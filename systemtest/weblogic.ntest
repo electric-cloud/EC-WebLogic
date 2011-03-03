@@ -432,7 +432,9 @@ ntest "runWlstWithNewScriptFile", {}, sub {
       # get the value of the commands lines
       my $commandLine = $xpath->findvalue("//property[propertyName='wlstLine']/value");
 
-      assertEq($commandLine, '"E:\Oracle\Middleware\wlserver_10.3\common\bin\wlst.cmd" "generated_script_'. substr($xpath->findvalue("//jobStepId"),5,5) . '.jython"', 
+      my $evalCmdLine = substr($commandLine,0,75);
+
+      assertEq($evalCmdLine, '"E:\Oracle\Middleware\wlserver_10.3\common\bin\wlst.cmd" "generated_script_', 
            'command line doesn\'t match expected output');
       
           
@@ -478,7 +480,9 @@ ntest "startAdminServer1", {}, sub {
       # get the value of the commands lines
       my $commandLine = $xpath->findvalue("//property[propertyName='startAdminServerLine']/value");
 
-      assertEq($commandLine, 'ecdaemon --pidProperty=cmd_pid -- ec-perl -e  "system(\'E:\Oracle\Middleware\user_projects\domains\base_domain\bin\startWebLogic.cmd > WebLogicServer-' . substr($xpath->findvalue("//jobStepId"),5,5) . '.log 2>&1\')"', 
+      my $evalCmdLine = substr($commandLine,0,149);
+       
+      assertEq($evalCmdLine, 'ecdaemon --pidProperty=cmd_pid -- ec-perl -e  "system(\'E:\Oracle\Middleware\user_projects\domains\base_domain\bin\startWebLogic.cmd > WebLogicServer-', 
            'command line doesn\'t match expected output');
       
 };
@@ -568,11 +572,12 @@ ntest "startManagedServer1", {}, sub {
 
       # get the job details
       $xpath = $::N->getJobDetails($jobId);
-   
+      
       # get the value of the commands lines
       my $commandLine = $xpath->findvalue("//property[propertyName='startManagedServerLine']/value");
-
-      assertEq($commandLine, 'ecdaemon --pidProperty=cmd_pid -- ec-perl -e "system(\'E:\Oracle\Middleware\user_projects\domains\base_domain\bin\startManagedWebLogic.cmd server1  t3://localhost:7001  -Dweblogic.management.username=admin  -Dweblogic.management.password=abr66666  > WebLogicServer-'.substr($xpath->findvalue("//jobStepId"),5,5).'.log 2>&1\')"', 
+      my $evalCmdLine = substr($commandLine,0,264);
+       
+      assertEq($evalCmdLine, 'ecdaemon --pidProperty=cmd_pid -- ec-perl -e "system(\'E:\Oracle\Middleware\user_projects\domains\base_domain\bin\startManagedWebLogic.cmd server1  t3://localhost:7001  -Dweblogic.management.username=admin  -Dweblogic.management.password=abr66666  > WebLogicServer-', 
            'command line doesn\'t match expected output');
 
 };

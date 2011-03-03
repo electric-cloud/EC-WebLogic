@@ -1195,17 +1195,6 @@ $[/myCall/deployerLine]</command>
                 </property>
                 
                 <property>
-                  <propertyName>setenvpath</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                  </propertySheet>
-                </property>
-                
-                <property>
                   <propertyName>javapath</propertyName>
                   <propertySheet>
                     <property>
@@ -1333,13 +1322,6 @@ $[/myCall/deployerLine]</command>
         <type>entry</type>
       </formalParameter>
       
-      <formalParameter>
-        <formalParameterName>setenvpath</formalParameterName>
-        <defaultValue></defaultValue>
-        <description>Absolute path of the setDomainEnv script file.</description>
-        <required>0</required>
-        <type>entry</type>
-      </formalParameter>
       
       <formalParameter>
         <formalParameterName>envscriptpath</formalParameterName>
