@@ -1,0 +1,29 @@
+<project name="EC-WebLogic" default="package" basedir=".">
+	<description>
+        Build the EC-WebLogic plugin
+    </description>
+
+    <property name="buildconfigdir" value="../Plugin-In-A-Box/scripts" />
+    
+	<!-- plugin specific properties -->
+	<property name="pluginKey" value="EC-WebLogic" />
+	<property name="pluginVersion" value="1.1" />
+	<property name="gwtModules" value="ecplugins.weblogic.ConfigurationManagement" />
+    <property name="package.export.src" value="weblogic.srcs"/>
+
+    <import file="${buildconfigdir}/buildTargets.xml"/>
+
+    <!-- Package sources for exported utility classes. -->
+    <fileset id="websphere.srcs" dir="${dir.src}">
+      <include name="**/PluginConstants.java"/>
+      <include name="**/WebLogicConfigList.java"/>
+      <include name="**/WebLogicConfigListLoader.*"/>
+    </fileset>
+	
+	<fileset id="images" dir="${dir.htdocs}">
+      <include name="**/PluginConstants.java"/>
+      <include name="**/WebLogicConfigList.java"/>
+      <include name="**/WebLogicConfigListLoader.*"/>
+    </fileset>
+	
+</project>

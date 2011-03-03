@@ -1,0 +1,421 @@
+<helpDefinition>
+  <title>EC-WebLogic - Help</title>
+  <componentContainer>
+    <LINK REL="StyleSheet" HREF="../../plugins/EC-WebLogic/pluginhelp.css" TYPE="text/css" MEDIA="screen"/>
+    <div class="help" >
+    
+    <h1 class="help">EC-Logic</h1>
+
+    <h2 class="help">Overview</h2>
+        <p class="help">
+        The plugin allows users to interact with the Oracle WebLogic server, such as starting and deploy application, 
+        starting Managed Servers and running Jython scripts.
+        </p>
+    
+    <h2 class="help">Configuration</h2>
+        
+          <p class="help">
+          To manage your WebSphere configuration, go to Administration > Plugins and click the EC-WebSphere <b>Configure</b> link.
+          </p>
+     
+          <p class="help">
+          Configurations have the following properties:
+          <ul>
+               <li>Configuration name - The name of the configuration.</li>
+               <li>URL - The URL for the WebLogic server, it must include protocol and port (example: t3://localhost:7001).</li>
+               <li>Credential - Username and password for the WebLogic server.</li>
+          </ul>
+          </p>
+        
+          
+     <h2 class="help">Using the Plugin</h2>
+          <p class="help">
+          To use the plugin, you must first create a step. There are two ways to create steps:
+               <ul>
+                    <li>
+                         Wizard step: When creating a procedure, do the following:
+                         <ol>
+                              <li>Click <b>Add Step</b> on the <b>Steps</b> panel.</li>
+                              <li>Select the Subprocedure category.</li>
+                              <li>In the Project field, select <b>EC-WebLogic</b>.</li>
+                              <li>In the Procedure field, select the procedure you wish to execute.</li>
+                              <li>Click <b>OK</b>.</li>
+                         </ol>
+                    </li>
+                    <li>
+                         Subprocedure step: To add a step to a procedure, do the following:
+                         <ol>
+                              <li>Go to the <b>Procedure Details</b> page for the procedure where you want to add the step.</li>
+                              <li>Click the arrow adjacent to <b>Create Step</b>.</li>
+                              <li>Select <b>Subprocedure Step</b>.</li>
+                              <li>In the Project field, click <b>Browse</b> and select <b>EC-WebLogic</b>.</li>
+                              <li>In the Procedure field, click <b>Browse</b> and select the procedure you wish to execute.</li>
+                              <li>Click <b>OK</b>.</li>
+                         </ol>
+                    </li>
+               </ul>
+          </p>
+          
+          <p class="help">
+          The subprocedure you select determines which fields are available.
+          </p>
+
+          <p class="help">
+          The StartManagedServer subprocedure starts a specified managed server instance on the selected resource machine.
+          The following fields are available for StartManagedServer:
+          </p>
+          <ul>
+               <li>configname - The name of the configuration that holds connection information for the WebLogic server (created on the Configure page).</li>
+               <li>instancename - Name of the instance to start.</li>
+               <li>scriptlocation - Absolute path of the start server script. It must include filename and extension.</li>
+          </ul>
+
+          <p class="help">
+          The StartAdminServer subprocedure starts a specified admin server instance on the selected resource machine.
+          The following fields are available for StartAdminServer:
+          </p>
+          <ul>
+               <li>scriptlocation - Absolute path of the start server script. It must include filename and extension.</li>
+          </ul>
+
+          <p class="help">
+          The StopManagedServer subprocedure stops a specified managed server on the selected resource.
+          The following fields are available for StopManagedServer:
+          <ul>
+               <li>configname - The name of the configuration that holds connection information for the WebLogic server (created on the Configure page).</li>
+               <li>instancename - Name of the instance to stop.</li>
+               <li>scriptlocation - Absolute path of stop server script. It must include filename and extension.</li>
+          </ul>
+          </p>
+          
+          <p class="help">
+          The StopAdminServer subprocedure stops a specified Admin Server instance on the selected resource.
+          The following fields are available for StopServer:
+          <ul>
+               <li>additionalcommands - Additional parameters received by the stop server script.</li>
+               <li>configname - The name of the configuration that holds connection information for the WebLogic server (created on the Configure page).</li>
+               <li>instancename - Name of the instance to stop.</li>
+               <li>scriptlocation - Absolute path of stop server script. Blank indicates that the script is loaded in the system's path.</li>
+          </ul>
+          </p>
+          
+          <p class="help">
+          The CheckServerStatus subprocedure checks the status of the specified URL,
+          by getting the returned HTTP code from the server. Curl is used in this
+          subprocedure.
+
+          The following fields are available for CheckServerStatus:
+          </p><ul>
+               <li>additionalcommands - Additional parameters received by curl.</li>
+               <li>configname - The name of the configuration that holds connection information for
+the WebLogic server (created on the Configure page). In this case,
+only credentials are taken from the configuration.</li>
+               <li>url - URL to check.</li>
+               <li>usecredentials - Indicates if credentials must be appended to the URL.</li>
+          </ul>
+          
+          <p class="help">
+          The RunCustomJob subprocedure is able to run Jython scripts on the server using <b>wsadmin</b>.
+          The following fields are available for RunCustomJob:
+          </p><ul>
+               <li>additionalcommands - Additional parameters received by <b>wsadmin</b>.</li>
+               <li>configname - The name of the configuration that holds connection information for
+the WebLogic server (created on the Configure page).</li>
+               <li>classpath - Use this option to make additional classes available to your
+scripting process. Separate absolute paths of jars to add with a semicolon (;).</li>
+               <li>commands - Runs commands using <b>wsadmin</b>. Enter one command per line.</li>
+               <li>connectiontype - Type of connection to establish with the server.</li>
+               <li>javaparams - Java options to add to the process. Separate each Java option with a semicolon (;).</li>
+               <li>scriptfileabspath - Absolute path the Jython script to be executed by <b>wsadmin</b>.</li>
+               <li>wsadminabspath - Absolute path of <b>wsadmin</b>. Leaving this blank assumes it is loaded in the system's path.</li>
+          </ul>
+          
+          <p class="help">
+          The StartApp subprocedure is able to start an application on the server using <b>wsadmin</b>.
+          The following fields are available for StartApp:
+          </p><ul>
+               <li>additionalcommands - Additional parameters received by <b>wsadmin</b>.</li>
+               <li>appname - Name of the application to start.</li>
+               <li>configname - The name of the configuration that holds connection information for
+the WebLogic server (created on the Configure page).</li>
+               <li>classpath - Use this option to make additional classes available to your
+scripting process. Separate absolute paths of jars to add with a semicolon (;).</li>
+               <li>commands - Runs commands using <b>wsadmin</b>. Enter one command per line.</li>
+               <li>connectiontype - Type of connection to establish with the server.</li>
+               <li>javaparams - Java options to add to the process. Separate each Java option with a semicolon (;).</li>
+               <li>wsadminabspath - Absolute path of <b>wsadmin</b>, including filename and extension.</li>
+          </ul>
+          
+          <p class="help">
+          The StopApp subprocedure is able to stop an application on the server using <b>wsadmin</b>.
+          The following fields are available for StopApp:
+          </p><ul>
+               <li>additionalcommands - Additional parameters received by <b>wsadmin</b>.</li>
+               <li>appname - Name of the application to start.</li>
+               <li>configname - The name of the configuration that holds connection information for
+the WebLogic server (created on the Configure page).</li>
+               <li>classpath - Use this option to make additional classes available to your
+scripting process. Separate absolute paths of jars to add with a semicolon (;).</li>
+               <li>commands - Runs commands using <b>wsadmin</b>. Enter one command per line.</li>
+               <li>connectiontype - Type of connection to establish with the server.</li>
+               <li>javaparams - Java options to add to the process. Separate each Java option with a semicolon (;).</li>
+               <li>wsadminabspath - Absolute path of <b>wsadmin</b>, including filename and extension.</li>
+          </ul>
+          
+          <p class="help">
+          The DeployApp subprocedure is able to deploy an application on the server using <b>wsadmin</b>.
+          The following fields are available for DeployApp:
+          </p><ul>
+               <li>additionalcommands - Additional parameters received by <b>wsadmin</b>.</li>
+               <li>appname - Name of the application to start.</li>
+               <li>apppath - Absolute path and filename of the application to deploy.</li>
+               <li>configname - The name of the configuration that holds connection information for
+the WebLogic server (created on the Configure page).</li>
+               <li>classpath - Use this option to make additional classes available to your
+scripting process. Separate absolute paths of jars to add with a semicolon (;).</li>
+               <li>commands - Runs commands using <b>wsadmin</b>. Enter one command per line.</li>
+               <li>connectiontype - Type of connection to establish with the server.</li>
+               <li>javaparams - Java options to add to the process. Separate each Java option with a semicolon (;).</li>
+               <li>wsadminabspath - Absolute path of <b>wsadmin</b>, including filename and extension.</li>
+          </ul>
+          
+          <p class="help">
+          The UndeployApp subprocedure is able to undeploy an application on the server using <b>wsadmin</b>.
+          The following fields are available for UndeployApp:
+          </p><ul>
+               <li>additionalcommands - Additional parameters received by <b>wsadmin</b>.</li>
+               <li>appname - Name of the application to start.</li>
+               <li>configname - The name of the configuration that holds connection information for
+the WebLogic server (created on the Configure page).</li>
+               <li>classpath - Use this option to make additional classes available to your
+scripting process. Separate absolute paths of jars to add with a semicolon (;).</li>
+               <li>commands - Runs commands using <b>wsadmin</b>. Enter one command per line.</li>
+               <li>connectiontype - Type of connection to establish with the server.</li>
+               <li>javaparams - Java options to add to the process. Separate each Java option with a semicolon (;).</li>
+               <li>wsadminabspath - Absolute path of <b>wsadmin</b>, including filename and extension.</li>
+          </ul>
+          
+     
+     <h2 class="help">Examples</h2>
+         <p class="help">
+          You want to use the EC-WebLogic plugin to manage IBM WebLogic installations.
+          First, create a connection configuration. Then use the
+          plugin's subprocedures to perform different actions on the virtual
+          machines. The use cases are:
+          </p><ul>
+               <li>Create a configuration</li>
+               <li>Start a WebLogic server</li>
+               <li>Stop a WebLogic server</li>
+               <li>Check a server's status</li>
+               <li>Run a Jython script</li>
+          </ul>
+          
+          <h3 class="help">Create Configuration</h3>
+               <p class="help">
+               <ol>
+                    <li>Go to Administration > Plugins in ElectricCommander.</li>
+                    <img src="../../plugins/EC-WebLogic/images/CreateConfiguration/1.png" alt=""/>
+                    <li>Click the EC-WebLogic <b>Configure</b> link.</li>
+                    <img src="../../plugins/EC-WebLogic/images/CreateConfiguration/22.png" alt=""/>
+                    <li>Click <b>Create Configuration</b>.</li>
+                    <img src="../../plugins/EC-WebLogic/images/CreateConfiguration/33.png" alt=""/>
+                    <li>Fill-in the fields with the following parameters:</li>
+                    <img src="../../plugins/EC-WebLogic/images/CreateConfiguration/44.png" alt=""/>
+                    <li>Click <b>OK</b> to create the configuration.</li>
+                    <img src="../../plugins/EC-WebLogic/images/CreateConfiguration/55.png" alt=""/>
+               </ol>
+               </p>
+               
+          <h3 class="help">Start a Server</h3>
+               <p class="help">
+               <ul>
+                    <li><b>Start an instance</b></li>
+                         <ol>
+                              <li>Create a new procedure and assign a name.</li>
+                              <li>Add a new subprocedure step and select the EC-WebLogic project
+                                  and the StartServer procedure.</li>
+                              <li>Fill-in the fields with the following parameters:</li>
+                              <img src="../../plugins/EC-WebLogic/images/StartServer/11.png" alt=""/>
+                              <li>Create and run the procedure.</li>
+                              <img src="../../plugins/EC-WebLogic/images/StartServer/22.png" alt=""/>
+                         </ol>
+                    
+               </ul>
+               </p>
+               
+          <h3 class="help">Stop a Server</h3>
+               <p class="help">
+               
+                    <li><b>Stop an instance</b></li>
+                         <ol>
+                              <li>Create a new procedure and assign a name.</li>
+                              <li>Add a new subprocedure step and select the EC-WebLogic project
+                                  and the StopServer procedure.</li>
+                              <li>Fill-in the fields with the following parameters:</li>
+                              <img src="../../plugins/EC-WebLogic/images/StopServer/11.png" alt=""/>
+                              <li>Create and run the procedure.</li>
+                              <img src="../../plugins/EC-WebLogic/images/StopServer/22.png" alt=""/>
+                         </ol>
+                      </p>
+                         
+                <p class="help">
+                <b>Stop an instance using authentication</b>
+                         <ol>
+                              <li>Create a new procedure and assign a name.</li>
+                              <li>Add a new subprocedure step and select the EC-WebLogic project
+                                  and the StopServer procedure.</li>
+                              <li>Fill-in the fields with the following parameters:</li>
+                              <img src="../../plugins/EC-WebLogic/images/StopServer/12.png" alt=""/>
+                              <li>Create and run the procedure.</li>
+                              <img src="../../plugins/EC-WebLogic/images/StopServer/22.png" alt=""/>
+                         </ol>
+                    
+               
+                </p>
+               
+          <h3 class="help">Check a Server's Status</h3>
+               <p class="help">
+               <b>Check a server with credentials</b>
+                         <ol>
+                              <li>Create a new procedure and assign a name.</li>
+                              <li>Add a new subprocedure step and select the EC-WebLogic project
+                                  and the CheckServerStatus procedure.</li>
+                              <li>Fill-in the fields with the following parameters:</li>
+                              <img src="../../plugins/EC-WebLogic/images/CheckServerStatus/11.png" alt=""/>
+                              <li>Create and run the procedure.</li>
+                              <img src="../../plugins/EC-WebLogic/images/CheckServerStatus/22.png" alt=""/>
+                         </ol>
+                         
+                    <li><b>Check a server without credentials</b></li>
+                         <ol>
+                              <li>Create a new procedure and assign a name.</li>
+                              <li>Add a new subprocedure step and select the EC-WebLogic project
+                                  and the CheckServerStatus procedure.</li>
+                              <li>Fill-in the fields with the following parameters:</li>
+                              <img src="../../plugins/EC-WebLogic/images/CheckServerStatus/12.png" alt=""/>
+                              <li>Create and run the procedure.</li>
+                              <img src="../../plugins/EC-WebLogic/images/CheckServerStatus/22.png" alt=""/>
+                         </ol>
+               </p>
+               
+          <h3 class="help">Run a Jython Script</h3>
+               <p class="help">
+               <ul>
+                    <li><b>Run a custom job using a Jython script file</b></li>
+                         <ol>
+                              <li>Create a new procedure and assign a name.</li>
+                              <li>Add a new subprocedure step and select the EC-WebLogic project
+                                  and the RunCustomJob procedure.</li>
+                              <li>Fill-in the fields with the following parameters:</li>
+                              <img src="../../plugins/EC-WebLogic/images/RunCustomJob/11.png" alt=""/>
+                              <li>Create and run the procedure.</li>
+                              <img src="../../plugins/EC-WebLogic/images/RunCustomJob/22.png" alt=""/>
+                         </ol>
+                         
+                    
+               </ul>
+               </p>
+               
+           <h3 class="help">Deploy an application</h3>
+               <p class="help">
+               <ul>
+                    <li><b>Deploy an application</b></li>
+                         <ol>
+                              <li>Create a new procedure and assign a name.</li>
+                              <li>Add a new subprocedure step and select the EC-WebLogic project
+                                  and the DeployApp procedure.</li>
+                              <li>Fill-in the fields with the following parameters:</li>
+                              <img src="../../plugins/EC-WebLogic/images/DeployApp/1.png" alt=""/>
+                              <li>Create and run the procedure.</li>
+                         </ol>
+                         
+                    
+               </ul>
+               </p>
+               
+               
+               <h3 class="help">Undeploy an application</h3>
+               <p class="help">
+               <ul>
+                    <li><b>Undeploy a desired application</b></li>
+                         <ol>
+                              <li>Create a new procedure and assign a name.</li>
+                              <li>Add a new subprocedure step and select the EC-WebLogic project
+                                  and the UndeployApp procedure.</li>
+                              <li>Fill-in the fields with the following parameters:</li>
+                              <img src="../../plugins/EC-WebLogic/images/UndeployApp/1.png" alt=""/>
+                              <li>Create and run the procedure.</li>
+                         </ol>
+                         
+                    
+               </ul>
+               </p>
+               
+           <h3 class="help">Start Application</h3>
+               <p class="help">
+               <ul>
+                    <li><b>Start an application</b></li>
+                         <ol>
+                              <li>Create a new procedure and assign a name.</li>
+                              <li>Add a new subprocedure step and select the EC-WebLogic project
+                                  and the StartApp procedure.</li>
+                              <li>Fill-in the fields with the following parameters:</li>
+                              <img src="../../plugins/EC-WebLogic/images/StartApp/1.png" alt=""/>
+                              <li>Create and run the procedure.</li>
+                         </ol>
+                         
+                    
+               </ul>
+               </p>
+               
+               
+           <h3 class="help">Stop Application</h3>
+               <p class="help">
+               <ul>
+                    <li><b>Stop an application</b></li>
+                         <ol>
+                              <li>Create a new procedure and assign a name.</li>
+                              <li>Add a new subprocedure step and select the EC-WebLogic project
+                                  and the StopApp procedure.</li>
+                              <li>Fill-in the fields with the following parameters:</li>
+                              <img src="../../plugins/EC-WebLogic/images/StopApp/1.png" alt=""/>
+                              <li>Create and run the procedure.</li>
+                         </ol>
+                         
+                    
+               </ul>
+               </p>
+               
+     <h2 class="help">Additional Information</h2>
+          <ul>
+               <li><a href="http://publib.boulder.ibm.com/infocenter/wasinfo/v5r1//index.jsp?topic=%2Fcom.ibm.websphere.base.doc%2Finfo%2Faes%2Fae%2Frxml_commandline.html">wsadmin definition</a></li>
+          </ul>
+        
+    <h2 class="help">Release Notes</h2>
+    
+        <h3 class="help">EC-WebLogic-1.2.0.0</h3>
+        <p class="help">
+        <ul>
+             <li>Start App, Stop App, Deploy App and Undeploy App subprocedures added.</li>
+        </ul>
+        </p>
+    
+        <h3 class="help">EC-WebLogic-1.1.1.0</h3>
+        <p class="help">
+        <ul>
+             <li>Jython commands can be entered manually in RunCustomJob procedure</li>
+             <li>Absolute path of executables needs path and filename with extension.</li>
+             <li>Help page corrections.</li>
+             
+        </ul>
+        </p>
+        <h3 class="help">EC-WebLogic-1.1.0.0</h3>
+        <p class="help">
+        <ul>
+             <li>Run Custom Job sub-procedure added.</li>
+             <li>Help page with examples added.</li>
+             
+        </ul>
+        </p>
+     </div>  </componentContainer>
+</helpDefinition>

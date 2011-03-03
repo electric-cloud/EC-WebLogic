@@ -1,0 +1,2439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exportedData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="commander.xsd" version="42" buildLabel="build_3.7_34336_OPT_2010.07.26_15:26:49" buildVersion="3.7.0.34336">
+
+  <exportPath>/projects/@PLUGIN_KEY@-@PLUGIN_VERSION@</exportPath>
+  <project>
+    <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+    <description>Integration with WebSphere</description>
+    <workspaceName></workspaceName>
+    <propertySheet>
+      
+      <property>
+        <propertyName>startserver_matchers</propertyName>
+        <value></value>
+        <expandable>0</expandable>
+      </property>
+      
+      <property>
+        <propertyName>stopserver_matchers</propertyName>
+        <value></value>
+        <expandable>0</expandable>
+      </property>
+      
+      <property>
+        <propertyName>curl_matchers</propertyName>
+        <value></value>
+        <expandable>0</expandable>
+      </property>
+      
+      <property>
+        <propertyName>deployer_matchers</propertyName>
+        <value></value>
+        <expandable>0</expandable>
+      </property>
+      
+      <property>
+        <propertyName>wlst_matchers</propertyName>
+        <value></value>
+        <expandable>0</expandable>
+      </property>
+      
+      <property>
+        <propertyName>weblogicserver_matchers</propertyName>
+        <value></value>
+        <expandable>0</expandable>
+      </property>
+      
+      <property>
+        <propertyName>ui_forms</propertyName>
+        <description>Property sheet to hold XML specification for forms</description>
+        <propertySheet>
+          <property>
+            <propertyName>WebLogicCreateConfigForm</propertyName>
+            <expandable>1</expandable>
+            <value></value>
+          </property>
+          <property>
+            <propertyName>WebLogicEditConfigForm</propertyName>
+            <description></description>
+            <expandable>1</expandable>
+            <value></value>
+          </property>
+        </propertySheet>
+      </property>
+      
+      <property>
+        <propertyName>ec_setup</propertyName>
+        <expandable>0</expandable>
+        <value></value>
+      </property>
+      
+      <property>
+        <propertyName>ec_visibility</propertyName>
+        <description></description>
+        <expandable>1</expandable>
+        <value>pickListOnly</value>
+      </property>
+      
+    </propertySheet>
+    
+    <procedure>
+      <procedureName>CreateConfiguration</procedureName>
+      <description>Create a WebLogic configuration</description>
+      <jobNameTemplate>weblogic-cfg-$[jobId]</jobNameTemplate>
+      <resourceName></resourceName>
+      <workspaceName></workspaceName>
+      <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+      <propertySheet>
+      
+        <property>
+          <propertyName>ec_customEditorData</propertyName>
+          <propertySheet>
+          
+            <property>
+              <propertyName>parameters</propertyName>
+              <propertySheet>
+              
+                <property>
+                  <propertyName>config</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>weblogic_url</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>credential</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+      </propertySheet>
+      
+      <formalParameter>
+        <formalParameterName>config</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Configuration Name</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+	  <formalParameter>
+        <formalParameterName>weblogic_url</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>URL of WebLogic Server (must include protocol, server and port).</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>credential</formalParameterName>
+        <defaultValue></defaultValue>
+        <description></description>
+        <required>0</required>
+        <type>credential</type>
+      </formalParameter>
+      
+      <step>
+        <stepName>CreateConfiguration</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command></command>
+        <condition></condition>
+        <description>Create a WebLogic configuration</description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor>postp</postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName>local</resourceName>
+        <retries>0</retries>
+        <shell>ec-perl</shell>
+        <timeLimit>5</timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName></workspaceName>
+        <procedureName>CreateConfiguration</procedureName>
+        <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+      <step>
+        <stepName>CreateAndAttachCredential</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command></command>
+        <condition></condition>
+        <description></description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor></postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName>local</resourceName>
+        <retries>0</retries>
+        <shell>ec-perl</shell>
+        <timeLimit>5</timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName></workspaceName>
+        <procedureName>CreateConfiguration</procedureName>
+        <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+        <attachedParameters>
+          <formalParameterName>credential</formalParameterName>
+        </attachedParameters>
+      </step>
+    </procedure>
+    
+    <procedure>
+      <procedureName>DeleteConfiguration</procedureName>
+      <description>Delete an WebLogic configuration</description>
+      <jobNameTemplate>weblogic-cfg-$[jobId]</jobNameTemplate>
+      <resourceName></resourceName>
+      <workspaceName></workspaceName>
+      <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+      <propertySheet>
+        <property>
+          <propertyName>ec_customEditorData</propertyName>
+          <propertySheet>
+            <property>
+              <propertyName>parameters</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>config</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+      </propertySheet>
+      
+      <formalParameter>
+        <formalParameterName>config</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>The configuration name</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <step>
+        <stepName>DeleteConfiguration</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command></command>
+        <condition></condition>
+        <description>Delete an WebLogic configuration</description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor>postp</postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName>local</resourceName>
+        <retries>0</retries>
+        <shell>ec-perl</shell>
+        <timeLimit>5</timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName></workspaceName>
+        <procedureName>DeleteConfiguration</procedureName>
+        <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+    </procedure>
+    
+    <procedure>
+      <procedureName>StartApp</procedureName>
+      <description>Start an application</description>
+      <jobNameTemplate>weblogic-startapp-$[jobId]</jobNameTemplate>
+      <resourceName></resourceName>
+      <workspaceName></workspaceName>
+      <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+      <propertySheet>
+        <property>
+          <propertyName>ec_customEditorData</propertyName>
+          <propertySheet>
+            <property>
+              <propertyName>parameters</propertyName>
+              <propertySheet>
+              
+                <property>
+                  <propertyName>appname</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>javapath</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>javaparams</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>configname</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>additionalcommands</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>envscriptpath</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+      </propertySheet>
+      
+      <formalParameter>
+        <formalParameterName>javaparams</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Java options to be passed to wsadmin, separate them using semicolons (;).</description>
+        <required>0</required>
+        <type>textarea</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>javapath</formalParameterName>
+        <defaultValue>java</defaultValue>
+        <description>Absolute path of wsadmin, including filename and extension.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+
+      <formalParameter>
+        <formalParameterName>appname</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Name of the application to start.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>configname</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Name of the configuration to be used.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>additionalcommands</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Absolute commands to be entered.</description>
+        <required>0</required>
+        <type>textarea</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>envscriptpath</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Absolute path of the setDomainEnv script including filename and extension.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <step>
+        <stepName>CreateCommand</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command></command>
+        <condition></condition>
+        <description></description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor></postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <shell>ec-perl</shell>
+        <timeLimit></timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName>default</workspaceName>
+        <procedureName>StartApp</procedureName>
+        <projectName>EC-WebLogic</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+      <step>
+        <stepName>StartApp</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command>$[/myCall/envLine]
+$[/myCall/startAppLine]</command>
+        <condition></condition>
+        <description>Checks the status of a given URL</description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor>postp --loadProperty /myProject/deployer_matchers</postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <shell></shell>
+        <timeLimit>5</timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName></workspaceName>
+        <procedureName>StartApp</procedureName>
+        <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+    </procedure>
+    
+    <procedure>
+      <procedureName>StopApp</procedureName>
+      <description>Stop an application</description>
+      <jobNameTemplate>weblogic-stopapp-$[jobId]</jobNameTemplate>
+      <resourceName></resourceName>
+      <workspaceName></workspaceName>
+      <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+      <propertySheet>
+        <property>
+          <propertyName>ec_customEditorData</propertyName>
+          <propertySheet>
+            <property>
+              <propertyName>parameters</propertyName>
+              <propertySheet>
+              
+                <property>
+                  <propertyName>gracefulmode</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>checkedValue</propertyName>
+                      <expandable>1</expandable>
+                      <value>1</value>
+                    </property>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                    <property>
+                      <propertyName>initiallyChecked</propertyName>
+                      <expandable>1</expandable>
+                      <value>0</value>
+                    </property>
+                    <property>
+                      <propertyName>uncheckedValue</propertyName>
+                      <expandable>1</expandable>
+                      <value>0</value>
+                    </property>
+                  </propertySheet>
+                </property>
+              
+                <property>
+                  <propertyName>appname</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>javapath</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>javaparams</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>configname</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>additionalcommands</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>envscriptpath</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+      </propertySheet>
+      
+      <formalParameter>
+        <formalParameterName>javaparams</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Java options to be passed.</description>
+        <required>0</required>
+        <type>textarea</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>javapath</formalParameterName>
+        <defaultValue>java</defaultValue>
+        <description>Absolute path of java</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+
+      <formalParameter>
+        <formalParameterName>appname</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Name of the application to start.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>configname</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Name of the configuration to be used.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>additionalcommands</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Absolute commands to be entered.</description>
+        <required>0</required>
+        <type>textarea</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>gracefulmode</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Enable stopping the application in Graceful mode</description>
+        <required>0</required>
+        <type>checkbox</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>envscriptpath</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Absolute path of the setDomainEnv script including filename and extension.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <step>
+        <stepName>CreateCommand</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command></command>
+        <condition></condition>
+        <description></description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor></postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <shell>ec-perl</shell>
+        <timeLimit></timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName>default</workspaceName>
+        <procedureName>StopApp</procedureName>
+        <projectName>EC-WebLogic</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+      <step>
+        <stepName>StopApp</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command>$[/myCall/envLine]
+$[/myCall/stopAppLine]</command>
+        <condition></condition>
+        <description>Checks the status of a given URL</description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor>postp --loadProperty /myProject/deployer_matchers</postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <shell></shell>
+        <timeLimit>5</timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName></workspaceName>
+        <procedureName>StopApp</procedureName>
+        <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+    </procedure>
+    
+    <procedure>
+      <procedureName>CheckServerStatus</procedureName>
+      <description>Check the status of the given server URL</description>
+      <jobNameTemplate>websphere-checkstatus-$[jobId]</jobNameTemplate>
+      <resourceName></resourceName>
+      <workspaceName></workspaceName>
+      <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+      <propertySheet>
+        <property>
+          <propertyName>ec_customEditorData</propertyName>
+          <propertySheet>
+            <property>
+              <propertyName>parameters</propertyName>
+              <propertySheet>
+              
+                <property>
+                  <propertyName>url</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+
+                <property>
+                  <propertyName>configname</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>usecredentials</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>checkedValue</propertyName>
+                      <expandable>1</expandable>
+                      <value>1</value>
+                    </property>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                    <property>
+                      <propertyName>initiallyChecked</propertyName>
+                      <expandable>1</expandable>
+                      <value>0</value>
+                    </property>
+                    <property>
+                      <propertyName>uncheckedValue</propertyName>
+                      <expandable>1</expandable>
+                      <value>0</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>additionalcommands</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+      </propertySheet>
+      
+      <formalParameter>
+        <formalParameterName>configname</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Name of the configuration to be used</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>usecredentials</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Indicates if credentials are required.</description>
+        <required>0</required>
+        <type>checkbox</type>
+      </formalParameter>
+
+      <formalParameter>
+        <formalParameterName>url</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>URL to be checked</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>additionalcommands</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Additional commands to be entered for curl.</description>
+        <required>0</required>
+        <type>textarea</type>
+      </formalParameter>
+      
+      <step>
+        <stepName>CreateCommand</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command></command>
+        <condition></condition>
+        <description></description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor></postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <shell>ec-perl</shell>
+        <timeLimit></timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName>default</workspaceName>
+        <procedureName>CheckServerStatus</procedureName>
+        <projectName>EC-WebLogic</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+      <step>
+        <stepName>CheckServerStatus</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command>$[/myCall/checkServerStatusLine]</command>
+        <condition></condition>
+        <description>Checks the status of a given URL</description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor>postp --loadProperty /myProject/curl_matchers</postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <shell></shell>
+        <timeLimit>5</timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName></workspaceName>
+        <procedureName>CheckServerStatus</procedureName>
+        <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+    </procedure>
+    
+    <procedure>
+      <procedureName>RunDeployer</procedureName>
+      <description>Runs weblogic.Deployer in a free-mode</description>
+      <jobNameTemplate>websphere-rundeployer-$[jobId]</jobNameTemplate>
+      <resourceName></resourceName>
+      <workspaceName></workspaceName>
+      <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+      <propertySheet>
+        <property>
+          <propertyName>ec_customEditorData</propertyName>
+          <propertySheet>
+            <property>
+              <propertyName>parameters</propertyName>
+              <propertySheet>
+              
+                <property>
+                  <propertyName>javapath</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>appname</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+              
+                <property>
+                  <propertyName>commandtouse</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>javaparams</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>configname</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>additionalcommands</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>envscriptpath</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+      </propertySheet>
+
+      <formalParameter>
+        <formalParameterName>commandtouse</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Deployer command</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>javaparams</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Java options to be passed to weblogic.Deployer</description>
+        <required>0</required>
+        <type>textarea</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>configname</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Name of the configuration to be used.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>additionalcommands</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Additional commands to be entered.</description>
+        <required>0</required>
+        <type>textarea</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>javapath</formalParameterName>
+        <defaultValue>java</defaultValue>
+        <description>Path to java</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>appname</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Name of the application to deploy.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>envscriptpath</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Absolute path of the setDomainEnv script including filename and extension.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <step>
+        <stepName>CreateCommand</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command></command>
+        <condition></condition>
+        <description></description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor></postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <shell>ec-perl</shell>
+        <timeLimit></timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName>default</workspaceName>
+        <procedureName>RunDeployer</procedureName>
+        <projectName>EC-WebLogic</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+      
+      <step>
+        <stepName>RunJob</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command>$[/myCall/envLine]
+$[/myCall/deployerLine]</command>
+        <condition></condition>
+        <description>Checks the status of a given URL</description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor>postp --loadProperty /myProject/deployer_matchers</postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <shell></shell>
+        <timeLimit>5</timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName></workspaceName>
+        <procedureName>RunDeployer</procedureName>
+        <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+    </procedure>
+    
+    <procedure>
+      <procedureName>DeployApp</procedureName>
+      <description>Deploy an application</description>
+      <jobNameTemplate>websphere-deployapp-$[jobId]</jobNameTemplate>
+      <resourceName></resourceName>
+      <workspaceName></workspaceName>
+      <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+      <propertySheet>
+        <property>
+          <propertyName>ec_customEditorData</propertyName>
+          <propertySheet>
+            <property>
+              <propertyName>parameters</propertyName>
+              <propertySheet>
+              
+                
+                <property>
+                  <propertyName>apppath</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>setenvpath</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>javapath</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>javaparams</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>configname</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>additionalcommands</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>targets</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>envscriptpath</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+      </propertySheet>
+      
+      <formalParameter>
+        <formalParameterName>javaparams</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Java options to be passed to wsadmin, separate them using semicolons (;).</description>
+        <required>0</required>
+        <type>textarea</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>javapath</formalParameterName>
+        <defaultValue>java</defaultValue>
+        <description>Path to java</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>appname</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Name of the application to deploy.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>       
+      
+      <formalParameter>
+        <formalParameterName>apppath</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Path of the application to deploy.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>configname</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Name of the configuration to be used.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>additionalcommands</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Absolute commands to be entered.</description>
+        <required>0</required>
+        <type>textarea</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>targets</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Targets on which to deploy the application or module.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>setenvpath</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Absolute path of the setDomainEnv script file.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>envscriptpath</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Absolute path of the setDomainEnv script including filename and extension.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <step>
+        <stepName>CreateCommand</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command></command>
+        <condition></condition>
+        <description></description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor></postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <shell>ec-perl</shell>
+        <timeLimit></timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName>default</workspaceName>
+        <procedureName>DeployApp</procedureName>
+        <projectName>EC-WebLogic</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+      <step>
+        <stepName>DeployApp</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command>$[/myCall/envLine]
+$[/myCall/deployAppLine]</command>
+        <condition></condition>
+        <description>Deploys an application</description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor>postp --loadProperty /myProject/deployer_matchers</postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <shell></shell>
+        <timeLimit>5</timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName></workspaceName>
+        <procedureName>DeployApp</procedureName>
+        <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+    </procedure>
+    
+    <procedure>
+      <procedureName>UndeployApp</procedureName>
+      <description>Undeploy an application</description>
+      <jobNameTemplate>websphere-undeployapp-$[jobId]</jobNameTemplate>
+      <resourceName></resourceName>
+      <workspaceName></workspaceName>
+      <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+      <propertySheet>
+        <property>
+          <propertyName>ec_customEditorData</propertyName>
+          <propertySheet>
+            <property>
+              <propertyName>parameters</propertyName>
+              <propertySheet>
+              
+                
+                <property>
+                  <propertyName>javapath</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>appname</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>gracefulmode</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>checkedValue</propertyName>
+                      <expandable>1</expandable>
+                      <value>1</value>
+                    </property>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                    <property>
+                      <propertyName>initiallyChecked</propertyName>
+                      <expandable>1</expandable>
+                      <value>0</value>
+                    </property>
+                    <property>
+                      <propertyName>uncheckedValue</propertyName>
+                      <expandable>1</expandable>
+                      <value>0</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>configname</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>additionalcommands</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>envscriptpath</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+      </propertySheet>
+      
+      <formalParameter>
+        <formalParameterName>javapath</formalParameterName>
+        <defaultValue>java</defaultValue>
+        <description>Path to java</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>javaparams</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Java options to be passed to wsadmin, separate them using semicolons (;).</description>
+        <required>0</required>
+        <type>textarea</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>gracefulmode</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Undeploys in Graceful Mode.</description>
+        <required>0</required>
+        <type>checkbox</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>appname</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Name of the application to undeploy.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>       
+      
+      <formalParameter>
+        <formalParameterName>configname</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Name of the configuration to be used.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>additionalcommands</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Absolute commands to be entered.</description>
+        <required>0</required>
+        <type>textarea</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>envscriptpath</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Absolute path of the setDomainEnv script including filename and extension.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <step>
+        <stepName>CreateCommand</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command></command>
+        <condition></condition>
+        <description></description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor></postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <shell>ec-perl</shell>
+        <timeLimit></timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName>default</workspaceName>
+        <procedureName>UndeployApp</procedureName>
+        <projectName>EC-WebLogic</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+      <step>
+        <stepName>UndeployApp</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command>$[/myCall/envLine]
+$[/myCall/undeployAppLine]</command>
+        <condition></condition>
+        <description>Undeploys an application</description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor>postp --loadProperty /myProject/deployer_matchers</postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <shell></shell>
+        <timeLimit>5</timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName></workspaceName>
+        <procedureName>UndeployApp</procedureName>
+        <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+    </procedure>
+    
+    <procedure>
+      <procedureName>RunWLST</procedureName>
+      <description>Run WLST script</description>
+      <jobNameTemplate>websphere-runwlst-$[jobId]</jobNameTemplate>
+      <resourceName></resourceName>
+      <workspaceName></workspaceName>
+      <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+      <propertySheet>
+        <property>
+          <propertyName>ec_customEditorData</propertyName>
+          <propertySheet>
+            <property>
+              <propertyName>parameters</propertyName>
+              <propertySheet>
+              
+                <property>
+                  <propertyName>wlstpath</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>additionalcommands</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>scriptfilesource</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>options</propertyName>
+                      <propertySheet>
+                        <property>
+                          <propertyName>option1</propertyName>
+                          <propertySheet>
+                            <property>
+                              <propertyName>text</propertyName>
+                              <expandable>1</expandable>
+                              <value>Supplied File</value>
+                            </property>
+                            <property>
+                              <propertyName>value</propertyName>
+                              <expandable>1</expandable>
+                              <value>suppliedfile</value>
+                            </property>
+                          </propertySheet>
+                        </property>
+                        <property>
+                          <propertyName>option2</propertyName>
+                          <propertySheet>
+                            <property>
+                              <propertyName>text</propertyName>
+                              <expandable>1</expandable>
+                              <value>New Script File</value>
+                            </property>
+                            <property>
+                              <propertyName>value</propertyName>
+                              <expandable>1</expandable>
+                              <value>newscriptfile</value>
+                            </property>
+                          </propertySheet>
+                        </property>
+                        
+                        <property>
+                          <propertyName>optionCount</propertyName>
+                          <expandable>1</expandable>
+                          <value>2</value>
+                        </property>
+                        <property>
+                          <propertyName>type</propertyName>
+                          <expandable>1</expandable>
+                          <value>list</value>
+                        </property>
+                      </propertySheet>
+                    </property>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>scriptfilepath</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>scriptfile</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+      </propertySheet>
+
+      <formalParameter>
+        <formalParameterName>wlstpath</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Absolute path to WLST.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>scriptfilepath</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Path of a Jython script that will be run using WLST.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>additionalcommands</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Additional commands to be entered for WLST.</description>
+        <required>0</required>
+        <type>textarea</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>scriptfilesource</formalParameterName>
+        <defaultValue></defaultValue>
+        <description></description>
+        <required>1</required>
+        <type>radio</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>scriptfile</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Content of the script file to run if Embedded File is chosen in the Script File Source</description>
+        <required>0</required>
+        <type>textarea</type>
+      </formalParameter>
+      
+      <step>
+        <stepName>CreateCommand</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command></command>
+        <condition></condition>
+        <description></description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor></postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <shell>ec-perl</shell>
+        <timeLimit></timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName>default</workspaceName>
+        <procedureName>RunWLST</procedureName>
+        <projectName>EC-WebLogic</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+      <step>
+        <stepName>RunWLST</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command>$[/myCall/wlstLine]</command>
+        <condition></condition>
+        <description>Run WLST script</description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor>postp --loadProperty /myProject/wlst_matchers</postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <shell></shell>
+        <timeLimit>5</timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName></workspaceName>
+        <procedureName>RunWLST</procedureName>
+        <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+    </procedure>
+    
+    <procedure>
+      <procedureName>StartAdminServer</procedureName>
+      <description>Starts a WebLogic Admin Server</description>
+      <jobNameTemplate>weblogic-startadminserver-$[jobId]</jobNameTemplate>
+      <resourceName></resourceName>
+      <workspaceName></workspaceName>
+      <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+      <propertySheet>
+        <property>
+          <propertyName>ec_customEditorData</propertyName>
+          <propertySheet>
+            <property>
+              <propertyName>parameters</propertyName>
+              <propertySheet>
+              
+                <property>
+                  <propertyName>scriptlocation</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+      </propertySheet>
+
+      <formalParameter>
+        <formalParameterName>scriptlocation</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Absolute path of the startWeblogic script, including filename and extension.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <step>
+        <stepName>createCommand</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command></command>
+        <condition></condition>
+        <description></description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor></postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <shell>ec-perl</shell>
+        <timeLimit></timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName>default</workspaceName>
+        <procedureName>StartAdminServer</procedureName>
+        <projectName>EC-WebLogic</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+      
+      <step>
+        <stepName>StartInstance</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command>$[/myCall/startAdminServerLine]</command>
+        <condition></condition>
+        <description>Start a WebSphere Admin Server</description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor>postp --loadProperty /myProject/weblogicserver_matchers</postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <shell></shell>
+        <timeLimit>5</timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName></workspaceName>
+        <procedureName>StartAdminServer</procedureName>
+        <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+    </procedure>
+    
+    <procedure>
+      <procedureName>StopAdminServer</procedureName>
+      <description>Stops a WebLogic Admin Server</description>
+      <jobNameTemplate>weblogic-stopadminserver-$[jobId]</jobNameTemplate>
+      <resourceName></resourceName>
+      <workspaceName></workspaceName>
+      <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+      <propertySheet>
+        <property>
+          <propertyName>ec_customEditorData</propertyName>
+          <propertySheet>
+            <property>
+              <propertyName>parameters</propertyName>
+              <propertySheet>
+              
+                <property>
+                  <propertyName>scriptlocation</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>configname</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+      </propertySheet>
+
+      <formalParameter>
+        <formalParameterName>scriptlocation</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Absolute path of the stopWeblogic script, including filename and extension.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>configname</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Name of the configuration used to get the admin URL, user and password.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <step>
+        <stepName>createCommand</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command></command>
+        <condition></condition>
+        <description></description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor></postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <shell>ec-perl</shell>
+        <timeLimit></timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName>default</workspaceName>
+        <procedureName>StopAdminServer</procedureName>
+        <projectName>EC-WebLogic</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+      
+      <step>
+        <stepName>StopInstance</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command>$[/myCall/stopAdminServerLine]</command>
+        <condition></condition>
+        <description>Stop a WebSphere Admin Server</description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor>postp --loadProperty /myProject/weblogicserver_matchers</postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <shell></shell>
+        <timeLimit>5</timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName></workspaceName>
+        <procedureName>StopAdminServer</procedureName>
+        <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+    </procedure>
+    
+    <procedure>
+      <procedureName>StartManagedServer</procedureName>
+      <description>Starts a WebLogic Managed Server</description>
+      <jobNameTemplate>weblogic-startmanagedserver-$[jobId]</jobNameTemplate>
+      <resourceName></resourceName>
+      <workspaceName></workspaceName>
+      <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+      <propertySheet>
+        <property>
+          <propertyName>ec_customEditorData</propertyName>
+          <propertySheet>
+            <property>
+              <propertyName>parameters</propertyName>
+              <propertySheet>
+              
+                <property>
+                  <propertyName>instancename</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>scriptlocation</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>configname</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+      </propertySheet>
+      
+      <formalParameter>
+        <formalParameterName>instancename</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>The configuration name</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+
+      <formalParameter>
+        <formalParameterName>scriptlocation</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Absolute path of the start server script, including filename and extension.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>configname</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Configuration name from which the URL will be taken.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <step>
+        <stepName>createCommand</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command></command>
+        <condition></condition>
+        <description></description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor></postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <shell>ec-perl</shell>
+        <timeLimit></timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName>default</workspaceName>
+        <procedureName>StartManagedServer</procedureName>
+        <projectName>EC-WebLogic</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+      
+      <step>
+        <stepName>StartInstance</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command>$[/myCall/startManagedServerLine]</command>
+        <condition></condition>
+        <description>Start a WebSphere instance</description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor>postp --loadProperty /myProject/weblogicserver_matchers</postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <shell></shell>
+        <timeLimit>5</timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName></workspaceName>
+        <procedureName>StartManagedServer</procedureName>
+        <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+    </procedure>
+    
+    <procedure>
+      <procedureName>StopManagedServer</procedureName>
+      <description>Stops a WebLogic Managed Server</description>
+      <jobNameTemplate>weblogic-stopmanagedserver-$[jobId]</jobNameTemplate>
+      <resourceName></resourceName>
+      <workspaceName></workspaceName>
+      <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+      <propertySheet>
+        <property>
+          <propertyName>ec_customEditorData</propertyName>
+          <propertySheet>
+            <property>
+              <propertyName>parameters</propertyName>
+              <propertySheet>
+              
+                <property>
+                  <propertyName>instancename</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>scriptlocation</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>configname</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+      </propertySheet>
+      
+      <formalParameter>
+        <formalParameterName>instancename</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Server's name to stop</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+
+      <formalParameter>
+        <formalParameterName>scriptlocation</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Absolute path of the stop server script, including filename and extension.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>configname</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Configuration name from which the URL will be taken.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <step>
+        <stepName>createCommand</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command></command>
+        <condition></condition>
+        <description></description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor></postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <shell>ec-perl</shell>
+        <timeLimit></timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName>default</workspaceName>
+        <procedureName>StopManagedServer</procedureName>
+        <projectName>EC-WebLogic</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+      
+      <step>
+        <stepName>StopInstance</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command>$[/myCall/stopManagedServerLine]</command>
+        <condition></condition>
+        <description>Stop a WebSphere instance</description>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName></logFileName>
+        <parallel>0</parallel>
+        <postProcessor>postp --loadProperty /myProject/stopserver_matchers</postProcessor>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName></resourceName>
+        <retries>0</retries>
+        <shell></shell>
+        <timeLimit>5</timeLimit>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory></workingDirectory>
+        <workspaceName></workspaceName>
+        <procedureName>StopManagedServer</procedureName>
+        <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+    </procedure>    
+    
+  </project>
+</exportedData>

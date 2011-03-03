@@ -1,0 +1,766 @@
+# -*-Perl-*-
+
+###############################
+# weblogic.ntest
+#
+# Exercise basic components of EC-WebLogic plugin
+#
+# Copyright (c) 2005-2010 Electric Cloud, Inc.
+# All rights reserved
+###############################
+
+use strict;
+use warnings;
+use ECTest;
+
+initCommander();
+
+$::gPlugin_name   = $::ENV{PLUGIN_NAME};
+$::gPlugin_key    = $::gPlugin_name;
+$::gPlugin_key    =~ s/-[^-]+$//;
+$::gPlugin_driver = $::gPlugin_key;
+$::gPlugin_driver =~ s/-/::/g;
+
+   use constant {
+       SUCCESS => 0,
+       ERROR   => 1,
+       WINDOWS_OS_ID => 'MSWin32'
+   };
+
+# win/lin matches the chronic3 procedure platform property
+$::gPlatform       = 'lin';
+if ($^O eq WINDOWS_OS_ID) {
+    $::gPlatform = 'win';
+}
+
+# from initCommander
+$::N = $adminSession;
+my $xpath = $::N->getPlugin($::gPlugin_key);
+$::gPlugin_name = $xpath->findvalue('//pluginName')->value;
+$::gPlugin_ver = $xpath->findvalue('//pluginVersion')->value;
+$::gCreatePrivateDirs = 1;
+
+
+
+# triggers fake data
+$::gRunTestUseFakeOutput = 1;
+
+$::gProjectImported = 0;
+$::gtestProjectName = 'WebLogicTestProject';
+
+my $outcome = '';
+
+########################################################################
+# importProject - imports the test project and asserts that the specified
+#                 procedures exists
+#
+# Arguments:
+#   -none
+#
+# Returns:
+#   -nothing
+#
+########################################################################
+sub importProject() {
+ 
+    #assert project exists and is imported
+    assertOK($::N->import(
+             { file =>"$::gTestFileDir/weblogicSystemTests.xml",
+               path  => "/projects/WebLogicTestProject",
+               force => 1
+             } ), 'import unsuccessful');
+    
+    #assert all given procedures exist   
+    assertOK($::N->getProcedure($::gtestProjectName, 'checkStatus1'),
+    'checkStatus1 procedure doesn\'t exist');
+    
+    assertOK($::N->getProcedure($::gtestProjectName, 'deployApp1'),
+    'deployApp1 procedure doesn\'t exist');
+    
+    assertOK($::N->getProcedure($::gtestProjectName, 'runDeployer1'),
+    'runDeployer1 procedure doesn\'t exist');
+    
+    assertOK($::N->getProcedure($::gtestProjectName, 'runWlstWithGivenScriptFile'),
+    'runWlstWithGivenScriptFile procedure doesn\'t exist');
+    
+    assertOK($::N->getProcedure($::gtestProjectName, 'runWlstWithNewScriptFile'),
+    'runWlstWithNewScriptFile procedure doesn\'t exist');
+    
+    assertOK($::N->getProcedure($::gtestProjectName, 'startAdminServer1'),
+    'startAdminServer1 procedure doesn\'t exist');
+    
+    assertOK($::N->getProcedure($::gtestProjectName, 'startApp1'),
+    'startApp1 procedure doesn\'t exist');
+    
+    assertOK($::N->getProcedure($::gtestProjectName, 'startManagedServer1'),
+    'startManagedServer1 procedure doesn\'t exist');
+    
+    assertOK($::N->getProcedure($::gtestProjectName, 'stopAdminServer1'),
+    'stopAdminServer1 procedure doesn\'t exist');
+    
+    assertOK($::N->getProcedure($::gtestProjectName, 'stopApp1'),
+    'stopApp1 procedure doesn\'t exist');
+    
+    assertOK($::N->getProcedure($::gtestProjectName, 'stopManagedServer1'),
+    'stopManagedServer1 procedure doesn\'t exist');
+    
+    assertOK($::N->getProcedure($::gtestProjectName, 'undeployApp1'),
+    'undeployApp1 procedure doesn\'t exist');
+    
+    $::gProjectImported = 1;
+}
+
+########################################################################
+# doSetup - invokes the project import method in case it hasn't been 
+#           executed
+#
+# Arguments:
+#   -none
+#
+# Returns:
+#   -nothing
+#
+########################################################################
+sub doSetup() {
+
+    if(! $::gProjectImported) {
+        importProject();
+    }
+    
+}
+
+################################
+# check-components-present - Check that the plugin contains required components
+#
+# Arguments:
+#   none
+#
+# Returns:
+#   none
+#
+################################
+ntest "check-components-present", {}, sub {
+    
+    my $xpath = $::N->getSteps("$::gPlugin_name","CreateConfiguration");
+    assertOK($xpath,"CreateConfiguration");
+    assertEq("CreateConfiguration", $xpath->findvalue("//step[1]/stepName"), "step 1 is CreateConfiguration");
+    assertEq("CreateAndAttachCredential", $xpath->findvalue("//step[2]/stepName"), "step 2 is CreateAndAttachCredential");
+
+};
+
+################################
+# setup-create configuration - Test creating a configuration
+#
+# Arguments:
+#   none
+#
+# Returns:
+#   none
+#
+################################
+ntest "setup-create configuration", {}, sub {
+    my $xpath = $::N->runProcedure("$::gPlugin_name", 
+        { procedureName => "CreateConfiguration",
+          pollInterval  => '0.2',
+          timeout       => 600,
+          actualParameter => [ 
+            { actualParameterName => 'config', value => "mytest2" }, 
+            { actualParameterName => 'weblogic_url', value => "t3://localhost:7001" },
+            { actualParameterName => 'credential', value => "mytest2" }, 
+          ],
+          credential => [ 
+            { credentialName => 'mytest2', userName => "admin", password => "abr66666", },
+          ],
+        });
+
+    assertOK($xpath, 'run create configuration procedure');
+    # make sure it finished
+    my $jobId = 0;
+    my $status = '';
+    assertDef($xpath, 'runProcedure finished without a timeout');
+    if ($xpath) {
+        $jobId  = $xpath->findvalue("//jobId");
+        $status = $xpath->findvalue("//status");
+
+        assertTrue($jobId && int($jobId) > 0,'valid job id');
+        assertEq('completed',$status,"job $jobId complete");
+
+        #abort if job did not finish
+        if ($status ne 'completed') {
+            assertOK($::N->abortJob($jobId, {force => 1}));
+        }
+    }
+
+    # examine log files
+    $xpath = $::N->getJobDetails($jobId);
+
+    writeFile("$::gCurrentTestDir/createConfiguration.log","====Job Details====\n$xpath->{_xml}\n");
+
+    # check that the config and credential exist
+    $xpath = $::N->getProperty("/projects/$::gPlugin_name/weblogic_cfgs/mytest2/weblogic_url");
+    assertEq('t3://localhost:7001', $xpath->findvalue("//value")->string_value,"server url");
+    
+    $xpath = $::N->getCredential("$::gPlugin_name",'mytest2');
+    assertEq('admin', $xpath->findvalue("//userName")->string_value, 'Credential user');
+};
+
+
+ntest "checkStatus1", {}, sub {
+
+      doSetup();
+      
+      # run test job
+     
+      my $xpath = $::N->runProcedure($::gtestProjectName, 
+              {procedureName => "checkStatus1",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+                  
+                  ]
+      });
+          
+       
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+      
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+  
+          assertTrue($jobId && int($jobId) > 0,'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+  
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+   
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='checkServerStatusLine']/value");
+
+      assertEq($commandLine, 'curl -v http://localhost:7001', 
+           'weblogic command line doesn\'t match expected output');
+
+
+};
+
+
+ntest "deployApp1", {}, sub {
+ 
+      doSetup();
+      
+      # run test job
+     
+      my $xpath = $::N->runProcedure($::gtestProjectName, 
+              {procedureName => "deployApp1",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+                  
+                  ]
+      });
+      
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+      
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+       
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+  
+          assertTrue($jobId && int($jobId) > 0,'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+  
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+   
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='deployAppLine']/value");
+
+      assertEq($commandLine, 'java weblogic.Deployer -adminurl t3://localhost:7001 -username admin -password abr66666 -deploy -name webapp -source "E:\websphere\test_install\webapp.war"', 
+           'command line doesn\'t match expected output');
+
+};
+
+ntest "runDeployer1", {}, sub {
+      
+      doSetup();
+      
+      # run test job      
+      my $xpath = $::N->runProcedure($::gtestProjectName, 
+              {procedureName => "runDeployer1",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+                  
+                  ]
+      });
+      
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+      
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+      
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+  
+          assertTrue($jobId && int($jobId) > 0,'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+  
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+     
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='deployerLine']/value");
+
+      assertEq($commandLine, 'java weblogic.Deployer -adminurl t3://localhost:7001 -username admin -password abr66666 -deploy -name webapp -source "e:/websphere/test_install/webapp.war"', 
+           'command line doesn\'t match expected output');
+     
+};
+
+ntest "runWlstWithGivenScriptFile", {}, sub {
+      doSetup();
+      
+      # run test job
+     
+      my $xpath = $::N->runProcedure($::gtestProjectName, 
+              {procedureName => "runWlstWithGivenScriptFile",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+                  
+                  ]
+      });
+      
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+      
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+  
+          assertTrue($jobId && int($jobId) > 0,'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+  
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+      
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='wlstLine']/value");
+
+      assertEq($commandLine, '"E:\Oracle\Middleware\wlserver_10.3\common\bin\wlst.cmd" "E:/websphere/test_install/install_simple.jython"', 
+           'command line doesn\'t match expected output');
+
+};
+
+ntest "runWlstWithNewScriptFile", {}, sub {
+      doSetup();
+      
+      # run test job
+     
+      my $xpath = $::N->runProcedure($::gtestProjectName, 
+              {procedureName => "runWlstWithNewScriptFile",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+                  
+                  ]
+      });
+          
+       
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+      
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+  
+          assertTrue($jobId && int($jobId) > 0,'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+  
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+      
+#      while ( my ($key, $value) = each(%$xpath)){
+#          print "$key => $value\n";
+#      }
+      
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='wlstLine']/value");
+
+      assertEq($commandLine, '"E:\Oracle\Middleware\wlserver_10.3\common\bin\wlst.cmd" "generated_script_'. substr($xpath->findvalue("//jobStepId"),5,5) . '.jython"', 
+           'command line doesn\'t match expected output');
+      
+          
+};
+
+ntest "startAdminServer1", {}, sub {
+      doSetup();
+      
+      # run test job
+     
+      my $xpath = $::N->runProcedure($::gtestProjectName, 
+              {procedureName => "startAdminServer1",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+                  
+                  ]
+      });
+          
+       
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+      
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+  
+          assertTrue($jobId && int($jobId) > 0,'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+  
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+   
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='startAdminServerLine']/value");
+
+      assertEq($commandLine, 'ecdaemon --pidProperty=cmd_pid -- ec-perl -e  "system(\'E:\Oracle\Middleware\user_projects\domains\base_domain\bin\startWebLogic.cmd > WebLogicServer-' . substr($xpath->findvalue("//jobStepId"),5,5) . '.log 2>&1\')"', 
+           'command line doesn\'t match expected output');
+      
+};
+
+ntest "startApp1", {}, sub {
+      doSetup();
+      
+      # run test job
+     
+      my $xpath = $::N->runProcedure($::gtestProjectName, 
+              {procedureName => "startApp1",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+                  
+                  ]
+      });
+          
+       
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+      
+      assertOK($xpath, 'runProcedure has errors');
+      
+      if ($xpath) {
+       
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+  
+          assertTrue($jobId && int($jobId) > 0,'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+  
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+   
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='startAppLine']/value");
+
+      assertEq($commandLine, 'java weblogic.Deployer -adminurl t3://localhost:7001 -username admin -password abr66666 -start -name webapp', 
+           'command line doesn\'t match expected output');
+
+};
+
+ntest "startManagedServer1", {}, sub {
+      doSetup();
+      
+      # run test job
+     
+      my $xpath = $::N->runProcedure($::gtestProjectName, 
+              {procedureName => "startManagedServer1",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+                  
+                  ]
+      });
+          
+       
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+      
+      assertOK($xpath, 'runProcedure has errors');
+      
+      if ($xpath) {
+       
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+  
+          assertTrue($jobId && int($jobId) > 0,'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+  
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+   
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='startManagedServerLine']/value");
+
+      assertEq($commandLine, 'ecdaemon --pidProperty=cmd_pid -- ec-perl -e "system(\'E:\Oracle\Middleware\user_projects\domains\base_domain\bin\startManagedWebLogic.cmd server1  t3://localhost:7001  -Dweblogic.management.username=admin  -Dweblogic.management.password=abr66666  > WebLogicServer-'.substr($xpath->findvalue("//jobStepId"),5,5).'.log 2>&1\')"', 
+           'command line doesn\'t match expected output');
+
+};
+
+ntest "stopAdminServer1", {}, sub {
+      doSetup();
+      
+      # run test job
+     
+      my $xpath = $::N->runProcedure($::gtestProjectName, 
+              {procedureName => "stopAdminServer1",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+                  
+                  ]
+      });
+          
+       
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+      
+      assertOK($xpath, 'runProcedure has errors');
+      
+      if ($xpath) {
+       
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+  
+          assertTrue($jobId && int($jobId) > 0,'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+  
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+   
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='stopAdminServerLine']/value");
+
+      assertEq($commandLine, '"E:\Oracle\Middleware\user_projects\domains\base_domain\bin\stopWebLogic.cmd"', 
+           'command line doesn\'t match expected output');
+
+};
+
+ntest "stopApp1", {}, sub {
+      doSetup();
+      
+      # run test job
+      my $xpath = $::N->runProcedure($::gtestProjectName, 
+              {procedureName => "stopApp1",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+                  
+                  ]
+      });
+          
+       
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+      
+      assertOK($xpath, 'runProcedure has errors');
+      
+      if ($xpath) {
+       
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+  
+          assertTrue($jobId && int($jobId) > 0,'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+  
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+   
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='stopAppLine']/value");
+
+      assertEq($commandLine, 'java weblogic.Deployer -adminurl t3://localhost:7001 -username admin -password abr66666 -stop -name webapp', 
+           'command line doesn\'t match expected output');
+
+};
+
+ntest "stopManagedServer1", {}, sub {
+ 
+      doSetup();
+      
+      # run test job
+      my $xpath = $::N->runProcedure($::gtestProjectName, 
+              {procedureName => "stopManagedServer1",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+                  
+                  ]
+      });
+          
+       
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+      
+      assertOK($xpath, 'runProcedure has errors');
+      
+      if ($xpath) {
+       
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+  
+          assertTrue($jobId && int($jobId) > 0,'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+  
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+   
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='stopManagedServerLine']/value");
+
+      assertEq($commandLine, '"E:\Oracle\Middleware\user_projects\domains\base_domain\bin\stopManagedWebLogic.cmd" server1 t3://localhost:7001 admin abr66666', 
+           'command line doesn\'t match expected output');
+
+};
+
+ntest "undeployApp1", {}, sub {
+      doSetup();
+      
+      # run test job
+     
+      my $xpath = $::N->runProcedure($::gtestProjectName, 
+              {procedureName => "undeployApp1",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+                  
+                  ]
+      });
+          
+       
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+      
+      assertOK($xpath, 'runProcedure has errors');
+      
+      if ($xpath) {
+       
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+  
+          assertTrue($jobId && int($jobId) > 0,'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+  
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+   
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='undeployAppLine']/value");
+
+      assertEq($commandLine, 'java weblogic.Deployer -adminurl t3://localhost:7001 -username admin -password abr66666 -undeploy -name webapp', 
+           'command line doesn\'t match expected output');
+
+};
+
