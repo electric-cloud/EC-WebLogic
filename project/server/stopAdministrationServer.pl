@@ -122,8 +122,11 @@
 
     }
 
-    $props{'stopAdminServerLine'} = createCommandLine(\@args);
+    my $cmdLine = createCommandLine(\@args);
+    $props{'stopAdminServerLine'} = $cmdLine;
     setProperties(\%props);
+    
+    system($cmdLine);
 
   }
   

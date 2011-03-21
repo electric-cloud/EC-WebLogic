@@ -131,8 +131,11 @@
      
     }
     
-    $props{'stopManagedServerLine'} = createCommandLine(\@args);
+    my $cmdLine = createCommandLine(\@args);
+    $props{'stopManagedServerLine'} = $cmdLine;
     setProperties(\%props);
+    
+    system($cmdLine);
 
   }
   

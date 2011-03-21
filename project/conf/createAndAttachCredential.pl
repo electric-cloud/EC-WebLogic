@@ -43,53 +43,53 @@ $errors .= $ec->checkAllErrors($xpath);
 # Attach credential to steps that will need it
 $xpath = $ec->attachCredential($projName, $credName,
     {procedureName => 'StartManagedServer',
-     stepName => 'createCommand'});
+     stepName => 'StartInstance'});
 $errors .= $ec->checkAllErrors($xpath);
 
 $xpath = $ec->attachCredential($projName, $credName,
     {procedureName => 'StopManagedServer',
-     stepName => 'createCommand'});
+     stepName => 'StopInstance'});
 $errors .= $ec->checkAllErrors($xpath);
 
 $xpath = $ec->attachCredential($projName, $credName,
     {procedureName => 'StopAdminServer',
-     stepName => 'createCommand'});
+     stepName => 'StopAdminServer'});
 $errors .= $ec->checkAllErrors($xpath);
 
 
 $xpath = $ec->attachCredential($projName, $credName,
     {procedureName => 'CheckServerStatus',
-     stepName => 'CreateCommand'});
+     stepName => 'CheckServerStatus'});
 $errors .= $ec->checkAllErrors($xpath);
 
 $xpath = $ec->attachCredential($projName, $credName,
     {procedureName => 'RunDeployer',
-     stepName => 'CreateCommand'});
+     stepName => 'RunJob'});
 $errors .= $ec->checkAllErrors($xpath);
 
 $xpath = $ec->attachCredential($projName, $credName,
     {procedureName => 'RunWLST',
-     stepName => 'CreateCommand'});
+     stepName => 'RunWLST'});
 $errors .= $ec->checkAllErrors($xpath);
 
 $xpath = $ec->attachCredential($projName, $credName,
     {procedureName => 'StartApp',
-     stepName => 'CreateCommand'});
+     stepName => 'StartApp'});
 $errors .= $ec->checkAllErrors($xpath);
 
 $xpath = $ec->attachCredential($projName, $credName,
     {procedureName => 'StopApp',
-     stepName => 'CreateCommand'});
+     stepName => 'StopApp'});
 $errors .= $ec->checkAllErrors($xpath);
 
 $xpath = $ec->attachCredential($projName, $credName,
     {procedureName => 'DeployApp',
-     stepName => 'CreateCommand'});
+     stepName => 'DeployApp'});
 $errors .= $ec->checkAllErrors($xpath);
 
 $xpath = $ec->attachCredential($projName, $credName,
     {procedureName => 'UndeployApp',
-     stepName => 'CreateCommand'});
+     stepName => 'UndeployApp'});
 $errors .= $ec->checkAllErrors($xpath);
 
 if ($errors ne '') {

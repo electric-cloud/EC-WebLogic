@@ -39,7 +39,6 @@
        EXECUTABLE => 'wlst.cmd',
        CREDENTIAL_ID => 'credential',
        SEPARATOR_CHAR => ';',
-       DEFAULT_WSADMIN_LANGUAGE => 'jython',
        WIN_IDENTIFIER => 'MSWin32',
        DEFAULT_GENERATED_SCRIPT_FILENAME => "generated_script_$[jobStepId].jython",
    
@@ -129,10 +128,12 @@
  	      push(@args, '"'.DEFAULT_GENERATED_SCRIPT_FILENAME.'"');
      
     }
-
     
-    $props{'wlstLine'} = createCommandLine(\@args);
+    my $cmdLine = createCommandLine(\@args);
+    $props{'wlstLine'} = $cmdLine;
     setProperties(\%props);
+    
+    system($cmdLine);
 
   }
   

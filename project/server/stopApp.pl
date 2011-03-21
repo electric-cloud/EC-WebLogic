@@ -108,7 +108,7 @@
     my %props;
     my $actualOperativeSystem = $^O;
     my %configuration;
-    my $envLine;
+    my $envLine = '';
     
     if($::gEnvScriptPath ne ''){
         if($^O eq WIN_IDENTIFIER){
@@ -166,9 +166,15 @@
         push(@args, $::gAdditionalOptions);
     }
     
-    $props{'envLine'} = $envLine;
-    $props{'stopAppLine'} = createCommandLine(\@args);
+    my $cmdLine = createCommandLine(\@args);
+    $props{'stopAppLine'} = $cmdLine;
     setProperties(\%props);
+    
+    if($envLine ne ''){
+        system($envLine);
+    }
+    
+    system($cmdLine);
 
   }
   

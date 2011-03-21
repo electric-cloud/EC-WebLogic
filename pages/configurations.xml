@@ -1,6 +1,6 @@
 <page>
     <componentContainer>
-        <title>WebSphere Configurations</title>
+        <title>WebLogic Configurations</title>
         <helpLink>/pages/@PLUGIN_NAME@/help</helpLink>
         <component plugin="@PLUGIN_KEY@"
                    version="@PLUGIN_VERSION@" 

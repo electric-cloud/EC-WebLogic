@@ -476,13 +476,11 @@ ntest "startAdminServer1", {}, sub {
 
       # get the job details
       $xpath = $::N->getJobDetails($jobId);
-   
+
       # get the value of the commands lines
       my $commandLine = $xpath->findvalue("//property[propertyName='startAdminServerLine']/value");
-
-      my $evalCmdLine = substr($commandLine,0,149);
        
-      assertEq($evalCmdLine, 'ecdaemon --pidProperty=cmd_pid -- ec-perl -e  "system(\'E:\Oracle\Middleware\user_projects\domains\base_domain\bin\startWebLogic.cmd > WebLogicServer-', 
+      assertSubstring('E:\Oracle\Middleware\user_projects\domains\base_domain\bin\startWebLogic.cmd', $commandLine,  
            'command line doesn\'t match expected output');
       
 };
@@ -575,9 +573,8 @@ ntest "startManagedServer1", {}, sub {
       
       # get the value of the commands lines
       my $commandLine = $xpath->findvalue("//property[propertyName='startManagedServerLine']/value");
-      my $evalCmdLine = substr($commandLine,0,264);
        
-      assertEq($evalCmdLine, 'ecdaemon --pidProperty=cmd_pid -- ec-perl -e "system(\'E:\Oracle\Middleware\user_projects\domains\base_domain\bin\startManagedWebLogic.cmd server1  t3://localhost:7001  -Dweblogic.management.username=admin  -Dweblogic.management.password=abr66666  > WebLogicServer-', 
+      assertSubstring('E:\Oracle\Middleware\user_projects\domains\base_domain\bin\startManagedWebLogic.cmd', $commandLine,  
            'command line doesn\'t match expected output');
 
 };
@@ -624,7 +621,7 @@ ntest "stopAdminServer1", {}, sub {
       # get the value of the commands lines
       my $commandLine = $xpath->findvalue("//property[propertyName='stopAdminServerLine']/value");
 
-      assertEq($commandLine, '"E:\Oracle\Middleware\user_projects\domains\base_domain\bin\stopWebLogic.cmd"', 
+      assertEq('"E:\Oracle\Middleware\user_projects\domains\base_domain\bin\stopWebLogic.cmd"',  $commandLine, 
            'command line doesn\'t match expected output');
 
 };

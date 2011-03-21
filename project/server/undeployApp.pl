@@ -107,7 +107,7 @@
     my @args = ();
     my %props;
     my %configuration;
-    my $envLine;
+    my $envLine = '';
     
     if($::gEnvScriptPath ne ''){
         if($^O eq WIN_IDENTIFIER){
@@ -165,9 +165,15 @@
         push(@args, $::gAdditionalOptions);
     }
     
-    $props{'envLine'} = $envLine;
-    $props{'undeployAppLine'} = createCommandLine(\@args);
+    my $cmdLine = createCommandLine(\@args);
+    $props{'undeployAppLine'} = $cmdLine;
     setProperties(\%props);
+    
+    if($envLine ne ''){
+        system($envLine);
+    }
+    
+    system($cmdLine);
 
   }
   

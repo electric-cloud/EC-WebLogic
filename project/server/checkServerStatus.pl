@@ -148,9 +148,12 @@
     #Add URL
     push(@args, $url);
     
-    $props{'checkServerStatusLine'} = createCommandLine(\@args);
-    
+    my $cmdLine = createCommandLine(\@args);
+    $props{'checkServerStatusLine'} = $cmdLine;
     setProperties(\%props);
+    
+    #execute command line
+    exec($cmdLine);
 
   }
   
