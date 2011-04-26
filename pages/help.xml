@@ -170,6 +170,14 @@
         
     <h2 class="help">Release Notes</h2>
     
+        <h3 class="help">EC-WebLogic-1.0.2.0</h3>
+        <p class="help">
+        <ul>
+             <li>Fixed minor bug on Configuration List page.</li>
+             
+        </ul>
+        </p>
+        
         <h3 class="help">EC-WebLogic-1.0.1.0</h3>
         <p class="help">
         <ul>
