@@ -169,7 +169,7 @@
         <parallel>0</parallel>
         <postProcessor>postp</postProcessor>
         <releaseExclusive>0</releaseExclusive>
-        <resourceName>local</resourceName>
+        <resourceName></resourceName>
         <retries>0</retries>
         <shell>ec-perl</shell>
         <timeLimit>5</timeLimit>
@@ -204,7 +204,7 @@
         <parallel>0</parallel>
         <postProcessor></postProcessor>
         <releaseExclusive>0</releaseExclusive>
-        <resourceName>local</resourceName>
+        <resourceName></resourceName>
         <retries>0</retries>
         <shell>ec-perl</shell>
         <timeLimit>5</timeLimit>
@@ -281,7 +281,7 @@
         <parallel>0</parallel>
         <postProcessor>postp</postProcessor>
         <releaseExclusive>0</releaseExclusive>
-        <resourceName>local</resourceName>
+        <resourceName></resourceName>
         <retries>0</retries>
         <shell>ec-perl</shell>
         <timeLimit>5</timeLimit>
