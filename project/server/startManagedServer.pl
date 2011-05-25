@@ -39,6 +39,7 @@
        PLUGIN_NAME => 'EC-WebLogic',
        WIN_IDENTIFIER => 'MSWin32',
        CREDENTIAL_ID => 'credential',
+       SERVER_RUNNING_STATE => 'RUNNING',
        
        SQUOTE => q{'},
        DQUOTE => q{"},
@@ -81,6 +82,7 @@
   $::gInstanceName = trim(q($[instancename]));
   $::gScriptLocation = trim(q($[scriptlocation]));
   $::gConfigurationName = trim(q($[configname]));
+  $::gWLSTAbsPath = trim(q($[wlstabspath]));
    
   # -------------------------------------------------------------------------
   # Main functions
@@ -146,6 +148,8 @@
     }
 
     startServer($::gScriptLocation, $serverName, $urlName, $user, $password);
+
+    verifyServerIsStarted($serverName, $urlName, $user, $password);
 
   }
   
@@ -389,7 +393,7 @@
           
       }
       
-      print "Command Parameters:\n" . Dumper(@systemcall) . "--------------------\n";
+      #print "Command Parameters:\n" . Dumper(@systemcall) . "--------------------\n";
       
       my %props;
     
@@ -397,10 +401,101 @@
       $props{'startManagedServerLine'} = $cmdLine;
       setProperties(\%props);
       
-      # We feed exec() an array because it likes this form better than one big string.
-      system(@systemcall);
+      #print "cmd line: $cmdLine\n";
+      system($cmdLine);
 
-  }  
+  }
+  
+  sub verifyServerIsStarted($){
+   
+      my ($serverName, $urlName, $user, $password)= @_;
+      
+      # create args array
+      my @args = ();
+      my %props;
+      
+      my $ec = new ElectricCommander();
+      $ec->abortOnError(0);
+      
+      push(@args, '"'.$::gWLSTAbsPath.'"');
+
+      #embedding jython code in the following scalar var
+      my $fileContent = "state = \"\"\n
+try:\n
+    connect('$user','$password','$urlName')\n
+
+except WLSTException:\n
+
+    state = \"NO_SERVER_FOUND\"\n
+
+else:\n
+
+    domainRuntime()\n
+
+    state = cmo.lookupServerLifeCycleRuntime('$serverName').getState()\n
+
+print \"Server State: \" + state\n";
+
+      open (MYFILE, '>>verifyServer.jython');
+      print MYFILE "$fileContent";
+      close (MYFILE);
+      
+      push(@args, '"verifyServer.jython"');
+     
+      
+      my $cmdLine = createCommandLine(\@args);
+      $props{'wlstLine'} = $cmdLine;
+      setProperties(\%props);
+      
+      #execute command
+      my $content = `$cmdLine`;
+      
+      #print log
+      print "$content\n";
+      
+      #evaluates if exit was successful to mark it as a success or fail the step
+      if($? == SUCCESS){
+       
+          $ec->setProperty("/myJobStep/outcome", 'success');
+          
+          #set any additional error or warning conditions here
+          #there may be cases in which an error occurs and the exit code is 0.
+          #we want to set to correct outcome for the running step
+          
+          #verifying server actual state
+          if($content =~ m/Server State: (.+)/){
+           
+              if($1 eq SERVER_RUNNING_STATE){
+                  
+                  print "RESULT\n\n";
+                  #server is running
+                  print "------------------------------------\n";
+                  print "Server $serverName is up and running\n";
+                  print "------------------------------------\n";
+                  
+              }else{
+                  
+                  #server is not running
+                  print "----------------------------------------\n";
+                  print "Server is not started, it is in $1 state\n";
+                  print "----------------------------------------\n";
+                  $ec->setProperty("/myJobStep/outcome", 'error');
+                  
+              }
+              
+          }
+          
+      }else{
+       
+          #server is not running
+          print "-------------------------------------------------------------------\n";
+          print "An unexpected error occurred, please check the log for more details\n";
+          print "-------------------------------------------------------------------\n";
+          $ec->setProperty("/myJobStep/outcome", 'error');
+       
+      }
+   
+  }
   
   main();
    

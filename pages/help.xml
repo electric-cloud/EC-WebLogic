@@ -10,7 +10,8 @@
         <p class="help">
         This plugin allows users to interact with the Oracle WebLogic server and accomplish tasks such as starting and deploying applications, starting managed servers, and running Jython scripts.
         </p>
-    <p class="help">            <b>Supported WebLogic version</b><br/>
+    <p class="help">
+            <b>Supported WebLogic version</b><br/>
             This plugin was developed and tested with WebLogic version 11g (10.3.4).
        </p>
 
@@ -21,10 +22,9 @@
           <ul>
           <li><b>Configuration Name</b> - Provide a unique name for the configuration, keeping in mind that you may need to create additional configurations over time.</li>
           <li><b>URL</b> - Provide the URL for the WebLogic server, it must include the protocol and port (example: t3://localhost:7001).</li>
-          <li><b>Credential</b> - Provide the username and password for the WebLogic server.</li>
+          <li><b>Credential</b> - Provide the username and password for the WebLogic Admin Server.</li>
           </ul>
-              
-        
+          
      <h2 class="help">Using the Plugin</h2>
           <p class="help">
 	  	    See the <a href="/commander/link/showHelp?page=plugins&amp;section=using">Commander online help system</a> for details about how to use this plugin within a procedure.
@@ -43,6 +43,7 @@
                <li><b>configname</b> - Provide the name of the configuration that holds connection information for the WebLogic server.</li>
                <li><b>instancename</b> - Provide the name of the instance to start.</li>
                <li><b>scriptlocation</b> - Provide the absolute path to the start server script. It must include the filename and extension.</li>
+               <li><b>wlstabspath</b> - Provide the absolute path to the wlst executable. It must include the filename and extension.</li>
           </ul>
 
           <p class="help">
@@ -50,6 +51,9 @@
           StartAdminServer has the following fields:
           </p>
           <ul>
+               <li><b>configname</b> - Provide the name of the configuration that holds connection information for the WebLogic server.</li>
+               <li><b>admininstancename</b> - Provide the Admin Server instance name to start.</li>
+               <li><b>wlstabspath</b> - Provide the absolute path to the wlst executable. It must include the filename and extension.</li>
                <li><b>scriptlocation</b> - Provide the absolute path to the start server script. It must include the filename and extension.</li>
           </ul>
 
@@ -57,7 +61,6 @@
           The StopManagedServer subprocedure stops a specified managed server on the selected resource.
           StopManagedServer has the following fields:
           <ul>
-               <li><b>configname</b> - Provide the name of the configuration that holds connection information for the WebLogic server.</li>
                <li><b>instancename</b> - Provide the name of the instance to stop.</li>
                <li><b>scriptlocation</b> - Provide the absolute path to the stop server script. It must include the filename and extension.</li>
           </ul>
@@ -66,26 +69,41 @@
           <p class="help">
           The StopAdminServer subprocedure stops a specified Admin Server instance on the selected resource.
           StopAdminServer has the following fields:
-          <ul>		<li><b>configname</b> - Provide the name of the configuration that holds connection information for the WebLogic server.</li>
+          <ul>
                <li><b>scriptlocation</b> - Provide the absolute path to the stop server script. It must include the filename and extension.</li>
-          </ul>          </p>          
+          </ul>
+          </p>          
           <p class="help">
-          The CheckServerStatus subprocedure checks the status of the specified URL,
-          by getting the returned HTTP code from the server. Curl is required.
+          The CheckServerStatus subprocedure checks the status of the specified server.
 
           CheckServerStatus has the following fields:
           </p><ul>
-               <li><b>additionalcommands</b> - Provide any additional parameters for curl.</li>
                <li><b>configname</b> - Provide the name of the configuration that holds connection information for the WebLogic server. In this case, only credentials are taken from the configuration.</li>
-               <li><b>url</b> - Indicate the URL to check.</li>
-               <li><b>usecredentials</b> - If checked, this indicates credentials must be appended to the URL.</li>
+               <li><b>instancename</b> - Indicate the name of the server instance to check.</li>
+               <li><b>maxelapsedtime</b> - Define the maximum time in seconds that the job will try to check into the server. Blank implies no wait time (server only checked once).</li>
+               <li><b>successcriteria</b> - Indicate the expected correct result to be obtained, either <b>Server running</b> or <b>Server not running</b>. If the indicated success criteria matches the returned result, it is considered successful, otherwise the step fails.</li>
+               <li><b>wlstabspath</b> - Provide the absolute path to the wlst executable. It must include the filename and extension.</li>
+          </ul>
+          
+          <p class="help">
+          The CheckPageStatus subprocedure checks the status of the specified page,
+          by getting the returned HTTP code from the URL.
+          </p><ul>
+               
+               <li><b>configname</b> - Provide the name of the configuration that holds connection information for the WebLogic server.</li>
+               <li><b>maxelapsedtime</b> - Indicate the maximum allowed time to check the status of a page.</li>
+               <li><b>successcriteria</b> - Indicate the status of the page that must be matched, either 
+                a <b>Page found</b> or a <b>Page not found</b> status. If the indicated success criteria matches the
+                returned status at the end of the analysis, it is considered successful. Otherwise, it is an error in the job.  
+               </li>
+               <li><b>targeturl</b> - Provide the URL of the page to check.</li>
           </ul>
           
           <p class="help">
           The RunWLST subprocedure runs Jython scripts on the server.
           RunWLST has the following fields:
           </p><ul>
-               <li><b>wlstpath</b> - Provide the absolute path to wlst.cmd. It must include the filename and extension.</li>
+               <li><b>wlstpath</b> - Provide the absolute path to the wlst executable. It must include the filename and extension.</li>
                <li><b>scriptfilepath</b> - Provide the absolute path to the Jython script to execute with WLST.</li>
                <li><b>additionalcommands</b> - Provide any additional parameters for WLST.</li>
                <li><b>scriptfilesource</b> - Indicate the source of the script file. <b>Supplied file</b> uses the file whose path is indicated in the <b>scriptfilepath</b> parameter and executes it. <b>New Script File</b> indicates that a script file with the content of the <b>scriptfile</b> parameter will be executed.</li>
@@ -159,7 +177,9 @@
               <li><b>configname</b> - Provide the name of the configuration that holds connection information for the WebLogic server.</li>
               <li><b>additionalcommands</b> - Provide any additional parameters for weblogic.Deployer.</li>
               <li><b>envscriptpath</b> - Provide the absolute path to the setDomainEnv script, including the filename and extension.</li>               
-           </ul>         
+           </ul>
+           
+           
      
                
      <h2 class="help">Additional Information</h2>
@@ -170,6 +190,17 @@
         
     <h2 class="help">Release Notes</h2>
     
+        <h3 class="help">EC-WebLogic-1.1.0.0</h3>
+        <p class="help">
+        <ul>
+             <li>Added the CheckPageStatus procedure</li>
+             <li>Modified the CheckServerProcedure procedure, CURL is not needed and parameters were changed</li>
+             <li>Fixed minor bugs</li>
+             <li>Removed CURL dependency </li>
+             <li>Added new postp matchers </li>
+        </ul>
+        </p>
+        
         <h3 class="help">EC-WebLogic-1.0.2.0</h3>
         <p class="help">
         <ul>
@@ -187,5 +218,6 @@
         </ul>
         </p>
         
-     </div>  </componentContainer>
+     </div>
+  </componentContainer>
 </helpDefinition>

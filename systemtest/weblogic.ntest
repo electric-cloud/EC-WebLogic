@@ -244,14 +244,9 @@ ntest "checkStatus1", {}, sub {
       $xpath = $::N->getJobDetails($jobId);
    
       # get the value of the commands lines
-      my $commandLine = $xpath->findvalue("//property[propertyName='checkServerStatusLine']/value");
-
-      assertEq($commandLine, 'curl -v http://localhost:7001', 
-           'weblogic command line doesn\'t match expected output');
-
+      #my $commandLine = $xpath->findvalue("//property[propertyName='checkServerStatusLine']/value");
 
 };
-
 
 ntest "deployApp1", {}, sub {
  

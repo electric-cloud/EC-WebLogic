@@ -1,6 +1,6 @@
-# -------------------------------------------------------------------------
+   # -------------------------------------------------------------------------
    # File
-   #    startManagedServer.pl
+   #    startAdministrationServer.pl
    #
    # Dependencies
    #    None
@@ -26,6 +26,7 @@
    use warnings;
    use strict;
    use Data::Dumper;
+   use ElectricCommander::PropDB;
    $|=1;
    
    # -------------------------------------------------------------------------
@@ -38,9 +39,16 @@
        PLUGIN_NAME => 'EC-WebLogic',
        WIN_IDENTIFIER => 'MSWin32',
        
+       CREDENTIAL_ID => 'credential',
+       
        SQUOTE => q{'},
        DQUOTE => q{"},
        BSLASH => q{\\},
+       
+       DEFAULT_ADMIN_SERVER_NAME => 'AdminServer',
+       
+       SERVER_RUNNING_STATE => 'RUNNING',
+       
    	
   };
   
@@ -76,6 +84,9 @@
   # -------------------------------------------------------------------------
   
   $::gScriptLocation = trim(q($[scriptlocation]));
+  $::gWLSTAbsPath = trim(q($[wlstabspath]));
+  $::gConfigurationName = trim(q($[configname]));
+  $::gAdminServerInstanceName = trim(q($[admininstancename]));
    
   # -------------------------------------------------------------------------
   # Main functions
@@ -95,7 +106,51 @@
   ########################################################################
   sub main() {
     
+    my %configuration;
+    
+    my $user = '';
+    my $password = '';
+    my $serverName = '';
+    my $urlName = '';
+    
+    if($::gConfigurationName ne ''){
+        %configuration = getConfiguration($::gConfigurationName);
+    }
+
+    # if target: add to command string
+    if($::gAdminServerInstanceName && $::gAdminServerInstanceName ne '') {
+        
+        $serverName = $::gAdminServerInstanceName;
+        
+    }else{
+     
+        $serverName = DEFAULT_ADMIN_SERVER_NAME;
+     
+    }
+    
+    #inject config...
+    if(%configuration){
+        
+        if($configuration{'weblogic_url'} ne ''){
+            
+            $urlName = $configuration{'weblogic_url'};
+        }
+        
+        if($configuration{'user'} ne ''){
+            $user = $configuration{'user'};
+        }
+        
+        if($configuration{'password'} ne ''){
+            $password = $configuration{'password'};
+        }
+     
+    }    
+    
     startServer($::gScriptLocation);
+    
+    verifyServerIsStarted($serverName, $urlName, $user, $password);
+    
+    
 
   }
   
@@ -290,20 +345,158 @@
           
       }
       
-      print "Command Parameters:\n" . Dumper(@systemcall) . "--------------------\n";
+      #print "Command Parameters:\n" . Dumper(@systemcall) . "--------------------\n";
       
-      # We feed exec() an array because it likes this form better than one big string.
-      
-
       my %props;
     
       my $cmdLine = createCommandLine(\@systemcall);
       $props{'startAdminServerLine'} = $cmdLine;
       setProperties(\%props);
       
-      system(@systemcall);
+      #print "cmd line: $cmdLine\n";
+      system($cmdLine);
 
   }
+  
+  sub verifyServerIsStarted($){
+   
+      my ($serverName, $urlName, $user, $password)= @_;
+      
+      # create args array
+      my @args = ();
+      my %props;
+      
+      my $ec = new ElectricCommander();
+      $ec->abortOnError(0);
+      
+      push(@args, '"'.$::gWLSTAbsPath.'"');
+
+      #embedding jython code in the following scalar var
+      my $fileContent = "state = \"\"\n
+try:\n
+    connect('$user','$password','$urlName')\n
+
+except WLSTException:\n
+
+    state = \"NO_SERVER_FOUND\"\n
+
+else:\n
+
+    domainRuntime()\n
+
+    state = cmo.lookupServerLifeCycleRuntime('$serverName').getState()\n
+
+print \"Server State: \" + state\n";
+
+      open (MYFILE, '>>verifyServer.jython');
+      print MYFILE "$fileContent";
+      close (MYFILE);
+      
+      push(@args, '"verifyServer.jython"');
+     
+      
+      my $cmdLine = createCommandLine(\@args);
+      $props{'wlstLine'} = $cmdLine;
+      setProperties(\%props);
+      
+      #execute command
+      my $content = `$cmdLine`;
+      
+      #print log
+      print "$content\n";
+      
+      #evaluates if exit was successful to mark it as a success or fail the step
+      if($? == SUCCESS){
+       
+          $ec->setProperty("/myJobStep/outcome", 'success');
+          
+          #set any additional error or warning conditions here
+          #there may be cases in which an error occurs and the exit code is 0.
+          #we want to set to correct outcome for the running step
+          
+          #verifying server actual state
+          if($content =~ m/Server State: (.+)/){
+           
+              if($1 eq SERVER_RUNNING_STATE){
+                  
+                  print "RESULT\n";
+                  #server is running
+                  print "------------------------------------\n";
+                  print "Server $serverName is up and running\n";
+                  print "------------------------------------\n";
+                  
+              }else{
+                  
+                  #server is not running
+                  print "----------------------------------------\n";
+                  print "Server is not started, it is in $1 state\n";
+                  print "----------------------------------------\n";
+                  $ec->setProperty("/myJobStep/outcome", 'error');
+                  
+              }
+              
+          }
+          
+      }else{
+       
+          #server is not running
+          print "-------------------------------------------------------------------\n";
+          print "An unexpected error occurred, please check the log for more details\n";
+          print "-------------------------------------------------------------------\n";
+          $ec->setProperty("/myJobStep/outcome", 'error');
+       
+      }
+   
+  }
+  
+  ##########################################################################
+  # getConfiguration - get the information of the configuration given
+  #
+  # Arguments:
+  #   -configName: name of the configuration to retrieve
+  #
+  # Returns:
+  #   -configToUse: hash containing the configuration information
+  #
+  #########################################################################
+  sub getConfiguration($){
+   
+      my ($configName) = @_;
+      
+      # get an EC object
+      my $ec = new ElectricCommander();
+      $ec->abortOnError(0);
+      
+      my %configToUse;
+      
+      my $proj = "$[/myProject/projectName]";
+      my $pluginConfigs = new ElectricCommander::PropDB($ec,"/projects/$proj/weblogic_cfgs");
+      
+      
+      my %configRow = $pluginConfigs->getRow($configName);
+      
+      # Check if configuration exists
+      unless(keys(%configRow)) {
+          exit ERROR;
+      }
+      
+      # Get user/password out of credential
+      my $xpath = $ec->getFullCredential($configRow{credential});
+      $configToUse{'user'} = $xpath->findvalue("//userName");
+      $configToUse{'password'} = $xpath->findvalue("//password");
+      
+      foreach my $c (keys %configRow) {
+          
+          #getting all values except the credential that was read previously
+          if($c ne CREDENTIAL_ID){
+              $configToUse{$c} = $configRow{$c};
+          }
+          
+      }
+      
+      return %configToUse;
+   
+  }    
   
   main();
    

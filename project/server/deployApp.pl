@@ -110,6 +110,9 @@
     my %configuration;
     my $envLine = '';
     
+    my $ec = new ElectricCommander();
+    $ec->abortOnError(0);
+    
     if($::gEnvScriptPath ne ''){
         if($^O eq WIN_IDENTIFIER){
            $envLine = '"'.$::gEnvScriptPath . '"';
@@ -180,7 +183,31 @@
         system($envLine);
     }
     
-    system($cmdLine);
+    #DO NOT UNCOMMENT THIS LINE ON PRODUCTION MODE
+    #print "command line: $cmdLine\n";
+    
+    #execute command
+    my $content = `$cmdLine`;
+    
+    #print log
+    print "$content\n";
+    
+    #evaluates if exit was successful to mark it as a success or fail the step
+    if($? == SUCCESS){
+     
+        $ec->setProperty("/myJobStep/outcome", 'success');
+        
+        #set any additional error or warning conditions here
+        #there may be cases in which an error occurs and the exit code is 0.
+        #we want to set to correct outcome for the running step
+#        if($content =~ m/WSVR0028I:/){
+#            #license expired warning
+#            $ec->setProperty("/myJobStep/outcome", 'warning');
+#        }
+        
+    }else{
+        $ec->setProperty("/myJobStep/outcome", 'error');
+    }
     
   }
   

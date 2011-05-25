@@ -28,9 +28,18 @@ push (@::gMatchers,
     
    },
   },
-
-
-
+  
+  {
+   id =>        "error1",
+   pattern =>          q{(Exception|Problem invoking WLST)},
+   action =>           q{
+    
+              my $description = "An unexpected error has occurred, please check the log for more details\n";
+              
+              
+              setProperty("summary", $description);
+    
+   },
+  },  
 
 );
-

@@ -21,12 +21,6 @@
       </property>
       
       <property>
-        <propertyName>curl_matchers</propertyName>
-        <value></value>
-        <expandable>0</expandable>
-      </property>
-      
-      <property>
         <propertyName>deployer_matchers</propertyName>
         <value></value>
         <expandable>0</expandable>
@@ -43,7 +37,17 @@
         <value></value>
         <expandable>0</expandable>
       </property>
-      
+      <property>
+          <propertyName>checkserver_matchers</propertyName>
+          <value/>
+          <expandable>0</expandable>
+      </property>
+      <property>
+          <propertyName>checkpage_matchers</propertyName>
+          <value/>
+          <expandable>0</expandable>
+       </property>
+         
       <property>
         <propertyName>ui_forms</propertyName>
         <description>Property sheet to hold XML specification for forms</description>
@@ -475,7 +479,6 @@
           </property>
         </propertySheet>
       </step>
-      
     </procedure>
     
     <procedure>
@@ -699,65 +702,95 @@
             <property>
               <propertyName>parameters</propertyName>
               <propertySheet>
-              
-                <property>
-                  <propertyName>url</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                  </propertySheet>
-                </property>
-
-                <property>
-                  <propertyName>configname</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                  </propertySheet>
-                </property>
-                
-                <property>
-                  <propertyName>usecredentials</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>checkedValue</propertyName>
-                      <expandable>1</expandable>
-                      <value>1</value>
-                    </property>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                    <property>
-                      <propertyName>initiallyChecked</propertyName>
-                      <expandable>1</expandable>
-                      <value>0</value>
-                    </property>
-                    <property>
-                      <propertyName>uncheckedValue</propertyName>
-                      <expandable>1</expandable>
-                      <value>0</value>
-                    </property>
-                  </propertySheet>
-                </property>
-                
-                <property>
-                  <propertyName>additionalcommands</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                  </propertySheet>
-                </property>
+              <property>
+                                    <propertyName>configname</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>maxelapsedtime</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>wlstabspath</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>instancename</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>successcriteria</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>options</propertyName>
+                                            <propertySheet>
+                                                <property>
+                                                    <propertyName>option1</propertyName>
+                                                    <propertySheet>
+                                                        <property>
+                                                            <propertyName>text</propertyName>
+                                                            <expandable>1</expandable>
+                                                            <value>Server running</value>
+                                                        </property>
+                                                        <property>
+                                                            <propertyName>value</propertyName>
+                                                            <expandable>1</expandable>
+                                                            <value>RUNNING</value>
+                                                        </property>
+                                                    </propertySheet>
+                                                </property>
+                                                <property>
+                                                    <propertyName>option2</propertyName>
+                                                    <propertySheet>
+                                                        <property>
+                                                            <propertyName>text</propertyName>
+                                                            <value>Server not running</value>
+                                                        </property>
+                                                        <property>
+                                                            <propertyName>value</propertyName>
+                                                            <owner>admin</owner>
+                                                            <value>NOT_RUNNING</value>
+                                                        </property>
+                                                    </propertySheet>
+                                                </property>
+                                                <property>
+                                                    <propertyName>optionCount</propertyName>
+                                                    <expandable>1</expandable>
+                                                    <value>2</value>
+                                                </property>
+                                                <property>
+                                                    <propertyName>type</propertyName>
+                                                    <expandable>1</expandable>
+                                                    <value>list</value>
+                                                </property>
+                                            </propertySheet>
+                                        </property>
+                                    </propertySheet>
+                                </property>
                 
               </propertySheet>
             </property>
@@ -765,38 +798,42 @@
         </property>
       </propertySheet>
       
-      <formalParameter>
-        <formalParameterName>configname</formalParameterName>
-        <defaultValue></defaultValue>
-        <description>Name of the configuration to be used</description>
-        <required>0</required>
-        <type>entry</type>
-      </formalParameter>
-      
-      <formalParameter>
-        <formalParameterName>usecredentials</formalParameterName>
-        <defaultValue></defaultValue>
-        <description>Indicates if credentials are required.</description>
-        <required>0</required>
-        <type>checkbox</type>
-      </formalParameter>
-
-      <formalParameter>
-        <formalParameterName>url</formalParameterName>
-        <defaultValue></defaultValue>
-        <description>URL to be checked</description>
-        <required>1</required>
-        <type>entry</type>
-      </formalParameter>
-      
-      <formalParameter>
-        <formalParameterName>additionalcommands</formalParameterName>
-        <defaultValue></defaultValue>
-        <description>Additional commands to be entered for curl.</description>
-        <required>0</required>
-        <type>textarea</type>
-      </formalParameter>
-      
+            <formalParameter>
+                <formalParameterName>configname</formalParameterName>
+                <defaultValue/>
+                <description>Name of the configuration to be used</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>wlstabspath</formalParameterName>
+                <defaultValue/>
+                <description>Absolute location of WLST</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>maxelapsedtime</formalParameterName>
+                <defaultValue></defaultValue>
+                <description>Defines the maximum time in seconds that the job will try to check into the server. Blank implies no wait time (URL only checked one time).</description>
+                <required>0</required>
+                <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>successcriteria</formalParameterName>
+                <defaultValue/>
+                <description>Indicates the expected correct result to be obtained when running checking the server.</description>
+                <required>1</required>
+                <type>select</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>instancename</formalParameterName>
+                <defaultValue/>
+                <description>Indicates the name of the instance to be checked.</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            
       <step>
         <stepName>CheckServerStatus</stepName>
         <alwaysRun>0</alwaysRun>
@@ -808,7 +845,7 @@
         <exclusive>0</exclusive>
         <logFileName></logFileName>
         <parallel>0</parallel>
-        <postProcessor>postp --loadProperty /myProject/curl_matchers</postProcessor>
+        <postProcessor>postp --loadProperty /myProject/checkserver_matchers</postProcessor>
         <releaseExclusive>0</releaseExclusive>
         <resourceName></resourceName>
         <retries>0</retries>
@@ -1575,7 +1612,7 @@
       <formalParameter>
         <formalParameterName>scriptfilesource</formalParameterName>
         <defaultValue></defaultValue>
-        <description></description>
+        <description>Indicate the source of the script file. Either a existent file or a new one with the code specified in scriptfile param.</description>
         <required>1</required>
         <type>radio</type>
       </formalParameter>
@@ -1652,7 +1689,41 @@
                   </propertySheet>
                 </property>
                 
+                <property>
+                  <propertyName>wlstabspath</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>configname</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
+                  <propertyName>admininstancename</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
               </propertySheet>
+              
             </property>
           </propertySheet>
         </property>
@@ -1665,6 +1736,30 @@
         <required>1</required>
         <type>entry</type>
       </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>admininstancename</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Instance name of the Admin Server to start</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+
+      <formalParameter>
+        <formalParameterName>configname</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Configuration name from which the Admin URL and credentials will be read.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>wlstabspath</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Location of WLST</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>      
       
       <step>
         <stepName>StartAdminServer</stepName>
@@ -1828,6 +1923,17 @@
                 </property>
                 
                 <property>
+                  <propertyName>wlstabspath</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
+                <property>
                   <propertyName>scriptlocation</propertyName>
                   <propertySheet>
                     <property>
@@ -1858,7 +1964,7 @@
       <formalParameter>
         <formalParameterName>instancename</formalParameterName>
         <defaultValue></defaultValue>
-        <description>The configuration name</description>
+        <description>Instance name of the Managed Server to start</description>
         <required>1</required>
         <type>entry</type>
       </formalParameter>
@@ -1874,7 +1980,15 @@
       <formalParameter>
         <formalParameterName>configname</formalParameterName>
         <defaultValue></defaultValue>
-        <description>Configuration name from which the URL will be taken.</description>
+        <description>Configuration name from which the Admin URL and credentials will be read.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>wlstabspath</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>Location of WLST</description>
         <required>1</required>
         <type>entry</type>
       </formalParameter>
@@ -1914,7 +2028,6 @@
           </property>
         </propertySheet>
       </step>
-      
     </procedure>
     
     <procedure>
@@ -2032,6 +2145,173 @@
       </step>
       
     </procedure>
+    
+    <procedure>
+            <procedureName>CheckPageStatus</procedureName>
+            <description>Check the status of a page on a given URL</description>
+            <jobNameTemplate>websphere-checkpage-$[jobId]</jobNameTemplate>
+            <resourceName />
+            <workspaceName />
+            <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+            <propertySheet>
+                <property>
+                    <propertyName>ec_customEditorData</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>parameters</propertyName>
+                            <propertySheet>
+                                <property>
+                                    <propertyName>targeturl</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>credentialName</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>maxelapsedtime</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>formType</propertyName>
+                                            <expandable>1</expandable>
+                                            <value>standard</value>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                                <property>
+                                    <propertyName>successcriteria</propertyName>
+                                    <propertySheet>
+                                        <property>
+                                            <propertyName>options</propertyName>
+                                            <propertySheet>
+                                                <property>
+                                                    <propertyName>option1</propertyName>
+                                                    <propertySheet>
+                                                        <property>
+                                                            <propertyName>text</propertyName>
+                                                            <expandable>1</expandable>
+                                                            <value>Page found</value>
+                                                        </property>
+                                                        <property>
+                                                            <propertyName>value</propertyName>
+                                                            <expandable>1</expandable>
+                                                            <value>pagefound</value>
+                                                        </property>
+                                                    </propertySheet>
+                                                </property>
+                                                <property>
+                                                    <propertyName>option2</propertyName>
+                                                    <propertySheet>
+                                                        <property>
+                                                            <propertyName>text</propertyName>
+                                                            <value>Page not found</value>
+                                                        </property>
+                                                        <property>
+                                                            <propertyName>value</propertyName>
+                                                            <owner>admin</owner>
+                                                            <value>pagenotfound</value>
+                                                        </property>
+                                                    </propertySheet>
+                                                </property>
+                                                <property>
+                                                    <propertyName>optionCount</propertyName>
+                                                    <expandable>1</expandable>
+                                                    <value>2</value>
+                                                </property>
+                                                <property>
+                                                    <propertyName>type</propertyName>
+                                                    <expandable>1</expandable>
+                                                    <value>list</value>
+                                                </property>
+                                            </propertySheet>
+                                        </property>
+                                    </propertySheet>
+                                </property>
+                            </propertySheet>
+                        </property>
+                    </propertySheet>
+                </property>
+            </propertySheet>
+            <formalParameter>
+                <formalParameterName>credentialName</formalParameterName>
+                <defaultValue />
+                <description>Credentials to be entered</description>
+                <required>0</required>
+                <type>credential</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>maxelapsedtime</formalParameterName>
+                <defaultValue />
+                <description>Defines the maximum time in seconds that the job will try to check into the server. Blank implies no wait time (0 seconds).</description>
+                <required>0</required>
+                <type>entry</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>successcriteria</formalParameterName>
+                <defaultValue />
+                <description>Indicates the expected correct result to be obtained when running checking the server.</description>
+                <required>0</required>
+                <type>select</type>
+            </formalParameter>
+            <formalParameter>
+                <formalParameterName>targeturl</formalParameterName>
+                <defaultValue />
+                <description>URL of the page to be checked</description>
+                <required>1</required>
+                <type>entry</type>
+            </formalParameter>
+            
+            <step>
+                <stepName>CheckPageStatus</stepName>
+                <alwaysRun>0</alwaysRun>
+                <broadcast>0</broadcast>
+                <command></command>
+                <condition />
+                <description>Checks the status of a given URL</description>
+                <errorHandling>failProcedure</errorHandling>
+                <exclusive>0</exclusive>
+                <logFileName />
+                <parallel>0</parallel>
+                <postProcessor>postp --loadProperty /myProject/checkpage_matchers</postProcessor>
+                <releaseExclusive>0</releaseExclusive>
+                <resourceName />
+                <retries>0</retries>
+                <shell>ec-perl</shell>
+                <timeLimit>5</timeLimit>
+                <timeLimitUnits>minutes</timeLimitUnits>
+                <workingDirectory />
+                <workspaceName />
+                <procedureName>CheckPageStatus</procedureName>
+                <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+                <propertySheet>
+                    <property>
+                        <propertyName>ec_customEditorData</propertyName>
+                        <propertySheet>
+                            <property>
+                                <propertyName>formType</propertyName>
+                                <expandable>1</expandable>
+                                <value>command</value>
+                            </property>
+                        </propertySheet>
+                    </property>
+                </propertySheet>
+                <attachedParameters>
+                    <formalParameterName>credentialName</formalParameterName>
+                </attachedParameters>
+            </step>
+        </procedure>
     
   </project>
 </exportedData>

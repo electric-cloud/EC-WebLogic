@@ -4,7 +4,8 @@
  
  ['//property[propertyName="stopserver_matchers"]/value', 'matchers/stopServerMatchers.pl'],
  ['//property[propertyName="startserver_matchers"]/value', 'matchers/startServerMatchers.pl'],
- ['//property[propertyName="curl_matchers"]/value', 'matchers/curlMatchers.pl'],
+ ['//property[propertyName="checkserver_matchers"]/value', 'matchers/checkServerMatchers.pl'],
+ ['//property[propertyName="checkpage_matchers"]/value', 'matchers/checkPageMatchers.pl'], 
  ['//property[propertyName="deployer_matchers"]/value', 'matchers/deployerMatchers.pl'],
  ['//property[propertyName="weblogicserver_matchers"]/value', 'matchers/weblogicserverMatchers.pl'],
     
@@ -13,6 +14,7 @@
  ['//procedure[procedureName="StopManagedServer"]/step[stepName="StopInstance"]/command' , 'server/stopManagedServer.pl'],
  ['//procedure[procedureName="StopAdminServer"]/step[stepName="StopAdminServer"]/command' , 'server/stopAdministrationServer.pl'],
  ['//procedure[procedureName="CheckServerStatus"]/step[stepName="CheckServerStatus"]/command' , 'server/checkServerStatus.pl'],
+ ['//procedure[procedureName="CheckPageStatus"]/step[stepName="CheckPageStatus"]/command' , 'server/checkPageStatus.pl'], 
  ['//procedure[procedureName="RunDeployer"]/step[stepName="RunJob"]/command' , 'server/runDeployer.pl'],
  ['//procedure[procedureName="RunWLST"]/step[stepName="RunWLST"]/command' , 'server/runWlst.pl'],
  ['//procedure[procedureName="StartApp"]/step[stepName="StartApp"]/command' , 'server/startApp.pl'],

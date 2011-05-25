@@ -15,5 +15,25 @@ push (@::gMatchers,
     
    },
   },
+  
+  {
+   id =>        "serverShutdownState",
+   pattern =>          q{Server State: (.+)},
+   action =>           q{
+    
+              if($1 eq 'RUNNING'){
+              
+                   my $description = "Server is started";
+              
+              }else{
+                   my $description = "Server is not started, actual status is $1\n";
+              }
+              
+              
+                              
+              setProperty("summary", $description);
+    
+   },
+  },
 );
 
