@@ -463,7 +463,7 @@
         <timeLimit></timeLimit>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory></workingDirectory>
-        <workspaceName>default</workspaceName>
+        <workspaceName></workspaceName>
         <procedureName>StartApp</procedureName>
         <projectName>EC-WebLogic</projectName>
         <propertySheet>
@@ -669,7 +669,7 @@
         <timeLimit></timeLimit>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory></workingDirectory>
-        <workspaceName>default</workspaceName>
+        <workspaceName></workspaceName>
         <procedureName>StopApp</procedureName>
         <projectName>EC-WebLogic</projectName>
         <propertySheet>
@@ -853,7 +853,7 @@
         <timeLimit></timeLimit>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory></workingDirectory>
-        <workspaceName>default</workspaceName>
+        <workspaceName></workspaceName>
         <procedureName>CheckServerStatus</procedureName>
         <projectName>EC-WebLogic</projectName>
         <propertySheet>
@@ -1045,7 +1045,7 @@
         <timeLimit></timeLimit>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory></workingDirectory>
-        <workspaceName>default</workspaceName>
+        <workspaceName></workspaceName>
         <procedureName>RunDeployer</procedureName>
         <projectName>EC-WebLogic</projectName>
         <propertySheet>
@@ -1247,7 +1247,7 @@
         <timeLimit></timeLimit>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory></workingDirectory>
-        <workspaceName>default</workspaceName>
+        <workspaceName></workspaceName>
         <procedureName>DeployApp</procedureName>
         <projectName>EC-WebLogic</projectName>
         <propertySheet>
@@ -1444,7 +1444,7 @@
         <timeLimit></timeLimit>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory></workingDirectory>
-        <workspaceName>default</workspaceName>
+        <workspaceName></workspaceName>
         <procedureName>UndeployApp</procedureName>
         <projectName>EC-WebLogic</projectName>
         <propertySheet>
@@ -1644,7 +1644,7 @@
         <timeLimit></timeLimit>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory></workingDirectory>
-        <workspaceName>default</workspaceName>
+        <workspaceName></workspaceName>
         <procedureName>RunWLST</procedureName>
         <projectName>EC-WebLogic</projectName>
         <propertySheet>
@@ -1780,7 +1780,7 @@
         <timeLimit></timeLimit>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory></workingDirectory>
-        <workspaceName>default</workspaceName>
+        <workspaceName></workspaceName>
         <procedureName>StartAdminServer</procedureName>
         <projectName>EC-WebLogic</projectName>
         <propertySheet>
@@ -1877,7 +1877,7 @@
         <timeLimit></timeLimit>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory></workingDirectory>
-        <workspaceName>default</workspaceName>
+        <workspaceName></workspaceName>
         <procedureName>StopAdminServer</procedureName>
         <projectName>EC-WebLogic</projectName>
         <propertySheet>
@@ -2012,7 +2012,7 @@
         <timeLimit></timeLimit>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory></workingDirectory>
-        <workspaceName>default</workspaceName>
+        <workspaceName></workspaceName>
         <procedureName>StartManagedServer</procedureName>
         <projectName>EC-WebLogic</projectName>
         <propertySheet>
@@ -2127,7 +2127,7 @@
         <timeLimit></timeLimit>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory></workingDirectory>
-        <workspaceName>default</workspaceName>
+        <workspaceName></workspaceName>
         <procedureName>StopManagedServer</procedureName>
         <projectName>EC-WebLogic</projectName>
         <propertySheet>

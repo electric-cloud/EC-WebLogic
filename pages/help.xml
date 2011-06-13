@@ -190,6 +190,13 @@
         
     <h2 class="help">Release Notes</h2>
     
+        <h3 class="help">EC-WebLogic-1.1.1.0</h3>
+        <p class="help">
+        <ul>
+             <li>Fixed issue affecting workspace setting.</li>
+        </ul>
+        </p>
+        
         <h3 class="help">EC-WebLogic-1.1.0.0</h3>
         <p class="help">
         <ul>

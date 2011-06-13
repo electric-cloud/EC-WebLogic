@@ -4,7 +4,7 @@ SRCTOP=..
 
 include $(SRCTOP)/build/vars.mak
 
-PLUGIN_PATCH_LEVEL=1.1.0
+PLUGIN_PATCH_LEVEL=1.1.1
 
 gwtmodules := weblogic/ConfigurationManagement
 
