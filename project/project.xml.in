@@ -89,7 +89,12 @@
       <workspaceName></workspaceName>
       <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
       <propertySheet>
-      
+        <property>
+          <propertyName>ec_visibility</propertyName>
+          <description></description>
+          <expandable>1</expandable>
+          <value>hidden</value>
+        </property>
         <property>
           <propertyName>ec_customEditorData</propertyName>
           <propertySheet>
@@ -243,6 +248,12 @@
       <workspaceName></workspaceName>
       <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
       <propertySheet>
+        <property>
+          <propertyName>ec_visibility</propertyName>
+          <description></description>
+          <expandable>1</expandable>
+          <value>hidden</value>
+        </property>
         <property>
           <propertyName>ec_customEditorData</propertyName>
           <propertySheet>
