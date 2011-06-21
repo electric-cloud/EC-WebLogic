@@ -3,7 +3,7 @@
 //
 // WebLogicConfigListLoader.java is part of ElectricCommander.
 //
-// Copyright (c) 2005-2010 Electric Cloud, Inc.
+// Copyright (c) 2005-2011 Electric Cloud, Inc.
 // All rights reserved.
 //
 
@@ -29,7 +29,7 @@ import com.electriccloud.commander.gwt.client.responses.CommanderError;
 import com.electriccloud.commander.gwt.client.responses.PropertyCallback;
 import com.electriccloud.commander.gwt.client.util.StringUtil;
 
-import static com.electriccloud.commander.gwt.client.ComponentBaseFactory.getPluginName;
+import static ecinternal.client.InternalComponentBaseFactory.getPluginName;
 
 public class WebLogicConfigListLoader
     extends Loader
@@ -37,29 +37,30 @@ public class WebLogicConfigListLoader
 
     //~ Instance fields --------------------------------------------------------
 
-    private final WebLogicConfigList   m_configList;
-    private final CgiRequestProxy m_cgiRequestProxy;
-    private String                m_editorName;
+    private final WebLogicConfigList m_configList;
+    private final CgiRequestProxy    m_cgiRequestProxy;
+    private String                   m_editorName;
 
     //~ Constructors -----------------------------------------------------------
 
     public WebLogicConfigListLoader(
-            WebLogicConfigList   configList,
-            Component       component,
-            ChainedCallback callback)
+            WebLogicConfigList configList,
+            Component          component,
+            ChainedCallback    callback)
     {
         this(configList, null, component, callback);
     }
 
     public WebLogicConfigListLoader(
-            WebLogicConfigList   configList,
-            String          implementedMethod,
-            Component       component,
-            ChainedCallback callback)
+            WebLogicConfigList configList,
+            String             implementedMethod,
+            Component          component,
+            ChainedCallback    callback)
     {
         super(component, callback);
         m_configList      = configList;
-        m_cgiRequestProxy = new CgiRequestProxy(getPluginName(), "weblogic.cgi");
+        m_cgiRequestProxy = new CgiRequestProxy(getPluginName(),
+                "weblogic.cgi");
     }
 
     //~ Methods ----------------------------------------------------------------
@@ -235,7 +236,8 @@ public class WebLogicConfigListLoader
 
             // There was no property value found in the response
             String errorMsg = "Editor '" + m_editorName
-                    + "' not found for WebLogic plugin '" + m_configPlugin + "'";
+                    + "' not found for WebLogic plugin '" + m_configPlugin
+                    + "'";
 
             if (m_component instanceof HasErrorPanel) {
                 ((HasErrorPanel) m_component).addErrorMessage(errorMsg);
