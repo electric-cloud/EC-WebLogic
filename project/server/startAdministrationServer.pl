@@ -240,43 +240,6 @@
             
   }
   
-  
-  sub fixPath($){
-   
-     my ($absPath) = @_;
-     
-     my $separator;
-     
-     if(!$absPath || $absPath eq ''){
-        return '';
-     }
-     
-     if((substr($absPath, length($absPath)-1,1) eq '\\') ||
-         substr($absPath, length($absPath)-1,1) eq '/'){
-          
-          return $absPath;
-          
-     }
-     
-     if($absPath =~ m/.*\/.+/){
-         
-         $separator = '/';
-         
-     }elsif($absPath =~ m/.+\\.+/) {
-       
-         $separator = "\\";
-      
-     }else{
-        exit ERROR;
-     }
-     
-     my $fixedPath = $absPath . $separator;
-    
-     
-     return $fixedPath;
-   
-  }
-  
   ########################################################################
   # startServer - uses ecdaemon for starting a Server
   #
@@ -366,6 +329,8 @@
       my @args = ();
       my %props;
       
+      print "Verifying server $serverName is started...\n";
+      
       my $ec = new ElectricCommander();
       $ec->abortOnError(0);
       
@@ -373,20 +338,12 @@
 
       #embedding jython code in the following scalar var
       my $fileContent = "state = \"\"\n
-try:\n
-    connect('$user','$password','$urlName')\n
-
-except WLSTException:\n
-
-    state = \"NO_SERVER_FOUND\"\n
-
-else:\n
-
-    domainRuntime()\n
-
-    state = cmo.lookupServerLifeCycleRuntime('$serverName').getState()\n
-
-print \"Server State: \" + state\n";
+      
+      while state <> \"RUNNING\":
+          state = cmo.lookupServerLifeCycleRuntime('$serverName').getState()\n
+          print state\n
+      
+      print \"$serverName is running\"";
 
       open (MYFILE, '>>verifyServer.jython');
       print MYFILE "$fileContent";
@@ -477,6 +434,7 @@ print \"Server State: \" + state\n";
       
       # Check if configuration exists
       unless(keys(%configRow)) {
+          print "Configuration $configName doesn't exist\n";
           exit ERROR;
       }
       

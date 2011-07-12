@@ -147,15 +147,6 @@
         
     }
 
-    #create all objects needed for response-request operations
-    my $agent = LWP::UserAgent->new(env_proxy => 1,keep_alive => 1, timeout => 30);
-    my $header = HTTP::Request->new(GET => $url);
-    my $request = HTTP::Request->new('GET', $url, $header);
-    
-    #enter BASIC authentication
-    $request->authorization_basic($user, $pass);
-    
-    
     #setting variables for iterating
     my $retries = 0;
     my $attempts = 0;
