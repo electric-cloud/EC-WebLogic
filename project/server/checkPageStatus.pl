@@ -316,7 +316,7 @@
     my $user  = $xPath->findvalue('//credential/userName');
     my $pass  = $xPath->findvalue('//credential/password');
     # DEBUG ONLY -- DON'T PRINT THIS IN PRODUCTION USE !!
-    print "Obtaining credentials: $user / $pass\n";
+    #print "Obtaining credentials: $user / $pass\n";
     push(@creds, $user);
     push(@creds, $pass);
     
