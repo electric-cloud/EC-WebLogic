@@ -2,28 +2,13 @@
 push (@::gMatchers,
   
   {
-   id =>        "connectionError",
-   pattern =>          q{(.*)javax.naming.CommunicationException(.+)|(.*)java.net.ConnectException(.+)},
-   action =>           q{
-    
-              my $description = ((defined $::gProperties{"summary"}) ? 
-                    $::gProperties{"summary"} : '');
-                    
-              $description .= "Could not connect to the specified URL.";
-                              
-              setProperty("summary", $description . "\n");
-    
-   },  
-  },
-  
-  {
-   id =>        "serverShutdownState",
+   id =>        "serverRunningState",
    pattern =>          q{Server State: (.+)},
    action =>           q{
     
               my $description = '';
               
-              if($1 eq 'RUNNING'){
+              if($1 =~ m/(RUNNING|running)/){
               
                    $description = "Server is started";
               
@@ -61,6 +46,19 @@ push (@::gMatchers,
     
    },
   },
-
+  
+  {
+   id =>        "successConnectingManagedServer",
+   pattern =>          q{Successfully connected to managed Server (.+) that belongs to domain (.+)},
+   action =>           q{
+    
+              my $description = "Successfully connected to managed Server $1";
+              
+              
+              setProperty("summary", $description);
+    
+   },
+  },
+  
 );
 

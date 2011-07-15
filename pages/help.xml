@@ -44,6 +44,7 @@
                <li><b>instancename</b> - Provide the name of the instance to start.</li>
                <li><b>scriptlocation</b> - Provide the absolute path to the start server script. It must include the filename and extension.</li>
                <li><b>wlstabspath</b> - Provide the absolute path to the wlst executable. It must include the filename and extension.</li>
+               <li><b>adminserverurl</b> - Provide the URL of the Admin Server (including protocol and port)</li>
           </ul>
 
           <p class="help">
@@ -193,6 +194,7 @@
         <h3 class="help">EC-WebLogic-1.1.3.0</h3>
         <p class="help">
         <ul>
+             <li>Added <b>adminserverurl</b> param into the StartManagedServer method.</li>
              <li>Fixed minor issues.</li>
         </ul>
         </p>

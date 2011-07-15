@@ -21,7 +21,7 @@ push (@::gMatchers,
    pattern =>          q{Server State: (.+)},
    action =>           q{
     
-              if($1 eq 'RUNNING'){
+              if($1 =~ m/(RUNNING|running)/{
               
                    my $description = "Server is started";
               

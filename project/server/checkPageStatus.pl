@@ -154,7 +154,7 @@
     #enter BASIC authentication
     if($::gAttachedCredentialName && $::gAttachedCredentialName ne ''){
         print "Getting credential '$::gAttachedCredentialName' from parameter $::gCredentialParam\n";
-        my @creds = getCredentialInfo($::gAttachedCredentialName);
+        my @creds = getCredentialInfo($::gCredentialParam);
         $user = $creds[0];
         $pass = $creds[1];
         $request->authorization_basic($user, $pass);
@@ -316,7 +316,7 @@
     my $user  = $xPath->findvalue('//credential/userName');
     my $pass  = $xPath->findvalue('//credential/password');
     # DEBUG ONLY -- DON'T PRINT THIS IN PRODUCTION USE !!
-    # print "Obtaining credentials: $user / $pass\n";
+    print "Obtaining credentials: $user / $pass\n";
     push(@creds, $user);
     push(@creds, $pass);
     

@@ -146,8 +146,11 @@
      
     }    
     
+    #start admin server using ecdaemon
     startServer($::gScriptLocation);
     
+    #almost none of the log is captured by ecdaemon, so a check is needed
+    #to verify the RUNNING state on it
     verifyServerIsStarted($serverName, $urlName, $user, $password);
     
     
@@ -321,6 +324,20 @@
 
   }
   
+  ##########################################################################
+  # verifyServerIsStarted - verifies if the specified administration server
+  #                            is running.
+  #
+  # Arguments:
+  #   -ServerName: name of the server instance
+  #   -URL: Admin Server URL (including protocol and port)
+  #   -User: user for logging into the server
+  #   -Password: password for logging into the server
+  #
+  # Returns:
+  #   none
+  #
+  #########################################################################
   sub verifyServerIsStarted($){
    
       my ($serverName, $urlName, $user, $password)= @_;
@@ -337,13 +354,38 @@
       push(@args, '"'.$::gWLSTAbsPath.'"');
 
       #embedding jython code in the following scalar var
-      my $fileContent = "state = \"\"\n
-      
-      while state <> \"RUNNING\":
-          state = cmo.lookupServerLifeCycleRuntime('$serverName').getState()\n
-          print state\n
-      
-      print \"$serverName is running\"";
+      my $fileContent = "
+state = \"\"
+x = 1
+runningVariableIndicator = \"RUNNING\"
+
+while state != runningVariableIndicator:
+    
+    print \"Checking state...\"
+    
+    try:
+        connect('$user','$password','$urlName')
+        
+    except WLSTException:
+    
+        state = \"NO_SERVER_FOUND\"
+    
+    else:
+        cd(\"Servers/$serverName\")
+        state = cmo.lookupServerLifeCycleRuntime().getState()
+        
+    x = x + 1
+    
+domainRuntime()
+print \"Server State: $serverName is running\"";
+
+#      my $fileContent = "state = \"\"\ndomainRuntime()\n";
+#      
+#      $fileContent .= "while state != \"RUNNING\":
+#          state = cmo.lookupServerLifeCycleRuntime('$serverName').getState()\n
+#          print state\n\n";
+#      
+#      $fileContent .= "print \"$serverName is running\"";
 
       open (MYFILE, '>>verifyServer.jython');
       print MYFILE "$fileContent";
@@ -351,7 +393,6 @@
       
       push(@args, '"verifyServer.jython"');
      
-      
       my $cmdLine = createCommandLine(\@args);
       $props{'wlstLine'} = $cmdLine;
       setProperties(\%props);
@@ -361,6 +402,8 @@
       
       #print log
       print "$content\n";
+      
+      print "RESULT\n";
       
       #evaluates if exit was successful to mark it as a success or fail the step
       if($? == SUCCESS){
@@ -373,10 +416,10 @@
           
           #verifying server actual state
           if($content =~ m/Server State: (.+)/){
-           
-              if($1 eq SERVER_RUNNING_STATE){
+              
+              if($1 =~ m/(RUNNING|running)/){
                   
-                  print "RESULT\n";
+                  
                   #server is running
                   print "------------------------------------\n";
                   print "Server $serverName is up and running\n";
@@ -392,13 +435,20 @@
                   
               }
               
+          }else{
+              #Server may not be running, stats could not be read from the log.
+              #A warning is signaled.
+              print "-------------------------------------------------------\n";
+              print "Server may not be started, could not check actual state\n";
+              print "-------------------------------------------------------\n";
+              $ec->setProperty("/myJobStep/outcome", 'warning');
           }
           
       }else{
        
           #server is not running
           print "-------------------------------------------------------------------\n";
-          print "An unexpected error occurred, please check the log for more details\n";
+          print "An unexpected error occurred and server may not be started, please check the log for more details\n";
           print "-------------------------------------------------------------------\n";
           $ec->setProperty("/myJobStep/outcome", 'error');
        

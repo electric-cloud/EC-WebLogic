@@ -83,6 +83,7 @@
   $::gScriptLocation = trim(q($[scriptlocation]));
   $::gConfigurationName = trim(q($[configname]));
   $::gWLSTAbsPath = trim(q($[wlstabspath]));
+  $::gAdminServerURL = trim(q($[adminserverurl]));
    
   # -------------------------------------------------------------------------
   # Main functions
@@ -145,10 +146,16 @@
             $password = $configuration{'password'};
         }
      
+    }else{
+        print "Unexpected error: Could not retrieve info from the configuration hash\n";
+        exit ERROR;
     }
 
-    startServer($::gScriptLocation, $serverName, $urlName, $user, $password);
-
+    #start managed server using ecdaemon
+    startServer($::gScriptLocation, $serverName, $::gAdminServerURL, $user, $password);
+    
+    #almost none of the log is captured by ecdaemon, so a check is needed
+    #to verify the RUNNING state on it
     verifyServerIsStarted($serverName, $urlName, $user, $password);
 
   }
@@ -224,7 +231,7 @@
       
       my ($reportFilename, $reportName) = @_;
       
-      if($reportFilename && $reportFilename ne ''){    
+      if($reportFilename && $reportFilename ne ''){
           
           # get an EC object
           my $ec = new ElectricCommander();
@@ -239,42 +246,6 @@
             
   }
   
-  
-  sub fixPath($){
-   
-     my ($absPath) = @_;
-     
-     my $separator;
-     
-     if(!$absPath || $absPath eq ''){
-        return '';
-     }
-     
-     if((substr($absPath, length($absPath)-1,1) eq '\\') ||
-         substr($absPath, length($absPath)-1,1) eq '/'){
-          
-          return $absPath;
-          
-     }
-     
-     if($absPath =~ m/.*\/.+/){
-         
-         $separator = '/';
-         
-     }elsif($absPath =~ m/.+\\.+/) {
-       
-         $separator = "\\";
-      
-     }else{
-        exit ERROR;
-     }
-     
-     my $fixedPath = $absPath . $separator;
-    
-     
-     return $fixedPath;
-   
-  }
   
   ##########################################################################
   # getConfiguration - get the information of the configuration given
@@ -304,6 +275,7 @@
       
       # Check if configuration exists
       unless(keys(%configRow)) {
+          print "Configuration '$configName' doesn't exist.\n";
           exit ERROR;
       }
       
@@ -326,11 +298,14 @@
   }  
   
     ########################################################################
-  # startServer - uses ecdaemon for starting a Server
+  # startServer - uses ecdaemon for starting a Managed Server
   #
   # Arguments:
-  #   -tomcat root: absolute path to Catalina Home
-  #   -script location: startup script location
+  #   -weblogic start managed server script: absolute path to managed server script
+  #   -server name: name of the instance of the managed server
+  #   -URL: URL (including protocol and port) of the Admin Server of the domain
+  #   -user: user of the admin server
+  #   -password: password of the admin server
   #
   # Returns:
   #   none
@@ -338,7 +313,7 @@
   ########################################################################
   sub startServer($){
    
-      my ($SCRIPT, $serverName, $urlName, $user, $pass) = @_;
+      my ($SCRIPT, $serverName, $adminServerURL, $user, $pass) = @_;
    
       # $The quote and backslash constants are just a convenient way to represtent literal literal characters so it is obvious
       # in the concatentations. NOTE: BSLASH ends up being a single backslash, it needs to be doubled here so it does not
@@ -350,7 +325,7 @@
       # Ideally, the logs should exist in the step's workspace directory, but because the ecdaemon continues after the step is
       # completed the temporary drive mapping to the workspace is gone by the time we want to write to it. Instead, the log
       # and errors get the JOBSTEPID appended and it goes in the Tomcat root directory.
-      my $LOGNAMEBASE = "tomcatstartmanagedserver";
+      my $LOGNAMEBASE = "weblogicstartmanagedserver";
       
       # If we try quoting in-line to get the final string exactly right, it will be confusing and ugly. Only the last
       # parameter to our outer exec() needs _literal_ single and double quotes inside the string itself, so we build that
@@ -375,7 +350,7 @@
           my $commandline = BSLASH . BSLASH . BSLASH . DQUOTE . $shellscript . BSLASH . BSLASH . BSLASH . DQUOTE;
           my $logfile = $LOGNAMEBASE . "-" . $ENV{'COMMANDER_JOBSTEPID'} . ".log";
           my $errfile = $LOGNAMEBASE . "-" . $ENV{'COMMANDER_JOBSTEPID'} . ".err";
-          $commandline = SQUOTE . $commandline . ' ' . $serverName . ' ' . $urlName .  " 1>" . $logfile . " 2>" . $errfile . SQUOTE;
+          $commandline = SQUOTE . $commandline . ' ' . $serverName . ' ' . $adminServerURL .  " 1>" . $logfile . " 2>" . $errfile . SQUOTE;
           $commandline = "exec(" . $commandline . ");";
           $commandline = DQUOTE . $commandline . DQUOTE;
           @systemcall = ("ecdaemon", "--", "ec-perl", "-e", $commandline);
@@ -389,7 +364,7 @@
           # really important since the vital information goes directly to $CATALINA_HOME/logs/catalina.out anyway. It can lose
           # important error messages if the paths are bad, etc. so this will be a JIRA.
           
-          @systemcall = ("ecdaemon", "--", "sh", "-c", DQUOTE . $shellscript . DQUOTE, $serverName, $urlName);
+          @systemcall = ("ecdaemon", "--", "sh", "-c", DQUOTE . $shellscript . ' '. $serverName . ' ' . $adminServerURL . DQUOTE);
           
       }
       
@@ -401,14 +376,29 @@
       $props{'startManagedServerLine'} = $cmdLine;
       setProperties(\%props);
       
-      #print "cmd line: $cmdLine\n";
+      print "cmd line: $cmdLine\n";
       system($cmdLine);
 
   }
   
+  
+  ##########################################################################
+  # verifyServerIsStarted - verifies if the specified managed server
+  #                            is running.
+  #
+  # Arguments:
+  #   -ServerName: name of the server instance
+  #   -URL: Managed Server URL (including protocol and port)
+  #   -User: user for logging into the admin server
+  #   -Password: password for logging into the admin server
+  #
+  # Returns:
+  #   none
+  #
+  #########################################################################  
   sub verifyServerIsStarted($){
    
-      my ($serverName, $urlName, $user, $password)= @_;
+      my ($serverName, $managedServerURL, $user, $password)= @_;
       
       # create args array
       my @args = ();
@@ -420,21 +410,30 @@
       push(@args, '"'.$::gWLSTAbsPath.'"');
 
       #embedding jython code in the following scalar var
-      my $fileContent = "state = \"\"\n
-try:\n
-    connect('$user','$password','$urlName')\n
+      my $fileContent = "
+state = \"\"
+x = 1
+runningVariableIndicator = \"RUNNING\"
 
-except WLSTException:\n
-
-    state = \"NO_SERVER_FOUND\"\n
-
-else:\n
-
-    domainRuntime()\n
-
-    state = cmo.lookupServerLifeCycleRuntime('$serverName').getState()\n
-
-print \"Server State: \" + state\n";
+while state != runningVariableIndicator:
+    
+    print \"Checking state...\"
+    
+    try:
+        connect('$user','$password','$managedServerURL')
+        
+    except WLSTException:
+    
+        state = \"NO_SERVER_FOUND\"
+    
+    else:
+        cd(\"Servers/$serverName\")
+        state = cmo.lookupServerLifeCycleRuntime().getState()
+        
+    x = x + 1
+    
+domainRuntime()
+print \"Server State: $serverName is running\"";
 
       open (MYFILE, '>>verifyServer.jython');
       print MYFILE "$fileContent";
@@ -453,11 +452,10 @@ print \"Server State: \" + state\n";
       #print log
       print "$content\n";
       
+      print "RESULT\n";
       #evaluates if exit was successful to mark it as a success or fail the step
       if($? == SUCCESS){
        
-          $ec->setProperty("/myJobStep/outcome", 'success');
-          
           #set any additional error or warning conditions here
           #there may be cases in which an error occurs and the exit code is 0.
           #we want to set to correct outcome for the running step
@@ -465,13 +463,14 @@ print \"Server State: \" + state\n";
           #verifying server actual state
           if($content =~ m/Server State: (.+)/){
            
-              if($1 eq SERVER_RUNNING_STATE){
+              if($1 =~ m/(RUNNING|running|Successfully connected to managed Server)/){
                   
-                  print "RESULT\n\n";
+                  
                   #server is running
                   print "------------------------------------\n";
                   print "Server $serverName is up and running\n";
                   print "------------------------------------\n";
+                  $ec->setProperty("/myJobStep/outcome", 'success');
                   
               }else{
                   
@@ -483,13 +482,22 @@ print \"Server State: \" + state\n";
                   
               }
               
+          }else{
+           
+               #Server may not be running, stats could not be read from the log.
+               #A warning is signaled.
+               print "-------------------------------------------------------\n";
+               print "Server may not be started, could not check actual state\n";
+               print "-------------------------------------------------------\n";
+               $ec->setProperty("/myJobStep/outcome", 'warning');
+           
           }
           
       }else{
        
           #server is not running
           print "-------------------------------------------------------------------\n";
-          print "An unexpected error occurred, please check the log for more details\n";
+          print "An unexpected error occurred and server may not be started, please check the log for more details\n";
           print "-------------------------------------------------------------------\n";
           $ec->setProperty("/myJobStep/outcome", 'error');
        

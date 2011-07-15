@@ -1991,7 +1991,15 @@
       <formalParameter>
         <formalParameterName>configname</formalParameterName>
         <defaultValue></defaultValue>
-        <description>Configuration name from which the Admin URL and credentials will be read.</description>
+        <description>Configuration name from which the Managed Server URL and the credentials from the Admin Server will be read.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+        <formalParameterName>adminserverurl</formalParameterName>
+        <defaultValue></defaultValue>
+        <description>URL from the Admin Server (including protocol and port).</description>
         <required>1</required>
         <type>entry</type>
       </formalParameter>
