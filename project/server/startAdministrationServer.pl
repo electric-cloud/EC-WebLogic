@@ -1,6 +1,6 @@
-   # -------------------------------------------------------------------------
+# -------------------------------------------------------------------------
    # File
-   #    startAdministrationServer.pl
+   #    startManagedServer.pl
    #
    # Dependencies
    #    None
@@ -23,10 +23,10 @@
    # Includes
    # -------------------------------------------------------------------------
    use ElectricCommander;
+   use ElectricCommander::PropDB;
    use warnings;
    use strict;
    use Data::Dumper;
-   use ElectricCommander::PropDB;
    $|=1;
    
    # -------------------------------------------------------------------------
@@ -38,17 +38,18 @@
        
        PLUGIN_NAME => 'EC-WebLogic',
        WIN_IDENTIFIER => 'MSWin32',
-       
        CREDENTIAL_ID => 'credential',
+       SERVER_RUNNING_STATE => 'RUNNING',
        
        SQUOTE => q{'},
        DQUOTE => q{"},
        BSLASH => q{\\},
        
        DEFAULT_ADMIN_SERVER_NAME => 'AdminServer',
+       SERVER_NOT_RUNNING_STATE => 'NOT_RUNNING',
+       SERVER_UNEXPECTED_RESPONSE => 'unexpectedresponse',
        
        SERVER_RUNNING_STATE => 'RUNNING',
-       
    	
   };
   
@@ -83,10 +84,10 @@
   # Variables
   # -------------------------------------------------------------------------
   
+  $::gInstanceName = trim(q($[admininstancename]));
   $::gScriptLocation = trim(q($[scriptlocation]));
-  $::gWLSTAbsPath = trim(q($[wlstabspath]));
   $::gConfigurationName = trim(q($[configname]));
-  $::gAdminServerInstanceName = trim(q($[admininstancename]));
+  $::gWLSTAbsPath = trim(q($[wlstabspath]));
    
   # -------------------------------------------------------------------------
   # Main functions
@@ -105,6 +106,12 @@
   #
   ########################################################################
   sub main() {
+      
+    # create args array
+    my @args = ();
+    my %props;
+    
+    my $fixedLocation = $::gScriptLocation;
     
     my %configuration;
     
@@ -117,43 +124,43 @@
         %configuration = getConfiguration($::gConfigurationName);
     }
 
+    my $cmdLineParams = '';
+    
     # if target: add to command string
-    if($::gAdminServerInstanceName && $::gAdminServerInstanceName ne '') {
-        
-        $serverName = $::gAdminServerInstanceName;
-        
-    }else{
-     
-        $serverName = DEFAULT_ADMIN_SERVER_NAME;
-     
-    }
+    if($::gInstanceName && $::gInstanceName ne '') {
+        $cmdLineParams .= ' ' . $::gInstanceName . ' ';
+        $serverName = $::gInstanceName;
+    }    
     
     #inject config...
     if(%configuration){
         
         if($configuration{'weblogic_url'} ne ''){
-            
+            $cmdLineParams .= ' ' . $configuration{'weblogic_url'} . ' ';
             $urlName = $configuration{'weblogic_url'};
         }
         
         if($configuration{'user'} ne ''){
+            $cmdLineParams .= ' -Dweblogic.management.username=' . $configuration{'user'} . ' ';
             $user = $configuration{'user'};
         }
         
         if($configuration{'password'} ne ''){
+            $cmdLineParams .= ' -Dweblogic.management.password=' . $configuration{'password'} . ' ';
             $password = $configuration{'password'};
         }
      
-    }    
-    
-    #start admin server using ecdaemon
+    }else{
+        print "Unexpected error: Could not retrieve info from the configuration hash\n";
+        exit ERROR;
+    }
+
+    #start managed server using ecdaemon
     startServer($::gScriptLocation);
     
     #almost none of the log is captured by ecdaemon, so a check is needed
     #to verify the RUNNING state on it
     verifyServerIsStarted($serverName, $urlName, $user, $password);
-    
-    
 
   }
   
@@ -228,7 +235,7 @@
       
       my ($reportFilename, $reportName) = @_;
       
-      if($reportFilename && $reportFilename ne ''){    
+      if($reportFilename && $reportFilename ne ''){
           
           # get an EC object
           my $ec = new ElectricCommander();
@@ -243,12 +250,66 @@
             
   }
   
-  ########################################################################
-  # startServer - uses ecdaemon for starting a Server
+  
+  ##########################################################################
+  # getConfiguration - get the information of the configuration given
   #
   # Arguments:
-  #   -tomcat root: absolute path to Catalina Home
-  #   -script location: startup script location
+  #   -configName: name of the configuration to retrieve
+  #
+  # Returns:
+  #   -configToUse: hash containing the configuration information
+  #
+  #########################################################################
+  sub getConfiguration($){
+   
+      my ($configName) = @_;
+      
+      # get an EC object
+      my $ec = new ElectricCommander();
+      $ec->abortOnError(0);
+      
+      my %configToUse;
+      
+      my $proj = "$[/myProject/projectName]";
+      my $pluginConfigs = new ElectricCommander::PropDB($ec,"/projects/$proj/weblogic_cfgs");
+      
+      
+      my %configRow = $pluginConfigs->getRow($configName);
+      
+      # Check if configuration exists
+      unless(keys(%configRow)) {
+          print "Configuration '$configName' doesn't exist.\n";
+          exit ERROR;
+      }
+      
+      # Get user/password out of credential
+      my $xpath = $ec->getFullCredential($configRow{credential});
+      $configToUse{'user'} = $xpath->findvalue("//userName");
+      $configToUse{'password'} = $xpath->findvalue("//password");
+      
+      foreach my $c (keys %configRow) {
+          
+          #getting all values except the credential that was read previously
+          if($c ne CREDENTIAL_ID){
+              $configToUse{$c} = $configRow{$c};
+          }
+          
+      }
+      
+      return %configToUse;
+   
+  }  
+  
+    ########################################################################
+  # startServer - uses ecdaemon for starting a Managed Server
+  #
+  # Arguments:
+  #   -weblogic start managed server script: absolute path to managed server script
+  #   -server name: name of the instance of the managed server
+  #   -URL: URL (including protocol and port) of the Admin Server of the domain
+  #   -user: user of the admin server
+  #   -password: password of the admin server
   #
   # Returns:
   #   none
@@ -256,7 +317,7 @@
   ########################################################################
   sub startServer($){
    
-      my ($SCRIPT) = @_;
+      my ($SCRIPT, $serverName, $adminServerURL, $user, $pass) = @_;
    
       # $The quote and backslash constants are just a convenient way to represtent literal literal characters so it is obvious
       # in the concatentations. NOTE: BSLASH ends up being a single backslash, it needs to be doubled here so it does not
@@ -268,7 +329,7 @@
       # Ideally, the logs should exist in the step's workspace directory, but because the ecdaemon continues after the step is
       # completed the temporary drive mapping to the workspace is gone by the time we want to write to it. Instead, the log
       # and errors get the JOBSTEPID appended and it goes in the Tomcat root directory.
-      my $LOGNAMEBASE = "tomcatstart";
+      my $LOGNAMEBASE = "weblogicstartmanagedserver";
       
       # If we try quoting in-line to get the final string exactly right, it will be confusing and ugly. Only the last
       # parameter to our outer exec() needs _literal_ single and double quotes inside the string itself, so we build that
@@ -307,7 +368,7 @@
           # really important since the vital information goes directly to $CATALINA_HOME/logs/catalina.out anyway. It can lose
           # important error messages if the paths are bad, etc. so this will be a JIRA.
           
-          @systemcall = ("ecdaemon", "--", "sh", "-c", DQUOTE . $shellscript . DQUOTE);
+          @systemcall = ($shellscript . " &");
           
       }
       
@@ -316,37 +377,36 @@
       my %props;
     
       my $cmdLine = createCommandLine(\@systemcall);
-      $props{'startAdminServerLine'} = $cmdLine;
+      $props{'startManagedServerLine'} = $cmdLine;
       setProperties(\%props);
       
-      #print "cmd line: $cmdLine\n";
+      print "cmd line: $cmdLine\n";
       system($cmdLine);
 
   }
   
+  
   ##########################################################################
-  # verifyServerIsStarted - verifies if the specified administration server
+  # verifyServerIsStarted - verifies if the specified managed server
   #                            is running.
   #
   # Arguments:
   #   -ServerName: name of the server instance
-  #   -URL: Admin Server URL (including protocol and port)
-  #   -User: user for logging into the server
-  #   -Password: password for logging into the server
+  #   -URL: Managed Server URL (including protocol and port)
+  #   -User: user for logging into the admin server
+  #   -Password: password for logging into the admin server
   #
   # Returns:
   #   none
   #
-  #########################################################################
+  #########################################################################  
   sub verifyServerIsStarted($){
    
-      my ($serverName, $urlName, $user, $password)= @_;
+      my ($serverName, $managedServerURL, $user, $password)= @_;
       
       # create args array
       my @args = ();
       my %props;
-      
-      print "Verifying server $serverName is started...\n";
       
       my $ec = new ElectricCommander();
       $ec->abortOnError(0);
@@ -364,7 +424,7 @@ while state != runningVariableIndicator:
     print \"Checking state...\"
     
     try:
-        connect('$user','$password','$urlName')
+        connect('$user','$password','$managedServerURL')
         
     except WLSTException:
     
@@ -379,20 +439,13 @@ while state != runningVariableIndicator:
 domainRuntime()
 print \"Server State: $serverName is running\"";
 
-#      my $fileContent = "state = \"\"\ndomainRuntime()\n";
-#      
-#      $fileContent .= "while state != \"RUNNING\":
-#          state = cmo.lookupServerLifeCycleRuntime('$serverName').getState()\n
-#          print state\n\n";
-#      
-#      $fileContent .= "print \"$serverName is running\"";
-
       open (MYFILE, '>>verifyServer.jython');
       print MYFILE "$fileContent";
       close (MYFILE);
       
       push(@args, '"verifyServer.jython"');
      
+      
       my $cmdLine = createCommandLine(\@args);
       $props{'wlstLine'} = $cmdLine;
       setProperties(\%props);
@@ -404,26 +457,24 @@ print \"Server State: $serverName is running\"";
       print "$content\n";
       
       print "RESULT\n";
-      
       #evaluates if exit was successful to mark it as a success or fail the step
       if($? == SUCCESS){
        
-          $ec->setProperty("/myJobStep/outcome", 'success');
-          
           #set any additional error or warning conditions here
           #there may be cases in which an error occurs and the exit code is 0.
           #we want to set to correct outcome for the running step
           
           #verifying server actual state
           if($content =~ m/Server State: (.+)/){
-              
-              if($1 =~ m/(RUNNING|running)/){
+           
+              if($1 =~ m/(RUNNING|running|Successfully connected to managed Server)/){
                   
                   
                   #server is running
                   print "------------------------------------\n";
                   print "Server $serverName is up and running\n";
                   print "------------------------------------\n";
+                  $ec->setProperty("/myJobStep/outcome", 'success');
                   
               }else{
                   
@@ -436,12 +487,14 @@ print \"Server State: $serverName is running\"";
               }
               
           }else{
-              #Server may not be running, stats could not be read from the log.
-              #A warning is signaled.
-              print "-------------------------------------------------------\n";
-              print "Server may not be started, could not check actual state\n";
-              print "-------------------------------------------------------\n";
-              $ec->setProperty("/myJobStep/outcome", 'warning');
+           
+               #Server may not be running, stats could not be read from the log.
+               #A warning is signaled.
+               print "-------------------------------------------------------\n";
+               print "Server may not be started, could not check actual state\n";
+               print "-------------------------------------------------------\n";
+               $ec->setProperty("/myJobStep/outcome", 'warning');
+           
           }
           
       }else{
@@ -455,56 +508,6 @@ print \"Server State: $serverName is running\"";
       }
    
   }
-  
-  ##########################################################################
-  # getConfiguration - get the information of the configuration given
-  #
-  # Arguments:
-  #   -configName: name of the configuration to retrieve
-  #
-  # Returns:
-  #   -configToUse: hash containing the configuration information
-  #
-  #########################################################################
-  sub getConfiguration($){
-   
-      my ($configName) = @_;
-      
-      # get an EC object
-      my $ec = new ElectricCommander();
-      $ec->abortOnError(0);
-      
-      my %configToUse;
-      
-      my $proj = "$[/myProject/projectName]";
-      my $pluginConfigs = new ElectricCommander::PropDB($ec,"/projects/$proj/weblogic_cfgs");
-      
-      
-      my %configRow = $pluginConfigs->getRow($configName);
-      
-      # Check if configuration exists
-      unless(keys(%configRow)) {
-          print "Configuration $configName doesn't exist\n";
-          exit ERROR;
-      }
-      
-      # Get user/password out of credential
-      my $xpath = $ec->getFullCredential($configRow{credential});
-      $configToUse{'user'} = $xpath->findvalue("//userName");
-      $configToUse{'password'} = $xpath->findvalue("//password");
-      
-      foreach my $c (keys %configRow) {
-          
-          #getting all values except the credential that was read previously
-          if($c ne CREDENTIAL_ID){
-              $configToUse{$c} = $configRow{$c};
-          }
-          
-      }
-      
-      return %configToUse;
-   
-  }    
   
   main();
    

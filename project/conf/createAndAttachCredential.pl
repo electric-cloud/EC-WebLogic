@@ -42,6 +42,11 @@ $errors .= $ec->checkAllErrors($xpath);
 
 # Attach credential to steps that will need it
 $xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'StartAdminServer',
+     stepName => 'StartAdminServer'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
     {procedureName => 'StartManagedServer',
      stepName => 'StartInstance'});
 $errors .= $ec->checkAllErrors($xpath);

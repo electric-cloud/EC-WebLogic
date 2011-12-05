@@ -475,7 +475,7 @@ ntest "startAdminServer1", {}, sub {
       # get the value of the commands lines
       my $commandLine = $xpath->findvalue("//property[propertyName='startAdminServerLine']/value");
        
-      assertSubstring('E:\Oracle\Middleware\user_projects\domains\base_domain\bin\startWebLogic.cmd', $commandLine,  
+      assertSubstring($commandLine, 'E:\Oracle\Middleware\user_projects\domains\base_domain\bin\startWebLogic.cmd',  
            'command line doesn\'t match expected output');
       
 };
@@ -709,7 +709,7 @@ ntest "stopManagedServer1", {}, sub {
       # get the value of the commands lines
       my $commandLine = $xpath->findvalue("//property[propertyName='stopManagedServerLine']/value");
 
-      assertEq($commandLine, '"E:\Oracle\Middleware\user_projects\domains\base_domain\bin\stopManagedWebLogic.cmd" server1 t3://localhost:7001 admin abr66666', 
+      assertEq($commandLine, '"E:\Oracle\Middleware\user_projects\domains\base_domain\bin\stopManagedWebLogic.cmd" server1 t3://localhost:7001 admin abr66666 &', 
            'command line doesn\'t match expected output');
 
 };

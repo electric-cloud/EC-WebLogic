@@ -85,6 +85,8 @@
   $::gTargets = "$[targets]";
   $::gAdditionalOptions = "$[additionalcommands]";
   $::gEnvScriptPath = trim(q($[envscriptpath]));
+  $::gWebJarPath = trim(q($[webjarpath]));
+	
   
   # -------------------------------------------------------------------------
   # Main functions
@@ -109,7 +111,6 @@
     my %props;
     my %configuration;
     my $envLine = '';
-    
     my $ec = new ElectricCommander();
     $ec->abortOnError(0);
     
@@ -135,6 +136,10 @@
         push(@args, $::gJavaParams);
     }
     
+    if($::gWebJarPath && $::gWebJarPath ne '') {
+        $ENV{'CLASSPATH'} .= $::gWebJarPath;
+    }
+		
     #Setting java main class to execute
     push(@args, MAIN_CLASS);
 
@@ -179,13 +184,15 @@
     $props{'deployAppLine'} = $cmdLine;
     setProperties(\%props);
     
+		qx{whoami};
+				
     if($envLine ne ''){
         system($envLine);
     }
     
     #DO NOT UNCOMMENT THIS LINE ON PRODUCTION MODE
     #print "command line: $cmdLine\n";
-    
+				
     #execute command
     my $content = `$cmdLine`;
     
@@ -330,8 +337,15 @@
       
       # Get user/password out of credential
       my $xpath = $ec->getFullCredential($configRow{credential});
+			
+			while ( my ($key, $value) = each(%$xpath) ) {
+				print "$key => $value\n";
+			}
+			
       $configToUse{'user'} = $xpath->findvalue("//userName");
       $configToUse{'password'} = $xpath->findvalue("//password");
+          print "configToUse user: $configToUse{'user'}\n";
+          print "configToUse password: $configToUse{'password'}\n";
       
       foreach my $c (keys %configRow) {
           

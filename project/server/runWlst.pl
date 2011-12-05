@@ -81,6 +81,7 @@
   $::gScriptFileAbsPath = trim(q($[scriptfilepath]));
   $::gWLSTAbsPath = trim(q($[wlstpath]));
   $::gAdditionalOptions = "$[additionalcommands]";
+  $::gWebJarPath = trim(q($[webjarpath]));
   
   # -------------------------------------------------------------------------
   # Main functions
@@ -129,6 +130,10 @@
  	      
  	      push(@args, '"'.DEFAULT_GENERATED_SCRIPT_FILENAME.'"');
      
+    }
+    
+    if($::gWebJarPath && $::gWebJarPath ne '') {
+        $ENV{'CLASSPATH'} .= $::gWebJarPath;
     }
     
     my $cmdLine = createCommandLine(\@args);

@@ -479,7 +479,7 @@
       $ec->abortOnError(0);
       
       push(@args, '"'.$::gWLSTAbsPath.'"');
-
+      			
       #embedding jython code in the following scalar var
       my $fileContent = "state = \"\"\n
 try:\n
@@ -505,10 +505,10 @@ print \"Server State: \" + state\n";
      
       
       my $cmdLine = createCommandLine(\@args);
+			
+			
       $props{'wlstLine'} = $cmdLine;
       setProperties(\%props);
-      
-      print "Checking status of the server...\n\n";
       
       #execute command
       my $content = `$cmdLine`;

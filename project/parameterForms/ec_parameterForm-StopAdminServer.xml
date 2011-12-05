@@ -1,0 +1,8 @@
+<step>
+    <project>/plugins/EC-WebLogic/project</project>
+    <procedure>StopAdminServer</procedure>
+    <category>Application Server</category>
+    <editor>        <formElement>            <type>entry</type>            <label>Script Location:</label>            <property>scriptlocation</property>            <documentation>Absolute path of the stopWeblogic script, including filename and extension. i.e: "/path/to/stopWeblogic.cmd". (Required)</documentation>            <required>1</required>        </formElement>
+        <formElement>            <type>entry</type>            <label>Config Name:</label>            <property>configname</property>            <required>1</required>            <documentation>Configuration name from which the URL and credentials are retrieved. (Required).</documentation>        </formElement>
+    </editor>
+</step>

@@ -83,6 +83,7 @@
   $::gCommandToUse = "$[commandtouse]";
   $::gAdditionalOptions = trim(q($[additionalcommands]));
   $::gEnvScriptPath = trim(q($[envscriptpath]));
+  $::gWebJarPath = trim(q($[webjarpath]));
   
   # -------------------------------------------------------------------------
   # Main functions
@@ -131,6 +132,10 @@
     
     if($::gJavaParams && $::gJavaParams ne '') {
         push(@args, $::gJavaParams);
+    }
+    
+    if($::gWebJarPath && $::gWebJarPath ne '') {
+        $ENV{'CLASSPATH'} .= $::gWebJarPath;
     }
     
     #Setting java main class to execute
