@@ -1,5 +1,111 @@
 if ($promoteAction eq "promote") {
 
+   $batch->setProperty("/server/ec_customEditors/pluginStep/WebLogic - Check Page Status",
+        {
+           description => "Check the status of a page on a given URL.",
+           value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/checkPageStatusForm]'
+        }
+       );
+
+    $batch->setProperty("/server/ec_customEditors/pluginStep/WebLogic - Check Server Status",
+
+        {
+           description => "Check the status of the given server URL.",
+           value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/checkServerStatusForm]'
+        }
+
+       );
+   
+    $batch->setProperty("/server/ec_customEditors/pluginStep/WebLogic - Start Admin Server",
+
+        {
+           description => "Starts a WebLogic Admin Server.",
+           value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/startAdminServerForm]'
+        }
+
+       );
+       
+        $batch->setProperty("/server/ec_customEditors/pluginStep/WebLogic - Stop Admin Server",
+
+        {
+           description => "Stops a WebLogic admin server.",
+           value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/stopAdminServerForm]'
+        }
+
+       );
+       
+    $batch->setProperty("/server/ec_customEditors/pluginStep/WebLogic - Start Managed Server",
+
+        {
+           description => "Starts a WebLogic managed server.",
+           value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/startManagedServerForm]'
+        }
+
+       );
+       
+        $batch->setProperty("/server/ec_customEditors/pluginStep/WebLogic - Stop Managed Server",
+
+        {
+           description => "Stops a WebLogic managed server.",
+           value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/stopManagedServerForm]'
+        }
+
+       );
+       
+    $batch->setProperty("/server/ec_customEditors/pluginStep/WebLogic - Run Deployer",
+
+        {
+           description => "Runs weblogic.Deployer in a free-mode.",
+           value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/runDeployerForm]'
+        }
+
+       );
+       
+    $batch->setProperty("/server/ec_customEditors/pluginStep/WebLogic - Run WLST",
+
+        {
+           description => "Runs Jython scripts using weblogic.WLST.",
+           value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/runWlstForm]'
+        }
+
+       );
+       
+       $batch->setProperty("/server/ec_customEditors/pluginStep/WebLogic - Start App",
+
+        {
+           description => "Starts an application.",
+           value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/startAppForm]'
+        }
+
+       );
+       
+       $batch->setProperty("/server/ec_customEditors/pluginStep/WebLogic - Stop App",
+
+        {
+           description => "Stops an application.",
+           value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/stopAppForm]'
+        }
+
+       );
+       
+       $batch->setProperty("/server/ec_customEditors/pluginStep/WebLogic - Deploy App",
+
+        {
+           description => "Deploys or redeploys an application or module.",
+           value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/deployAppForm]'
+        }
+
+       );
+       
+       $batch->setProperty("/server/ec_customEditors/pluginStep/WebLogic - Undeploy App",
+
+        {
+           description => "Stops the deployment unit and removes staged files from target servers.",
+           value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/undeployAppForm]'
+        }
+
+       );
+
 } elsif ($promoteAction eq "demote") {
 
 }

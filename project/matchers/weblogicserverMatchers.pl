@@ -60,5 +60,17 @@ push (@::gMatchers,
    },
   },
   
+  {
+   id =>        "adminServerStarted",
+   pattern =>          q{Successfully connected to Admin Server '(.+)'.*},
+   action =>           q{
+    
+             my $description= "Admin Server $1 successfully started";
+                              
+              setProperty("summary", $description . "\n");
+    
+   },
+  },
+  
 );
 

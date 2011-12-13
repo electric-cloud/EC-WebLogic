@@ -1,7 +1,19 @@
 @files = (
  ['//property[propertyName="ui_forms"]/propertySheet/property[propertyName="WebLogicCreateConfigForm"]/value'  , 'WebLogicCreateConfigForm.xml'],
  ['//property[propertyName="ui_forms"]/propertySheet/property[propertyName="WebLogicEditConfigForm"]/value'  , 'WebLogicEditConfigForm.xml'],
- 
+ ['//property[propertyName="ui_forms"]/propertySheet/property[propertyName="checkPageStatusForm"]/value', 'parameterForms/ec_parameterForm-CheckPageStatus.xml'],
+ ['//property[propertyName="ui_forms"]/propertySheet/property[propertyName="checkServerStatusForm"]/value', 'parameterForms/ec_parameterForm-CheckServerStatus.xml'],
+ ['//property[propertyName="ui_forms"]/propertySheet/property[propertyName="startManagedServerForm"]/value', 'parameterForms/ec_parameterForm-StartManagedServer.xml'],
+ ['//property[propertyName="ui_forms"]/propertySheet/property[propertyName="stopManagedServerForm"]/value', 'parameterForms/ec_parameterForm-StopManagedServer.xml'],
+ ['//property[propertyName="ui_forms"]/propertySheet/property[propertyName="startAdminServerForm"]/value', 'parameterForms/ec_parameterForm-StartAdminServer.xml'],
+ ['//property[propertyName="ui_forms"]/propertySheet/property[propertyName="stopAdminServerForm"]/value', 'parameterForms/ec_parameterForm-StopAdminServer.xml'],
+ ['//property[propertyName="ui_forms"]/propertySheet/property[propertyName="runDeployerForm"]/value', 'parameterForms/ec_parameterForm-RunDeployer.xml'],
+ ['//property[propertyName="ui_forms"]/propertySheet/property[propertyName="runWlstForm"]/value', 'parameterForms/ec_parameterForm-RunWLST.xml'],
+ ['//property[propertyName="ui_forms"]/propertySheet/property[propertyName="startAppForm"]/value', 'parameterForms/ec_parameterForm-StartApp.xml'],
+ ['//property[propertyName="ui_forms"]/propertySheet/property[propertyName="stopAppForm"]/value', 'parameterForms/ec_parameterForm-StopApp.xml'],
+ ['//property[propertyName="ui_forms"]/propertySheet/property[propertyName="deployAppForm"]/value', 'parameterForms/ec_parameterForm-DeployApp.xml'],
+ ['//property[propertyName="ui_forms"]/propertySheet/property[propertyName="undeployAppForm"]/value', 'parameterForms/ec_parameterForm-UndeployApp.xml'],
+
  ['//property[propertyName="stopserver_matchers"]/value', 'matchers/stopServerMatchers.pl'],
  ['//property[propertyName="startserver_matchers"]/value', 'matchers/startServerMatchers.pl'],
  ['//property[propertyName="checkserver_matchers"]/value', 'matchers/checkServerMatchers.pl'],
