@@ -6,7 +6,7 @@
     <description>WebLogic Application Server</description>
     <configure>configurations.xml</configure>
     <help>EC-WebLogic_help.xml</help>
-    <author>Electric Cloud</author>
+    <author>Electric Cloud</author> 
     <authorUrl>http://www.electric-cloud.com/support</authorUrl>
     <category>Application Server</category>
     <commander-version min="3.6"/>
