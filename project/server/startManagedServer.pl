@@ -364,7 +364,7 @@
           # really important since the vital information goes directly to $CATALINA_HOME/logs/catalina.out anyway. It can lose
           # important error messages if the paths are bad, etc. so this will be a JIRA.
           
-          @systemcall = ($shellscript . ' '. $serverName . ' ' . $adminServerURL . ' -Dweblogic.management.username='. $user . ' -Dweblogic.management.password=' . $pass . ' &');
+          @systemcall = ($shellscript . ' '. $serverName . ' ' . $adminServerURL . ' &');
           
       }
       

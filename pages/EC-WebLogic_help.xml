@@ -940,6 +940,12 @@
         other resources onto the Managed Servers and use the
         Administration Server for configuration and management
         purposes only.</p>
+		<p>In order to start the managed server, a file
+		called "boot.properties" must be created in the path 
+		"$DOMAIN_DIR$/servers/myserver/security", and this file must have
+		the credentials needed to start the server. i.e: 
+		<p>username=weblogic</p>
+		<p>password=w3blogic</p>
 
         <table class="paramdefs">
             <thead>
