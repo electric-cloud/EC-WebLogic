@@ -60,14 +60,14 @@
 
     <h2>Oracle WebLogic Server</h2>
     <!-- The tool description should answer these kinds of questions:
-                    What is the tool itself is used for in the development
-                    process? Who would use this tool? What is the general use-case or
-                    problem that this tool solves? Look at the tool's documentation or
-                    website(s) to get their own descriptions. Look at Wikipedia or other
-                    outside websites. If there is a Hudson plugin, read their
-                    documentation for ideas, examples, etc. It's OK to copy word-for-word
-                    only if appropriate, such as FOSS - but not commercial software.
-                    -->
+                        What is the tool itself is used for in the development
+                        process? Who would use this tool? What is the general use-case or
+                        problem that this tool solves? Look at the tool's documentation or
+                        website(s) to get their own descriptions. Look at Wikipedia or other
+                        outside websites. If there is a Hudson plugin, read their
+                        documentation for ideas, examples, etc. It's OK to copy word-for-word
+                        only if appropriate, such as FOSS - but not commercial software.
+                        -->
 
     <p>WebLogic is a server software application that runs on a
     middle tier, between back-end databases and related
@@ -85,15 +85,17 @@
     <h3>WebLogic Links</h3>
 
     <ul>
-        <li><a href="http://www.oracle.com/technetwork/middleware/weblogic/overview/index.html">WebLogic home page</a></li>
+        <li>
+        <a href="http://www.oracle.com/technetwork/middleware/weblogic/overview/index.html">
+        WebLogic home page</a></li>
     </ul>
 
     <h2>Electric Commander Integration to WebLogic</h2>
     <!-- The integration description should answer the questions:
-                    How deep does our integration go? Why should I care? What general
-                    functionality does the plugin include? What functionality does
-                    the plugin omit?
-                    -->
+                        How deep does our integration go? Why should I care? What general
+                        functionality does the plugin include? What functionality does
+                        the plugin omit?
+                        -->
 
     <p>This plugin allows users to interact with the Oracle
     WebLogic server. The plugin usage is focused on application and
@@ -128,9 +130,9 @@
 
         <h3>Plugin Configuration</h3>
         <!-- If the plugin has separate configurations then include this section,
-                                                        otherwise omit this whole section. We don't need to have a configuration
-                                                        section that just says "There is no configuration for this plugin."
-                                                        -->
+                                                                otherwise omit this whole section. We don't need to have a configuration
+                                                                section that just says "There is no configuration for this plugin."
+                                                                -->
 
         <div class="sectionnote">
             Plugin configurations are sets of parameters that apply
@@ -148,11 +150,11 @@
             will open the Configuration page.
         </div>
         <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
-                                                        Parameter Panel, and the first sentence(s) of the description should be
-                                                        the same as the tooltip (if there is one). After that, the parameter
-                                                        description can go into greater detail about the parameter including
-                                                        valid value ranges and examples.
-                                                        -->
+                                                                Parameter Panel, and the first sentence(s) of the description should be
+                                                                the same as the tooltip (if there is one). After that, the parameter
+                                                                description can go into greater detail about the parameter including
+                                                                valid value ranges and examples.
+                                                                -->
 
         <p>To enable Commander to communicate with your WebLogic
         Application Server, create a WebLogic configuration,
@@ -185,10 +187,10 @@
                 <tr>
                     <td>Login as</td>
                     <!-- Describe *exactly* which user name and password go here.
-                                                                                                                                                        Is it for a particular machine? Is it for a website? Is it for a
-                                                                                                                                                        particular function in the tool? Does it depend on another
-                                                                                                                                                        parameter (like a machine name) for its meaning?
-                                                                                                                                                        -->
+                                                                                                                                                                            Is it for a particular machine? Is it for a website? Is it for a
+                                                                                                                                                                            particular function in the tool? Does it depend on another
+                                                                                                                                                                            parameter (like a machine name) for its meaning?
+                                                                                                                                                                            -->
 
                     <td><i>Username</i>: Provide the user name
                     Commander uses to communicate with the WebLogic
@@ -919,11 +921,11 @@
         protocol):</p><img src="../../plugins/EC-WebLogic/images/StartAdministrationServer/EC-WLSStartAdministrationServer3.png" />
          
 
-        <p>In the <b>StartAdminServer</b> step, click the Log icon to
-        see the diagnostic info. The output is similar to the
+        <p>In the <b>StartAdminServer</b> step, click the Log icon
+        to see the diagnostic info. The output is similar to the
         following diagnostic
         report:</p><img src="../../plugins/EC-WebLogic/images/StartAdministrationServer/EC-WLSStartAdministrationServer4.png" />
-    </div>
+        </div>
 
     <div class="procedure"
          id="StartManagedServer">
@@ -940,12 +942,16 @@
         other resources onto the Managed Servers and use the
         Administration Server for configuration and management
         purposes only.</p>
-		<p>In order to start the managed server, a file
-		called "boot.properties" must be created in the path 
-		"$DOMAIN_DIR$/servers/myserver/security", and this file must have
-		the credentials needed to start the server. i.e: 
-		<p>username=weblogic</p>
-		<p>password=w3blogic</p>
+
+        <p>In order to start the managed server, a file called
+        "boot.properties" must be created in the path
+        "$DOMAIN_DIR$/servers/myserver/security", and this file
+        must have the credentials needed to start the server.
+        i.e:</p>
+
+        <p>username=weblogic</p>
+
+        <p>password=w3blogic</p>
 
         <table class="paramdefs">
             <thead>
@@ -1309,10 +1315,10 @@
 
     <h1 class="sectionhead">Examples and Use Cases</h1>
     <!-- This section is for examples and use cases, including screenshots of the new Parameter Panel with example values filled in.
-                    Unfortunately, I can't tell you what exactly to put here, but it's OK to put what seems like too much! Include both parameter
-                    values and output where appropriate. Use a separate 'h2' header for each example. Under the h2 header try to stay with the style
-                    outline used above where possible.
-                    -->
+                        Unfortunately, I can't tell you what exactly to put here, but it's OK to put what seems like too much! Include both parameter
+                        values and output where appropriate. Use a separate 'h2' header for each example. Under the h2 header try to stay with the style
+                        outline used above where possible.
+                        -->
 
     <h2>Run WLST</h2>
     <hr style="margin-top: 20px; height: 2px; width: 100%;"
@@ -1362,7 +1368,8 @@
 
         <li>Added <b>weblogic jar Absolute Path</b> param into the
         DeployApp, UndeployApp, StartApp, StopApp, RunDeployer and
-        RunWLST method, needed in Linux environment to load WebLogic libreries.</li>
+        RunWLST method, needed in Linux environment to load
+        WebLogic libreries.</li>
     </ul>
 
     <h2>EC-WebLogic-1.1.3.0</h2>
