@@ -1,114 +1,3 @@
-if ($promoteAction eq "promote") {
-
-   $batch->setProperty("/server/ec_customEditors/pluginStep/WebLogic - Check Page Status",
-        {
-           description => "Check the status of a page on a given URL.",
-           value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/checkPageStatusForm]'
-        }
-       );
-
-    $batch->setProperty("/server/ec_customEditors/pluginStep/WebLogic - Check Server Status",
-
-        {
-           description => "Check the status of the given server URL.",
-           value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/checkServerStatusForm]'
-        }
-
-       );
-   
-    $batch->setProperty("/server/ec_customEditors/pluginStep/WebLogic - Start Admin Server",
-
-        {
-           description => "Starts a WebLogic Admin Server.",
-           value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/startAdminServerForm]'
-        }
-
-       );
-       
-        $batch->setProperty("/server/ec_customEditors/pluginStep/WebLogic - Stop Admin Server",
-
-        {
-           description => "Stops a WebLogic admin server.",
-           value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/stopAdminServerForm]'
-        }
-
-       );
-       
-    $batch->setProperty("/server/ec_customEditors/pluginStep/WebLogic - Start Managed Server",
-
-        {
-           description => "Starts a WebLogic managed server.",
-           value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/startManagedServerForm]'
-        }
-
-       );
-       
-        $batch->setProperty("/server/ec_customEditors/pluginStep/WebLogic - Stop Managed Server",
-
-        {
-           description => "Stops a WebLogic managed server.",
-           value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/stopManagedServerForm]'
-        }
-
-       );
-       
-    $batch->setProperty("/server/ec_customEditors/pluginStep/WebLogic - Run Deployer",
-
-        {
-           description => "Runs weblogic.Deployer in a free-mode.",
-           value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/runDeployerForm]'
-        }
-
-       );
-       
-    $batch->setProperty("/server/ec_customEditors/pluginStep/WebLogic - Run WLST",
-
-        {
-           description => "Runs Jython scripts using weblogic.WLST.",
-           value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/runWlstForm]'
-        }
-
-       );
-       
-       $batch->setProperty("/server/ec_customEditors/pluginStep/WebLogic - Start App",
-
-        {
-           description => "Starts an application.",
-           value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/startAppForm]'
-        }
-
-       );
-       
-       $batch->setProperty("/server/ec_customEditors/pluginStep/WebLogic - Stop App",
-
-        {
-           description => "Stops an application.",
-           value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/stopAppForm]'
-        }
-
-       );
-       
-       $batch->setProperty("/server/ec_customEditors/pluginStep/WebLogic - Deploy App",
-
-        {
-           description => "Deploys or redeploys an application or module.",
-           value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/deployAppForm]'
-        }
-
-       );
-       
-       $batch->setProperty("/server/ec_customEditors/pluginStep/WebLogic - Undeploy App",
-
-        {
-           description => "Stops the deployment unit and removes staged files from target servers.",
-           value       => '$[/plugins/@PLUGIN_KEY@-@PLUGIN_VERSION@/project/ui_forms/undeployAppForm]'
-        }
-
-       );
-
-} elsif ($promoteAction eq "demote") {
-
-}
 
 if ($upgradeAction eq "upgrade") {
     my $query = $commander->newBatch();
@@ -241,3 +130,82 @@ if ($upgradeAction eq "upgrade") {
         }
     }
 }
+
+my %startApp = (
+    label       => "WebLogic - Start App",
+    procedure   => "StartApp",
+    description => "Starts an application.",
+    category    => "Application Server"
+);
+my %stopApp = (
+    label       => "WebLogic - Stop App",
+    procedure   => "StopApp",
+    description => "Stops an application.",
+    category    => "Application Server"
+);
+my %checkServerStatus = (
+    label       => "WebLogic - Check Server Status",
+    procedure   => "CheckServerStatus",
+    description => "Check the status of the given server URL.",
+    category    => "Application Server"
+);
+my %deployApp = (
+    label       => "WebLogic - Deploy App",
+    procedure   => "DeployApp",
+    description => "Deploys or redeploys an application or module using the weblogic.",
+    category    => "Application Server"
+);
+my %runDeployer = (
+    label       => "WebLogic - Run Deployer",
+    procedure   => "RunDeployer",
+    description => "Runs weblogic.Deployer in a free-mode.",
+    category    => "Application Server"
+);
+my %undeployApp = (
+    label       => "WebLogic - Undeploy App",
+    procedure   => "UndeployApp",
+    description => "Stops the deployment unit and removes staged files from target servers.",
+    category    => "Application Server"
+);
+my %runWLST = (
+    label       => "WebLogic - Run WLST",
+    procedure   => "RunWLST",
+    description => "Runs Jython scripts using weblogic.WLST.",
+    category    => "Application Server"
+);
+my %startAdminServer = (
+    label       => "WebLogic - Start Admin Server",
+    procedure   => "StartAdminServer",
+    description => "Starts the WebLogic Admin Server.",
+    category    => "Application Server"
+);
+my %stopAdminServer = (
+    label       => "WebLogic - Stop Admin Server",
+    procedure   => "StopAdminServer",
+    description => "Stops the WebLogic Admin Server.",
+    category    => "Application Server"
+);
+my %startManagedServer = (
+    label       => "WebLogic - Start Managed Server",
+    procedure   => "StartManagedServer",
+    description => "Starts a WebLogic Managed Server.",
+    category    => "Application Server"
+);
+my %stopManagedServer = (
+    label       => "WebLogic - Stop Managed Server",
+    procedure   => "StopManagedServer",
+    description => "Stops a WebLogic Managed Server.",
+    category    => "Application Server"
+);
+my %checkPageStatus = (
+    label       => "WebLogic - Check Page Status",
+    procedure   => "CheckPageStatus",
+    description => "Check the status of the given page URL.",
+    category    => "Application Server"
+);
+@::createStepPickerSteps = (\%startApp, \%stopApp,
+                            \%checkServerStatus, \%deployApp,
+                            \%runDeployer, \%undeployApp,
+                            \%runWLST, \%startAdminServer,
+                            \%stopAdminServer, \%startManagedServer,
+                            \%stopManagedServer, \%checkPageStatus);

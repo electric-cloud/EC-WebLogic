@@ -1,13 +1,8 @@
-<step>
-    <project>/plugins/EC-WebLogic/project</project>
-    <procedure>StartAdminServer</procedure>
-    <category>Application Server</category>
-    <editor>        <formElement>            <type>entry</type>            <label>Script Location:</label>            <property>scriptlocation</property>            <documentation>Absolute path of the startWeblogic script, including filename and extension. i.e: "/path/to/startWeblogic.cmd". (Required)</documentation>            <required>1</required>        </formElement>                <formElement>
-            <type>entry</type>
-            <label>Admin Server Instance Name:</label>
-            <property>admininstancename</property>
-            <required>1</required>
-            <documentation>Instance name of the Admin Server to start. i.e: "AdminServer". (Required)</documentation>        </formElement>
-        <formElement>            <type>entry</type>            <label>Config Name:</label>            <property>configname</property>            <required>1</required>            <documentation>Configuration name from which the Admin URL and credentials will be read. (Required)</documentation>        </formElement>                <formElement>            <type>entry</type>            <label>WLST Absolute Path:</label>            <property>wlstabspath</property>            <required>1</required>            <documentation>Absolute path to WLST. i.e: "/path/to/wlst.cmd" or "wlst.sh". (Required)</documentation>        </formElement>
-    </editor>
-</step>
+<editor>	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#StartAdminServer</help>		<formElement>		<type>entry</type>		<label>Script Location:</label>		<property>scriptlocation</property>		<documentation>Absolute path of the startWeblogic script, including filename and extension. i.e: '/path/to/startWeblogic.cmd'. (Required)</documentation>		<required>1</required>	</formElement>		<formElement>
+		<type>entry</type>
+		<label>Admin Server Instance Name:</label>
+		<property>admininstancename</property>
+		<required>1</required>
+		<documentation>Instance name of the Admin Server to start. i.e: 'AdminServer'. (Required)</documentation>	</formElement>
+	<formElement>		<type>entry</type>		<label>Config Name:</label>		<property>configname</property>		<required>1</required>		<documentation>Configuration name from which the Admin URL and credentials will be read. (Required)</documentation>	</formElement>		<formElement>		<type>entry</type>		<label>WLST Absolute Path:</label>		<property>wlstabspath</property>		<required>1</required>		<documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)</documentation>	</formElement>
+</editor>
