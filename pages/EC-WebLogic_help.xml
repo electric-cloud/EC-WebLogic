@@ -9,9 +9,7 @@
   "content-type" />
 
   <title>Electric Commander Plugin for WebLogic</title>
-  <link rel="stylesheet" href=
-  "../../plugins/EC-WebLogic/pluginhelp.css" type="text/css" media=
-  "screen" />
+  <link rel="stylesheet" href= "../../plugins/@PLUGIN_KEY@/pluginhelp.css" type="text/css" media= "screen" />
 </head>
 
 <body>
