@@ -89,26 +89,24 @@
     section that just says "There is no configuration for this plugin."
     -->
 
-      <div>
+      <p>
         Plugin configurations are sets of parameters that apply
         across some or all of the plugin's procedures. They are
         intended to reduce repetition of common values, create
         predefined sets of parameters for end users, and to
         securely store credentials where needed. Each configuration
         is given a unique name that is entered in designated
-        parameters on procedures that use them.<br />
+        parameters on procedures that use them.<br /><br />
         Plugin configurations are created by going to the Electric
-        Commander "Administration" tab, then to the "Plugins"
-        sub-tab. On the right side of the line for the specific
-        plugin, there is a "Configure" link which will open the
-        Configuration page.
-      </div>
+        Commander "Administration" tab, then to the "Defect
+        Tracking" sub-tab.
+      </p>
       <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
-        Parameter Panel, and the first sentence(s) of the description should be
-        the same as the tooltip (if there is one). After that, the parameter
-        description can go into greater detail about the parameter including
-        valid value ranges and examples.
-        -->
+    Parameter Panel, and the first sentence(s) of the description should be
+    the same as the tooltip (if there is one). After that, the parameter
+    description can go into greater detail about the parameter including
+    valid value ranges and examples.
+    -->
 
       <p>To enable Commander to communicate with your WebLogic
       Application Server, create a WebLogic configuration,
