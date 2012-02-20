@@ -125,82 +125,104 @@ if ($upgradeAction eq "upgrade") {
                 procedureName => 'CheckPageStatus',
                 stepName => 'CheckPageStatus'
             });
-
-
+            
+            # Attach the credential to the appropriate steps
+            $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
+                procedureName => 'StartNodeManager',
+                stepName => 'StartNodeManager'
+            });
+            
+            # Attach the credential to the appropriate steps
+            $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
+                procedureName => 'StopNodeManager',
+                stepName => 'StopNodeManager'
+            });
         }
     }
 }
 
 my %startApp = (
-    label       => "WebLogic - Start App",
+    label       => "@PLUGIN_KEY@ - Start App",
     procedure   => "StartApp",
     description => "Starts an application.",
     category    => "Application Server"
 );
 my %stopApp = (
-    label       => "WebLogic - Stop App",
+    label       => "@PLUGIN_KEY@ - Stop App",
     procedure   => "StopApp",
     description => "Stops an application.",
     category    => "Application Server"
 );
 my %checkServerStatus = (
-    label       => "WebLogic - Check Server Status",
+    label       => "@PLUGIN_KEY@ - Check Server Status",
     procedure   => "CheckServerStatus",
     description => "Check the status of the given server URL.",
     category    => "Application Server"
 );
 my %deployApp = (
-    label       => "WebLogic - Deploy App",
+    label       => "@PLUGIN_KEY@ - Deploy App",
     procedure   => "DeployApp",
     description => "Deploys or redeploys an application or module using the weblogic.",
     category    => "Application Server"
 );
 my %runDeployer = (
-    label       => "WebLogic - Run Deployer",
+    label       => "@PLUGIN_KEY@ - Run Deployer",
     procedure   => "RunDeployer",
     description => "Runs weblogic.Deployer in a free-mode.",
     category    => "Application Server"
 );
 my %undeployApp = (
-    label       => "WebLogic - Undeploy App",
+    label       => "@PLUGIN_KEY@ - Undeploy App",
     procedure   => "UndeployApp",
     description => "Stops the deployment unit and removes staged files from target servers.",
     category    => "Application Server"
 );
 my %runWLST = (
-    label       => "WebLogic - Run WLST",
+    label       => "@PLUGIN_KEY@ - Run WLST",
     procedure   => "RunWLST",
     description => "Runs Jython scripts using weblogic.WLST.",
     category    => "Application Server"
 );
 my %startAdminServer = (
-    label       => "WebLogic - Start Admin Server",
+    label       => "@PLUGIN_KEY@ - Start Admin Server",
     procedure   => "StartAdminServer",
     description => "Starts the WebLogic Admin Server.",
     category    => "Application Server"
 );
 my %stopAdminServer = (
-    label       => "WebLogic - Stop Admin Server",
+    label       => "@PLUGIN_KEY@ - Stop Admin Server",
     procedure   => "StopAdminServer",
     description => "Stops the WebLogic Admin Server.",
     category    => "Application Server"
 );
 my %startManagedServer = (
-    label       => "WebLogic - Start Managed Server",
+    label       => "@PLUGIN_KEY@ - Start Managed Server",
     procedure   => "StartManagedServer",
     description => "Starts a WebLogic Managed Server.",
     category    => "Application Server"
 );
 my %stopManagedServer = (
-    label       => "WebLogic - Stop Managed Server",
+    label       => "@PLUGIN_KEY@ - Stop Managed Server",
     procedure   => "StopManagedServer",
     description => "Stops a WebLogic Managed Server.",
     category    => "Application Server"
 );
 my %checkPageStatus = (
-    label       => "WebLogic - Check Page Status",
+    label       => "@PLUGIN_KEY@ - Check Page Status",
     procedure   => "CheckPageStatus",
     description => "Check the status of the given page URL.",
+    category    => "Application Server"
+);
+my %startNodeManager = (
+    label       => "@PLUGIN_KEY@ - Start Node Manager",
+    procedure   => "StartNodeManager",
+    description => "Starts the WebLogic Node Manager.",
+    category    => "Application Server"
+);
+my %stopNodeManager = (
+    label       => "@PLUGIN_KEY@ - Stop Node Manager",
+    procedure   => "StopNodeManager",
+    description => "Stops the WebLogic Node Manager.",
     category    => "Application Server"
 );
 @::createStepPickerSteps = (\%startApp, \%stopApp,
@@ -208,4 +230,4 @@ my %checkPageStatus = (
                             \%runDeployer, \%undeployApp,
                             \%runWLST, \%startAdminServer,
                             \%stopAdminServer, \%startManagedServer,
-                            \%stopManagedServer, \%checkPageStatus);
+                            \%stopManagedServer, \%checkPageStatus, \%startNodeManager, \%stopNodeManager);

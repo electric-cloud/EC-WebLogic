@@ -1,0 +1,8 @@
+<editor>	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#StartAdminServer</help>		<formElement>		<type>entry</type>		<label>Script Location:</label>		<property>scriptlocation</property>		<documentation>Absolute path of the startWeblogic script, including filename and extension. i.e: '/path/to/startWeblogic.cmd'. (Required)</documentation>		<required>1</required>	</formElement>		<formElement>
+		<type>entry</type>
+		<label>Admin Server Instance Name:</label>
+		<property>admininstancename</property>
+		<required>1</required>
+		<documentation>Instance name of the Admin Server to start. i.e: 'AdminServer'. (Required)</documentation>	</formElement>
+	<formElement>		<type>entry</type>		<label>Config Name:</label>		<property>configname</property>		<required>1</required>		<documentation>Configuration name from which the Admin URL and credentials will be read. (Required)</documentation>	</formElement>		<formElement>		<type>entry</type>		<label>WLST Absolute Path:</label>		<property>wlstabspath</property>		<required>1</required>		<documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)</documentation>	</formElement>	<formElement>		<type>entry</type>		<label>Maximum Elapsed Time:</label>		<property>maxelapsedtime</property>		<documentation>Defines the maximum time in seconds that the job will try to check into the server. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).</documentation>		<required>0</required>	</formElement>
+</editor>

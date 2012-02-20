@@ -1,0 +1,47 @@
+@files = (
+	['//property[propertyName="ui_forms"]/propertySheet/property[propertyName="WebLogicCreateConfigForm"]/value'  , 'WebLogicCreateConfigForm.xml'],
+	['//property[propertyName="ui_forms"]/propertySheet/property[propertyName="WebLogicEditConfigForm"]/value'  , 'WebLogicEditConfigForm.xml'],
+	 
+	['//property[propertyName="stopserver_matchers"]/value', 'matchers/stopServerMatchers.pl'],
+	['//property[propertyName="startserver_matchers"]/value', 'matchers/startServerMatchers.pl'],
+	['//property[propertyName="checkserver_matchers"]/value', 'matchers/checkServerMatchers.pl'],
+	['//property[propertyName="startnodemanager_matchers"]/value', 'matchers/startNodeManagerMatchers.pl'],
+	['//property[propertyName="checkpage_matchers"]/value', 'matchers/checkPageMatchers.pl'], 
+	['//property[propertyName="deployer_matchers"]/value', 'matchers/deployerMatchers.pl'],
+	['//property[propertyName="weblogicserver_matchers"]/value', 'matchers/weblogicserverMatchers.pl'],
+		
+	['//procedure[procedureName="StartAdminServer"]/step[stepName="StartAdminServer"]/command' , 'server/startAdministrationServer.pl'],
+	['//procedure[procedureName="StartManagedServer"]/step[stepName="StartInstance"]/command' , 'server/startManagedServer.pl'],
+	['//procedure[procedureName="StartNodeManager"]/step[stepName="StartNodeManager"]/command' , 'server/startNodeManager.pl'],
+	['//procedure[procedureName="StopManagedServer"]/step[stepName="StopInstance"]/command' , 'server/stopManagedServer.pl'],
+	['//procedure[procedureName="StopAdminServer"]/step[stepName="StopAdminServer"]/command' , 'server/stopAdministrationServer.pl'],
+	['//procedure[procedureName="CheckServerStatus"]/step[stepName="CheckServerStatus"]/command' , 'server/checkServerStatus.pl'],
+	['//procedure[procedureName="CheckPageStatus"]/step[stepName="CheckPageStatus"]/command' , 'server/checkPageStatus.pl'], 
+	['//procedure[procedureName="RunDeployer"]/step[stepName="RunJob"]/command' , 'server/runDeployer.pl'],
+	['//procedure[procedureName="RunWLST"]/step[stepName="RunWLST"]/command' , 'server/runWlst.pl'],
+	['//procedure[procedureName="StartApp"]/step[stepName="StartApp"]/command' , 'server/startApp.pl'],
+	['//procedure[procedureName="StopApp"]/step[stepName="StopApp"]/command' , 'server/stopApp.pl'],
+	['//procedure[procedureName="DeployApp"]/step[stepName="DeployApp"]/command' , 'server/deployApp.pl'],
+	['//procedure[procedureName="UndeployApp"]/step[stepName="UndeployApp"]/command' , 'server/undeployApp.pl'], 
+	
+	['//procedure[procedureName="CreateConfiguration"]/step[stepName="CreateConfiguration"]/command' , 'conf/createcfg.pl'],
+	['//procedure[procedureName="CreateConfiguration"]/step[stepName="CreateAndAttachCredential"]/command' , 'conf/createAndAttachCredential.pl'],
+	['//procedure[procedureName="DeleteConfiguration"]/step[stepName="DeleteConfiguration"]/command' , 'conf/deletecfg.pl'],
+	
+	['//property[propertyName="ec_setup"]/value', 'ec_setup.pl'], 
+	
+	['//procedure[procedureName="StartAdminServer"]/propertySheet/property[propertyName="ec_parameterForm"]/value', 'parameterForms/ec_parameterForm-StartAdminServer.xml'],
+	['//procedure[procedureName="StartManagedServer"]/propertySheet/property[propertyName="ec_parameterForm"]/value', 'parameterForms/ec_parameterForm-StartManagedServer.xml'],
+	['//procedure[procedureName="StartNodeManager"]/propertySheet/property[propertyName="ec_parameterForm"]/value', 'parameterForms/ec_parameterForm-StartNodeManager.xml'],
+	['//procedure[procedureName="StopManagedServer"]/propertySheet/property[propertyName="ec_parameterForm"]/value', 'parameterForms/ec_parameterForm-StopManagedServer.xml'],
+	['//procedure[procedureName="StopAdminServer"]/propertySheet/property[propertyName="ec_parameterForm"]/value', 'parameterForms/ec_parameterForm-StopAdminServer.xml'],
+	['//procedure[procedureName="CheckServerStatus"]/propertySheet/property[propertyName="ec_parameterForm"]/value', 'parameterForms/ec_parameterForm-CheckServerStatus.xml'],
+	['//procedure[procedureName="CheckPageStatus"]/propertySheet/property[propertyName="ec_parameterForm"]/value', 'parameterForms/ec_parameterForm-CheckPageStatus.xml'],
+	['//procedure[procedureName="RunDeployer"]/propertySheet/property[propertyName="ec_parameterForm"]/value', 'parameterForms/ec_parameterForm-RunDeployer.xml'],
+	['//procedure[procedureName="RunWLST"]/propertySheet/property[propertyName="ec_parameterForm"]/value', 'parameterForms/ec_parameterForm-RunWLST.xml'],
+	['//procedure[procedureName="StartApp"]/propertySheet/property[propertyName="ec_parameterForm"]/value', 'parameterForms/ec_parameterForm-StartApp.xml'],
+	['//procedure[procedureName="StopApp"]/propertySheet/property[propertyName="ec_parameterForm"]/value', 'parameterForms/ec_parameterForm-StopApp.xml'],
+	['//procedure[procedureName="DeployApp"]/propertySheet/property[propertyName="ec_parameterForm"]/value', 'parameterForms/ec_parameterForm-DeployApp.xml'],
+	['//procedure[procedureName="UndeployApp"]/propertySheet/property[propertyName="ec_parameterForm"]/value', 'parameterForms/ec_parameterForm-UndeployApp.xml'],	
+
+);

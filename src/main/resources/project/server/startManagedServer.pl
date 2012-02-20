@@ -36,11 +36,17 @@
        SUCCESS => 0,
        ERROR   => 1,
        
+       TRUE => 1,
+       FALSE => 0,
+       
        PLUGIN_NAME => 'EC-WebLogic',
        WIN_IDENTIFIER => 'MSWin32',
        CREDENTIAL_ID => 'credential',
-       SERVER_RUNNING_STATE => 'RUNNING',
-       
+	   
+       SERVER_RUNNING_STATE => 'RUNNING',       
+       SERVER_NOT_RUNNING_STATE => 'NOT_RUNNING',
+       SERVER_UNEXPECTED_RESPONSE => 'unexpectedresponse',
+	   
        SQUOTE => q{'},
        DQUOTE => q{"},
        BSLASH => q{\\},
@@ -79,11 +85,14 @@
   # Variables
   # -------------------------------------------------------------------------
   
-  $::gInstanceName = trim(q($[instancename]));
+  $::gInstanceName = "\"" . trim(q($[instancename])) . "\"";
   $::gScriptLocation = trim(q($[scriptlocation]));
   $::gConfigurationName = trim(q($[configname]));
   $::gWLSTAbsPath = trim(q($[wlstabspath]));
-  $::gAdminServerURL = trim(q($[adminserverurl]));
+  $::gMaxElapsedTime = "$[maxelapsedtime]";
+  $::gIntervalWaitTime = 10;
+  $::gSuccessCriteria = SERVER_RUNNING_STATE;
+  $::gManagedServerURL = trim(q($[adminserverurl]));
    
   # -------------------------------------------------------------------------
   # Main functions
@@ -116,6 +125,9 @@
     my $serverName = '';
     my $urlName = '';
     
+    my $elapsedTime = 0;
+    my $startTimeStamp = time;
+	
     if($::gConfigurationName ne ''){
         %configuration = getConfiguration($::gConfigurationName);
     }
@@ -152,12 +164,192 @@
     }
 
     #start managed server using ecdaemon
-    startServer($::gScriptLocation, $serverName, $::gAdminServerURL, $user, $password);
+    startServer($::gScriptLocation, $serverName, $user, $password);
     
-    #almost none of the log is captured by ecdaemon, so a check is needed
-    #to verify the RUNNING state on it
-    verifyServerIsStarted($serverName, $urlName, $user, $password);
+	
+	
+    sleep 15;
+    #checks if max elapsed time is default
+    if($::gMaxElapsedTime eq ''){
+        $::gMaxElapsedTime = 0;
+    }
+	
+    #check elapsed time is not negative
+    if($::gMaxElapsedTime < 0){
+     
+        print 'Elapsed time cannot be a negative number. Enter a number greater or equal than zero.';
+        exit ERROR;
+        
+    }
+    
+    #getting all info from the configuration, url, user and pass
+    if($::gConfigurationName ne ''){
+     
+        #retrieve configuration hash
+        %configuration = getConfiguration($::gConfigurationName);
+        
+        #insert into params the respective values by reference
+        getDataFromConfig(\%configuration, \$urlName, \$user, \$password);
+        
+    }
 
+    #setting variables for iterating
+    my $retries = 0;
+    my $attempts = 0;
+    my $continueFlag = 0;
+    my $successCriteriaReached = FALSE;
+    
+    do{
+        
+        $attempts++;
+        print "------------\nATTEMPT $attempts\n";
+        
+        #first attempt will always be done, no need to be forced to sleep
+        if($retries > 0){
+           
+           my $testtimestart = time;
+           
+           print "Waiting $::gIntervalWaitTime seconds before starting Attempt #$attempts...\n\n";
+           
+           #sleeping process during N seconds
+           sleep $::gIntervalWaitTime;
+           
+        }
+        
+        #check the status of the server in a round
+        my $obtainedResult = verifyServerIsStarted(
+            $::gInstanceName, $user, $password);
+        
+        #does the expected criteria match the obtained criteria?
+        if($::gSuccessCriteria eq $obtainedResult){
+            $successCriteriaReached = TRUE;
+        }else{
+            $successCriteriaReached = FALSE;
+        }
+        
+        print "\nCriteria reached: ";
+        
+        if($successCriteriaReached == TRUE){
+         
+            print "True\n";
+         
+        }else{
+           
+            print "False\n";
+            
+        }
+        
+        $elapsedTime = time - $startTimeStamp;
+        print "Elapsed time so far: $elapsedTime seconds\n";
+        $retries++;
+        
+        #evaluate if loop has to be continued
+        $continueFlag = keepChecking($successCriteriaReached, $elapsedTime);
+
+        print "------------\n\n";
+     
+    }while($continueFlag == TRUE);
+    
+    #print stats
+    print "\n---------------------------------\n";
+    print "URL: $urlName\n";
+    print "Attempts of connecting to the server: $attempts\n";
+    print "Total elapsed time: $elapsedTime seconds";
+    print "---------------------------------\n";
+    
+    $props{'urlName'} = $urlName;
+    
+    setProperties(\%props);
+
+  }
+
+  #########################################################################
+  # getDataFromConfig - gets the data required from the config for this procedure
+  #                        and pass it by reference to the actual function's
+  #                        parameters.
+  #
+  # Arguments:
+  #   -configuration: hash containing the data from the config
+  #   -url: parameter that will receive the value of the URL, must be passed
+  #              as reference.
+  #   -user: config's user whose value is set in this function, must be passed
+  #              as reference.
+  #   -pass: config's password whose value is set in this function, must be passed
+  #              as reference.
+  #
+  # Returns:
+  #   none
+  #
+  #########################################################################  
+  sub getDataFromConfig($){
+   
+        my($configuration, $url, $user, $pass) = @_;
+        
+        if($configuration->{'weblogic_url'} && $configuration->{'weblogic_url'} ne ''){
+            ${$url} = $configuration->{'weblogic_url'};
+        }else{
+            print "Error: Could not get URL from configuration '$::gConfigurationName'\n";
+            exit ERROR;
+        }
+        
+        if($configuration->{'user'} && $configuration->{'user'} ne ''){
+            ${$user} = $configuration->{'user'};
+        }else{
+            #print "Error: Could not get user from configuration '$::gConfigName'\n";
+            #exit ERROR;
+        }
+        
+        if($configuration->{'password'} && $configuration->{'password'} ne ''){
+            ${$pass} = $configuration->{'password'};
+        }else{
+            #print "Error: Could not get password from configuration $::gConfigName'\n";
+            #exit ERROR;
+        }
+   
+  }
+    
+  ########################################################################
+  # keepChecking - determines if analysis must be continued or aborted
+  #
+  # Arguments:
+  #   -successCriteriaReached: indicates if the selected success criteria by
+  #          the user matches the criteria so far.
+  #   -elapsedTime: current analysis' elapsed time
+  #
+  # Returns:
+  #   -continueFlag: determines if process must continued or terminated
+  #                      (1 => continued. 0 => terminated)
+  #
+  #########################################################################  
+  sub keepChecking($){
+   
+      my ($successCriteriaReached, $elapsedTime) = @_;
+      my $continueFlag;
+      
+      #If entered max elapsed time is default or criteria is reached, 
+      # evaluation is done.
+      #If current elapsed time is lower than the maximum established 
+      # by the user and criteria has not been reached, evaluation 
+      # shall continue.
+      #If current elapsed is equal or greater, than the maximum permitted. The
+      # evaluation must be terminated.
+      if($::gMaxElapsedTime == 0 || $successCriteriaReached == TRUE){
+       
+          $continueFlag = FALSE;
+       
+      }elsif($elapsedTime < $::gMaxElapsedTime && $successCriteriaReached == FALSE){
+         
+          $continueFlag = TRUE;
+       
+      }elsif($elapsedTime >= $::gMaxElapsedTime){
+       
+          $continueFlag = FALSE;
+         
+      }
+      #print "max time $::gMaxElapsedTime continue flag $continueFlag";
+      
+      return $continueFlag;
+   
   }
   
   ########################################################################
@@ -214,38 +406,6 @@
           $ec->setProperty("/myCall/$key", $val);
       }
   }
-  
-  ########################################################################
-  # registerReports - creates a link for registering the generated report
-  # in the job step detail
-  #
-  # Arguments:
-  #   -reportFilename: name of the archive which will be linked to the job detail
-  #   -reportName: name which will be given to the generated linked report
-  #
-  # Returns:
-  #   none
-  #
-  ########################################################################
-  sub registerReports($){
-      
-      my ($reportFilename, $reportName) = @_;
-      
-      if($reportFilename && $reportFilename ne ''){
-          
-          # get an EC object
-          my $ec = new ElectricCommander();
-          $ec->abortOnError(0);
-          
-          $ec->setProperty("/myJob/artifactsDirectory", '');
-                  
-          $ec->setProperty("/myJob/report-urls/" . $reportName, 
-             "jobSteps/$[jobStepId]/" . $reportFilename);
-              
-      }
-            
-  }
-  
   
   ##########################################################################
   # getConfiguration - get the information of the configuration given
@@ -313,7 +473,7 @@
   ########################################################################
   sub startServer($){
    
-      my ($SCRIPT, $serverName, $adminServerURL, $user, $pass) = @_;
+      my ($SCRIPT, $serverName, $user, $pass) = @_;
    
       # $The quote and backslash constants are just a convenient way to represtent literal literal characters so it is obvious
       # in the concatentations. NOTE: BSLASH ends up being a single backslash, it needs to be doubled here so it does not
@@ -350,7 +510,7 @@
           my $commandline = BSLASH . BSLASH . BSLASH . DQUOTE . $shellscript . BSLASH . BSLASH . BSLASH . DQUOTE;
           my $logfile = $LOGNAMEBASE . "-" . $ENV{'COMMANDER_JOBSTEPID'} . ".log";
           my $errfile = $LOGNAMEBASE . "-" . $ENV{'COMMANDER_JOBSTEPID'} . ".err";
-          $commandline = SQUOTE . $commandline . ' ' . $serverName . ' ' . $adminServerURL .  " 1>" . $logfile . " 2>" . $errfile . SQUOTE;
+          $commandline = SQUOTE . $commandline . ' ' . $serverName . " 1>" . $logfile . " 2>" . $errfile . SQUOTE;
           $commandline = "exec(" . $commandline . ");";
           $commandline = DQUOTE . $commandline . DQUOTE;
           @systemcall = ("ecdaemon", "--", "ec-perl", "-e", $commandline);
@@ -364,7 +524,7 @@
           # really important since the vital information goes directly to $CATALINA_HOME/logs/catalina.out anyway. It can lose
           # important error messages if the paths are bad, etc. so this will be a JIRA.
           
-          @systemcall = ($shellscript . ' '. $serverName . ' ' . $adminServerURL . ' &');
+          @systemcall = ($shellscript . ' '. $serverName . ' &');
           
       }
       
@@ -398,8 +558,10 @@
   #########################################################################  
   sub verifyServerIsStarted($){
    
-      my ($serverName, $managedServerURL, $user, $password)= @_;
+      my ($serverName, $user, $password)= @_;
       
+      my $obtainedResult = '';
+	  
       # create args array
       my @args = ();
       my %props;
@@ -410,30 +572,21 @@
       push(@args, '"'.$::gWLSTAbsPath.'"');
 
       #embedding jython code in the following scalar var
-      my $fileContent = "
-state = \"\"
-x = 1
-runningVariableIndicator = \"RUNNING\"
+      my $fileContent = "state = \"\"\n
+try:\n
+	connect('$user','$password','$::gManagedServerURL')\n
+	
+except WLSTException:\n
 
-while state != runningVariableIndicator:
-    
-    print \"Checking state...\"
-    
-    try:
-        connect('$user','$password','$managedServerURL')
-        
-    except WLSTException:
-    
-        state = \"NO_SERVER_FOUND\"
-    
-    else:
-        cd(\"Servers/$serverName\")
-        state = cmo.lookupServerLifeCycleRuntime().getState()
-        
-    x = x + 1
-    
-domainRuntime()
-print \"Server State: $serverName is running\"";
+	state = \"NO_SERVER_FOUND\"\n
+
+else:\n
+
+	domainRuntime()\n
+	
+	state = cmo.lookupServerLifeCycleRuntime($::gInstanceName).getState()\n        
+
+print \"Server State: \" + state\n";
 
       open (MYFILE, '>>verifyServer.jython');
       print MYFILE "$fileContent";
@@ -451,8 +604,9 @@ print \"Server State: $serverName is running\"";
       
       #print log
       print "$content\n";
-      
+
       print "RESULT\n";
+      print "$?\n";
       #evaluates if exit was successful to mark it as a success or fail the step
       if($? == SUCCESS){
        
@@ -471,6 +625,7 @@ print \"Server State: $serverName is running\"";
                   print "Server $serverName is up and running\n";
                   print "------------------------------------\n";
                   $ec->setProperty("/myJobStep/outcome", 'success');
+                  $obtainedResult = SERVER_RUNNING_STATE;
                   
               }else{
                   
@@ -479,6 +634,7 @@ print \"Server State: $serverName is running\"";
                   print "Server is not started, it is in $1 state\n";
                   print "----------------------------------------\n";
                   $ec->setProperty("/myJobStep/outcome", 'error');
+                  $obtainedResult = SERVER_NOT_RUNNING_STATE;
                   
               }
               
@@ -502,6 +658,7 @@ print \"Server State: $serverName is running\"";
           $ec->setProperty("/myJobStep/outcome", 'error');
        
       }
+      return $obtainedResult;   
    
   }
   

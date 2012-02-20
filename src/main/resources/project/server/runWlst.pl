@@ -272,7 +272,7 @@
       my %configToUse;
       
       my $proj = "$[/myProject/projectName]";
-      my $pluginConfigs = new ElectricCommander::PropDB($ec,"/projects/$proj/websphere_cfgs");
+      my $pluginConfigs = new ElectricCommander::PropDB($ec,"/projects/$proj/weblogic_cfgs");
       
       
       my %configRow = $pluginConfigs->getRow($configName);
@@ -299,48 +299,6 @@
       return %configToUse;
    
   }
-  
-  sub fixPath($){
-   
-     my ($absPath) = @_;
-     
-     my $separator;
-     
-     if($absPath && $absPath ne ''){
-      
-        if((substr($absPath, length($absPath)-1,1) eq '\\') ||
-         substr($absPath, length($absPath)-1,1) eq '/'){
-          
-            return $absPath;
-          
-         }
-     
-         if($absPath =~ m/.*\/.+/){
-         
-             $separator = '/';
-         
-         }elsif($absPath =~ m/.+\\.+/) {
-       
-             $separator = "\\";
-      
-         }else{
-             return '';
-         }
-
-         my $fixedPath = $absPath . $separator;
-     
-         return $fixedPath;
-         
-     }else{
-      
-         return '';
-      
-     }
-     
-     
-   
-  }
-  
   
   main();
    

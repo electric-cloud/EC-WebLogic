@@ -1,0 +1,11 @@
+<editor>	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CheckPageStatus</help>	<formElement>		<type>credential</type>		<label>Credentials to be entered:</label>		<property>credentialName</property>		<documentation>The credentials needed to check the status of the page.</documentation>		<required>0</required>	</formElement>			
+	<formElement>
+		<type>entry</type>
+		<label>Maximum Elapsed Time:</label>
+		<property>maxelapsedtime</property>
+		<documentation>Defines the maximum time in seconds that the job will try to check into the server. Blank implies no wait time (URL only checked one time).</documentation>		<required>0</required>	</formElement>
+	<formElement>
+		<type>entry</type>
+		<label>Target URL:</label>		<property>targeturl</property>		<documentation>URL of the page to be checked. (Required)</documentation>		<required>1</required>
+	</formElement>		<formElement>		<type>select</type>		<label>Success Criteria:</label>		<property>successcriteria</property>		<required>1</required>		<documentation>Indicates the expected correct result to be obtained when running checking the server. (Required)</documentation>		<option><name>Page found</name><value>pagefound</value></option>		<option><name>Page not found</name><value>pagenotfound</value></option>	</formElement>
+</editor>

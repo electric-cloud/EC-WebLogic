@@ -3,1275 +3,1623 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Windows (vers 14 February 2006), see www.w3.org" />
-  <meta content="text/html; charset=us-ascii" http-equiv=
-  "content-type" />
+    <meta name="generator"
+          content="HTML Tidy for Windows (vers 14 February 2006), see www.w3.org" />
+    <meta content="text/html; charset=us-ascii"
+          http-equiv="content-type" />
 
-  <title>Electric Commander Plugin for WebLogic</title>
-  <link rel="stylesheet" href= "../../plugins/@PLUGIN_KEY@/pluginhelp.css" type="text/css" media= "screen" />
+    <title>Electric Commander Plugin for WebLogic</title>
+    <link rel="stylesheet"
+          href="../../plugins/@PLUGIN_KEY@/pluginhelp.css"
+          type="text/css"
+          media="screen" />
 </head>
 
 <body>
-  <div class="help">
-    <h1>Oracle WebLogic Server</h1>
+    <div class="help">
+        <h1>Oracle WebLogic Server</h1>
 
-    <p>Plugin Version @PLUGIN_VERSION@</p>
-    <hr style=
-    "margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;"
-    noshade="noshade" />
-    <!-- The tool description should answer these kinds of questions:
-    What is the tool itself is used for in the development
-    process? Who would use this tool? What is the general use-case or
-    problem that this tool solves? Look at the tool's documentation or
-    website(s) to get their own descriptions. Look at Wikipedia or other
-    outside websites. If there is a Hudson plugin, read their
-    documentation for ideas, examples, etc. It's OK to copy word-for-word
-    only if appropriate, such as FOSS - but not commercial software.
-    -->
+        <p>Plugin Version @PLUGIN_VERSION@</p>
+        <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;"
+            noshade="noshade" />
+        <!-- The tool description should answer these kinds of questions:
+                                    What is the tool itself is used for in the development
+                                    process? Who would use this tool? What is the general use-case or
+                                    problem that this tool solves? Look at the tool's documentation or
+                                    website(s) to get their own descriptions. Look at Wikipedia or other
+                                    outside websites. If there is a Hudson plugin, read their
+                                    documentation for ideas, examples, etc. It's OK to copy word-for-word
+                                    only if appropriate, such as FOSS - but not commercial software.
+                                    -->
 
-    <p>WebLogic is a server software application that runs on a
-    middle tier, between back-end databases and related
-    applications and browser-based thin clients. The main features
-    of WebLogic server include connectors that make it possible for
-    any legacy application on any client to interoperate with
-    server applications, Enterprise JavaBean (EJB) components,
-    resource pooling, and connection sharing that make applications
-    very scalable. An administration console with a user interface
-    makes management tasks more efficient and features such as
-    Secure Sockets Layer (SSL) support for the encryption of data
-    transmissions, as well as authentication and authorization
-    mechanisms, make applications and secure.</p>
+        <p>WebLogic is a server software application that runs on a
+        middle tier, between back-end databases and related
+        applications and browser-based thin clients. The main
+        features of WebLogic server include connectors that make it
+        possible for any legacy application on any client to
+        interoperate with server applications, Enterprise JavaBean
+        (EJB) components, resource pooling, and connection sharing
+        that make applications very scalable. An administration
+        console with a user interface makes management tasks more
+        efficient and features such as Secure Sockets Layer (SSL)
+        support for the encryption of data transmissions, as well
+        as authentication and authorization mechanisms, make
+        applications and secure.</p>
 
-    <h2>WebLogic Links</h2>
+        <h2>WebLogic Links</h2>
 
-    <ul>
-      <li><a href=
-      "http://www.oracle.com/technetwork/middleware/weblogic/overview/index.html">
-      WebLogic home page</a></li>
-    </ul>
+        <ul>
+            <li>
+            <a href="http://www.oracle.com/technetwork/middleware/weblogic/overview/index.html">
+            WebLogic home page</a></li>
+        </ul>
 
-    <h2>Electric Commander Integration to WebLogic</h2>
-    <!-- The integration description should answer the questions:
-    How deep does our integration go? Why should I care? What general
-    functionality does the plugin include? What functionality does
-    the plugin omit?
-    -->
+        <h2>Electric Commander Integration to WebLogic</h2>
+        <!-- The integration description should answer the questions:
+                                    How deep does our integration go? Why should I care? What general
+                                    functionality does the plugin include? What functionality does
+                                    the plugin omit?
+                                    -->
 
-    <p>This plugin allows users to interact with the Oracle
-    WebLogic server. The plugin usage is focused on application and
-    server status management, being able of interacting or editing
-    existing application, and deploying new ones. The Managed
-    Servers and the Admin Server can be both started and stopped at
-    any moment with this integration. Jython scripting is allowed
-    providing the script file or by entering a new embedded file
-    when required.</p>
+        <p>This plugin allows users to interact with the Oracle
+        WebLogic server. The plugin usage is focused on application
+        and server status management, being able of interacting or
+        editing existing application, and deploying new ones. The
+        Managed Servers and the Admin Server can be both started
+        and stopped at any moment with this integration. Jython
+        scripting is allowed providing the script file or by
+        entering a new embedded file when required.</p>
 
-    <h2>Integrated Version</h2>
+        <h2>Integrated Version</h2>
 
-    <p>This plugin was developed and tested against WebLogic
-    version 10.3.</p>
+        <p>This plugin was developed and tested against WebLogic
+        version 10.3.</p>
 
-    <h1>Plugin Procedures</h1>
+        <h1>Plugin Procedures</h1>
 
-    <p>
-      IMPORTANT: For all parameter descriptions below, required
-      parameters are shown in <span class='required'>bold
-      italics</span>.
-    </p>
+        <p>IMPORTANT: For all parameter descriptions below,
+        required parameters are shown in
+        <span class='required'>bold italics</span>.</p>
 
-    <div id="CreateConfiguration">
-      <a name='CreateConfiguration' id="CreateConfiguration"></a>
+        <div id="CreateConfiguration">
+            <a name='CreateConfiguration'
+                 id="CreateConfiguration"></a> 
 
-      <h3>Plugin Configuration</h3>
-    <!-- If the plugin has separate configurations then include this section,
-    otherwise omit this whole section. We don't need to have a configuration
-    section that just says "There is no configuration for this plugin."
-    -->
+            <h3>Plugin Configuration</h3>
+            <!-- If the plugin has separate configurations then include this section,
+                                                    otherwise omit this whole section. We don't need to have a configuration
+                                                    section that just says "There is no configuration for this plugin."
+                                                    -->
 
-      <p>
-        Plugin configurations are sets of parameters that apply
-        across some or all of the plugin's procedures. They are
-        intended to reduce repetition of common values, create
-        predefined sets of parameters for end users, and to
-        securely store credentials where needed. Each configuration
-        is given a unique name that is entered in designated
-        parameters on procedures that use them.<br /><br />
-        Plugin configurations are created by going to the Electric
-        Commander "Administration" tab, then to the "Defect
-        Tracking" sub-tab.
-      </p>
-      <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
-    Parameter Panel, and the first sentence(s) of the description should be
-    the same as the tooltip (if there is one). After that, the parameter
-    description can go into greater detail about the parameter including
-    valid value ranges and examples.
-    -->
+            <p>Plugin configurations are sets of parameters that
+            apply across some or all of the plugin's procedures.
+            They are intended to reduce repetition of common
+            values, create predefined sets of parameters for end
+            users, and to securely store credentials where needed.
+            Each configuration is given a unique name that is
+            entered in designated parameters on procedures that use
+            them.<br />
+            <br />
+             Plugin configurations are created by going to the
+            Electric Commander "Administration" tab, then to the
+            "Defect Tracking" sub-tab.</p>
+            <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
+                                                    Parameter Panel, and the first sentence(s) of the description should be
+                                                    the same as the tooltip (if there is one). After that, the parameter
+                                                    description can go into greater detail about the parameter including
+                                                    valid value ranges and examples.
+                                                    -->
 
-      <p>To enable Commander to communicate with your WebLogic
-      Application Server, create a WebLogic configuration,
-      supplying the following information:</p>
+            <p>To enable Commander to communicate with your
+            WebLogic Application Server, create a WebLogic
+            configuration, supplying the following information:</p>
 
-      <table class="grid">
-        <thead>
-          <tr>
-            <th>Parameter</th>
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
 
-            <th>Description</th>
-          </tr>
-        </thead>
+                        <th>Description</th>
+                    </tr>
+                </thead>
 
-        <tbody>
-          <tr>
-            <td class='required'>Configuration Name</td>
+                <tbody>
+                    <tr>
+                        <td class='required'>Configuration
+                        Name</td>
 
-            <td>Identifier of the configuration to create. This
-            parameter is required. (Required)</td>
-          </tr>
+                        <td>Identifier of the configuration to
+                        create. This parameter is required.
+                        (Required)</td>
+                    </tr>
 
-          <tr>
-            <td class='required'>WebLogic URL</td>
+                    <tr>
+                        <td class='required'>WebLogic URL</td>
 
-            <td>Url of a WebLogic Server (must include protocol,
-            server and port). (Required)</td>
-          </tr>
+                        <td>Url of a WebLogic Server (must include
+                        protocol, server and port). (Required)</td>
+                    </tr>
 
-          <tr>
-            <td>Login as</td>
-            <!-- Describe *exactly* which user name and password go here.
-            Is it for a particular machine? Is it for a website? Is it for a
-            particular function in the tool? Does it depend on another
-            parameter (like a machine name) for its meaning?
-            -->
+                    <tr>
+                        <td>Login as</td>
+                        <!-- Describe *exactly* which user name and password go here.
+                                                                                                            Is it for a particular machine? Is it for a website? Is it for a
+                                                                                                            particular function in the tool? Does it depend on another
+                                                                                                            parameter (like a machine name) for its meaning?
+                                                                                                            -->
 
-            <td><i>Username</i>: Provide the user name Commander
-            uses to communicate with the WebLogic server.<br />
-            <i>Password</i>: Provide the password for the specified
-            Username.<br />
-            <i>Retype Password</i>: Retype the password
-            specified.</td>
-          </tr>
-        </tbody>
-      </table><img src=
-      "../../plugins/EC-WebLogic/images/Config/EC-WLSConfig.png" />
+                        <td><i>Username</i>: Provide the user name
+                        Commander uses to communicate with the
+                        WebLogic server.<br />
+                         <i>Password</i>: Provide the password for
+                        the specified Username.<br />
+                         <i>Retype Password</i>: Retype the
+                        password specified.</td>
+                    </tr>
+                </tbody>
+            </table><img src="../../plugins/EC-WebLogic/images/Config/EC-WLSConfig.png" />
+             
 
-      <p><b>Note:</b> in the URL the protocol is "t3", this is
-      because RMI communications in WebLogic Server use the "t3"
-      protocol to transport data between WebLogic Server and other
-      Java programs, including clients and other WebLogic Server
-      instances. A server instance keeps track of each Java Virtual
-      Machine (JVM) with which it connects, and creates a single
-      "t3" connection to carry all traffic for a JVM. This
-      proctocol is used in most of the procedures of the WebLogic
-      Plugin</p>
+            <p><b>Note:</b> in the URL the protocol is "t3", this
+            is because RMI communications in WebLogic Server use
+            the "t3" protocol to transport data between WebLogic
+            Server and other Java programs, including clients and
+            other WebLogic Server instances. A server instance
+            keeps track of each Java Virtual Machine (JVM) with
+            which it connects, and creates a single "t3" connection
+            to carry all traffic for a JVM. This proctocol is used
+            in most of the procedures of the WebLogic Plugin</p>
+        </div>
+
+        <div id="DeployApp">
+            <a name="DeployApp"
+                 id="DeployApp"></a> 
+
+            <h3>DeployApp</h3>
+
+            <p>Deploys or redeploys an application or module using
+            the weblogic. Deployer provided java class.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class='required'>Java Absolute
+                        Path</td>
+
+                        <td>Absolute path of java. i.e: "java",
+                        "java.exe" <i>or</i> "/path/to/java".
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Java Parameters</td>
+
+                        <td>Java parameters to pass. i.e:
+                        "-verbose".</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Application Name</td>
+
+                        <td>Deployment name to assign to a
+                        newly-deployed application or standalone
+                        module. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Application Path</td>
+
+                        <td>Absolute path of the application to
+                        deploy. i.e: "/path/to/webapp.war"
+                        <i>or</i> "c:/mydir/webapp.war".
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Configuration Name</td>
+
+                        <td>Name of the configuration to be used
+                        for retrieving Admin Server's URL and
+                        credentials.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Targets</td>
+
+                        <td>Targets on which to deploy the
+                        application or module (comma-separated list
+                        of the target servers, clusters, or virtual
+                        hosts).</td>
+                    </tr>
+
+                    <tr>
+                        <td>Additional Commands</td>
+
+                        <td>Additional commands to be entered for
+                        weblogic.Deployer.</td>
+                    </tr>
+
+                    <tr>
+                        <td>setDomainEnv Script Absolute Path</td>
+
+                        <td>Absolute path of the setDomainEnv
+                        script, including filename and extension.
+                        i.e: "/path/to/setDomainEnv.sh" <i>or</i>
+                        "setDomainEnv.cmd".</td>
+                    </tr>
+
+                    <tr>
+                        <td>weblogic jar Absolute Path</td>
+
+                        <td>Absolute path of the weblogic jar,
+                        needed to run the deploy function. In
+                        Windows environment, if the jar is already
+                        added to the enviroment classpath variable,
+                        then is not necesary to include it. In
+                        Linux environment you must include the
+                        path. i.e: "/path/to/weblogic.jar"
+                        <i>or</i>
+                        "/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar".</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To deploy an application, select the following
+            highlighted
+            step:</p><img src="../../plugins/EC-WebLogic/images/DeployApp/EC-WLSDeployApp1.png" />
+             
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/EC-WebLogic/images/DeployApp/EC-WLSDeployApp2.png" />
+             
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            application was deployed
+            successfully:</p><img src="../../plugins/EC-WebLogic/images/DeployApp/EC-WLSDeployApp3.png" />
+             
+
+            <p>In the <b>DeployApp</b> step, click the Log icon to
+            see the diagnostic info. The output is similar to the
+            following diagnostic
+            report:</p><img src="../../plugins/EC-WebLogic/images/DeployApp/EC-WLSDeployApp4.png" />
+            </div>
+
+        <div id="UndeployApp">
+            <a name="UndeployApp"
+                 id="UndeployApp"></a> 
+
+            <h3>UndeployApp</h3>
+
+            <p>Stops the deployment unit and removes staged files
+            from target servers.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class='required'>Java Absolute
+                        Path</td>
+
+                        <td>Absolute path of java. i.e: "java",
+                        "java.exe" <i>or</i> "/path/to/java".
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Java Parameters</td>
+
+                        <td>Java parameters to pass. i.e:
+                        "-verbose".</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Application Name</td>
+
+                        <td>Name of the application to undeploy.
+                        i.e: "webapp". (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Enable Graceful Mode</td>
+
+                        <td>Enables stopping the application in
+                        Graceful Mode (after existing HTTP clients
+                        have completed their work).</td>
+                    </tr>
+
+                    <tr>
+                        <td>Configuration Name</td>
+
+                        <td>Name of the configuration to be used
+                        for retrieving Admin Server's URL and
+                        credentials.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Additional Commands</td>
+
+                        <td>Additional commands to be entered for
+                        weblogic.Deployer.</td>
+                    </tr>
+
+                    <tr>
+                        <td>setDomainEnv Script Absolute Path</td>
+
+                        <td>Absolute path of the setDomainEnv
+                        script, including filename and extension.
+                        i.e: "/path/to/setDomainEnv.sh" <i>or</i>
+                        "setDomainEnv.cmd".</td>
+                    </tr>
+
+                    <tr>
+                        <td>weblogic jar Absolute Path</td>
+
+                        <td>Absolute path of the weblogic jar,
+                        needed to run the undeploy function. In
+                        Windows environment, if the jar is already
+                        added to the enviroment classpath variable,
+                        then is not necesary to include it. In
+                        Linux environment you must include the
+                        path. i.e: "/path/to/weblogic.jar"
+                        <i>or</i>
+                        "/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar".</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To undeploy an application, select the following
+            highlighted
+            step:</p><img src="../../plugins/EC-WebLogic/images/UndeployApp/EC-WLSUndeployApp1.png" />
+             
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/EC-WebLogic/images/UndeployApp/EC-WLSUndeployApp2.png" />
+             
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            application was undeployed
+            successfully:</p><img src="../../plugins/EC-WebLogic/images/UndeployApp/EC-WLSUndeployApp3.png" />
+             
+
+            <p>In the <b>UndeployApp</b> step, click the Log icon
+            to see the diagnostic info. The output is similar to
+            the following diagnostic
+            report:</p><img src="../../plugins/EC-WebLogic/images/UndeployApp/EC-WLSUndeployApp4.png" />
+            </div>
+
+        <div id="StartApp">
+            <a name="StartApp"
+                 id="StartApp"></a> 
+
+            <h3>StartApp</h3>
+
+            <p>Starts an application.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class='required'>Java Absolute
+                        Path</td>
+
+                        <td>Absolute path of java. i.e: "java",
+                        "java.exe" <i>or</i> "/path/to/java".
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Java Parameters</td>
+
+                        <td>Java parameters to pass. i.e:
+                        "-verbose".</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Application Name</td>
+
+                        <td>Name of the application to start. i.e:
+                        "webapp". (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Configuration Name</td>
+
+                        <td>Name of the configuration to be used
+                        for retrieving Admin Server's URL and
+                        credentials.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Additional Commands</td>
+
+                        <td>Additional commands to be entered for
+                        weblogic.Deployer.</td>
+                    </tr>
+
+                    <tr>
+                        <td>setDomainEnv Script Absolute Path</td>
+
+                        <td>Absolute path of the setDomainEnv
+                        script, including filename and extension.
+                        i.e: "/path/to/setDomainEnv.sh" <i>or</i>
+                        "setDomainEnv.cmd".</td>
+                    </tr>
+
+                    <tr>
+                        <td>weblogic jar Absolute Path</td>
+
+                        <td>Absolute path of the weblogic jar,
+                        needed to run the start application
+                        function. In Windows environment, if the
+                        jar is already added to the enviroment
+                        classpath variable, then is not necesary to
+                        include it. In Linux environment you must
+                        include the path. i.e:
+                        "/path/to/weblogic.jar" <i>or</i>
+                        "/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar".</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To start an application, select the following
+            highlighted
+            step:</p><img src="../../plugins/EC-WebLogic/images/StartApp/EC-WLSStartApp1.png" />
+             
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/EC-WebLogic/images/StartApp/EC-WLSStartApp2.png" />
+             
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            application was started
+            successfully:</p><img src="../../plugins/EC-WebLogic/images/StartApp/EC-WLSStartApp3.png" />
+             
+
+            <p>In the <b>StartApp</b> step, click the Log icon to
+            see the diagnostic info. The output is similar to the
+            following diagnostic
+            report:</p><img src="../../plugins/EC-WebLogic/images/StartApp/EC-WLSStartApp4.png" />
+            </div>
+
+        <div id="StopApp">
+            <a name="StopApp"
+                 id="StopApp"></a> 
+
+            <h3>StopApp</h3>
+
+            <p>Stops an application.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class='required'>Java Absolute
+                        Path</td>
+
+                        <td>Absolute path of java. i.e: "java",
+                        "java.exe" <i>or</i> "/path/to/java".
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Java Parameters</td>
+
+                        <td>Java parameters to pass. i.e:
+                        "-verbose".</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Application Name</td>
+
+                        <td>Name of the application to stop. i.e:
+                        "webapp". (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Enable Graceful Mode</td>
+
+                        <td>Enables stopping the application in
+                        Graceful Mode (after existing HTTP clients
+                        have completed their work).</td>
+                    </tr>
+
+                    <tr>
+                        <td>Configuration Name</td>
+
+                        <td>Name of the configuration to be used
+                        for retrieving Admin Server's URL and
+                        credentials.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Additional Commands</td>
+
+                        <td>Additional commands to be entered for
+                        weblogic.Deployer.</td>
+                    </tr>
+
+                    <tr>
+                        <td>setDomainEnv Script Absolute Path</td>
+
+                        <td>Absolute path of the setDomainEnv
+                        script, including filename and extension.
+                        i.e: "/path/to/setDomainEnv.sh" <i>or</i>
+                        "setDomainEnv.cmd".</td>
+                    </tr>
+
+                    <tr>
+                        <td>weblogic jar Absolute Path</td>
+
+                        <td>Absolute path of the weblogic jar,
+                        needed to run the stop application
+                        function. In Windows environment, if the
+                        jar is already added to the enviroment
+                        classpath variable, then is not necesary to
+                        include it. In Linux environment you must
+                        include the path. i.e:
+                        "/path/to/weblogic.jar" <i>or</i>
+                        "/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar".</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To stop an application, select the following
+            highlighted
+            step:</p><img src="../../plugins/EC-WebLogic/images/StopApp/EC-WLSStopApp1.png" />
+             
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/EC-WebLogic/images/StopApp/EC-WLSStopApp2.png" />
+             
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            application was stoped
+            successfully:</p><img src="../../plugins/EC-WebLogic/images/StopApp/EC-WLSStopApp3.png" />
+             
+
+            <p>In the <b>StopApp</b> step, click the Log icon to
+            see the diagnostic info. The output is similar to the
+            following diagnostic
+            report:</p><img src="../../plugins/EC-WebLogic/images/StopApp/EC-WLSStopApp4.png" />
+            </div>
+
+        <div id="RunDeployer">
+            <a name="RunDeployer"
+                 id="RunDeployer"></a> 
+
+            <h3>RunDeployer</h3>
+
+            <p>Runs weblogic.Deployer in a free-mode.
+            Weblogic.Deployer is a Java-based deployment tool that
+            provides a command-line interface to the WebLogic
+            Server deployment API.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class='required'>Command To Use</td>
+
+                        <td>The weblogic.Deployer command to use.
+                        i.e: "-deploy", "-undeploy", "-stop"
+                        <i>or</i> "-listapps". (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Java Parameters</td>
+
+                        <td>Java parameters to pass. i.e:
+                        "-verbose".</td>
+                    </tr>
+
+                    <tr>
+                        <td>Configuration Name</td>
+
+                        <td>Name of the configuration to be used
+                        for retrieving Admin Server's URL and
+                        credentials.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Additional Commands</td>
+
+                        <td>Additional commands to be entered for
+                        weblogic.Deployer.</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Java Absolute
+                        Path</td>
+
+                        <td>Absolute path of java. i.e: "java",
+                        "java.exe" <i>or</i> "/path/to/java".
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Application Name</td>
+
+                        <td>Name of the application to manage. i.e:
+                        "webapp". (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>setDomainEnv Script Absolute Path</td>
+
+                        <td>Absolute path of the setDomainEnv
+                        script, including filename and extension.
+                        i.e: "/path/to/setDomainEnv.sh" <i>or</i>
+                        "setDomainEnv.cmd".</td>
+                    </tr>
+
+                    <tr>
+                        <td>weblogic jar Absolute Path</td>
+
+                        <td>Absolute path of the weblogic jar,
+                        needed to run the weblogic.Deployer in a
+                        free-mode. In Windows environment, if the
+                        jar is already added to the enviroment
+                        classpath variable, then is not necesary to
+                        include it. In Linux environment you must
+                        include the path. i.e:
+                        "/path/to/weblogic.jar" <i>or</i>
+                        "/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar".</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To run the weblogic.Deployer in a free-mode, select
+            the following highlighted
+            step:</p><img src="../../plugins/EC-WebLogic/images/RunDeployer/EC-WLSRunDep1.png" />
+             
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/EC-WebLogic/images/RunDeployer/EC-WLSRunDep2.png" />
+             
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            job ran
+            successfully:</p><img src="../../plugins/EC-WebLogic/images/RunDeployer/EC-WLSRunDep3.png" />
+             
+
+            <p>In the <b>RunJob</b> step, click the Log icon to see
+            the diagnostic info. The output is similar to the
+            following diagnostic
+            report:</p><img src="../../plugins/EC-WebLogic/images/RunDeployer/EC-WLSRunDep4.png" />
+            </div>
+
+        <div id="RunWLST">
+            <a name="RunWLST"
+                 id="RunWLST"></a> 
+
+            <h3>RunWLST</h3>
+
+            <p>Runs Jython scripts using weblogic.WLST. The
+            WebLogic Scripting Tool (WLST) is a command-line
+            scripting interface that system administrators and
+            operators use to monitor and manage WebLogic Server
+            instances and domains. The WLST scripting environment
+            is based on the Java scripting interpreter, Jython. In
+            addition to WebLogic scripting functions, you can use
+            common features of interpreted languages, including
+            local variables, conditional variables, and flow
+            control statements.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class='required'>WLST Absolute
+                        Path</td>
+
+                        <td>Absolute path to WLST. i.e:
+                        "/path/to/wlst.cmd" <i>or</i> "wlst.sh".
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Script File Absolute Path</td>
+
+                        <td>Absolute path of a Jython script
+                        containing the desired job. The path is
+                        used only if "Supplied File" is selected in
+                        the "Script File Source" parameter. i.e:
+                        "/path/to/scriptfile.jython".</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Script File
+                        Source</td>
+
+                        <td>Indicates the source of the script file
+                        to execute. Either a existent file in the
+                        path defined in the 'scriptfile' parameter
+                        OR a new one using the code specified in
+                        scriptfile parameter. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Script File</td>
+
+                        <td>Content of the script file to run if
+                        "New Script File" option is chosen in the
+                        "Script File Source" parameter.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Additional Commands</td>
+
+                        <td>Additional commands to be entered for
+                        weblogic.WLST.</td>
+                    </tr>
+
+                    <tr>
+                        <td>weblogic jar Absolute Path</td>
+
+                        <td>Absolute path of the weblogic jar,
+                        needed to run Jython scripts using
+                        weblogic.WLST. In Windows environment, if
+                        the jar is already added to the enviroment
+                        classpath variable, then is not necesary to
+                        include it. In Linux environment you must
+                        include the path. i.e:
+                        "/path/to/weblogic.jar" <i>or</i>
+                        "/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar".</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To see a complete example, see the <i>Examples and
+            Use Cases</i> section.</p>
+        </div>
+
+        <div id="StartAdminServer">
+            <a name="StartAdminServer"
+                 id="StartAdminServer"></a> 
+
+            <h3>StartAdminServer</h3>
+
+            <p>Starts the WebLogic Admin Server</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class='required'>Script Location</td>
+
+                        <td>Absolute path of the startWeblogic
+                        script, including filename and extension.
+                        i.e: "/path/to/startWeblogic.cmd".
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Admin Server Instance
+                        Name</td>
+
+                        <td>Instance name of the Admin Server to
+                        start. i.e: "AdminServer". (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Config Name</td>
+
+                        <td>Configuration name from which the Admin
+                        URL and credentials will be read.
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>WLST Absolute
+                        Path</td>
+
+                        <td>Absolute path to WLST. i.e:
+                        "/path/to/wlst.cmd" <i>or</i> "wlst.sh".
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Maximum Elapsed Time</td>
+
+                        <td>Defines the maximum time in seconds
+                        that the job will try to check into the
+                        server. Note that the step has a "Time
+                        Limit" property, so if this property is set
+                        to less than the parameter it will abort
+                        the step early. Blank implies no wait time
+                        (URL only checked one time).</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To start the administration server, select the
+            following highlighted
+            step:</p><img src="../../plugins/EC-WebLogic/images/StartAdministrationServer/EC-WLSStartAdministrationServer1.png" />
+             
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/EC-WebLogic/images/StartAdministrationServer/EC-WLSStartAdministrationServer2.png" />
+             
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            server was started successfully (the warning indicates
+            that the server is been accessed by an insecure
+            protocol):</p><img src="../../plugins/EC-WebLogic/images/StartAdministrationServer/EC-WLSStartAdministrationServer3.png" />
+             
+
+            <p>In the <b>StartAdminServer</b> step, click the Log
+            icon to see the diagnostic info. The output is similar
+            to the following diagnostic
+            report:</p><img src="../../plugins/EC-WebLogic/images/StartAdministrationServer/EC-WLSStartAdministrationServer4.png" />
+            </div>
+
+        <div id="StartManagedServer">
+            <a name="StartManagedServer"
+                 id="StartManagedServer"></a> 
+
+            <h3>StartManagedServer</h3>
+
+            <p>Starts a WebLogic Managed Server. A WebLogic Server
+            administration domain is a logically related group of
+            WebLogic Server resources. Usually, you configure a
+            domain to include additional WebLogic Server instances
+            called Managed Servers. You deploy Web applications,
+            EJBs, and other resources onto the Managed Servers and
+            use the Administration Server for configuration and
+            management purposes only. Note that the Node Manager
+            must be running before run this procedure.</p>
+
+            <p>In order to start the managed server, a file called
+            "boot.properties" must be created in the path
+            "$DOMAIN_DIR$/servers/myserver/security", and this file
+            must have the credentials needed to start the server.
+            i.e:</p>
+
+            <p>username=weblogic</p>
+
+            <p>password=w3blogic</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class='required'>Script Location</td>
+
+                        <td>Absolute path of the start server
+                        script, including filename and extension.
+                        i.e: "/path/to/startManagedServer.cmd".
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Instance Name</td>
+
+                        <td>Instance name of the Managed Server to
+                        start. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Config Name</td>
+
+                        <td>Configuration name from which the
+                        Managed Server URL and the credentials from
+                        the Admin Server will be read.
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Admin Server URL</td>
+
+                        <td>URL from the Admin Server (including
+                        protocol and port). (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>WLST Absolute
+                        Path</td>
+
+                        <td>Absolute path to WLST. i.e:
+                        "/path/to/wlst.cmd" <i>or</i> "wlst.sh".
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Maximum Elapsed Time</td>
+
+                        <td>Defines the maximum time in seconds
+                        that the job will try to check into the
+                        server. Note that the step has a "Time
+                        Limit" property, so if this property is set
+                        to less than the parameter it will abort
+                        the step early. Blank implies no wait time
+                        (URL only checked one time).</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To start a managed server, select the following
+            highlighted
+            step:</p><img src="../../plugins/EC-WebLogic/images/StartManagedServer/EC-WLSStartManagedServer1.png" />
+             
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/EC-WebLogic/images/StartManagedServer/EC-WLSStartManagedServer2.png" />
+             
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            server was started successfully (the warning indicates
+            that the server is been accessed by an insecure
+            protocol):</p><img src="../../plugins/EC-WebLogic/images/StartManagedServer/EC-WLSStartManagedServer3.png" />
+             
+
+            <p>In the <b>StartInstance</b> step, click the Log icon
+            to see the diagnostic info. The output is similar to
+            the following diagnostic
+            report:</p><img src="../../plugins/EC-WebLogic/images/StartManagedServer/EC-WLSStartManagedServer4.png" />
+            </div>
+
+        <div id="StopManagedServer">
+            <a name="StopManagedServer"
+                 id="StopManagedServer"></a> 
+
+            <h3>StopManagedServer</h3>
+
+            <p>Stops a WebLogic Managed Server. Note that the Node
+            Manager must be running before run this procedure.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class='required'>Script Location</td>
+
+                        <td>Absolute path of the stop server
+                        script, including filename and extension.
+                        i.e: "/path/to/stopManagedServer.cmd".
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Instance Name</td>
+
+                        <td>Instance name of the Managed Server to
+                        stop. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Config Name</td>
+
+                        <td>Configuration name from which the URL
+                        is retrieved. (Required)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To stop the admin server, select the following
+            highlighted
+            step:</p><img src="../../plugins/EC-WebLogic/images/StopManagedServer/EC-WLSStopManagedServer1.png" />
+             
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/EC-WebLogic/images/StopManagedServer/EC-WLSStopManagedServer2.png" />
+             
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            job ran successfully (the warning indicates that the
+            server is been accessed by an insecure
+            protocol):</p><img src="../../plugins/EC-WebLogic/images/StopManagedServer/EC-WLSStopManagedServer3.png" />
+             
+
+            <p>In the <b>StopAdminServer</b> step, click the Log
+            icon to see the diagnostic info. The output is similar
+            to the following diagnostic
+            report:</p><img src="../../plugins/EC-WebLogic/images/StopManagedServer/EC-WLSStopManagedServer4.png" />
+            </div>
+
+        <div id="StopAdminServer">
+            <a name="StopAdminServer"
+                 id="StopAdminServer"></a> 
+
+            <h3>StopAdminServer</h3>
+
+            <p>Stops a WebLogic Admin Server</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class='required'>Script Location</td>
+
+                        <td>Absolute path of the stopWeblogic
+                        script, including filename and extension.
+                        i.e: "/path/to/stopWeblogic.cmd".
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Config Name</td>
+
+                        <td>Configuration name from which the URL
+                        and credentials are retrieved.
+                        (Required)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To stop the admin server, select the following
+            highlighted
+            step:</p><img src="../../plugins/EC-WebLogic/images/StopAdminServer/EC-WLSStopAdminServer1.png" />
+             
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/EC-WebLogic/images/StopAdminServer/EC-WLSStopAdminServer2.png" />
+             
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            job ran successfully (the warning indicates that the
+            server is been accessed by an insecure
+            protocol):</p><img src="../../plugins/EC-WebLogic/images/StopAdminServer/EC-WLSStopAdminServer3.png" />
+             
+
+            <p>In the <b>StopAdminServer</b> step, click the Log
+            icon to see the diagnostic info. The output is similar
+            to the following diagnostic
+            report:</p><img src="../../plugins/EC-WebLogic/images/StopAdminServer/EC-WLSStopAdminServer4.png" />
+            </div>
+
+        <div id="CheckServerStatus">
+            <a name="CheckServerStatus"
+                 id="CheckServerStatus"></a> 
+
+            <h3>CheckServerStatus</h3>
+
+            <p>Check the status of the given server URL.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Configuration Name</td>
+
+                        <td>Name of the configuration to be used.
+                        URL, port and credentials are gathered from
+                        the given configuration.</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Wlst Script Absolute
+                        Path</td>
+
+                        <td>Absolute path to WLST. i.e:
+                        "/path/to/wlst.cmd" <i>or</i>"wlst.sh".
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Maximum Elapsed Time</td>
+
+                        <td>Defines the maximum time in seconds
+                        that the job will try to check into the
+                        server. Blank implies no wait time (URL
+                        only checked one time).</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Success Criteria</td>
+
+                        <td>Indicates the expected correct result
+                        to be obtained when running checking the
+                        server. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Instance Name</td>
+
+                        <td>Indicates the name of the instance to
+                        be checked. (Required)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To stop the admin server, select the following
+            highlighted
+            step:</p><img src="../../plugins/EC-WebLogic/images/CheckServerStatus/EC-WLSCheckServerStatus1.png" />
+             
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/EC-WebLogic/images/CheckServerStatus/EC-WLSCheckServerStatus2.png" />
+             
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            job ran successfully (the warning indicates that the
+            server is been accessed by an insecure
+            protocol):</p><img src="../../plugins/EC-WebLogic/images/CheckServerStatus/EC-WLSCheckServerStatus3.png" />
+             
+
+            <p>In the <b>StopAdminServer</b> step, click the Log
+            icon to see the diagnostic info. The output is similar
+            to the following diagnostic
+            report:</p><img src="../../plugins/EC-WebLogic/images/CheckServerStatus/EC-WLSCheckServerStatus4.png" />
+            </div>
+
+        <div id="CheckPageStatus">
+            <a name="CheckPageStatus"
+                 id="CheckPageStatus"></a> 
+
+            <h3>CheckPageStatus</h3>
+
+            <p>Check the status of the given page URL.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Credentials to be entered</td>
+
+                        <td>The credentials needed to check the
+                        status of the page.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Maximum Elapsed Time</td>
+
+                        <td>Defines the maximum time in seconds
+                        that the job will try to check into the
+                        server. Blank implies no wait time (URL
+                        only checked one time).</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Target URL</td>
+
+                        <td>URL of the page to be checked.
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Success Criteria</td>
+
+                        <td>Indicates the expected correct result
+                        to be obtained when running checking the
+                        server.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To stop the admin server, select the following
+            highlighted
+            step:</p><img src="../../plugins/EC-WebLogic/images/CheckPageStatus/EC-WLSCheckPageStatus1.png" />
+             
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/EC-WebLogic/images/CheckPageStatus/EC-WLSCheckPageStatus2.png" />
+             
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            job ran
+            successfully:</p><img src="../../plugins/EC-WebLogic/images/CheckPageStatus/EC-WLSCheckPageStatus3.png" />
+             
+
+            <p>In the <b>StopAdminServer</b> step, click the Log
+            icon to see the diagnostic info. The output is similar
+            to the following diagnostic
+            report:</p><img src="../../plugins/EC-WebLogic/images/CheckPageStatus/EC-WLSCheckPageStatus4.png" />
+             
+
+            <p><b>Note:</b> in the URL the protocol is "http", this
+            is because for this procedure, the Electric Commander
+            use an internal method to test the status of the URL
+            pages with the original "http" protocol used in the web
+            browsers.</p>
+        </div>
+
+        <div id="StartNodeManager">
+            <a name="StartNodeManager"
+                 id="StartNodeManager"></a> 
+
+            <h3>StartNodeManager</h3>
+
+            <p>Starts the WebLogic Node Manager. Node Manager is a
+            WebLogic Server utility that enables you to start, shut
+            down, and restart Administration Server and Managed
+            Server instances from a remote location. Although Node
+            Manager is optional, it is recommended if your WebLogic
+            Server environment hosts applications with high
+            availability requirements.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class='required'>Node Manager Script
+                        Location</td>
+
+                        <td>Absolute path of the startNodeManager
+                        script, including filename and extension.
+                        i.e:
+                        '/Oracle/Middleware/wlserver_10.3/server/bin/startNodeManager.cmd'.
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Maximum Elapsed Time</td>
+
+                        <td>Defines the time in seconds that the
+                        job wait to test the status of the node
+                        manager. Note that the step has a "Time
+                        Limit" property, so if this property is set
+                        to less than the parameter it will abort
+                        the step early. Blank implies no wait time
+                        (URL only checked one time).</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To start the node manager, select the following
+            highlighted
+            step:</p><img src="../../plugins/EC-WebLogic/images/StartNodeManager/EC-WLSStartNodeManager1.png" />
+             
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/EC-WebLogic/images/StartNodeManager/EC-WLSStartNodeManager2.png" />
+             
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            node manager was started
+            successfully:</p><img src="../../plugins/EC-WebLogic/images/StartNodeManager/EC-WLSStartNodeManager3.png" />
+             
+
+            <p>In the <b>CheckNodeManagerStatus</b> step, click the
+            Log icon to see the diagnostic info. The output is
+            similar to the following diagnostic
+            report:</p><img src="../../plugins/EC-WebLogic/images/StartNodeManager/EC-WLSStartNodeManager4.png" />
+            </div>
+
+        <div id="StopNodeManager">
+            <a name="StopNodeManager"
+                 id="StopNodeManager"></a> 
+
+            <h3>StopNodeManager</h3>
+
+            <p>Stops the WebLogic Node Manager.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class='required'>Config Name</td>
+
+                        <td>Configuration name from which the
+                        credentials will be read. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Host Name</td>
+
+                        <td>Host name of Node Manager. This
+                        argument defaults to localhost.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Node Manager Port</td>
+
+                        <td>Port number of Node Manager. This
+                        argument defaults to a value that is based
+                        on the Node Manager server type, for plain
+                        type, defaults to 5556. For rsh type,
+                        defaults to 514. For ssh type, defaults to
+                        22. For ssl type, defaults to 5556.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Domain Name</td>
+
+                        <td>Name of the domain that you want to
+                        manage. This argument defaults to
+                        mydomain.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Domain Path</td>
+
+                        <td>Path of the domain directory to which
+                        you want to save the Node Manager secret
+                        file (nm_password.properties) and
+                        SerializedSystemIni.dat file. This argument
+                        defaults to the directory in which WLST was
+                        started.</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>WLST Absolute
+                        Path</td>
+
+                        <td>Absolute path to WLST. i.e:
+                        '/path/to/wlst.cmd' or 'wlst.sh'.
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Node Manage Type</td>
+
+                        <td>Type of the Node Manager server. This
+                        argument defaults to ssl.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Maximum Elapsed Time</td>
+
+                        <td>Defines the time in seconds that the
+                        job wait to test the status of the node
+                        manager. Note that the step has a "Time
+                        Limit" property, so if this property is set
+                        to less than the parameter it will abort
+                        the step early. Blank implies no wait time
+                        (URL only checked one time).</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To stop the node manager, select the following
+            highlighted
+            step:</p><img src="../../plugins/EC-WebLogic/images/StopNodeManager/EC-WLSStopNodeManager1.png" />
+             
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/EC-WebLogic/images/StopNodeManager/EC-WLSStopNodeManager2.png" />
+             
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            node manager was stopped
+            successfully:</p><img src="../../plugins/EC-WebLogic/images/StopNodeManager/EC-WLSStopNodeManager3.png" />
+             
+
+            <p>In the <b>CheckNodeManagerStatus</b> step, click the
+            Log icon to see the diagnostic info. The output is
+            similar to the following diagnostic
+            report:</p><img src="../../plugins/EC-WebLogic/images/StopNodeManager/EC-WLSStopNodeManager4.png" />
+            </div>
+
+        <h1>Examples and Use Cases</h1>
+        <!-- This section is for examples and use cases, including screenshots of the new Parameter Panel with example values filled in.
+                                    Unfortunately, I can't tell you what exactly to put here, but it's OK to put what seems like too much! Include both parameter
+                                    values and output where appropriate. Use a separate 'h2' header for each example. Under the h2 header try to stay with the style
+                                    outline used above where possible.
+                                    -->
+
+        <h2>Run WLST</h2>
+
+        <p>In this example, the objetive is to print an 'Hello
+        World!' in the output using the <i>Supplied File</i> option
+        with an existing scrit file in a path, and using the <i>New
+        Script File</i> option with embedded code.</p>
+
+        <p>To run the custom job, select the following highlighted
+        step:</p><img src="../../plugins/EC-WebLogic/images/RunWLST/EC-WLSRunWLST1.png" />
+         
+
+        <p>Then, enter the following parameters. The first image is
+        for the <i>Supplied File</i> option, and the second one is
+        for <i>New Script
+        File</i>:</p><img src="../../plugins/EC-WebLogic/images/RunWLST/EC-WLSRunWLST2.png" />
+         <img src="../../plugins/EC-WebLogic/images/RunWLST/EC-WLSRunWLST3.png" />
+         
+
+        <p>When the job is executed, you should see the following
+        job detail, note the output indicating the successfully
+        execution, this applies for both <i>Script File Source</i>
+        options:</p><img src="../../plugins/EC-WebLogic/images/RunWLST/EC-WLSRunWLST4.png" />
+         
+
+        <p>In the <b>RunWLST</b> step, click the Log icon to see
+        the log info. This applies both <i>Script File Source</i>
+        option, the output is similar to the following
+        sample:</p><img src="../../plugins/EC-WebLogic/images/RunWLST/EC-WLSRunWLST5.png" />
+         
+
+        <p>The next image shows the <i>HelloWorld.jython</i> file
+        used in the <i>Supplied File</i>
+        option:</p><img src="../../plugins/EC-WebLogic/images/RunWLST/EC-WLSRunWLST6.png" />
+         
+
+        <h1>Release Notes</h1>
+
+        <h2>@PLUGIN_KEY@ 2.0.3</h2>
+
+        <ul>
+            <li>Added a parameter in the start and stop server
+            procedures to determine the maximun time in seconds to
+            test the status of the server.</li>
+
+            <li>Created 2 new procedures: StartNodeManager and
+            StopNodeManager.</li>
+        </ul>
+
+        <h2>@PLUGIN_KEY@ 2.0.2</h2>
+
+        <ul>
+            <li>Changes to Help files.</li>
+        </ul>
+
+        <h2>@PLUGIN_KEY@ 2.0.1</h2>
+
+        <ul>
+            <li>Upgrade to use the new Parameter Form XML.</li>
+
+            <li>Added a link directly to the new help
+            document.</li>
+        </ul>
+
+        <h2>@PLUGIN_KEY@ 2.0.0</h2>
+
+        <ul>
+            <li>New Help Page Format</li>
+
+            <li>New Parameter Panels for each procedure</li>
+
+            <li>Added <b>weblogic jar Absolute Path</b> param into
+            the DeployApp, UndeployApp, StartApp, StopApp,
+            RunDeployer and RunWLST method, needed in Linux
+            environment to load WebLogic libreries.</li>
+        </ul>
+
+        <h2>@PLUGIN_KEY@ 1.1.3</h2>
+
+        <ul>
+            <li>Added <b>adminserverurl</b> param into the
+            StartManagedServer method.</li>
+
+            <li>Fixed minor issues.</li>
+        </ul>
+
+        <h2>@PLUGIN_KEY@ 1.1.1</h2>
+
+        <ul>
+            <li>Fixed issue affecting workspace setting.</li>
+        </ul>
+
+        <h2>@PLUGIN_KEY@ 1.1.0</h2>
+
+        <ul>
+            <li>Added the CheckPageStatus procedure</li>
+
+            <li>Modified the CheckServerProcedure procedure, CURL
+            is not needed and parameters were changed</li>
+
+            <li>Fixed minor bugs</li>
+
+            <li>Removed CURL dependency</li>
+
+            <li>Added new postp matchers</li>
+        </ul>
+
+        <h2>@PLUGIN_KEY@ 1.0.2</h2>
+
+        <ul>
+            <li>Fixed minor bug on Configuration List page.</li>
+        </ul>
+
+        <h2>@PLUGIN_KEY@ 1.0.1</h2>
+
+        <ul>
+            <li>Procedures have one step only and are executed
+            using Perl directly</li>
+
+            <li>Credentials in the StartManagedServer procedure
+            must be stored in a boot.properties file</li>
+        </ul>
     </div>
-
-    <div id="DeployApp">
-      <a name="DeployApp" id="DeployApp"></a>
-
-      <h3>DeployApp</h3>
-
-      <p>Deploys or redeploys an application or module using the
-      weblogic. Deployer provided java class.</p>
-
-      <table class="grid">
-        <thead>
-          <tr>
-            <th>Parameter</th>
-
-            <th>Description</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td class='required'>Java Absolute Path</td>
-
-            <td>Absolute path of java. i.e: "java", "java.exe"
-            <i>or</i> "/path/to/java". (Required)</td>
-          </tr>
-
-          <tr>
-            <td>Java Parameters</td>
-
-            <td>Java parameters to pass. i.e: "-verbose".</td>
-          </tr>
-
-          <tr>
-            <td class='required'>Application Name</td>
-
-            <td>Deployment name to assign to a newly-deployed
-            application or standalone module. (Required)</td>
-          </tr>
-
-          <tr>
-            <td class='required'>Application Path</td>
-
-            <td>Absolute path of the application to deploy. i.e:
-            "/path/to/webapp.war" <i>or</i> "c:/mydir/webapp.war".
-            (Required)</td>
-          </tr>
-
-          <tr>
-            <td>Configuration Name</td>
-
-            <td>Name of the configuration to be used for retrieving
-            Admin Server's URL and credentials.</td>
-          </tr>
-
-          <tr>
-            <td>Targets</td>
-
-            <td>Targets on which to deploy the application or
-            module (comma-separated list of the target servers,
-            clusters, or virtual hosts).</td>
-          </tr>
-
-          <tr>
-            <td>Additional Commands</td>
-
-            <td>Additional commands to be entered for
-            weblogic.Deployer.</td>
-          </tr>
-
-          <tr>
-            <td>setDomainEnv Script Absolute Path</td>
-
-            <td>Absolute path of the setDomainEnv script, including
-            filename and extension. i.e: "/path/to/setDomainEnv.sh"
-            <i>or</i> "setDomainEnv.cmd".</td>
-          </tr>
-
-          <tr>
-            <td>weblogic jar Absolute Path</td>
-
-            <td>Absolute path of the weblogic jar, needed to run
-            the deploy function. In Windows environment, if the jar
-            is already added to the enviroment classpath variable,
-            then is not necesary to include it. In Linux
-            environment you must include the path. i.e:
-            "/path/to/weblogic.jar" <i>or</i>
-            "/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar".</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p>To deploy an application, select the following highlighted
-      step:</p><img src=
-      "../../plugins/EC-WebLogic/images/DeployApp/EC-WLSDeployApp1.png" />
-
-      <p>Then, enter the following parameters:</p><img src=
-      "../../plugins/EC-WebLogic/images/DeployApp/EC-WLSDeployApp2.png" />
-
-      <p>When the job is executed, you should see the following job
-      detail, note the output indicating the application was
-      deployed successfully:</p><img src=
-      "../../plugins/EC-WebLogic/images/DeployApp/EC-WLSDeployApp3.png" />
-
-      <p>In the <b>DeployApp</b> step, click the Log icon to see
-      the diagnostic info. The output is similar to the following
-      diagnostic report:</p><img src=
-      "../../plugins/EC-WebLogic/images/DeployApp/EC-WLSDeployApp4.png" />
-    </div>
-
-    <div id="UndeployApp">
-      <a name="UndeployApp" id="UndeployApp"></a>
-
-      <h3>UndeployApp</h3>
-
-      <p>Stops the deployment unit and removes staged files from
-      target servers.</p>
-
-      <table class="grid">
-        <thead>
-          <tr>
-            <th>Parameter</th>
-
-            <th>Description</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td class='required'>Java Absolute Path</td>
-
-            <td>Absolute path of java. i.e: "java", "java.exe"
-            <i>or</i> "/path/to/java". (Required)</td>
-          </tr>
-
-          <tr>
-            <td>Java Parameters</td>
-
-            <td>Java parameters to pass. i.e: "-verbose".</td>
-          </tr>
-
-          <tr>
-            <td class='required'>Application Name</td>
-
-            <td>Name of the application to undeploy. i.e: "webapp".
-            (Required)</td>
-          </tr>
-
-          <tr>
-            <td>Enable Graceful Mode</td>
-
-            <td>Enables stopping the application in Graceful Mode
-            (after existing HTTP clients have completed their
-            work).</td>
-          </tr>
-
-          <tr>
-            <td>Configuration Name</td>
-
-            <td>Name of the configuration to be used for retrieving
-            Admin Server's URL and credentials.</td>
-          </tr>
-
-          <tr>
-            <td>Additional Commands</td>
-
-            <td>Additional commands to be entered for
-            weblogic.Deployer.</td>
-          </tr>
-
-          <tr>
-            <td>setDomainEnv Script Absolute Path</td>
-
-            <td>Absolute path of the setDomainEnv script, including
-            filename and extension. i.e: "/path/to/setDomainEnv.sh"
-            <i>or</i> "setDomainEnv.cmd".</td>
-          </tr>
-
-          <tr>
-            <td>weblogic jar Absolute Path</td>
-
-            <td>Absolute path of the weblogic jar, needed to run
-            the undeploy function. In Windows environment, if the
-            jar is already added to the enviroment classpath
-            variable, then is not necesary to include it. In Linux
-            environment you must include the path. i.e:
-            "/path/to/weblogic.jar" <i>or</i>
-            "/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar".</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p>To undeploy an application, select the following
-      highlighted step:</p><img src=
-      "../../plugins/EC-WebLogic/images/UndeployApp/EC-WLSUndeployApp1.png" />
-
-      <p>Then, enter the following parameters:</p><img src=
-      "../../plugins/EC-WebLogic/images/UndeployApp/EC-WLSUndeployApp2.png" />
-
-      <p>When the job is executed, you should see the following job
-      detail, note the output indicating the application was
-      undeployed successfully:</p><img src=
-      "../../plugins/EC-WebLogic/images/UndeployApp/EC-WLSUndeployApp3.png" />
-
-      <p>In the <b>UndeployApp</b> step, click the Log icon to see
-      the diagnostic info. The output is similar to the following
-      diagnostic report:</p><img src=
-      "../../plugins/EC-WebLogic/images/UndeployApp/EC-WLSUndeployApp4.png" />
-    </div>
-
-    <div id="StartApp">
-      <a name="StartApp" id="StartApp"></a>
-
-      <h3>StartApp</h3>
-
-      <p>Starts an application.</p>
-
-      <table class="grid">
-        <thead>
-          <tr>
-            <th>Parameter</th>
-
-            <th>Description</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td class='required'>Java Absolute Path</td>
-
-            <td>Absolute path of java. i.e: "java", "java.exe"
-            <i>or</i> "/path/to/java". (Required)</td>
-          </tr>
-
-          <tr>
-            <td>Java Parameters</td>
-
-            <td>Java parameters to pass. i.e: "-verbose".</td>
-          </tr>
-
-          <tr>
-            <td class='required'>Application Name</td>
-
-            <td>Name of the application to start. i.e: "webapp".
-            (Required)</td>
-          </tr>
-
-          <tr>
-            <td>Configuration Name</td>
-
-            <td>Name of the configuration to be used for retrieving
-            Admin Server's URL and credentials.</td>
-          </tr>
-
-          <tr>
-            <td>Additional Commands</td>
-
-            <td>Additional commands to be entered for
-            weblogic.Deployer.</td>
-          </tr>
-
-          <tr>
-            <td>setDomainEnv Script Absolute Path</td>
-
-            <td>Absolute path of the setDomainEnv script, including
-            filename and extension. i.e: "/path/to/setDomainEnv.sh"
-            <i>or</i> "setDomainEnv.cmd".</td>
-          </tr>
-
-          <tr>
-            <td>weblogic jar Absolute Path</td>
-
-            <td>Absolute path of the weblogic jar, needed to run
-            the start application function. In Windows environment,
-            if the jar is already added to the enviroment classpath
-            variable, then is not necesary to include it. In Linux
-            environment you must include the path. i.e:
-            "/path/to/weblogic.jar" <i>or</i>
-            "/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar".</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p>To start an application, select the following highlighted
-      step:</p><img src=
-      "../../plugins/EC-WebLogic/images/StartApp/EC-WLSStartApp1.png" />
-
-      <p>Then, enter the following parameters:</p><img src=
-      "../../plugins/EC-WebLogic/images/StartApp/EC-WLSStartApp2.png" />
-
-      <p>When the job is executed, you should see the following job
-      detail, note the output indicating the application was
-      started successfully:</p><img src=
-      "../../plugins/EC-WebLogic/images/StartApp/EC-WLSStartApp3.png" />
-
-      <p>In the <b>StartApp</b> step, click the Log icon to see the
-      diagnostic info. The output is similar to the following
-      diagnostic report:</p><img src=
-      "../../plugins/EC-WebLogic/images/StartApp/EC-WLSStartApp4.png" />
-    </div>
-
-    <div id="StopApp">
-      <a name="StopApp" id="StopApp"></a>
-
-      <h3>StopApp</h3>
-
-      <p>Stops an application.</p>
-
-      <table class="grid">
-        <thead>
-          <tr>
-            <th>Parameter</th>
-
-            <th>Description</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td class='required'>Java Absolute Path</td>
-
-            <td>Absolute path of java. i.e: "java", "java.exe"
-            <i>or</i> "/path/to/java". (Required)</td>
-          </tr>
-
-          <tr>
-            <td>Java Parameters</td>
-
-            <td>Java parameters to pass. i.e: "-verbose".</td>
-          </tr>
-
-          <tr>
-            <td class='required'>Application Name</td>
-
-            <td>Name of the application to stop. i.e: "webapp".
-            (Required)</td>
-          </tr>
-
-          <tr>
-            <td>Enable Graceful Mode</td>
-
-            <td>Enables stopping the application in Graceful Mode
-            (after existing HTTP clients have completed their
-            work).</td>
-          </tr>
-
-          <tr>
-            <td>Configuration Name</td>
-
-            <td>Name of the configuration to be used for retrieving
-            Admin Server's URL and credentials.</td>
-          </tr>
-
-          <tr>
-            <td>Additional Commands</td>
-
-            <td>Additional commands to be entered for
-            weblogic.Deployer.</td>
-          </tr>
-
-          <tr>
-            <td>setDomainEnv Script Absolute Path</td>
-
-            <td>Absolute path of the setDomainEnv script, including
-            filename and extension. i.e: "/path/to/setDomainEnv.sh"
-            <i>or</i> "setDomainEnv.cmd".</td>
-          </tr>
-
-          <tr>
-            <td>weblogic jar Absolute Path</td>
-
-            <td>Absolute path of the weblogic jar, needed to run
-            the stop application function. In Windows environment,
-            if the jar is already added to the enviroment classpath
-            variable, then is not necesary to include it. In Linux
-            environment you must include the path. i.e:
-            "/path/to/weblogic.jar" <i>or</i>
-            "/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar".</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p>To stop an application, select the following highlighted
-      step:</p><img src=
-      "../../plugins/EC-WebLogic/images/StopApp/EC-WLSStopApp1.png" />
-
-      <p>Then, enter the following parameters:</p><img src=
-      "../../plugins/EC-WebLogic/images/StopApp/EC-WLSStopApp2.png" />
-
-      <p>When the job is executed, you should see the following job
-      detail, note the output indicating the application was stoped
-      successfully:</p><img src=
-      "../../plugins/EC-WebLogic/images/StopApp/EC-WLSStopApp3.png" />
-
-      <p>In the <b>StopApp</b> step, click the Log icon to see the
-      diagnostic info. The output is similar to the following
-      diagnostic report:</p><img src=
-      "../../plugins/EC-WebLogic/images/StopApp/EC-WLSStopApp4.png" />
-    </div>
-
-    <div id="RunDeployer">
-      <a name="RunDeployer" id="RunDeployer"></a>
-
-      <h3>RunDeployer</h3>
-
-      <p>Runs weblogic.Deployer in a free-mode. Weblogic.Deployer
-      is a Java-based deployment tool that provides a command-line
-      interface to the WebLogic Server deployment API.</p>
-
-      <table class="grid">
-        <thead>
-          <tr>
-            <th>Parameter</th>
-
-            <th>Description</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td class='required'>Command To Use</td>
-
-            <td>The weblogic.Deployer command to use. i.e:
-            "-deploy", "-undeploy", "-stop" <i>or</i> "-listapps".
-            (Required)</td>
-          </tr>
-
-          <tr>
-            <td>Java Parameters</td>
-
-            <td>Java parameters to pass. i.e: "-verbose".</td>
-          </tr>
-
-          <tr>
-            <td>Configuration Name</td>
-
-            <td>Name of the configuration to be used for retrieving
-            Admin Server's URL and credentials.</td>
-          </tr>
-
-          <tr>
-            <td>Additional Commands</td>
-
-            <td>Additional commands to be entered for
-            weblogic.Deployer.</td>
-          </tr>
-
-          <tr>
-            <td class='required'>Java Absolute Path</td>
-
-            <td>Absolute path of java. i.e: "java", "java.exe"
-            <i>or</i> "/path/to/java". (Required)</td>
-          </tr>
-
-          <tr>
-            <td class='required'>Application Name</td>
-
-            <td>Name of the application to manage. i.e: "webapp".
-            (Required)</td>
-          </tr>
-
-          <tr>
-            <td>setDomainEnv Script Absolute Path</td>
-
-            <td>Absolute path of the setDomainEnv script, including
-            filename and extension. i.e: "/path/to/setDomainEnv.sh"
-            <i>or</i> "setDomainEnv.cmd".</td>
-          </tr>
-
-          <tr>
-            <td>weblogic jar Absolute Path</td>
-
-            <td>Absolute path of the weblogic jar, needed to run
-            the weblogic.Deployer in a free-mode. In Windows
-            environment, if the jar is already added to the
-            enviroment classpath variable, then is not necesary to
-            include it. In Linux environment you must include the
-            path. i.e: "/path/to/weblogic.jar" <i>or</i>
-            "/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar".</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p>To run the weblogic.Deployer in a free-mode, select the
-      following highlighted step:</p><img src=
-      "../../plugins/EC-WebLogic/images/RunDeployer/EC-WLSRunDep1.png" />
-
-      <p>Then, enter the following parameters:</p><img src=
-      "../../plugins/EC-WebLogic/images/RunDeployer/EC-WLSRunDep2.png" />
-
-      <p>When the job is executed, you should see the following job
-      detail, note the output indicating the job ran
-      successfully:</p><img src=
-      "../../plugins/EC-WebLogic/images/RunDeployer/EC-WLSRunDep3.png" />
-
-      <p>In the <b>RunJob</b> step, click the Log icon to see the
-      diagnostic info. The output is similar to the following
-      diagnostic report:</p><img src=
-      "../../plugins/EC-WebLogic/images/RunDeployer/EC-WLSRunDep4.png" />
-    </div>
-
-    <div id="RunWLST">
-      <a name="RunWLST" id="RunWLST"></a>
-
-      <h3>RunWLST</h3>
-
-      <p>Runs Jython scripts using weblogic.WLST. The WebLogic
-      Scripting Tool (WLST) is a command-line scripting interface
-      that system administrators and operators use to monitor and
-      manage WebLogic Server instances and domains. The WLST
-      scripting environment is based on the Java scripting
-      interpreter, Jython. In addition to WebLogic scripting
-      functions, you can use common features of interpreted
-      languages, including local variables, conditional variables,
-      and flow control statements.</p>
-
-      <table class="grid">
-        <thead>
-          <tr>
-            <th>Parameter</th>
-
-            <th>Description</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td class='required'>WLST Absolute Path</td>
-
-            <td>Absolute path to WLST. i.e: "/path/to/wlst.cmd"
-            <i>or</i> "wlst.sh". (Required)</td>
-          </tr>
-
-          <tr>
-            <td>Script File Absolute Path</td>
-
-            <td>Absolute path of a Jython script containing the
-            desired job. The path is used only if "Supplied File"
-            is selected in the "Script File Source" parameter. i.e:
-            "/path/to/scriptfile.jython".</td>
-          </tr>
-
-          <tr>
-            <td class='required'>Script File Source</td>
-
-            <td>Indicates the source of the script file to execute.
-            Either a existent file in the path defined in the
-            'scriptfile' parameter OR a new one using the code
-            specified in scriptfile parameter. (Required)</td>
-          </tr>
-
-          <tr>
-            <td>Script File</td>
-
-            <td>Content of the script file to run if "New Script
-            File" option is chosen in the "Script File Source"
-            parameter.</td>
-          </tr>
-
-          <tr>
-            <td>Additional Commands</td>
-
-            <td>Additional commands to be entered for
-            weblogic.WLST.</td>
-          </tr>
-
-          <tr>
-            <td>weblogic jar Absolute Path</td>
-
-            <td>Absolute path of the weblogic jar, needed to run
-            Jython scripts using weblogic.WLST. In Windows
-            environment, if the jar is already added to the
-            enviroment classpath variable, then is not necesary to
-            include it. In Linux environment you must include the
-            path. i.e: "/path/to/weblogic.jar" <i>or</i>
-            "/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar".</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p>To see a complete example, see the <i>Examples and Use
-      Cases</i> section.</p>
-    </div>
-
-    <div id="StartAdminServer">
-      <a name="StartAdminServer" id="StartAdminServer"></a>
-
-      <h3>StartAdminServer</h3>
-
-      <p>Starts the WebLogic Admin Server</p>
-
-      <table class="grid">
-        <thead>
-          <tr>
-            <th>Parameter</th>
-
-            <th>Description</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td class='required'>Script Location</td>
-
-            <td>Absolute path of the startWeblogic script,
-            including filename and extension. i.e:
-            "/path/to/startWeblogic.cmd". (Required)</td>
-          </tr>
-
-          <tr>
-            <td class='required'>Admin Server Instance Name</td>
-
-            <td>Instance name of the Admin Server to start. i.e:
-            "AdminServer". (Required)</td>
-          </tr>
-
-          <tr>
-            <td class='required'>Config Name</td>
-
-            <td>Configuration name from which the Admin URL and
-            credentials will be read. (Required)</td>
-          </tr>
-
-          <tr>
-            <td class='required'>WLST Absolute Path</td>
-
-            <td>Absolute path to WLST. i.e: "/path/to/wlst.cmd"
-            <i>or</i> "wlst.sh". (Required)</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p>To start the administration server, select the following
-      highlighted step:</p><img src=
-      "../../plugins/EC-WebLogic/images/StartAdministrationServer/EC-WLSStartAdministrationServer1.png" />
-
-      <p>Then, enter the following parameters:</p><img src=
-      "../../plugins/EC-WebLogic/images/StartAdministrationServer/EC-WLSStartAdministrationServer2.png" />
-
-      <p>When the job is executed, you should see the following job
-      detail, note the output indicating the server was started
-      successfully (the warning indicates that the server is been
-      accessed by an insecure protocol):</p><img src=
-      "../../plugins/EC-WebLogic/images/StartAdministrationServer/EC-WLSStartAdministrationServer3.png" />
-
-      <p>In the <b>StartAdminServer</b> step, click the Log icon to
-      see the diagnostic info. The output is similar to the
-      following diagnostic report:</p><img src=
-      "../../plugins/EC-WebLogic/images/StartAdministrationServer/EC-WLSStartAdministrationServer4.png" />
-    </div>
-
-    <div id="StartManagedServer">
-      <a name="StartManagedServer" id="StartManagedServer"></a>
-
-      <h3>StartManagedServer</h3>
-
-      <p>Starts a WebLogic Managed Server. A WebLogic Server
-      administration domain is a logically related group of
-      WebLogic Server resources. Usually, you configure a domain to
-      include additional WebLogic Server instances called Managed
-      Servers. You deploy Web applications, EJBs, and other
-      resources onto the Managed Servers and use the Administration
-      Server for configuration and management purposes only.</p>
-
-      <p>In order to start the managed server, a file called
-      "boot.properties" must be created in the path
-      "$DOMAIN_DIR$/servers/myserver/security", and this file must
-      have the credentials needed to start the server. i.e:</p>
-
-      <p>username=weblogic</p>
-
-      <p>password=w3blogic</p>
-
-      <table class="grid">
-        <thead>
-          <tr>
-            <th>Parameter</th>
-
-            <th>Description</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td class='required'>Script Location</td>
-
-            <td>Absolute path of the start server script, including
-            filename and extension. i.e:
-            "/path/to/startManagedServer.cmd". (Required)</td>
-          </tr>
-
-          <tr>
-            <td class='required'>Instance Name</td>
-
-            <td>Instance name of the Managed Server to start.
-            (Required)</td>
-          </tr>
-
-          <tr>
-            <td class='required'>Config Name</td>
-
-            <td>Configuration name from which the Managed Server
-            URL and the credentials from the Admin Server will be
-            read. (Required)</td>
-          </tr>
-
-          <tr>
-            <td class='required'>Admin Server URL</td>
-
-            <td>URL from the Admin Server (including protocol and
-            port). (Required)</td>
-          </tr>
-
-          <tr>
-            <td class='required'>WLST Absolute Path</td>
-
-            <td>Absolute path to WLST. i.e: "/path/to/wlst.cmd"
-            <i>or</i> "wlst.sh". (Required)</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p>To start a managed server, select the following
-      highlighted step:</p><img src=
-      "../../plugins/EC-WebLogic/images/StartManagedServer/EC-WLSStartManagedServer1.png" />
-
-      <p>Then, enter the following parameters:</p><img src=
-      "../../plugins/EC-WebLogic/images/StartManagedServer/EC-WLSStartManagedServer2.png" />
-
-      <p>When the job is executed, you should see the following job
-      detail, note the output indicating the server was started
-      successfully (the warning indicates that the server is been
-      accessed by an insecure protocol):</p><img src=
-      "../../plugins/EC-WebLogic/images/StartManagedServer/EC-WLSStartManagedServer3.png" />
-
-      <p>In the <b>StartInstance</b> step, click the Log icon to
-      see the diagnostic info. The output is similar to the
-      following diagnostic report:</p><img src=
-      "../../plugins/EC-WebLogic/images/StartManagedServer/EC-WLSStartManagedServer4.png" />
-    </div>
-
-    <div id="StopManagedServer">
-      <a name="StopManagedServer" id="StopManagedServer"></a>
-
-      <h3>StopManagedServer</h3>
-
-      <p>Stops a WebLogic Managed Server</p>
-
-      <table class="grid">
-        <thead>
-          <tr>
-            <th>Parameter</th>
-
-            <th>Description</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td class='required'>Script Location</td>
-
-            <td>Absolute path of the stop server script, including
-            filename and extension. i.e:
-            "/path/to/stopManagedServer.cmd". (Required)</td>
-          </tr>
-
-          <tr>
-            <td class='required'>Instance Name</td>
-
-            <td>Instance name of the Managed Server to stop.
-            (Required)</td>
-          </tr>
-
-          <tr>
-            <td class='required'>Config Name</td>
-
-            <td>Configuration name from which the URL is retrieved.
-            (Required)</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p>To stop the admin server, select the following highlighted
-      step:</p><img src=
-      "../../plugins/EC-WebLogic/images/StopManagedServer/EC-WLSStopManagedServer1.png" />
-
-      <p>Then, enter the following parameters:</p><img src=
-      "../../plugins/EC-WebLogic/images/StopManagedServer/EC-WLSStopManagedServer2.png" />
-
-      <p>When the job is executed, you should see the following job
-      detail, note the output indicating the job ran successfully
-      (the warning indicates that the server is been accessed by an
-      insecure protocol):</p><img src=
-      "../../plugins/EC-WebLogic/images/StopManagedServer/EC-WLSStopManagedServer3.png" />
-
-      <p>In the <b>StopAdminServer</b> step, click the Log icon to
-      see the diagnostic info. The output is similar to the
-      following diagnostic report:</p><img src=
-      "../../plugins/EC-WebLogic/images/StopManagedServer/EC-WLSStopManagedServer4.png" />
-    </div>
-
-    <div id="StopAdminServer">
-      <a name="StopAdminServer" id="StopAdminServer"></a>
-
-      <h3>StopAdminServer</h3>
-
-      <p>Stops a WebLogic Admin Server</p>
-
-      <table class="grid">
-        <thead>
-          <tr>
-            <th>Parameter</th>
-
-            <th>Description</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td class='required'>Script Location</td>
-
-            <td>Absolute path of the stopWeblogic script, including
-            filename and extension. i.e:
-            "/path/to/stopWeblogic.cmd". (Required)</td>
-          </tr>
-
-          <tr>
-            <td class='required'>Config Name</td>
-
-            <td>Configuration name from which the URL and
-            credentials are retrieved. (Required)</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p>To stop the admin server, select the following highlighted
-      step:</p><img src=
-      "../../plugins/EC-WebLogic/images/StopAdminServer/EC-WLSStopAdminServer1.png" />
-
-      <p>Then, enter the following parameters:</p><img src=
-      "../../plugins/EC-WebLogic/images/StopAdminServer/EC-WLSStopAdminServer2.png" />
-
-      <p>When the job is executed, you should see the following job
-      detail, note the output indicating the job ran successfully
-      (the warning indicates that the server is been accessed by an
-      insecure protocol):</p><img src=
-      "../../plugins/EC-WebLogic/images/StopAdminServer/EC-WLSStopAdminServer3.png" />
-
-      <p>In the <b>StopAdminServer</b> step, click the Log icon to
-      see the diagnostic info. The output is similar to the
-      following diagnostic report:</p><img src=
-      "../../plugins/EC-WebLogic/images/StopAdminServer/EC-WLSStopAdminServer4.png" />
-    </div>
-
-    <div id="CheckServerStatus">
-      <a name="CheckServerStatus" id="CheckServerStatus"></a>
-
-      <h3>CheckServerStatus</h3>
-
-      <p>Check the status of the given server URL.</p>
-
-      <table class="grid">
-        <thead>
-          <tr>
-            <th>Parameter</th>
-
-            <th>Description</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>Configuration Name</td>
-
-            <td>Name of the configuration to be used. URL, port and
-            credentials are gathered from the given
-            configuration.</td>
-          </tr>
-
-          <tr>
-            <td class='required'>Wlst Script Absolute Path</td>
-
-            <td>Absolute path to WLST. i.e: "/path/to/wlst.cmd"
-            <i>or</i>"wlst.sh". (Required)</td>
-          </tr>
-
-          <tr>
-            <td>Maximum Elapsed Time</td>
-
-            <td>Defines the maximum time in seconds that the job
-            will try to check into the server. Blank implies no
-            wait time (URL only checked one time).</td>
-          </tr>
-
-          <tr>
-            <td class='required'>Success Criteria</td>
-
-            <td>Indicates the expected correct result to be
-            obtained when running checking the server.
-            (Required)</td>
-          </tr>
-
-          <tr>
-            <td class='required'>Instance Name</td>
-
-            <td>Indicates the name of the instance to be checked.
-            (Required)</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p>To stop the admin server, select the following highlighted
-      step:</p><img src=
-      "../../plugins/EC-WebLogic/images/CheckServerStatus/EC-WLSCheckServerStatus1.png" />
-
-      <p>Then, enter the following parameters:</p><img src=
-      "../../plugins/EC-WebLogic/images/CheckServerStatus/EC-WLSCheckServerStatus2.png" />
-
-      <p>When the job is executed, you should see the following job
-      detail, note the output indicating the job ran successfully
-      (the warning indicates that the server is been accessed by an
-      insecure protocol):</p><img src=
-      "../../plugins/EC-WebLogic/images/CheckServerStatus/EC-WLSCheckServerStatus3.png" />
-
-      <p>In the <b>StopAdminServer</b> step, click the Log icon to
-      see the diagnostic info. The output is similar to the
-      following diagnostic report:</p><img src=
-      "../../plugins/EC-WebLogic/images/CheckServerStatus/EC-WLSCheckServerStatus4.png" />
-    </div>
-
-    <div id="CheckPageStatus">
-      <a name="CheckPageStatus" id="CheckPageStatus"></a>
-
-      <h3>CheckPageStatus</h3>
-
-      <p>Check the status of the given page URL.</p>
-
-      <table class="grid">
-        <thead>
-          <tr>
-            <th>Parameter</th>
-
-            <th>Description</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>Credentials to be entered</td>
-
-            <td>The credentials needed to check the status of the
-            page.</td>
-          </tr>
-
-          <tr>
-            <td>Maximum Elapsed Time</td>
-
-            <td>Defines the maximum time in seconds that the job
-            will try to check into the server. Blank implies no
-            wait time (URL only checked one time).</td>
-          </tr>
-
-          <tr>
-            <td class='required'>Target URL</td>
-
-            <td>URL of the page to be checked. (Required)</td>
-          </tr>
-
-          <tr>
-            <td>Success Criteria</td>
-
-            <td>Indicates the expected correct result to be
-            obtained when running checking the server.</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p>To stop the admin server, select the following highlighted
-      step:</p><img src=
-      "../../plugins/EC-WebLogic/images/CheckPageStatus/EC-WLSCheckPageStatus1.png" />
-
-      <p>Then, enter the following parameters:</p><img src=
-      "../../plugins/EC-WebLogic/images/CheckPageStatus/EC-WLSCheckPageStatus2.png" />
-
-      <p>When the job is executed, you should see the following job
-      detail, note the output indicating the job ran
-      successfully:</p><img src=
-      "../../plugins/EC-WebLogic/images/CheckPageStatus/EC-WLSCheckPageStatus3.png" />
-
-      <p>In the <b>StopAdminServer</b> step, click the Log icon to
-      see the diagnostic info. The output is similar to the
-      following diagnostic report:</p><img src=
-      "../../plugins/EC-WebLogic/images/CheckPageStatus/EC-WLSCheckPageStatus4.png" />
-
-      <p><b>Note:</b> in the URL the protocol is "http", this is
-      because for this procedure, the Electric Commander use an
-      internal method to test the status of the URL pages with the
-      original "http" protocol used in the web browsers.</p>
-    </div>
-
-    <h1>Examples and Use Cases</h1>
-    <!-- This section is for examples and use cases, including screenshots of the new Parameter Panel with example values filled in.
-    Unfortunately, I can't tell you what exactly to put here, but it's OK to put what seems like too much! Include both parameter
-    values and output where appropriate. Use a separate 'h2' header for each example. Under the h2 header try to stay with the style
-    outline used above where possible.
-    -->
-
-    <h2>Run WLST</h2>
-
-    <p>In this example, the objetive is to print an 'Hello World!'
-    in the output using the <i>Supplied File</i> option with an
-    existing scrit file in a path, and using the <i>New Script
-    File</i> option with embedded code.</p>
-
-    <p>To run the custom job, select the following highlighted
-    step:</p><img src=
-    "../../plugins/EC-WebLogic/images/RunWLST/EC-WLSRunWLST1.png" />
-
-    <p>Then, enter the following parameters. The first image is for
-    the <i>Supplied File</i> option, and the second one is for
-    <i>New Script File</i>:</p><img src=
-    "../../plugins/EC-WebLogic/images/RunWLST/EC-WLSRunWLST2.png" />
-    <img src=
-    "../../plugins/EC-WebLogic/images/RunWLST/EC-WLSRunWLST3.png" />
-
-    <p>When the job is executed, you should see the following job
-    detail, note the output indicating the successfully execution,
-    this applies for both <i>Script File Source</i>
-    options:</p><img src=
-    "../../plugins/EC-WebLogic/images/RunWLST/EC-WLSRunWLST4.png" />
-
-    <p>In the <b>RunWLST</b> step, click the Log icon to see the
-    log info. This applies both <i>Script File Source</i> option,
-    the output is similar to the following sample:</p><img src=
-    "../../plugins/EC-WebLogic/images/RunWLST/EC-WLSRunWLST5.png" />
-
-    <p>The next image shows the <i>HelloWorld.jython</i> file used
-    in the <i>Supplied File</i> option:</p><img src=
-    "../../plugins/EC-WebLogic/images/RunWLST/EC-WLSRunWLST6.png" />
-
-    <h1>Release Notes</h1>
-
-    <h2>EC-WebLogic-2.0.1</h2>
-
-    <ul>
-      <li>Upgrade to use the new Parameter Form XML.</li>
-
-      <li>Added a link directly to the new help document.</li>
-    </ul>
-
-    <h2>EC-WebLogic-2.0.0</h2>
-
-    <ul>
-      <li>New Help Page Format</li>
-
-      <li>New Parameter Panels for each procedure</li>
-
-      <li>Added <b>weblogic jar Absolute Path</b> param into the
-      DeployApp, UndeployApp, StartApp, StopApp, RunDeployer and
-      RunWLST method, needed in Linux environment to load WebLogic
-      libreries.</li>
-    </ul>
-
-    <h2>EC-WebLogic-1.1.3</h2>
-
-    <ul>
-      <li>Added <b>adminserverurl</b> param into the
-      StartManagedServer method.</li>
-
-      <li>Fixed minor issues.</li>
-    </ul>
-
-    <h2>EC-WebLogic-1.1.1</h2>
-
-    <ul>
-      <li>Fixed issue affecting workspace setting.</li>
-    </ul>
-
-    <h2>EC-WebLogic-1.1.0</h2>
-
-    <ul>
-      <li>Added the CheckPageStatus procedure</li>
-
-      <li>Modified the CheckServerProcedure procedure, CURL is not
-      needed and parameters were changed</li>
-
-      <li>Fixed minor bugs</li>
-
-      <li>Removed CURL dependency</li>
-
-      <li>Added new postp matchers</li>
-    </ul>
-
-    <h2>EC-WebLogic-1.0.2</h2>
-
-    <ul>
-      <li>Fixed minor bug on Configuration List page.</li>
-    </ul>
-
-    <h2>EC-WebLogic-1.0.1</h2>
-
-    <ul>
-      <li>Procedures have one step only and are executed using Perl
-      directly</li>
-
-      <li>Credentials in the StartManagedServer procedure must be
-      stored in a boot.properties file</li>
-    </ul>
-  </div>
 </body>
 </html>

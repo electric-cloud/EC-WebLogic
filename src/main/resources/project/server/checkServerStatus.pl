@@ -163,7 +163,7 @@
            
            my $testtimestart = time;
            
-           print "Waiting $::gIntervalWaitTime seconds before starting Attempt #$attempts...\n\n";
+           print "Waiting $::gIntervalWaitTime seconds before starting Attempt #$attempts.\n\n";
            
            #sleeping process during N seconds
            sleep $::gIntervalWaitTime;
