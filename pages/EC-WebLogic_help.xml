@@ -1536,30 +1536,36 @@
 
         <h1>Release Notes</h1>
 
+		<h2>@PLUGIN_KEY@ 2.0.4</h2>
+
+		<ul>
+			<li>Procedure name(s) were changed in the step picker section</li>
+		</ul>
+		
         <h2>@PLUGIN_KEY@ 2.0.3</h2>
 
         <ul>
             <li>Added a parameter in the start and stop server
             procedures to determine the maximun time in seconds to
-            test the status of the server.</li>
+            test the status of the server</li>
 
             <li>Created 2 new procedures: StartNodeManager and
-            StopNodeManager.</li>
+            StopNodeManager</li>
         </ul>
 
         <h2>@PLUGIN_KEY@ 2.0.2</h2>
 
         <ul>
-            <li>Changes to Help files.</li>
+            <li>Changes to Help files</li>
         </ul>
 
         <h2>@PLUGIN_KEY@ 2.0.1</h2>
 
         <ul>
-            <li>Upgrade to use the new Parameter Form XML.</li>
+            <li>Upgrade to use the new Parameter Form XML</li>
 
             <li>Added a link directly to the new help
-            document.</li>
+            document</li>
         </ul>
 
         <h2>@PLUGIN_KEY@ 2.0.0</h2>
@@ -1572,22 +1578,22 @@
             <li>Added <b>weblogic jar Absolute Path</b> param into
             the DeployApp, UndeployApp, StartApp, StopApp,
             RunDeployer and RunWLST method, needed in Linux
-            environment to load WebLogic libreries.</li>
+            environment to load WebLogic libreries</li>
         </ul>
 
         <h2>@PLUGIN_KEY@ 1.1.3</h2>
 
         <ul>
             <li>Added <b>adminserverurl</b> param into the
-            StartManagedServer method.</li>
+            StartManagedServer method</li>
 
-            <li>Fixed minor issues.</li>
+            <li>Fixed minor issues</li>
         </ul>
 
         <h2>@PLUGIN_KEY@ 1.1.1</h2>
 
         <ul>
-            <li>Fixed issue affecting workspace setting.</li>
+            <li>Fixed issue affecting workspace setting</li>
         </ul>
 
         <h2>@PLUGIN_KEY@ 1.1.0</h2>
@@ -1608,7 +1614,7 @@
         <h2>@PLUGIN_KEY@ 1.0.2</h2>
 
         <ul>
-            <li>Fixed minor bug on Configuration List page.</li>
+            <li>Fixed minor bug on Configuration List page</li>
         </ul>
 
         <h2>@PLUGIN_KEY@ 1.0.1</h2>
