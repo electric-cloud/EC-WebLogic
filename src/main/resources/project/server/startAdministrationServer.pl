@@ -534,7 +534,7 @@
       my %props;
     
       my $cmdLine = createCommandLine(\@systemcall);
-      $props{'startManagedServerLine'} = $cmdLine;
+      $props{'startAdminServerLine'} = $cmdLine;
       setProperties(\%props);
       
       print "cmd line: $cmdLine\n";

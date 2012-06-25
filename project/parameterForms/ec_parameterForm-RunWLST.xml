@@ -1,12 +1,0 @@
-<editor>	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#RunWLST</help>		<formElement>
-		<type>entry</type>
-		<label>WLST Absolute Path:</label>
-		<property>wlstpath</property>
-		<required>1</required>
-		<documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)</documentation>	</formElement>
-	<formElement>
-		<type>entry</type>
-		<label>Script File Absolute Path:</label>
-		<property>scriptfilepath</property>
-		<documentation>Absolute path of a Jython script containing the desired job. The path is used only if 'Supplied File' is selected in the 'Script File Source' parameter. i.e: '/path/to/scriptfile.jython'.</documentation>		<required>0</required>	</formElement>		<formElement>		<type>radio</type>		<label>Script File Source:</label>		<property>scriptfilesource</property>		<required>1</required>		<documentation>Indicates the source of the script file to execute. Either a existent file in the path defined in the 'scriptfile' parameter OR a new one using the code specified in scriptfile parameter. (Required)</documentation>		<option><name>Supplied File</name><value>suppliedfile</value></option>		<option><name>New Script File</name><value>newscriptfile</value></option>	</formElement>		<formElement>		<type>textarea</type>		<label>Script File:</label>		<property>scriptfile</property>		<documentation>Content of the script file to run if 'New Script File' option is chosen in the 'Script File Source' parameter.</documentation>		<required>0</required>	</formElement>		<formElement>		<type>textarea</type>		<label>Additional Commands:</label>		<property>additionalcommands</property>		<documentation>Additional commands to be entered for weblogic.WLST.</documentation>		<required>0</required>	</formElement>				<formElement>		<type>entry</type>		<label>weblogic jar Absolute Path:</label>		<property>webjarpath</property>		<documentation>Absolute path of the weblogic jar, needed to run the run Jython scripts using weblogic.WLST. In Windows environment, if the jar is already added to the enviroment classpath variable, then is not necesary to include it. In Linux environment you must include the path. i.e: '/path/to/weblogic.jar' or '/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar'.</documentation>		<required>0</required>	</formElement>
-</editor>

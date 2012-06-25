@@ -130,14 +130,14 @@
 
                         <td>Identifier of the configuration to
                         create. This parameter is required.
-                        (Required)</td>
+                        </td>
                     </tr>
 
                     <tr>
                         <td class='required'>WebLogic URL</td>
 
                         <td>Url of a WebLogic Server (must include
-                        protocol, server and port). (Required)</td>
+                        protocol, server and port). </td>
                     </tr>
 
                     <tr>
@@ -175,7 +175,7 @@
             <a name="DeployApp"
                  id="DeployApp"></a> 
 
-            <h3>DeployApp</h3>
+            <h3>Deploy Application</h3>
 
             <p>Deploys or redeploys an application or module using
             the weblogic. Deployer provided java class.</p>
@@ -196,7 +196,7 @@
 
                         <td>Absolute path of java. i.e: "java",
                         "java.exe" <i>or</i> "/path/to/java".
-                        (Required)</td>
+                        </td>
                     </tr>
 
                     <tr>
@@ -211,7 +211,7 @@
 
                         <td>Deployment name to assign to a
                         newly-deployed application or standalone
-                        module. (Required)</td>
+                        module. </td>
                     </tr>
 
                     <tr>
@@ -220,7 +220,7 @@
                         <td>Absolute path of the application to
                         deploy. i.e: "/path/to/webapp.war"
                         <i>or</i> "c:/mydir/webapp.war".
-                        (Required)</td>
+                        </td>
                     </tr>
 
                     <tr>
@@ -292,12 +292,11 @@
             following diagnostic
             report:</p><img src="../../plugins/EC-WebLogic/images/DeployApp/EC-WLSDeployApp4.png" />
             </div>
-
         <div id="UndeployApp">
             <a name="UndeployApp"
                  id="UndeployApp"></a> 
 
-            <h3>UndeployApp</h3>
+            <h3>Undeploy Application</h3>
 
             <p>Stops the deployment unit and removes staged files
             from target servers.</p>
@@ -318,7 +317,7 @@
 
                         <td>Absolute path of java. i.e: "java",
                         "java.exe" <i>or</i> "/path/to/java".
-                        (Required)</td>
+                        </td>
                     </tr>
 
                     <tr>
@@ -332,7 +331,7 @@
                         <td class='required'>Application Name</td>
 
                         <td>Name of the application to undeploy.
-                        i.e: "webapp". (Required)</td>
+                        i.e: "webapp". </td>
                     </tr>
 
                     <tr>
@@ -408,7 +407,7 @@
             <a name="StartApp"
                  id="StartApp"></a> 
 
-            <h3>StartApp</h3>
+            <h3>Start Application</h3>
 
             <p>Starts an application.</p>
 
@@ -428,7 +427,7 @@
 
                         <td>Absolute path of java. i.e: "java",
                         "java.exe" <i>or</i> "/path/to/java".
-                        (Required)</td>
+                        </td>
                     </tr>
 
                     <tr>
@@ -442,7 +441,7 @@
                         <td class='required'>Application Name</td>
 
                         <td>Name of the application to start. i.e:
-                        "webapp". (Required)</td>
+                        "webapp". </td>
                     </tr>
 
                     <tr>
@@ -510,7 +509,7 @@
             <a name="StopApp"
                  id="StopApp"></a> 
 
-            <h3>StopApp</h3>
+            <h3>Stop Application</h3>
 
             <p>Stops an application.</p>
 
@@ -530,7 +529,7 @@
 
                         <td>Absolute path of java. i.e: "java",
                         "java.exe" <i>or</i> "/path/to/java".
-                        (Required)</td>
+                        </td>
                     </tr>
 
                     <tr>
@@ -544,7 +543,7 @@
                         <td class='required'>Application Name</td>
 
                         <td>Name of the application to stop. i.e:
-                        "webapp". (Required)</td>
+                        "webapp". </td>
                     </tr>
 
                     <tr>
@@ -620,7 +619,7 @@
             <a name="RunDeployer"
                  id="RunDeployer"></a> 
 
-            <h3>RunDeployer</h3>
+            <h3>Run Deployer</h3>
 
             <p>Runs weblogic.Deployer in a free-mode.
             Weblogic.Deployer is a Java-based deployment tool that
@@ -642,7 +641,7 @@
 
                         <td>The weblogic.Deployer command to use.
                         i.e: "-deploy", "-undeploy", "-stop"
-                        <i>or</i> "-listapps". (Required)</td>
+                        <i>or</i> "-listapps". </td>
                     </tr>
 
                     <tr>
@@ -673,14 +672,14 @@
 
                         <td>Absolute path of java. i.e: "java",
                         "java.exe" <i>or</i> "/path/to/java".
-                        (Required)</td>
+                        </td>
                     </tr>
 
                     <tr>
                         <td class='required'>Application Name</td>
 
                         <td>Name of the application to manage. i.e:
-                        "webapp". (Required)</td>
+                        "webapp". </td>
                     </tr>
 
                     <tr>
@@ -733,7 +732,7 @@
             <a name="RunWLST"
                  id="RunWLST"></a> 
 
-            <h3>RunWLST</h3>
+            <h3>Run WLST</h3>
 
             <p>Runs Jython scripts using weblogic.WLST. The
             WebLogic Scripting Tool (WLST) is a command-line
@@ -762,7 +761,7 @@
 
                         <td>Absolute path to WLST. i.e:
                         "/path/to/wlst.cmd" <i>or</i> "wlst.sh".
-                        (Required)</td>
+                        </td>
                     </tr>
 
                     <tr>
@@ -783,7 +782,7 @@
                         to execute. Either a existent file in the
                         path defined in the 'scriptfile' parameter
                         OR a new one using the code specified in
-                        scriptfile parameter. (Required)</td>
+                        scriptfile parameter. </td>
                     </tr>
 
                     <tr>
@@ -825,7 +824,7 @@
             <a name="StartAdminServer"
                  id="StartAdminServer"></a> 
 
-            <h3>StartAdminServer</h3>
+            <h3>Start Admin Server</h3>
 
             <p>Starts the WebLogic Admin Server</p>
 
@@ -845,7 +844,7 @@
                         <td>Absolute path of the startWeblogic
                         script, including filename and extension.
                         i.e: "/path/to/startWeblogic.cmd".
-                        (Required)</td>
+                        </td>
                     </tr>
 
                     <tr>
@@ -853,7 +852,7 @@
                         Name</td>
 
                         <td>Instance name of the Admin Server to
-                        start. i.e: "AdminServer". (Required)</td>
+                        start. i.e: "AdminServer". </td>
                     </tr>
 
                     <tr>
@@ -861,7 +860,7 @@
 
                         <td>Configuration name from which the Admin
                         URL and credentials will be read.
-                        (Required)</td>
+                        </td>
                     </tr>
 
                     <tr>
@@ -870,7 +869,7 @@
 
                         <td>Absolute path to WLST. i.e:
                         "/path/to/wlst.cmd" <i>or</i> "wlst.sh".
-                        (Required)</td>
+                        </td>
                     </tr>
 
                     <tr>
@@ -913,7 +912,7 @@
             <a name="StartManagedServer"
                  id="StartManagedServer"></a> 
 
-            <h3>StartManagedServer</h3>
+            <h3>Start Managed Server</h3>
 
             <p>Starts a WebLogic Managed Server. A WebLogic Server
             administration domain is a logically related group of
@@ -951,14 +950,14 @@
                         <td>Absolute path of the start server
                         script, including filename and extension.
                         i.e: "/path/to/startManagedServer.cmd".
-                        (Required)</td>
+                        </td>
                     </tr>
 
                     <tr>
                         <td class='required'>Instance Name</td>
 
                         <td>Instance name of the Managed Server to
-                        start. (Required)</td>
+                        start. </td>
                     </tr>
 
                     <tr>
@@ -967,14 +966,14 @@
                         <td>Configuration name from which the
                         Managed Server URL and the credentials from
                         the Admin Server will be read.
-                        (Required)</td>
+                        </td>
                     </tr>
 
                     <tr>
                         <td class='required'>Admin Server URL</td>
 
                         <td>URL from the Admin Server (including
-                        protocol and port). (Required)</td>
+                        protocol and port). </td>
                     </tr>
 
                     <tr>
@@ -983,7 +982,7 @@
 
                         <td>Absolute path to WLST. i.e:
                         "/path/to/wlst.cmd" <i>or</i> "wlst.sh".
-                        (Required)</td>
+                        </td>
                     </tr>
 
                     <tr>
@@ -1026,7 +1025,7 @@
             <a name="StopManagedServer"
                  id="StopManagedServer"></a> 
 
-            <h3>StopManagedServer</h3>
+            <h3>Stop Managed Server</h3>
 
             <p>Stops a WebLogic Managed Server. Note that the Node
             Manager must be running before run this procedure.</p>
@@ -1047,21 +1046,21 @@
                         <td>Absolute path of the stop server
                         script, including filename and extension.
                         i.e: "/path/to/stopManagedServer.cmd".
-                        (Required)</td>
+                        </td>
                     </tr>
 
                     <tr>
                         <td class='required'>Instance Name</td>
 
                         <td>Instance name of the Managed Server to
-                        stop. (Required)</td>
+                        stop. </td>
                     </tr>
 
                     <tr>
                         <td class='required'>Config Name</td>
 
                         <td>Configuration name from which the URL
-                        is retrieved. (Required)</td>
+                        is retrieved. </td>
                     </tr>
                 </tbody>
             </table>
@@ -1092,7 +1091,7 @@
             <a name="StopAdminServer"
                  id="StopAdminServer"></a> 
 
-            <h3>StopAdminServer</h3>
+            <h3>Stop Admin Server</h3>
 
             <p>Stops a WebLogic Admin Server</p>
 
@@ -1112,7 +1111,7 @@
                         <td>Absolute path of the stopWeblogic
                         script, including filename and extension.
                         i.e: "/path/to/stopWeblogic.cmd".
-                        (Required)</td>
+                        </td>
                     </tr>
 
                     <tr>
@@ -1120,7 +1119,7 @@
 
                         <td>Configuration name from which the URL
                         and credentials are retrieved.
-                        (Required)</td>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -1151,7 +1150,7 @@
             <a name="CheckServerStatus"
                  id="CheckServerStatus"></a> 
 
-            <h3>CheckServerStatus</h3>
+            <h3>Check Server Status</h3>
 
             <p>Check the status of the given server URL.</p>
 
@@ -1179,7 +1178,7 @@
 
                         <td>Absolute path to WLST. i.e:
                         "/path/to/wlst.cmd" <i>or</i>"wlst.sh".
-                        (Required)</td>
+                        </td>
                     </tr>
 
                     <tr>
@@ -1196,14 +1195,14 @@
 
                         <td>Indicates the expected correct result
                         to be obtained when running checking the
-                        server. (Required)</td>
+                        server. </td>
                     </tr>
 
                     <tr>
                         <td class='required'>Instance Name</td>
 
                         <td>Indicates the name of the instance to
-                        be checked. (Required)</td>
+                        be checked. </td>
                     </tr>
                 </tbody>
             </table>
@@ -1234,7 +1233,7 @@
             <a name="CheckPageStatus"
                  id="CheckPageStatus"></a> 
 
-            <h3>CheckPageStatus</h3>
+            <h3>Check Page Status</h3>
 
             <p>Check the status of the given page URL.</p>
 
@@ -1268,7 +1267,7 @@
                         <td class='required'>Target URL</td>
 
                         <td>URL of the page to be checked.
-                        (Required)</td>
+                        </td>
                     </tr>
 
                     <tr>
@@ -1313,7 +1312,7 @@
             <a name="StartNodeManager"
                  id="StartNodeManager"></a> 
 
-            <h3>StartNodeManager</h3>
+            <h3>Start Node Manager</h3>
 
             <p>Starts the WebLogic Node Manager. Node Manager is a
             WebLogic Server utility that enables you to start, shut
@@ -1341,7 +1340,7 @@
                         script, including filename and extension.
                         i.e:
                         '/Oracle/Middleware/wlserver_10.3/server/bin/startNodeManager.cmd'.
-                        (Required)</td>
+                        </td>
                     </tr>
 
                     <tr>
@@ -1383,7 +1382,7 @@
             <a name="StopNodeManager"
                  id="StopNodeManager"></a> 
 
-            <h3>StopNodeManager</h3>
+            <h3>Stop Node Manager</h3>
 
             <p>Stops the WebLogic Node Manager.</p>
 
@@ -1401,7 +1400,7 @@
                         <td class='required'>Config Name</td>
 
                         <td>Configuration name from which the
-                        credentials will be read. (Required)</td>
+                        credentials will be read. </td>
                     </tr>
 
                     <tr>
@@ -1447,7 +1446,7 @@
 
                         <td>Absolute path to WLST. i.e:
                         '/path/to/wlst.cmd' or 'wlst.sh'.
-                        (Required)</td>
+                        </td>
                     </tr>
 
                     <tr>
@@ -1492,6 +1491,311 @@
             report:</p><img src="../../plugins/EC-WebLogic/images/StopNodeManager/EC-WLSStopNodeManager4.png" />
             </div>
 
+        <div id="CreateDatasource">
+            <a name="CreateDatasource"
+                 id="CreateDatasource"></a> 
+
+            <h3>Create Datasource</h3>
+
+            <p>Creates a Datasource in WebLogic.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class='required'>Configuration</td>
+
+                        <td>Configuration name from which the Admin URL and credentials will be read.</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>WLST Absolute Path</td>
+
+                        <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Datasource Name</td>
+
+                        <td>A unique name that identifies this Datasource in the WebLogic domain.</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Database</td>
+
+                        <td>The database used by the Datasource.</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Server Instance</td>
+
+                        <td>Instance name of the Server to include the Datasource. i.e: 'AdminServer'.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Datasource JNDI</td>
+
+                        <td>The JNDI path to where this Datasource is bound. By default, the JNDI name is the name of the Datasource. Applications that look up the JNDI path will get a "javax.sql.Datasource" instance that corresponds to this Datasource.</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Datasource Driver Class</td>
+
+                        <td>The full package name of JDBC driver class used to create the physical database connections in the connection pool. (Note that this driver class must be in the classpath of any server to which it is deployed).</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Datasource URL</td>
+
+                        <td>The URL of the database to connect to. The format of the URL varies by JDBC driver. The URL is passed to the JDBC driver to create the physical database connections.</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Database User</td>
+
+                        <td>The user to connect to the database.</td>
+                    </tr>
+                    <tr>
+                        <td class='required'>Database Password</td>
+
+                        <td>The password attribute passed to the JDBC driver when creating physical database connections. The value is stored in an encrypted form in the descriptor file and when displayed on the Administration Console.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To create a Datasource, select the following
+            highlighted
+            step:</p><img src="../../plugins/EC-WebLogic/images/CreateDatasource/EC-WLSCreateDatasource1.png" />
+             
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/EC-WebLogic/images/CreateDatasource/EC-WLSCreateDatasource2.png" />
+             
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            datasource was creted
+            successfully:</p><img src="../../plugins/EC-WebLogic/images/CreateDatasource/EC-WLSCreateDatasource3.png" />
+             
+            <p>In the <b>CreateDatasource</b> step, click the Log icon to
+            see the diagnostic info. The output is similar to the
+            following diagnostic
+            report:</p><img src="../../plugins/EC-WebLogic/images/CreateDatasource/EC-WLSCreateDatasource4.png" />
+            </div>
+
+        <div id="DeleteDatasource">
+            <a name="DeleteDatasource"
+                 id="DeleteDatasource"></a> 
+
+            <h3>Delete Datasource</h3>
+
+            <p>Deletes a WebLogic Datasource.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class='required'>Configuration</td>
+
+                        <td>Configuration name from which the Admin URL and credentials will be read.</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>WLST Absolute Path</td>
+
+                        <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Datasource Name</td>
+
+                        <td>The unique name that identifies this Datasource in the WebLogic domain to delete it.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To delete a Datasource, select the following
+            highlighted
+            step:</p><img src="../../plugins/EC-WebLogic/images/DeleteDatasource/EC-WLSDeleteDatasource1.png" />
+             
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/EC-WebLogic/images/DeleteDatasource/EC-WLSDeleteDatasource2.png" />
+             
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            datasource was deleted
+            successfully:</p><img src="../../plugins/EC-WebLogic/images/DeleteDatasource/EC-WLSDeleteDatasource3.png" />
+             
+            <p>In the <b>DeleteDatasource</b> step, click the Log icon to
+            see the diagnostic info. The output is similar to the
+            following diagnostic
+            report:</p><img src="../../plugins/EC-WebLogic/images/DeleteDatasource/EC-WLSDeleteDatasource4.png" />
+            </div>
+
+        <div id="SuspendServer">
+            <a name="SuspendServer"
+                 id="SuspendServer"></a> 
+
+            <h3>Suspend Server</h3>
+
+            <p>Suspends a WebLogic server.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class='required'>Configuration</td>
+
+                        <td>Configuration name from which the Admin URL and credentials will be read.</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>WLST Absolute Path</td>
+
+                        <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Server Name</td>
+
+                        <td>Name of the server to suspend.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Ignore Sessions</td>
+
+                        <td>Boolean value specifying whether WLST should drop all HTTP sessions immediately or wait for HTTP sessions to complete or time out while suspending. This argument defaults to false, indicating that HTTP sessions must complete or time out.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Timeout</td>
+
+                        <td>Time (in seconds) the WLST waits for the server to complete in-process work before suspending the server. This argument defaults to 0 seconds, indicating that there is no timeout.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Force</td>
+
+                        <td>Boolean value specifying whether WLST should suspend the server without waiting for active sessions to complete. This argument defaults to false, indicating that all active sessions must complete before suspending the server.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Block</td>
+
+                        <td>Boolean value specifying whether WLST blocks user interaction until the server is started. This argument defaults to false, indicating that user interaction is not blocked. In this case, WLST returns control to the user after issuing the command and assigns the task MBean associated with the current task to a variable that you can use to check its status. If you are importing WLST as a Jython module, as described in Importing WLST as a Jython Module, block is always set to true.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To suspend a server, select the following
+            highlighted
+            step:</p><img src="../../plugins/EC-WebLogic/images/SuspendServer/EC-WLSSuspendServer1.png" />
+             
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/EC-WebLogic/images/SuspendServer/EC-WLSSuspendServer2.png" />
+             
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            server was suspended
+            successfully:</p><img src="../../plugins/EC-WebLogic/images/SuspendServer/EC-WLSSuspendServer3.png" />
+             
+            <p>In the <b>SuspendServer</b> step, click the Log icon to
+            see the diagnostic info. The output is similar to the
+            following diagnostic
+            report:</p><img src="../../plugins/EC-WebLogic/images/SuspendServer/EC-WLSSuspendServer4.png" />
+            </div>
+
+
+
+        <div id="ResumeServer">
+            <a name="ResumeServer"
+                 id="ResumeServer"></a> 
+
+            <h3>Resume Server</h3>
+
+            <p>Resumes a WebLogic server.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class='required'>Configuration</td>
+
+                        <td>Configuration name from which the Admin URL and credentials will be read.</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>WLST Absolute Path</td>
+
+                        <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
+                    </tr>
+
+                    <tr>
+                        <td class='required'>Server Name</td>
+
+                        <td>Name of the server to resume.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Block</td>
+
+                        <td>Boolean value specifying whether WLST blocks user interaction until the server is started. This argument defaults to false, indicating that user interaction is not blocked. In this case, WLST returns control to the user after issuing the command and assigns the task MBean associated with the current task to a variable that you can use to check its status. If you are importing WLST as a Jython module, as described in Importing WLST as a Jython Module, block is always set to true.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>To resume a server, select the following
+            highlighted
+            step:</p><img src="../../plugins/EC-WebLogic/images/ResumeServer/EC-WLSResumeServer1.png" />
+             
+
+            <p>Then, enter the following
+            parameters:</p><img src="../../plugins/EC-WebLogic/images/ResumeServer/EC-WLSResumeServer2.png" />
+             
+
+            <p>When the job is executed, you should see the
+            following job detail, note the output indicating the
+            server was resumed
+            successfully:</p><img src="../../plugins/EC-WebLogic/images/ResumeServer/EC-WLSResumeServer3.png" />
+             
+            <p>In the <b>ResumeServer</b> step, click the Log icon to
+            see the diagnostic info. The output is similar to the
+            following diagnostic
+            report:</p><img src="../../plugins/EC-WebLogic/images/ResumeServer/EC-WLSResumeServer4.png" />
+            </div>
+			
         <h1>Examples and Use Cases</h1>
         <!-- This section is for examples and use cases, including screenshots of the new Parameter Panel with example values filled in.
                                     Unfortunately, I can't tell you what exactly to put here, but it's OK to put what seems like too much! Include both parameter
@@ -1536,30 +1840,36 @@
 
         <h1>Release Notes</h1>
 
-		<h2>@PLUGIN_KEY@ 2.0.4</h2>
+		<h2>EC-WebLogic 2.0.5</h2>
+
+		<ul>
+			<li>Added 4 new procedures to: create datasources, delete datasources, suspend a server and resume a server</li>
+            <li>Fixed minor bugs</li>
+		</ul>
+
+		<h2>EC-WebLogic 2.0.4</h2>
 
 		<ul>
 			<li>Procedure name(s) were changed in the step picker section</li>
 		</ul>
 		
-        <h2>@PLUGIN_KEY@ 2.0.3</h2>
+        <h2>EC-WebLogic 2.0.3</h2>
 
         <ul>
             <li>Added a parameter in the start and stop server
             procedures to determine the maximun time in seconds to
             test the status of the server</li>
 
-            <li>Created 2 new procedures: StartNodeManager and
-            StopNodeManager</li>
+            <li>Created 2 new procedures to start and stop the Node Manager</li>
         </ul>
 
-        <h2>@PLUGIN_KEY@ 2.0.2</h2>
+        <h2>EC-WebLogic 2.0.2</h2>
 
         <ul>
             <li>Changes to Help files</li>
         </ul>
 
-        <h2>@PLUGIN_KEY@ 2.0.1</h2>
+        <h2>EC-WebLogic 2.0.1</h2>
 
         <ul>
             <li>Upgrade to use the new Parameter Form XML</li>
@@ -1568,7 +1878,7 @@
             document</li>
         </ul>
 
-        <h2>@PLUGIN_KEY@ 2.0.0</h2>
+        <h2>EC-WebLogic 2.0.0</h2>
 
         <ul>
             <li>New Help Page Format</li>
@@ -1581,7 +1891,7 @@
             environment to load WebLogic libreries</li>
         </ul>
 
-        <h2>@PLUGIN_KEY@ 1.1.3</h2>
+        <h2>EC-WebLogic 1.1.3</h2>
 
         <ul>
             <li>Added <b>adminserverurl</b> param into the
@@ -1590,13 +1900,13 @@
             <li>Fixed minor issues</li>
         </ul>
 
-        <h2>@PLUGIN_KEY@ 1.1.1</h2>
+        <h2>EC-WebLogic 1.1.1</h2>
 
         <ul>
             <li>Fixed issue affecting workspace setting</li>
         </ul>
 
-        <h2>@PLUGIN_KEY@ 1.1.0</h2>
+        <h2>EC-WebLogic 1.1.0</h2>
 
         <ul>
             <li>Added the CheckPageStatus procedure</li>
@@ -1611,13 +1921,13 @@
             <li>Added new postp matchers</li>
         </ul>
 
-        <h2>@PLUGIN_KEY@ 1.0.2</h2>
+        <h2>EC-WebLogic 1.0.2</h2>
 
         <ul>
             <li>Fixed minor bug on Configuration List page</li>
         </ul>
 
-        <h2>@PLUGIN_KEY@ 1.0.1</h2>
+        <h2>EC-WebLogic 1.0.1</h2>
 
         <ul>
             <li>Procedures have one step only and are executed

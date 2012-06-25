@@ -107,6 +107,18 @@ sub importProject() {
     assertOK($::N->getProcedure($::gtestProjectName, 'undeployApp1'),
     'undeployApp1 procedure doesn\'t exist');
     
+    assertOK($::N->getProcedure($::gtestProjectName, 'suspendServer1'),
+    'suspendServer1 procedure doesn\'t exist');
+    
+    assertOK($::N->getProcedure($::gtestProjectName, 'resumeServer1'),
+    'resumeServer1 procedure doesn\'t exist');
+    
+    assertOK($::N->getProcedure($::gtestProjectName, 'createDatasource1'),
+    'createDatasource1 procedure doesn\'t exist');
+    
+    assertOK($::N->getProcedure($::gtestProjectName, 'deleteDatasource1'),
+    'deleteDatasource1 procedure doesn\'t exist');
+    
     $::gProjectImported = 1;
 }
 
@@ -475,7 +487,7 @@ ntest "startAdminServer1", {}, sub {
       # get the value of the commands lines
       my $commandLine = $xpath->findvalue("//property[propertyName='startAdminServerLine']/value");
        
-      assertSubstring($commandLine, 'E:\Oracle\Middleware\user_projects\domains\base_domain\bin\startWebLogic.cmd',  
+      assertSubstring('E:\Oracle\Middleware\user_projects\domains\base_domain\bin\startWebLogic.cmd', $commandLine,  
            'command line doesn\'t match expected output');
       
 };
@@ -761,3 +773,182 @@ ntest "undeployApp1", {}, sub {
 
 };
 
+ntest "suspendServer1", {}, sub {
+      doSetup();
+      
+      # run test job
+     
+      my $xpath = $::N->runProcedure($::gtestProjectName, 
+              {procedureName => "suspendServer1",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+                  
+                  ]
+      });
+          
+       
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+      
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+  
+          assertTrue($jobId && int($jobId) > 0,'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+  
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='suspendServerLine']/value");
+       
+      assertEq('"C:\Oracle\Middleware\wlserver_10.3\common\bin\wlst.cmd" "suspendServer.jython"', $commandLine, 
+           'command line doesn\'t match expected output');
+      
+};
+
+ntest "resumeServer1", {}, sub {
+      doSetup();
+      
+      # run test job
+     
+      my $xpath = $::N->runProcedure($::gtestProjectName, 
+              {procedureName => "resumeServer1",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+                  
+                  ]
+      });
+          
+       
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+      
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+  
+          assertTrue($jobId && int($jobId) > 0,'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+  
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='resumeServerLine']/value");
+       
+      assertEq('"C:\Oracle\Middleware\wlserver_10.3\common\bin\wlst.cmd" "resumeServer.jython"',  $commandLine,
+           'command line doesn\'t match expected output');
+      
+};
+
+ntest "createDatasource1", {}, sub {
+      doSetup();
+      
+      # run test job
+     
+      my $xpath = $::N->runProcedure($::gtestProjectName, 
+              {procedureName => "createDatasource1",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+                  
+                  ]
+      });
+          
+       
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+      
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+  
+          assertTrue($jobId && int($jobId) > 0,'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+  
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='createDatasourceLine']/value");
+       
+      #assertEq('"C:\Oracle\Middleware\wlserver_10.3\common\bin\wlst.cmd" "createDatasource.jython"',  $commandLine,
+      #     'command line doesn\'t match expected output');
+      
+};
+
+ntest "deleteDatasource1", {}, sub {
+      doSetup();
+      
+      # run test job
+     
+      my $xpath = $::N->runProcedure($::gtestProjectName, 
+              {procedureName => "deleteDatasource1",
+              pollInterval  => '1',
+              timeout => 600,
+                   actualParameter => [
+                  
+                  ]
+      });
+          
+       
+      # make sure it finished
+      my $jobId = 0;
+      my $status = '';
+      
+      assertOK($xpath, 'runProcedure has errors');
+      if ($xpath) {
+          $jobId  = $xpath->findvalue("//jobId");
+          $status = $xpath->findvalue("//status");
+          $outcome = $xpath->findvalue("//outcome");
+  
+          assertTrue($jobId && int($jobId) > 0,'valid job id');
+          assertEq('completed',$status,"job $jobId complete");
+  
+          #abort if job did not finish
+          if ($status ne 'completed') {
+              assertOK($::N->abortJob($jobId, {force => 1}));
+          }
+      }
+
+      # get the job details
+      $xpath = $::N->getJobDetails($jobId);
+
+      # get the value of the commands lines
+      my $commandLine = $xpath->findvalue("//property[propertyName='deleteDatasourceLine']/value");
+       
+      #assertEq('"C:\Oracle\Middleware\wlserver_10.3\common\bin\wlst.cmd" "deleteDatasource.jython"',  $commandLine,
+      #     'command line doesn\'t match expected output');
+      
+};

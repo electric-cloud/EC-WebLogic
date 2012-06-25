@@ -1,85 +1,109 @@
 my %startApp = (
     label       => "WebLogic - Start Application",
     procedure   => "StartApp",
-    description => "Start an application.",
+    description => "Starts an application",
     category    => "Application Server"
 );
 my %stopApp = (
     label       => "WebLogic - Stop Application",
     procedure   => "StopApp",
-    description => "Stop an application",
+    description => "Stops an application",
     category    => "Application Server"
 );
 my %checkServerStatus = (
     label       => "WebLogic - Check Server Status",
     procedure   => "CheckServerStatus",
-    description => "Check the status of the given server URL.",
+    description => "Checks the status of the given server URL",
     category    => "Application Server"
 );
 my %deployApp = (
     label       => "WebLogic - Deploy Application",
     procedure   => "DeployApp",
-    description => "Deploy or redeploy an application or module using the weblogic",
+    description => "Deploys or redeploys an application or module using the weblogic",
     category    => "Application Server"
 );
 my %runDeployer = (
     label       => "WebLogic - Run Deployer",
     procedure   => "RunDeployer",
-    description => "Run weblogic.Deployer in a free-mode",
+    description => "Runs weblogic.Deployer in a free-mode",
     category    => "Application Server"
 );
 my %undeployApp = (
     label       => "WebLogic - Undeploy Application",
     procedure   => "UndeployApp",
-    description => "Stop the deployment unit and removes staged files from target servers",
+    description => "Stops the deployment unit and removes staged files from target servers",
     category    => "Application Server"
 );
 my %runWLST = (
     label       => "WebLogic - Run WLST",
     procedure   => "RunWLST",
-    description => "Run Jython scripts using weblogic1.WLST",
+    description => "Runs Jython scripts using weblogic1.WLST",
     category    => "Application Server"
 );
 my %startAdminServer = (
     label       => "WebLogic - Start Admin Server",
     procedure   => "StartAdminServer",
-    description => "Start the WebLogic Admin Server",
+    description => "Starts the WebLogic Admin Server",
     category    => "Application Server"
 );
 my %stopAdminServer = (
     label       => "WebLogic - Stop Admin Server",
     procedure   => "StopAdminServer",
-    description => "Stop the WebLogic Admin Server",
+    description => "Stops the WebLogic Admin Server",
     category    => "Application Server"
 );
 my %startManagedServer = (
     label       => "WebLogic - Start Managed Server",
     procedure   => "StartManagedServer",
-    description => "Start a WebLogic Managed Server",
+    description => "Starts a WebLogic Managed Server",
     category    => "Application Server"
 );
 my %stopManagedServer = (
     label       => "WebLogic - Stop Managed Server",
     procedure   => "StopManagedServer",
-    description => "Stop a WebLogic Managed Server",
+    description => "Stops a WebLogic Managed Server",
     category    => "Application Server"
 );
 my %checkPageStatus = (
     label       => "WebLogic - Check Page Status",
     procedure   => "CheckPageStatus",
-    description => "Check the status of the given page URL",
+    description => "Checks the status of the given page URL",
     category    => "Application Server"
 );
 my %startNodeManager = (
     label       => "WebLogic - Start Node Manager",
     procedure   => "StartNodeManager",
-    description => "Start the WebLogic Node Manager",
+    description => "Starts the WebLogic Node Manager",
     category    => "Application Server"
 );
 my %stopNodeManager = (
     label       => "WebLogic - Stop Node Manager",
     procedure   => "StopNodeManager",
-    description => "Stop the WebLogic Node Manager",
+    description => "Stops the WebLogic Node Manager",
+    category    => "Application Server"
+);
+my %createDatasource = (
+    label       => "WebLogic - Create Datasource",
+    procedure   => "CreateDatasource",
+    description => "Creates a Datasource",
+    category    => "Application Server"
+);
+my %deleteDatasource = (
+    label       => "WebLogic - Delete Datasource",
+    procedure   => "DeleteDatasource",
+    description => "Deletes a Datasource",
+    category    => "Application Server"
+);
+my %suspendServer = (
+    label       => "WebLogic - Suspend Server",
+    procedure   => "SuspendServer",
+    description => "Suspends a server",
+    category    => "Application Server"
+);
+my %resumeServer = (
+    label       => "WebLogic - Resume Server",
+    procedure   => "ResumeServer",
+    description => "Resumes a server",
     category    => "Application Server"
 );
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/EC-WebLogic - Start App");
@@ -116,13 +140,22 @@ $batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Start App
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Stop Application");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Deploy Application");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Undeploy Application");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Create Datasource");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Delete Datasource");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Create Data Source");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Delete Data Source");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Suspend Server");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Resume Server");
 
 @::createStepPickerSteps = (\%startApp, \%stopApp,
                             \%checkServerStatus, \%deployApp,
                             \%runDeployer, \%undeployApp,
                             \%runWLST, \%startAdminServer,
                             \%stopAdminServer, \%startManagedServer,
-                            \%stopManagedServer, \%checkPageStatus, \%startNodeManager, \%stopNodeManager);
+                            \%stopManagedServer, \%checkPageStatus, 
+							\%startNodeManager, \%stopNodeManager, 
+							\%createDatasource, \%deleteDatasource, 
+							\%suspendServer, \%resumeServer);
 							
 
 if ($upgradeAction eq "upgrade") {
@@ -262,6 +295,30 @@ if ($upgradeAction eq "upgrade") {
             $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
                 procedureName => 'StopNodeManager',
                 stepName => 'StopNodeManager'
+            });
+            
+            # Attach the credential to the appropriate steps
+            $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
+                procedureName => 'CreateDatasource',
+                stepName => 'CreateDatasource'
+            });
+            
+            # Attach the credential to the appropriate steps
+            $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
+                procedureName => 'DeleteDatasource',
+                stepName => 'DeleteDatasource'
+            });
+            
+            # Attach the credential to the appropriate steps
+            $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
+                procedureName => 'SuspendServer',
+                stepName => 'SuspendServer'
+            });
+            
+            # Attach the credential to the appropriate steps
+            $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
+                procedureName => 'ResumeServer',
+                stepName => 'ResumeServer'
             });
         }
     }
