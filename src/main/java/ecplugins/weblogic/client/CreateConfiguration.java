@@ -24,9 +24,9 @@ import ecinternal.client.InternalFormBase;
 import ecinternal.client.ui.CustomEditorLoader;
 
 import com.electriccloud.commander.gwt.client.requests.CgiRequestProxy;
-import com.electriccloud.commander.gwt.client.requests.RunProcedureRequest;
-import com.electriccloud.commander.gwt.client.responses.DefaultRunProcedureResponseCallback;
-import com.electriccloud.commander.gwt.client.responses.RunProcedureResponse;
+import com.electriccloud.commander.client.requests.RunProcedureRequest;
+import com.electriccloud.commander.client.responses.DefaultRunProcedureResponseCallback;
+import com.electriccloud.commander.client.responses.RunProcedureResponse;
 import com.electriccloud.commander.gwt.client.ui.CredentialEditor;
 import com.electriccloud.commander.gwt.client.ui.FormBuilder;
 import com.electriccloud.commander.gwt.client.ui.FormTable;

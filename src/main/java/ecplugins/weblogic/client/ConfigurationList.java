@@ -25,11 +25,11 @@ import ecinternal.client.DialogClickHandler;
 import ecinternal.client.ListBase;
 
 
-import com.electriccloud.commander.gwt.client.ChainedCallback;
+import com.electriccloud.commander.client.ChainedCallback;
 import com.electriccloud.commander.gwt.client.requests.CgiRequestProxy;
-import com.electriccloud.commander.gwt.client.requests.RunProcedureRequest;
-import com.electriccloud.commander.gwt.client.responses.DefaultRunProcedureResponseCallback;
-import com.electriccloud.commander.gwt.client.responses.RunProcedureResponse;
+import com.electriccloud.commander.client.requests.RunProcedureRequest;
+import com.electriccloud.commander.client.responses.DefaultRunProcedureResponseCallback;
+import com.electriccloud.commander.client.responses.RunProcedureResponse;
 import com.electriccloud.commander.gwt.client.ui.ListTable;
 import com.electriccloud.commander.gwt.client.ui.SimpleErrorBox;
 
