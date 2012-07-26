@@ -112,7 +112,7 @@ public class ConfigurationList
                                 + response.getJobId());
                     }
 
-                    waitForJob(response.getJobId());
+                    waitForJob(response.getJobId().toString());
                 }
             });
 
