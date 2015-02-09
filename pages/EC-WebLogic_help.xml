@@ -1840,10 +1840,10 @@
 
         <h1>Release Notes</h1>
 
-        <h2>EC-WebLogic 2.0.5.1</h2>
+        <h2>EC-WebLogic 2.0.6</h2>
 
         <ul>
-            <li>Fixed the references to the createDataSource and deleteDataSource files in the manifest.pl so that the files are included correctly in the plugin jar.</li>
+            <li>Fixed typos in references to the createDataSource and deleteDataSource files in the manifest.pl so that the files are included correctly in the plugin jar.</li>
             <li>Fixed errors in the createDataSource procedure.</li>
         </ul>
 
