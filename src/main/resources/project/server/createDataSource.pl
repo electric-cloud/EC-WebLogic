@@ -307,8 +307,8 @@ try:\n
     cd('/JDBCSystemResources/' + dsName + '/JDBCResource/' + dsName)\n
     cmo.setName(dsName)\n
 
-    cd('/JDBCSystemResources/' + dsName + '/JDBCResource/' + dsName + '/JDBCDatasourceParams/' + dsName )\n
-    set('JNDINames',jarray.array([String('jdbc/' + dsName )], String))\n
+    cd('/JDBCSystemResources/' + dsName + '/JDBCResource/' + dsName + '/JDBCDataSourceParams/' + dsName )\n
+    set('JNDINames',jarray.array([String(dsJNDIName)], String))\n
 
     cd('/JDBCSystemResources/' + dsName + '/JDBCResource/' + dsName + '/JDBCDriverParams/' + dsName )\n
     cmo.setUrl(dsURL)\n
@@ -328,7 +328,7 @@ try:\n
     cd('/JDBCSystemResources/' + dsName + '/JDBCResource/' + dsName + '/JDBCDriverParams/' + dsName + '/Properties/' + dsName + '/Properties/databaseName')\n
     cmo.setValue(dsDatabaseName)\n
 
-    cd('/JDBCSystemResources/' + dsName + '/JDBCResource/' + dsName + '/JDBCDatasourceParams/' + dsName )\n
+    cd('/JDBCSystemResources/' + dsName + '/JDBCResource/' + dsName + '/JDBCDataSourceParams/' + dsName )\n
     cmo.setGlobalTransactionsProtocol('OnePhaseCommit')\n
 
     cd('/SystemResources/' + dsName )\n
@@ -338,7 +338,7 @@ try:\n
     print ''\n
 	
 except WLSTException:\n
-    print '***** CANNOT CREATE Datasource !!! Check If the Datasource With the Name : ' , dsName ,' Alreday exists or NOT'\n
+    print '***** CANNOT CREATE Datasource !!! Check If the Datasource With the Name : ' , dsName ,' already exists or NOT'\n
 else:\n
     save()\n
     activate()\n";

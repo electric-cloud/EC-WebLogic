@@ -47,8 +47,14 @@ push (@::gMatchers,
    id =>        "error6",
    pattern =>          q{Destination unreachable},
    action =>           q{&addSimpleError("Error: Destination unreachable. Check the provided URL", "error");},
-  },  
-    
+  },
+
+  {
+   id =>        "error7",
+   pattern =>          q{This Exception occurred},
+   action =>           q{&addSimpleError("Error: Could not create and/or configure the datasource properly. Please check logs for details", "error");},
+  },
+
 );
 
 
