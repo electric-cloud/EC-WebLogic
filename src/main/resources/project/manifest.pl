@@ -12,7 +12,7 @@
 	['//property[propertyName="checkpage_matchers"]/value', 'matchers/checkPageMatchers.pl'], 
 	['//property[propertyName="deployer_matchers"]/value', 'matchers/deployerMatchers.pl'],
 	['//property[propertyName="weblogicserver_matchers"]/value', 'matchers/weblogicserverMatchers.pl'],
-	['//property[propertyName="Datasource_matchers"]/value', 'matchers/DataSourceMatchers.pl'],
+	['//property[propertyName="Datasource_matchers"]/value', 'matchers/dataSourceMatchers.pl'],
 		
 	['//procedure[procedureName="StartAdminServer"]/step[stepName="StartAdminServer"]/command' , 'server/startAdministrationServer.pl'],
 	['//procedure[procedureName="SuspendServer"]/step[stepName="SuspendServer"]/command' , 'server/suspendServer.pl'],
