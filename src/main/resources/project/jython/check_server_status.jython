@@ -1,0 +1,17 @@
+state = ""
+
+try:
+    connect('[% username %]','[% password %]','[% admin_url %]')
+
+
+except WLSTException:
+
+    state = "NO_SERVER_FOUND"
+
+else:
+
+    domainRuntime()
+
+    state = cmo.lookupServerLifeCycleRuntime('[% servername %]').getState()
+
+print "Server State: " + state

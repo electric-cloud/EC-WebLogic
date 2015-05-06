@@ -9,6 +9,15 @@
     </formElement>
 
     <formElement>
+      <type>entry</type>
+      <label>JAVA_HOME:</label>
+      <property>java_home</property>
+      <value></value>
+      <documentation>JAVA_HOME</documentation>
+      <required>0</required>
+    </formElement>
+    
+    <formElement>
         <type>credential</type>
         <label>Login as:</label>
         <property>credential</property>

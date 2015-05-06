@@ -14,7 +14,16 @@
         <documentation>URL of WebLogic Server (must include protocol, server and port).</documentation>
 		<required>1</required>
     </formElement>
-
+    
+    <formElement>
+      <type>entry</type>
+      <label>JAVA_HOME:</label>
+      <property>java_home</property>
+      <value></value>
+      <documentation>JAVA_HOME</documentation>
+      <required>0</required>
+    </formElement>
+        
     <formElement>
         <type>credential</type>
         <label>Login as:</label>

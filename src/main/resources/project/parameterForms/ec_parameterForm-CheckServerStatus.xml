@@ -1,12 +1,47 @@
-<editor>	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CheckServerStatus</help>	<formElement>
-		<type>entry</type>
-		<label>Configuration Name:</label>
-		<property>configname</property>
-		<required>1</required>
-		<documentation>Name of the configuration to be used. URL, port and credentials are gathered from the given configuration. (Required)</documentation>	</formElement>		<formElement>		<type>entry</type>		<label>Wlst Script Absolute Path:</label>		<property>wlstabspath</property>		<required>1</required>		<documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)</documentation>	</formElement>
-	<formElement>
-		<type>entry</type>
-		<label>Maximum Elapsed Time:</label>
-		<property>maxelapsedtime</property>
-		<documentation>Defines the maximum time in seconds that the job will try to check into the server. Blank implies no wait time (URL only checked one time).</documentation>		<required>0</required>	</formElement>	<formElement>		<type>select</type>		<label>Success Criteria:</label>		<property>successcriteria</property>		<required>1</required>		<documentation>Indicates the expected correct result to be obtained when running checking the server. (Required)</documentation>		<option><name>Server running</name><value>RUNNING</value></option>		<option><name>Server not running</name><value>NOT_RUNNING</value></option>	</formElement>		<formElement>		<type>entry</type>		<label>Instance Name:</label>		<property>instancename</property>		<documentation>Indicates the name of the instance to be checked. (Required)</documentation>		<required>1</required>	</formElement>
-</editor>
+<editor>
+  <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CheckServerStatus</help>
+  <formElement>
+    <type>entry</type>
+    <label>Configuration Name:</label>
+    <property>configname</property>
+    <required>1</required>
+    <documentation>Name of the configuration to be used. URL, port and credentials are gathered from the given configuration. (Required)</documentation>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <label>Wlst Script Absolute Path:</label>
+    <property>wlstabspath</property>
+    <required>1</required>
+    <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)</documentation>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <label>Maximum Elapsed Time:</label>
+    <property>maxelapsedtime</property>
+    <documentation>Defines the maximum time in seconds that the job will try to check into the server. Blank implies no wait time (URL only checked one time).</documentation>
+    <required>0</required>
+  </formElement>
+  <formElement>
+    <type>select</type>
+    <label>Success Criteria:</label>
+    <property>successcriteria</property>
+    <required>1</required>
+    <documentation>Indicates the expected correct result to be obtained when running checking the server. (Required)</documentation>
+    <option>
+      <name>Server running</name>
+      <value>RUNNING</value>
+    </option>
+    <option>
+      <name>Server not running</name>
+      <value>NOT_RUNNING</value>
+    </option>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <label>Instance Name:</label>
+    <property>instancename</property>
+    <documentation>Indicates the name of the instance to be checked. (Required)</documentation>
+    <required>1</required>
+  </formElement>
+</editor>
+
