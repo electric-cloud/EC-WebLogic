@@ -58,6 +58,16 @@ sub new {
 }
 
 
+=item B<ec>
+
+Returns ElectricCommander instance.
+
+When called first time executes ElectricCommander->new();
+All next times it just returns instance without initialization
+
+
+=cut
+
 sub ec {
     my ($self) = @_;
 
@@ -70,12 +80,31 @@ sub ec {
 }
 
 
+=item B<set_property>
+
+Sets property of step by property name
+
+    $core->set_property(summary=>'Done with success');
+
+Returns 1.
+
+=cut
+
 sub set_property {
     my ($self, $key, $value) = @_;
 
     $self->ec()->setProperty("/myCall/$key", $value);
+    return 1;
 }
 
+
+=item B<success>
+
+Sets outcome step status to success.
+
+    $core->success();
+
+=cut
 
 sub success {
     my ($self) = @_;
@@ -133,7 +162,7 @@ sub _set_outcome {
 
 Terminating execution immediately with error message.
 
-    $jboss->bail_out("Something was VERY wrong");
+    $core->bail_out("Something was VERY wrong");
 
 =cut
 
@@ -151,36 +180,102 @@ sub bail_out {
 }
 
 
+=item B<before_init_hook>
+
+Called BEFORE blessing hash reference in the constructor
+
+This subroutine should be overrided.
+
+    *EC::Plugin::Core::before_init_hook = sub {
+        my ($class, constructor_params) = @_;
+        return 1;
+    }
+
+=cut
+
 sub before_init_hook {
     1;
 }
 
+=item B<after_init_hook>
+
+Called AFTER blessing a hash reference and before return object in new.
+
+This subroutine should be overrided.
+
+    *EC::Plugin::Core::after_init_hook = sub {
+        my ($self, %constructor_params) = @_;
+        # You can add additional actions for constructor
+        $self->{my_cool_property} = 'my_custom_property';
+    }
+
+=cut
 
 sub after_init_hook {
     1;
 }
 
 
-sub run_command {
-    my ($self, @cmd) = @_;
+=item B<run_command_with_timeout>
 
-    my $retval = {
-        code => 0,
-        stdout => '',
-        stderr => ''
+B<WARNING:> Right now this function supports ONLY unix OS because of EC perl for windows
+was packed without signals support. And supported signals are weird.
+
+    my $res = $core->run_command_with_timeout(10, 'ls -la');
+
+Returns the same value as run_command.
+
+=cut
+
+sub run_command_with_timeout {
+    my ($self, $timeout, @cmd) = @_;
+
+    my $timeout_response = {
+        code => -2,
+        stdout => 'TIMEOUT',
+        stderr => 'TIMEOUT',
     };
-
-    if (is_win) {
-        $retval =  $self->_syscall_win32(@cmd);
-    }
-    else {
-        $retval =  $self->_syscall(@cmd);
-    }
-    return $retval;
+    my $res = $self->exec_timelimit(
+        limit => $timeout,
+        do => sub {
+            return $self->run_command(@cmd);
+        },
+        on_timeout => sub {
+            return $timeout_response;
+        },
+        on_success => sub {
+            my $result = shift;
+            if ($result->{stderr} =~ m/TIMEOUT\n/s) {
+                return $timeout_response;
+            }
+            return $result;
+        }
+    );
+    return $res;
 }
 
+
+=item B<get_credentials>
+
+Returns credentials data as hash reference.
+
+    $core->get_credentials(
+        'plugin_config_name' => {
+            userName => 'user',
+            password => 'password',
+        }, 'plugin_cfgs'
+    );
+
+Where 1st parameter is a configuration name, second parameter is a mapper, third parameter
+is path for plugin configs. For example, for JBoss it will be jboss_cfgs.
+
+About mapper. Mapper maps credentials data as user specified. With mapper from above example
+it will return credentials {user => 'username', password=>'coolpassword'}
+
+=cut
+
 sub get_credentials {
-    my ($self, $config_name, $cfgs_path) = @_;
+    my ($self, $config_name, $config_rows, $cfgs_path) = @_;
 
     print "Running it\n";
     if ($self->{_credentials}) {
@@ -200,7 +295,7 @@ sub get_credentials {
         $plugin_configs = ElectricCommander::PropDB->new($ec, $pattern);
         1;
     } or do {
-        $self->out("Can't access credentials.");
+        $self->out(1, "Can't access credentials.");
         # bailing out if can't access credendials.
         $self->bail_out("Can't access credentials.");
     };
@@ -210,7 +305,7 @@ sub get_credentials {
         %config_row = $plugin_configs->getRow($config_name);
         1;
     } or do {
-        $self->out("Configuration $config_name doesn't exist.");
+        $self->out(1, "Configuration $config_name doesn't exist.");
         # bailing out if configuration specified doesn't exist.
         $self->bail_out("Configuration $config_name doesn't exist.");
     };
@@ -222,15 +317,64 @@ sub get_credentials {
     my $retval = {};
 
     my $xpath = $ec->getFullCredential($config_row{credential});
-    $retval->{user} = '' . $xpath->findvalue("//userName");
-    $retval->{password} = '' . $xpath->findvalue("//password");
-    $retval->{java_home} = '' . $config_row{java_home};
-    $retval->{weblogic_url} = '' . $config_row{weblogic_url};
+    # {userName => 'user'}
+    for my $key (keys %$config_rows) {
+        my $v = '';
+        if ($key eq 'userName' || $key eq 'password') {
+            $v = '' . $xpath->findvalue('//' . $key);
+        }
+        else {
+            $v = $config_row{$key};
+        }
+        $v ||= '';
+        $retval->{$config_rows->{$key}} = $v;
+    }
+    # $retval->{user} = '' . $xpath->findvalue("//userName");
+    # $retval->{password} = '' . $xpath->findvalue("//password");
+    # $retval->{java_home} = '' . $config_row{java_home};
+    # $retval->{weblogic_url} = '' . $config_row{weblogic_url};
 
     return $retval;
 
 }
 
+
+=item B<run_command>
+
+Running system command. This function is cross-platrorm.
+For unix OS it implemented on pipes, without any additional files, for win32 it implemented with system and files for stdout and stderr.
+
+    my $res = $self->run_command('ls -la');
+    printf "Exited with code %s, Stdout: %s, Stderr: %s", $res->{code}, $res->{stdout}, $res->{stderr};
+
+=cut
+
+sub run_command {
+    my ($self, @cmd) = @_;
+
+    my $retval = {
+        code => 0,
+        stdout => '',
+        stderr => ''
+    };
+
+    if (is_win) {
+        $retval =  $self->_syscall_win32(@cmd);
+    }
+    else {
+        $retval =  $self->_syscall(@cmd);
+    }
+    return $retval;
+}
+
+
+=item B<_syscall>
+
+System call for unix OS. Implemented over IPC::Open3. Internal function.
+You should use run_command insted.
+
+
+=cut
 
 sub _syscall {
     my ($self, @command) = @_;
@@ -286,12 +430,25 @@ sub _syscall {
 }
 
 
+=item B<_syscal_win32>
+
+System call for Win OS. Implemented with additional files because of older win OS
+haven't pipes support, but both of them have same ID - MSWin32, so, this is the solution.
+
+Internal function. You should use run_command instead.
+
+=cut
+
 sub _syscall_win32 {
     my ($self, @command) = @_;
 
     my $command = join '', @command;
 
     my $result_folder = $ENV{COMMANDER_WORKSPACE};
+    if (!$result_folder) {
+        $self->out(1, "Missing ENV for result folder. Result folder set to .");
+        $result_folder = '.';
+    }
     $command .= qq| 1> "$result_folder/command.stdout" 2> "$result_folder/command.stderr"|;
     if (is_win) {
         $self->dbg("MSWin32 detected");
@@ -314,6 +471,17 @@ sub _syscall_win32 {
     return $retval;
 }
 
+
+=item B<is_win>
+
+Returns true if OS is Win.
+
+    if ($core->is_win()) {
+        print "Windows detected";
+    }
+
+=cut
+
 sub is_win {
     if ($^O eq 'MSWin32') {
         return 1
@@ -322,16 +490,31 @@ sub is_win {
 }
 
 
+=item B<dbg>
+
+Right now just wrapper for out(1, ...);
+
+=cut
+
 sub dbg {
     my ($self, @params) = @_;
     return $self->out(1, @params);
 }
 
 
+=item B<out>
+
+Prints result if core debug level >= specified debug level
+
+    $core->out(1, "Debug level one");
+
+=cut
+
 sub out {
     my ($self, $debug_level, @msg) = @_;
 
-
+    # protection from dumb typos
+    $debug_level =~ m/^\d+$/s or $debug_level = 1;
     if (!$self->{_init}->{debug_level}) {
         return 1;
     }
@@ -411,6 +594,75 @@ sub render_template_from_property {
 
     return $self->render_template(text => $template, render_params => $params);
 }
+
+
+# TODO: add simple version of exec_timelimit
+sub exec_timelimit_simple {
+    1;
+};
+
+
+sub do_while {
+    my ($self, $do, $while, $timeout) = @_;
+
+    my $do_while = time() + $timeout;
+    my $result;
+    my $done = 0;
+    my $timed_out = 0;
+    while(!$done) {
+        $result = $do->();
+        if ($result eq $while) {
+            $done = 1;
+            last;
+        }
+        if (time() > $do_while) {
+            $timed_out = 1;
+            $done = 1;
+        }
+    }
+
+    if ($timed_out) {
+        return 0;
+    };
+    return $result;
+}
+
+
+sub exec_timelimit {
+    my ($self, %params) = @_;
+
+    if (!$params{limit}) {
+        croak "Missing limit parameter";
+    }
+    if ($params{limit} !~ m/^\d+$/s) {
+        croak "Limit param must be numeric"
+    }
+    for (qw/do on_success on_timeout/) {
+        $params{$_} or croak "Missing param: $_";
+        if (ref $params{$_} ne 'CODE') {
+            croak "$_ param must be a subroutine";
+        }
+    }
+
+    my $result = undef;
+    eval {
+        # timeout handler
+        local $SIG{ALRM} = sub {
+            die "TIMEOUT\n"; # \n is required
+        };
+        # Timeout set
+        alarm($params{limit});
+        # Starting user sub
+
+        $result = $params{do}->();
+        alarm 0;
+        1;
+    } or do {
+        return $params{on_timeout}->($result, $@);
+    };
+
+    return $params{on_success}->($result);
+};
 
 1;
 

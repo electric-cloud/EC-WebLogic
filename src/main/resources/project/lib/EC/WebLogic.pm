@@ -17,8 +17,35 @@ sub after_init_hook {
 sub get_credentials {
     my ($self, $config_name) = @_;
 
-    return $self->SUPER::get_credentials($config_name, 'weblogic_cfgs');
+    return $self->SUPER::get_credentials(
+        $config_name => {
+            userName => 'user',
+            password => 'password',
+            java_home => 'java_home',
+            weblogic_url => 'weblogic_url'
+        },
+        'weblogic_cfgs');
 }
+
+
+sub get_common_credentials {
+    my ($self, $cred_name) = @_;
+
+    my $xpath = $self->ec()->getFullCredential($cred_name, {
+        jobStepId => $ENV{COMMANDER_JOBSTEPID}
+    });
+    if (!defined $xpath) {
+        $self->error("Can't find common credential", $cred_name);
+    }
+
+    my $credentials = {
+        user => $xpath->findvalue('//credential/userName') . '',
+        password => $xpath->findvalue('//credential/password') . ''
+    };
+
+    return $credentials;
+}
+
 
 sub process_response {
     my ($self, $result) = @_;
@@ -31,5 +58,6 @@ sub process_response {
         $self->error($result->{stderr});
     }
 }
+
 1;
 
