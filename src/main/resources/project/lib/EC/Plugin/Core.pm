@@ -80,6 +80,45 @@ sub ec {
 }
 
 
+=item B<check_executable>
+
+Returns {ok => 1, msg => ''} if file can be executed. If not, returns reason in msg field.
+
+    my $check = $core->check_executable('/path/to/file');
+    unless ($check->{ok}) {
+        die "File is not an executable";
+    }
+
+=cut
+
+sub check_executable {
+    my ($self, $file_path) = @_;
+
+    my $retval = {
+        ok => 0,
+        msg => '',
+    };
+
+    if (!-e $file_path) {
+        $retval->{msg} = "File $file_path doesn't exist";
+        return $retval;
+    }
+
+    if (-d $file_path) {
+        $retval->{msg} = "$file_path is a directory";
+        return $retval;
+    }
+
+    if (!-x $file_path) {
+        $retval->{msg} = "$file_path is not an executable";
+        return $retval;
+    }
+
+    $retval->{ok} = 1;
+    return $retval;
+}
+
+
 =item B<set_property>
 
 Sets property of step by property name
@@ -468,6 +507,11 @@ sub _syscall_win32 {
     $retval->{stderr} = join '', <$stderr>;
     close $stdout;
     close $stderr;
+
+    # Cleaning up
+    unlink("$result_folder/command.stderr");
+    unlink("$result_folder/command.stdout");
+
     return $retval;
 }
 
@@ -663,6 +707,10 @@ sub exec_timelimit {
 
     return $params{on_success}->($result);
 };
+
+=back
+
+=cut
 
 1;
 

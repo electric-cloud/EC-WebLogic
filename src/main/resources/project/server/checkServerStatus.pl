@@ -22,6 +22,13 @@ sub main {
         'successcriteria',
         'maxelapsedtime'
     );
+
+    $wl->out(1, "Executable file: ", $params->{wlstabspath});
+    my $check = $wl->check_executable($params->{wlstabspath});
+
+    unless ($check->{ok}) {
+        $wl->bail_out($check->{msg});
+    }
     my $config_name = $params->{configname};
 
     if ($params->{maxelapsedtime} && $params->{maxelapsedtime} !~ m/^\d+$/s) {
@@ -64,6 +71,8 @@ sub main {
         $exec_result = check_server_status($wl, $params, $cmd);
     }
 
+    unlink $path;
+
     if ($exec_result > 0) {
         $wl->out(1, "Criteria was met");
         $wl->success();
@@ -89,7 +98,9 @@ sub check_server_status {
     my ($criteria, $server_running) = (0, 0);
     $criteria = $params->{successcriteria} eq 'RUNNING' ? 1 : 0;
 
-    $wl->out(1, "Command output: ", $result->{stdout});
+    $wl->out(1, "EXIT_CODE:", $result->{code});
+    $wl->out(1, "STDOUT: ", $result->{stdout});
+    $wl->out(1, "STDERR: ", $result->{stderr});
 
     if ($result->{stdout} =~ m/Server\sState:NO_SERVER_FOUND/s) {
         # error
