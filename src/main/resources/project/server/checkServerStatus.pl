@@ -78,6 +78,8 @@ sub main {
 sub check_server_status {
     my ($wl, $params, $cmd) = @_;
 
+    $wl->out(1, '=' x 60);
+    $wl->out(1, "Checking server status");
     my $result = $wl->run_command($cmd);
 
     if ($result->{stderr} =~ m/^TIMEOUT\n$/s) {
@@ -87,9 +89,12 @@ sub check_server_status {
     my ($criteria, $server_running) = (0, 0);
     $criteria = $params->{successcriteria} eq 'RUNNING' ? 1 : 0;
 
+    $wl->out(1, "Command output: ", $result->{stdout});
+
     if ($result->{stdout} =~ m/Server\sState:NO_SERVER_FOUND/s) {
         # error
         # $wl->error("NO_SERVER_FOUND");
+        $wl->out(1, "NO_SERVER_FOUND");
         return -1;
     }
 

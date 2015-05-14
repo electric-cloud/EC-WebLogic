@@ -23,9 +23,11 @@ sub main {
         'targeturl',
         'successcriteria'
     );
+    my $cred = {};
 
-    my $cred = $wl->get_common_credentials('credentialName');
-    $wl->out(1, "Credentials: ", Dumper $cred);
+    if ($params->{credentialName}) {
+        $cred = $wl->get_common_credentials('credentialName');
+    }
     $wl->out(1, "Testing url: ", $params->{targeturl});
     my $ua = LWP::UserAgent->new();
 
