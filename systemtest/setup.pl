@@ -61,6 +61,7 @@ if ($msg ne '') {
     exit 1;
 }
 $plugin_name = $xpath->findvalue('//plugin/pluginName')->value;
+$N->setProperty("/plugins/$plugin_name/project/dryrun", 1);
 
 # Promote this plugin
 $N->promotePlugin("$plugin_name");

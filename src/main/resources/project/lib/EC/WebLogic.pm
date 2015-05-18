@@ -11,6 +11,18 @@ sub after_init_hook {
     my ($self, %params) = @_;
 
     $self->{plugin_name} = 'EC-WebLogic';
+    my $dryrun = 0;
+
+    if ($self->{plugin_key}) {
+        eval {
+            $dryrun = $self->ec()->getProperty(
+                "/plugins/$self->{plugin_key}/project/dryrun"
+            )->findvalue('//value')->string_value();
+        };
+    }
+    if ($dryrun) {
+        $self->dryrun(1);
+    }
 }
 
 
@@ -58,6 +70,62 @@ sub process_response {
         $self->error($result->{stderr});
     }
 }
+
+## %arams = (
+## shell => '/path/to/wlst.sh,
+## timeout => 100,
+## options => '-a b -c d',
+## script_path => '/path/to/jython_script',
+## script_content => 'print hello world',
+## )
+sub execute_jython_script {
+    my ($self, %params) = @_;
+
+    if (!$params{shell}) {
+        croak "Missing shell param";
+    }
+
+    my $check = $self->dryrun() ?
+        {ok => 1} : $self->check_executable($params{shell});
+
+    unless ($check->{ok}) {
+        $self->bail_out($check->{msg});
+    }
+
+    if (!$params{script_path}) {
+        croak "Missing script_path parameter";
+    }
+
+    if ($params{script_content} && -e $params{script_path}) {
+        !$self->dryrun() && croak "Script file $params{script_path} already exists";
+    }
+
+    if (!$self->dryrun() && $params{script_content}) {
+        open FH, '>', $params{script_path};
+        print FH $params{script_content};
+        close FH;
+    }
+
+    my $command = $params{shell} . ' ';
+    if ($params{options}) {
+        $command .= $params{options} . ' ';
+    }
+
+    $command .= $params{script_path};
+    my $retval;
+    $self->set_property(wlstLine => $command);
+    $retval = $self->run_command($command);
+
+    # cleanup now.
+    if ($params{script_content}) {
+        $self->out(1, "Unlinking file $params{script_path}");
+        !$self->dryrun() && unlink $params{script_path};
+    }
+
+    return $retval;
+}
+
+
 
 1;
 

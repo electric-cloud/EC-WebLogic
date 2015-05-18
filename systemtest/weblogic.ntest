@@ -389,8 +389,7 @@ ntest "runWlstWithGivenScriptFile", {}, sub {
       
       # get the value of the commands lines
       my $commandLine = $xpath->findvalue("//property[propertyName='wlstLine']/value");
-
-      assertEq($commandLine, '"E:\Oracle\Middleware\wlserver_10.3\common\bin\wlst.cmd" "E:/websphere/test_install/install_simple.jython"', 
+      assertEq($commandLine, 'E:\Oracle\Middleware\wlserver_10.3\common\bin\wlst.cmd E:/websphere/test_install/install_simple.jython', 
            'command line doesn\'t match expected output');
 
 };
@@ -441,8 +440,8 @@ ntest "runWlstWithNewScriptFile", {}, sub {
 
       my $evalCmdLine = substr($commandLine,0,75);
 
-      assertEq($evalCmdLine, '"E:\Oracle\Middleware\wlserver_10.3\common\bin\wlst.cmd" "generated_script_', 
-           'command line doesn\'t match expected output');
+      my $regexp = 'E:\\\Oracle\\\Middleware\\\wlserver_10.3\\\common\\\bin\\\wlst.cmd';
+      assertTrue($evalCmdLine =~ m/$regexp/s, "Command line is looks like ok");
       
           
 };

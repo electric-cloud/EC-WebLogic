@@ -21,6 +21,7 @@ use IO::Select;
 use Symbol qw/gensym/;
 
 
+my $DRYRUN = 0;
 =item B<new>
 
 Constructor. Parameters:
@@ -43,18 +44,40 @@ sub new {
     if ($params{ec}) {
         $self->{_ec} = $params{ec};
     }
-    if ($params{dryrun}) {
-        $self->{dryrun} = 1;
-    }
+
     if ($params{project_name}) {
         $self->{project_name} = $params{project_name};
     }
-
+    if ($params{plugin_name}) {
+        $self->{plugin_name} = $params{plugin_name};
+    }
+    if ($params{plugin_key}) {
+        $self->{plugin_key} = $params{plugin_key}
+    }
     $self->{_init}->{debug_level} ||= 1;
-
     bless $self, $class;
+
     $self->after_init_hook(%params);
+    if ($params{dryrun}) {
+        $self->dryrun(1);
+    }
     return $self;
+}
+
+
+=item B<dryrun>
+
+Is dryrun flag.
+
+=cut
+
+sub dryrun {
+    my ($self, $dryrun) = @_;
+
+    if (!defined $dryrun) {
+        return $DRYRUN;
+    }
+    $DRYRUN = $dryrun;
 }
 
 
@@ -397,6 +420,14 @@ sub run_command {
         stderr => ''
     };
 
+    $self->out(1, "Running command: " . join('', @cmd));
+    if ($self->dryrun()) {
+        return {
+            code => 1,
+            stdout => 'DUMMY_STDOUT',
+            stderr => 'DUMMY_STDERR',
+        };
+    }
     if (is_win) {
         $retval =  $self->_syscall_win32(@cmd);
     }
@@ -707,6 +738,35 @@ sub exec_timelimit {
 
     return $params{on_success}->($result);
 };
+
+
+sub parse_tagsmap {
+    my ($self, $map) = @_;
+    $map =~ s/\n//gis;
+    my $result = {};
+    my @t = split /,/, $map;
+
+    for my $row (@t) {
+        # negative lookbehind
+        my @arr = split(/(?<!\\)=>/, $row);
+        if (scalar @arr > 2) {
+            die "Error occured";
+        }
+        trim($arr[0]);
+        trim($arr[1]);
+        $result->{$arr[0]} = $arr[1];
+    }
+    return $result;
+}
+
+
+# removes leading and trailing whitespaces
+# STATIC
+sub trim {
+    $_[0] or return;
+    $_[0] =~ s/^\s+//s;
+    $_[0] =~ s/\s+$//s;
+}
 
 =back
 
