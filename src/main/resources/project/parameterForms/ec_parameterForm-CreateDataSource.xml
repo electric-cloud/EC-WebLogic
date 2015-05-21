@@ -1,11 +1,83 @@
-<editor>	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateDatasource</help>				
-	<formElement>
-		<type>entry</type>
-		<label>Configuration:</label>
-		<property>configname</property>
-		<documentation>Configuration name from which the Admin URL and credentials will be read. (Required)</documentation>		<required>1</required>	</formElement>	<formElement>		<type>entry</type>		<label>WLST Absolute Path:</label>		<property>wlstabspath</property>		<required>1</required>		<documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)</documentation>	</formElement>
-	<formElement>
-		<type>entry</type>
-		<label>Datasource Name:</label>		<property>dsname</property>		<documentation>A unique name that identifies this Datasource in the WebLogic domain. (Required)</documentation>		<required>1</required>
-	</formElement>		<formElement>		<type>entry</type>		<label>Database:</label>		<property>dsdbname</property>		<documentation>The database used by the Datasource. (Required)</documentation>		<required>1</required>	</formElement>			<formElement>		<type>entry</type>		<label>Server Instance:</label>		<property>target</property>		<documentation>Instance name of the Server to include the Datasource. i.e: 'AdminServer'. (Required)</documentation>		<required>1</required>	</formElement>			<formElement>		<type>entry</type>		<label>Datasource JNDI:</label>		<property>jndiname</property>		<documentation>The JNDI path to where this Datasource is bound. By default, the JNDI name is the name of the Datasource. Applications that look up the JNDI path will get a "javax.sql.Datasource" instance that corresponds to this Datasource.</documentation>		<required>0</required>	</formElement>			<formElement>		<type>entry</type>		<label>Datasource Driver Class:</label>		<property>driverclass</property>		<documentation>The full package name of JDBC driver class used to create the physical database connections in the connection pool. (Note that this driver class must be in the classpath of any server to which it is deployed). (Required)</documentation>		<required>1</required>	</formElement>			<formElement>		<type>entry</type>		<label>Datasource URL:</label>		<property>driverurl</property>		<documentation>The URL of the database to connect to. The format of the URL varies by JDBC driver. The URL is passed to the JDBC driver to create the physical database connections. (Required)</documentation>		<required>1</required>	</formElement>			<formElement>		<type>entry</type>		<label>Database User:</label>		<property>username</property>		<documentation>The user to connect to the database. (Required)</documentation>		<required>1</required>	</formElement>			<formElement>		<type>entry</type>		<label>Database Password:</label>		<property>password</property>		<documentation>The password attribute passed to the JDBC driver when creating physical database connections. The value is stored in an encrypted form in the descriptor file and when displayed on the Administration Console. (Required)</documentation>		<required>1</required>	</formElement>	
-</editor>
+<editor>
+  <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateDatasource</help>
+  <formElement>
+    <type>entry</type>
+    <label>Configuration:</label>
+    <property>configname</property>
+    <documentation>
+      Configuration name from which the Admin URL and credentials will be read.
+    </documentation>
+    <required>1</required>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <label>WLST Absolute Path:</label>
+    <property>wlstabspath</property>
+    <required>1</required>
+    <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <label>Datasource Name:</label>
+    <property>dsname</property>
+    <documentation>A unique name that identifies this Datasource in the WebLogic domain.</documentation>
+    <required>1</required>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <label>Database:</label>
+    <property>dsdbname</property>
+    <documentation>The database used by the Datasource.</documentation>
+    <required>1</required>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <label>Server Instance:</label>
+    <property>target</property>
+    <documentation>Instance name of the Server to include the Datasource. i.e: 'AdminServer'.</documentation>
+    <required>1</required>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <label>Datasource JNDI:</label>
+    <property>jndiname</property>
+    <documentation>
+      The JNDI path to where this Datasource is bound. By default, the JNDI name is the name of the Datasource. Applications that look up the JNDI path will get a "javax.sql.Datasource" instance that corresponds to this Datasource.
+    </documentation>
+    <required>0</required>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <label>Datasource Driver Class:</label>
+    <property>driverclass</property>
+    <documentation>
+      The full package name of JDBC driver class used to create the physical database connections in the connection pool. (Note that this driver class must be in the classpath of any server to which it is deployed).
+    </documentation>
+    <required>1</required>
+  </formElement>
+  <formElement><type>entry</type>
+  <label>Datasource URL:</label>
+  <property>driverurl</property>
+  <documentation>
+    The URL of the database to connect to. The format of the URL varies by JDBC driver. The URL is passed to the JDBC driver to create the physical database connections. (Required)
+  </documentation>
+  <required>1</required>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <label>Database User:</label>
+    <property>username</property>
+    <documentation>The user to connect to the database.</documentation>
+    <required>1</required>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <label>Database Password:</label>
+    <property>password</property>
+    <documentation>
+      The password attribute passed to the JDBC driver when creating physical database connections. The value is stored in an encrypted form in the descriptor file and when displayed on the Administration Console.
+    </documentation>
+    <required>1</required>
+  </formElement>	
+</editor>
+

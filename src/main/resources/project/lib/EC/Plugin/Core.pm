@@ -589,7 +589,10 @@ sub out {
     my ($self, $debug_level, @msg) = @_;
 
     # protection from dumb typos
-    $debug_level =~ m/^\d+$/s or $debug_level = 1;
+    $debug_level =~ m/^\d+$/s or do {
+        $debug_level = 1;
+        unshift @msg, $debug_level;
+    };
     if (!$self->{_init}->{debug_level}) {
         return 1;
     }
@@ -662,6 +665,7 @@ sub render_template_from_property {
         croak "No template";
     }
     my $template;
+    $self->out(1, "Processing template $template_name");
     $template = $self->get_param($template_name);
     unless ($template) {
         croak "Template $template_name wasn't found";

@@ -29,7 +29,7 @@ sub after_init_hook {
 sub get_credentials {
     my ($self, $config_name) = @_;
 
-    return $self->SUPER::get_credentials(
+    my $cred = $self->SUPER::get_credentials(
         $config_name => {
             userName => 'user',
             password => 'password',
@@ -37,6 +37,11 @@ sub get_credentials {
             weblogic_url => 'weblogic_url'
         },
         'weblogic_cfgs');
+    if ($cred->{java_home}) {
+        $ENV{JAVA_HOME} = $cred->{java_home};
+    }
+
+    return $cred;
 }
 
 
@@ -65,10 +70,23 @@ sub process_response {
     if (!exists $result->{stdout} || !exists $result->{stderr} || !exists $result->{code}) {
         $self->bail_out("Unknown error occured");
     }
-    # result code is > 0, so, it's an error
-    if ($result->{code}) {
-        $self->error($result->{stderr});
+
+    $self->out(1, "EXIT_CODE: ", $result->{code}, "\n");
+    $self->out(1, "STDOUT: ", $result->{stdout}, "\n");
+    $self->out(1, "STDERR: ", $result->{stderr}, "\n");
+    $self->out(1, "DONE\n");
+    # result code is != 0, so, it's an error
+    if ($result->{code} != 0) {
+        for my $where (qw/stdout stderr/) {
+            if ($result->{$where} =~ m/WLSTException:\s(.+)$/is) {
+                $self->bail_out($1);
+            }
+        }
+        $self->error();
+        return;
     }
+    $self->success();
+    return;
 }
 
 ## %arams = (

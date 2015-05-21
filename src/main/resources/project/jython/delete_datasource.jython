@@ -1,0 +1,15 @@
+state = ""
+try:
+    connect('[% username %]','[% password %]','[% weblogic_url %]')
+    edit()
+    startEdit()
+    dsName = '[% ds_name %]'
+    cd('/')
+    print 'Deleting Datasource: ' + dsName
+    delete(dsName,'JDBCSystemResource')
+    print dsName + ' deleted!'
+except ValueError:
+    print dsName + ' does not exist!'
+else:
+    save()
+    activate()
