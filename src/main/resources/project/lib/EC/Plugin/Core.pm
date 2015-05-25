@@ -401,6 +401,19 @@ sub get_credentials {
 }
 
 
+=item B<safe_cmd>
+
+Returns system command as is. For output purification should be extended in the child class.
+
+=cut
+
+sub safe_cmd {
+    my ($self, $command) = @_;
+
+    return $command;
+}
+
+
 =item B<run_command>
 
 Running system command. This function is cross-platrorm.
@@ -420,7 +433,9 @@ sub run_command {
         stderr => ''
     };
 
-    $self->out(1, "Running command: " . join('', @cmd));
+    my $cmd_to_display = join '', @cmd;
+    $cmd_to_display = $self->safe_cmd($cmd_to_display);
+    $self->out(1, "Running command: " . $cmd_to_display);
     if ($self->dryrun()) {
         return {
             code => 1,

@@ -143,7 +143,14 @@ sub execute_jython_script {
     return $retval;
 }
 
+# extending safe_cmd from the base class
+sub safe_cmd {
+    my ($wl, $command) = @_;
 
+    $command =~ s/-password.+?\s/-password *** /s;
+
+    return $command;
+}
 
 1;
 
