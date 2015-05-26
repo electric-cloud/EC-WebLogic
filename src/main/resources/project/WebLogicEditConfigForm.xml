@@ -1,28 +1,37 @@
 <editor>
-	<formElement>
-        <type>entry</type>
-        <label>WebLogic URL:</label>
-        <property>weblogic_url</property>
-        <value></value>
-        <documentation>URL of WebLogic server (must include protocol, server and port).</documentation>
-        <required>1</required>
-    </formElement>
+  <formElement>
+    <type>entry</type>
+    <label>WebLogic URL:</label>
+    <property>weblogic_url</property>
+    <value></value>
+    <documentation>URL of WebLogic server (must include protocol, server and port).</documentation>
+    <required>1</required>
+  </formElement>
 
-    <formElement>
-      <type>entry</type>
-      <label>JAVA_HOME:</label>
-      <property>java_home</property>
-      <value></value>
-      <documentation>JAVA_HOME</documentation>
-      <required>0</required>
-    </formElement>
-    
-    <formElement>
-        <type>credential</type>
-        <label>Login as:</label>
-        <property>credential</property>
-        <value></value>
-        <required>0</required>
-    </formElement>
+  <formElement>
+    <type>entry</type>
+    <label>JAVA_HOME:</label>
+    <property>java_home</property>
+    <value></value>
+    <documentation>JAVA_HOME</documentation>
+    <required>0</required>
+  </formElement>
+  
+  <formElement>
+    <type>credential</type>
+    <label>Login as:</label>
+    <property>credential</property>
+    <value></value>
+    <required>0</required>
+  </formElement>
+
+  <formElement>
+    <type>entry</type>
+    <label>Debug level:</label>
+    <property>debug_level</property>
+    <value></value>
+    <documentation>Debug level.</documentation>
+    <required>0</required>
+  </formElement>
     
 </editor>

@@ -34,9 +34,16 @@ sub get_credentials {
             userName => 'user',
             password => 'password',
             java_home => 'java_home',
-            weblogic_url => 'weblogic_url'
+            weblogic_url => 'weblogic_url',
+            debug_level => 'debug_level'
         },
         'weblogic_cfgs');
+
+    if (defined $cred->{debug_level}) {
+        $self->debug_level($cred->{debug_level});
+        $self->out(3, "Debug level set to ", $self->debug_level())
+    }
+
     if ($cred->{java_home}) {
         $ENV{JAVA_HOME} = $cred->{java_home};
     }

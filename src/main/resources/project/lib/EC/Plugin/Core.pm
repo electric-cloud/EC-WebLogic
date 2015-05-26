@@ -34,9 +34,12 @@ sub new {
     my ($class, %params) = @_;
 
     my $self = {};
+    bless $self, $class;
+
     before_init_hook(@_);
     if ($params{debug_level}) {
-        $self->{_init}->{debug_level} = $params{debug_level}
+        # $self->{_init}->{debug_level} = $params{debug_level}
+        $self->debug_level($params{debug_level});
     }
     if ($params{result_folder}) {
         $self->{_init}->{result_folder} = $params{result_folder};
@@ -54,8 +57,9 @@ sub new {
     if ($params{plugin_key}) {
         $self->{plugin_key} = $params{plugin_key}
     }
-    $self->{_init}->{debug_level} ||= 1;
-    bless $self, $class;
+    defined $self->debug_level() or do {
+        $self->debug_level(1);
+    };
 
     $self->after_init_hook(%params);
     if ($params{dryrun}) {
@@ -580,6 +584,20 @@ sub is_win {
 }
 
 
+sub debug_level {
+    my ($self, $debug_level) = @_;
+
+    if (defined $debug_level) {
+        $self->{_init}->{debug_level} = $debug_level;
+        return 1;
+    }
+
+    if (defined $self->{_init}->{debug_level}) {
+        return $self->{_init}->{debug_level};
+    }
+    return 1;
+}
+
 =item B<dbg>
 
 Right now just wrapper for out(1, ...);
@@ -608,10 +626,10 @@ sub out {
         $debug_level = 1;
         unshift @msg, $debug_level;
     };
-    if (!$self->{_init}->{debug_level}) {
+    if (!$self->debug_level()) {
         return 1;
     }
-    if ($self->{_init}->{debug_level} < $debug_level) {
+    if ($self->debug_level() < $debug_level) {
         return 1;
     }
     my $msg = join '', @msg;
