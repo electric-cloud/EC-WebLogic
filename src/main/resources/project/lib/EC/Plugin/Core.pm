@@ -22,6 +22,8 @@ use Symbol qw/gensym/;
 
 
 my $DRYRUN = 0;
+
+
 =item B<new>
 
 Constructor. Parameters:
@@ -125,6 +127,11 @@ sub check_executable {
         ok => 0,
         msg => '',
     };
+
+    if ($self->dryrun()) {
+        $retval->{ok} = 1;
+        return $retval;
+    }
 
     if (!-e $file_path) {
         $retval->{msg} = "File $file_path doesn't exist";
@@ -441,8 +448,9 @@ sub run_command {
     $cmd_to_display = $self->safe_cmd($cmd_to_display);
     $self->out(1, "Running command: " . $cmd_to_display);
     if ($self->dryrun()) {
+        $self->dbg("Running command in dryrun mode");
         return {
-            code => 1,
+            code => 0,
             stdout => 'DUMMY_STDOUT',
             stderr => 'DUMMY_STDERR',
         };
@@ -663,6 +671,22 @@ sub get_param {
     return $retval;
 }
 
+
+sub esc_args {
+    my ($self, @args) = @_;
+
+    @args = map {
+        $_ = is_win() ? qq|"$_"| : qq|'$_'|;
+        $_;
+    } @args;
+
+    if (wantarray) {
+        return @args;
+    }
+    my $str =  join ' ', @args;
+    trim($str);
+    return $str;
+}
 
 =item B<get_params_as_hashref>
 

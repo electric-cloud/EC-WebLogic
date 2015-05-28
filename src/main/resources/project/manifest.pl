@@ -7,6 +7,8 @@
     ['//property[propertyName="jython"]/propertySheet/property[propertyName="check_server_status.jython"]/value', 'jython/check_server_status.jython'],
     ['//property[propertyName="jython"]/propertySheet/property[propertyName="create_datasource.jython"]/value', 'jython/create_datasource.jython'],
     ['//property[propertyName="jython"]/propertySheet/property[propertyName="delete_datasource.jython"]/value', 'jython/delete_datasource.jython'],
+    ['//property[propertyName="jython"]/propertySheet/property[propertyName="deploy_app.jython"]/value', 'jython/deploy_app.jython'],
+    ['//property[propertyName="jython"]/propertySheet/property[propertyName="undeploy_app.jython"]/value', 'jython/undeploy_app.jython'],
 
     ['//property[propertyName="ui_forms"]/propertySheet/property[propertyName="WebLogicCreateConfigForm"]/value'  , 'WebLogicCreateConfigForm.xml'],
     ['//property[propertyName="ui_forms"]/propertySheet/property[propertyName="WebLogicEditConfigForm"]/value'  , 'WebLogicEditConfigForm.xml'],

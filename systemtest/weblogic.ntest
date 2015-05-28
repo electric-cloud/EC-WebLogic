@@ -299,10 +299,9 @@ ntest "deployApp1", {}, sub {
       $xpath = $::N->getJobDetails($jobId);
    
       # get the value of the commands lines
-      my $commandLine = $xpath->findvalue("//property[propertyName='deployAppLine']/value");
+      my $commandLine = $xpath->findvalue("//property[propertyName='wlstLine']/value");
 
-      assertEq($commandLine, 'java weblogic.Deployer -adminurl t3://localhost:7001 -username admin -password *** -deploy  -name webapp -source E:\websphere\test_install\webapp.war', 
-           'command line doesn\'t match expected output');
+      assertTrue($commandLine =~ m;/path/to/wlst\.sh.+/exec.jython;, q|command line doesn't match expected output|);
 
 };
 
@@ -337,10 +336,8 @@ ntest "undeployApp1", {}, sub {
     $xpath = $::N->getJobDetails($jobId);
 
     # get the value of the commands lines
-    my $commandLine = $xpath->findvalue("//property[propertyName='undeployAppLine']/value");
-
-    assertEq($commandLine, 'java weblogic.Deployer -adminurl t3://localhost:7001 -username admin -password *** -undeploy  -name webapp',
-             'command line doesn\'t match expected output');
+    my $commandLine = $xpath->findvalue("//property[propertyName='wlstLine']/value");
+    assertTrue($commandLine =~ m;/path/to/wlst\.sh.+?/exec.jython;, q|command line doesn't match expected output|);
 
 };
 

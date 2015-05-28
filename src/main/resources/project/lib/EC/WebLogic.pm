@@ -21,6 +21,7 @@ sub after_init_hook {
         };
     }
     if ($dryrun) {
+        $self->dbg("Dryrun enabled");
         $self->dryrun(1);
     }
 }

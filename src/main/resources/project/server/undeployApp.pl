@@ -23,63 +23,36 @@ sub main {
 
     my $params = $wl->get_params_as_hashref(
         'appname',
-        'javapath',
+        'wlstabspath',
         'gracefulmode',
-        'javaparams',
-        'configname',
-        'additionalcommands',
-        'envscriptpath',
-        'webjarpath',
+        'configname'
     );
 
-    my $cred = undef;
+    my $cred = $wl->get_credentials($params->{configname});
+    my $gracefulmode = 'false';
 
-    if ($params->{configname}) {
-        $cred = $wl->get_credentials($params->{configname});
+    if ($params->{gracefulmode}) {
+        $params->{gracefulmode} = 'true'
     }
 
-    my $command = $params->{javapath};
+    my $render_params = {
+        username => $cred->{user},
+        password => $cred->{password},
+        admin_url => $params->{weblogic_url},
+        app_name => $params->{appname},
+        gracefulmode => $gracefulmode,
+    };
 
-    if ($params->{javaparams}) {
-        $command .= " $params->{javaparams} ";
-    }
+    my $template_path = '/myProject/jython/undeploy_app.jython';
+    my $template = $wl->render_template_from_property($template_path, $render_params);
 
-    if ($params->{webjarpath}) {
-        $ENV{CLASSPATH} .= $params->{webjarpath};
-    }
+    $wl->out(10, "Generated script:\n", $template);
+    my $res = $wl->execute_jython_script(
+        shell => $params->{wlstabspath},
+        script_path => $ENV{COMMANDER_WORKSPACE} . '/exec.jython',
+        script_content => $template,
+    );
 
-    if ($params->{envscriptpath}) {
-        my $check = $wl->check_executable($params->{envscriptpath});
-        if (!$check->{ok}) {
-            $wl->bail_out($check->{msg});
-        }
-
-        `$params->{envscriptpath}`;
-    }
-
-    $command .= ' ' . $MAIN_CLASS;
-
-    if ($cred) {
-        if ($cred->{weblogic_url}) {
-            $command .= ' -adminurl ' . $cred->{weblogic_url};
-        }
-
-        if ($cred->{user}) {
-            $command .= ' -username ' . $cred->{user};
-        }
-        if ($cred->{password}) {
-            $command .= ' -password ' . $cred->{password};
-        }
-    }
-
-    $command .= ' -undeploy ';
-    $command .= ' -name ' . $params->{appname};
-
-    if ($params->{additionalcommands}) {
-        $command .= " $params->{additionalcommands} ";
-    }
-
-    $wl->set_property(undeployAppLine => $wl->safe_cmd($command));
-    my $res = $wl->run_command($command);
     $wl->process_response($res);
+    return;
 }

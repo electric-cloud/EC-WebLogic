@@ -1,0 +1,8 @@
+print 'deploying jar...'
+connect('[% username %]','[% password %]','[% admin_url %]')
+applicationName = '[% app_name %]'
+applicationPath = '[% app_path %]'
+targets = '[% targets %]'
+
+status = deploy(appName=applicationName, path=applicationPath, targets=targets, libraryModule='[% is_library %]')
+print status

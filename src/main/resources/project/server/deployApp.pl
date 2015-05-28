@@ -21,71 +21,46 @@ sub main {
         plugin_key => $PLUGIN_KEY
     );
 
+    # TODO: remove javapath, javaparams, additionalcommands, webjarpath, envscriptpath field.
     my $params = $wl->get_params_as_hashref(
+        'wlstabspath',
         'appname',
         'apppath',
-        'javapath',
-        'javaparams',
         'configname',
         'targets',
-        'additionalcommands',
-        'envscriptpath',
-        'webjarpath'
+        'is_library'
     );
 
-    if ($params->{envscriptpath}) {
-        my $check = $wl->check_executable($params->{envscriptpath});
-        if (!$check->{ok}) {
-            $wl->bail_out($check->{msg});
-        }
-
-        `$params->{envscriptpath}`;
+    my $is_library = 'false';
+    if ($params->{is_library}) {
+        $is_library = 'true';
     }
-    my $cred = undef;
-    if ($params->{configname}) {
-        $cred = $wl->get_credentials($params->{configname});
+    my $check = $wl->check_executable($params->{wlstabspath});
+    unless ($check->{ok}) {
+        $wl->bail_out($check->{msg});
     }
+    my $cred = $wl->get_credentials($params->{configname});
+    my $render_params = {
+        username => $cred->{user},
+        password => $cred->{password},
+        targets => $params->{targets},
+        admin_url => $params->{weblogic_url},
+        app_name => $params->{appname},
+        app_path => $params->{apppath},
+        is_library => $is_library
+    };
 
-    # assembling the commandline.
-    my $command = $params->{javapath};
+    my $template_path = '/myProject/jython/deploy_app.jython';
+    my $template = $wl->render_template_from_property($template_path, $render_params);
 
-    if ($params->{javaparams}) {
-        $command .= ' ' . $params->{javaparams};
-    }
+    $wl->out(10, "Generated script:\n", $template);
+    my $res = $wl->execute_jython_script(
+        shell => $params->{wlstabspath},
+        script_path => $ENV{COMMANDER_WORKSPACE} . '/exec.jython',
+        script_content => $template,
+    );
 
-    if ($params->{webjarpath}) {
-        $ENV{CLASSPATH} .= $params->{webjarpath};
-    }
-
-    $command .= ' ' . $MAIN_CLASS;
-
-    if ($cred) {
-        if ($cred->{weblogic_url}) {
-            $command .= ' -adminurl ' . $cred->{weblogic_url};
-        }
-
-        if ($cred->{user}) {
-            $command .= ' -username ' . $cred->{user};
-        }
-        if ($cred->{password}) {
-            $command .= ' -password ' . $cred->{password};
-        }
-    }
-
-    $command .= ' -deploy ';
-    $command .= ' -name ' . $params->{appname};
-    $command .= ' -source ' . $params->{apppath};
-    if ($params->{targets}) {
-        $command .= ' -targets ' . $params->{targets};
-    }
-
-    if ($params->{additionalcommands}) {
-        $command .= " $params->{additionalcommands}";
-    }
-
-
-    $wl->set_property(deployAppLine => $wl->safe_cmd($command));
-
-    my $res = $wl->run_command($command);
     $wl->process_response($res);
+    return;
 }
+

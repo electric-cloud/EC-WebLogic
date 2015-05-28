@@ -1,0 +1,10 @@
+print 'deploying jar...'
+connect('[% username %]','[% password %]','[% admin_url %]')
+applicationName = '[% app_name %]'
+status = ""
+try:
+    status = undeploy(appName=applicationName, retireGracefully='[% gracefulmode %]')
+except Exception:
+    status = "Undeploy error" + Exception
+
+print status
