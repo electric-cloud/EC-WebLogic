@@ -571,7 +571,7 @@
             <value>suppliedfile</value>
           </property>
           <property>
-            <propertyName>wlstpath</propertyName>
+            <propertyName>wlstabspath</propertyName>
             <expandable>1</expandable>
             <value>E:\Oracle\Middleware\wlserver_10.3\common\bin\wlst.cmd</value>
           </property>
@@ -639,7 +639,7 @@
             <value>newscriptfile</value>
           </property>
           <property>
-            <propertyName>wlstpath</propertyName>
+            <propertyName>wlstabspath</propertyName>
             <expandable>1</expandable>
             <value>E:\Oracle\Middleware\wlserver_10.3\common\bin\wlst.cmd</value>
           </property>
@@ -754,11 +754,6 @@
             <inheriting>1</inheriting>
           </acl>
           <property>
-            <propertyName>additionalcommands</propertyName>
-            <expandable>1</expandable>
-            <value></value>
-          </property>
-          <property>
             <propertyName>appname</propertyName>
             <expandable>1</expandable>
             <value>webapp</value>
@@ -769,14 +764,9 @@
             <value>mytest2</value>
           </property>
           <property>
-            <propertyName>javaparams</propertyName>
+            <propertyName>wlstabspath</propertyName>
             <expandable>1</expandable>
-            <value></value>
-          </property>
-          <property>
-            <propertyName>javapath</propertyName>
-            <expandable>1</expandable>
-            <value>java</value>
+            <value>/path/to/wlst.sh</value>
           </property>
         </actualParameters>
         <propertySheet>
@@ -947,11 +937,6 @@
             <inheriting>1</inheriting>
           </acl>
           <property>
-            <propertyName>additionalcommands</propertyName>
-            <expandable>1</expandable>
-            <value></value>
-          </property>
-          <property>
             <propertyName>appname</propertyName>
             <expandable>1</expandable>
             <value>webapp</value>
@@ -962,19 +947,9 @@
             <value>mytest2</value>
           </property>
           <property>
-            <propertyName>gracefulmode</propertyName>
+            <propertyName>wlstabspath</propertyName>
             <expandable>1</expandable>
-            <value>0</value>
-          </property>
-          <property>
-            <propertyName>javaparams</propertyName>
-            <expandable>1</expandable>
-            <value></value>
-          </property>
-          <property>
-            <propertyName>javapath</propertyName>
-            <expandable>1</expandable>
-            <value>java</value>
+            <value>/path/to/wlst.sh</value>
           </property>
         </actualParameters>
         <propertySheet>

@@ -10,6 +10,9 @@
     ['//property[propertyName="jython"]/propertySheet/property[propertyName="deploy_app.jython"]/value', 'jython/deploy_app.jython'],
     ['//property[propertyName="jython"]/propertySheet/property[propertyName="undeploy_app.jython"]/value', 'jython/undeploy_app.jython'],
 
+    ['//property[propertyName="jython"]/propertySheet/property[propertyName="start_app.jython"]/value', 'jython/start_app.jython'],
+    ['//property[propertyName="jython"]/propertySheet/property[propertyName="stop_app.jython"]/value', 'jython/stop_app.jython'],
+
     ['//property[propertyName="ui_forms"]/propertySheet/property[propertyName="WebLogicCreateConfigForm"]/value'  , 'WebLogicCreateConfigForm.xml'],
     ['//property[propertyName="ui_forms"]/propertySheet/property[propertyName="WebLogicEditConfigForm"]/value'  , 'WebLogicEditConfigForm.xml'],
 

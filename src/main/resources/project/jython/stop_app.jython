@@ -1,0 +1,5 @@
+connect('[% username %]','[% password %]','[% admin_url %]')
+applicationName = '[% app_name %]'
+
+status = stopApplication(applicationName)
+print status

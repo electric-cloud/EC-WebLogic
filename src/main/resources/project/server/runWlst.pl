@@ -19,7 +19,7 @@ sub main {
     # $wl->dryrun(1);
     my $params = $wl->get_params_as_hashref(
         'scriptfilesource', # radio button
-        'wlstpath', # wlst abs path
+        'wlstabspath', # wlst abs path
         'scriptfile', # script file content
         'scriptfilepath', # jython script abs path
         'additionalcommands', # additional commands for jython
@@ -35,7 +35,7 @@ sub main {
         }
     }
     my %wl_params = (
-        shell => $params->{wlstpath},
+        shell => $params->{wlstabspath},
         script_path => $params->{scriptfilepath}
     );
 

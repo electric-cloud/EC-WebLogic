@@ -3,7 +3,7 @@
   <formElement>
     <type>entry</type>
     <label>WLST Absolute Path:</label>
-    <property>wlstpath</property>
+    <property>wlstabspath</property>
     <required>1</required>
     <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)</documentation>
   </formElement>
