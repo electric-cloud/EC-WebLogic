@@ -31,7 +31,7 @@
     <property>debug_level</property>
     <value></value>
     <documentation>Debug level.</documentation>
-    <required>0</required>
+    <required>1</required>
   </formElement>
     
 </editor>

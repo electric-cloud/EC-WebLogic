@@ -178,7 +178,8 @@ ntest "setup-create configuration", {}, sub {
           actualParameter => [ 
             { actualParameterName => 'config', value => "mytest2" }, 
             { actualParameterName => 'weblogic_url', value => "t3://localhost:7001" },
-            { actualParameterName => 'credential', value => "mytest2" }, 
+            { actualParameterName => 'credential', value => "mytest2" },
+            { actualParameterName => 'debug_level', value => "1" }, 
           ],
           credential => [ 
             { credentialName => 'mytest2', userName => "admin", password => "abr66666", },

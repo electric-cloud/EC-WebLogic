@@ -1,3 +1,6 @@
+no warnings qw/redefine/;
+use XML::Simple;
+use Data::Dumper;
 my %startApp = (
     label       => "WebLogic - Start Application",
     procedure   => "StartApp",
@@ -159,6 +162,7 @@ $batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Resume Se
 							
 
 if ($upgradeAction eq "upgrade") {
+    patch_configs("/plugins/$otherPluginName/project/weblogic_cfgs");
     my $query = $commander->newBatch();
     my $newcfg = $query->getProperty(
         "/plugins/$pluginName/project/weblogic_cfgs");
@@ -323,4 +327,60 @@ if ($upgradeAction eq "upgrade") {
         }
     }
 }
-							
+
+
+sub patch_configs {
+    my ($config_path) = @_;
+
+    my $configs = '';
+    eval {
+        my $res = $commander->getProperty($config_path);
+        $configs = $res->findvalue('//propertySheetId')->string_value();
+    };
+    unless ($configs) {
+        return;
+    }
+    my $cfg_list = undef;
+    eval {
+        my $t = $commander->getProperties({propertySheetId => $configs});
+        my $cfg_data = XMLin($t->{_xml});
+
+        $cfg_list = $cfg_data->{response}->{propertySheet}->{property};
+        if (ref $cfg_list eq 'HASH') {
+            $cfg_list = [$cfg_list];
+        }
+        if (ref $cfg_list ne 'ARRAY') {
+            $cfg_list = [];
+        }
+    };
+
+
+    for my $c (@$cfg_list) {
+        my $debug_level = undef;
+
+        eval {
+            my $prop = $commander->getProperty($config_path . '/' . $c->{propertyName});
+            eval {
+                my $sheet = $commander->getProperties({
+                    propertySheetId => $c->{propertySheetId}
+                });
+                $sheet = XMLin($sheet->{_xml});
+                for my $p (@{$sheet->{response}->{propertySheet}->{property}}) {
+                    if ($p->{propertyName} eq 'debug_level') {
+                        if (!ref $p->{value} && $p->{value} =~ m/^\d+$/s) {
+                            $debug_level = $p->{value};
+                        }
+                    }
+                }
+            };
+            1;
+        } or do {
+            next;
+        };
+        defined $debug_level and next;
+        $debug_level = 1;
+        $commander->setProperty($config_path . '/' . $c->{propertyName} . '/debug_level' => $debug_level);
+
+    }
+    return 1;
+}
