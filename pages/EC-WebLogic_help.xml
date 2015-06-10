@@ -164,6 +164,8 @@
 
 
         <p>This plugin was developed and tested against WebLogic version 10.3.</p>
+				
+				<p>IMPORTANT: In the ElectricFlow UI, go to the Home page, open the Main Menu, and click <b>Admin</b> > <b>Plugins</b> to open the Plugin Manager.</p>
 
         <h1 id="setupconfig">Setting Up the Plugin Configuration</h1>
 
