@@ -29,6 +29,8 @@ sub main {
     unless ($check->{ok}) {
         $wl->bail_out($check->{msg});
     }
+    $params->{wlstabspath} = $wl->esc_args($params->{wlstabspath});
+
     my $config_name = $params->{configname};
 
     if ($params->{maxelapsedtime} && $params->{maxelapsedtime} !~ m/^\d+$/s) {
@@ -51,12 +53,13 @@ sub main {
     my $template_path = '/myProject/jython/check_server_status.jython';
 
     my $script = $wl->render_template_from_property($template_path, $render_params);
-    my $path = $ENV{COMMANDER_WORKSPACE} . '/exec.jython';
+    my $path = $wl->generate_exec_path();
     open FH, '>>', $path;
     print FH $script;
     close FH;
 
     my $exec_result;
+    $path = $wl->esc_args($path);
     my $cmd = "$params->{wlstabspath} $path";
     if ($params->{maxelapsedtime} && $params->{maxelapsedtime} > 0) {
         $exec_result = $wl->do_while(

@@ -676,8 +676,14 @@ sub esc_args {
     my ($self, @args) = @_;
 
     @args = map {
-        $_ = is_win() ? qq|"$_"| : qq|'$_'|;
-        $_;
+        if (is_win) {
+            $_ =~ s/"/\\"/gs;
+            $_ = qq|"$_"|;
+        }
+        else {
+            $_ =~ s/'/\\'/gs;
+            $_ = qq|'$_'|;
+        }
     } @args;
 
     if (wantarray) {

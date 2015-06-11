@@ -31,7 +31,6 @@ sub main {
     my $cred = $wl->get_credentials($params->{configname});
     if ($cred->{java_home}) {
         $wl->out(1, "JAVA_HOME was provided");
-        $ENV{JAVA_HOME} = $cred->{java_home};
     }
     my $render_params = {
         username => $cred->{user},

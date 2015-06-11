@@ -423,11 +423,13 @@ ntest "runWlstWithGivenScriptFile", {}, sub {
 
       # get the job details
       $xpath = $::N->getJobDetails($jobId);
-      
+
       # get the value of the commands lines
+      my $sep = $^O eq 'MSWin32' ? q|"| : q|'|;
+      my $expected = sprintf
+          q|%sE:\Oracle\Middleware\wlserver_10.3\common\bin\wlst.cmd%s %sE:/websphere/test_install/install_simple.jython%s|, $sep, $sep, $sep, $sep;
       my $commandLine = $xpath->findvalue("//property[propertyName='wlstLine']/value");
-      assertEq($commandLine, 'E:\Oracle\Middleware\wlserver_10.3\common\bin\wlst.cmd E:/websphere/test_install/install_simple.jython', 
-           'command line doesn\'t match expected output');
+      assertEq($commandLine, $expected, 'command line doesn\'t match expected output');
 
 };
 
@@ -570,7 +572,8 @@ ntest "startApp1", {}, sub {
       # get the value of the commands lines
       my $commandLine = $xpath->findvalue("//property[propertyName='wlstLine']/value");
 
-      assertTrue($commandLine =~ m;/path/to/wlst.sh\s.+?exec\.jython;s, q|command line doesn't match expected output|);
+      my $sep = $^O eq 'MSWin32' ? q|"| : q|'|;
+      assertTrue($commandLine =~ m;$sep/path/to/wlst.sh$sep\s.+?exec\.jython$sep;s, q|command line doesn't match expected output|);
 
 };
 
@@ -708,7 +711,8 @@ ntest "stopApp1", {}, sub {
 
       # get the value of the commands lines
       my $commandLine = $xpath->findvalue("//property[propertyName='wlstLine']/value");
-      assertTrue($commandLine =~ m;/path/to/wlst.sh\s.+?exec\.jython;s, q|command line doesn't match expected output|);
+      my $sep = $^O eq 'MSWin32' ? q|"| : q|'|;
+      assertTrue($commandLine =~ m;$sep/path/to/wlst.sh$sep\s.+?exec\.jython$sep;s, q|command line doesn't match expected output|);
 };
 
 ntest "stopManagedServer1", {}, sub {

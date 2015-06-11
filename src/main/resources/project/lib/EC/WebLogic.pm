@@ -27,6 +27,27 @@ sub after_init_hook {
 }
 
 
+sub generate_exec_path {
+    my $wl = shift;
+    my $path = $ENV{COMMANDER_WORKSPACE} . '/exec.jython';
+
+    # $path = $wl->esc_args($path);
+    $wl->out(1, "Path: $path");
+    return $path;
+}
+
+
+# sub get_params_as_hashref {
+#     my ($self, @params) = @_;
+
+#     my $res = $self->SUPER::get_params_as_hashref(@params);
+
+#     if ($res->{wlstabspath}) {
+#         $res->{wlstabspath} = $self->esc_args($res->{wlstabspath});
+#     }
+#     return $res;
+# }
+
 sub get_credentials {
     my ($self, $config_name) = @_;
 
@@ -132,12 +153,15 @@ sub execute_jython_script {
         close FH;
     }
 
-    my $command = $params{shell} . ' ';
+    my $command = $self->esc_args($params{shell}) . ' ';
+
     if ($params{options}) {
         $command .= $params{options} . ' ';
     }
 
-    $command .= $params{script_path};
+    my $script_path = $params{script_path};
+    $script_path = $self->esc_args($script_path);
+    $command .= $script_path;
     my $retval;
     $self->set_property(wlstLine => $command);
     $retval = $self->run_command($command);
