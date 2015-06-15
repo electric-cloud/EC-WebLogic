@@ -287,7 +287,7 @@
 
                         <td>The credentials required to check the
 
-                        status of the page.</td>
+                        status of the page. Enter the <b>Username</b> and <b>Password</b>.</td>
 
                     </tr>
 
@@ -299,9 +299,9 @@
 
 
 
-                        <td>Defines the maximum time in seconds
+                        <td>The maximum time in seconds
 
-                        that the job will try to check into the
+                        that the job tries to check into the
 
                         server. If no value is entered, there is no wait time
 
@@ -333,7 +333,15 @@
 
                         <td>The expected result when the 
 
-                        server status is checked.</td>
+                        server status is checked: 
+												
+												<ul>
+												<li>Page found (200)</li>
+												<li>Page not found (400)</li>
+												<li>Page error</li>
+												</ul>
+												
+												</td>
 
                     </tr>
 
@@ -354,16 +362,17 @@
 		        <p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The status of the page was checked successfully.</p>
 		        <img src="../../plugins/EC-WebLogic/images/CheckPageStatus/EC-WLSCheckPageStatus3.png" />
 		
-		        <p>In the <b>CheckPageStatus</b> step, click the Log button to see the diagnostic information: 
+		        <p>In the <b>CheckPageStatus</b> step, click the Log button to see the diagnostic information:</p>
+						<br />
 		        <img src="../../plugins/EC-WebLogic/images/CheckPageStatus/EC-WLSCheckPageStatus4.png" />
-				</p>
+				
 
             
-                <p><b>Note:</b> In the URL, the protocol is http. For this procedure, 
+           <p><b>Note:</b> In the URL, the protocol is http. For this procedure, 
 				
-				ElectricFlow uses an internal method to test the status of the 
+				   ElectricFlow uses an internal method to test the status of the 
 
-                page URLs with the original http protocol used in the web browsers.</p>
+          page URLs with the original http protocol used in the web browsers.</p>
 
         </div>
 
@@ -430,7 +439,7 @@
 
 
 
-                        <td>Absolute path to WLST. such as 
+                        <td>Absolute path to WLST, such as 
 
                         "/path/to/wlst.cmd" <i>or</i>"wlst.sh".
 
@@ -466,7 +475,13 @@
 
                         <td>The expected result when the server status
 
-                        is checked. </td>
+                        is checked:
+												<ul>
+												<li><b>Server running</b></li>
+												<li><b>Server not running</b></li>
+												</ul>
+												
+												</td>
 
                     </tr>
 
@@ -499,6 +514,7 @@
 		        <img src="../../plugins/EC-WebLogic/images/CheckServerStatus/EC-WLSCheckServerStatus3.png" />
 		
 		        <p>In the <b>CheckServerStatus</b> step, click the Log button to see the diagnostic information: 
+						<br />
 		        <img src="../../plugins/EC-WebLogic/images/CheckServerStatus/EC-WLSCheckServerStatus4.png" />
 				</p>
 			
@@ -643,8 +659,6 @@
 
                         <td class='required'>Database Password</td>
 
-
-
                         <td>The password attribute passed to the JDBC driver when creating physical database connections. The value is stored 
 						
 						in an encrypted form in the descriptor file and is displayed on the Administration Console.</td>
@@ -669,7 +683,8 @@
 		       <img src="../../plugins/EC-WebLogic/images/CreateDatasource/EC-WLSCreateDatasource3.png" />
 		
 		        <p>In the <b>CreateDatasource</b> step, click the Log button to see the diagnostic information: 
-		       <img src="../../plugins/EC-WebLogic/images/CreateDatasource/EC-WLSCreateDatasource4.png" />>
+						<br />
+		        <img src="../../plugins/EC-WebLogic/images/CreateDatasource/EC-WLSCreateDatasource4.png" />>
 				</p>
 
         </div>
@@ -764,7 +779,9 @@
 		       <img src="../../plugins/EC-WebLogic/images/DeleteDatasource/EC-WLSDeleteDatasource3.png" />
 		
 		        <p>In the <b>DeleteDatasource</b> step, click the Log button to see the diagnostic information: 
-		       <img src="../../plugins/EC-WebLogic/images/DeleteDatasource/EC-WLSDeleteDatasource4.png" />
+						<br />
+		        <img src="../../plugins/EC-WebLogic/images/DeleteDatasource/EC-WLSDeleteDatasource4.png" />
+						
 				</p>
 
         </div>
@@ -801,27 +818,37 @@
 
                 <tbody>
 
-                    <tr>
+                      <tr>
 
-                        <td class='required'>Java Absolute Path</td>
+                        <td class='required'>Configuration Name</td>
 
-                        <td>Absolute path of java. For example: i.e: "java", "java.exe", or "/path/to/java".</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Java Parameters</td>
-
-                        <td>Java parameters to pass, such as -verbose.</td>
+                        <td>Name of the configuration to use when the URL and credentials for the Administration Server are retrieved.</td>
 
                     </tr>
+										
+										<tr>
 
-                    <tr>
+                        <td>Wlst Script Absolute Path</td>
+
+                        <td>Absolute path to the WLST, such as /path/to/wlst
+												
+												or wlst.sh.</td>
+
+                    </tr>
+										
+										 <tr>
 
                         <td class='required'>Application Name</td>
 
                         <td>Deployment name to assign to a newly deployed application or standalone module. </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td class='required'>Is Library</td>
+
+                        <td>Select this parameter if the applicatino is library.</td>
 
                     </tr>
 
@@ -835,19 +862,11 @@
 
                     <tr>
 
-                        <td>Configuration Name</td>
-
-                        <td>Name of the configuration to use when the URL and credentials for the Administration Server are retrieved.</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Targets</td>
+                        <td class='required'>Targets</td>
 
                         <td>Targets on which to deploy the application or module in a comma-separated list
 
-                        of the target servers, clusters, or virtual hosts.</td>
+                        of the target servers, clusters, and virtual hosts.</td>
 
                     </tr>
 
@@ -858,42 +877,7 @@
                         <td>Additional commands to be entered in the weblogic.Deployer tool.</td>
 
                     </tr>
-
-
-                    <tr>
-
-                        <td>setDomainEnv Script Absolute Path</td>
-
-                        <td>Absolute path of the setDomainEnv script, including filename and extension.
-
-                        For example, "/path/to/setDomainEnv.sh" or "setDomainEnv.cmd".</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>weblogic jar Absolute Path</td>
-
-
-
-                        <td>Absolute path of the weblogic.jar file that is required 
-
-                        to run the Deploy function. In a  
-
-                        Windows environment, if the jar file is already
-
-                        added to the environment classpath variable,
-
-                        it is not necesary to include it. In a 
-
-                        Linux environment,  you must include the
-
-                        path, such as "/path/to/weblogic.jar" or 
-
-                       "/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar".</td>
-
-                    </tr>
-
+                   
                 </tbody>
 
             </table>
@@ -917,8 +901,10 @@
 		    <img src="../../plugins/EC-WebLogic/images/DeployApp/EC-WLSDeployApp3.png" />
 		
 		    <p>In the <b>DeployApp</b> step, click the Log button to see the diagnostic information:</p>
-			
-	        <img src="../../plugins/EC-WebLogic/images/DeployApp/EC-WLSDeployApp4.png" />.	 
+				
+				<br />
+						
+	      <img src="../../plugins/EC-WebLogic/images/DeployApp/EC-WLSDeployApp4.png" />.	 
 
         </div>
 
@@ -1029,9 +1015,10 @@
 				moved from the STANDBY state to the RUNNING state.</p>
 		        <img src="../../plugins/EC-WebLogic/images/ResumeServer/EC-WLSResumeServer3.png" />
 		
-		        <p>In the <b>ResumeServer</b> step, click the Log button to see the diagnostic information: 
+		        <p>In the <b>ResumeServer</b> step, click the Log button to see the diagnostic information:</p>
+						<br />
 		        <img src="../../plugins/EC-WebLogic/images/ResumeServer/EC-WLSResumeServer4.png" />
-				</p>
+				
             
         </div>
 
@@ -1106,7 +1093,7 @@
 
 										 <tr>
 
-                        <td>Java Absolute Path</td>
+                        <td class='required'>Java Absolute Path</td>
 
                         <td>Absolute path of java, such as "java", "java.exe" or "/path/to/java".</td>
                     </tr>
@@ -1175,9 +1162,10 @@
 		        successfully.</p>
 		        <img src="../../plugins/EC-WebLogic/images/RunDeployer/EC-WLSRunDep3.png" />
 		
-		        <p>In the <b>RunDeployer</b> step, click the Log button to see the diagnostic information: 
+		        <p>In the <b>RunDeployer</b> step, click the Log button to see the diagnostic information:</p> 
+						<br />
 		        <img src="../../plugins/EC-WebLogic/images/RunDeployer/EC-WLSRunDep4.png" />.
-						</p> 
+						
 
             </div>
 
@@ -1266,15 +1254,21 @@
 
 
 
-                        <td>Source of the script file
+                        <td>Source of the script file:
+												
+												<ul>
+												
+												<li><b>Supplied File</b>: The source is an existing file. The path to this file is 
+												
+												specified in the <b>Script File Absolute Path</b> field.</li>
+												
+												<li><b>New Script File</b>: The source is a new script file using the code in the
+												
+												<b>Script File</b> field.</li>
+												
+												</ul>
 
-                        to execute: an existing file in the
-
-                        path defined in the "Script File" parameter 
-
-                        or a new one using the code specified in
-
-                        "Script File" parameter. </td>
+                        </td>
 
                     </tr>
 
@@ -1288,9 +1282,9 @@
 
                         <td>Content of the script file to run if the 
 
-                        "New Script File" option is chosen in the
+                        <b>New Script File</b> parameter is selected as the 
 
-                        "Script File Source" parameter.</td>
+                        <b>Script File Source</b> parameter.</td>
 
                     </tr>
 
@@ -1309,6 +1303,20 @@
                     </tr>
 
 
+										<tr>
+
+                        <td>Additional Environment Variables</td>
+
+
+                        <td>Additional environment variables specified as comma-separated 
+												
+												key-value pairs, such as JAVA_HOME ==. /path/to/java/home' or
+												
+												other_env ==> 'myenv'. to enter in 
+
+                        weblogic.WLST.</td>
+
+                    </tr>
 
                     <tr>
 
@@ -1341,8 +1349,8 @@
             </table>
 
             </li>
-
-		        </ol>   
+						
+						</ol>   
 						
 		        <h3>Output</h3>
 						
@@ -1481,9 +1489,10 @@
 		        successfully.</p>
 		        <img src="../../plugins/EC-WebLogic/images/StartAdministrationServer/EC-WLSStartAdministrationServer3.png" />
 		
-		        <p>In the <b>StartAdminServer</b> step, click the Log button to see the diagnostic information: 
-		        <img src="../../plugins/EC-WebLogic/images/StartAdministrationServer/EC-WLSStartAdministrationServer4.png" />.
-						</p> 
+		        <p>In the <b>StartAdminServer</b> step, click the Log button to see the diagnostic information:</p> 
+		        <br />
+						<img src="../../plugins/EC-WebLogic/images/StartAdministrationServer/EC-WLSStartAdministrationServer4.png" />.
+						 
 						
         </div>
 
@@ -1518,28 +1527,6 @@
 
                     <tr>
 
-                        <td class='required'>Java Absolute Path</td>
-
-                        <td>Absolute path to Java, such as "java",
-
-                        "java.exe", or "/path/to/java".
-
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Java Parameters</td>
-
-                        <td>Java parameters to pass, such as "-verbose".</td>
-
-                    </tr>
-
-
-
-                    <tr>
-
                         <td class='required'>Application Name</td>
 
                         <td>Name of the application to start, such as "webapp". </td>
@@ -1558,43 +1545,16 @@
 
                     </tr>
 
+                   
                     <tr>
 
-                        <td>Additional Commands</td>
+                        <td>WLST Absolute Path</td>
 
-                        <td>Additional commands to be entered in the 
-
-                        weblogic.Deployer tool.</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>setDomainEnv Script Absolute Path</td>
-
-                        <td>Absolute path of the setDomainEnv script, including filename and extension, such as 
-												
-							"/path/to/setDomainEnv.sh" or "setDomainEnv.cmd".</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>weblogic jar Absolute Path</td>
-
-                       <td>Absolute path of the weblogic.jar file that is 
-
-                        needed to run the start application
-
-                        operation. In a Windows environment, if the
-
-                        jar file has already added been to the environment
-
-                        classpath variable, it is not necesary to
-
-                        include it. In a Linux environment you must
-
-                        include the path, such as or "/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar".</td>
+                        <td>Absolute path of the WLST. 
+											 
+											  The default is java. 
+											 
+											  </td>
 
                     </tr>
 
@@ -1604,11 +1564,11 @@
      
 		 	</li>
 						
-		    <br />
+		   <br />
 			
 	        <img src="../../plugins/EC-WebLogic/images/StartApp/EC-WLSStartApp2.png" />
 			
-		    <br />
+		    <br /> 
 
 		    </ol>   
 						
@@ -1621,6 +1581,8 @@
 		    <img src="../../plugins/EC-WebLogic/images/StartApp/EC-WLSStartApp3.png" />
 		
 		    <p>In the <b>StartApp</b> step, click the Log button to see the diagnostic information:</p>
+				
+				<br />
 			
 		    <img src="../../plugins/EC-WebLogic/images/StartApp/EC-WLSStartApp4.png" />.
 					 
@@ -1811,9 +1773,10 @@
 		        successfully.</p>
 		        <img src="../../plugins/EC-WebLogic/images/StartManagedServer/EC-WLSStartManagedServer3.png" />
 		
-		        <p>In the <b>StartManagedServer</b> step, click the Log button to see the diagnostic information: 
+		        <p>In the <b>StartManagedServer</b> step, click the Log button to see the diagnostic information:</p>
+						<br /> 
 		        <img src="../../plugins/EC-WebLogic/images/StartManagedServer/EC-WLSStartManagedServer4.png" />
-				</p>
+				
 
               </div>
 
@@ -1931,9 +1894,10 @@
 				successfully.</p>
 		        <img src="../../plugins/EC-WebLogic/images/StartNodeManager/EC-WLSStartNodeManager3.png" />
 		
-		        <p>In the <b>StartNodeManager</b> step, click the Log button to see the diagnostic information: 
+		        <p>In the <b>StartNodeManager</b> step, click the Log button to see the diagnostic information:</p>
+						<br /> 
 		       <img src="../../plugins/EC-WebLogic/images/StartNodeManager/EC-WLSStartNodeManager4.png" />
-				</p>
+				
 
         </div>
 		
@@ -2014,9 +1978,10 @@
 		        successfully.</p>
 		        <img src="../../plugins/EC-WebLogic/images/StopAdminServer/EC-WLSStopAdminServer3.png" />
 		
-		        <p>In the <b>StopAdminServer</b> step, click the Log button to see the diagnostic information: 
+		        <p>In the <b>StopAdminServer</b> step, click the Log button to see the diagnostic information:</p>
+						<br /> 
 		        <img src="../../plugins/EC-WebLogic/images/StopAdminServer/EC-WLSStopAdminServer4.png" />
-				</p>
+				
 
 
         </div>
@@ -2052,43 +2017,15 @@
 
                     <tr>
 
-                        <td class='required'>Java Absolute Path</td>
+                        <td class='required'>WLST Absolute Path</td>
 
-                        <td>Absolute path of java, such as "java", "java.exe", or "/path/to/java".
+                        <td>Absolute path to the WLST, such as /path/to/wlst.cmd or wlst.sh.
 
                         </td>
 
                     </tr>
 
-                    <tr>
-
-                        <td>Java Parameters</td>
-
-                        <td>Java parameters to pass, such as "-verbose".</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td class='required'>Application Name</td>
-
-                        <td>Name of the application to stop, such as "webapp". </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Enable Graceful Mode</td>
-
-                        <td>Enables stopping the application in
-
-                        Graceful Mode after existing HTTP clients
-
-                        have completed their work.</td>
-
-                    </tr>
-
-                    <tr>
+                  	<tr>
 
                         <td>Configuration Name</td>
 
@@ -2102,49 +2039,9 @@
 
                     <tr>
 
-                        <td>Additional Commands</td>
+                        <td class='required'>Application Name</td>
 
-                        <td>Additional commands to be entered in the 
-
-                        weblogic.Deployer tool.</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>setDomainEnv Script Absolute Path</td>
-
-                        <td>Absolute path of the setDomainEnv
-
-                        script, including filename and extension, such as 
-												
-						"/path/to/setDomainEnv.sh" or "setDomainEnv.cmd".</td>
-
-                    </tr>
-
-
-
-                    <tr>
-
-                        <td>weblogic jar Absolute Path</td>
-
-
-
-                        <td>Absolute path of the weblogic.jar file that is 
-
-                        required to run the stop application
-
-                        operation. In a Windows environment, if the
-
-                        jar file has already been added to the environment
-
-                        classpath variable, it is not necessary to
-
-                        include it. In a Linux environment you must
-
-                        include the path, such as "/path/to/weblogic.jar" or 
-
-                        "/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar".</td>
+                        <td>Name of the application to stop, such as "webapp". </td>
 
                     </tr>
 
@@ -2167,9 +2064,10 @@
 		        successfully.</p>
 		        <img src="../../plugins/EC-WebLogic/images/StopApp/EC-WLSStopApp3.png" />
 		
-		        <p>In the <b>StopApp</b> step, click the Log button to see the diagnostic information: 
+		        <p>In the <b>StopApp</b> step, click the Log button to see the diagnostic information:</p> 
+						<br />
 		        <img src="../../plugins/EC-WebLogic/images/StopApp/EC-WLSStopApp4.png" />.
-						</p>	 
+							 
 
 
             </div>
@@ -2273,9 +2171,10 @@
 		        <p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The server was stopped successfully.</p>
 		        <img src="../../plugins/EC-WebLogic/images/StopManagedServer/EC-WLSStopManagedServer3.png" />
 		
-		        <p>In the <b>StopManagedServer</b> step, click the Log button to see the diagnostic information: 
+		        <p>In the <b>StopManagedServer</b> step, click the Log button to see the diagnostic information:</p>
+						<br /> 
 		        <img src="../../plugins/EC-WebLogic/images/StopManagedServer/EC-WLSStopManagedServer4.png" />
-				</p>
+				
 
             </div>
 		
@@ -2422,9 +2321,9 @@
                         <td>Node Manage Type</td>
 
 
-                        <td>Type of the Node Manager server. The 
+                        <td>Type of the Node Manager server: Plain, RSH, SSH, or SSL. The 
 
-                        default is ssl.</td>
+                        default is SSL.</td>
 
                     </tr>
 
@@ -2469,9 +2368,10 @@
 				successfully.</p>
 		       <img src="../../plugins/EC-WebLogic/images/StopNodeManager/EC-WLSStopNodeManager3.png" />
 		
-		        <p>In the <b>StopNodeManager</b> step, click the Log button to see the diagnostic information: 
-		       <img src="../../plugins/EC-WebLogic/images/StopNodeManager/EC-WLSStopNodeManager4.png" />
-				</p>
+		        <p>In the <b>StopNodeManager</b> step, click the Log button to see the diagnostic information:</p> 
+		        <br />
+						<img src="../../plugins/EC-WebLogic/images/StopNodeManager/EC-WLSStopNodeManager4.png" />
+				
 
             
         </div>
@@ -2615,9 +2515,10 @@
 				successfully.</p>
 		       <img src="../../plugins/EC-WebLogic/images/SuspendServer/EC-WLSSuspendServer3.png" />
 		
-		        <p>In the <b>SuspendServer</b> step, click the Log button to see the diagnostic information: 
-		       <img src="../../plugins/EC-WebLogic/images/SuspendServer/EC-WLSSuspendServer4.png" />
-				</p>
+		        <p>In the <b>SuspendServer</b> step, click the Log button to see the diagnostic information:</p>
+		       <br />
+					 <img src="../../plugins/EC-WebLogic/images/SuspendServer/EC-WLSSuspendServer4.png" />
+				
        
             </div>
 
@@ -2651,22 +2552,24 @@
                 </thead>
 
                 <tbody>
+								
+								    <tr>
 
-                    <tr>
+                        <td class='required'>Configuration Name</td>
 
-                        <td class='required'>Java Absolute Path</td>
+                        <td>Name of the configuration to be used when the Administration Server URL and credentials
 
-                        <td>Absolute path to Java, such as "java", "java.exe", or "/path/to/java".
-
-                        </td>
+                        are retrieved.</td>
 
                     </tr>
 
                     <tr>
 
-                        <td>Java Parameters</td>
+                        <td class='required'>Wlst Script Absolute Path</td>
 
-                        <td>Java parameters to pass, such as "-verbose".</td>
+                        <td>Absolute path to the WLST, such as /path/to/wlst or wlst.sh.
+
+                        </td>
 
                     </tr>
 
@@ -2686,62 +2589,8 @@
 
                         have completed their work.</td>
 
-                    </tr>
-
-                    <tr>
-
-                        <td>Configuration Name</td>
-
-                        <td>Name of the configuration to be used when the Administration Server URL and credentials
-
-                        are retrieved.</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Additional Commands</td>
-
-                        <td>Additional commands to be entered in the weblogic.Deployer tool.</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>setDomainEnv Script Absolute Path</td>
-
-                        <td>Absolute path of the setDomainEnv
-
-                        script, including filename and extension.
-
-                        For example, "/path/to/setDomainEnv.sh" or
-
-                        "setDomainEnv.cmd".</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>weblogic jar Absolute Path</td>
-
-                        <td>Absolute path of the weblogic.jar file that is 
-												
-                        required to run the Undeploy function. In a 
-
-                        Windows environment, if the jar file is already
-
-                        added to the environment classpath variable,
-
-                        it is not necesary to include it. In a 
-
-                        Linux environment, you must include the
-
-                        path, such as "/path/to/weblogic.jar" or 
-
-                        "/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar".</td>
-
-                    </tr>
-
+                    </tr>       
+                  
                 </tbody>
 
             </table>
@@ -2764,7 +2613,9 @@
 		
 		    <p>In the <b>UndeployApp</b> step, click the Log button to see the diagnostic information:</p>
 			
-		    <img src="../../plugins/EC-WebLogic/images/UndeployApp/EC-WLSUndeployApp4.png" />.
+		    <br />
+				
+				<img src="../../plugins/EC-WebLogic/images/UndeployApp/EC-WLSUndeployApp4.png" />.
 							 
 		</div>
 
@@ -2837,12 +2688,20 @@
 		<img src="../../plugins/EC-WebLogic/images/RunWLST/EC-WLSRunWLST6.png" />
 
     <h1 id="rns">Release Notes</h1>
+		
+		<h2>EC-WebLogic 2.1.0</h2>
+		
+		<ul>
+		
+		<li>Refactored the CheckPageStatus, CheckServerStatus, CreateDataSource, DeleteDataSource, DeployApp, RunWLST, 
+		
+		StartApp, StopApp, and UndeployApp procedures. </li>
+		
+		</ul>
 
 		<h2>EC-WebLogic 2.0.7</h2>
 
-        
-
-	    <ul>
+        <ul>
 
                <li>Fixed the manifest file.</li>
 
