@@ -5,14 +5,14 @@
     <label>Configuration Name:</label>
     <property>configname</property>
     <required>1</required>
-    <documentation>Name of the configuration to be used. URL, port and credentials are gathered from the given configuration. (Required)</documentation>
+    <documentation>Name of the configuration to be used. URL, port and credentials are gathered from the given configuration.</documentation>
   </formElement>
   <formElement>
     <type>entry</type>
     <label>Wlst Script Absolute Path:</label>
     <property>wlstabspath</property>
     <required>1</required>
-    <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)</documentation>
+    <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
   </formElement>
   <formElement>
     <type>entry</type>
@@ -26,7 +26,7 @@
     <label>Success Criteria:</label>
     <property>successcriteria</property>
     <required>1</required>
-    <documentation>Indicates the expected correct result to be obtained when running checking the server. (Required)</documentation>
+    <documentation>Indicates the expected correct result to be obtained when running checking the server.</documentation>
     <option>
       <name>Server running</name>
       <value>RUNNING</value>
@@ -40,7 +40,7 @@
     <type>entry</type>
     <label>Instance Name:</label>
     <property>instancename</property>
-    <documentation>Indicates the name of the instance to be checked. (Required)</documentation>
+    <documentation>Indicates the name of the instance to be checked.</documentation>
     <required>1</required>
   </formElement>
 </editor>

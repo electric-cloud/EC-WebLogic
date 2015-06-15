@@ -26,7 +26,7 @@
     <label>Success Criteria:</label>
     <property>successcriteria</property>
     <required>1</required>
-    <documentation>Indicates the expected correct result to be obtained when running checking the server. (Required)</documentation>
+    <documentation>Indicates the expected correct result to be obtained when running checking the server.</documentation>
     <option><name>Page found (200)</name><value>pagefound</value></option>
     <option><name>Page not found (404)</name><value>pagenotfound</value></option>
     <option><name>Page error</name><value>pageerror</value></option>

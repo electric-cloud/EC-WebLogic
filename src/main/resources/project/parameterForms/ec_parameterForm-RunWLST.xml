@@ -5,7 +5,7 @@
     <label>WLST Absolute Path:</label>
     <property>wlstabspath</property>
     <required>1</required>
-    <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)</documentation>
+    <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
   </formElement>
   <formElement>
     <type>entry</type>
@@ -22,7 +22,7 @@
     <property>scriptfilesource</property>
     <required>1</required>
     <documentation>
-      Indicates the source of the script file to execute. Either a existent file in the path defined in the 'scriptfile' parameter OR a new one using the code specified in scriptfile parameter. (Required)
+      Indicates the source of the script file to execute. Either a existent file in the path defined in the 'scriptfile' parameter OR a new one using the code specified in scriptfile parameter.
     </documentation>
     <option>
       <name>Supplied File</name>

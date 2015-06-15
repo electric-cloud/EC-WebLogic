@@ -59,7 +59,7 @@
   <label>Datasource URL:</label>
   <property>driverurl</property>
   <documentation>
-    The URL of the database to connect to. The format of the URL varies by JDBC driver. The URL is passed to the JDBC driver to create the physical database connections. (Required)
+    The URL of the database to connect to. The format of the URL varies by JDBC driver. The URL is passed to the JDBC driver to create the physical database connections.
   </documentation>
   <required>1</required>
   </formElement>

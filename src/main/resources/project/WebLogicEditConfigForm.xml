@@ -13,7 +13,7 @@
     <label>JAVA_HOME:</label>
     <property>java_home</property>
     <value></value>
-    <documentation>JAVA_HOME</documentation>
+    <documentation>JAVA_HOME environment variable, i.e. path to bin, where java executable is located.</documentation>
     <required>0</required>
   </formElement>
   
@@ -30,7 +30,7 @@
     <label>Debug level:</label>
     <property>debug_level</property>
     <value></value>
-    <documentation>Debug level.</documentation>
+    <documentation>Debug level, higher debug level - more debug messages.</documentation>
     <required>1</required>
   </formElement>
     

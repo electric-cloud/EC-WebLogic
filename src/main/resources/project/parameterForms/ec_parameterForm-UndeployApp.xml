@@ -1,1 +1,38 @@
-<editor>  <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#UndeployApp</help>  <formElement>    <type>entry</type>    <label>Configuration Name:</label>    <property>configname</property>    <documentation>Name of the configuration to be used for retrieving Admin Server's URL and credentials.</documentation>    <required>1</required>  </formElement>      <formElement>    <type>entry</type>    <label>Wlst Script Absolute Path:</label>    <property>wlstabspath</property>    <required>1</required>    <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>  </formElement>    <formElement>    <type>entry</type>    <label>Application Name:</label>    <property>appname</property>    <documentation>Name of the application to undeploy. i.e: 'webapp'. (Required)</documentation>    <required>1</required>  </formElement>    <formElement>    <type>checkbox</type>    <label>Enable Graceful Mode:</label>    <property>gracefulmode</property>    <checkedValue>1</checkedValue>    <uncheckedValue>0</uncheckedValue>    <required>0</required>    <documentation>Enables stopping the application in Graceful Mode (after existing HTTP clients have completed their work).</documentation>  </formElement></editor>
+<editor>
+  <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#UndeployApp</help>
+
+  <formElement>
+    <type>entry</type>
+    <label>Configuration Name:</label>
+    <property>configname</property>
+    <documentation>Name of the configuration to be used for retrieving Admin Server's URL and credentials.</documentation>
+    <required>1</required>
+  </formElement>
+    
+  <formElement>
+    <type>entry</type>
+    <label>Wlst Script Absolute Path:</label>
+    <property>wlstabspath</property>
+    <required>1</required>
+    <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
+  </formElement>
+  
+  <formElement>
+    <type>entry</type>
+    <label>Application Name:</label>
+    <property>appname</property>
+    <documentation>Name of the application to undeploy. i.e: 'webapp'.</documentation>
+    <required>1</required>
+  </formElement>
+  
+  <formElement>
+    <type>checkbox</type>
+    <label>Enable Graceful Mode:</label>
+    <property>gracefulmode</property>
+    <checkedValue>1</checkedValue>
+    <uncheckedValue>0</uncheckedValue>
+    <required>0</required>
+    <documentation>Enables stopping the application in Graceful Mode (after existing HTTP clients have completed their work).</documentation>
+  </formElement>
+
+</editor>
