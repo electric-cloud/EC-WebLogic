@@ -528,7 +528,7 @@
 
 
 
-            <h3>CreateDatasource</h3>
+            <h2>CreateDatasource</h2>
 
 
 
@@ -672,7 +672,7 @@
 		 	</li>
 						
 		        <br />
-	            <img src="../../plugins/EC-WebLogic/images/CreateDatasource/EC-WLSCreateDatasource2.png" />
+	            <img src="../../plugins/EC-WebLogic/images/CreateDataSource/CreateDataSource2.png" />
 		        <br />
 
 		        </ol>   
@@ -680,11 +680,12 @@
 		        <h3>Output</h3>
 						
 		        <p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The database was created successfully.</p>
-		       <img src="../../plugins/EC-WebLogic/images/CreateDatasource/EC-WLSCreateDatasource3.png" />
+		       <img src="../../plugins/EC-WebLogic/images/CreateDataSource/CreateDataSource3.png" />
 		
 		        <p>In the <b>CreateDatasource</b> step, click the Log button to see the diagnostic information: 
 						<br />
-		        <img src="../../plugins/EC-WebLogic/images/CreateDatasource/EC-WLSCreateDatasource4.png" />>
+		        <img src="../../plugins/EC-WebLogic/images/CreateDataSource/CreateDataSource4.png" />
+						
 				</p>
 
         </div>
