@@ -1060,7 +1060,7 @@
 
                         <td class='required'>Command to Use</td>
 
-                        <td>The weblogic.Deployer command to use, such sa "-deploy", "-undeploy", "-stop" or "-listapps".
+                        <td>The weblogic.Deployer command to use, such as "-deploy", "-undeploy", "-stop" or "-listapps".
 
                         </td>
 
