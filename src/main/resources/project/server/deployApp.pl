@@ -43,8 +43,9 @@ sub main {
     my $render_params = {
         username => $cred->{user},
         password => $cred->{password},
+        admin_url => $cred->{weblogic_url},
+
         targets => $params->{targets},
-        admin_url => $params->{weblogic_url},
         app_name => $params->{appname},
         app_path => $params->{apppath},
         is_library => $is_library
