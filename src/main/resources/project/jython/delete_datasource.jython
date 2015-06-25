@@ -1,9 +1,9 @@
 state = ""
 try:
-    connect('[% username %]','[% password %]','[% weblogic_url %]')
+    connect(r'[% username %]', r'[% password %]', r'[% weblogic_url %]')
     edit()
     startEdit()
-    dsName = '[% ds_name %]'
+    dsName = r'[% ds_name %]'
     cd('/')
     print 'Deleting Datasource: ' + dsName
     delete(dsName,'JDBCSystemResource')

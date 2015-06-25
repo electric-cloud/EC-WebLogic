@@ -1,7 +1,7 @@
 state = ""
 
 try:
-    connect('[% username %]','[% password %]','[% admin_url %]')
+    connect(r'[% username %]', r'[% password %]', r'[% admin_url %]')
 
 
 except WLSTException:

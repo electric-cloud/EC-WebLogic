@@ -849,6 +849,7 @@ use warnings;
 use Carp;
 
 our $ANCHOR = ['\[%', '%\]'];
+our $ESCAPE = 0;
 
 =over
 
@@ -886,10 +887,21 @@ sub render {
     else {
         @template = split "\n", $params{text};
     }
+
+    my $escape = 0;
+    if ($ENV{MICROTEMPLATE_ESCAPE_PARAMS} ||  $params{escape} || $ESCAPE) {
+        $escape = 1;
+    }
+    if ($params{noescape}) {
+        $escape = 0;
+    }
     local *{EC::MicroTemplate::parse} = sub {
         my $string = shift;
         for my $key (keys %$render_params) {
             next unless $render_params->{$key};
+            if ($escape) {
+                $render_params->{$key} =~ s|\\|\\\\|gs;
+            }
             $string =~ s/$ANCHOR->[0]\s*?$key\s*?$ANCHOR->[1]/$render_params->{$key}/gs;
         }
         my $template = "$ANCHOR->[0].*?$ANCHOR->[1]";

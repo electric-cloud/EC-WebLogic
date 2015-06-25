@@ -1,17 +1,17 @@
 state = ""
 try:
-    connect('[% username %]','[% password %]','[% weblogic_url %]')
+    connect(r'[% username %]', r'[% password %]', r'[% weblogic_url %]')
     edit()
     startEdit()
-    dsName = '[% ds_name %]'
-    dsDatabaseName = '[% ds_database_name %]'
-    DatasourceTarget = '[% server_name %]'
-    dsJNDIName = '[% ds_jndi_name %]'
-    dsDriverName = '[% ds_driver_class %]'
-    dsURL = '[% ds_driver_url %]'
-    dsUserName = '[% ds_user_name %]'
-    dsPassword = '[% ds_password %]'
-    dsTestQuery = 'SQL SELECT * FROM DUAL'
+    dsName = r'[% ds_name %]'
+    dsDatabaseName = r'[% ds_database_name %]'
+    DatasourceTarget = r'[% server_name %]'
+    dsJNDIName = r'[% ds_jndi_name %]'
+    dsDriverName = r'[% ds_driver_class %]'
+    dsURL = r'[% ds_driver_url %]'
+    dsUserName = r'[% ds_user_name %]'
+    dsPassword = r'[% ds_password %]'
+    dsTestQuery = r'SQL SELECT * FROM DUAL'
     print ''
     print 'Creating Datasource: ',dsName,'.'
     cmo.createJDBCSystemResource(dsName)

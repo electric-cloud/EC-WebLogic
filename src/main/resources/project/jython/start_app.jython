@@ -1,5 +1,5 @@
-connect('[% username %]','[% password %]','[% admin_url %]')
-applicationName = '[% app_name %]'
+connect(r'[% username %]', r'[% password %]', r'[% admin_url %]')
+applicationName = r'[% app_name %]'
 
 status = startApplication(applicationName)
 print status

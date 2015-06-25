@@ -1,8 +1,8 @@
 print 'deploying jar...'
-connect('[% username %]','[% password %]','[% admin_url %]')
-applicationName = '[% app_name %]'
-applicationPath = '[% app_path %]'
-targets = '[% targets %]'
+connect(r'[% username %]', r'[% password %]', r'[% admin_url %]')
+applicationName = r'[% app_name %]'
+applicationPath = r'[% app_path %]'
+targets = r'[% targets %]'
 
-status = deploy(appName=applicationName, path=applicationPath, targets=targets, libraryModule='[% is_library %]')
+status = deploy(appName=applicationName, path=applicationPath, targets=targets, libraryModule=r'[% is_library %]')
 print status
