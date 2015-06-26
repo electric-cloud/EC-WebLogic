@@ -1,0 +1,8 @@
+state = ""
+try:
+    connect(r'[% username %]', r'[% password %]', r'[% admin_url %]')
+    state = suspend(r'[% server_name %]', '[% ignore_sessions %]', [% timeout %], r'[% force %]', r'[% block %]')
+except WLSTException:
+    state = "NO_SERVER_FOUND"
+
+print state

@@ -9,9 +9,11 @@
     ['//property[propertyName="jython"]/propertySheet/property[propertyName="delete_datasource.jython"]/value', 'jython/delete_datasource.jython'],
     ['//property[propertyName="jython"]/propertySheet/property[propertyName="deploy_app.jython"]/value', 'jython/deploy_app.jython'],
     ['//property[propertyName="jython"]/propertySheet/property[propertyName="undeploy_app.jython"]/value', 'jython/undeploy_app.jython'],
-
     ['//property[propertyName="jython"]/propertySheet/property[propertyName="start_app.jython"]/value', 'jython/start_app.jython'],
     ['//property[propertyName="jython"]/propertySheet/property[propertyName="stop_app.jython"]/value', 'jython/stop_app.jython'],
+    ['//property[propertyName="jython"]/propertySheet/property[propertyName="suspend_server.jython"]/value', 'jython/suspend_server.jython'],
+    ['//property[propertyName="jython"]/propertySheet/property[propertyName="resume_server.jython"]/value', 'jython/resume_server.jython'],
+
 
     ['//property[propertyName="ui_forms"]/propertySheet/property[propertyName="WebLogicCreateConfigForm"]/value'  , 'WebLogicCreateConfigForm.xml'],
     ['//property[propertyName="ui_forms"]/propertySheet/property[propertyName="WebLogicEditConfigForm"]/value'  , 'WebLogicEditConfigForm.xml'],

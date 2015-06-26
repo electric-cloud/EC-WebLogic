@@ -120,31 +120,36 @@
 	    <expandable>1</expandable>
 	    <value/>
 	  </property>
-
           <property>
 	    <propertyName>deploy_app.jython</propertyName>
 	    <expandable>1</expandable>
 	    <value/>
 	  </property>
-
           <property>
 	    <propertyName>undeploy_app.jython</propertyName>
 	    <expandable>1</expandable>
 	    <value/>
 	  </property>
-
           <property>
 	    <propertyName>start_app.jython</propertyName>
 	    <expandable>1</expandable>
 	    <value/>
 	  </property>
-
           <property>
 	    <propertyName>stop_app.jython</propertyName>
 	    <expandable>1</expandable>
 	    <value/>
 	  </property>
-          
+          <property>
+	    <propertyName>suspend_server.jython</propertyName>
+	    <expandable>1</expandable>
+	    <value/>
+	  </property>
+          <property>
+	    <propertyName>resume_server.jython</propertyName>
+	    <expandable>1</expandable>
+	    <value/>
+	  </property>
 	</propertySheet>
       </property>
       

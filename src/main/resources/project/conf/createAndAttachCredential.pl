@@ -112,6 +112,16 @@ $xpath = $ec->attachCredential($projName, $credName,
      stepName => 'DeleteDatasource'});
 $errors .= $ec->checkAllErrors($xpath);
 
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'SuspendServer',
+     stepName => 'SuspendServer'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'ResumeServer',
+     stepName => 'ResumeServer'});
+$errors .= $ec->checkAllErrors($xpath);
+
 if ($errors ne '') {
     
     # Cleanup the partially created configuration we just created
