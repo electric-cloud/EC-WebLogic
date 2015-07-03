@@ -180,8 +180,9 @@ Sets outcome step status to success.
 =cut
 
 sub success {
-    my ($self) = @_;
+    my ($self, @msg) = @_;
 
+    $self->set_summary(@msg);
     return $self->_set_outcome('success');
 }
 
@@ -195,8 +196,9 @@ Sets outcome step status to error.
 =cut
 
 sub error {
-    my ($self) = @_;
+    my ($self, @msg) = @_;
 
+    $self->set_summary(@msg);
     return $self->_set_outcome('error');
 }
 
@@ -210,8 +212,9 @@ Sets outcome step status to warning.
 =cut
 
 sub warning {
-    my ($self) = @_;
+    my ($self, @msg) = @_;
 
+    $self->set_summary(@msg);
     return $self->_set_outcome('warning');
 }
 
@@ -248,8 +251,27 @@ sub bail_out {
     $msg .= "\n";
 
     $self->error();
+    $self->out(1, "BAILED_OUT:\n$msg\n");
     $self->set_property(summary => $msg);
     exit 1;
+}
+
+
+=item B<set_summary>
+
+Sets job status.
+
+=cut
+
+sub set_summary {
+    my ($self, @msg) = @_;
+
+    my $msg = join '', @msg;
+    if (!$msg) {
+        return 1;
+    }
+
+    $self->set_property(summary => $msg);
 }
 
 
@@ -898,7 +920,7 @@ sub render {
     local *{EC::MicroTemplate::parse} = sub {
         my $string = shift;
         for my $key (keys %$render_params) {
-            next unless $render_params->{$key};
+            next unless defined $render_params->{$key};
             if ($escape) {
                 $render_params->{$key} =~ s|\\|\\\\|gs;
             }

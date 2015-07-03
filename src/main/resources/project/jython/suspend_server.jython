@@ -4,5 +4,7 @@ try:
     state = suspend(r'[% server_name %]', '[% ignore_sessions %]', [% timeout %], r'[% force %]', r'[% block %]')
 except WLSTException:
     state = "NO_SERVER_FOUND"
+    print state
+    sys.exit(1)
 
 print state

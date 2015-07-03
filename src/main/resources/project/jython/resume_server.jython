@@ -4,5 +4,7 @@ try:
     resume(r'[% server_name %]', r'[% block %]')
 except WLSTException:
     state = "NO_SERVER_FOUND"
+    print state
+    sys.exit(1)
 
 print state

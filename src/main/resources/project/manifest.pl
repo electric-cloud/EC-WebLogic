@@ -13,6 +13,7 @@
     ['//property[propertyName="jython"]/propertySheet/property[propertyName="stop_app.jython"]/value', 'jython/stop_app.jython'],
     ['//property[propertyName="jython"]/propertySheet/property[propertyName="suspend_server.jython"]/value', 'jython/suspend_server.jython'],
     ['//property[propertyName="jython"]/propertySheet/property[propertyName="resume_server.jython"]/value', 'jython/resume_server.jython'],
+    ['//property[propertyName="jython"]/propertySheet/property[propertyName="stop_node_manager.jython"]/value', 'jython/stop_node_manager.jython'],
 
 
     ['//property[propertyName="ui_forms"]/propertySheet/property[propertyName="WebLogicCreateConfigForm"]/value'  , 'WebLogicCreateConfigForm.xml'],

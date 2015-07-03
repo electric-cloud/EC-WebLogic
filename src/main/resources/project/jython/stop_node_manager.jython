@@ -1,0 +1,12 @@
+state = "Successfully stopped the Node Manager."
+try:
+    nmConnect(r'[% username %]', r'[% password %]', r'[% hostname %]', r'[% port %]', r'[% domain_name %]', r'[% domain_path %]', r'[% node_manager_type %]')
+
+except WLSTException:
+    state = "Error stopping to Node Manager."
+    print state
+    sys.exit(1)
+
+else:
+    state = stopNodeManager()
+    print state
