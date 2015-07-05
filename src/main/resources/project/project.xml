@@ -3126,7 +3126,6 @@
 	<exclusive>0</exclusive>
 	<logFileName/>
 	<parallel>0</parallel>
-	<postProcessor>postp --loadProperty /myProject/suspendServer_matchers</postProcessor>
 	<releaseExclusive>0</releaseExclusive>
 	<resourceName/>
 	<retries>0</retries>
@@ -3255,7 +3254,6 @@
 	<exclusive>0</exclusive>
 	<logFileName/>
 	<parallel>0</parallel>
-	<postProcessor>postp --loadProperty /myProject/resumeServer_matchers</postProcessor>
 	<releaseExclusive>0</releaseExclusive>
 	<resourceName/>
 	<retries>0</retries>

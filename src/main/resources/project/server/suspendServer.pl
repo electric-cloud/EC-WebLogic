@@ -62,7 +62,7 @@ sub main {
     };
 
     if ($render_params->{timeout} !~ m/^\d+$/) {
-        $wl->bail_out("Timeout should be an integer value");
+        $wl->bail_out("Timeout should be a positive integer value");
     }
     my $template_path = '/myProject/jython/suspend_server.jython';
     my $template = $wl->render_template_from_property($template_path, $render_params);
