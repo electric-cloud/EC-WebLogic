@@ -184,8 +184,8 @@ if ($upgradeAction eq "upgrade") {
             });
         }
     }
-	
-	# Copy configuration credentials and attach them to the appropriate steps
+
+    # Copy configuration credentials and attach them to the appropriate steps
     my $nodes = $query->find($creds);
     if ($nodes) {
         my @nodes = $nodes->findnodes('credential/credentialName');
@@ -217,7 +217,7 @@ if ($upgradeAction eq "upgrade") {
                     changePermissionsPrivilege => 'allow'
                 });
             }
-            
+
             $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
                 procedureName => 'StartApp',
                 stepName => 'StartApp'
@@ -228,97 +228,97 @@ if ($upgradeAction eq "upgrade") {
                 procedureName => 'StopApp',
                 stepName => 'StopApp'
             });
-            
+
             # Attach the credential to the appropriate steps
             $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
                 procedureName => 'CheckServerStatus',
                 stepName => 'CheckServerStatus'
             });
-            
+
             # Attach the credential to the appropriate steps
             $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
                 procedureName => 'DeployApp',
                 stepName => 'DeployApp'
             });
-            
+
             # Attach the credential to the appropriate steps
             $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
                 procedureName => 'RunDeployer',
                 stepName => 'RunJob'
             });
-            
+
             # Attach the credential to the appropriate steps
             $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
                 procedureName => 'UndeployApp',
                 stepName => 'UndeployApp'
             });
-            
+
             # Attach the credential to the appropriate steps
             $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
                 procedureName => 'RunWLST',
                 stepName => 'RunWLST'
             });
-            
+
             # Attach the credential to the appropriate steps
             $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
                 procedureName => 'StartAdminServer',
                 stepName => 'StartAdminServer'
             });
-            
+
             # Attach the credential to the appropriate steps
             $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
                 procedureName => 'StopAdminServer',
                 stepName => 'StopAdminServer'
             });
-            
+
             # Attach the credential to the appropriate steps
             $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
                 procedureName => 'StartManagedServer',
                 stepName => 'StartInstance'
             });
-            
+
             # Attach the credential to the appropriate steps
             $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
                 procedureName => 'StopManagedServer',
                 stepName => 'StopInstance'
             });
-            
+
             # Attach the credential to the appropriate steps
             $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
                 procedureName => 'CheckPageStatus',
                 stepName => 'CheckPageStatus'
             });
-            
+
             # Attach the credential to the appropriate steps
             $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
                 procedureName => 'StartNodeManager',
                 stepName => 'StartNodeManager'
             });
-            
+
             # Attach the credential to the appropriate steps
             $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
                 procedureName => 'StopNodeManager',
                 stepName => 'StopNodeManager'
             });
-            
+
             # Attach the credential to the appropriate steps
             $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
                 procedureName => 'CreateDatasource',
                 stepName => 'CreateDatasource'
             });
-            
+
             # Attach the credential to the appropriate steps
             $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
                 procedureName => 'DeleteDatasource',
                 stepName => 'DeleteDatasource'
             });
-            
+
             # Attach the credential to the appropriate steps
             $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
                 procedureName => 'SuspendServer',
                 stepName => 'SuspendServer'
             });
-            
+
             # Attach the credential to the appropriate steps
             $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
                 procedureName => 'ResumeServer',

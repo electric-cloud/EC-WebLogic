@@ -103,6 +103,11 @@ $xpath = $ec->attachCredential($projName, $credName,
 $errors .= $ec->checkAllErrors($xpath);
 
 $xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'StopNodeManager',
+     stepName => 'StopNodeManager'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
     {procedureName => 'CreateDatasource',
      stepName => 'CreateDatasource'});
 $errors .= $ec->checkAllErrors($xpath);

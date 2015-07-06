@@ -20,7 +20,6 @@ sub main {
         'scriptlocation',
         'maxelapsedtime'
     );
-    print "Log!";
     my $check = $wl->check_executable($params->{scriptlocation});
     unless ($check->{ok}) {
         $wl->bail_out($check->{msg});
@@ -29,26 +28,55 @@ sub main {
     my $log_path = $ENV{COMMANDER_WORKSPACE};
     my $sep = $wl->is_win() ? '\\' : '/';
     my $err_log = $log_path . $sep . 'ecdaemon.err.log';
+    open TMP, '>', $err_log;
+    close TMP;
     my $out_log = $log_path . $sep . 'ecdaemon.out.log';
-    $wl->out(1, "Log path: $log_path");
+    open TMP, '>', $out_log;
+    close TMP;
     my $command = qq|ecdaemon -- ec-perl -e |;
-    $command .= qq|"exec('$params->{scriptlocation} 1> $out_log 2> $err_log')"|;
+    $sep = $wl->is_win() ? q|"| : q|'|;
+    $command .= sprintf(
+        qq|"exec(q{%s$params->{scriptlocation}%s 1> %s$out_log%s 2> %s$err_log%s})"|,
+        $sep, $sep, $sep, $sep, $sep, $sep
+    );
+
     $wl->out(1, "Running command $command");
-    my $res = $wl->run_command($command);
-    if ($res->{code} != 0) {
-        $wl->bail_out("Can't execute");
-    }
-    sleep $params->{maxelapsedtime};
-    open FH, $err_log;
-    my $content = join '', <FH>;
-    if ($content =~ m/(?:Exception\s(.+)|Fatal\serror\s(.+))/) {
-        $wl->error();
-    }
-    elsif ($content =~ m/(?:Successfully\s(.+)|started\son\sport\s(.+))/) {
-        $wl->success();
+    my $res;
+    if ($wl->is_win()) {
+        system(1, $command);
+        $res->{code} = 0;
     }
     else {
-        $wl->warning();
+        $res = $wl->run_command($command);
+    }
+    if ($res->{code} != 0) {
+        if ($res->{stdout}) {
+            $wl->out(1, "STDOUT:\n", $res->{stdout});
+        }
+        if ($res->{stderr}) {
+            $wl->out(1, "STDERR:\n", $res->{stderr});
+        }
+        $wl->bail_out("Exit code: $res->{code}");
+    }
+    my $content = '';
+    my $max_ts = time() + $params->{maxelapsedtime};
+    while (time() < $max_ts) {
+        open FH, $err_log or $wl->bail_out("Can't open log: $!");
+
+        while (my $line = <FH>) {
+            $content .= $line;
+
+        }
+        if ($content =~ m/started\son\sport/ms) {
+            $wl->out(1, "RESULT:\n", $content);
+            $wl->success();
+            exit 0;
+        }
+        $wl->out(1, "Not started, will try again");
+        sleep 1;
     }
 
+    $wl->out(1, "RESULT:\n$content");
+    $wl->error();
 }
+
