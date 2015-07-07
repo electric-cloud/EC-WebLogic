@@ -28,14 +28,15 @@ sub main {
     );
 
     $params->{hostName} ||= 'localhost';
-    $params->{port} ||= 5556;
+    if (!$params->{port} || $params->{port} !~ m/^\d+$/s) {
+        $params->{port} = 5556;
+    }
     $params->{domainName} ||= 'mydomain';
 
     my $check = $wl->check_executable($params->{wlstabspath});
     unless ($check->{ok}) {
         $wl->bail_out($check->{msg});
     }
-#    $wl->dryrun(1);
     my $cred = $wl->get_credentials($params->{configname});
     my $render_params = {
         username => $cred->{user},
@@ -57,28 +58,5 @@ sub main {
         script_content => $template,
     );
     $wl->process_response($res);
-    # my $content;
-    # if ($res->{code} != 0) {
-    #     $content = $res->{stderr} || $res->{stdout};
-    #     $wl->error($content);
-    #     exit 1;
-    # }
-    # $content = $res->{stdout} || $res->{stderr};
-    # if ($content =~ m/(?:Exception\s(.+)|Fatal\serror\s(.+))/s) {
-    #     $wl->error("Done with errors");
-    #     exit 1;
-    # }
-    # elsif($content =~ m/Disabled\scommand:\sQUIT/s) {
-    #     $wl->error('QUIT command was disabled for specified node manager');
-    #     exit 1;
-    # }
-    # elsif ($content =~ m/(?:Successfully\s(.+)|started\son\sport\s(.+))/s) {
-    #     $wl->success();
-    #     exit 0;
-    # }
-    # else {
-    #     $wl->warning("Check procedure log for more details");
-    #     exit 1;
-    # }
 }
 

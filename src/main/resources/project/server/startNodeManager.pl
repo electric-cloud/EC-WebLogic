@@ -20,6 +20,10 @@ sub main {
         'scriptlocation',
         'maxelapsedtime'
     );
+
+    if ($params->{maxelapsedtime} !~ m/^\d+$/s) {
+        $params->{maxelapsedtime} = 60;
+    }
     my $check = $wl->check_executable($params->{scriptlocation});
     unless ($check->{ok}) {
         $wl->bail_out($check->{msg});
@@ -58,9 +62,10 @@ sub main {
         }
         $wl->bail_out("Exit code: $res->{code}");
     }
-    my $content = '';
+    my $content;
     my $max_ts = time() + $params->{maxelapsedtime};
     while (time() < $max_ts) {
+        $content = '';
         open FH, $err_log or $wl->bail_out("Can't open log: $!");
 
         while (my $line = <FH>) {
@@ -71,6 +76,11 @@ sub main {
             $wl->out(1, "RESULT:\n", $content);
             $wl->success();
             exit 0;
+        }
+        if ($content =~ m/could\snot\sobtain\sexclusive\slock/ims) {
+            $wl->out(1, "RESULT:\n", $content);
+            $wl->error('Could not obtain exclusive lock, maybe, NodeManager is already running.');
+            exit 1;
         }
         $wl->out(1, "Not started, will try again");
         sleep 1;

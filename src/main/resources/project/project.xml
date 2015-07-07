@@ -2341,7 +2341,6 @@
 	<exclusive>0</exclusive>
 	<logFileName/>
 	<parallel>0</parallel>
-	<postProcessor>postp --loadProperty /myProject/startnodemanager_matchers</postProcessor>
 	<releaseExclusive>0</releaseExclusive>
 	<resourceName/>
 	<retries>0</retries>
@@ -2562,14 +2561,14 @@
 	<formalParameterName>domainName</formalParameterName>
 	<defaultValue/>
 	<description>Name of the domain that you want to manage. This argument defaults to mydomain.</description>
-	<required>0</required>
+	<required>1</required>
 	<type>entry</type>
       </formalParameter>
       <formalParameter>
 	<formalParameterName>domainPath</formalParameterName>
 	<defaultValue/>
 	<description>Path of the domain directory to which you want to save the Node Manager secret file (nm_password.properties) and SerializedSystemIni.dat file. This argument defaults to the directory in which WLST was started.</description>
-	<required>0</required>
+	<required>1</required>
 	<type>entry</type>
       </formalParameter>
       <formalParameter>
@@ -2583,14 +2582,14 @@
 	<formalParameterName>nmType</formalParameterName>
 	<defaultValue/>
 	<description>Type of the Node Manager server. This argument defaults to ssl.</description>
-	<required>0</required>
+	<required>1</required>
 	<type>select</type>
       </formalParameter>
       <formalParameter>
 	<formalParameterName>maxelapsedtime</formalParameterName>
-	<defaultValue/>
+	<defaultValue>ssl</defaultValue>
 	<description>Defines the time in seconds that the job wait to test the status of the node manager. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).</description>
-	<required>0</required>
+	<required>1</required>
 	<type>entry</type>
       </formalParameter>
       
@@ -2605,7 +2604,6 @@
 	<exclusive>0</exclusive>
 	<logFileName/>
 	<parallel>0</parallel>
-	<postProcessor>postp --loadProperty /myProject/stopnodemanager_matchers</postProcessor>
 	<releaseExclusive>0</releaseExclusive>
 	<resourceName/>
 	<retries>0</retries>
