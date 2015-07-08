@@ -2078,7 +2078,6 @@
 	<exclusive>0</exclusive>
 	<logFileName/>
 	<parallel>0</parallel>
-	<postProcessor>postp --loadProperty /myProject/stopserver_matchers</postProcessor>
 	<releaseExclusive>0</releaseExclusive>
 	<resourceName/>
 	<retries>0</retries>
@@ -2395,7 +2394,7 @@
 		  </propertySheet>
 		</property>
 		<property>
-		  <propertyName>hostName</propertyName>
+		  <propertyName>host_name</propertyName>
 		  <propertySheet>
 		    <property>
 		      <propertyName>formType</propertyName>
@@ -2544,7 +2543,7 @@
 	<type>entry</type>
       </formalParameter>
       <formalParameter>
-	<formalParameterName>hostName</formalParameterName>
+	<formalParameterName>host_name</formalParameterName>
 	<defaultValue/>
 	<description>Host name of Node Manager. This argument defaults to localhost.</description>
 	<required>0</required>

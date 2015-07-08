@@ -12,7 +12,7 @@
   <formElement>
     <type>entry</type>
     <label>Host Name:</label>
-    <property>hostName</property>
+    <property>host_name</property>
     <documentation>Host name of Node Manager. This argument defaults to localhost.</documentation>
     <required>0</required>
   </formElement>

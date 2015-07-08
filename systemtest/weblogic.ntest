@@ -637,10 +637,9 @@ ntest "startManagedServer1", {}, sub {
     $xpath = $::N->getJobDetails($jobId);
       
     # get the value of the commands lines
-    my $commandLine = $xpath->findvalue("//property[propertyName='startManagedServerLine']/value");
-       
-    assertSubstring('E:\Oracle\Middleware\user_projects\domains\base_domain\bin\startManagedWebLogic.cmd', $commandLine,  
-                    'command line doesn\'t match expected output');
+    # my $commandLine = $xpath->findvalue("//property[propertyName='startManagedServerLine']/value");
+    my $commandLine = $xpath->findvalue("//property[propertyName='wlstLine']/value");
+    assertTrue($commandLine =~ m/.+?wlst\.cmd.+?exec\.jython/is, "Command line is ok");
 
 };
 

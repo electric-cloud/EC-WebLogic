@@ -18,7 +18,7 @@ sub main {
     );
     my $params = $wl->get_params_as_hashref(
         'configname',
-        'hostName',
+        'host_name',
         'port',
         'domainName',
         'domainPath',
@@ -27,7 +27,7 @@ sub main {
         'nmType'
     );
 
-    $params->{hostName} ||= 'localhost';
+    $params->{host_name} ||= 'localhost';
     if (!$params->{port} || $params->{port} !~ m/^\d+$/s) {
         $params->{port} = 5556;
     }
@@ -42,7 +42,7 @@ sub main {
         username => $cred->{user},
         password => $cred->{password},
 
-        hostname => $params->{hostName},
+        hostname => $params->{host_name},
         port => $params->{port},
         domain_name => $params->{domainName},
         domain_path => $params->{domainPath},
