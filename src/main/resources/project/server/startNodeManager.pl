@@ -21,6 +21,7 @@ sub main {
         'maxelapsedtime'
     );
 
+    $params->{maxelapsedtime} ||= 60;
     if ($params->{maxelapsedtime} !~ m/^\d+$/s) {
         $wl->bail_out("Timeout should be a positive integer value");
     }
