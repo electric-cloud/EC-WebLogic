@@ -98,6 +98,9 @@ sub main {
         }
         sleep 10;
     }
+    if (!defined $params->{code}) {
+        $params->{code} = 1;
+    }
     $wl->out(1, "EXIT_CODE: $params->{code}");
     $wl->out(1, "STDOUT:\n", $res->{stdout}) if $res->{stdout};
     $wl->out(1, "STDERR:\n", $res->{stderr}) if $res->{stderr};
