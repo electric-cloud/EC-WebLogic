@@ -2697,7 +2697,7 @@
 		<li>Refactored the CheckPageStatus, CheckServerStatus, CreateDataSource, DeleteDataSource, DeployApp, RunWLST, 
 		
 		StartApp, StopApp, and UndeployApp procedures. </li>
-		
+       <li>Added link to plugin Configuration Page in plugin step panels.</li>
 		</ul>
 
 		<h2>EC-WebLogic 2.0.7</h2>
@@ -2783,17 +2783,9 @@
 
 
         <h2>EC-WebLogic 2.0.1</h2>
-
-
-
         <ul>
-
             <li>Upgrade to use the new Parameter Form XML.</li>
-
-
-
             <li>Added a link directly to the new Help file.</li>
-
         </ul>
 
 
