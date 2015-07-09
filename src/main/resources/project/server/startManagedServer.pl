@@ -26,9 +26,10 @@ sub main {
         'adminserverurl'
     );
 
+    $params->{maxelapsedtime} ||= 180;
     my $cred = $wl->get_credentials($params->{configname});
     if ($params->{maxelapsedtime} !~ m/^\d+$/s) {
-        $params->{maxelapsedtime} = 180;
+        $wl->bail_out("Timeout should be a positive integer value");
     }
     my $check = $wl->check_executable($params->{scriptlocation});
     unless ($check->{ok}) {
