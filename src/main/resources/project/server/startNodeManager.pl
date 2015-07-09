@@ -22,7 +22,7 @@ sub main {
     );
 
     if ($params->{maxelapsedtime} !~ m/^\d+$/s) {
-        $params->{maxelapsedtime} = 60;
+        $wl->bail_out("Timeout should be a positive integer value");
     }
     my $check = $wl->check_executable($params->{scriptlocation});
     unless ($check->{ok}) {

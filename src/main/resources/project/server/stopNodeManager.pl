@@ -27,6 +27,9 @@ sub main {
         'nmType'
     );
 
+    if ($params->{maxelapsedtime} !~ m/^\d+$/s) {
+        $wl->bail_out("Timeout should be a positive integer value");
+    }
     $params->{host_name} ||= 'localhost';
     if (!$params->{port} || $params->{port} !~ m/^\d+$/s) {
         $params->{port} = 5556;
