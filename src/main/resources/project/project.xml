@@ -3147,7 +3147,6 @@
 	</propertySheet>
       </step>
     </procedure>
-    
     <procedure>
       <procedureName>ResumeServer</procedureName>
       <description>Resumes the provided server</description>
