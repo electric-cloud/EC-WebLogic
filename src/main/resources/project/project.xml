@@ -1020,7 +1020,7 @@
 	<formalParameterName>envscriptpath</formalParameterName>
 	<defaultValue/>
 	<description>Absolute path of the setDomainEnv script, including filename and extension. i.e: '/path/to/setDomainEnv.sh' or 'setDomainEnv.cmd'.</description>
-	<required>0</required>
+	<required>1</required>
 	<type>entry</type>
       </formalParameter>
       <formalParameter>
