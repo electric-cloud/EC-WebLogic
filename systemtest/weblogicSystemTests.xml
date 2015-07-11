@@ -94,6 +94,21 @@
             <value></value>
           </property>
           <property>
+            <propertyName>wlstabspath</propertyName>
+            <expandable>1</expandable>
+            <value>/path/to/wlst.sh</value>
+          </property>
+          <property>
+            <propertyName>successcriteria</propertyName>
+            <expandable>1</expandable>
+            <value>pagefound</value>
+          </property>
+          <property>
+            <propertyName>instancename</propertyName>
+            <expandable>1</expandable>
+            <value>myserver</value>
+          </property>
+          <property>
             <propertyName>configname</propertyName>
             <expandable>1</expandable>
             <value></value>
@@ -508,6 +523,16 @@
           </property>
           <property>
             <propertyName>javapath</propertyName>
+            <expandable>1</expandable>
+            <value>java</value>
+          </property>
+          <property>
+            <propertyName>envscriptpath</propertyName>
+            <expandable>1</expandable>
+            <value>java</value>
+          </property>
+          <property>
+            <propertyName>webjarpath</propertyName>
             <expandable>1</expandable>
             <value>java</value>
           </property>
