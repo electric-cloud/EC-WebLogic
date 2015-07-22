@@ -1,7 +1,7 @@
 // -*- Groovy -*-
 // build.gradle
 //
-// Gradle build script for @PLUGIN_KEY@ plugin.
+// Gradle build script for EC-WebLogic plugin.
 //
 // Copyright (c) 2015 Electric Cloud, Inc.
 // All rights reserved
@@ -26,8 +26,8 @@ repositories {
 }
 
 group = "com.electriccloud"
-description = "Plugins : @PLUGIN_KEY@"
-version = "@PLUGIN_VERSION@"
+description = "Plugins : EC-WebLogic"
+version = "3.0.0"
 
 apply plugin: 'flow-gradle-plugin'
 
@@ -35,4 +35,6 @@ task wrapper(type: Wrapper) {
 	gradleVersion = '2.3'
 }
 
-@GWT@
+gwt {
+	modules 'ecplugins.weblogic.client.ConfigurationManagementFactory'
+}

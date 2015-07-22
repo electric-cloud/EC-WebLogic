@@ -1,7 +1,7 @@
-@PLUGIN_KEY@
+EC-WebLogic
 ============
 
-The ElectricFlow @PLUGIN_NAME@ integration
+The ElectricFlow WebLogic integration
 
 ## Compile ##
 
