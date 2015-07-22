@@ -36,5 +36,5 @@ task wrapper(type: Wrapper) {
 }
 
 gwt {
-	modules 'ecplugins.weblogic.client.ConfigurationManagementFactory'
+	modules 'ecplugins.weblogic.ConfigurationManagement'
 }
