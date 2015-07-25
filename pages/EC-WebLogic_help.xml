@@ -42,7 +42,7 @@
 
             noshade="noshade" />
 						
-			<p>Revised on June 17, 2015</p>
+			<p>Revised on July 29, 2015</p>
 				
 				<h1>Contents</h1>
 				
@@ -1350,7 +1350,10 @@
             </table>
 
             </li>
-						
+					
+                <br />
+	            <img src="../../plugins/EC-WebLogic/images/RunWLST/runWLSTexample.png" />
+		        <br />					
 						</ol>   
 						
 		        <h3>Output</h3>
