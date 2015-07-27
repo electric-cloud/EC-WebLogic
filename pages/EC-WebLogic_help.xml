@@ -287,7 +287,7 @@
 
                         <td>The credentials required to check the
 
-                        status of the page. Enter the <b>Username</b> and <b>Password</b>.</td>
+                        status of the page.</td>
 
                     </tr>
 
@@ -1539,7 +1539,7 @@
 
                     <tr>
 
-                        <td>Configuration Name</td>
+                        <td class='required'>Configuration Name</td>
 
                         <td>Name of the configuration to be used
 
@@ -1552,7 +1552,7 @@
                    
                     <tr>
 
-                        <td>WLST Absolute Path</td>
+                        <td class='required'>WLST Absolute Path</td>
 
                         <td>Absolute path of the WLST. 
 											 
