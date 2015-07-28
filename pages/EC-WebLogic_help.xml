@@ -327,7 +327,7 @@
 
                     <tr>
 
-                        <td>Success Criteria</td>
+                        <td class='required'>Success Criteria</td>
 
 
 
@@ -352,7 +352,7 @@
 		 	</li>
 						
 		        <br />
-	            <img src="../../plugins/EC-WebLogic/images/CheckPageStatus/EC-WLSCheckPageStatus2.png" />
+	            <img src="../../plugins/EC-WebLogic/images/CheckPageStatus/WLSCheckPageStatus2.png" />
 		        <br />
 
 		        </ol>   
