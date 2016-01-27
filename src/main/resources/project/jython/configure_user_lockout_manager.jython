@@ -1,0 +1,27 @@
+try:
+    # connect to the server
+    print 'Going for configuring user lockout manager'
+    connect(r'[% wl_username %]', r'[% wl_password %]', r'[% admin_url %]')
+    
+    lockoutEnabled = r'[% lockout_enabled %]'
+    lockoutThreshold = r'[% lockout_threshold %]'
+    lockoutDuration = r'[% lockout_duration %]'
+    
+    edit()
+    startEdit()
+    cd ('/')
+    lockoutManager = cmo.getSecurityConfiguration().getDefaultRealm().getUserLockoutManager()
+  
+    if (lockoutEnabled == '1'):
+        lockoutManager.setLockoutEnabled(lockoutEnabled)
+    
+    if (lockoutThreshold):
+        lockoutManager.setLockoutThreshold(lockoutThreshold)
+
+    if (lockoutDuration):
+        lockoutManager.setLockoutDuration(lockoutDuration)
+
+    save()
+    activate()  
+except WLSTException:
+    print 'Configure User Lockout Manager Exception'

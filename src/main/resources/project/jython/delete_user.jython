@@ -1,0 +1,18 @@
+from weblogic.management.security.authentication import UserReaderMBean
+
+try:
+    print 'Going for deleting user'
+    # connect to the server
+    connect(r'[% wl_username %]', r'[% wl_password %]', r'[% admin_url %]')
+    userName = r'[% username %]'
+    domainName = r'[% domain_name %]'
+    realmName = r'[% realm_name %]'
+    cd('/SecurityConfiguration/' + domainName + '/Realms/' + realmName + '/AuthenticationProviders/DefaultAuthenticator')
+
+    if (cmo.userExists(userName)):
+        cmo.removeUser(userName)
+        print 'Delete User: ' + userName
+    else:
+        print 'User: ' + userName + ' does not exist.'
+except WLSTException:
+    print 'Delete User Error Exception'

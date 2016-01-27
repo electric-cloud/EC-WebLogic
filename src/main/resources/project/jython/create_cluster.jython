@@ -1,0 +1,22 @@
+try:
+    # connect to the server
+    print 'Going for creating cluster'
+    connect(r'[% wl_username %]', r'[% wl_password %]', r'[% admin_url %]')
+    
+    clusterName = r'[% cluster_name %]'
+    multicastAddress = r'[% multicast_address %]'
+    multicastPort = r'[% multicast_port %]'
+    edit()
+    startEdit(-1,-1,'false')
+    cd('/')
+    cmo.createCluster(clusterName)
+    cd('Clusters/' + clusterName)
+    if (multicastAddress):
+        set('MulticastAddress', multicastAddress)
+    if (multicastPort):
+        set('MulticastPort', multicastPort)
+    save()
+    activate()
+except WLSTException:
+    print 'Create Cluster Exception'
+

@@ -1,0 +1,30 @@
+from weblogic.management.security.authentication import UserReaderMBean
+from weblogic.management.security.authentication import GroupReaderMBean
+try:
+    print 'Going for removing user from group'
+    # connect to the server
+    connect(r'[% wl_username %]', r'[% wl_password %]', r'[% admin_url %]')
+    userName = r'[% user_name %]'
+    groupName = r'[% group_name %]'
+    domainName = r'[% domain_name %]'
+    realmName = r'[% realm_name %]'
+
+    cd('/SecurityConfiguration/' + domainName + '/Realms/' + realmName + '/AuthenticationProviders/DefaultAuthenticator')
+    
+    # check if user exists
+    if (cmo.userExists(userName)):
+        # check if group exists
+        if (cmo.groupExists(groupName)):
+            # check if already member
+            if (cmo.isMember(groupName, userName, true)):
+                cmo.removeMemberFromGroup(groupName, userName)
+                print 'Removed User: ' + userName + ' to Group: ' + groupName
+            else:
+                print 'User: ' + userName + ' is not a member of Group: ' + groupName
+        else:
+            print 'Group: ' + groupName + ' does not exist. Aborting removing User: ' + userName + ' to Group: ' + groupName
+    else:
+        print 'User: ' + userName + ' does not exist. Aborting removing User: ' + userName + ' to Group: ' + groupName
+except WLSTException:
+    print 'Remove user from group Exception'
+

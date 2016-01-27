@@ -125,6 +125,86 @@ my %resumeServer = (
     description => "Resumes a server",
     category    => "Application Server"
 );
+my %createUser = (
+    label       => "WebLogic - Create User",
+    procedure   => "CreateUser",
+    description => "Create new user",
+    category    => "Application Server"
+);
+
+my %createGroup = (
+    label       => "WebLogic - Create Group",
+    procedure   => "CreateGroup",
+    description => "Create new group",
+    category    => "Application Server"
+);
+my %deleteUser = (
+    label       => "WebLogic - Delete User",
+    procedure   => "DeleteUser",
+    description => "Delete user",
+    category    => "Application Server"
+);
+my %deleteGroup = (
+    label       => "WebLogic - Delete Group",
+    procedure   => "DeleteGroup",
+    description => "Delete Group",
+    category    => "Application Server"
+);
+my %addUserToGroup = (
+    label       => "WebLogic - Add User To Group",
+    procedure   => "AddUserToGroup",
+    description => "Add User To Group",
+    category    => "Application Server"
+);
+my %removeUserFromGroup = (
+    label       => "WebLogic - Remove User From Group",
+    procedure   => "RemoveUserFromGroup",
+    description => "Remove User From Group",
+    category    => "Application Server"
+);
+my %changeUserPassword = (
+    label       => "WebLogic - Change User Password",
+    procedure   => "ChangeUserPassword",
+    description => "Change User Password",
+    category    => "Application Server"
+);
+my %unlockUserAccount = (
+    label       => "WebLogic - Unlock User Account",
+    procedure   => "UnlockUserAccount",
+    description => "Unlock User Account",
+    category    => "Application Server"
+);
+my %updateApp = (
+    label       => "WebLogic - Update Application",
+    procedure   => "UpdateApp",
+    description => "Update Application",
+    category    => "Application Server"
+);
+my %createDomain = (
+    label       => "WebLogic - Create Domain",
+    procedure   => "CreateDomain",
+    description => "Create new domain from template",
+    category    => "Application Server"
+);
+
+my %createCluster = (
+    label       => "WebLogic - Create Cluster",
+    procedure   => "CreateCluster",
+    description => "Create new cluster",
+    category    => "Application Server"
+);
+my %addServerToCluster = (
+    label       => "WebLogic - Add Server To Cluster",
+    procedure   => "AddServerToCluster",
+    description => "Add server to cluster",
+    category    => "Application Server"
+);
+my %configureUserLockoutManager = (
+    label       => "WebLogic - Configure User Lockout Manager",
+    procedure   => "ConfigureUserLockoutManager",
+    description => "Configure User Lockout Manager",
+    category    => "Application Server"
+);
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/EC-WebLogic - Start App");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/EC-WebLogic - Stop App");
 $batch->deleteProperty("/server/ec_customEditors/pickerStep/EC-WebLogic - Check Server Status");
@@ -174,8 +254,14 @@ $batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Resume Se
                             \%stopManagedServer, \%checkPageStatus, 
 							\%startNodeManager, \%stopNodeManager, 
 							\%createDatasource, \%deleteDatasource, 
-							\%suspendServer, \%resumeServer);
-							
+							\%suspendServer, \%resumeServer,
+                            \%createUser, \%createGroup,
+                            \%deleteUser, \%deleteGroup,
+                            \%addUserToGroup, \%removeUserFromGroup,
+                            \%changeUserPassword, \%unlockUserAccount,
+                            \%updateApp, \%createDomain,
+                            \%createCluster, \%addServerToCluster,
+                            \%configureUserLockoutManager);
 
 if ($upgradeAction eq "upgrade") {
     patch_configs("/plugins/$otherPluginName/project/weblogic_cfgs");
@@ -339,6 +425,73 @@ if ($upgradeAction eq "upgrade") {
             $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
                 procedureName => 'ResumeServer',
                 stepName => 'ResumeServer'
+            });
+
+            # Attach the credential to the appropriate steps
+            $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
+                procedureName => 'CreateUser',
+                stepName => 'CreateUser'
+            });
+
+            # Attach the credential to the appropriate steps
+            $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
+                procedureName => 'CreateGroup',
+                stepName => 'CreateGroup'
+            });
+            # Attach the credential to the appropriate steps
+            $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
+                procedureName => 'DeleteUser',
+                stepName => 'DeleteUser'
+            });
+            # Attach the credential to the appropriate steps
+            $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
+                procedureName => 'DeleteGroup',
+                stepName => 'DeleteGroup'
+            });
+            # Attach the credential to the appropriate steps
+            $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
+                procedureName => 'AddUserToGroup',
+                stepName => 'AddUserToGroup'
+            });
+            # Attach the credential to the appropriate steps
+            $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
+                procedureName => 'RemoveUserFromGroup',
+                stepName => 'RemoveUserFromGroup'
+            });
+            # Attach the credential to the appropriate steps
+            $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
+                procedureName => 'ChangeUserPassword',
+                stepName => 'ChangeUserPassword'
+            });
+            # Attach the credential to the appropriate steps
+            $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
+                procedureName => 'UnlockUserAccount',
+                stepName => 'UnlockUserAccount'
+            });
+            # Attach the credential to the appropriate steps
+            $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
+                procedureName => 'UpdateApp',
+                stepName => 'UpdateApp'
+            });
+            # Attach the credential to the appropriate steps
+            $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
+                procedureName => 'CreateDomain',
+                stepName => 'CreateDomain'
+            });
+            # Attach the credential to the appropriate steps
+            $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
+                procedureName => 'CreateCluster',
+                stepName => 'CreateCluster'
+            });
+            # Attach the credential to the appropriate steps
+            $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
+                procedureName => 'AddServerToCluster',
+                stepName => 'AddServerToCluster'
+            });
+            # Attach the credential to the appropriate steps
+            $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
+                procedureName => 'ConfigureUserLockoutManager',
+                stepName => 'ConfigureUserLockoutManager'
             });
         }
     }

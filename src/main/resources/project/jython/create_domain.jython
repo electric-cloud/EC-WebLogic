@@ -1,0 +1,9 @@
+try:
+    connect(r'[% wl_username %]', r'[% wl_password %]', r'[% admin_url %]')
+    domainTemplate = r'[% domain_template %]'
+    domainDir = r'[% domain_directory %]'
+    user = r'[% user %]'
+    password = r'[% password %]'
+    createDomain(domainTemplate, domainDir, user, password)
+except WLSTException:
+    print 'Create Domain Exception'
