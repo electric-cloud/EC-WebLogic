@@ -1,24 +1,21 @@
 try:
     print 'Going for updating application'
-    connect(r'[% username %]', r'[% password %]', r'[% admin_url %]')
+    connect(r'[% wl_username %]', r'[% wl_password %]', r'[% admin_url %]')
     applicationName = r'[% app_name %]'
     planPath = r'[% plan_path %]'
-    '''
-    ++++++Need to test for variable arguments+++++++++++++++++++++
-    ++++++update application not taking more than 2 arguments++++++
     options = r'[% options %]'
-    options = "stageMode='STAGE', testMode='false'"
-    arguments = options.split(',')
-    arguments = [i.strip(' ') for i in arguments]
-    if (planPath):
-        arguments.insert(0, planPath)
-    arguments.insert(0, applicationName)
-    print arguments
-    updateApplication(*arguments)
-    '''
-    if (planPath):
-        updateApplication(applicationName, planPath)
+    optionsDict = {}
+
+    if(optionsDict):
+        for nextArgument in options.split(','):
+          arguments = nextArgument.split('=')
+          optionsDict[arguments[0]]=arguments[1]
+        updateApplication(applicationName, planPath, **optionsDict)
     else:
-        updateApplication(applicationName)
-except WLSTException:
-    print 'Update Application Exception'
+        updateApplication(applicationName, planPath)
+        
+except WLSTException,e:
+    print 'Update Application Exception: ' + str(e)
+    sys.exit(1)
+
+

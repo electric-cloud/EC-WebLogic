@@ -4,8 +4,8 @@ try:
     connect(r'[% wl_username %]', r'[% wl_password %]', r'[% admin_url %]')
     
     lockoutEnabled = r'[% lockout_enabled %]'
-    lockoutThreshold = r'[% lockout_threshold %]'
-    lockoutDuration = r'[% lockout_duration %]'
+    lockoutThreshold = int(r'[% lockout_threshold %]')
+    lockoutDuration = int(r'[% lockout_duration %]')
     
     edit()
     startEdit()
@@ -20,8 +20,11 @@ try:
 
     if (lockoutDuration):
         lockoutManager.setLockoutDuration(lockoutDuration)
-
+except WLSTException,e:
+    print 'Configure User Lockout Manager Exception: ' + str(e)
+    sys.exit(1)
+else:
     save()
-    activate()  
-except WLSTException:
-    print 'Configure User Lockout Manager Exception'
+    activate()
+    disconnect()
+    exit()  

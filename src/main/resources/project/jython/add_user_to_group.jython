@@ -25,5 +25,6 @@ try:
             print 'Group: ' + groupName + ' does not exist. Aborting adding User: ' + userName + ' to Group: ' + groupName
     else:
         print 'User: ' + userName + ' does not exist. Aborting adding User: ' + userName + ' to Group: ' + groupName
-except WLSTException:
-    print 'Add User To Group Exception'
+except WLSTException,e:
+    print 'Add User To Group Exception: ' +str(e)
+    sys.exit(1)

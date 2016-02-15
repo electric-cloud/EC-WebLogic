@@ -114,6 +114,10 @@
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_cluster.jython"]/value</xpath>
   </file>
   <file>
+    <path>jython/delete_cluster.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_cluster.jython"]/value</xpath>
+  </file>
+  <file>
     <path>jython/add_server_to_cluster.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="add_server_to_cluster.jython"]/value</xpath>
   </file>
@@ -350,6 +354,10 @@
     <xpath>//procedure[procedureName="CreateCluster"]/step[stepName="CreateCluster"]/command</xpath>
   </file>
   <file>
+    <path>server/deleteCluster.pl</path>
+    <xpath>//procedure[procedureName="DeleteCluster"]/step[stepName="DeleteCluster"]/command</xpath>
+  </file>
+  <file>
     <path>server/addServerToCluster.pl</path>
     <xpath>//procedure[procedureName="AddServerToCluster"]/step[stepName="AddServerToCluster"]/command</xpath>
   </file>
@@ -488,6 +496,10 @@
   <file>
     <path>parameterForms/ec_parameterForm-CreateCluster.xml</path>
     <xpath>//procedure[procedureName="CreateCluster"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-DeleteCluster.xml</path>
+    <xpath>//procedure[procedureName="DeleteCluster"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
   </file>
   <file>
     <path>parameterForms/ec_parameterForm-AddServerToCluster.xml</path>

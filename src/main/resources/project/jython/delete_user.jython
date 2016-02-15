@@ -14,5 +14,7 @@ try:
         print 'Delete User: ' + userName
     else:
         print 'User: ' + userName + ' does not exist.'
-except WLSTException:
-    print 'Delete User Error Exception'
+except WLSTException,e:
+    print 'Delete User Error Exception : ' + str(e)
+    sys.exit(1)
+

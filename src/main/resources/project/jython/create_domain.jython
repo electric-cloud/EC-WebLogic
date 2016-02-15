@@ -5,5 +5,7 @@ try:
     user = r'[% user %]'
     password = r'[% password %]'
     createDomain(domainTemplate, domainDir, user, password)
-except WLSTException:
-    print 'Create Domain Exception'
+except WLSTException,e:
+    print 'Create Domain Exception: ' + str(e) 
+    sys.exit(1)
+

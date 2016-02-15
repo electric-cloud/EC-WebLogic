@@ -2,15 +2,19 @@ try:
     # connect to the server
     print 'Going for adding server to cluster'
     connect(r'[% wl_username %]', r'[% wl_password %]', r'[% admin_url %]')
-    
-    serverName = r'[% server_name %]'
     clusterName = r'[% cluster_name %]'
+
     edit()
     startEdit(-1,-1,'false')
-    cd('/')
-    server = cmo.createServer(serverName)
-    server.setCluster(getMBean('/Clusters/' + clusterName))
+    serverName = r'[% server_name %]'
+    cd('/Servers/' + serverName)
+    cmo.setCluster(getMBean('/Clusters/' + clusterName))
+except WLSTException,e:
+    print 'Adding server to cluster exception: ' + str(e)
+    sys.exit(1)
+else:
     save()
     activate()
-except WLSTException:
-    print 'Adding server to cluster exception'
+    disconnect()
+    exit()
+
