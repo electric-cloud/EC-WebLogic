@@ -20,7 +20,6 @@ $[/myProject/preamble]
 my $PROJECT_NAME = '$[/myProject/projectName]';
 my $PLUGIN_NAME = '@PLUGIN_NAME@';
 my $PLUGIN_KEY  = '@PLUGIN_KEY@';
-use Data::Dumper;
 
 $| = 1;
 
@@ -32,36 +31,36 @@ sub main {
           plugin_name  => $PLUGIN_NAME,
           plugin_key   => $PLUGIN_KEY
       );
-      my $params = $wl->get_params_as_hashref(
-          'configname', 'dsname',   'dsdbname',    'target',
-          'driverurl',  'jndiname', 'driverclass', 'username',
-          'password',   'wlstabspath'
-      );
-      my $cred = $wl->get_credentials( $params->{configname} );
-      if ( $cred->{java_home} ) {
-          $wl->out( 1, "JAVA_HOME was provided" );
-      }
-      my $render_params = {
-          username     => $cred->{user},
-          password     => $cred->{password},
-          weblogic_url => $cred->{weblogic_url},
 
-          ds_name          => $params->{dsname},
-          ds_database_name => $params->{dsdbname},
-          server_name      => $params->{target},
-          ds_jndi_name     => $params->{jndiname},
-          ds_driver_class  => $params->{driverclass},
-          ds_driver_url    => $params->{driverurl},
-          ds_user_name     => $params->{username},
-          ds_password      => $params->{password}
+#Every additional option should have following format <OPTION_NAME1>=<OPTION_VALUE1>, <OPTION_NAME2>=<OPTION_VALUE2>
+#Options separated by commas
+      my $params =
+        $wl->get_params_as_hashref( 'wlst_abs_path', 'app_name', 'configname',
+          'plan_path', 'options' );
+
+      my $cred = $wl->get_credentials( $params->{configname} );
+
+      my $check = $wl->check_executable( $params->{wlst_abs_path} );
+
+      if ( !$check->{ok} ) {
+          $wl->bail_out( $check->{msg} );
+      }
+
+      my $render_params = {
+          wl_username => $cred->{user},
+          wl_password => $cred->{password},
+          admin_url   => $cred->{weblogic_url},
+          app_name    => $params->{app_name},
+          plan_path   => $params->{plan_path},
+          options     => $params->{options},
       };
-      my $template_path = '/myProject/jython/create_datasource.jython';
+      my $template_path = '/myProject/jython/update_app.jython';
       my $template =
         $wl->render_template_from_property( $template_path, $render_params );
 
       $wl->out( 10, "Generated script:\n", $template );
       my $res = $wl->execute_jython_script(
-          shell          => $params->{wlstabspath},
+          shell          => $params->{wlst_abs_path},
           script_path    => $ENV{COMMANDER_WORKSPACE} . '/exec.jython',
           script_content => $template,
       );
@@ -69,4 +68,3 @@ sub main {
       $wl->process_response($res);
       return;
 }
-
