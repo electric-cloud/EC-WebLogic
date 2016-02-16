@@ -18,15 +18,15 @@ try:
             # check if already member
             if (cmo.isMember(groupName, userName, true)):
                 cmo.removeMemberFromGroup(groupName, userName)
-                print 'Removed User: ' + userName + ' to Group: ' + groupName
+                print 'Removed User: ' + userName + ' from Group: ' + groupName
             else:
                 print 'User: ' + userName + ' is not a member of Group: ' + groupName
         else:
-            print 'Group: ' + groupName + ' does not exist. Aborting removing User: ' + userName + ' to Group: ' + groupName
+            print 'Group: ' + groupName + ' does not exist. Aborting removing User: ' + userName + ' from Group: ' + groupName
     else:
-        print 'User: ' + userName + ' does not exist. Aborting removing User: ' + userName + ' to Group: ' + groupName
-        
-except WLSTException,e:
+        print 'User: ' + userName + ' does not exist. Aborting removing User: ' + userName + ' from Group: ' + groupName
+
+except WLSTException, e:
     print 'Remove user from group Exception: ' + str(e) 
     sys.exit(1)
 

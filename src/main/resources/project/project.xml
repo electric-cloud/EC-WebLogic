@@ -118,7 +118,7 @@
         <value/>
       </property>
       <property>
-        <propertyName>createcluste_matchers</propertyName>
+        <propertyName>createcluster_matchers</propertyName>
         <expandable>0</expandable>
         <value/>
       </property>
@@ -4927,7 +4927,7 @@
     </procedure>
     <procedure>
       <procedureName>CreateCluster</procedureName>
-      <description>Create a cluster.</description>
+      <description>Delete a cluster.</description>
       <jobNameTemplate>weblogic-createcluster-$[jobId]</jobNameTemplate>
       <resourceName/>
       <workspaceName/>

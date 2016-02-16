@@ -24,7 +24,7 @@ try:
         else:
             print 'User: ' + userName + ' already exists and overwriteExistingUser flag is false'
 
-except WLSTException,e:
+except WLSTException, e:
     print 'Create User Exception: ' + str(e)
     sys.exit(1)
 

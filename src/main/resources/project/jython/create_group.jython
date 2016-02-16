@@ -22,7 +22,7 @@ try:
         else:
             print 'Group: ' + groupName + ' already exists and overwriteExistingGroup flag is false'
 
-except WLSTException,e:
+except WLSTException, e:
     print 'Create Group Error Exception: ' + str(e)
     sys.exit(1)
 

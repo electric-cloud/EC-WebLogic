@@ -9,10 +9,11 @@ try:
     serverName = r'[% server_name %]'
     cd('/Servers/' + serverName)
     cmo.setCluster(getMBean('/Clusters/' + clusterName))
-except WLSTException,e:
+except WLSTException, e:
     print 'Adding server to cluster exception: ' + str(e)
     sys.exit(1)
 else:
+    print 'Added Server: ' + serverName + 'to Cluster: ' + clusterName
     save()
     activate()
     disconnect()

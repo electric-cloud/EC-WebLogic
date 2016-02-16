@@ -13,12 +13,12 @@ try:
     for nextManagedServer in listOfServers:
         nextManagedServer.setCluster(None)
     cd('/')
-    cmo.destroyCluster(getMBean('/Clusters/' + clusterName))
-    print 'Delete Cluster: ' + clusterName
-except WLSTException,e:
+    cmo.destroyCluster(getMBean('/Clusters/' + clusterName))   
+except WLSTException, e:
     print 'Create Cluster Exception: ' + str(e)
     sys.exit(1)
 else:
+    print 'Deleted Cluster: ' + clusterName
     save()
     activate()
     disconnect()

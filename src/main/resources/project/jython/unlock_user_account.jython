@@ -16,7 +16,7 @@ try:
         print 'User Account: ' + userName + ' is unlocked.'
     else:
         print 'User Account: ' + userName + ' is already unlocked.'
-except WLSTException,e:
+except WLSTException, e:
     print 'Unlocking User Account Exception: ' + str(e)
     sys.exit(1)
- 
+

@@ -12,7 +12,7 @@ try:
         print 'Deleted Group: ' + groupName
     else:
         print 'Group: ' + groupName + ' does not exist.'
-except WSLTException,e:
+except WSLTException, e:
     print 'Delete Group Exception: ' + str(e)
     sys.exit(1)
 

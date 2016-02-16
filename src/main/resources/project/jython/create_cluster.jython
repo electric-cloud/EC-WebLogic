@@ -15,10 +15,11 @@ try:
         set('MulticastAddress', multicastAddress)
     if (multicastPort):
         set('MulticastPort', multicastPort)
-except WLSTException,e:
+except WLSTException, e:
     print 'Create Cluster Exception: '+ str(e)
     sys.exit(1)
 else:
+    print "Created Cluster: " + clusterName
     save()
     activate()
     disconnect()

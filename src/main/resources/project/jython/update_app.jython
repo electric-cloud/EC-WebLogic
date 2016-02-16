@@ -13,9 +13,10 @@ try:
         updateApplication(applicationName, planPath, **optionsDict)
     else:
         updateApplication(applicationName, planPath)
-        
-except WLSTException,e:
+except WLSTException, e:
     print 'Update Application Exception: ' + str(e)
     sys.exit(1)
+else:
+    print 'Updated application: ' + applicationName    
 
 
