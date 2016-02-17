@@ -1,0 +1,18 @@
+from weblogic.management.security.authentication import GroupReaderMBean
+try:
+    # connect to the server
+    print 'Going for deleting group'
+    connect(r'[% wl_username %]', r'[% wl_password %]', r'[% admin_url %]')
+    groupName = r'[% group_name %]'
+    domainName = r'[% domain_name %]'
+    realmName = r'[% realm_name %]'
+    cd('/SecurityConfiguration/' + domainName + '/Realms/' + realmName + '/AuthenticationProviders/DefaultAuthenticator')
+    if (cmo.groupExists(groupName)):
+        cmo.removeGroup(groupName)
+        print 'Deleted Group: ' + groupName
+    else:
+        print 'Group: ' + groupName + ' does not exist.'
+except WSLTException, e:
+    print 'Delete Group Exception: ' + str(e)
+    sys.exit(1)
+
