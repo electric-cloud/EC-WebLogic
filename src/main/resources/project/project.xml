@@ -229,6 +229,11 @@
             <value/>
           </property>
           <property>
+            <propertyName>create_domain.jython</propertyName>
+            <expandable>1</expandable>
+            <value/>
+          </property>
+          <property>
             <propertyName>create_group.jython</propertyName>
             <expandable>1</expandable>
             <value/>
@@ -3854,6 +3859,9 @@
             </propertySheet>
           </property>
         </propertySheet>
+        <attachedParameters>
+          <formalParameterName>user_credentials</formalParameterName>
+        </attachedParameters>
       </step>
     </procedure>
     <procedure>
