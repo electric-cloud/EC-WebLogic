@@ -8,12 +8,16 @@ try:
     startEdit(-1,-1,'false')
     serverName = r'[% server_name %]'
     cd('/Servers/' + serverName)
-    cmo.setCluster(getMBean('/Clusters/' + clusterName))
+    if(getMBean('/Clusters/' + clusterName)):
+        cmo.setCluster(getMBean('/Clusters/' + clusterName))
+    else:
+        print 'Cluster does not exist'
+        sys.exit(1)    
 except WLSTException, e:
     print 'Adding server to cluster exception: ' + str(e)
     sys.exit(1)
 else:
-    print 'Added Server: ' + serverName + 'to Cluster: ' + clusterName
+    print 'Added Server: ' + serverName + ' to Cluster: ' + clusterName
     save()
     activate()
     disconnect()
