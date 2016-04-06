@@ -36,14 +36,14 @@
         <type>entry</type>
         <label>Lockout Threshold:</label>
         <property>lockout_threshold</property>
-        <documentation>.</documentation>
+        <documentation>The maximum number of consecutive invalid login attempts that can occur before a user's account is locked out. Minimum value: 1, Maximum value: 2147483647.</documentation>
         <required>0</required>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Lockout Duration:</label>
         <property>lockout_duration</property>
-        <documentation>.</documentation>
+        <documentation>The number of minutes that a user's account is locked out. Minimum value: 0, Maximum value: 2147483647.</documentation>
         <required>0</required>
     </formElement>
     <formElement>
@@ -51,7 +51,7 @@
         <label>Lockout Enabled:</label>
         <property>lockout_enabled</property>
         <required>0</required>
-        <documentation>.</documentation>
+        <documentation>Specifies whether the server locks users out when there are invalid login attempts on their account.</documentation>
         <checkedValue>1</checkedValue>
         <uncheckedValue>0</uncheckedValue>
     </formElement>

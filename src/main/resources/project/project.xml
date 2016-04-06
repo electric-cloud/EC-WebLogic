@@ -5405,21 +5405,21 @@
       <formalParameter>
         <formalParameterName>lockout_duration</formalParameterName>
         <defaultValue/>
-        <description>Duration for which account is locked.</description>
+        <description>The number of minutes that a user's account is locked out. Minimum value: 0, Maximum value: 2147483647.</description>
         <required>1</required>
         <type>entry</type>
       </formalParameter>
       <formalParameter>
         <formalParameterName>lockout_threshold</formalParameterName>
         <defaultValue/>
-        <description>Lockout threshold-Maximum number of unsuccessful attempts.</description>
+        <description>The maximum number of consecutive invalid login attempts that can occur before a user's account is locked out. Minimum value: 1, Maximum value: 2147483647.</description>
         <required>0</required>
         <type>entry</type>
       </formalParameter>
       <formalParameter>
         <formalParameterName>lockout_enabled</formalParameterName>
         <defaultValue/>
-        <description>Lockout Enabled.</description>
+        <description>Specifies whether the server locks users out when there are invalid login attempts on their account.</description>
         <required>0</required>
         <type>checkbox</type>
       </formalParameter>
