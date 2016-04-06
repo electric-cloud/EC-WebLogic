@@ -4011,8 +4011,8 @@
       <formalParameter>
         <formalParameterName>desc</formalParameterName>
         <defaultValue/>
-        <description>Description of user. (Required)</description>
-        <required>1</required>
+        <description>Description of the group.</description>
+        <required>0</required>
         <type>textarea</type>
       </formalParameter>
       <formalParameter>

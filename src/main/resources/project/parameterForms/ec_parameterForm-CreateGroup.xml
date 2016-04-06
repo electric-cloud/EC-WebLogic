@@ -55,10 +55,10 @@
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>User Description:</label>
+        <label>Group Description:</label>
         <property>desc</property>
         <documentation>Description about the user.</documentation>
-        <required>1</required>
+        <required>0</required>
     </formElement>
     <formElement>
         <type>checkbox</type>
