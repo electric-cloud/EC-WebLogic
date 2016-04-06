@@ -58,7 +58,7 @@
         <label>User Description:</label>
         <property>desc</property>
         <documentation>Description about the user.</documentation>
-        <required>1</required>
+        <required>0</required>
     </formElement>
     <formElement>
         <type>checkbox</type>
