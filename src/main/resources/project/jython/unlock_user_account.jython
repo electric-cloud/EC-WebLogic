@@ -8,14 +8,21 @@ try:
     userName = r'[% user_name %]'
     domainName = r'[% domain_name %]'
     realmName = r'[% realm_name %]'
+    
+    #Check if the user exists
+    cd('/SecurityConfiguration/' + domainName + '/Realms/' + realmName + '/AuthenticationProviders/DefaultAuthenticator')
+    if (not cmo.userExists(userName)):
+        print 'User: ' + userName + ' does not exist.'
+        sys.exit(1)      
+
     cd('/SecurityConfiguration/' + domainName + '/Realms/' + realmName)
     # test if a user is lockedOut
-    lockoutManager = cmo.getUserLockoutManager()
+    lockoutManager = cmo.getUserLockoutManager()    
     if (lockoutManager.isLockedOut(userName)):
         lockoutManager.clearLockout(userName)
         print 'User Account: ' + userName + ' is unlocked.'
     else:
-        print 'User Account: ' + userName + ' is already unlocked.'
+        print 'User Account: ' + userName + ' is already unlocked.'    
 except WLSTException, e:
     print 'Unlocking User Account Exception: ' + str(e)
     sys.exit(1)

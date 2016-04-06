@@ -5079,7 +5079,7 @@
     </procedure>
     <procedure>
       <procedureName>DeleteCluster</procedureName>
-      <description>Create a cluster.</description>
+      <description>Delete a cluster.</description>
       <jobNameTemplate>weblogic-deletecluster-$[jobId]</jobNameTemplate>
       <resourceName/>
       <workspaceName/>
@@ -5148,7 +5148,7 @@
       <formalParameter>
         <formalParameterName>cluster_name</formalParameterName>
         <defaultValue/>
-        <description>Name of the cluster to be created.</description>
+        <description>Name of the cluster to be deleted.</description>
         <required>1</required>
         <type>entry</type>
       </formalParameter>

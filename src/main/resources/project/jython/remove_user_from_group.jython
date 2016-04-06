@@ -23,8 +23,10 @@ try:
                 print 'User: ' + userName + ' is not a member of Group: ' + groupName
         else:
             print 'Group: ' + groupName + ' does not exist. Aborting removing User: ' + userName + ' from Group: ' + groupName
+            sys.exit(1)
     else:
         print 'User: ' + userName + ' does not exist. Aborting removing User: ' + userName + ' from Group: ' + groupName
+        sys.exit(1)
 
 except WLSTException, e:
     print 'Remove user from group Exception: ' + str(e) 

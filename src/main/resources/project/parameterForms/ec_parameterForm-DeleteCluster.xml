@@ -36,7 +36,7 @@
         <type>entry</type>
         <label>Cluster Name:</label>
         <property>cluster_name</property>
-        <documentation>Name of the cluster to be created.</documentation>
+        <documentation>Name of the cluster to be deleted.</documentation>
         <required>1</required>
     </formElement>
 </editor>
