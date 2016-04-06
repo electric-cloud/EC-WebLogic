@@ -4791,7 +4791,7 @@
     </procedure>
     <procedure>
       <procedureName>UpdateApp</procedureName>
-      <description>Update an alrady deployed app.</description>
+      <description>Update an already deployed app.</description>
       <jobNameTemplate>weblogic-updateapp-$[jobId]</jobNameTemplate>
       <resourceName/>
       <workspaceName/>
@@ -4888,7 +4888,7 @@
         <formalParameterName>plan_path</formalParameterName>
         <defaultValue/>
         <description>Name of the new deployment plan file. The filename can be absolute or relative to the application directory.</description>
-        <required>0</required>
+        <required>1</required>
         <type>entry</type>
       </formalParameter>
       <formalParameter>
