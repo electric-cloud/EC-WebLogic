@@ -35,14 +35,10 @@ sub main {
 
     my $params = $wl->get_params_as_hashref(
         'wlst_abs_path',
-        'configname',
-        'user_credentials',
-        'domain_template',
+        'template_name',
         'domain_directory'
     );
 
-    my $cred = $wl->get_credentials($params->{configname});
-    my $user_cred = $wl->get_common_credentials('user_credentials');
     my $check = $wl->check_executable($params->{wlst_abs_path});
 
     if (!$check->{ok}) {
@@ -50,15 +46,10 @@ sub main {
     }
 
     my $render_params = {
-        wl_username => $cred->{user},
-        wl_password => $cred->{password},
-        admin_url => $cred->{weblogic_url},
-        user => $user_cred->{user},
-        password => $user_cred->{password},
-        domain_template => $params->{domain_template},
+        template_name => $params->{template_name},
         domain_directory => $params->{domain_directory}
     };
-    my $template_path = '/myProject/jython/create_domain.jython';
+    my $template_path = '/myProject/jython/create_template.jython';
     my $template = $wl->render_template_from_property($template_path, $render_params);
 
     $wl->out(10, "Generated script:\n", $template);

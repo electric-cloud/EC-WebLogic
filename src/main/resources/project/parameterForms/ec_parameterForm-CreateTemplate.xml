@@ -1,0 +1,41 @@
+<!--
+
+     Copyright 2015 Electric Cloud, Inc.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
+<editor>
+    <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateTemplate</help>
+    <formElement>
+        <type>entry</type>
+        <label>WLST Absolute Path:</label>
+        <property>wlst_abs_path</property>
+        <required>1</required>
+        <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Domain Directory:</label>
+        <property>domain_directory</property>
+        <documentation>Name of the domain directory from which you want to create the template.</documentation>
+        <required>1</required>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Template Name:</label>
+        <property>template_name</property>
+        <documentation>Name (use .jar extension) and location of the domain template to store the domain configuration information. A domain template is a JAR file that contains domain configuration documents, applications, security data, startup scripts, and other information needed to create a WebLogic domain.</documentation>
+        <required>1</required>
+    </formElement>
+</editor>

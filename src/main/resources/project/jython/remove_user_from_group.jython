@@ -1,7 +1,7 @@
 from weblogic.management.security.authentication import UserReaderMBean
 from weblogic.management.security.authentication import GroupReaderMBean
 try:
-    print 'Going for removing user from group'
+    print('Going for removing user from group')
     # connect to the server
     connect(r'[% wl_username %]', r'[% wl_password %]', r'[% admin_url %]')
     userName = r'[% user_name %]'
@@ -18,16 +18,18 @@ try:
             # check if already member
             if (cmo.isMember(groupName, userName, true)):
                 cmo.removeMemberFromGroup(groupName, userName)
-                print 'Removed User: ' + userName + ' from Group: ' + groupName
+                print('Removed User: ' + userName + ' from Group: ' + groupName)
             else:
-                print 'User: ' + userName + ' is not a member of Group: ' + groupName
+                print('User: ' + userName + ' is not a member of Group: ' + groupName)
         else:
-            print 'Group: ' + groupName + ' does not exist. Aborting removing User: ' + userName + ' from Group: ' + groupName
+            print('Group: ' + groupName + ' does not exist. Aborting removing User: ' + userName + ' from Group: ' + groupName)
+            sys.exit(1)
     else:
-        print 'User: ' + userName + ' does not exist. Aborting removing User: ' + userName + ' from Group: ' + groupName
+        print('User: ' + userName + ' does not exist. Aborting removing User: ' + userName + ' from Group: ' + groupName)
+        sys.exit(1)
 
 except WLSTException, e:
-    print 'Remove user from group Exception: ' + str(e) 
+    print('Remove user from group Exception: ' + str(e))
     sys.exit(1)
 
 

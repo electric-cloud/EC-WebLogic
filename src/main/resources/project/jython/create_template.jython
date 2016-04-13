@@ -1,0 +1,14 @@
+try:
+    sourceDomainDir = r'[% domain_directory %]'.strip()
+    templateName = r'[% template_name %]'.strip()
+    readDomain(sourceDomainDir)
+    if(templateName).endswith('.jar'):
+    	writeTemplate(templateName)
+    else:
+    	print('Template should be a jar file.')
+    	sys.exit(1)
+except WLSTException, e:
+    print('Create Template Exception: ' + str(e)) 
+    sys.exit(1)
+else:
+    print('Created Template.')

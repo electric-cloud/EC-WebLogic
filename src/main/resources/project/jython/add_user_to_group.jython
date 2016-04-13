@@ -3,7 +3,7 @@ from weblogic.management.security.authentication import GroupReaderMBean
 
 try:
     # connect to the server
-    print 'Going for adding user to group'
+    print('Going for adding user to group')
     connect(r'[% wl_username %]', r'[% wl_password %]', r'[% admin_url %]')
     userName = r'[% user_name %]'
     groupName = r'[% group_name %]'
@@ -18,13 +18,13 @@ try:
             # check if already member
             if (not cmo.isMember(groupName, userName, true)):
                 cmo.addMemberToGroup(groupName, userName)
-                print 'Added User: ' + userName + ' to Group: ' + groupName
+                print('Added User: ' + userName + ' to Group: ' + groupName)
             else:
-                print 'User: ' + userName + ' is already a member of Group: ' + groupName
+                print('User: ' + userName + ' is already a member of Group: ' + groupName)
         else:
-            print 'Group: ' + groupName + ' does not exist. Aborting adding User: ' + userName + ' to Group: ' + groupName
+            print('Group: ' + groupName + ' does not exist. Aborting adding User: ' + userName + ' to Group: ' + groupName)
     else:
-        print 'User: ' + userName + ' does not exist. Aborting adding User: ' + userName + ' to Group: ' + groupName
+        print('User: ' + userName + ' does not exist. Aborting adding User: ' + userName + ' to Group: ' + groupName)
 except WLSTException, e:
-    print 'Add User To Group Exception: ' +str(e)
+    print('Add User To Group Exception: ' +str(e))
     sys.exit(1)

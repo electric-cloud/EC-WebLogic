@@ -1,6 +1,6 @@
 try:
     # connect to the server
-    print 'Going for creating cluster'
+    print('Going for creating cluster')
     connect(r'[% wl_username %]', r'[% wl_password %]', r'[% admin_url %]')
     
     clusterName = r'[% cluster_name %]'
@@ -16,10 +16,10 @@ try:
     if (multicastPort):
         set('MulticastPort', multicastPort)
 except WLSTException, e:
-    print 'Create Cluster Exception: '+ str(e)
+    print('Create Cluster Exception: '+ str(e))
     sys.exit(1)
 else:
-    print "Created Cluster: " + clusterName
+    print('Created Cluster: ' + clusterName)
     save()
     activate()
     disconnect()

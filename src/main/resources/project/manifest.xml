@@ -110,6 +110,10 @@
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_domain.jython"]/value</xpath>
   </file>
   <file>
+    <path>jython/create_template.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_template.jython"]/value</xpath>
+  </file>
+  <file>
     <path>jython/create_cluster.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_cluster.jython"]/value</xpath>
   </file>
@@ -350,6 +354,10 @@
     <xpath>//procedure[procedureName="CreateDomain"]/step[stepName="CreateDomain"]/command</xpath>
   </file>
   <file>
+    <path>server/createTemplate.pl</path>
+    <xpath>//procedure[procedureName="CreateTemplate"]/step[stepName="CreateTemplate"]/command</xpath>
+  </file>
+  <file>
     <path>server/createCluster.pl</path>
     <xpath>//procedure[procedureName="CreateCluster"]/step[stepName="CreateCluster"]/command</xpath>
   </file>
@@ -492,6 +500,10 @@
   <file>
     <path>parameterForms/ec_parameterForm-CreateDomain.xml</path>
     <xpath>//procedure[procedureName="CreateDomain"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-CreateTemplate.xml</path>
+    <xpath>//procedure[procedureName="CreateTemplate"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
   </file>
   <file>
     <path>parameterForms/ec_parameterForm-CreateCluster.xml</path>

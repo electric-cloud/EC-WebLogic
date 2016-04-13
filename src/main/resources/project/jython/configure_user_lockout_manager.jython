@@ -1,6 +1,6 @@
 try:
     # connect to the server
-    print 'Going for configuring user lockout manager'
+    print('Going for configuring user lockout manager')
     connect(r'[% wl_username %]', r'[% wl_password %]', r'[% admin_url %]')
     
     lockoutEnabled = int(r'[% lockout_enabled %]')
@@ -21,10 +21,10 @@ try:
     if (lockoutDuration):
         lockoutManager.setLockoutDuration(lockoutDuration)
 except WLSTException, e:
-    print 'Configure User Lockout Manager Exception: ' + str(e)
+    print('Configure User Lockout Manager Exception: ' + str(e))
     sys.exit(1)
 else:
-    print 'Configured user lockout manager successfully.'
+    print('Configured user lockout manager successfully.')
     save()
     activate()
     disconnect()

@@ -753,11 +753,18 @@ sub get_params_as_hashref {
     for my $param_name (@params_list) {
         my $param = $self->get_param($param_name);
         next unless defined $param;
-        $retval->{$param_name} = $param;
+        $retval->{$param_name} = trim_input($param);
     }
     return $retval;
 }
 
+sub  trim_input { 
+    my $s = shift;
+
+    #remove leading and trailing spaces
+    $s =~ s/^\s+|\s+$//g;
+    return $s 
+}
 
 sub render_template_from_property {
     my ($self, $template_name, $params) = @_;
