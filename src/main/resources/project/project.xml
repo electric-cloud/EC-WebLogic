@@ -234,6 +234,11 @@
             <value/>
           </property>
           <property>
+            <propertyName>create_template.jython</propertyName>
+            <expandable>1</expandable>
+            <value/>
+          </property>
+          <property>
             <propertyName>create_group.jython</propertyName>
             <expandable>1</expandable>
             <value/>
@@ -3862,6 +3867,116 @@
         <attachedParameters>
           <formalParameterName>user_credentials</formalParameterName>
         </attachedParameters>
+      </step>
+    </procedure>
+    <procedure>
+      <procedureName>CreateTemplate</procedureName>
+      <description>Creates a domain template from the existing domain.</description>
+      <jobNameTemplate>weblogic-createtemplate-$[jobId]</jobNameTemplate>
+      <resourceName/>
+      <workspaceName/>
+      <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+      <propertySheet>
+        <property>
+          <propertyName>ec_parameterForm</propertyName>
+          <expandable>1</expandable>
+          <value/>
+        </property>
+        <property>
+          <propertyName>ec_customEditorData</propertyName>
+          <propertySheet>
+            <property>
+              <propertyName>parameters</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>wlst_abs_path</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>template_name</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>domain_directory</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+      </propertySheet>
+      <formalParameter>
+        <formalParameterName>wlst_abs_path</formalParameterName>
+        <defaultValue>java weblogic.WSLT</defaultValue>
+        <description>WLST absolute path</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>template_name</formalParameterName>
+        <defaultValue/>
+        <description>Name (use .jar extension) and location of the domain template to store the domain configuration information. A domain template is a JAR file that contains domain configuration documents, applications, security data, startup scripts, and other information needed to create a WebLogic domain.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>domain_directory</formalParameterName>
+        <defaultValue/>
+        <description>Name of the domain directory from which you want to create the template.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <step>
+        <stepName>CreateTemplate</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command/>
+        <condition/>
+        <description/>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName/>
+        <parallel>0</parallel>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName/>
+        <retries>0</retries>
+        <shell>ec-perl</shell>
+        <timeLimit/>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory/>
+        <workspaceName/>
+        <procedureName>CreateTemplate</procedureName>
+        <projectName>EC-WebLogic</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
       </step>
     </procedure>
     <procedure>

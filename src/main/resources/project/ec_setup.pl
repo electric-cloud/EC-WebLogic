@@ -185,24 +185,27 @@ my %updateApp = (
 my %createDomain = (
     label       => "WebLogic - Create Domain",
     procedure   => "CreateDomain",
-    description => "Create new domain from template",
+    description => "Create a new domain from template",
     category    => "Application Server"
 );
-
+my %createTemplate = (
+    label       => "WebLogic - Create Template",
+    procedure   => "CreateTemplate",
+    description => "Create a domain template from an existing domain",
+    category    => "Application Server"
+);
 my %createCluster = (
     label       => "WebLogic - Create Cluster",
     procedure   => "CreateCluster",
     description => "Create new cluster",
     category    => "Application Server"
 );
-
 my %deleteCluster = (
     label       => "WebLogic - Delete Cluster",
     procedure   => "DeleteCluster",
     description => "Delete a cluster",
     category    => "Application Server"
 );
-
 my %addServerToCluster = (
     label       => "WebLogic - Add Server To Cluster",
     procedure   => "AddServerToCluster",
@@ -215,6 +218,7 @@ my %configureUserLockoutManager = (
     description => "Configure User Lockout Manager",
     category    => "Application Server"
 );
+
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/EC-WebLogic - Start App");
 $batch->deleteProperty(
@@ -309,8 +313,9 @@ $batch->deleteProperty(
     \%addUserToGroup,              \%removeUserFromGroup,
     \%changeUserPassword,          \%unlockUserAccount,
     \%updateApp,                   \%createDomain,
-    \%createCluster,               \%addServerToCluster,
-    \%configureUserLockoutManager, \%deleteCluster
+    \%createTemplate,              \%createCluster,               
+    \%addServerToCluster,          \%configureUserLockoutManager, 
+    \%deleteCluster
 );
 
 if ( $upgradeAction eq "upgrade" ) {
