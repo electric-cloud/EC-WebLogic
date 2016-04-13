@@ -1,6 +1,6 @@
 try:
     # connect to the server
-    print 'Going for deleting cluster'
+    print('Going for deleting cluster')
     connect(r'[% wl_username %]', r'[% wl_password %]', r'[% admin_url %]')
     clusterName = r'[% cluster_name %]'
     clusterExists = true
@@ -15,10 +15,10 @@ try:
     cd('/')
     cmo.destroyCluster(getMBean('/Clusters/' + clusterName))   
 except WLSTException, e:
-    print 'Create Cluster Exception: ' + str(e)
+    print('Create Cluster Exception: ' + str(e))
     sys.exit(1)
 else:
-    print 'Deleted Cluster: ' + clusterName
+    print('Deleted Cluster: ' + clusterName)
     save()
     activate()
     disconnect()

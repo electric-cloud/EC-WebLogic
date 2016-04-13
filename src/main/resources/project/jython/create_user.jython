@@ -1,7 +1,7 @@
 from weblogic.management.security.authentication import UserReaderMBean
 try:
     # connect to the server
-    print 'Going for creating user'
+    print('Going for creating user')
     connect(r'[% wl_username %]', r'[% wl_password %]', r'[% admin_url %]')
     userName = r'[% username %]'
     password = r'[% password %]'
@@ -13,18 +13,18 @@ try:
 
     if (not cmo.userExists(userName)):
         cmo.createUser(userName, password, desc)
-        print 'Created User: ' + userName
+        print('Created User: ' + userName)
     else:
-        print 'OverwriteExistingUser: ' + overwriteExistingUser
+        print('OverwriteExistingUser: ' + overwriteExistingUser)
         if(overwriteExistingUser != '0'):
             cmo.removeUser(userName)
-            print 'Removed User: ' + userName
+            print('Removed User: ' + userName)
             cmo.createUser(userName, password, desc)
-            print 'Created User: ' + userName
+            print('Created User: ' + userName)
         else:
-            print 'User: ' + userName + ' already exists and overwriteExistingUser flag is false'
+            print('User: ' + userName + ' already exists and overwriteExistingUser flag is false')
 
 except WLSTException, e:
-    print 'Create User Exception: ' + str(e)
+    print('Create User Exception: ' + str(e))
     sys.exit(1)
 

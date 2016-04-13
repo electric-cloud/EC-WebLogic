@@ -5,10 +5,10 @@ try:
     if(templateName).endswith('.jar'):
     	writeTemplate(templateName)
     else:
-    	print ('Template should be a jar file.')
+    	print('Template should be a jar file.')
     	sys.exit(1)
 except WLSTException, e:
-    print ('Create Template Exception: ' + str(e)) 
+    print('Create Template Exception: ' + str(e)) 
     sys.exit(1)
 else:
-    print 'Created Template.'
+    print('Created Template.')

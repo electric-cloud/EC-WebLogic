@@ -6,7 +6,7 @@ try:
     password = r'[% password %]'
     createDomain(domainTemplate, domainDir, user, password)
 except WLSTException, e:
-    print 'Create Domain Exception: ' + str(e) 
+    print('Create Domain Exception: ' + str(e))
     sys.exit(1)
 else:
-    print 'Created Domain.'
+    print('Created Domain.')

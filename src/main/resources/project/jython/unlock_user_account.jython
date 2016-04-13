@@ -2,7 +2,7 @@ from weblogic.management.security.authentication import UserReaderMBean
 from weblogic.management.security.authentication import GroupReaderMBean
 from weblogic.management.security.authentication import UserLockoutManagerMBean
 try:
-    print 'Going for unlocking user account'
+    print('Going for unlocking user account')
     # connect to the server
     connect(r'[% wl_username %]', r'[% wl_password %]', r'[% admin_url %]')
     userName = r'[% user_name %]'
@@ -12,7 +12,7 @@ try:
     #Check if the user exists
     cd('/SecurityConfiguration/' + domainName + '/Realms/' + realmName + '/AuthenticationProviders/DefaultAuthenticator')
     if (not cmo.userExists(userName)):
-        print 'User: ' + userName + ' does not exist.'
+        print('User: ' + userName + ' does not exist.')
         sys.exit(1)      
 
     cd('/SecurityConfiguration/' + domainName + '/Realms/' + realmName)
@@ -20,10 +20,10 @@ try:
     lockoutManager = cmo.getUserLockoutManager()    
     if (lockoutManager.isLockedOut(userName)):
         lockoutManager.clearLockout(userName)
-        print 'User Account: ' + userName + ' is unlocked.'
+        print('User Account: ' + userName + ' is unlocked.')
     else:
-        print 'User Account: ' + userName + ' is already unlocked.'    
+        print('User Account: ' + userName + ' is already unlocked.')   
 except WLSTException, e:
-    print 'Unlocking User Account Exception: ' + str(e)
+    print('Unlocking User Account Exception: ' + str(e))
     sys.exit(1)
 

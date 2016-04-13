@@ -1,7 +1,7 @@
 from weblogic.management.security.authentication import GroupReaderMBean
 try:
     # connect to the server
-    print 'Going for creating group'
+    print('Going for creating group')
     connect(r'[% wl_username %]', r'[% wl_password %]', r'[% admin_url %]')
     groupName = r'[% group_name %]'
     domainName = r'[% domain_name %]'
@@ -11,19 +11,19 @@ try:
     cd('/SecurityConfiguration/' + domainName + '/Realms/' + realmName + '/AuthenticationProviders/DefaultAuthenticator')
     if (not cmo.groupExists(groupName)):
         status = cmo.createGroup(groupName, desc)
-        print 'Created Group: ' + groupName
+        print('Created Group: ' + groupName)
     else:
-        print 'overwriteExistingGroup: ' + overwriteExistingGroup
+        print('overwriteExistingGroup: ' + overwriteExistingGroup)
         if(overwriteExistingGroup != '0'):
             cmo.removeGroup(groupName)
-            print 'Removed Group: ' + groupName
+            print('Removed Group: ' + groupName)
             cmo.createGroup(groupName, desc)
-            print 'Created Group: ' + groupName
+            print('Created Group: ' + groupName)
         else:
-            print 'Group: ' + groupName + ' already exists and overwriteExistingGroup flag is false'
+            print('Group: ' + groupName + ' already exists and overwriteExistingGroup flag is false')
 
 except WLSTException, e:
-    print 'Create Group Error Exception: ' + str(e)
+    print('Create Group Error Exception: ' + str(e))
     sys.exit(1)
 
 
