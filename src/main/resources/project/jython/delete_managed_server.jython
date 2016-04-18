@@ -1,0 +1,27 @@
+try:
+    # connect to the server
+    print('Going for deleting server')
+    connect(r'[% wl_username %]', r'[% wl_password %]', r'[% admin_url %]')
+    
+    edit()
+    startEdit(-1,-1,'false')
+    cd('/')
+    serverName = r'[% server_name %]'
+    print('Server Name: ' + serverName)
+    cd('/Servers/' + serverName)
+    cmo.setCluster(None)
+    cmo.setMachine(None)
+    serverName = r'[% server_name %]'
+    editService.getConfigurationManager().removeReferencesToBean(getMBean('/Servers/' + serverName)) 
+    cd('/')
+    serverName = r'[% server_name %]'
+    cmo.destroyServer(getMBean('/Servers/' + serverName))
+except WLSTException, e:
+    print('Delete Server Exception: ' + str(e))
+    sys.exit(1)
+else:
+    print('Deleted Server: ' + serverName)
+    save()
+    activate()
+    disconnect()
+    exit()    

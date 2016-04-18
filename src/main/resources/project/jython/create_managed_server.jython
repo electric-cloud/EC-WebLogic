@@ -1,0 +1,28 @@
+try:
+    # connect to the server
+    print('Going for creating managed server')
+    connect(r'[% wl_username %]', r'[% wl_password %]', r'[% admin_url %]')
+    
+    listenAddress = r'[% listen_address %]'
+    listenPort = int(r'[% listen_port %]')
+    edit()
+    startEdit()
+    cd('/')
+    serverName = r'[% server_name %]'
+    cmo.createServer(serverName)
+    cd('/Servers/' + serverName)
+    if (listenAddress):
+        cmo.setListenAddress(listenAddress)
+    if (listenPort):
+        cmo.setListenPort(listenPort)
+except WLSTException, e:
+    print('Create Server Exception: '+ str(e))
+    sys.exit(1)
+else:
+    serverName = r'[% server_name %]'
+    print('Created Server: ' + serverName)
+    save()
+    activate()
+    disconnect()
+    exit() 
+

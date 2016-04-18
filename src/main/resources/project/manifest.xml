@@ -122,6 +122,14 @@
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_cluster.jython"]/value</xpath>
   </file>
   <file>
+    <path>jython/create_managed_server.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_managed_server.jython"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/delete_managed_server.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_managed_server.jython"]/value</xpath>
+  </file>
+  <file>
     <path>jython/add_server_to_cluster.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="add_server_to_cluster.jython"]/value</xpath>
   </file>
@@ -366,6 +374,14 @@
     <xpath>//procedure[procedureName="DeleteCluster"]/step[stepName="DeleteCluster"]/command</xpath>
   </file>
   <file>
+    <path>server/createManagedServer.pl</path>
+    <xpath>//procedure[procedureName="CreateManagedServer"]/step[stepName="CreateManagedServer"]/command</xpath>
+  </file>
+  <file>
+    <path>server/deleteManagedServer.pl</path>
+    <xpath>//procedure[procedureName="DeleteManagedServer"]/step[stepName="DeleteManagedServer"]/command</xpath>
+  </file>
+  <file>
     <path>server/addServerToCluster.pl</path>
     <xpath>//procedure[procedureName="AddServerToCluster"]/step[stepName="AddServerToCluster"]/command</xpath>
   </file>
@@ -512,6 +528,14 @@
   <file>
     <path>parameterForms/ec_parameterForm-DeleteCluster.xml</path>
     <xpath>//procedure[procedureName="DeleteCluster"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-CreateManagedServer.xml</path>
+    <xpath>//procedure[procedureName="CreateManagedServer"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-DeleteManagedServer.xml</path>
+    <xpath>//procedure[procedureName="DeleteManagedServer"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
   </file>
   <file>
     <path>parameterForms/ec_parameterForm-AddServerToCluster.xml</path>

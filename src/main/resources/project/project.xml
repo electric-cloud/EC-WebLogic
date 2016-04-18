@@ -298,6 +298,16 @@
             <expandable>1</expandable>
             <value/>
           </property>
+          <property>
+            <propertyName>create_managed_server.jython</propertyName>
+            <expandable>1</expandable>
+            <value/>
+          </property>
+          <property>
+            <propertyName>delete_managed_server.jython</propertyName>
+            <expandable>1</expandable>
+            <value/>
+          </property>
         </propertySheet>
       </property>
       <property>
@@ -5050,7 +5060,7 @@
     </procedure>
     <procedure>
       <procedureName>CreateCluster</procedureName>
-      <description>Delete a cluster.</description>
+      <description>Create a cluster.</description>
       <jobNameTemplate>weblogic-createcluster-$[jobId]</jobNameTemplate>
       <resourceName/>
       <workspaceName/>
@@ -5558,6 +5568,260 @@
         <workingDirectory/>
         <workspaceName/>
         <procedureName>ConfigureUserLockoutManager</procedureName>
+        <projectName>EC-WebLogic</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+    </procedure>
+    <procedure>
+      <procedureName>CreateManagedServer</procedureName>
+      <description>Create a Managed Server.</description>
+      <jobNameTemplate>weblogic-createmanagedserver-$[jobId]</jobNameTemplate>
+      <resourceName/>
+      <workspaceName/>
+      <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+      <propertySheet>
+        <property>
+          <propertyName>ec_parameterForm</propertyName>
+          <expandable>1</expandable>
+          <value/>
+        </property>
+        <property>
+          <propertyName>ec_customEditorData</propertyName>
+          <propertySheet>
+            <property>
+              <propertyName>parameters</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>wlst_abs_path</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>configname</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>server_name</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>listen_address</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>listen_port</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+      </propertySheet>
+      <formalParameter>
+        <formalParameterName>wlst_abs_path</formalParameterName>
+        <defaultValue>java weblogic.WSLT</defaultValue>
+        <description>WLST absolute path</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>configname</formalParameterName>
+        <defaultValue/>
+        <description>Name of the configuration to be used for retrieving Admin Server's URL and credentials.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>server_name</formalParameterName>
+        <defaultValue/>
+        <description>Name of the managed server to be created.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>listen_address</formalParameterName>
+        <defaultValue/>
+        <description>Server Listen Address.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>listen_port</formalParameterName>
+        <defaultValue/>
+        <description>Server Listen Port.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      <step>
+        <stepName>CreateManagedServer</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command/>
+        <condition/>
+        <description/>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName/>
+        <parallel>0</parallel>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName/>
+        <retries>0</retries>
+        <shell>ec-perl</shell>
+        <timeLimit/>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory/>
+        <workspaceName/>
+        <procedureName>CreateManagedServer</procedureName>
+        <projectName>EC-WebLogic</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+    </procedure>
+    <procedure>
+      <procedureName>DeleteManagedServer</procedureName>
+      <description>Delete a Managed Server.</description>
+      <jobNameTemplate>weblogic-deletemanagedserver-$[jobId]</jobNameTemplate>
+      <resourceName/>
+      <workspaceName/>
+      <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+      <propertySheet>
+        <property>
+          <propertyName>ec_parameterForm</propertyName>
+          <expandable>1</expandable>
+          <value/>
+        </property>
+        <property>
+          <propertyName>ec_customEditorData</propertyName>
+          <propertySheet>
+            <property>
+              <propertyName>parameters</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>wlst_abs_path</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>configname</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>server_name</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+      </propertySheet>
+      <formalParameter>
+        <formalParameterName>wlst_abs_path</formalParameterName>
+        <defaultValue>java weblogic.WSLT</defaultValue>
+        <description>WLST absolute path</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>configname</formalParameterName>
+        <defaultValue/>
+        <description>Name of the configuration to be used for retrieving Admin Server's URL and credentials.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>server_name</formalParameterName>
+        <defaultValue/>
+        <description>Name of the managed server to be deleted.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <step>
+        <stepName>DeleteManagedServer</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command/>
+        <condition/>
+        <description/>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName/>
+        <parallel>0</parallel>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName/>
+        <retries>0</retries>
+        <shell>ec-perl</shell>
+        <timeLimit/>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory/>
+        <workspaceName/>
+        <procedureName>DeleteManagedServer</procedureName>
         <projectName>EC-WebLogic</projectName>
         <propertySheet>
           <property>
