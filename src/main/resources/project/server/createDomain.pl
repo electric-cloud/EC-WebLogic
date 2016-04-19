@@ -38,7 +38,9 @@ sub main {
         'configname',
         'user_credentials',
         'domain_template',
-        'domain_directory'
+        'domain_directory',
+        'listen_address',
+        'listen_port'
     );
 
     my $cred = $wl->get_credentials($params->{configname});
@@ -56,7 +58,9 @@ sub main {
         user => $user_cred->{user},
         password => $user_cred->{password},
         domain_template => $params->{domain_template},
-        domain_directory => $params->{domain_directory}
+        domain_directory => $params->{domain_directory},
+        listen_address => $params->{listen_address},
+        listen_port    => $params->{listen_port}
     };
     my $template_path = '/myProject/jython/create_domain.jython';
     my $template = $wl->render_template_from_property($template_path, $render_params);

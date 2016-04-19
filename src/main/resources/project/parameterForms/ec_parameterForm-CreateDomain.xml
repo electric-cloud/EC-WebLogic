@@ -53,4 +53,18 @@
         <documentation>Name of the directory to which you want to write the domain configuration information. .</documentation>
         <required>1</required>
     </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Listen Address:</label>
+        <property>listen_address</property>
+        <documentation>Server Listen Address.</documentation>
+        <required>0</required>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Listen Port:</label>
+        <property>listen_port</property>
+        <documentation>Server Listen Port.</documentation>
+        <required>0</required>
+    </formElement>
 </editor>
