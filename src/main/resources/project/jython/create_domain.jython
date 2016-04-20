@@ -7,9 +7,8 @@ try:
     listenPort = int(r'[% listen_port %]')
     
     print('Reading Template - ' + domainTemplate)
-    readTemplate('C:\Oracle\Middleware\Oracle_Home\user_projects\DemoTemplate.jar')
+    readTemplate(domainTemplate)
     base_domain = pwd()
-    print('####Base Domain:' + base_domain )
 
     # Admin Server 
     print('Creating Server - Admin Server')
