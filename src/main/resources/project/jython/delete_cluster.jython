@@ -15,7 +15,7 @@ try:
     cd('/')
     cmo.destroyCluster(getMBean('/Clusters/' + clusterName))   
 except WLSTException, e:
-    print('Create Cluster Exception: ' + str(e))
+    print('Delete Cluster Exception: ' + str(e))
     sys.exit(1)
 else:
     print('Deleted Cluster: ' + clusterName)

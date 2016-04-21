@@ -197,13 +197,25 @@ my %createTemplate = (
 my %createCluster = (
     label       => "WebLogic - Create Cluster",
     procedure   => "CreateCluster",
-    description => "Create new cluster",
+    description => "Create a new cluster",
     category    => "Application Server"
 );
 my %deleteCluster = (
     label       => "WebLogic - Delete Cluster",
     procedure   => "DeleteCluster",
     description => "Delete a cluster",
+    category    => "Application Server"
+);
+my %createManagedServer = (
+    label       => "WebLogic - Create Managed Server",
+    procedure   => "createManagedServer",
+    description => "Create a new managed server",
+    category    => "Application Server"
+);
+my %deleteManagedServer = (
+    label       => "WebLogic - Delete Managed Server",
+    procedure   => "deleteManagedServer",
+    description => "Delete a managed server",
     category    => "Application Server"
 );
 my %addServerToCluster = (
@@ -315,7 +327,8 @@ $batch->deleteProperty(
     \%updateApp,                   \%createDomain,
     \%createTemplate,              \%createCluster,               
     \%addServerToCluster,          \%configureUserLockoutManager, 
-    \%deleteCluster
+    \%deleteCluster,               \%createManagedServer,
+    \%deleteManagedServer    
 );
 
 if ( $upgradeAction eq "upgrade" ) {
@@ -660,6 +673,23 @@ if ( $upgradeAction eq "upgrade" ) {
                 {
                     procedureName => 'DeleteCluster',
                     stepName      => 'DeleteCluster'
+                }
+            );
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'CreateManagedServer',
+                    stepName      => 'CreateManagedServer'
+                }
+            );
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'DeleteManagedServer',
+                    stepName      => 'DeleteManagedServer'
                 }
             );
 

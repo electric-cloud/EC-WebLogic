@@ -16,7 +16,7 @@
 
 -->
 <editor>
-    <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateDomain</help>
+    <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateManagedServer</help>
     <formElement>
         <type>entry</type>
         <label>WLST Absolute Path:</label>
@@ -33,38 +33,10 @@
         <required>1</required>
     </formElement>
     <formElement>
-        <type>credential</type>
-        <label>User Credentials:</label>
-        <property>user_credentials</property>
-        <documentation>Credentials of the user(Username and password).</documentation>
+        <type>entry</type>
+        <label>Server Name:</label>
+        <property>server_name</property>
+        <documentation>Name of the managed server to be deleted.</documentation>
         <required>1</required>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Domain Template:</label>
-        <property>domain_template</property>
-        <documentation>Name and location of the domain template from which you want to create a domain.</documentation>
-        <required>1</required>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Domain Directory:</label>
-        <property>domain_directory</property>
-        <documentation>Name of the directory to which you want to write the domain configuration information. .</documentation>
-        <required>1</required>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Listen Address:</label>
-        <property>listen_address</property>
-        <documentation>Server Listen Address.</documentation>
-        <required>0</required>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Listen Port:</label>
-        <property>listen_port</property>
-        <documentation>Server Listen Port.</documentation>
-        <required>0</required>
     </formElement>
 </editor>

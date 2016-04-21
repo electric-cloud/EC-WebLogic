@@ -32,37 +32,29 @@ sub main {
         plugin_name => $PLUGIN_NAME,
         plugin_key => $PLUGIN_KEY
     );
-
+    #Every additional option should have following format <OPTION_NAME1>=<OPTION_VALUE1>, <OPTION_NAME2>=<OPTION_VALUE2>
+    #Options separated by commas
     my $params = $wl->get_params_as_hashref(
         'wlst_abs_path',
-        'configname',
-        'user_credentials',
-        'domain_template',
-        'domain_directory',
-        'listen_address',
-        'listen_port'
+        'server_name',
+        'configname'
     );
 
     my $cred = $wl->get_credentials($params->{configname});
-    my $user_cred = $wl->get_common_credentials('user_credentials');
     my $check = $wl->check_executable($params->{wlst_abs_path});
-
     if (!$check->{ok}) {
         $wl->bail_out($check->{msg});
     }
+
 
     my $render_params = {
         wl_username => $cred->{user},
         wl_password => $cred->{password},
         admin_url => $cred->{weblogic_url},
-        user => $user_cred->{user},
-        password => $user_cred->{password},
-        domain_template => $params->{domain_template},
-        domain_directory => $params->{domain_directory},
-        listen_address => $params->{listen_address},
-        listen_port    => $params->{listen_port}
+        server_name => $params->{server_name}
     };
-    my $template_path = '/myProject/jython/create_domain.jython';
+
+    my $template_path = '/myProject/jython/delete_managed_server.jython';
     my $template = $wl->render_template_from_property($template_path, $render_params);
 
     $wl->out(10, "Generated script:\n", $template);
