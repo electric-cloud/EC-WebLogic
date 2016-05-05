@@ -4,7 +4,7 @@ try:
     connect(r'[% wl_username %]', r'[% wl_password %]', r'[% admin_url %]')
     
     listenAddress = r'[% listen_address %]'
-    listenPort = int(r'[% listen_port %]')
+    listenPort = r'[% listen_port %]'
     edit()
     startEdit()
     cd('/')
@@ -14,7 +14,7 @@ try:
     if (listenAddress):
         cmo.setListenAddress(listenAddress)
     if (listenPort):
-        cmo.setListenPort(listenPort)
+        cmo.setListenPort(int(listenPort))
 except WLSTException, e:
     print('Create Server Exception: '+ str(e))
     sys.exit(1)
