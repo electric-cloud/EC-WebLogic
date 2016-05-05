@@ -16,18 +16,18 @@
 {	
     	"CreateUser": [{
 			"wlst_abs_path": "C:/Oracle/Middleware/Oracle_Home/Oracle_Common/common/bin/wlst.cmd",
-			"configname": "avinashConfig",
+			"configname": "newConfig",
 			"user_credentials":"web"
-			"domain_name": "checkMeOut",
+			"domain_name": "testDomain",
 			"realm_name": "myrealm",
 			"desc": "",
 		}],
 		
 	"CreateGroup": [{
 			"wlst_abs_path": "C:/Oracle/Middleware/Oracle_Home/Oracle_Common/common/bin/wlst.cmd",
-			"configname": "avinashConfig",
+			"configname": "newConfig",
 			"group_name":"testGroup",
-			"domain_name": "checkMeOut",
+			"domain_name": "testDomain",
 			"realm_name": "myrealm",
 			"desc": "",
 			"overwrite_existing_user":""	
@@ -35,25 +35,25 @@
 		
 	 "AddUserToGroup": [{
 			"wlst_abs_path": "C:/Oracle/Middleware/Oracle_Home/Oracle_Common/common/bin/wlst.cmd",
-			"configname": "avinashConfig",
+			"configname": "newConfig",
 			"group_name":"testGroup",
-			"user_name" : "weblogic12",
-			"domain_name": "checkMeOut",
+			"user_name" : "testUser",
+			"domain_name": "testDomain",
 			"realm_name": "myrealm"
 		}],
 
 	 "RemoveUserFromGroup": [{
 			"wlst_abs_path": "C:/Oracle/Middleware/Oracle_Home/Oracle_Common/common/bin/wlst.cmd",
-			"configname": "avinashConfig",
+			"configname": "newConfig",
 			"group_name":"testGroup",
-			"user_name" : "weblogic12",
-			"domain_name": "checkMeOut",
+			"user_name" : "testUser",
+			"domain_name": "testDomain",
 			"realm_name": "myrealm"
 		}],
 		
      	"ConfigureUserLockoutManager": [{
 			"wlst_abs_path": "C:/Oracle/Middleware/Oracle_Home/Oracle_Common/common/bin/wlst.cmd",
-			"configname": "avinashConfig",
+			"configname": "newConfig",
 			"lockout_threshold":"10",
 			"lockout_duration":"10",
 			"lockout_enabled":"1"
@@ -62,33 +62,33 @@
 
      	"UnlockUserAccount": [{
 			"wlst_abs_path": "C:/Oracle/Middleware/Oracle_Home/Oracle_Common/common/bin/wlst.cmd",
-			"configname": "avinashConfig",
-			"user_name" : "weblogic12",
-			"domain_name": "checkMeOut",
+			"configname": "newConfig",
+			"user_name" : "testUser",
+			"domain_name": "testDomain",
 			"realm_name": "myrealm"
 
 		}],
 		
 	"DeleteGroup": [{
 			"wlst_abs_path": "C:/Oracle/Middleware/Oracle_Home/Oracle_Common/common/bin/wlst.cmd",
-			"configname": "avinashConfig",
+			"configname": "newConfig",
 			"group_name":"testGroup",
-			"domain_name": "checkMeOut",
+			"domain_name": "testDomain",
 			"realm_name": "myrealm"
 		}],
 		
 	"DeleteUser": [{
 			"wlst_abs_path": "C:/Oracle/Middleware/Oracle_Home/Oracle_Common/common/bin/wlst.cmd",
-			"configname": "avinashConfig",
-			"user_name" : "weblogic12",
-			"domain_name": "checkMeOut",
+			"configname": "newConfig",
+			"user_name" : "testUser",
+			"domain_name": "testDomain",
 			"realm_name": "myrealm"
 
 		}],	
 		
     	"CreateCluster": [{
 			"wlst_abs_path": "C:/Oracle/Middleware/Oracle_Home/Oracle_Common/common/bin/wlst.cmd",
-			"configname": "avinashConfig",
+			"configname": "newConfig",
 			"cluster_name" : "testCluster",
 			"multicast_address": "239.192.0.0",
 			"multicast_port": "7040"
@@ -97,7 +97,7 @@
 	
 	"CreateManagedServer": [{
 			"wlst_abs_path": "C:/Oracle/Middleware/Oracle_Home/Oracle_Common/common/bin/wlst.cmd",
-			"configname": "avinashConfig",
+			"configname": "newConfig",
 			"server_name" : "testServer",
 			"listen_address": "192.168.102.55",
 			"listen_port": "7041"
@@ -106,7 +106,7 @@
 		
     	"AddServerToCluster": [{
 			"wlst_abs_path": "C:/Oracle/Middleware/Oracle_Home/Oracle_Common/common/bin/wlst.cmd",
-			"configname": "avinashConfig",
+			"configname": "newConfig",
 			"server_name" : "testServer",
 			"cluster_name": "testCluster"
 
@@ -114,24 +114,24 @@
 		
 	"DeleteCluster": [{
 			"wlst_abs_path": "C:/Oracle/Middleware/Oracle_Home/Oracle_Common/common/bin/wlst.cmd",
-			"configname": "avinashConfig",
+			"configname": "newConfig",
 			"cluster_name" : "testCluster"
 
 		}],	
 		
 	"DeleteManagedServer": [{
 			"wlst_abs_path": "C:/Oracle/Middleware/Oracle_Home/Oracle_Common/common/bin/wlst.cmd",
-			"configname": "avinashConfig",
+			"configname": "newConfig",
 			"server_name" : "testServer"
 
 		}],	
 
         "ChangeUserPassword": [{
 			"wlst_abs_path": "C:/Oracle/Middleware/Oracle_Home/Oracle_Common/common/bin/wlst.cmd",
-			"configname": "avinashConfig",
+			"configname": "newConfig",
 			"old_user_credentials":"web1",
 			"new_user_credentials" : "web2",
-			"domain_name": "checkMeOut",
+			"domain_name": "testDomain",
 			"realm_name": "myrealm"
 		}],			
     		
