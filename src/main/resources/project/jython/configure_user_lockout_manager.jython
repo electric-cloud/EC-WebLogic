@@ -3,23 +3,25 @@ try:
     print('Going for configuring user lockout manager')
     connect(r'[% wl_username %]', r'[% wl_password %]', r'[% admin_url %]')
     
-    lockoutEnabled = int(r'[% lockout_enabled %]')
-    lockoutThreshold = int(r'[% lockout_threshold %]')
-    lockoutDuration = int(r'[% lockout_duration %]')
+    lockoutEnabled = r'[% lockout_enabled %]'
+    lockoutThreshold = r'[% lockout_threshold %]'
+    lockoutDuration = r'[% lockout_duration %]'
     
     edit()
     startEdit()
     cd ('/')
     lockoutManager = cmo.getSecurityConfiguration().getDefaultRealm().getUserLockoutManager()
   
-    if (lockoutEnabled == 1):
-        lockoutManager.setLockoutEnabled(lockoutEnabled)
+    if (lockoutEnabled and int(lockoutEnabled) == 1):
+        lockoutManager.setLockoutEnabled(int(lockoutEnabled))
     
     if (lockoutThreshold):
-        lockoutManager.setLockoutThreshold(lockoutThreshold)
+        print("Inside lockout Threshold")
+        lockoutManager.setLockoutThreshold(int(lockoutThreshold))
 
     if (lockoutDuration):
-        lockoutManager.setLockoutDuration(lockoutDuration)
+        print("Inside lockout duration")
+        lockoutManager.setLockoutDuration(int(lockoutDuration))
 except WLSTException, e:
     print('Configure User Lockout Manager Exception: ' + str(e))
     sys.exit(1)

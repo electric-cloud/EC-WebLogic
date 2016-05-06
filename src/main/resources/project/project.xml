@@ -5565,7 +5565,7 @@
         <formalParameterName>lockout_duration</formalParameterName>
         <defaultValue/>
         <description>The number of minutes that a user's account is locked out. Minimum value: 0, Maximum value: 2147483647.</description>
-        <required>1</required>
+        <required>0</required>
         <type>entry</type>
       </formalParameter>
       <formalParameter>

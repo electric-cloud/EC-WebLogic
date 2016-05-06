@@ -12,6 +12,7 @@ try:
         print('Deleted Group: ' + groupName)
     else:
         print('Group: ' + groupName + ' does not exist.')
+        sys.exit(1)
 except WSLTException, e:
     print('Delete Group Exception: ' + str(e))
     sys.exit(1)

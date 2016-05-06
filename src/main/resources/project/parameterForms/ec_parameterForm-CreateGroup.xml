@@ -57,7 +57,7 @@
         <type>textarea</type>
         <label>Group Description:</label>
         <property>desc</property>
-        <documentation>Description about the user.</documentation>
+        <documentation>Description about the group.</documentation>
         <required>0</required>
     </formElement>
     <formElement>

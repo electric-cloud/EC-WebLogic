@@ -21,10 +21,13 @@ try:
                 print('Added User: ' + userName + ' to Group: ' + groupName)
             else:
                 print('User: ' + userName + ' is already a member of Group: ' + groupName)
+                sys.exit(1)
         else:
             print('Group: ' + groupName + ' does not exist. Aborting adding User: ' + userName + ' to Group: ' + groupName)
+            sys.exit(1)
     else:
         print('User: ' + userName + ' does not exist. Aborting adding User: ' + userName + ' to Group: ' + groupName)
+        sys.exit(1)
 except WLSTException, e:
     print('Add User To Group Exception: ' +str(e))
     sys.exit(1)
