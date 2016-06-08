@@ -169,13 +169,11 @@
 		    They reduce repetition of common values, create predefined sets of parameters for end users, and store 
 		    credentials securely. Each configuration has a unique name that is automatically entered in designated 
 		    parameters in the procedures.</p>
-						
 		<h2>Input</h2>
-  
         <ol>
 		    <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
 		    <li>Find the EC-WebLogic row.</li>
-		    <li>Click <b>Configure</b> to open the WebLogic Configurations page.</li> 	
+		    <li>Click <b>Configure</b> to open the WebLogic Configurations page.</li>
 		    <li>Click <b>Create Configuration</b>.</li>
 		    <li>To create a WebLogic configuration, enter the following information and click <b>OK</b>. 
 			<br /> Remember that you may need to create additional configurations later.</li>
@@ -194,24 +192,30 @@
                     </tr>
                     <tr>
                         <td class="required">WebLogic URL</td>
-                        <td>The URL of the WebLogic server that includes the protocol, server, and port.</td>		
+                        <td>The URL of the WebLogic server that includes the protocol, server, and port.</td>
+                    </tr>
+                    <tr>
+                        <td>JAVA_HOME</td>
+                        <td>JAVA_HOME environment variable. It should be used when java is not in the path, or different java need to be used.</td>
                     </tr>
                     <tr>
                         <td class="required">Login as</td>
                         <td>
-												<ul>
-												<li><b>User Name</b>: Enter the name of the WebLogic user.</li>
-												<li><b>Password</b>: Enter the password for the WebLogic user name.</li>
-												<li><b>Retype Password</b>: Re-enter the password for the WebLogic user name.</li>
-												</ul>
-												</td>
+						  <ul>
+							<li><b>User Name</b>: Enter the name of the WebLogic user.</li>
+							<li><b>Password</b>: Enter the password for the WebLogic user name.</li>
+							<li><b>Retype Password</b>: Re-enter the password for the WebLogic user name.</li>
+						  </ul>
+						</td>
+                    </tr>
+                    <tr>
+                      <td class="required">Debug level</td>
+                      <td>Verbosity level of output. By default, debug level is set to 1.</td>
                     </tr>
                     </tbody>
             </table>
-		
 		    <img src="../../plugins/EC-WebLogic/images/Config/EC-WLSConfig.png" />
-		
-		    <p><b>Note:</b> In the URL, the protocol is "t3."  The 
+		    <p><b>Note:</b> In the URL, the protocol is "t3."  The
 
             RMI communications in WebLogic Server use
 
