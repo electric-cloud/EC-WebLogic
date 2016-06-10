@@ -42,6 +42,15 @@
   </formElement>
   
   <formElement>
+    <type>entry</type>
+    <label>JAVA_VENDOR:</label>
+    <property>java_vendor</property>
+    <value></value>
+    <documentation>JAVA_VENDOR environment variable, use it to specify java vendor.</documentation>
+    <required>0</required>
+  </formElement>
+  
+  <formElement>
     <type>credential</type>
     <label>Login as:</label>
     <property>credential</property>

@@ -200,6 +200,10 @@
                         <td>JAVA_HOME environment variable. It should be used when java is not in the path, or different java need to be used.</td>
                     </tr>
                     <tr>
+                      <td>JAVA_VENDOR</td>
+                      <td>JAVA_VENDOR environment variable. It should be used when java vendor need to be specified.</td>
+                    </tr>
+                    <tr>
                         <td class="required">Login as</td>
                         <td>
 						  <ul>

@@ -72,6 +72,7 @@ sub get_credentials {
             userName => 'user',
             password => 'password',
             java_home => 'java_home',
+            java_vendor => 'java_vendor',
             weblogic_url => 'weblogic_url',
             debug_level => 'debug_level'
         },
@@ -84,6 +85,11 @@ sub get_credentials {
 
     if ($cred->{java_home}) {
         $ENV{JAVA_HOME} = $cred->{java_home};
+        $self->out(10, "JAVA_HOME was set to $cred->{java_home}");
+    }
+    if ($cred->{java_vendor}) {
+        $ENV{JAVA_VENDOR} = $cred->{java_vendor};
+        $self->out(10, "JAVA_VENDOR was set to $cred->{java_vendor}");
     }
 
     return $cred;
