@@ -279,7 +279,7 @@
 
                         <td class="required">WLST Absolute Path</td>
 
-                        <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
+                        <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)</td>
 
                     </tr>
 
@@ -287,7 +287,7 @@
 
                         <td class="required">Configuration Name</td>
 
-                        <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. A Configuration defines connection details and can be created by going to plugin configuration page.</td>
+                        <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. A Configuration defines connection details and can be created by going to plugin configuration page. (Required)</td>
 
                     </tr>
 
@@ -295,7 +295,7 @@
 
                         <td class="required">Server Name</td>
 
-                        <td>Name of the server which is to be added to cluster.</td>
+                        <td>Name of the server which is to be added to cluster. (Required)</td>
 
                     </tr>
 
@@ -303,7 +303,7 @@
 
                         <td class="required">Cluster Name</td>
 
-                        <td>Name of the cluster in which server is to be added.</td>
+                        <td>Name of the cluster in which server is to be added. (Required)</td>
 
                     </tr>
 					
@@ -314,7 +314,7 @@
 		 	</li>
 						
 		        <br />
-	            <img src="../../plugins/EC-WebLogic/images/AddServerToCluster/C-WLSAddServerToClusterStatus2.png" />
+	            <img src="../../plugins/EC-WebLogic/images/AddServerToCluster/EC-WLSAddServerToClusterStatus2.png" />
 		        <br />
 
 		        </ol>   
@@ -2190,7 +2190,7 @@
 						
 		        <p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The server instance successfully 
 				moved from the STANDBY state to the RUNNING state.</p>
-		        <img src="../../plugins/EC-WebLogic/images/ResumeServer/C-WLSResumeServer3.png" />
+		        <img src="../../plugins/EC-WebLogic/images/ResumeServer/EC-WLSResumeServer3.png" />
 		
 		        <p>In the <b>ResumeServer</b> step, click the Log button to see the diagnostic information:</p>
 						<br />
