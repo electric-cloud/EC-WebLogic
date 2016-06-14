@@ -640,7 +640,7 @@
       </propertySheet>
       <formalParameter>
         <formalParameterName>wlstabspath</formalParameterName>
-        <defaultValue>java</defaultValue>
+        <defaultValue/>
         <description>WLST absolute path</description>
         <required>1</required>
         <type>entry</type>
