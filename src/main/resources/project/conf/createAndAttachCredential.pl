@@ -143,6 +143,32 @@ $xpath = $ec->attachCredential($projName, $credName,
      stepName => 'ResumeServer'});
 $errors .= $ec->checkAllErrors($xpath);
 
+# new procedures
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'CreateUser',
+     stepName => 'CreateUser'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'DeleteUser',
+     stepName => 'DeleteUser'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'ChangeUserPassword',
+     stepName => 'ChangeUserPassword'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'CreateGroup',
+     stepName => 'CreateGroup'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'DeleteGroup',
+     stepName => 'DeleteGroup'});
+$errors .= $ec->checkAllErrors($xpath);
+
 if ($errors ne '') {
     
     # Cleanup the partially created configuration we just created
