@@ -1420,117 +1420,64 @@
         </div>
 		
         <div id="CreateUser">
-
             <a name="CreateUser" id="CreateUser"></a> 
-
             <h2>CreateUser</h2>
-
             <p>This procedure creates a new user on the WebLogic server.</p>
-
 			<h3>Input</h3>
-			
             <ol>
-				  <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
-			      <li>Go to the CreateDatasource procedure.</li>
-			      <li>Enter the following parameters:<br />
-						
-           <table class="grid">
-
+			  <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
+			  <li>Go to the CreateUser procedure.</li>
+			  <li>Enter the following parameters:<br />
+              <table class="grid">
                 <thead>
-
-                    <tr>
-
-                        <th>Parameter</th>
-
-                        <th>Description</th>
-
-                    </tr>
-
+                  <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                  </tr>
                 </thead>
-
-
                 <tbody>
-
+                  <tr>
+                    <td class="required">WLST Absolute Path</td>
+                    <td>Absolute path to WLST, such as /path/to/wlst.cmd or wlst.sh. (Required)</td>
+                  </tr>
+                  <tr>
+                    <td class="required">Configuration</td>
+                    <td>Configuration name from which the Admin URL and credentials are read.A Configuration defines connection details and can be created by going to plugin configuration page. (Required)</td>
+                  </tr>
                     <tr>
-
-                        <td class="required">WLST Absolute Path</td>
-
-                        <td>Absolute path to WLST, such as /path/to/wlst.cmd or wlst.sh.</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td class="required">Configuration</td>
-
-                        <td>Configuration name from which the Admin URL and credentials are read.A Configuration defines connection details and can be created by going to plugin configuration page</td>
-
-                    </tr>
-					
-                    <tr>
-
                         <td class="required">User Credentials</td>
-
-                        <td>User credentials(Username and password).</td>
-
+                        <td>User credentials(Username and password). (Required)</td>
                     </tr>
-
                     <tr>
-
                         <td class="required">Domain Name</td>
-
-                        <td>Name of the user domain.</td>
-
+                        <td>Name of the user domain. (Required)</td>
                     </tr>
-
                     <tr>
-
                         <td class="required">Realm Name</td>
-
-                        <td>Name of the User Realm</td>
-
+                        <td>Name of the User Realm. (Required)</td>
                     </tr>
-
                     <tr>
-
                         <td>User Description</td>
-
                         <td>Description about the User</td>
-
                     </tr>	
-					
-
                     <tr>
-
                         <td>Overwrite Existing Group</td>
-
                         <td>If enabled it will delete already existing group of the same name and recreate new group.</td>
-
                     </tr>	
-					
                 </tbody>
-
             </table>
-			
 		 	</li>
-						
-		        <br />
-	            <img src="../../plugins/EC-WebLogic/images/CreateUser/EC-WLSCreateUserStatus2.png" />
-		        <br />
-
-		        </ol>   
-						
-		        <h3>Output</h3>
-						
-		        <p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The database was created successfully.</p>
-		       <img src="../../plugins/EC-WebLogic/images/CreateUser/EC-WLSCreateUserStatus3.png" />
-		
-		        <p>In the <b>CreateUser</b> step, click the Log button to see the diagnostic information: 
-						<br />
-		        <img src="../../plugins/EC-WebLogic/images/CreateUser/EC-WLSCreateUserStatus4.png" />
-						
-				</p>
-
+		    <br />
+	        <img src="../../plugins/EC-WebLogic/images/CreateUser/EC-WLSCreateUserStatus2.png" />
+		    <br />
+		    </ol>   
+		    <h3>Output</h3>
+		    <p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The database was created successfully.</p>
+		    <img src="../../plugins/EC-WebLogic/images/CreateUser/EC-WLSCreateUserStatus3.png" />
+		    <p>In the <b>CreateUser</b> step, click the Log button to see the diagnostic information: 
+			<br />
+		    <img src="../../plugins/EC-WebLogic/images/CreateUser/EC-WLSCreateUserStatus4.png" />
+			</p>
         </div>
 
 		<div id="DeleteCluster">
@@ -1806,117 +1753,56 @@
         </div>
 		
         <div id="DeleteUser">
-
             <a name="DeleteUser" id="DeleteUser"></a> 
-
             <h2>DeleteUser</h2>
-
             <p>This procedure deletes a user on the WebLogic server.</p>
-
 			<h3>Input</h3>
-			
             <ol>
-				  <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
-			      <li>Go to the CreateDatasource procedure.</li>
-			      <li>Enter the following parameters:<br />
-						
-           <table class="grid">
-
+			  <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
+			  <li>Go to the DeleteUser procedure.</li>
+			  <li>Enter the following parameters:<br />
+              <table class="grid">
                 <thead>
-
-                    <tr>
-
-                        <th>Parameter</th>
-
-                        <th>Description</th>
-
-                    </tr>
-
+                  <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                  </tr>
                 </thead>
-
-
                 <tbody>
-
-                    <tr>
-
-                        <td class="required">WLST Absolute Path</td>
-
-                        <td>Absolute path to WLST, such as /path/to/wlst.cmd or wlst.sh.</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td class="required">Configuration</td>
-
-                        <td>Configuration name from which the Admin URL and credentials are read.A Configuration defines connection details and can be created by going to plugin configuration page</td>
-
-                    </tr>
-					
-                    <tr>
-
-                        <td class="required">User Name</td>
-
-                        <td>Name of the user to be deleted.</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td class="required">Domain Name</td>
-
-                        <td>Name of the user domain.</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td class="required">Realm Name</td>
-
-                        <td>Name of the User Realm</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>User Description</td>
-
-                        <td>Description about the User</td>
-
-                    </tr>	
-					
-
-                    <tr>
-
-                        <td>Overwrite Existing Group</td>
-
-                        <td>If enabled it will delete already existing group of the same name and recreate new group.</td>
-
-                    </tr>	
-					
+                  <tr>
+                    <td class="required">WLST Absolute Path</td>
+                    <td>Absolute path to WLST, such as /path/to/wlst.cmd or wlst.sh. (Required)</td>
+                  </tr>
+                  <tr>
+                    <td class="required">Configuration</td>
+                    <td>Configuration name from which the Admin URL and credentials are read.A Configuration defines connection details and can be created by going to plugin configuration page. (Required)</td>
+                  </tr>
+                  <tr>
+                    <td class="required">User Name</td>
+                    <td>Name of the user to be deleted. (Required)</td>
+                  </tr>
+                  <tr>
+                    <td class="required">Domain Name</td>
+                    <td>Name of the user domain. (Required)</td>
+                  </tr>
+                  <tr>
+                    <td class="required">Realm Name</td>
+                    <td>Name of the User Realm. (Required)</td>
+                  </tr>
                 </tbody>
-
             </table>
-			
 		 	</li>
-						
-		        <br />
-	            <img src="../../plugins/EC-WebLogic/images/DeleteUser/EC-WLSDeleteUserStatus2.png" />
-		        <br />
-
-		        </ol>   
-						
-		        <h3>Output</h3>
-						
-		        <p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The database was created successfully.</p>
-		       <img src="../../plugins/EC-WebLogic/images/DeleteUser/EC-WLSDeleteUserStatus3.png" />
-		
-		        <p>In the <b>DeleteUser</b> step, click the Log button to see the diagnostic information: 
-						<br />
-		        <img src="../../plugins/EC-WebLogic/images/DeleteUser/EC-WLSDeleteUserStatus4.png" />
-						
-				</p>
-
+		    <br />
+	        <img src="../../plugins/EC-WebLogic/images/DeleteUser/EC-WLSDeleteUserStatus2.png" />
+		    <br />
+		    </ol>   
+		    <h3>Output</h3>
+		    <p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The database was created successfully.</p>
+		    <img src="../../plugins/EC-WebLogic/images/DeleteUser/EC-WLSDeleteUserStatus3.png" />
+		    <p>In the <b>DeleteUser</b> step, click the Log button to see the diagnostic information: 
+			<br />
+		    <img src="../../plugins/EC-WebLogic/images/DeleteUser/EC-WLSDeleteUserStatus4.png" />
+			</p>
         </div>
 		
 		<div id="DeployApp"> <a name="DeployApp" id="DeployApp"></a> 
