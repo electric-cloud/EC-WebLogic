@@ -7,7 +7,7 @@ try:
     password = r'[% password %]'
     domainName = r'[% domain_name %]'
     realmName = r'[% realm_name %]'
-    desc = r'[% desc %]'
+    desc = r'''[% desc %]'''
     overwriteExistingUser = r'[% overwrite_existing_user %]'
     cd('/SecurityConfiguration/' + domainName + '/Realms/' + realmName + '/AuthenticationProviders/DefaultAuthenticator')
 

@@ -6,7 +6,7 @@ try:
     groupName = r'[% group_name %]'
     domainName = r'[% domain_name %]'
     realmName = r'[% realm_name %]'
-    desc = r'[% desc %]'
+    desc = r'''[% desc %]'''
     overwriteExistingGroup = r'[% overwrite_existing_group %]'
     cd('/SecurityConfiguration/' + domainName + '/Realms/' + realmName + '/AuthenticationProviders/DefaultAuthenticator')
     if (not cmo.groupExists(groupName)):

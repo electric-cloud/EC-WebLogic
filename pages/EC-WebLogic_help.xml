@@ -1236,7 +1236,7 @@
 			
             <ol>
 				  <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
-			      <li>Go to the CreateDatasource procedure.</li>
+			      <li>Go to the CreateGroup procedure.</li>
 			      <li>Enter the following parameters:<br />
 						
            <table class="grid">
