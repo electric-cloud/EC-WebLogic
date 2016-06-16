@@ -906,7 +906,7 @@
 			
             <ol>
 				  <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
-			      <li>Go to the CheckServerStatus procedure.</li>
+			      <li>Go to the CreateCluster procedure.</li>
 			      <li>Enter the following parameters:<br />
 						
             <table class="grid">
@@ -1139,7 +1139,7 @@
 			
             <ol>
 				  <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
-			      <li>Go to the CreateDatasource procedure.</li>
+			      <li>Go to the CreateDomain procedure.</li>
 			      <li>Enter the following parameters:<br />
 						
            <table class="grid">
@@ -1350,7 +1350,7 @@
 			
             <ol>
 				  <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
-			      <li>Go to the CreateDatasource procedure.</li>
+			      <li>Go to the CreateTemplate procedure.</li>
 			      <li>Enter the following parameters:<br />
 						
            <table class="grid">
@@ -1492,7 +1492,7 @@
 			
             <ol>
 				  <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
-			      <li>Go to the CheckServerStatus procedure.</li>
+			      <li>Go to the DeleteCluster procedure.</li>
 			      <li>Enter the following parameters:<br />
 						
             <table class="grid">
@@ -1650,7 +1650,7 @@
 			
             <ol>
 				  <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
-			      <li>Go to the CreateDatasource procedure.</li>
+			      <li>Go to the DeleteGroup procedure.</li>
 			      <li>Enter the following parameters:<br />
 						
            <table class="grid">
@@ -1939,7 +1939,7 @@
 			
             <ol>
 				  <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
-			      <li>Go to the AddUserToGroup procedure.</li>
+			      <li>Go to the RemoveUserFromGroup procedure.</li>
 			      <li>Enter the following parameters:<br />
 						
             <table class="grid">
@@ -3179,7 +3179,7 @@
 			
             <ol>
 				  <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
-			      <li>Go to the StartManagedServer procedure.</li>
+			      <li>Go to the StopManagedServer procedure.</li>
 			      <li>Enter the following parameters:<br />
 						
            <table class="grid">
@@ -3713,7 +3713,7 @@
 			
             <ol>
 				<li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
-			    <li>Go to the UndeployApp procedure.</li>
+			    <li>Go to the UnlockUserAccount procedure.</li>
 			    <li>Enter the following parameters:<br />
 						
             <table class="grid">
@@ -3814,7 +3814,7 @@
 			
             <ol>
 				<li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
-			    <li>Go to the UndeployApp procedure.</li>
+			    <li>Go to the UpdateApp procedure.</li>
 			    <li>Enter the following parameters:<br />
 						
             <table class="grid">
