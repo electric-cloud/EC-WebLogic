@@ -23,6 +23,7 @@ try:
             print('Created User: ' + userName)
         else:
             print('User: ' + userName + ' already exists and overwriteExistingUser flag is false')
+            sys.exit(1)
 
 except WLSTException, e:
     print('Create User Exception: ' + str(e))
