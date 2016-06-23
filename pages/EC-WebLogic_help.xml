@@ -363,10 +363,6 @@
                   <td>Name of the managed server to be created. (Required)</td>
                 </tr>
                 <tr>
-                  <td class="required">Domain Name</td>
-                  <td>Name of the user domain.</td>
-                </tr>
-                <tr>
                   <td>Listen Address</td>
                   <td>Server Listen Address.</td>
                 </tr>
@@ -1126,102 +1122,65 @@
 				</p>
 
         </div>
-		
         <div id="CreateDomain">
-
             <a name="CreateDomain" id="CreateDomain"></a> 
-
             <h2>CreateDomain</h2>
-
             <p>This procedure creates a new domain on the WebLogic server.</p>
-
-			<h3>Input</h3>
-			
+            <h3>Input</h3>
             <ol>
-				  <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
-			      <li>Go to the CreateDomain procedure.</li>
-			      <li>Enter the following parameters:<br />
-						
-           <table class="grid">
-
+              <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
+              <li>Go to the CreateDomain procedure.</li>
+              <li>Enter the following parameters:<br />
+              <table class="grid">
                 <thead>
-
-                    <tr>
-
-                        <th>Parameter</th>
-
-                        <th>Description</th>
-
-                    </tr>
-
+                  <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                  </tr>
                 </thead>
-
-
                 <tbody>
-
-                    <tr>
-
-                        <td class="required">WLST Absolute Path</td>
-
-                        <td>Absolute path to WLST, such as /path/to/wlst.cmd or wlst.sh.</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td class="required">Configuration</td>
-
-                        <td>Configuration name from which the Admin URL and credentials are read.A Configuration defines connection details and can be created by going to plugin configuration page</td>
-
-                    </tr>
-					
-                    <tr>
-
-                        <td class="required">User Credentials</td>
-
-                        <td>Credentials of the user(Username and password).</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td class="required">Domain Template</td>
-
-                        <td>Name and location of the domain template from which you want to create a domain.</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td class="required">Domain Directory</td>
-
-                        <td>Name of the directory to which you want to write the domain configuration information.</td>
-
-                    </tr>
-
+                  <tr>
+                    <td class="required">WLST Absolute Path</td>
+                    <td>Absolute path to WLST, such as /path/to/wlst.cmd or wlst.sh.</td>
+                  </tr>
+                  <tr>
+                    <td class="required">Configuration</td>
+                    <td>Configuration name from which the Admin URL and credentials are read.A Configuration defines connection details and can be created by going to plugin configuration page</td>
+                  </tr>
+                  <tr>
+                    <td class="required">User Credentials</td>
+                    <td>Credentials of the user(Username and password).</td>
+                  </tr>
+                  <tr>
+                    <td class="required">Domain Template</td>
+                    <td>Name and location of the domain template from which you want to create a domain.</td>
+                  </tr>
+                  <tr>
+                    <td class="required">Domain Directory</td>
+                    <td>Name of the directory to which you want to write the domain configuration information.</td>
+                  </tr>
+                  <tr>
+                    <td>Listen Address</td>
+                    <td>Server Listen Address.</td>
+                  </tr>
+                  <tr>
+                    <td>Listen Port</td>
+                    <td>Server Listen Port.</td>
+                  </tr>
                 </tbody>
-
-            </table>
-			
-		 	</li>
-						
-		        <br />
-	            <img src="../../plugins/EC-WebLogic/images/CreateDomain/EC-WLSCreateDomainStatus2.png" />
-		        <br />
-
-		        </ol>   
-						
-		        <h3>Output</h3>
-						
-		        <p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The database was created successfully.</p>
-		       <img src="../../plugins/EC-WebLogic/images/CreateDomain/EC-WLSCreateDomainStatus3.png" />
-		
-		        <p>In the <b>CreateDomain</b> step, click the Log button to see the diagnostic information: 
-						<br />
-		        <img src="../../plugins/EC-WebLogic/images/CreateDomain/EC-WLSCreateDomainStatus4.png" />
-						
-				</p>
-
+              </table>
+              </li>
+              <br />
+              <img src="../../plugins/EC-WebLogic/images/CreateDomain/EC-WLSCreateDomainStatus2.png" />
+              <br />
+            </ol>
+            <h3>Output</h3>
+            <p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The database was created successfully.</p>
+            <img src="../../plugins/EC-WebLogic/images/CreateDomain/EC-WLSCreateDomainStatus3.png" />
+            <p>In the <b>CreateDomain</b> step, click the Log button to see the diagnostic information: 
+              <br />
+              <img src="../../plugins/EC-WebLogic/images/CreateDomain/EC-WLSCreateDomainStatus4.png" />
+            </p>
         </div>
 		
         <div id="CreateGroup">
