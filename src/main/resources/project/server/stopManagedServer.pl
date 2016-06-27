@@ -136,12 +136,13 @@ sub main() {
         }
     }
 
-    my @args_safe = map {
+    my @args_safe = @args;
+    @args_safe = map {
         if ($_ eq $configuration{password}) {
             $_ = '***PROTECTED***';
         }
         $_;
-    } @args;
+    } @args_safe;
 
     my $cmdLine = createCommandLine(\@args);
 
