@@ -3756,7 +3756,10 @@
 		<img src="../../plugins/EC-WebLogic/images/RunWLST/EC-WLSRunWLST6.png" />
 
     <h1 id="rns">Release Notes</h1>
-	
+	<h2>@PLUGIN_KEY@ 3.2.1</h2>
+    <ul>
+      <li>A lot of minor improvements and bugfixes.</li>
+    </ul>
         <h2>@PLUGIN_KEY@ 3.2.0</h2>
 
         <ul>
