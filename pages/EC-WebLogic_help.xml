@@ -2103,131 +2103,61 @@
         </div>
 
         <div id="RunDeployer"> <a name="RunDeployer" id="RunDeployer"></a> 
-
             <h2>RunDeployer</h2>
-
             <p>This procedure runs weblogic.Deployer tool in a free mode.
-
             The weblogic.Deployer tool is a Java-based deployment tool that
-
             provides a command-line interface to the WebLogic Server deployment API.</p>
-						
 			<h3>Input</h3>
-			
             <ol>
-				  <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
-			      <li>Go to the RunDeployer procedure.</li>
-			      <li>Enter the following parameters:<br />
-						
+			  <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
+			  <li>Go to the RunDeployer procedure.</li>
+			  <li>Enter the following parameters:<br />
             <table class="grid">
-
-                <thead>
-
-                    <tr>
-
-                        <th>Parameter</th>
-
-                        <th>Description</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    <tr>
-
-                        <td class="required">Command to Use</td>
-
-                        <td>The weblogic.Deployer command to use, such as "-deploy", "-undeploy", "-stop" or "-listapps".
-
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Java Parameters</td>
-
-                        <td>Java parameters to pass, such as "-verbose".</td>
-
-                    </tr>
-										
-										 <tr>
-
-                        <td class="required">Configuration Name</td>
-
-                        <td>Name of the configuration to use when the Administration Server URL and credentials are retrieved.</td>
-
-                    </tr>
-
-										 <tr>
-
-                        <td>Additional Commands</td>
-
-                        <td>Additional commands to be entered in the 
-
-                        weblogic.Deployer tool.</td>
-
-                    </tr>
-
-										 <tr>
-
-                        <td class="required">Java Absolute Path</td>
-
-                        <td>Absolute path of java, such as "java", "java.exe" or "/path/to/java".</td>
-                    </tr>
-										
-                    <tr>
-
-                        <td class="required">Application Name</td>
-
-                        <td>Name of the application to stop, such as "webapp". </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>setDomainEnv Script Absolute Path</td>
-
-                        <td>Absolute path of the setDomainEnv
-
-                        script, including filename and extension, such as 
-												
-						"/path/to/setDomainEnv.sh" or "setDomainEnv.cmd".</td>
-
-                    </tr>
-
-
-
-                    <tr>
-
-                        <td>weblogic jar Absolute Path</td>
-
-
-                        <td>Absolute path of the weblogic.jar file that is 
-
-                        required to run the stop application
-
-                        operation. In a Windows environment, if the
-
-                        jar file has already been added to the environment
-
-                        classpath variable, it is not necessary to
-
-                        include it. In a Linux environment you must
-
-                        include the path, such as "/path/to/weblogic.jar" or 
-
-                        "/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar".</td>
-
-                    </tr>
-
-                </tbody>
-
+              <thead>
+                  <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="required">Command to Use</td>
+                  <td>The weblogic.Deployer command to use, such as "-deploy", "-undeploy", "-stop" or "-listapps".
+                  </td>
+                </tr>
+                <tr>
+                  <td>Java Parameters</td>
+                  <td>Java parameters to pass, such as "-verbose".</td>
+                </tr>
+				<tr>
+                  <td class="required">Configuration Name</td>
+                  <td>Name of the configuration to use when the Administration Server URL and credentials are retrieved.</td>
+                </tr>
+				<tr>
+                  <td>Additional Commands</td>
+                  <td>Additional commands to be entered in the weblogic.Deployer tool.</td>
+                </tr>
+				<tr>
+                  <td class="required">Java Absolute Path</td>
+                  <td>Absolute path of java, such as "java", "java.exe" or "/path/to/java".</td>
+                </tr>
+                <tr>
+                  <td class="required">Application Name</td>
+                  <td>Name of the application to stop, such as "webapp". </td>
+                </tr>
+                <tr>
+                  <td class="required">setDomainEnv Script Absolute Path</td>
+                  <td>Absolute path of the setDomainEnv script, including filename and extension, such as "/path/to/setDomainEnv.sh" or "setDomainEnv.cmd".</td>
+                </tr>
+                <tr>
+                  <td class="required">weblogic jar Absolute Path</td>
+                  <td>Absolute path of the weblogic.jar file that is required to run the stop application operation.
+                  In a Windows environment, if the jar file has already been added to the environment classpath variable,
+                  it is not necessary to include it. In a Linux environment you must include the path,
+                  such as "/path/to/weblogic.jar" or "/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar".</td>
+                </tr>
+              </tbody>
             </table>
-
-     
 		 	</li>
 						
 		        <br />
@@ -3237,166 +3167,59 @@
             <p>This procedure stops the WebLogic Node Manager.</p>
 
             <h3>Input</h3>
-			
             <ol>
 				  <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
 			      <li>Go to the StopNodeManager procedure.</li>
 			      <li>Enter the following parameters:<br />
-						
-           <table class="grid">
-
-                <thead>
-
-                    <tr>
-
+                  <table class="grid">
+                    <thead>
+                      <tr>
                         <th>Parameter</th>
-
                         <th>Description</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    <tr>
-
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
                         <td class="required">Config Name</td>
-
-
-
-                        <td>Configuration name from which the
-
-                        credentials are read. </td>
-
-                    </tr>
-
-
-
-                    <tr>
-
+                        <td>Configuration name from which the credentials are read. </td>
+                      </tr>
+                      <tr>
                         <td>Host Name</td>
-
-
-
-                        <td>Host name of the Node Manager. The default 
-
-                        is localhost.</td>
-
-                    </tr>
-
-
-
-                    <tr>
-
+                        <td>Host name of the Node Manager. The default is localhost.</td>
+                      </tr>
+                      <tr>
                         <td>Node Manager Port</td>
-
-
-
-                        <td>Port number of Node Manager. The default 
-						
-						is a value based on the Node Manager server type.
-						
-						For the plain type, the default is 5556. For the rsh type,
-
-                        the default is 514. For the ssh type, the default is 22. 
-						
-						For the ssl type, the default is 5556.</td>
-
-                    </tr>
-
-
-
-                    <tr>
-
-                        <td>Domain Name</td>
-
-
-
-                        <td>Name of the domain to manage. 
-						
-						The default is mydomain.</td>
-
-                    </tr>
-
-
-
-                    <tr>
-
-                        <td>Domain Path</td>
-
-
-
-                        <td>Path of the domain directory where
-
-                        you want to save the Node Manager secret
-
-                        file (nm_password.properties) and
-
-                        SerializedSystemIni.dat file. The 
-
-                        default is the directory in which WLST was
-
-                        started.</td>
-
-                    </tr>
-
-
-
-                    <tr>
-
-                        <td class="required">WLST Absolute
-
-                        Path</td>
-
-
-
-                        <td>Absolute path to the WLST, such as /path/to/wlst.cmd  
-						
-						or wlst.sh.
-
+                        <td>Port number of Node Manager. The default is a value based on the Node Manager server type.
+						For the plain type, the default is 5556. For the rsh type, the default is 514. For the ssh type, the default is 22. 
+						For the ssl type, the default is 5556.
                         </td>
-
+                      </tr>
+                      <tr>
+                        <td class="required">Domain Name</td>
+                        <td>Name of the domain to manage. The default is mydomain.</td>
+                      </tr>
+                      <tr>
+                        <td class="required">Domain Path</td>
+                        <td>Path of the domain directory where you want to save the Node Manager secret file(nm_password.properties)
+                        and SerializedSystemIni.dat file. The  default is the directory in which WLST was started.</td>
                     </tr>
-
-
-
                     <tr>
-
-                        <td>Node Manage Type</td>
-
-
-                        <td>Type of the Node Manager server: Plain, RSH, SSH, or SSL. The 
-
-                        default is SSL.</td>
-
+                      <td class="required">WLST Absolute Path</td>
+                      <td>Absolute path to the WLST, such as /path/to/wlst.cmd or wlst.sh.
+                      </td>
                     </tr>
-
-
-
                     <tr>
-
+                      <td class="required">Node Manage Type</td>
+                      <td>Type of the Node Manager server: Plain, RSH, SSH, or SSL. The default is SSL.</td>
+                    </tr>
+                    <tr>
                         <td>Maximum Elapsed Time</td>
-
-
-
-                        <td>Defines the time in seconds that the
-
-                        job waits to test the status of the node
-
-                        manager. The step has a "Time
-
-                        Limit" property, so if this property is set
-
-                        to less than the parameter value, it will abort
-
-                        the step early. If no value is entered, there is no wait time
-
-                        (the URL is checked only one time).</td>
-
+                        <td>Defines the time in seconds that the job waits to test the status of the node manager.
+                        The step has a "Time Limit" property, so if this property is set to less than the parameter value, it will abort
+                        the step early. If no value is entered, there is no wait time (the URL is checked only one time).
+                        </td>
                     </tr>
-
-                </tbody>
+                    </tbody>
 
             </table>     
 		 	</li>

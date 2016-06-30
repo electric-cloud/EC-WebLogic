@@ -159,24 +159,19 @@
     
     #inject config...
     if(%configuration){
-        
-        if($configuration{'weblogic_url'} ne ''){
+        if($configuration{'weblogic_url'}) {
             push(@args, '-adminurl ' . $configuration{'weblogic_url'});
         }
-        
-        if($configuration{'weblogic_port'} ne ''){
+        if($configuration{'weblogic_port'}) {
             push(@args, '-port ' . $configuration{'weblogic_port'});
         }
-        
-        if($configuration{'user'} ne ''){
+        if($configuration{'user'}) {
             push(@args, '-username ' . $configuration{'user'});
         }
-        
-        if($configuration{'password'} ne ''){
+        if($configuration{'password'}) {
             push(@args, '-password ' . $configuration{'password'});
         }
     }
-    
     #setting the command
     push(@args, $::gCommandToUse);
     
