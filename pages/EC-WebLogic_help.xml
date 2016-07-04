@@ -46,6 +46,7 @@
 				<li><a href="#CreateDomain">CreateDomain</a></li>
 				<li><a href="#CreateGroup">CreateGroup</a></li>
                 <li><a href="#CreateManagedServer">CreateManagedServer</a></li>
+                <li><a href="#DeleteManagedServer">DeleteManagedServer</a></li>
 				<li><a href="#CreateTemplate">CreateTemplate</a></li>
 				<li><a href="#CreateUser">CreateUser</a></li>
 				<li><a href="#DeleteCluster">DeleteCluster</a></li>
@@ -280,7 +281,7 @@
 
                         <td class="required">WLST Absolute Path</td>
 
-                        <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)</td>
+                        <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. </td>
 
                     </tr>
 
@@ -288,7 +289,7 @@
 
                         <td class="required">Configuration Name</td>
 
-                        <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. A Configuration defines connection details and can be created by going to plugin configuration page. (Required)</td>
+                        <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. A Configuration defines connection details and can be created by going to plugin configuration page. </td>
 
                     </tr>
 
@@ -296,7 +297,7 @@
 
                         <td class="required">Server Name</td>
 
-                        <td>Name of the server which is to be added to cluster. (Required)</td>
+                        <td>Name of the server which is to be added to cluster. </td>
 
                     </tr>
 
@@ -304,7 +305,7 @@
 
                         <td class="required">Cluster Name</td>
 
-                        <td>Name of the cluster in which server is to be added. (Required)</td>
+                        <td>Name of the cluster in which server is to be added. </td>
 
                     </tr>
 					
@@ -352,15 +353,15 @@
               <tbody>
                 <tr>
                   <td class="required">WLST Absolute Path</td>
-                  <td>Absolute path to WLST, such as /path/to/wlst.cmd or wlst.sh. (Required)</td>
+                  <td>Absolute path to WLST, such as /path/to/wlst.cmd or wlst.sh. </td>
                 </tr>
                 <tr>
                   <td class="required">Configuration</td>
-                  <td>Configuration name from which the Admin URL and credentials are read.A Configuration defines connection details and can be created by going to plugin configuration page. (Required)</td>
+                  <td>Configuration name from which the Admin URL and credentials are read.A Configuration defines connection details and can be created by going to plugin configuration page. </td>
                 </tr>
                 <tr>
                   <td class="required">Server Name</td>
-                  <td>Name of the managed server to be created. (Required)</td>
+                  <td>Name of the managed server to be created. </td>
                 </tr>
                 <tr>
                   <td>Listen Address</td>
@@ -383,6 +384,51 @@
           <p>In the <b>CreateManagedServer</b> step, click the Log button to see the diagnostic information: 
 	      <br />
 	      <img src="../../plugins/EC-WebLogic/images/CreateManagedServer/EC-WLSCreateManagedServer4.png" />
+          </p>
+        </div>
+                <div id="DeleteManagedServer">
+          <a name="DeleteManagedServer" id="DeleteManagedServer"></a> 
+          <h2>DeleteManagedServer</h2>
+          <p>This procedure deletes existing managed server from the WebLogic server.</p>
+          <h3>Input</h3>
+          <ol>
+	        <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
+	        <li>Go to the DeleteManagedServer procedure.</li>
+	        <li>Enter the following parameters:<br />
+            <table class="grid">
+              <thead>
+                <tr>
+                  <th>Parameter</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="required">WLST Absolute Path</td>
+                  <td>Absolute path to WLST, such as /path/to/wlst.cmd or wlst.sh. </td>
+                </tr>
+                <tr>
+                  <td class="required">Configuration</td>
+                  <td>Configuration name from which the Admin URL and credentials are read.
+                    A Configuration defines connection details and can be created by going to plugin configuration page. </td>
+                </tr>
+                <tr>
+                  <td class="required">Server Name</td>
+                  <td>Name of the managed server to be deleted. </td>
+                </tr>
+              </tbody>
+            </table>
+	        </li>
+	        <br />
+	        <img src="../../plugins/EC-WebLogic/images/DeleteMangedServer/EC-WLSDeleteManagedServer2.png" />
+	        <br />
+          </ol>   
+          <h3>Output</h3>
+          <p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The Managed Server was deleted successfully.</p>
+          <img src="../../plugins/EC-WebLogic/images/DeleteMangedServer/EC-WLSDeleteManagedServer3.png" />
+          <p>In the <b>DeleteManagedServer</b> step, click the Log button to see the diagnostic information: 
+	      <br />
+	      <img src="../../plugins/EC-WebLogic/images/DeleteMangedServer/EC-WLSDeleteManagedServer4.png" />
           </p>
         </div>
         
@@ -645,7 +691,7 @@
 
                         <td class="required">Target URL</td>
 
-                        <td>URL of the page to check. (Required)
+                        <td>URL of the page to check. 
 
                         </td>
 
@@ -661,7 +707,7 @@
 												<li>Page found (200)</li>
 												<li>Page not found (400)</li>
 												<li>Page error</li>
-												</ul> (Required)
+												</ul> 
 												
 						</td>
 
@@ -727,7 +773,7 @@
 
                         <td class="required">Configuration Name</td>
 
-                        <td>Name of the configuration to be used.URL, port and credentials are from the specified configuration. (Required)</td>
+                        <td>Name of the configuration to be used.URL, port and credentials are from the specified configuration. </td>
 
                     </tr>
 
@@ -735,7 +781,7 @@
 
                         <td class="required">Wlst Script Absolute Path</td>
 
-                        <td>Absolute path to WLST, such as "/path/to/wlst.cmd" <i>or</i>"wlst.sh". (Required)</td>
+                        <td>Absolute path to WLST, such as "/path/to/wlst.cmd" <i>or</i>"wlst.sh". </td>
 
                     </tr>
 
@@ -766,7 +812,7 @@
 
                         <td class="required">Instance Name</td>
 
-                        <td>Name of the instance to check. (Required)</td>
+                        <td>Name of the instance to check. </td>
 
                     </tr>
 
@@ -1397,23 +1443,23 @@
                 <tbody>
                   <tr>
                     <td class="required">WLST Absolute Path</td>
-                    <td>Absolute path to WLST, such as /path/to/wlst.cmd or wlst.sh. (Required)</td>
+                    <td>Absolute path to WLST, such as /path/to/wlst.cmd or wlst.sh. </td>
                   </tr>
                   <tr>
                     <td class="required">Configuration</td>
-                    <td>Configuration name from which the Admin URL and credentials are read.A Configuration defines connection details and can be created by going to plugin configuration page. (Required)</td>
+                    <td>Configuration name from which the Admin URL and credentials are read.A Configuration defines connection details and can be created by going to plugin configuration page. </td>
                   </tr>
                     <tr>
                         <td class="required">User Credentials</td>
-                        <td>User credentials(Username and password). (Required)</td>
+                        <td>User credentials(Username and password). </td>
                     </tr>
                     <tr>
                         <td class="required">Domain Name</td>
-                        <td>Name of the user domain. (Required)</td>
+                        <td>Name of the user domain. </td>
                     </tr>
                     <tr>
                         <td class="required">Realm Name</td>
-                        <td>Name of the User Realm. (Required)</td>
+                        <td>Name of the User Realm. </td>
                     </tr>
                     <tr>
                         <td>User Description</td>
@@ -1730,23 +1776,23 @@
                 <tbody>
                   <tr>
                     <td class="required">WLST Absolute Path</td>
-                    <td>Absolute path to WLST, such as /path/to/wlst.cmd or wlst.sh. (Required)</td>
+                    <td>Absolute path to WLST, such as /path/to/wlst.cmd or wlst.sh. </td>
                   </tr>
                   <tr>
                     <td class="required">Configuration</td>
-                    <td>Configuration name from which the Admin URL and credentials are read.A Configuration defines connection details and can be created by going to plugin configuration page. (Required)</td>
+                    <td>Configuration name from which the Admin URL and credentials are read.A Configuration defines connection details and can be created by going to plugin configuration page. </td>
                   </tr>
                   <tr>
                     <td class="required">User Name</td>
-                    <td>Name of the user to be deleted. (Required)</td>
+                    <td>Name of the user to be deleted. </td>
                   </tr>
                   <tr>
                     <td class="required">Domain Name</td>
-                    <td>Name of the user domain. (Required)</td>
+                    <td>Name of the user domain. </td>
                   </tr>
                   <tr>
                     <td class="required">Realm Name</td>
-                    <td>Name of the User Realm. (Required)</td>
+                    <td>Name of the User Realm. </td>
                   </tr>
                 </tbody>
             </table>
@@ -2031,7 +2077,7 @@
 
 
 
-                        <td>Configuration name from which the Admin URL and credentials are read. (Required)</td>
+                        <td>Configuration name from which the Admin URL and credentials are read. </td>
 
                     </tr>
 
@@ -2043,7 +2089,7 @@
 
 
 
-                        <td>Absolute path to the WLST, such as path/to/wlst.cmd or wlst.sh. (Required)</td>
+                        <td>Absolute path to the WLST, such as path/to/wlst.cmd or wlst.sh. </td>
 
                     </tr>
 
@@ -2055,7 +2101,7 @@
 
 
 
-                        <td>Name of the server. (Required)</td>
+                        <td>Name of the server. </td>
 
                     </tr>
 
@@ -2532,15 +2578,15 @@
                 <tbody>
                     <tr>
                         <td class="required">Application Name</td>
-                        <td>Name of the application to start, such as "webapp". (Required)</td>
+                        <td>Name of the application to start, such as "webapp". </td>
                     </tr>
                     <tr>
                         <td class="required">Configuration Name</td>
-                        <td>Name of the configuration to be used for retrieving Administration Server URL and credentials. (Required)</td>
+                        <td>Name of the configuration to be used for retrieving Administration Server URL and credentials. </td>
                     </tr>                   
                     <tr>
                         <td class="required">WLST Absolute Path</td>
-                        <td>Absolute path to the WLST, such as /path/to/wlst.cmd or wlst.sh. (Required)</td>
+                        <td>Absolute path to the WLST, such as /path/to/wlst.cmd or wlst.sh. </td>
                     </tr>
 
                 </tbody>
@@ -3585,110 +3631,59 @@
 				<img src="../../plugins/EC-WebLogic/images/UnlockUserAccount/EC-WLSUnlockUserAccountStatus4.png" />.
 							 
 		</div>
-		
-			<div id="UpdateApp"> <a name="UpdateApp" id="UpdateApp"></a> 
-
-            <h2>UpdateApp</h2>
-
-            <p>This procedure can be used to update an application.</p>
-
-            <h3>Input</h3>
-			
-            <ol>
-				<li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
-			    <li>Go to the UpdateApp procedure.</li>
-			    <li>Enter the following parameters:<br />
-						
-            <table class="grid">
-
-                <thead>
-
-                    <tr>
-
-                        <th>Parameter</th>
-
-                        <th>Description</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-								
-                    <tr>
-
-                        <td class="required">WLST Absolute Path</td>
-
-                        <td>Absolute path to the WLST, such as /path/to/wlst or wlst.sh.
-
-                        </td>
-
-                    </tr>
-					
-					<tr>
-
-                        <td class="required">Configuration Name</td>
-
-                        <td>Name of the configuration to be used when the Administration Server URL and credentials
-
-                        are retrieved.A Configuration defines connection details and can be created by going to plugin configuration page.</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td class="required">Application Name</td>
-
-                        <td>Name of the application which is to be updated.</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td class="required">Plan Path</td>
-
-                        <td>Name of the new deployment plan file. The filename can be absolute or relative to the application directory.</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td class="required">Additional Options</td>
-
-                        <td>Comma-separated list of deployment options, specified as name-value pairs.</td>
-
-                    </tr>      
-                  
-                </tbody>
-
-            </table>
-
-     
-		 	</li>
-						
-		    <br />
-	        <img src="../../plugins/EC-WebLogic/images/UpdateApp/EC-WLSUpdateAppStatus2.png" />
-		    <br />
-
-		    </ol>   
-						
-		    <h3>Output</h3>
-						
-		    <p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The application was undeployed  
-		        successfully.</p>
-				
-		    <img src="../../plugins/EC-WebLogic/images/UpdateApp/EC-WLSUpdateAppStatus3.png" />
-		
-		    <p>In the <b>UpdateApp</b> step, click the Log button to see the diagnostic information:</p>
-			
-		    <br />
-				
-				<img src="../../plugins/EC-WebLogic/images/UpdateApp/EC-WLSUpdateAppStatus4.png" />.
-							 
+		<div id="UpdateApp"> <a name="UpdateApp" id="UpdateApp"></a> 
+        <h2>UpdateApp</h2>
+        <p>This procedure can be used to update an application.</p>
+        <h3>Input</h3>
+        <ol>
+		  <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
+		  <li>Go to the UpdateApp procedure.</li>
+		  <li>Enter the following parameters:<br />
+          <table class="grid">
+            <thead>
+              <tr>
+                <th>Parameter</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="required">WLST Absolute Path</td>
+                <td>Absolute path to the WLST, such as /path/to/wlst or wlst.sh.
+                </td>
+              </tr>
+			  <tr>
+                <td class="required">Configuration Name</td>
+                <td>Name of the configuration to be used when the Administration Server URL and credentials are retrieved.
+                A Configuration defines connection details and can be created by going to plugin configuration page.</td>
+              </tr>
+              <tr>
+                <td class="required">Application Name</td>
+                <td>Name of the application which is to be updated.</td>
+              </tr>
+              <tr>
+                <td class="required">Plan Path</td>
+                <td>Name of the new deployment plan file. The filename can be absolute or relative to the application directory.</td>
+              </tr>
+              <tr>
+                <td>Additional Options</td>
+                <td>Comma-separated list of deployment options, specified as name-value pairs.</td>
+              </tr>      
+            </tbody>
+          </table>
+		  </li>
+		  <br />
+	      <img src="../../plugins/EC-WebLogic/images/UpdateApp/EC-WLSUpdateAppStatus2.png" />
+		  <br />
+		</ol>   
+		<h3>Output</h3>
+		<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The application was undeployed successfully.</p>
+		<img src="../../plugins/EC-WebLogic/images/UpdateApp/EC-WLSUpdateAppStatus3.png" />
+		<p>In the <b>UpdateApp</b> step, click the Log button to see the diagnostic information:</p>
+		<br />
+		<img src="../../plugins/EC-WebLogic/images/UpdateApp/EC-WLSUpdateAppStatus4.png" />.
 		</div>
-
         <h1 id="example">Examples and Use Cases</h1>
-
         <!-- This section is for examples and use cases, including screenshots of the new Parameter Panel with example values filled in.
 
                                     Unfortunately, I can't tell you what exactly to put here, but it's OK to put what seems like too much! Include both parameter
