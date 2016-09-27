@@ -197,7 +197,11 @@
                     </tr>
                     <tr>
                         <td>JAVA_HOME</td>
-                        <td>JAVA_HOME environment variable. It should be used when java is not in the path, or different java need to be used.</td>
+                        <td>JAVA_HOME environment variable. It should be used when java is not in the path, or a different JDK needs to be used.</td>
+                    </tr>
+                    <tr>
+                      <td>JAVA_VENDOR</td>
+                      <td>JAVA_VENDOR environment variable. It should be used to specify the Java vendor value when setting the JAVA_HOME parameter to point to a specific JDK.</td>
                     </tr>
                     <tr>
                         <td class="required">Login as</td>
