@@ -169,6 +169,16 @@ $xpath = $ec->attachCredential($projName, $credName,
      stepName => 'DeleteGroup'});
 $errors .= $ec->checkAllErrors($xpath);
 
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'StartCluster',
+     stepName => 'StartCluster'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'StopCluster',
+     stepName => 'StopCluster'});
+$errors .= $ec->checkAllErrors($xpath);
+
 if ($errors ne '') {
     
     # Cleanup the partially created configuration we just created

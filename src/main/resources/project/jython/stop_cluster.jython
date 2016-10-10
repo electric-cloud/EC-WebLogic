@@ -1,0 +1,44 @@
+def startCluster(clustername):
+    try:
+        start(clustername,"Cluster");
+    except Exception, e:
+        print 'Error while starting cluster', e
+        dumpStack()
+        return
+
+def shutdownCluster(clustername):
+    try:
+        shutdown(clustername,"Cluster");
+    except Exception, e:
+        print 'Error while shutting down cluster',e
+        dumpStack()
+        return
+
+userName = r'''
+[% username %]
+'''.strip()
+
+password = r'''
+[% password %]
+'''.strip()
+
+weblogicURL = r'''
+[% admin_url %]
+'''.strip()
+
+clusterName = r'''
+[% cluster_name %]
+'''.strip()
+
+connect(userName, password, weblogicURL)
+shutdownCluster(clusterName)
+cluster = ('/Clusters/' + clusterName)
+cd(cluster)
+print state(clusterName, 'Cluster')
+servers = cmo.getServers()
+print servers
+domainRuntime()
+for server in servers:
+    srv = server.getName()
+    status = cmo.lookupServerLifeCycleRuntime(srv).getState()
+    print srv + ': ' + status

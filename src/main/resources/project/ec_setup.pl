@@ -231,6 +231,20 @@ my %configureUserLockoutManager = (
     category    => "Application Server"
 );
 
+my %startCluster = (
+    label       => "WebLogic - Start Cluster",
+    procedure   => "StartCluster",
+    description => "StartCluster",
+    category    => "Application Server"
+);
+
+my %stopCluster = (
+    label       => "WebLogic - Stop Cluster",
+    procedure   => "StopCluster",
+    description => "StopCluster",
+    category    => "Application Server"
+);
+
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/EC-WebLogic - Start App");
 $batch->deleteProperty(
@@ -309,6 +323,10 @@ $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Suspend Server");
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Resume Server");
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Start Cluster");
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Stop Cluster");
 
 @::createStepPickerSteps = (
     \%startApp,                    \%stopApp,
@@ -328,7 +346,8 @@ $batch->deleteProperty(
     \%createTemplate,              \%createCluster,               
     \%addServerToCluster,          \%configureUserLockoutManager, 
     \%deleteCluster,               \%createManagedServer,
-    \%deleteManagedServer    
+    \%deleteManagedServer,         \%startCluster,
+    \%stopCluster
 );
 
 if ( $upgradeAction eq "upgrade" ) {
@@ -708,6 +727,23 @@ if ( $upgradeAction eq "upgrade" ) {
                 {
                     procedureName => 'ConfigureUserLockoutManager',
                     stepName      => 'ConfigureUserLockoutManager'
+                }
+            );
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'StartCluster',
+                    stepName      => 'StartCluster'
+                }
+            );
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'StopCluster',
+                    stepName      => 'StopCluster'
                 }
             );
         }

@@ -138,6 +138,14 @@
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="configure_user_lockout_manager.jython"]/value</xpath>
   </file>
   <file>
+    <path>jython/start_cluster.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="start_cluster.jython"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/stop_cluster.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="stop_cluster.jython"]/value</xpath>
+  </file>
+  <file>
     <path>WebLogicCreateConfigForm.xml</path>
     <xpath>//property[propertyName="ui_forms"]/propertySheet/property[propertyName="WebLogicCreateConfigForm"]/value</xpath>
   </file>
@@ -386,6 +394,14 @@
     <xpath>//procedure[procedureName="AddServerToCluster"]/step[stepName="AddServerToCluster"]/command</xpath>
   </file>
   <file>
+    <path>server/startCluster.pl</path>
+    <xpath>//procedure[procedureName="StartCluster"]/step[stepName="StartCluster"]/command</xpath>
+  </file>
+  <file>
+    <path>server/stopCluster.pl</path>
+    <xpath>//procedure[procedureName="StopCluster"]/step[stepName="StopCluster"]/command</xpath>
+  </file>
+  <file>
     <path>server/configureUserLockoutManager.pl</path>
     <xpath>//procedure[procedureName="ConfigureUserLockoutManager"]/step[stepName="ConfigureUserLockoutManager"]/command</xpath>
   </file>
@@ -544,5 +560,13 @@
   <file>
     <path>parameterForms/ec_parameterForm-ConfigureUserLockoutManager.xml</path>
     <xpath>//procedure[procedureName="ConfigureUserLockoutManager"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-StartCluster.xml</path>
+    <xpath>//procedure[procedureName="StartCluster"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-StopCluster.xml</path>
+    <xpath>//procedure[procedureName="StopCluster"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
   </file>
 </fileset>
