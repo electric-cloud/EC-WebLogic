@@ -1,11 +1,3 @@
-def startCluster(clustername):
-    try:
-        start(clustername,"Cluster");
-    except Exception, e:
-        print 'Error while starting cluster', e
-        dumpStack()
-        return
-
 def shutdownCluster(clustername):
     try:
         shutdown(clustername,"Cluster");

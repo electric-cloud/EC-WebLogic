@@ -6,14 +6,6 @@ def startCluster(clustername):
         dumpStack()
         return
 
-def startCluster(clustername):
-    try:
-        start(clustername,"Cluster");
-    except Exception, e:
-        print 'Error while starting cluster', e
-        dumpStack()
-        return
-
 userName = r'''
 [% username %]
 '''.strip()
