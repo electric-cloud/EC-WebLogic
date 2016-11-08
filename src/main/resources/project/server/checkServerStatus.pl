@@ -71,7 +71,7 @@ sub main {
     my $template = $wl->render_template_from_property($template_path, $render_params);
 
     $wl->out(10, "Generated script:\n", $template);
-    # my $script = $wl->render_template_from_property($template_path, $render_params);
+
     my $path = $wl->generate_exec_path();
     open FH, '>>', $path;
     print FH $template;
