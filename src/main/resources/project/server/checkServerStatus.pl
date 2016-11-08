@@ -68,10 +68,13 @@ sub main {
     };
     my $template_path = '/myProject/jython/check_server_status.jython';
 
-    my $script = $wl->render_template_from_property($template_path, $render_params);
+    my $template = $wl->render_template_from_property($template_path, $render_params);
+
+    $wl->out(10, "Generated script:\n", $template);
+
     my $path = $wl->generate_exec_path();
-    open FH, '>>', $path;
-    print FH $script;
+    open FH, '>', $path;
+    print FH $template;
     close FH;
 
     my $exec_result;
