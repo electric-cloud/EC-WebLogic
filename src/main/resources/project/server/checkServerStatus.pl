@@ -73,7 +73,7 @@ sub main {
     $wl->out(10, "Generated script:\n", $template);
 
     my $path = $wl->generate_exec_path();
-    open FH, '>>', $path;
+    open FH, '>', $path;
     print FH $template;
     close FH;
 

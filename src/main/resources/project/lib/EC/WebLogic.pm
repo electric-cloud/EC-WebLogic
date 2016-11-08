@@ -59,30 +59,20 @@ sub after_init_hook {
 
 sub generate_exec_path {
     my $wl = shift;
-    my $path = $ENV{COMMANDER_WORKSPACE} . '/exec.jython';
+    my $path;
 
     if (parallel_exec_support) {
         my $rnd = gen_random_numbers(42);
-        $rnd = '_' . $rnd;
-        $path =~ s/(\.[\w]+?)$/$rnd$1/s;
-        $wl->out(1, "Script path: ", $path);
+        $path = $ENV{COMMANDER_WORKSPACE} . "/exec_$rnd.jython";
+    }
+    else {
+        $path = $ENV{COMMANDER_WORKSPACE} . '/exec.jython';
     }
     # $path = $wl->esc_args($path);
     $wl->out(1, "Path: $path");
     return $path;
 }
 
-
-# sub get_params_as_hashref {
-#     my ($self, @params) = @_;
-
-#     my $res = $self->SUPER::get_params_as_hashref(@params);
-
-#     if ($res->{wlstabspath}) {
-#         $res->{wlstabspath} = $self->esc_args($res->{wlstabspath});
-#     }
-#     return $res;
-# }
 
 sub get_credentials {
     my ($self, $config_name) = @_;
