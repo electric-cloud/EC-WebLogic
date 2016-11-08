@@ -17,11 +17,25 @@
 package EC::WebLogic;
 use strict;
 use warnings;
+use subs qw/parallel_exec_support/;
+
 use Data::Dumper;
 use ElectricCommander;
 use Carp;
 
 use base 'EC::Plugin::Core';
+
+our $ENABLE_PARALLEL_EXEC_SUPPORT = 1;
+
+sub parallel_exec_support {
+    my ($p) = @_;
+
+    if (defined $p) {
+        $ENABLE_PARALLEL_EXEC_SUPPORT = $p;
+    }
+    return $ENABLE_PARALLEL_EXEC_SUPPORT;
+}
+
 
 sub after_init_hook {
     my ($self, %params) = @_;
@@ -47,6 +61,12 @@ sub generate_exec_path {
     my $wl = shift;
     my $path = $ENV{COMMANDER_WORKSPACE} . '/exec.jython';
 
+    if (parallel_exec_support) {
+        my $rnd = gen_random_numbers(42);
+        $rnd = '_' . $rnd;
+        $path =~ s/(\.[\w]+?)$/$rnd$1/s;
+        $wl->out(1, "Script path: ", $path);
+    }
     # $path = $wl->esc_args($path);
     $wl->out(1, "Path: $path");
     return $path;
@@ -164,7 +184,13 @@ sub execute_jython_script {
     if (!$params{script_path}) {
         croak "Missing script_path parameter";
     }
-
+    # augmenting scipt path with random numbers if parallel exec is enabled;
+    if (parallel_exec_support) {
+        my $rnd = gen_random_numbers(42);
+        $rnd = '_' . $rnd;
+        $params{script_path} =~ s/(\.[\w]+?)$/$rnd$1/s;
+        $self->out(1, "Script path: ", $params{script_path});
+    }
     if ($params{script_content} && -e $params{script_path}) {
         !$self->dryrun() && croak "Script file $params{script_path} already exists";
     }
@@ -197,6 +223,7 @@ sub execute_jython_script {
     return $retval;
 }
 
+
 # extending safe_cmd from the base class
 sub safe_cmd {
     my ($wl, $command) = @_;
@@ -204,6 +231,15 @@ sub safe_cmd {
     $command =~ s/-password.+?\s/-password *** /s;
 
     return $command;
+}
+
+
+sub gen_random_numbers {
+    my ($mod) = @_;
+
+    my $rand = rand($mod);
+    $rand =~ s/\.//s;
+    return $rand;
 }
 
 1;
