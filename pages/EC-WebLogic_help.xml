@@ -25,61 +25,57 @@
         <p>Plugin Version @PLUGIN_VERSION@</p>
 
         <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade" />
-						
-			<p>Revised on July 4, 2016</p>
-				
-				<h1>Contents</h1>
-				
-				<ul>
-				<li><p><a href="#overview">Overview</a></p></li>
-				<li><p><a href="#setupconfig">Setting Up the Plugin Configuration</a></p></li>
-				<li><p><a href="#procedures">Plugin Procedures</a></p></li>
-				<ul>
-				<li><a href="#AddServerToCluster">AddServerToCluster</a></li>
-				<li><a href="#AddUserToGroup">AddUserToGroup</a></li>
-				<li><a href="#ChangeUserPassword">ChangeUserPassword</a></li>
-				<li><a href="#CheckPageStatus">CheckPageStatus</a></li>
-				<li><a href="#CheckServerStatus">CheckServerStatus</a></li>
-				<li><a href="#ConfigureUserLockoutManager">ConfigureUserLockoutManager</a></li>
-				<li><a href="#CreateCluster">CreateCluster</a></li>
-				<li><a href="#CreateDatasource">CreateDatasource</a></li>
-				<li><a href="#CreateDomain">CreateDomain</a></li>
-				<li><a href="#CreateGroup">CreateGroup</a></li>
+        <p>Revised on July 4, 2016</p>
+
+        <h1>Contents</h1>
+        <ul>
+            <li><p><a href="#overview">Overview</a></p></li>
+            <li><p><a href="#setupconfig">Setting Up the Plugin Configuration</a></p></li>
+            <li><p><a href="#procedures">Plugin Procedures</a></p></li>
+            <ul>
+                <li><a href="#AddServerToCluster">AddServerToCluster</a></li>
+                <li><a href="#AddUserToGroup">AddUserToGroup</a></li>
+                <li><a href="#ChangeUserPassword">ChangeUserPassword</a></li>
+                <li><a href="#CheckPageStatus">CheckPageStatus</a></li>
+                <li><a href="#CheckServerStatus">CheckServerStatus</a></li>
+                <li><a href="#ConfigureUserLockoutManager">ConfigureUserLockoutManager</a></li>
+                <li><a href="#CreateCluster">CreateCluster</a></li>
+                <li><a href="#CreateDatasource">CreateDatasource</a></li>
+                <li><a href="#CreateDomain">CreateDomain</a></li>
+                <li><a href="#CreateGroup">CreateGroup</a></li>
                 <li><a href="#CreateManagedServer">CreateManagedServer</a></li>
                 <li><a href="#DeleteManagedServer">DeleteManagedServer</a></li>
-				<li><a href="#CreateTemplate">CreateTemplate</a></li>
-				<li><a href="#CreateUser">CreateUser</a></li>
-				<li><a href="#DeleteCluster">DeleteCluster</a></li>
-				<li><a href="#DeleteDatasource">DeleteDatasource</a></li>
-				<li><a href="#DeleteGroup">DeleteGroup</a></li>
-				<li><a href="#DeleteUser">DeleteUser</a></li>
-				<li><a href="#DeployApp">DeployApp</a></li>
-				<li><a href="#RemoveUserFromGroup">RemoveUserFromGroup</a></li>
-				<li><a href="#ResumeServer">ResumeServer</a></li>
-				<li><a href="#RunDeployer">RunDeployer</a></li>
-				<li><a href="#RunWLST">RunWLST</a></li>
-				<li><a href="#StartAdminServer">StartAdminServer</a></li>
-				<li><a href="#StartApp">StartApp</a></li>
+                <li><a href="#CreateTemplate">CreateTemplate</a></li>
+                <li><a href="#CreateUser">CreateUser</a></li>
+                <li><a href="#DeleteCluster">DeleteCluster</a></li>
+                <li><a href="#DeleteDatasource">DeleteDatasource</a></li>
+                <li><a href="#DeleteGroup">DeleteGroup</a></li>
+                <li><a href="#DeleteUser">DeleteUser</a></li>
+                <li><a href="#DeployApp">DeployApp</a></li>
+                <li><a href="#RemoveUserFromGroup">RemoveUserFromGroup</a></li>
+                <li><a href="#ResumeServer">ResumeServer</a></li>
+                <li><a href="#RunDeployer">RunDeployer</a></li>
+                <li><a href="#RunWLST">RunWLST</a></li>
+                <li><a href="#StartAdminServer">StartAdminServer</a></li>
+                <li><a href="#StartApp">StartApp</a></li>
                 <li><a href="#StartCluster">StartCluster</a></li>
-				<li><a href="#StartManagedServer">StartManagedServer</a></li>
-				<li><a href="#StartNodeManager">StartNodeManager</a></li>
-				<li><a href="#StopAdminServer">StopAdminServer</a></li>
-				<li><a href="#StopApp">StopApp</a></li>
+                <li><a href="#StartManagedServer">StartManagedServer</a></li>
+                <li><a href="#StartNodeManager">StartNodeManager</a></li>
+                <li><a href="#StopAdminServer">StopAdminServer</a></li>
+                <li><a href="#StopApp">StopApp</a></li>
                 <li><a href="#StopCluster">StopCluster</a></li>
-				<li><a href="#StopManagedServer">StopManagedServer</a></li>
-				<li><a href="#StopNodeManager">StopNodeManager</a></li>
-				<li><a href="#SuspendServer">SuspendServer</a></li>
-				<li><a href="#UndeployApp">UndeployApp</a></li>
-				<li><a href="#UnlockUserAccount">UnlockUserAccount</a></li>
-				<li><a href="#UpdateApp">UpdateApp</a></li>
-				</ul>
-				<li><p><a href="#example">Examples and Use Cases</a></p></li>
-				<li><p><a href="#rns">Release Notes</a></p></li>
-				</ul>
-			
-		<h1 id="overview">Overview</h1>    
-      
-			
+                <li><a href="#StopManagedServer">StopManagedServer</a></li>
+                <li><a href="#StopNodeManager">StopNodeManager</a></li>
+                <li><a href="#SuspendServer">SuspendServer</a></li>
+                <li><a href="#UndeployApp">UndeployApp</a></li>
+                <li><a href="#UnlockUserAccount">UnlockUserAccount</a></li>
+                <li><a href="#UpdateApp">UpdateApp</a></li>
+            </ul>
+            <li><p><a href="#example">Examples and Use Cases</a></p></li>
+            <li><p><a href="#rns">Release Notes</a></p></li>
+        </ul>
+        <h1 id="overview">Overview</h1>
+
         <!-- The tool description should answer these kinds of questions:
 
                                     What is the tool itself is used for in the development
