@@ -6128,7 +6128,7 @@
         <formalParameterName>forceShutdown</formalParameterName>
         <defaultValue/>
         <description>
-            Boolean value specifying whether WLST should terminate a server instance or a cluster without waiting for the active sessions to complete. This argument defaults to false, indicating that all active sessions must complete before shutdown.
+            Value specifying whether WLST should terminate a server instance or a cluster without waiting for the active sessions to complete. This argument defaults to false, indicating that all active sessions must complete before shutdown.
         </description>
         <required>0</required>
         <type>checkbox</type>
@@ -6138,7 +6138,7 @@
         <formalParameterName>ignoreSessions</formalParameterName>
         <defaultValue/>
         <description>
-            Boolean value specifying whether WLST should drop all HTTP sessions immediately or wait for HTTP sessions to complete or timeout while shutting down. This argument defaults to false, indicating that all HTTP sessions must complete or timeout.
+            Value specifying whether WLST should drop all HTTP sessions immediately or wait for HTTP sessions to complete or timeout while shutting down. This argument defaults to false, indicating that all HTTP sessions must complete or timeout.
         </description>
         <required>0</required>
         <type>checkbox</type>
