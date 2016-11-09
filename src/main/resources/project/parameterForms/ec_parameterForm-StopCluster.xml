@@ -16,31 +16,68 @@
 
 -->
 <editor>
-  <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#StopCluster</help>
+    <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#StopCluster</help>
+    <formElement>
+        <type>entry</type>
+        <label>WLST Absolute Path:</label>
+        <property>wlstabspath</property>
+        <required>1</required>
+        <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Configuration Name:</label>
+        <property>configname</property>
+        <documentation>
+            Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.
+        </documentation>
+        <htmlDocumentation>
+            Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="/commander/pages/@PLUGIN_NAME@/configurations">configuration page</a>.
+        </htmlDocumentation>
+        <required>1</required>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Cluster Name:</label>
+        <property>clustername</property>
+        <documentation>
+            Name of the cluster to stop. i.e: 'mycluster'.
+        </documentation>
+        <required>1</required>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Shutdown Timeout:</label>
+        <property>shutdownTimeout</property>
+        <documentation>
+            Timeout in seconds for cluster shutdown.
+        </documentation>
+        <value>360</value>
+        <required>0</required>
+    </formElement>
+    <formElement>
+        <type>checkbox</type>
+        <label>Force Shutdown?:</label>
+        <property>forceShutdown</property>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <value>0</value>
+        <required>0</required>
+        <documentation>
+            Value specifying whether WLST should terminate a server instance or a cluster without waiting for the active sessions to complete. This argument defaults to false, indicating that all active sessions must complete before shutdown.
+        </documentation>
+    </formElement>
+    <formElement>
+        <type>checkbox</type>
+        <label>Ignore Sessions?:</label>
+        <property>ignoreSessions</property>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <required>0</required>
+        <value>0</value>
+        <documentation>
+            Value specifying whether WLST should drop all HTTP sessions immediately or wait for HTTP sessions to complete or timeout while shutting down. This argument defaults to false, indicating that all HTTP sessions must complete or timeout.
+        </documentation>
+    </formElement>
 
-  <formElement>
-    <type>entry</type>
-    <label>WLST Absolute Path:</label>
-    <property>wlstabspath</property>
-    <required>1</required>
-    <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
-  </formElement>
-  <formElement>
-    <type>entry</type>
-    <label>Configuration Name:</label>
-    <property>configname</property>
-    <documentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</documentation>
-    <htmlDocumentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="/commander/pages/@PLUGIN_NAME@/configurations">configuration page</a>.</htmlDocumentation>
-    <required>1</required>
-  </formElement>
-  
-  <formElement>
-    <type>entry</type>
-    <label>Cluster Name:</label>
-    <property>clustername</property>
-    <documentation>
-      Name of the cluster to stop. i.e: 'mycluster'.
-    </documentation>
-    <required>1</required>
-  </formElement>
 </editor>

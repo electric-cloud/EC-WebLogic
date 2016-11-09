@@ -36,8 +36,18 @@ sub main {
     my $params = $wl->get_params_as_hashref(
         'wlstabspath',
         'clustername',
-        'configname'
+        'configname',
+        'ignoreSessions',
+        'forceShutdown',
+        'shutdownTimeout'
     );
+
+    EC::Plugin::Core::trim($params->{shutdownTimeout});
+    $params->{shutdownTimeout} ||= 360;
+
+    if ($params->{shutdownTimeout} !~ m/^[0-9]+$/s) {
+        $wl->bail_out("Timeout should be a positive integer");
+    }
 
     my $cred = $wl->get_credentials($params->{configname});
 
@@ -52,6 +62,9 @@ sub main {
         password => $cred->{password},
         admin_url => $cred->{weblogic_url},
         cluster_name => $params->{clustername},
+        timeout => $params->{shutdownTimeout},
+        forceShutdown => $params->{forceShutdown},
+        ignoreSessions => $params->{ignoreSessions}
     };
     my $template_path = '/myProject/jython/stop_cluster.jython';
     my $template = $wl->render_template_from_property($template_path, $render_params);

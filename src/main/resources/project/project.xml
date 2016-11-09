@@ -6049,6 +6049,36 @@
                   </propertySheet>
                 </property>
                 <property>
+                  <propertyName>shutdownTimeout</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>ignoreSessions</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>forceShutdown</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
                   <propertyName>configname</propertyName>
                   <propertySheet>
                     <property>
@@ -6083,6 +6113,35 @@
         <description>Name of the configuration to be used for retrieving Admin Server's URL and credentials.</description>
         <required>1</required>
         <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>shutdownTimeout</formalParameterName>
+        <defaultValue/>
+        <description>
+            Time (in seconds) that WLST waits for subsystems to complete in-process work and suspend themselves before shutting down the server. This argument defaults to 0 seconds, indicating that there is no timeout.
+        </description>
+        <required>0</required>
+        <type>checkbox</type>
+      </formalParameter>
+
+      <formalParameter>
+        <formalParameterName>forceShutdown</formalParameterName>
+        <defaultValue/>
+        <description>
+            Boolean value specifying whether WLST should terminate a server instance or a cluster without waiting for the active sessions to complete. This argument defaults to false, indicating that all active sessions must complete before shutdown.
+        </description>
+        <required>0</required>
+        <type>checkbox</type>
+      </formalParameter>
+
+      <formalParameter>
+        <formalParameterName>ignoreSessions</formalParameterName>
+        <defaultValue/>
+        <description>
+            Boolean value specifying whether WLST should drop all HTTP sessions immediately or wait for HTTP sessions to complete or timeout while shutting down. This argument defaults to false, indicating that all HTTP sessions must complete or timeout.
+        </description>
+        <required>0</required>
+        <type>checkbox</type>
       </formalParameter>
       <step>
         <stepName>StopCluster</stepName>
