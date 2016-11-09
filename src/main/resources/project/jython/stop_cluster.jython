@@ -13,10 +13,11 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+import sys
 
-def shutdownCluster(clustername):
+def shutdownCluster(clustername, timeout, ignoreSessions, forceShutdown):
     try:
-        shutdown(clustername,"Cluster");
+        shutdown(clustername, "Cluster", ignoreSessions, timeout, forceShutdown);
     except Exception, e:
         print 'Error while shutting down cluster',e
         dumpStack()
@@ -38,15 +39,46 @@ clusterName = r'''
 [% cluster_name %]
 '''.strip()
 
+timeout = r'''
+[% timeout %]
+'''.strip()
+
+ignoreSessions = r'''
+[% ignoreSessions %]
+'''.strip()
+
+forceShutdown = r'''
+[% forceShutdown %]
+'''.strip()
+
+timeout = int(timeout);
+
+if ignoreSessions == '1':
+    ignoreSessions = 'true'
+else:
+    ignoreSessions = 'false'
+
+if forceShutdown == '1':
+    forceShutdown = 'true'
+else:
+    forceShutdown = 'false'
+
 connect(userName, password, weblogicURL)
-shutdownCluster(clusterName)
+shutdownCluster(clusterName, timeout, ignoreSessions, forceShutdown)
 cluster = ('/Clusters/' + clusterName)
 cd(cluster)
 print state(clusterName, 'Cluster')
 servers = cmo.getServers()
 print servers
 domainRuntime()
+errorsCount = 0;
 for server in servers:
     srv = server.getName()
     status = cmo.lookupServerLifeCycleRuntime(srv).getState()
+    if status != 'SHUTDOWN':
+        errorsCount += 1
     print srv + ': ' + status
+
+if errorsCount > 0:
+    print "Error occured during stopping cluster %s\n" % (clusterName)
+    sys.exit(1)

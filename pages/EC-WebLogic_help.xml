@@ -25,59 +25,57 @@
         <p>Plugin Version @PLUGIN_VERSION@</p>
 
         <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade" />
-						
-			<p>Revised on July 4, 2016</p>
-				
-				<h1>Contents</h1>
-				
-				<ul>
-				<li><p><a href="#overview">Overview</a></p></li>
-				<li><p><a href="#setupconfig">Setting Up the Plugin Configuration</a></p></li>
-				<li><p><a href="#procedures">Plugin Procedures</a></p></li>
-				<ul>
-				<li><a href="#AddServerToCluster">AddServerToCluster</a></li>
-				<li><a href="#AddUserToGroup">AddUserToGroup</a></li>
-				<li><a href="#ChangeUserPassword">ChangeUserPassword</a></li>
-				<li><a href="#CheckPageStatus">CheckPageStatus</a></li>
-				<li><a href="#CheckServerStatus">CheckServerStatus</a></li>
-				<li><a href="#ConfigureUserLockoutManager">ConfigureUserLockoutManager</a></li>
-				<li><a href="#CreateCluster">CreateCluster</a></li>
-				<li><a href="#CreateDatasource">CreateDatasource</a></li>
-				<li><a href="#CreateDomain">CreateDomain</a></li>
-				<li><a href="#CreateGroup">CreateGroup</a></li>
+        <p>Revised on July 4, 2016</p>
+
+        <h1>Contents</h1>
+        <ul>
+            <li><p><a href="#overview">Overview</a></p></li>
+            <li><p><a href="#setupconfig">Setting Up the Plugin Configuration</a></p></li>
+            <li><p><a href="#procedures">Plugin Procedures</a></p></li>
+            <ul>
+                <li><a href="#AddServerToCluster">AddServerToCluster</a></li>
+                <li><a href="#AddUserToGroup">AddUserToGroup</a></li>
+                <li><a href="#ChangeUserPassword">ChangeUserPassword</a></li>
+                <li><a href="#CheckPageStatus">CheckPageStatus</a></li>
+                <li><a href="#CheckServerStatus">CheckServerStatus</a></li>
+                <li><a href="#ConfigureUserLockoutManager">ConfigureUserLockoutManager</a></li>
+                <li><a href="#CreateCluster">CreateCluster</a></li>
+                <li><a href="#CreateDatasource">CreateDatasource</a></li>
+                <li><a href="#CreateDomain">CreateDomain</a></li>
+                <li><a href="#CreateGroup">CreateGroup</a></li>
                 <li><a href="#CreateManagedServer">CreateManagedServer</a></li>
                 <li><a href="#DeleteManagedServer">DeleteManagedServer</a></li>
-				<li><a href="#CreateTemplate">CreateTemplate</a></li>
-				<li><a href="#CreateUser">CreateUser</a></li>
-				<li><a href="#DeleteCluster">DeleteCluster</a></li>
-				<li><a href="#DeleteDatasource">DeleteDatasource</a></li>
-				<li><a href="#DeleteGroup">DeleteGroup</a></li>
-				<li><a href="#DeleteUser">DeleteUser</a></li>
-				<li><a href="#DeployApp">DeployApp</a></li>
-				<li><a href="#RemoveUserFromGroup">RemoveUserFromGroup</a></li>
-				<li><a href="#ResumeServer">ResumeServer</a></li>
-				<li><a href="#RunDeployer">RunDeployer</a></li>
-				<li><a href="#RunWLST">RunWLST</a></li>
-				<li><a href="#StartAdminServer">StartAdminServer</a></li>
-				<li><a href="#StartApp">StartApp</a></li>
-				<li><a href="#StartManagedServer">StartManagedServer</a></li>
-				<li><a href="#StartNodeManager">StartNodeManager</a></li>
-				<li><a href="#StopAdminServer">StopAdminServer</a></li>
-				<li><a href="#StopApp">StopApp</a></li>
-				<li><a href="#StopManagedServer">StopManagedServer</a></li>
-				<li><a href="#StopNodeManager">StopNodeManager</a></li>
-				<li><a href="#SuspendServer">SuspendServer</a></li>
-				<li><a href="#UndeployApp">UndeployApp</a></li>
-				<li><a href="#UnlockUserAccount">UnlockUserAccount</a></li>
-				<li><a href="#UpdateApp">UpdateApp</a></li>
-				</ul>
-				<li><p><a href="#example">Examples and Use Cases</a></p></li>
-				<li><p><a href="#rns">Release Notes</a></p></li>
-				</ul>
-			
-		<h1 id="overview">Overview</h1>    
-      
-			
+                <li><a href="#CreateTemplate">CreateTemplate</a></li>
+                <li><a href="#CreateUser">CreateUser</a></li>
+                <li><a href="#DeleteCluster">DeleteCluster</a></li>
+                <li><a href="#DeleteDatasource">DeleteDatasource</a></li>
+                <li><a href="#DeleteGroup">DeleteGroup</a></li>
+                <li><a href="#DeleteUser">DeleteUser</a></li>
+                <li><a href="#DeployApp">DeployApp</a></li>
+                <li><a href="#RemoveUserFromGroup">RemoveUserFromGroup</a></li>
+                <li><a href="#ResumeServer">ResumeServer</a></li>
+                <li><a href="#RunDeployer">RunDeployer</a></li>
+                <li><a href="#RunWLST">RunWLST</a></li>
+                <li><a href="#StartAdminServer">StartAdminServer</a></li>
+                <li><a href="#StartApp">StartApp</a></li>
+                <li><a href="#StartCluster">StartCluster</a></li>
+                <li><a href="#StartManagedServer">StartManagedServer</a></li>
+                <li><a href="#StartNodeManager">StartNodeManager</a></li>
+                <li><a href="#StopAdminServer">StopAdminServer</a></li>
+                <li><a href="#StopApp">StopApp</a></li>
+                <li><a href="#StopCluster">StopCluster</a></li>
+                <li><a href="#StopManagedServer">StopManagedServer</a></li>
+                <li><a href="#StopNodeManager">StopNodeManager</a></li>
+                <li><a href="#SuspendServer">SuspendServer</a></li>
+                <li><a href="#UndeployApp">UndeployApp</a></li>
+                <li><a href="#UnlockUserAccount">UnlockUserAccount</a></li>
+                <li><a href="#UpdateApp">UpdateApp</a></li>
+            </ul>
+            <li><p><a href="#example">Examples and Use Cases</a></p></li>
+            <li><p><a href="#rns">Release Notes</a></p></li>
+        </ul>
+        <h1 id="overview">Overview</h1>
+
         <!-- The tool description should answer these kinds of questions:
 
                                     What is the tool itself is used for in the development
@@ -2622,9 +2620,61 @@
 					 
         </div>
 
+        <div id="StartCluster"> <a name="StartCluster" id="StartCluster"></a> 
+
+            <h2>StartCluster</h2>
+
+            <p>This procedures starts a cluster.</p>
+
+            <h3>Input</h3>
+            <ol>
+                <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
+                <li>Go to the StartCluster procedure.</li>
+                <li>Enter the following parameters:<br />
+                <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="required">WLST Absolute Path</td>
+                        <td>Absolute path to the WLST, such as /path/to/wlst.cmd or wlst.sh. </td>
+                    </tr>
+                    <tr>
+                        <td class="required">Configuration Name</td>
+                        <td>
+                            Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="required">Cluster Name</td>
+                        <td>Name of the cluster to start. i.e: 'mycluster'.</td>
+                    </tr>
+                </tbody>
+            </table>
+                </li>
+                <br />
+                <img src="../../plugins/EC-WebLogic/images/StartCluster/EC-WLSStartCluster2.png" />
+                <br />
+            </ol>
+            <h3>Output</h3>
+            <p>
+                After the job runs, you can view the results on the Job Details page in ElectricFlow. The cluster was started successfully.
+            </p>
+            <img src="../../plugins/EC-WebLogic/images/StartCluster/EC-WLSStartCluster3.png" />
+            <p>
+                In the <b>StartCluster</b> step, click the Log button to see the diagnostic information:
+            </p>
+            <br />
+            <img src="../../plugins/EC-WebLogic/images/StartCluster/EC-WLSStartCluster4.png" />.
+        </div>
+
         <div id="StartManagedServer">
 
-            <a name="StartManagedServer" id="StartManagedServer"></a> 
+            <a name="StartManagedServer" id="StartManagedServer"></a>
 
 
 
@@ -3095,14 +3145,78 @@
 		        <p>In the <b>StopApp</b> step, click the Log button to see the diagnostic information:</p> 
 						<br />
 		        <img src="../../plugins/EC-WebLogic/images/StopApp/EC-WLSStopApp4.png" />.
-							 
 
+        </div>
 
-            </div>
-		
-		<div id="StopManagedServer">
+        <div id="StopCluster"> <a name="StopCluster" id="StopCluster"></a>
+            <h2>StopCluster</h2>
+            <p>This procedures stops a cluster.</p>
+            <h3>Input</h3>
+            <ol>
+                <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
+                <li>Go to the StopCluster procedure.</li>
+                <li>Enter the following parameters:<br />
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="required">WLST Absolute Path</td>
+                            <td>Absolute path to the WLST, such as /path/to/wlst.cmd or wlst.sh. </td>
+                        </tr>
+                        <tr>
+                            <td class="required">Configuration Name</td>
+                            <td>
+                                Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="required">Cluster Name</td>
+                        <td>Name of the cluster to stop. i.e: 'mycluster'.</td>
+                    </tr>
+                    <tr>
+                        <td class="required">Shutdown Timeout</td>
+                        <td>Timeout in seconds for cluster shutdown.</td>
+                    </tr>
+                    <tr>
+                        <td class="required">Force Shutdown?</td>
+                        <td>
+                            Value specifying whether WLST should terminate a server instance or a cluster without waiting for the active sessions to complete. This argument defaults to false, indicating that all active sessions must complete before shutdown.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="required">Ignore Sessions?</td>
+                        <td>
+                            Value specifying whether WLST should drop all HTTP sessions immediately or wait for HTTP sessions to complete or timeout while shutting down.
+                            This argument defaults to false, indicating that all HTTP sessions must complete or timeout.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+                </li>
+                <br />
+                <img src="../../plugins/EC-WebLogic/images/StopCluster/EC-WLSStopCluster2.png" />
+                <br />
+            </ol>
+            <h3>Output</h3>
+            <p>
+                After the job runs, you can view the results on the Job Details page in ElectricFlow. The cluster was stopped successfully.
+            </p>
+            <img src="../../plugins/EC-WebLogic/images/StopCluster/EC-WLSStopCluster3.png" />
+            <p>
+                In the <b>StopCluster</b> step, click the Log button to see the diagnostic information:
+            </p>
+            <br />
+            <img src="../../plugins/EC-WebLogic/images/StopCluster/EC-WLSStopCluster4.png" />.
+        </div>
 
-            <a name="StopManagedServer" id="StopManagedServer"></a> 
+        <div id="StopManagedServer">
+
+            <a name="StopManagedServer" id="StopManagedServer"></a>
 
 
             <h2>StopManagedServer</h2>

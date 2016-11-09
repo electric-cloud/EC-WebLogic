@@ -46,7 +46,15 @@ print state(clusterName, 'Cluster')
 servers = cmo.getServers()
 print servers
 domainRuntime()
+errorsCount = 0
+
 for server in servers:
     srv = server.getName()
     status = cmo.lookupServerLifeCycleRuntime(srv).getState()
+    if status != 'RUNNING':
+        errorsCount += 1
     print srv + ': ' + status
+
+if errorsCount > 0:
+    print "Error occured during starting cluster %s\n" % (clusterName)
+    sys.exit(1)
