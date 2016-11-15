@@ -838,7 +838,7 @@
                 <h3>Output</h3>
                 <p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The database was created successfully.</p>
                 <img src="../../plugins/EC-WebLogic/images/CreateGroup/EC-WLSCreateGroupStatus3.png" />
-                <p>In the <b>CreateGroup</b> step, click the Log button to see the diagnostic information: 
+                <p>In the <b>CreateGroup</b> step, click the Log button to see the diagnostic information:
                 <br />
                 <img src="../../plugins/EC-WebLogic/images/CreateGroup/EC-WLSCreateGroupStatus4.png" />
                 </p>
@@ -1089,7 +1089,7 @@
                 <h3>Output</h3>
                 <p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The database was created successfully.</p>
                 <img src="../../plugins/EC-WebLogic/images/DeleteGroup/EC-WLSDeleteGroupStatus3.png" />
-                <p>In the <b>DeleteGroup</b> step, click the Log button to see the diagnostic information: 
+                <p>In the <b>DeleteGroup</b> step, click the Log button to see the diagnostic information:
                 <br />
                 <img src="../../plugins/EC-WebLogic/images/DeleteGroup/EC-WLSDeleteGroupStatus4.png" />
                 </p>
@@ -1148,7 +1148,7 @@
             </div>
             <div id="DeployApp"> <a name="DeployApp" id="DeployApp"></a>
             <h2>DeployApp</h2>
-            <p>This procedure deploys or redeploys an application or module using WLST.</p>
+            <p>This procedure deploys an application or module using WLST.</p>
             <h3>Input</h3>
             <ol>
                 <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
@@ -2226,7 +2226,7 @@
     </div>
     <div id="UpdateApp"> <a name="UpdateApp" id="UpdateApp"></a>
     <h2>UpdateApp</h2>
-    <p>This procedure can be used to update an application.</p>
+    <p>This procedure can be used to update or redeploy an application.</p>
     <h3>Input</h3>
     <ol>
         <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
@@ -2259,6 +2259,18 @@
                     <td>Name of the new deployment plan file. The filename can be absolute or relative to the application directory.</td>
                 </tr>
                 <tr>
+                    <td>Redeploy?</td>
+                    <td>Redeploy flag. If checked, the application will be redeployed from sources. In this case parameter "Application Path" is mandatory.</td>
+                </tr>
+                <tr>
+                    <td>Application path</td>
+                    <td>Absolute path of the application to deploy. i.e: '/path/to/webapp.war' or 'c:/mydir/webapp.war'. The parameter is required, if "Redeploy" flag is checked.</td>
+                </tr>
+                <tr>
+                    <td>Lock wait timeout</td>
+                    <td>Time (in milliseconds) that WLST waits for the activation of configuration changes to complete before canceling the operation. A value of -1 indicates that the operation will not time out. This argument defaults to 300,000 ms (or 5 minutes).</td>
+                </tr>
+                <tr>
                     <td>Additional Options</td>
                     <td>Comma-separated list of deployment options, specified as name-value pairs.</td>
                 </tr>
@@ -2286,7 +2298,7 @@
     <p>In this example, the objective is to print "Hello
     World!" in an output device by using the <i>Supplied File</i> option
     with an existing script file in a path or the <i>New
-    Script File</i> option with embedded code for the 
+    Script File</i> option with embedded code for the
     <i>Script File Source</i> parameter.</p>
     <h3>Input</h3>
     <ol>

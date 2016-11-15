@@ -30,6 +30,10 @@
     <xpath>//property[propertyName="preamble"]/value</xpath>
   </file>
   <file>
+    <path>jython/preamble.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="preamble.jython"]/value</xpath>
+  </file>
+  <file>
     <path>jython/check_server_status.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="check_server_status.jython"]/value</xpath>
   </file>
