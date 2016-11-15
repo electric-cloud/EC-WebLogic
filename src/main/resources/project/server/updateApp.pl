@@ -36,7 +36,7 @@ sub main {
 #Options separated by commas
       my $params =
         $wl->get_params_as_hashref( 'wlst_abs_path', 'app_name', 'configname',
-          'plan_path', 'options' );
+          'plan_path', 'options', 'app_path', 'redeploy', 'lock_timeout' );
 
       my $cred = $wl->get_credentials( $params->{configname} );
 
@@ -46,6 +46,11 @@ sub main {
           $wl->bail_out( $check->{msg} );
       }
 
+      if ($params->{redeploy} && !$params->{app_path}) {
+          # Here we also need an application path
+          $wl->bail_out("Application path is required for redeploy procedure.")
+      }
+
       my $render_params = {
           wl_username => $cred->{user},
           wl_password => $cred->{password},
@@ -53,6 +58,9 @@ sub main {
           app_name    => $params->{app_name},
           plan_path   => $params->{plan_path},
           options     => $params->{options},
+          app_path    => $params->{app_path},
+          redeploy    => $params->{redeploy},
+          timeout     => $params->{lock_timeout},
       };
       my $template_path = '/myProject/jython/update_app.jython';
       my $template =

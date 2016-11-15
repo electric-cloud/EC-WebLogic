@@ -47,6 +47,29 @@
         <required>1</required>
     </formElement>
     <formElement>
+        <type>checkbox</type>
+        <label>Redeploy?</label>
+        <property>redeploy</property>
+        <documentation>Reloads classes and redeploys a previously deployed application if checked.</documentation>
+        <required>0</required>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Application Path:</label>
+        <property>app_path</property>
+        <documentation>Absolute path of the application to deploy. i.e: '/path/to/webapp.war' or 'c:/mydir/webapp.war'.</documentation>
+        <required>0</required>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Lock wait timeout:</label>
+        <property>lock_timeout</property>
+        <documentation>Time (in milliseconds) that WLST waits for the activation of configuration changes to complete before canceling the operation. A value of -1 indicates that the operation will not time out. This argument defaults to 300,000 ms (or 5 minutes).</documentation>
+        <required>0</required>
+    </formElement>
+    <formElement>
         <type>entry</type>
         <label>Additional Options:</label>
         <property>options</property>
