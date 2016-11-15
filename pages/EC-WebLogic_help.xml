@@ -1148,8 +1148,7 @@
             </div>
             <div id="DeployApp"> <a name="DeployApp" id="DeployApp"></a>
             <h2>DeployApp</h2>
-            <p>This procedure deploys an application or module using
-            the weblogic.Deployer Java class.</p>
+            <p>This procedure deploys an application or module using WLST.</p>
             <h3>Input</h3>
             <ol>
                 <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
@@ -1191,7 +1190,7 @@
                         </tr>
                         <tr>
                             <td>Additional Commands</td>
-                            <td>Additional commands to be entered in the weblogic.Deployer tool.</td>
+                            <td>Additional commands to be entered in the WLST.</td>
                         </tr>
                     </tbody>
                 </table>

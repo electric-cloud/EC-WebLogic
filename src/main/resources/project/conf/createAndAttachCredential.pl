@@ -179,8 +179,13 @@ $xpath = $ec->attachCredential($projName, $credName,
      stepName => 'StopCluster'});
 $errors .= $ec->checkAllErrors($xpath);
 
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'UpdateApp',
+     stepName => 'UpdateApp'});
+$errors .= $ec->checkAllErrors($xpath);
+
 if ($errors ne '') {
-    
+
     # Cleanup the partially created configuration we just created
     $ec->deleteProperty($configPath);
     $ec->deleteCredential($projName, $credName);
@@ -188,5 +193,5 @@ if ($errors ne '') {
     $ec->setProperty("/myJob/configError", $errMsg);
     print $errMsg;
     exit ERROR;
-    
+
 }
