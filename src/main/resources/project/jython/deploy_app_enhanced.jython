@@ -1,0 +1,90 @@
+import re
+
+def startChanges():
+    edit()
+    startEdit()
+
+# Saves and activates changes
+def commitChanges(lockTimeout = None):
+    save()
+    params = {'block': 'true'}
+    if lockTimeout:
+        params['timeout'] = lockTimeout
+    activate(**params)
+
+
+def discardChanges():
+    stopEdit('y')
+
+
+def checkIfApplicationExists(appName):
+    for deployment in cmo.getAppDeployments():
+        if deployment.getName() == appName:
+            return 1
+    return 0
+
+def getDeploymentTargets(appName):
+    targets = ls('/AppDeployments/' + appName + '/Targets', returnMap = 'true')
+    return targets
+
+def runRedeploy(appName, appPath, planPath, options):
+    try:
+        startChanges()
+        status = redeploy(appName, planPath = planPath, appPath = appPath, **options)
+        commitChanges()
+        print status
+    except WLSTException, e:
+        print "Redeploy failed"
+        print str(e)
+        discardChanges()
+
+
+def runDeploy(appName, appPath, deployParams, options):
+    try:
+        startChanges()
+        params = {}
+        params.update(deployParams)
+        params.update(options)
+        status = deploy(appName = appName, path = appPath, **params)
+        commitChanges()
+        print status
+    except WLSTException, e:
+        print "Deploy failed"
+        print str(e)
+        discardChanges()
+
+
+connect(r'weblogic', r'zxqwertu32', r'localhost:7001')
+applicationName = r'HelloWorld'
+applicationPath = r'/vagrant/HelloWorldForWeblogic.war'
+targets = r'AdminServer'
+additionalOptions = r'''
+createPlan=true,testMode=true,timeout=100,archiveVersion=1.2.3,appVersion=1.2,versionIdentifier=versionIdent
+'''.strip()
+
+
+options = {}
+for optionPair in re.split(',\s*', additionalOptions):
+    key, value = re.split('\s*=\s*', optionPair)
+    if re.match('^-?\d+$', value):
+        value = int(value)
+
+    options[key] = value
+
+print options
+
+# Create options map
+options = {'libraryModule': 'false'}
+deployParams = {'targets': targets}
+
+planPath = None
+
+applicationExists = checkIfApplicationExists(applicationName)
+if applicationExists:
+    print "Application %s exists, redeploying the application using %s path" % (applicationName, applicationPath)
+    runRedeploy(applicationName, applicationPath, planPath, options)
+else:
+    print "Deploying a new application %s" % (applicationName)
+    runDeploy(applicationName, applicationPath, deployParams, options)
+
+
