@@ -50,7 +50,7 @@
       <property>startTimeout</property>
       <value>300</value>
       <documentation>
-          Timeout in seconds. If provided, procedure will wait for conditions.
+          Timeout in seconds for cluster start.
       </documentation>
       <required>0</required>
   </formElement>

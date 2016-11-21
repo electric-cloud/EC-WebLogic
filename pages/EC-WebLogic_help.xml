@@ -1612,6 +1612,10 @@
                     <td class="required">Cluster Name</td>
                     <td>Name of the cluster to start. i.e: 'mycluster'.</td>
                 </tr>
+                <tr>
+                    <td>Timeout</td>
+                    <td>Timeout in seconds for cluster start. Default is 300.</td>
+                </tr>
             </tbody>
         </table>
         </li>
@@ -1897,7 +1901,7 @@
                 </tr>
                 <tr>
                     <td class="required">Shutdown Timeout</td>
-                    <td>Timeout in seconds for cluster shutdown.</td>
+                    <td>Timeout in seconds for cluster shutdown. Default is 300.</td>
                 </tr>
                 <tr>
                     <td class="required">Force Shutdown?</td>
