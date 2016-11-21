@@ -52,6 +52,6 @@
       <documentation>
           Timeout in seconds. If provided, procedure will wait for conditions.
       </documentation>
-      <required>1</required>
+      <required>0</required>
   </formElement>
 </editor>

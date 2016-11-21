@@ -13,10 +13,10 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-
+import time as pytime 
 def startCluster(clustername):
     try:
-        start(clustername,"Cluster");
+        start(clustername, "Cluster", block='false');
     except Exception, e:
         print 'Error while starting cluster', e
         dumpStack()
@@ -38,6 +38,12 @@ clusterName = r'''
 [% cluster_name %]
 '''.strip()
 
+timeout = r'''
+[% timeout %]
+'''.strip()
+
+timeout = int(timeout)
+
 connect(userName, password, weblogicURL)
 startCluster(clusterName)
 cluster = ('/Clusters/' + clusterName)
@@ -47,13 +53,27 @@ servers = cmo.getServers()
 print servers
 domainRuntime()
 errorsCount = 0
-
-for server in servers:
-    srv = server.getName()
-    status = cmo.lookupServerLifeCycleRuntime(srv).getState()
-    if status != 'RUNNING':
+timeSpent = 0
+while 1:
+    notOk = 0
+    for server in servers:
+        srv = server.getName()
+        status = cmo.lookupServerLifeCycleRuntime(srv).getState()
+        if status != 'RUNNING':
+            notOk += 1
+            print srv + ': ' + status
+    if timeSpent >= timeout:
+        print "Timed out."
         errorsCount += 1
-    print srv + ': ' + status
+        break
+        
+    if notOk > 0:
+        print "Waiting for cluster to start"
+        pytime.sleep(5)
+        timeSpent += 5
+    else:
+        print "Cluster was successfully started."
+        break
 
 if errorsCount > 0:
     print "Error occured during starting cluster %s\n" % (clusterName)
