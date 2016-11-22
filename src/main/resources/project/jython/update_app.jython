@@ -14,52 +14,25 @@
 #  limitations under the License.
 #
 
-[% preamble %]
-
-print('Going for updating application')
-connect(r'[% wl_username %]', r'[% wl_password %]', r'[% admin_url %]')
-
-applicationName = r'[% app_name %]'
-
-planPath = r'''
-[% plan_path %]
-'''.strip()
-
-options = r'[% options %]'
-
-applicationPath = r'''
-[% app_path %]
-'''.strip()
-
-redeployFlag = r'[% redeploy %]'
-
-timeout = None
-
-if r'[% timeout %]':
-    timeout = int(r'[% timeout %]')
-
-optionsDict = {}
-
-if options:
-    for nextArgument in options.split(','):
-        arguments = nextArgument.split('=')
-        optionsDict[arguments[0]]=arguments[1]
-
-startChanges()
 try:
-    if redeployFlag == '1':
-        status = redeploy(applicationName, appPath = applicationPath, planPath = planPath, **optionsDict)
-        print "Application " + applicationName + " has been redeployed"
-        print status
-    else:
-        status = updateApplication(applicationName, planPath, **optionsDict)
-        print "Application " + applicationName + " has been updated"
-        print status
-    commitChanges(timeout)
+    print('Going for updating application')
+    connect(r'[% wl_username %]', r'[% wl_password %]', r'[% admin_url %]')
+    applicationName = r'[% app_name %]'
+    planPath = r'[% plan_path %]'
+    options = r'[% options %]'
+    optionsDict = {}
 
+    if(optionsDict):
+        for nextArgument in options.split(','):
+          arguments = nextArgument.split('=')
+          optionsDict[arguments[0]]=arguments[1]
+        updateApplication(applicationName, planPath, **optionsDict)
+    else:
+        updateApplication(applicationName, planPath)
 except WLSTException, e:
-    discardChanges()
     print('Update Application Exception: ' + str(e))
     sys.exit(1)
+else:
+    print('Updated application: ' + applicationName) 
 
 

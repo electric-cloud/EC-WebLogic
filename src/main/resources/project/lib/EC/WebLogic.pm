@@ -232,15 +232,5 @@ sub gen_random_numbers {
     return $rand;
 }
 
-
-sub render_template_from_property {
-    my ($self, $template_name, $params) = @_;
-
-    $params ||= {};
-    $params->{preamble} = $self->get_param('/myProject/jython/preamble.jython');
-    return $self->SUPER::render_template_from_property($template_name, $params);
-}
-
-
 1;
 
