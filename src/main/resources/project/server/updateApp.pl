@@ -55,7 +55,7 @@ sub main {
       };
       my $template_path = '/myProject/jython/update_app.jython';
       my $template =
-        $wl->render_template_from_property($template_path, $render_params);
+          $wl->render_template_from_property($template_path, $render_params);
 
       $wl->out(10, "Generated script:\n", $template);
       my $res = $wl->execute_jython_script(
