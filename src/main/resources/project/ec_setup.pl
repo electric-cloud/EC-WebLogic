@@ -337,9 +337,6 @@ $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Update Application");
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Update Application (DEPRECATED)");
-
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Update App Config");
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Update Application Config");
 
