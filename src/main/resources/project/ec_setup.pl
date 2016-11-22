@@ -177,7 +177,7 @@ my %unlockUserAccount = (
     category    => "Application Server"
 );
 my %updateApp = (
-    label       => "WebLogic - Update Application",
+    label       => "WebLogic - Update Application (DEPRECATED)",
     procedure   => "UpdateApp",
     description => "Update Application",
     category    => "Application Server"
@@ -237,11 +237,16 @@ my %startCluster = (
     description => "StartCluster",
     category    => "Application Server"
 );
-
 my %stopCluster = (
     label       => "WebLogic - Stop Cluster",
     procedure   => "StopCluster",
     description => "StopCluster",
+    category    => "Application Server"
+);
+my %updateAppConfig = (
+    label       => "WebLogic - Update Application Config",
+    procedure   => "UpdateAppConfig",
+    description => "Updates Application Config",
     category    => "Application Server"
 );
 
@@ -328,6 +333,16 @@ $batch->deleteProperty(
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Stop Cluster");
 
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Update Application");
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Update Application (DEPRECATED)");
+
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Update App Config");
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Update Application Config");
+
 @::createStepPickerSteps = (
     \%startApp,                    \%stopApp,
     \%checkServerStatus,           \%deployApp,
@@ -347,7 +362,7 @@ $batch->deleteProperty(
     \%addServerToCluster,          \%configureUserLockoutManager, 
     \%deleteCluster,               \%createManagedServer,
     \%deleteManagedServer,         \%startCluster,
-    \%stopCluster
+    \%stopCluster,                 \%updateAppConfig
 );
 
 if ( $upgradeAction eq "upgrade" ) {
@@ -744,6 +759,14 @@ if ( $upgradeAction eq "upgrade" ) {
                 {
                     procedureName => 'StopCluster',
                     stepName      => 'StopCluster'
+                }
+            );
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'UpdateAppConfig',
+                    stepName      => 'UpdateAppConfig'
                 }
             );
         }

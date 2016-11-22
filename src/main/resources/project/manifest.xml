@@ -150,6 +150,10 @@
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="stop_cluster.jython"]/value</xpath>
   </file>
   <file>
+    <path>jython/update_app_config.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="update_app_config.jython"]/value</xpath>
+  </file>
+  <file>
     <path>WebLogicCreateConfigForm.xml</path>
     <xpath>//property[propertyName="ui_forms"]/propertySheet/property[propertyName="WebLogicCreateConfigForm"]/value</xpath>
   </file>
@@ -370,6 +374,10 @@
     <xpath>//procedure[procedureName="UpdateApp"]/step[stepName="UpdateApp"]/command</xpath>
   </file>
   <file>
+    <path>server/updateAppConfig.pl</path>
+    <xpath>//procedure[procedureName="UpdateAppConfig"]/step[stepName="UpdateAppConfig"]/command</xpath>
+  </file>
+  <file>
     <path>server/createDomain.pl</path>
     <xpath>//procedure[procedureName="CreateDomain"]/step[stepName="CreateDomain"]/command</xpath>
   </file>
@@ -532,6 +540,10 @@
   <file>
     <path>parameterForms/ec_parameterForm-UpdateApp.xml</path>
     <xpath>//procedure[procedureName="UpdateApp"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-UpdateAppConfig.xml</path>
+    <xpath>//procedure[procedureName="UpdateAppConfig"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
   </file>
   <file>
     <path>parameterForms/ec_parameterForm-CreateDomain.xml</path>

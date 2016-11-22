@@ -55,7 +55,8 @@
                     <li><a href="#SuspendServer">SuspendServer</a></li>
                     <li><a href="#UndeployApp">UndeployApp</a></li>
                     <li><a href="#UnlockUserAccount">UnlockUserAccount</a></li>
-                    <li><a href="#UpdateApp">UpdateApp</a></li>
+                    <li><a href="#UpdateApp">UpdateApp (DEPRECATED)</a></li>
+                    <li><a href="#UpdateAppConfig">UpdateAppConfig</a></li>
                 </ul>
                 <li><p><a href="#example">Examples and Use Cases</a></p></li>
                 <li><p><a href="#rns">Release Notes</a></p></li>
@@ -2225,7 +2226,8 @@
     <img src="../../plugins/EC-WebLogic/images/UnlockUserAccount/EC-WLSUnlockUserAccountStatus4.png" />.
     </div>
     <div id="UpdateApp"> <a name="UpdateApp" id="UpdateApp"></a>
-    <h2>UpdateApp</h2>
+    <h2>UpdateApp (DEPRECATED)</h2>
+    <p>WARNING: This procedure is marked as deprecated and will be removed in the next releases. Please, use <a href="#UpdateAppConfig">UpdateAppConfig</a> procedure instead.</p>
     <p>This procedure can be used to update an application.</p>
     <h3>Input</h3>
     <ol>
@@ -2276,6 +2278,65 @@
     <br />
     <img src="../../plugins/EC-WebLogic/images/UpdateApp/EC-WLSUpdateAppStatus4.png" />.
     </div>
+
+    <div id="UpdateAppConfig">
+        <a name="UpdateAppConfig" id="UpdateAppConfig"></a>
+        <h2>UpdateAppConfig</h2>
+        <p>This procedure can be used to update an application confiration.</p>
+        <h3>Input</h3>
+        <ol>
+            <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
+            <li>Go to the UpdateAppConfig procedure.</li>
+            <li>Enter the following parameters:<br />
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="required">WLST Absolute Path</td>
+                        <td>Absolute path to the WLST, such as /path/to/wlst or wlst.sh.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="required">Configuration Name</td>
+                        <td>Name of the configuration to be used when the Administration Server URL and credentials are retrieved.
+                        A Configuration defines connection details and can be created by going to plugin configuration page.</td>
+                    </tr>
+                    <tr>
+                        <td class="required">Application Name</td>
+                        <td>Name of the application which is to be updated.</td>
+                    </tr>
+                    <tr>
+                        <td class="required">Plan Path</td>
+                        <td>Name of the new deployment plan file. The filename can be absolute or relative to the application directory.</td>
+                    </tr>
+                    <tr>
+                        <td>Deployment Plan</td>
+                        <td>Content of the deployment plan. Required, if there is no plan_path file.</td>
+                    </tr>
+                    <tr>
+                        <td>Additional Options</td>
+                        <td>Comma-separated list of deployment options, specified as name-value pairs.</td>
+                    </tr>
+                </tbody>
+            </table>
+            </li>
+            <br />
+            <img src="../../plugins/EC-WebLogic/images/UpdateAppConfig/EC-WLSUpdateAppConfigStatus2.png" />
+            <br />
+        </ol>
+        <h3>Output</h3>
+        <p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The application was undeployed successfully.</p>
+        <img src="../../plugins/EC-WebLogic/images/UpdateAppConfig/EC-WLSUpdateAppConfigStatus3.png" />
+        <p>In the <b>UpdateAppConfig</b> step, click the Log button to see the diagnostic information:</p>
+        <br />
+        <img src="../../plugins/EC-WebLogic/images/UpdateAppConfig/EC-WLSUpdateAppConfigStatus4.png" />.
+    </div>
+    
     <h1 id="example">Examples and Use Cases</h1>
     <!-- This section is for examples and use cases, including screenshots of the new Parameter Panel with example values filled in.
          Unfortunately, I can't tell you what exactly to put here, but it's OK to put what seems like too much! Include both parameter

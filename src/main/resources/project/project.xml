@@ -323,6 +323,11 @@
               <expandable>1</expandable>
               <value/>
           </property>
+          <property>
+              <propertyName>update_app_config.jython</propertyName>
+              <expandable>1</expandable>
+              <value/>
+          </property>
         </propertySheet>
       </property>
       <property>
@@ -5124,7 +5129,169 @@
           </property>
         </propertySheet>
       </step>
+  </procedure>
+      <procedure>
+      <procedureName>UpdateAppConfig</procedureName>
+      <description>Update a configuration of an already deployed app.</description>
+      <jobNameTemplate>weblogic-updateappconfig-$[jobId]</jobNameTemplate>
+      <resourceName/>
+      <workspaceName/>
+      <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+      <propertySheet>
+        <property>
+          <propertyName>ec_parameterForm</propertyName>
+          <expandable>1</expandable>
+          <value/>
+        </property>
+        <property>
+          <propertyName>ec_customEditorData</propertyName>
+          <propertySheet>
+            <property>
+              <propertyName>parameters</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>wlst_abs_path</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>configname</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>app_name</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>plan_path</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>deployment_plan</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>options</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+      </propertySheet>
+      <formalParameter>
+        <formalParameterName>wlst_abs_path</formalParameterName>
+        <defaultValue>java weblogic.WSLT</defaultValue>
+        <description>WLST absolute path</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>configname</formalParameterName>
+        <defaultValue/>
+        <description>Name of the configuration to be used for retrieving Admin Server's URL and credentials.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>app_name</formalParameterName>
+        <defaultValue/>
+        <description>Name of the already deployed app which is to be updated.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>plan_path</formalParameterName>
+        <defaultValue/>
+        <description>Name of the new deployment plan file. The filename can be absolute or relative to the application directory.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>deployment_plan</formalParameterName>
+        <defaultValue/>
+        <description>Content of the deployment plan. Required, if there is no plan_path file.</description>
+        <required>0</required>
+        <type>textarea</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>options</formalParameterName>
+        <defaultValue/>
+        <description>Comma-separated list of deployment options, specified as name-value pairs.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      <step>
+        <stepName>UpdateAppConfig</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command/>
+        <condition/>
+        <description/>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName/>
+        <parallel>0</parallel>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName/>
+        <retries>0</retries>
+        <shell>ec-perl</shell>
+        <timeLimit/>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory/>
+        <workspaceName/>
+        <procedureName>UpdateAppConfig</procedureName>
+        <projectName>EC-WebLogic</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
     </procedure>
+
     <procedure>
       <procedureName>CreateCluster</procedureName>
       <description>Create a cluster.</description>
