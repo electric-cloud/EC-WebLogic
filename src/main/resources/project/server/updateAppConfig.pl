@@ -70,7 +70,7 @@ sub main {
         plan_path   => $params->{plan_path},
         options     => $params->{options},
     };
-    my $template_path = '/myProject/jython/update_app.jython';
+    my $template_path = '/myProject/jython/update_app_config.jython';
     my $template =
         $wl->render_template_from_property($template_path, $render_params);
 
