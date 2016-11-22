@@ -43,12 +43,13 @@ options = r'''
 [% options %]
 '''.strip()
 
-timeout = 300
+timeout = 300000
 
 optionsDict = {}
 
 if options:
-    for nextArgument in options.split(','):
+    # for nextArgument in options.split(','):
+    for nextArgument in re.split(',\s*', options):
         arguments = nextArgument.split('=')
         optionsDict[arguments[0]]=arguments[1]
 
