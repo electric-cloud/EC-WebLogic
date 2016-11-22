@@ -5041,36 +5041,6 @@
                   </propertySheet>
                 </property>
                 <property>
-                  <propertyName>app_path</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                  </propertySheet>
-                </property>
-                <property>
-                  <propertyName>redeploy</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                  </propertySheet>
-                </property>
-                <property>
-                  <propertyName>lock_timeout</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                  </propertySheet>
-                </property>
-                <property>
                   <propertyName>options</propertyName>
                   <propertySheet>
                     <property>
@@ -5111,27 +5081,6 @@
         <defaultValue/>
         <description>Name of the new deployment plan file. The filename can be absolute or relative to the application directory.</description>
         <required>1</required>
-        <type>entry</type>
-      </formalParameter>
-      <formalParameter>
-        <formalParameterName>app_path</formalParameterName>
-        <defaultValue/>
-        <description>Path to the application.</description>
-        <required>0</required>
-        <type>entry</type>
-      </formalParameter>
-      <formalParameter>
-        <formalParameterName>redeploy</formalParameterName>
-        <defaultValue/>
-        <description>If checked, the application will be redeployed.</description>
-        <required>0</required>
-        <type>checkbox</type>
-      </formalParameter>
-      <formalParameter>
-        <formalParameterName>lock_timeout</formalParameterName>
-        <defaultValue/>
-        <description>Timeout for activation function. Defaults to 300,000 ms (5 minutes).</description>
-        <required>0</required>
         <type>entry</type>
       </formalParameter>
       <formalParameter>
