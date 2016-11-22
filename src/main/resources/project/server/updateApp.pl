@@ -35,20 +35,14 @@ sub main {
 #Every additional option should have following format <OPTION_NAME1>=<OPTION_VALUE1>, <OPTION_NAME2>=<OPTION_VALUE2>
 #Options separated by commas
       my $params =
-        $wl->get_params_as_hashref( 'wlst_abs_path', 'app_name', 'configname',
-          'plan_path', 'options', 'app_path', 'redeploy', 'lock_timeout' );
+          $wl->get_params_as_hashref('wlst_abs_path', 'app_name', 'configname', 'plan_path', 'options');
 
-      my $cred = $wl->get_credentials( $params->{configname} );
+      my $cred = $wl->get_credentials($params->{configname});
 
       my $check = $wl->check_executable( $params->{wlst_abs_path} );
 
-      if ( !$check->{ok} ) {
-          $wl->bail_out( $check->{msg} );
-      }
-
-      if ($params->{redeploy} && !$params->{app_path}) {
-          # Here we also need an application path
-          $wl->bail_out("Application path is required for redeploy procedure.")
+      if (!$check->{ok}) {
+          $wl->bail_out($check->{msg});
       }
 
       my $render_params = {
@@ -58,15 +52,12 @@ sub main {
           app_name    => $params->{app_name},
           plan_path   => $params->{plan_path},
           options     => $params->{options},
-          app_path    => $params->{app_path},
-          redeploy    => $params->{redeploy},
-          timeout     => $params->{lock_timeout},
       };
       my $template_path = '/myProject/jython/update_app.jython';
       my $template =
-        $wl->render_template_from_property( $template_path, $render_params );
+        $wl->render_template_from_property($template_path, $render_params);
 
-      $wl->out( 10, "Generated script:\n", $template );
+      $wl->out(10, "Generated script:\n", $template);
       my $res = $wl->execute_jython_script(
           shell          => $params->{wlst_abs_path},
           script_path    => $ENV{COMMANDER_WORKSPACE} . '/exec.jython',

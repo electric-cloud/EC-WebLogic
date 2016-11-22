@@ -2226,7 +2226,7 @@
     </div>
     <div id="UpdateApp"> <a name="UpdateApp" id="UpdateApp"></a>
     <h2>UpdateApp</h2>
-    <p>This procedure can be used to update or redeploy an application.</p>
+    <p>This procedure can be used to update an application.</p>
     <h3>Input</h3>
     <ol>
         <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
@@ -2257,18 +2257,6 @@
                 <tr>
                     <td class="required">Plan Path</td>
                     <td>Name of the new deployment plan file. The filename can be absolute or relative to the application directory.</td>
-                </tr>
-                <tr>
-                    <td>Redeploy?</td>
-                    <td>Redeploy flag. If checked, the application will be redeployed from sources. In this case parameter "Application Path" is mandatory.</td>
-                </tr>
-                <tr>
-                    <td>Application path</td>
-                    <td>Absolute path of the application to deploy. i.e: '/path/to/webapp.war' or 'c:/mydir/webapp.war'. The parameter is required, if "Redeploy" flag is checked.</td>
-                </tr>
-                <tr>
-                    <td>Lock wait timeout</td>
-                    <td>Time (in milliseconds) that WLST waits for the activation of configuration changes to complete before canceling the operation. A value of -1 indicates that the operation will not time out. This argument defaults to 300,000 ms (or 5 minutes).</td>
                 </tr>
                 <tr>
                     <td>Additional Options</td>
