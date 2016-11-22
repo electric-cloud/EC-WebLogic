@@ -48,7 +48,7 @@
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>Deployment Plan:</label>
+        <label>Deployment Plan Content:</label>
         <property>deployment_plan</property>
         <documentation>Content of the deployment plan. Required, if there is no plan_path file.</documentation>
         <required>0</required>

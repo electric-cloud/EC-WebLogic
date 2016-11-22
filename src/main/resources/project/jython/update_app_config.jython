@@ -16,7 +16,7 @@
 
 [% preamble %]
 
-print('Going for updating application')
+print('Going to update application configuration.')
 wl_username = r'''
 [% wl_username %]
 '''.strip()
