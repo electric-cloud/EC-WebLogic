@@ -2312,7 +2312,7 @@
                     </tr>
                     <tr>
                         <td class="required">Plan Path</td>
-                        <td>Name of the new deployment plan file. The filename can be absolute or relative to the application directory.</td>
+                        <td>Absolute path to the deployment plan file. If file doesn't exist, new file will be created with Deployment Plan Content.</td>
                     </tr>
                     <tr>
                         <td>Deployment Plan</td>

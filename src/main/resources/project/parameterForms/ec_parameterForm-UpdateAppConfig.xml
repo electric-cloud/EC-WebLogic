@@ -43,7 +43,7 @@
         <type>entry</type>
         <label>Plan Path:</label>
         <property>plan_path</property>
-        <documentation>Name of the new deployment plan file. The filename can be absolute or relative to the application directory.</documentation>
+        <documentation>Absolute path to the new deployment plan file.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
