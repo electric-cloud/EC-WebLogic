@@ -662,6 +662,26 @@
                   </propertySheet>
                 </property>
                 <property>
+                  <propertyName>version_identifier</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>additional_options</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
                   <propertyName>configname</propertyName>
                   <propertySheet>
                     <property>
@@ -695,6 +715,20 @@
         <defaultValue/>
         <description>Name of the configuration to be used for retrieving Admin Server's URL and credentials.</description>
         <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>additional_options</formalParameterName>
+        <defaultValue/>
+        <description>Additional options for startApplication API. (See deploy function for reference).</description>
+        <required>0</required>
+        <type>textarea</type>
+</formalParameter>
+      <formalParameter>
+        <formalParameterName>version_identifier</formalParameterName>
+        <defaultValue/>
+        <description>Specific application version to be started.</description>
+        <required>0</required>
         <type>entry</type>
       </formalParameter>
       <step>
@@ -797,6 +831,27 @@
                   </propertySheet>
                 </property>
                 <property>
+                  <propertyName>version_identifier</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>additional_options</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+
+                <property>
                   <propertyName>configname</propertyName>
                   <propertySheet>
                     <property>
@@ -811,6 +866,20 @@
           </propertySheet>
         </property>
       </propertySheet>
+      <formalParameter>
+          <formalParameterName>additional_options</formalParameterName>
+          <defaultValue/>
+          <description>Additional options for stopApplication API. (See deploy function for reference).</description>
+          <required>0</required>
+          <type>textarea</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>version_identifier</formalParameterName>
+        <defaultValue/>
+        <description>Specific application version to be stopped.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
       <formalParameter>
         <formalParameterName>wlstabspath</formalParameterName>
         <defaultValue/>
@@ -1473,11 +1542,33 @@
                     </property>
                   </propertySheet>
                 </property>
+                <property>
+                  <propertyName>version_identifier</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+
+                <property>
+                  <propertyName>additional_options</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
               </propertySheet>
             </property>
           </propertySheet>
         </property>
       </propertySheet>
+
       <formalParameter>
         <formalParameterName>wlstabspath</formalParameterName>
         <defaultValue/>
@@ -1505,6 +1596,20 @@
         <description>Name of the configuration to be used for retrieving Admin Server's URL and credentials.</description>
         <required>0</required>
         <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+          <formalParameterName>version_identifier</formalParameterName>
+          <defaultValue/>
+          <description>Specified a single application version to be undeployed. For production redeployment.</description>
+          <required>0</required>
+          <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+          <formalParameterName>additional_options</formalParameterName>
+          <defaultValue/>
+          <description>If checked, all retired versions of the application will be undeployed.</description>
+          <required>0</required>
+          <type>textarea</type>
       </formalParameter>
       <step>
         <stepName>UndeployApp</stepName>

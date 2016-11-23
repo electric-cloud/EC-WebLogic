@@ -16,41 +16,60 @@
 
 -->
 <editor>
-  <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#UndeployApp</help>
+    <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#UndeployApp</help>
 
-  <formElement>
-    <type>entry</type>
-    <label>Configuration Name:</label>
-    <property>configname</property>
-    <documentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</documentation>
-    <htmlDocumentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="/commander/pages/@PLUGIN_NAME@/configurations">configuration page</a>.</htmlDocumentation>
-    <required>1</required>
-  </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Configuration Name:</label>
+        <property>configname</property>
+        <documentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</documentation>
+        <htmlDocumentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="/commander/pages/@PLUGIN_NAME@/configurations">configuration page</a>.</htmlDocumentation>
+        <required>1</required>
+    </formElement>
     
-  <formElement>
-    <type>entry</type>
-    <label>Wlst Script Absolute Path:</label>
-    <property>wlstabspath</property>
-    <required>1</required>
-    <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
-  </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Wlst Script Absolute Path:</label>
+        <property>wlstabspath</property>
+        <required>1</required>
+        <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
+    </formElement>
   
-  <formElement>
-    <type>entry</type>
-    <label>Application Name:</label>
-    <property>appname</property>
-    <documentation>Name of the application to undeploy. i.e: 'webapp'.</documentation>
-    <required>1</required>
-  </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Application Name:</label>
+        <property>appname</property>
+        <documentation>Name of the application to undeploy. i.e: 'webapp'.</documentation>
+        <required>1</required>
+    </formElement>
   
-  <formElement>
-    <type>checkbox</type>
-    <label>Enable Graceful Mode:</label>
-    <property>gracefulmode</property>
-    <checkedValue>1</checkedValue>
-    <uncheckedValue>0</uncheckedValue>
-    <required>0</required>
-    <documentation>Enables stopping the application in Graceful Mode (after existing HTTP clients have completed their work).</documentation>
-  </formElement>
+    <formElement>
+        <type>checkbox</type>
+        <label>Enable Graceful Mode:</label>
+        <property>gracefulmode</property>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <required>0</required>
+        <documentation>Enables stopping the application in Graceful Mode (after existing HTTP clients have completed their work).</documentation>
+    </formElement>
+    
+    <formElement>
+        <type>entry</type>
+        <label>Application Version:</label>
+        <property>version_identifier</property>
+        <documentation>
+            Specified a single application version to be undeployed. See <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="http://docs.oracle.com/middleware/12212/wls/DEPGD/redeploy.htm#DEPGD270">Requirements and Restrictions for Production Redeployment</a> for reference.
+        </documentation>
+        <required>0</required>
+    </formElement>
+    <formElement>
+        <type>textarea</type>
+        <label>Additional options:</label>
+        <property>additional_options</property>
+        <documentation>Additional options for undeploy API call. (See <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="https://docs.oracle.com/middleware/12212/wls/WLSTC/reference.htm#WLSTC119">deploy</a> function for reference).
+        </documentation>
+        <required>0</required>
+    </formElement>
 
 </editor>
+

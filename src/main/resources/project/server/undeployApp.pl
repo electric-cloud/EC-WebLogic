@@ -41,7 +41,9 @@ sub main {
         'appname',
         'wlstabspath',
         'gracefulmode',
-        'configname'
+        'configname',
+        'version_identifier',
+        'additional_options'
     );
 
     my $cred = $wl->get_credentials($params->{configname});
@@ -51,12 +53,15 @@ sub main {
         $params->{gracefulmode} = 'true'
     }
 
+    print "AdditionalOptions: $params->{additional_options}\n";
     my $render_params = {
         username => $cred->{user},
         password => $cred->{password},
         admin_url => $params->{weblogic_url},
         app_name => $params->{appname},
         gracefulmode => $gracefulmode,
+        additional_options => $params->{additional_options},
+        version_identifier => $params->{version_identifier},
     };
 
     my $template_path = '/myProject/jython/undeploy_app.jython';

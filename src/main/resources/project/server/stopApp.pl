@@ -36,7 +36,9 @@ sub main {
     my $params = $wl->get_params_as_hashref(
         'wlstabspath',
         'appname',
-        'configname'
+        'configname',
+        'version_identifier',
+        'additional_options'
     );
 
     my $cred = $wl->get_credentials($params->{configname});
@@ -52,6 +54,8 @@ sub main {
         password => $cred->{password},
         admin_url => $params->{weblogic_url},
         app_name => $params->{appname},
+        version_identifier => $params->{version_identifier},
+        additional_options => $params->{additional_options}
     };
     my $template_path = '/myProject/jython/stop_app.jython';
     my $template = $wl->render_template_from_property($template_path, $render_params);
