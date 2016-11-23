@@ -14,13 +14,57 @@
 #  limitations under the License.
 #
 
-print 'deploying jar...'
-connect(r'[% username %]', r'[% password %]', r'[% admin_url %]')
-applicationName = r'[% app_name %]'
+[% preamble %]
+
+username = r'''
+[% username %]
+'''.strip()
+
+password = r'''
+[% password %]
+'''.strip()
+
+admin_url = r'''
+[% admin_url %]
+'''.strip()
+
+application_name = r'''
+[% app_name %]
+'''.strip()
+
+additional_options = r'''
+[% additional_options %]
+'''.strip()
+
+version_identifier = r'''
+[% version_identifier %]
+'''.strip()
+
+graceful_mode = r'''
+[% gracefulmode %]
+'''.strip()
+
+optionsDict = {};
+print "Additional options: %s" % (additional_options)
+if additional_options:
+    optionsDict = parseOptions(additional_options)
+
+if version_identifier:
+    optionsDict['versionIdentifier'] = version_identifier
+
+optionsDict['retireGracefully'] = graceful_mode
+
+print "Undeploying application with options: %s" % (optionsDict)
+
+connect(username, password, admin_url)
+
+startChanges()
 status = ""
 try:
-    status = undeploy(appName=applicationName, retireGracefully='[% gracefulmode %]')
-except Exception:
-    status = "Undeploy error" + Exception
+    status = undeploy(application_name, '', **optionsDict)
+except WLSTException, e:
+    discardChanges()
+    print('Undeploy Application Exception: ' + str(e))
+    sys.exit(1)
 
 print status

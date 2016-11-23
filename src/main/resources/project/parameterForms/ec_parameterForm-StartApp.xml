@@ -43,4 +43,23 @@
     </documentation>
     <required>1</required>
   </formElement>
+
+  <formElement>
+      <type>entry</type>
+      <label>Application Version:</label>
+      <property>version_identifier</property>
+      <documentation>
+          Specific application version to be started.
+      </documentation>
+      <required>0</required>
+  </formElement>
+  <formElement>
+      <type>entry</type>
+      <label>Additional options:</label>
+      <property>additional_options</property>
+      <documentation>
+          Additional options for startApplication API. (See deploy function for reference).
+      </documentation>
+      <required>0</required>
+  </formElement>
 </editor>

@@ -32,3 +32,12 @@ def commitChanges(lockTimeout = None):
 
 def discardChanges():
     stopEdit('y')
+
+# add parse function
+def parseOptions(options):
+    print "Options: %s" % (options)
+    optionsDict = {}
+    for nextArgument in re.split('\s*,\s*', options):
+        arguments = nextArgument.split('=')
+        optionsDict[arguments[0]]=arguments[1]
+    return optionsDict
