@@ -45,7 +45,7 @@ graceful_mode = r'''
 '''.strip()
 
 optionsDict = {};
-print "Additional options: %s" % (additional_options)
+
 if additional_options:
     optionsDict = parseOptions(additional_options)
 
