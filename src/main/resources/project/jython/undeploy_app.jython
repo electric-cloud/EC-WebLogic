@@ -62,6 +62,7 @@ startChanges()
 status = ""
 try:
     status = undeploy(application_name, '', **optionsDict)
+    commitChanges()
 except WLSTException, e:
     discardChanges()
     print('Undeploy Application Exception: ' + str(e))

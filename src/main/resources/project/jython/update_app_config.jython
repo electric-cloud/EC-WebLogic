@@ -51,7 +51,7 @@ if additional_options:
     optionsDict = parseOptions(additional_options)
 
 # check application
-if not checkIfApplicationExists(application_name, ''):
+if not checkIfApplicationExists(application_name, '', ''):
     print "Application %s doesn't exists" % (application_name)
     sys.exit(1)
 
