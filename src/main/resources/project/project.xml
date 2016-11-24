@@ -5093,7 +5093,7 @@
     </procedure>
     <procedure>
       <procedureName>UpdateApp</procedureName>
-      <description>Update an already deployed app.</description>
+      <description>Update an already deployed app. (DEPRECATED)</description>
       <jobNameTemplate>weblogic-updateapp-$[jobId]</jobNameTemplate>
       <resourceName/>
       <workspaceName/>
