@@ -16,7 +16,7 @@
 
 def startCluster(clustername):
     try:
-        start(clustername,"Cluster");
+        start(clustername, "Cluster", block='true');
     except Exception, e:
         print 'Error while starting cluster', e
         dumpStack()
