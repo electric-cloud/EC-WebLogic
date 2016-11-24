@@ -43,4 +43,15 @@
     </documentation>
     <required>1</required>
   </formElement>
+  
+  <formElement>
+      <type>entry</type>
+      <label>Timeout:</label>
+      <property>startTimeout</property>
+      <value>300</value>
+      <documentation>
+          Timeout in seconds for cluster start.
+      </documentation>
+      <required>0</required>
+  </formElement>
 </editor>

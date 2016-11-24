@@ -43,7 +43,7 @@ sub main {
     );
 
     EC::Plugin::Core::trim($params->{shutdownTimeout});
-    $params->{shutdownTimeout} ||= 360;
+    $params->{shutdownTimeout} ||= 300;
 
     if ($params->{shutdownTimeout} !~ m/^[0-9]+$/s) {
         $wl->bail_out("Timeout should be a positive integer");

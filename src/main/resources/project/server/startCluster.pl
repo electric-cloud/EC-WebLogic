@@ -36,8 +36,16 @@ sub main {
     my $params = $wl->get_params_as_hashref(
         'wlstabspath',
         'clustername',
-        'configname'
+        'configname',
+        'startTimeout'
     );
+
+    EC::Plugin::Core::trim($params->{startTimeout});
+    $params->{startTimeout} ||= 300;
+
+    if ($params->{startTimeout} !~ m/^[0-9]+$/s) {
+        $wl->bail_out("Timeout should be a positive integer");
+    }
 
     my $cred = $wl->get_credentials($params->{configname});
 
@@ -52,6 +60,7 @@ sub main {
         password => $cred->{password},
         admin_url => $cred->{weblogic_url},
         cluster_name => $params->{clustername},
+        timeout => $params->{startTimeout}
     };
     my $template_path = '/myProject/jython/start_cluster.jython';
     my $template = $wl->render_template_from_property($template_path, $render_params);

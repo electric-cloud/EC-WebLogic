@@ -6225,6 +6225,16 @@
                     </property>
                   </propertySheet>
                 </property>
+                <property>
+                  <propertyName>startTimeout</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
               </propertySheet>
             </property>
           </propertySheet>
@@ -6249,6 +6259,13 @@
         <defaultValue/>
         <description>Name of the configuration to be used for retrieving Admin Server's URL and credentials.</description>
         <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>startTimeout</formalParameterName>
+        <defaultValue>300</defaultValue>
+        <description>StartTimeout.</description>
+        <required>0</required>
         <type>entry</type>
       </formalParameter>
       <step>
@@ -6393,7 +6410,7 @@
       </formalParameter>
       <formalParameter>
         <formalParameterName>shutdownTimeout</formalParameterName>
-        <defaultValue/>
+        <defaultValue>300</defaultValue>
         <description>
             Time (in seconds) that WLST waits for subsystems to complete in-process work and suspend themselves before shutting down the server. This argument defaults to 0 seconds, indicating that there is no timeout.
         </description>
