@@ -1384,6 +1384,118 @@
                     </property>
                   </propertySheet>
                 </property>
+
+                <property>
+                    <propertyName>stage_mode</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>formType</propertyName>
+                            <expandable>1</expandable>
+                            <value>standard</value>
+                        </property>
+                    </propertySheet>
+                </property>
+
+                <property>
+                    <propertyName>deployment_plan</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>formType</propertyName>
+                            <expandable>1</expandable>
+                            <value>standard</value>
+                        </property>
+                    </propertySheet>
+                </property>
+                
+                <property>
+                    <propertyName>plan_path</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>formType</propertyName>
+                            <expandable>1</expandable>
+                            <value>standard</value>
+                        </property>
+                    </propertySheet>
+                </property>
+
+                <property>
+                    <propertyName>additional_options</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>formType</propertyName>
+                            <expandable>1</expandable>
+                            <value>standard</value>
+                        </property>
+                    </propertySheet>
+                </property>
+
+                <property>
+                    <propertyName>archive_version</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>formType</propertyName>
+                            <expandable>1</expandable>
+                            <value>standard</value>
+                        </property>
+                    </propertySheet>
+                </property>
+                
+                <property>
+                    <propertyName>plan_version</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>formType</propertyName>
+                            <expandable>1</expandable>
+                            <value>standard</value>
+                        </property>
+                    </propertySheet>
+                </property>
+
+                <property>
+                    <propertyName>retire_gracefully</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>formType</propertyName>
+                            <expandable>1</expandable>
+                            <value>standard</value>
+                        </property>
+                    </propertySheet>
+                </property>
+                
+                <property>
+                    <propertyName>retire_timeout</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>formType</propertyName>
+                            <expandable>1</expandable>
+                            <value>standard</value>
+                        </property>
+                    </propertySheet>
+                </property>
+                
+                <property>
+                    <propertyName>version_identifier</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>formType</propertyName>
+                            <expandable>1</expandable>
+                            <value>standard</value>
+                        </property>
+                    </propertySheet>
+                </property>
+                
+                <property>
+                    <propertyName>upload</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>formType</propertyName>
+                            <expandable>1</expandable>
+                            <value>standard</value>
+                        </property>
+                    </propertySheet>
+                </property>
+
+                
               </propertySheet>
             </property>
           </propertySheet>
@@ -1432,6 +1544,86 @@
         <description>Targets on which to deploy the application or module (comma-separated list of the target servers, clusters, or virtual hosts).</description>
         <required>0</required>
         <type>entry</type>
+      </formalParameter>
+
+      <formalParameter>
+          <formalParameterName>stage_mode</formalParameterName>
+          <defaultValue/>
+          <description>Staging mode for the application you are deploying. (Notes: Drop-down values: stage, nostage, and external_stage. Ref: http://docs.oracle.com/middleware/12212/wls/DEPGD/deploy.htm#DEPGD235)</description>
+          <required>0</required>
+          <type>select</type>
+      </formalParameter>
+
+      <formalParameter>
+          <formalParameterName>deployment_plan</formalParameterName>
+          <defaultValue/>
+          <description>A WebLogic Server deployment plan is an XML document that you use to configure an application for deployment to a specific WebLogic Server environment.</description>
+          <required>0</required>
+          <type>textarea</type>
+      </formalParameter>
+
+      <formalParameter>
+          <formalParameterName>plan_path</formalParameterName>
+          <defaultValue/>
+          <description>Path to read a deployment plan (if there is one) or to save a new one from the Deployment plan content parameter.</description>
+          <required>0</required>
+          <type>entry</type>
+      </formalParameter>
+
+      <formalParameter>
+          <formalParameterName>additional_options</formalParameterName>
+          <defaultValue/>
+          <description>Comma-separated list of deployment options, specified as name-value pairs. Refer to WLST deploy documentation (The options, which are not included in this form).</description>
+          <required>0</required>
+          <type>textarea</type>
+      </formalParameter>
+
+      <formalParameter>
+          <formalParameterName>archive_version</formalParameterName>
+          <defaultValue/>
+          <description>Archive version number. Is used for production redeployment, specifies the application version which is going to be retired, while versionIdentifier specifies a new version. Archive version stays along with the new one.</description>
+          <required>0</required>
+          <type>entry</type>
+      </formalParameter>
+
+      <formalParameter>
+          <formalParameterName>plan_version</formalParameterName>
+          <defaultValue/>
+          <description>Plan version number</description>
+          <required>0</required>
+          <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+          <formalParameterName>retire_gracefully</formalParameterName>
+          <defaultValue/>
+          <description>Retirement policy to gracefully retire an application only after it has completed all in-flight work. This policy is only meaningful for stop and redeploy operations and is mutually exclusive to the retire timeout policy.</description>
+          <required>0</required>
+          <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+          <formalParameterName>retire_timeout</formalParameterName>
+          <defaultValue/>
+          <description>Time (in seconds) WLST waits before retiring an application that has been replaced with a newer version. This option default to -1, which specifies graceful timeout.</description>
+          <required>0</required>
+          <type>entry</type>
+      </formalParameter>
+      
+      <formalParameter>
+          <formalParameterName>version_identifier</formalParameterName>
+          <defaultValue/>
+          <description>Version Identifier</description>
+          <required>0</required>
+          <type>entry</type>
+      </formalParameter>
+
+      <formalParameter>
+          <formalParameterName>upload</formalParameterName>
+          <defaultValue>0</defaultValue>
+          <description>Optional. Boolean value specifying whether the application files are uploaded to the WebLogic Server Administration Server'’s upload directory prior to deployment. Use this option when you are on a different machine from the Administration Server and you cannot copy the deployment files by other means. This option defaults to false.</description>
+          <required>0</required>
+          <type>checkbox</type>
       </formalParameter>
       <step>
         <stepName>DeployApp</stepName>

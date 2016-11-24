@@ -14,11 +14,114 @@
 #  limitations under the License.
 #
 
-print 'deploying jar...'
-connect(r'[% username %]', r'[% password %]', r'[% admin_url %]')
-applicationName = r'[% app_name %]'
-applicationPath = r'[% app_path %]'
-targets = r'[% targets %]'
+[% preamble %]
 
-status = deploy(appName=applicationName, path=applicationPath, targets=targets, libraryModule=r'[% is_library %]')
-print status
+# parameters section
+
+username = r'''
+[% username %]
+'''.strip()
+
+password = r'''
+[% password %]
+'''.strip()
+
+admin_url = r'''
+[% admin_url %]
+'''.strip()
+
+application_name = r'''
+[% app_name %]
+'''.strip()
+
+application_path = r'''
+[% app_path %]
+'''.strip()
+
+targets = r'''
+[% targets %]
+'''.strip()
+
+stage_mode = r'''
+[% stage_mode %]
+'''.strip()
+
+plan_path = r'''
+[% plan_path %]
+'''.strip()
+
+additional_options = r'''
+[% additional_options %]
+'''.strip()
+
+archive_version = r'''
+[% archive_version %]
+'''.strip()
+
+plan_version = r'''
+[% plan_version %]
+'''.strip()
+
+retire_gracefully = r'''
+[% retire_gracefully %]
+'''.strip()
+
+retire_timeout = r'''
+[% retire_timeout %]
+'''.strip()
+
+version_identifier = r'''
+[% version_identifier %]
+'''.strip()
+
+upload = r'''
+[% upload %]
+'''.strip()
+
+# end of parameters
+
+print 'Deploying jar...'
+connect(username, password, admin_url)
+
+# deployment options 
+deploymentOptions = {}
+
+if targets:
+    deploymentOptions['targets'] = targets
+
+if plan_path:
+    deploymentOptions['planPath'] = plan_path
+
+if stage_mode:
+    deploymentOptions['stageMode'] = stage_mode
+
+# options parameter(additional options)
+optionsDict = {}
+
+if additional_options:
+    optionsDict = parseOptions(additional_options)
+
+if archive_version:
+    optionsDict['archiveVersion'] = archive_version
+
+if retire_timeout:
+    optionsDict['retireTimeout'] = retire_timeout
+
+if retire_gracefully:
+    optionsDict['retireGracefully'] = retire_gracefully
+
+if upload:
+    optionsDict['upload'] = upload
+
+if version_identifier:
+    optionsDict['versionIdentifier'] = version_identifier
+
+application_exists = checkIfApplicationExists(application_name, version_identifier)
+if application_exists:
+    print "Redeploy"
+    runRedeploy(application_name, application_path, plan_path, optionsDict)
+else:
+    print "Deploy"
+    runDeploy(application_name, application_path, deploymentOptions, optionsDict);
+
+print "Done"

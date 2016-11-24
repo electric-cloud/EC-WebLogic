@@ -17,6 +17,8 @@
 # imports
 import re
 
+# end of imports
+
 def startChanges():
     edit()
     startEdit()
@@ -41,3 +43,48 @@ def parseOptions(options):
         arguments = nextArgument.split('=')
         optionsDict[arguments[0]]=arguments[1]
     return optionsDict
+
+
+# checks if application exists:
+def checkIfApplicationExists(appName, appVersion):
+    print 'Checking AppName: %s with Version: %s for existance' % (appName, appVersion)
+    for deployment in cmo.getAppDeployments():
+        tempName = deployment.getName()
+        name = ''
+        version = ''
+        if re.match('#', tempName):
+            name, version = tempName.split('#')
+        else:
+            name = tempName
+
+        if name == appName:
+            if appVersion:
+                if appVersion != version:
+                    return 0
+            return 1
+    return 0
+
+def runDeploy(appName, appPath, deployParams, options):
+    try:
+        startChanges()
+        params = {}
+        params.update(deployParams)
+        params.update(options)
+        status = deploy(appName = appName, path = appPath, **params)
+        commitChanges()
+        print status
+    except WLSTException, e:
+        print "Deploy failed"
+        print str(e)
+        discardChanges()
+
+def runRedeploy(appName, appPath, planPath, options):
+    try:
+        startChanges()
+        status = redeploy(appName = appName, appPath = appPath, planPath = planPath, **options)
+        commitChanges()
+        print status
+    except WLSTException, e:
+        print "Redeploy failed"
+        print str(e)
+        discardChanges()

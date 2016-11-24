@@ -15,4 +15,149 @@
      limitations under the License.
 
 -->
-<editor>  <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#DeployApp</help>    <formElement>    <type>entry</type>    <label>Configuration Name:</label>    <property>configname</property>    <documentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</documentation>    <htmlDocumentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="/commander/pages/@PLUGIN_NAME@/configurations">configuration page</a>.</htmlDocumentation>    <required>1</required>  </formElement>    <formElement>    <type>entry</type>    <label>Wlst Script Absolute Path:</label>    <property>wlstabspath</property>    <required>1</required>    <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>  </formElement>    <formElement>    <type>entry</type>    <label>Application Name:</label>    <property>appname</property>    <documentation>Deployment name to assign to a newly-deployed application or standalone module. i.e: 'webapp'.</documentation>    <required>1</required>  </formElement>  <formElement>    <label>Is library:</label>    <property>is_library</property>    <documentation>Is library?</documentation>    <required>1</required>    <type>checkbox</type>    <checkedValue>1</checkedValue>    <uncheckedValue>0</uncheckedValue>  </formElement>        <formElement>    <type>entry</type>    <label>Application Path:</label>    <property>apppath</property>    <documentation>Absolute path of the application to deploy. i.e: '/path/to/webapp.war' or 'c:/mydir/webapp.war'.</documentation>    <required>1</required>  </formElement>  <formElement>    <type>entry</type>    <label>Targets:</label>    <property>targets</property>    <documentation>Targets on which to deploy the application or module (comma-separated list of the target servers, clusters, or virtual hosts).</documentation>    <required>1</required>  </formElement></editor>
+<editor>
+    <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#DeployApp</help>
+    <formElement>
+        <type>entry</type>
+        <label>Configuration Name:</label>
+        <property>configname</property>
+        <documentation>
+            Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.
+        </documentation>
+        <htmlDocumentation>
+            Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="/commander/pages/@PLUGIN_NAME@/configurations">configuration page</a>.
+        </htmlDocumentation>
+        <required>1</required>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Wlst Script Absolute Path:</label>
+        <property>wlstabspath</property>
+        <required>1</required>
+        <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Application Name:</label>
+        <property>appname</property>
+        <documentation>Deployment name to assign to a newly-deployed application or standalone module. i.e: 'webapp'.</documentation>
+        <required>1</required>
+    </formElement>
+    <formElement>
+        <label>Is library:</label>
+        <property>is_library</property>
+        <documentation>Is library?</documentation>
+        <required>1</required>
+        <type>checkbox</type>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Application Path:</label>
+        <property>apppath</property>
+        <documentation>Absolute path of the application to deploy. i.e: '/path/to/webapp.war' or 'c:/mydir/webapp.war'.</documentation>
+        <required>1</required>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Targets:</label>
+        <property>targets</property>
+        <documentation>Targets on which to deploy the application or module (comma-separated list of the target servers, clusters, or virtual hosts).</documentation>
+        <required>1</required>
+    </formElement>
+
+    <formElement>
+        <label>Stage mode</label>
+        <property>stage_mode</property>
+        <type>select</type>
+        <option><name>stage</name><value>stage</value></option>
+        <option><name>nostage</name><value>nostage</value></option>
+        <option><name>external_stage</name><value>external_stage</value></option>
+        <required>0</required>
+        <documentation>Staging mode for the application you are deploying. (Notes: Drop-down values: stage, nostage, and external_stage. Ref: http://docs.oracle.com/middleware/12212/wls/DEPGD/deploy.htm#DEPGD235)</documentation>
+    </formElement>
+    
+
+    <formElement>
+        <label>Deployment plan content</label>
+        <property>deployment_plan</property>
+        <type>textarea</type>
+        <required>0</required>
+        <documentation>A WebLogic Server deployment plan is an XML document that you use to configure an application for deployment to a specific WebLogic Server environment.</documentation>
+    </formElement>
+
+
+    <formElement>
+        <label>Deployment plan path</label>
+        <property>plan_path</property>
+        <type>entry</type>
+        <required>0</required>
+        <documentation>Path to read a deployment plan (if there is one) or to save a new one from the Deployment plan content parameter.</documentation>
+    </formElement>
+
+
+    <formElement>
+        <label>Additional Options</label>
+        <property>additional_options</property>
+        <type>textarea</type>
+        <required>0</required>
+        <documentation>Comma-separated list of deployment options, specified as name-value pairs. Refer to WLST deploy documentation (The options, which are not included in this form).</documentation>
+    </formElement>
+
+
+    <formElement>
+        <label>Archive version</label>
+        <property>archive_version</property>
+        <type>entry</type>
+        <required>0</required>
+        <documentation>Archive version number. Is used for production redeployment, specifies the application version which is going to be retired, while versionIdentifier specifies a new version. Archive version stays along with the new one.</documentation>
+    </formElement>
+
+
+    <formElement>
+        <label>Plan version</label>
+        <property>plan_version</property>
+        <type>entry</type>
+        <required>0</required>
+        <documentation>Plan version number</documentation>
+    </formElement>
+
+
+    <formElement>
+        <label>Retire gracefully</label>
+        <property>retire_gracefully</property>
+        <type>entry</type>
+        <required>0</required>
+        <documentation>Retirement policy to gracefully retire an application only after it has completed all in-flight work. This policy is only meaningful for stop and redeploy operations and is mutually exclusive to the retire timeout policy.</documentation>
+    </formElement>
+
+
+    <formElement>
+        <label>Retire timeout</label>
+        <property>retire_timeout</property>
+        <type>entry</type>
+        <required>0</required>
+        <documentation>Time (in seconds) WLST waits before retiring an application that has been replaced with a newer version. This option default to -1, which specifies graceful timeout.</documentation>
+    </formElement>
+
+
+    <formElement>
+        <label>Version identifier</label>
+        <property>version_identifier</property>
+        <type>entry</type>
+        <required>0</required>
+        <documentation>Version Identifier</documentation>
+    </formElement>
+
+
+    <formElement>
+        <label>Upload</label>
+        <property>upload</property>
+        <type>checkbox</type>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <required>0</required>
+        <documentation>Optional. Boolean value specifying whether the application files are uploaded to the WebLogic Server Administration Server'’s upload directory prior to deployment. Use this option when you are on a different machine from the Administration Server and you cannot copy the deployment files by other means. This option defaults to false.</documentation>
+    </formElement>
+</editor>
