@@ -250,7 +250,7 @@
                             </tr>
                             <tr>
                                 <td class="required">Configuration</td>
-                                <td>Configuration name from which the Admin URL and credentials are read.A Configuration defines connection details and can be created by going to plugin configuration page. </td>
+                                <td>Configuration name from which the Admin URL and credentials are read. A Configuration defines connection details and can be created by going to plugin configuration page. </td>
                             </tr>
                             <tr>
                                 <td class="required">Server Name</td>
@@ -378,7 +378,7 @@
                 <p>In the <b>AddUserToGroup</b> step, click the Log button to see the diagnostic information:</p>
                 <br />
                 <img src="../../plugins/EC-WebLogic/images/AddUserToGroup/EC-WLSAddUserToGroupStatus4.png" />
-                <p><b>Note:</b> In the URL, the protocol is http. For this procedure,ElectricFlow uses an internal method to test the status of the page URLs with the original http protocol used in the web browsers.</p>
+                <p><b>Note:</b> In the URL, the protocol is http. For this procedure, ElectricFlow uses an internal method to test the status of the page URLs with the original http protocol used in the web browsers.</p>
             </div>
             <div id="ChangeUserPassword">
                 <a name="ChangeUserPassword" id="ChangeUserPassword"></a>
@@ -403,7 +403,7 @@
                             </tr>
                             <tr>
                                 <td class="required">Configuration Name</td>
-                                <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.A Configuration defines connection details and can be created by going to plugin configuration page.</td>
+                                <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. A Configuration defines connection details and can be created by going to plugin configuration page.</td>
                             </tr>
                             <tr>
                                 <td class="required">Old User Credentials</td>
@@ -509,10 +509,10 @@
                         <tbody>
                             <tr>
                                 <td class="required">Configuration Name</td>
-                                <td>Name of the configuration to be used.URL, port and credentials are from the specified configuration. </td>
+                                <td>Name of the configuration to be used. URL, port and credentials are from the specified configuration. </td>
                             </tr>
                             <tr>
-                                <td class="required">Wlst Script Absolute Path</td>
+                                <td class="required">WLST Script Absolute Path</td>
                                 <td>Absolute path to WLST, such as "/path/to/wlst.cmd" <i>or</i>"wlst.sh". </td>
                             </tr>
                             <tr>
@@ -570,7 +570,7 @@
                             </tr>
                             <tr>
                                 <td class="required">Configuration Name</td>
-                                <td>Name of the configuration to be used.URL, port and credentials are from the specified configuration.A Configuration defines connection details and can be created by going to plugin configuration page.</td>
+                                <td>Name of the configuration to be used. URL, port and credentials are from the specified configuration.A Configuration defines connection details and can be created by going to plugin configuration page.</td>
                             </tr>
                             <tr>
                                 <td>Lockout Threshold</td>
@@ -911,7 +911,7 @@
                             </tr>
                             <tr>
                                 <td class="required">Configuration</td>
-                                <td>Configuration name from which the Admin URL and credentials are read.A Configuration defines connection details and can be created by going to plugin configuration page. </td>
+                                <td>Configuration name from which the Admin URL and credentials are read. A Configuration defines connection details and can be created by going to plugin configuration page. </td>
                             </tr>
                             <tr>
                                 <td class="required">User Credentials</td>
@@ -971,7 +971,7 @@
                             </tr>
                             <tr>
                                 <td class="required">Configuration Name</td>
-                                <td>Name of the configuration to be used.URL, port and credentials are from the specified configuration.A Configuration defines connection details and can be created by going to plugin configuration page.</td>
+                                <td>Name of the configuration to be used. URL, port and credentials are from the specified configuration.A Configuration defines connection details and can be created by going to plugin configuration page.</td>
                             </tr>
                             <tr>
                                 <td class="required">Cluster Name</td>
@@ -1058,7 +1058,7 @@
                             </tr>
                             <tr>
                                 <td class="required">Configuration</td>
-                                <td>Configuration name from which the Admin URL and credentials are read.A Configuration defines connection details and can be created by going to plugin configuration page</td>
+                                <td>Configuration name from which the Admin URL and credentials are read. A Configuration defines connection details and can be created by going to plugin configuration page</td>
                             </tr>
                             <tr>
                                 <td class="required">Group Name</td>
@@ -2196,7 +2196,7 @@
                 <tr>
                     <td class="required">Configuration Name</td>
                     <td>Name of the configuration to be used when the Administration Server URL and credentials
-                    are retrieved.A Configuration defines connection details and can be created by going to plugin configuration page.</td>
+                    are retrieved. A Configuration defines connection details and can be created by going to plugin configuration page.</td>
                 </tr>
                 <tr>
                     <td class="required">User Name</td>
