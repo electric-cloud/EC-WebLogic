@@ -16,6 +16,7 @@
 
 # imports
 import re
+import sys
 
 def startChanges():
     edit()
@@ -41,3 +42,27 @@ def parseOptions(options):
         arguments = nextArgument.split('=')
         optionsDict[arguments[0]]=arguments[1]
     return optionsDict
+
+# checks if application exists:
+def checkIfApplicationExists(appName, appVersion = '', appPlanVersion = ''):
+    found = 0
+    for deployment in cmo.getAppDeployments():
+        deployment_name = deployment.getName()
+        name = ''
+        version = ''
+        plan_version = ''
+
+        version_array = []
+        version_array = deployment_name.split('#')
+    
+        if len(version_array) == 1:
+            name = version_array[0]
+        elif len(version_array) == 2:
+            name, version = version_array
+        elif len(version_array) == 3:
+            name, version, plan_version = version_array
+
+        if name == appName and version == appVersion and plan_version == appPlanVersion:
+            found = 1
+            
+    return found

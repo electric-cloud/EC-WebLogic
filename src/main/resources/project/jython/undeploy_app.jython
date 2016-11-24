@@ -58,10 +58,15 @@ print "Undeploying application with options: %s" % (optionsDict)
 
 connect(username, password, admin_url)
 
+if not checkIfApplicationExists(application_name, version_identifier, ''):
+    print "Application %s (version: %s) doesn't exists" % (application_name, version_identifier)
+    sys.exit(1)
+
 startChanges()
 status = ""
 try:
     status = undeploy(application_name, '', **optionsDict)
+    commitChanges()
 except WLSTException, e:
     discardChanges()
     print('Undeploy Application Exception: ' + str(e))
