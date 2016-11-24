@@ -5305,7 +5305,7 @@
                   </propertySheet>
                 </property>
                 <property>
-                  <propertyName>options</propertyName>
+                  <propertyName>additional_options</propertyName>
                   <propertySheet>
                     <property>
                       <propertyName>formType</propertyName>
@@ -5355,11 +5355,11 @@
         <type>textarea</type>
       </formalParameter>
       <formalParameter>
-        <formalParameterName>options</formalParameterName>
+        <formalParameterName>additional_options</formalParameterName>
         <defaultValue/>
         <description>Comma-separated list of deployment options, specified as name-value pairs.</description>
         <required>0</required>
-        <type>entry</type>
+        <type>textarea</type>
       </formalParameter>
       <step>
         <stepName>UpdateAppConfig</stepName>

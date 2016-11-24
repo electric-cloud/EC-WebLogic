@@ -29,34 +29,36 @@ admin_url = r'''
 [% admin_url %]
 '''.strip()
 
-connect(wl_username, wl_password, admin_url)
-
-applicationName = r'''
+application_name = r'''
 [% app_name %]
 '''.strip();
 
-planPath = r'''
+plan_path = r'''
 [% plan_path %]
 '''.strip()
 
-options = r'''
-[% options %]
+additional_options = r'''
+[% additional_options %]
 '''.strip()
 
 timeout = 300000
 
+connect(wl_username, wl_password, admin_url)
+
 optionsDict = {}
 
-if options:
-    # for nextArgument in options.split(','):
-    for nextArgument in re.split(',\s*', options):
-        arguments = nextArgument.split('=')
-        optionsDict[arguments[0]]=arguments[1]
+if additional_options:
+    optionsDict = parseOptions(additional_options)
+
+# check application
+if not checkIfApplicationExists(application_name, ''):
+    print "Application %s doesn't exists" % (application_name)
+    sys.exit(1)
 
 startChanges()
 try:
-    status = updateApplication(applicationName, planPath, **optionsDict)
-    print "Application " + applicationName + " has been updated"
+    status = updateApplication(application_name, plan_path, **optionsDict)
+    print "Application " + application_name + " has been updated"
     print status
     commitChanges(timeout)
 

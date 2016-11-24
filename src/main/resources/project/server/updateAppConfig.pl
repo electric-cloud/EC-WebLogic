@@ -40,7 +40,7 @@ sub main {
         configname
         plan_path
         deployment_plan
-        options
+        additional_options
     });
 
     my $cred = $wl->get_credentials($params->{configname});
@@ -51,6 +51,7 @@ sub main {
         $wl->bail_out($check->{msg});
     }
 
+    # if 
     if (!-e $params->{plan_path}) {
         if (!$params->{deployment_plan}) {
             $wl->bail_out("Deployment plan $params->{plan_path} doesn't exist and it's content wasn't provided.");
@@ -62,17 +63,19 @@ sub main {
         print $fh $deployment_plan;
         close $fh;
     }
+    elsif (-e $params->{plan_path} && -d $params->{plan_path}) {
+        $wl->bail_out("$params->{plan_path} exists and it is a directory. Absolute path to deployment plan file is expected");
+    }
     my $render_params = {
         wl_username => $cred->{user},
         wl_password => $cred->{password},
         admin_url   => $cred->{weblogic_url},
         app_name    => $params->{app_name},
         plan_path   => $params->{plan_path},
-        options     => $params->{options},
+        additional_options     => $params->{additional_options},
     };
     my $template_path = '/myProject/jython/update_app_config.jython';
-    my $template =
-        $wl->render_template_from_property($template_path, $render_params);
+    my $template = $wl->render_template_from_property($template_path, $render_params);
 
     $wl->out(10, "Generated script:\n", $template);
     my $res = $wl->execute_jython_script(
