@@ -63,9 +63,6 @@ def getApplication(appName, appVersion = '', appPlanVersion = ''):
         elif len(version_array) == 3:
             name, version, plan_version = version_array
 
-        # if name == appName and version == appVersion and plan_version == appPlanVersion:
-        #     result = deployment
-        # AppName is found
         if name == appName:
             if appVersion != '*' and appVersion != version:
                 continue
