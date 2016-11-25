@@ -49,7 +49,7 @@ if version_identifier:
     optionsDict['versionIdentifier'] = version_identifier
 
 connect(username, password, admin_url)
-# STATE_PREPARED STATE_PREPARED STATE_RETIRED
+
 if not checkIfApplicationExists(application_name, version_identifier, ''):
     print "Application %s (version: %s) doesn't exists" % (application_name, version_identifier)
     sys.exit(1)
