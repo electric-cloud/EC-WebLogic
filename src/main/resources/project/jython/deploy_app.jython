@@ -79,8 +79,8 @@ upload = r'''
 '''.strip()
 
 # end of parameters
-system.exit(0)
-print 'Deploying jar...'
+
+print 'Deploying application...'
 connect(username, password, admin_url)
 
 # deployment options 
