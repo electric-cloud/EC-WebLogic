@@ -54,6 +54,11 @@ if not checkIfApplicationExists(application_name, version_identifier, ''):
     print "Application %s (version: %s) doesn't exists" % (application_name, version_identifier)
     sys.exit(1)
 
+appStatus = getApplicationState(application_name, version_identifier, '')
+for status in appStatus:
+    if status == 'STATE_PREPARED' or status == 'STATE_RETIRED':
+        print 'WARNING' + ':' + 'Application is already stoppped.'
+
 print "Stopping application with options: %s" % (optionsDict)
 status = stopApplication(application_name, **optionsDict)
 print status

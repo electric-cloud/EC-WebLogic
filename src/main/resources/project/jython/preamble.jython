@@ -18,6 +18,8 @@
 import re
 import sys
 
+# end of imports
+
 def startChanges():
     edit()
     startEdit()
@@ -43,9 +45,8 @@ def parseOptions(options):
         optionsDict[arguments[0]]=arguments[1]
     return optionsDict
 
-# checks if application exists:
-def checkIfApplicationExists(appName, appVersion = '', appPlanVersion = ''):
-    found = 0
+def getApplication(appName, appVersion = '', appPlanVersion = ''):
+    result = None
     for deployment in cmo.getAppDeployments():
         deployment_name = deployment.getName()
         name = ''
@@ -54,7 +55,7 @@ def checkIfApplicationExists(appName, appVersion = '', appPlanVersion = ''):
 
         version_array = []
         version_array = deployment_name.split('#')
-    
+
         if len(version_array) == 1:
             name = version_array[0]
         elif len(version_array) == 2:
@@ -63,6 +64,55 @@ def checkIfApplicationExists(appName, appVersion = '', appPlanVersion = ''):
             name, version, plan_version = version_array
 
         if name == appName and version == appVersion and plan_version == appPlanVersion:
-            found = 1
-            
-    return found
+            result = deployment
+
+    return result
+
+def getApplicationState(appName, appVersion = '', appPlanVersion = ''):
+    deployment = getApplication(appName, appVersion, appPlanVersion)
+    print "Deployment: "
+    print deployment
+    domainConfig()
+    cd ('/AppDeployments/' + deployment.getName() + '/Targets')
+    mytargets = ls(returnMap='true')
+    domainRuntime()
+    cd('AppRuntimeStateRuntime')
+    cd('AppRuntimeStateRuntime')
+    applicationState = []
+    for targetinst in mytargets:
+        currentState = cmo.getCurrentState(deployment.getName(), targetinst)
+        applicationState.append(currentState)
+
+    return applicationState
+
+# checks if application exists:
+def checkIfApplicationExists(appName, appVersion = '', appPlanVersion = ''):
+    app = getApplication(appName, appVersion, appPlanVersion)
+    if app:
+        return 1
+    return 0
+
+def runDeploy(appName, appPath, deployParams, options):
+    try:
+        startChanges()
+        params = {}
+        params.update(deployParams)
+        params.update(options)
+        status = deploy(appName = appName, path = appPath, **params)
+        commitChanges()
+        print status
+    except WLSTException, e:
+        print "Deploy failed"
+        print str(e)
+        discardChanges()
+
+def runRedeploy(appName, appPath, planPath, options):
+    try:
+        startChanges()
+        status = redeploy(appName = appName, appPath = appPath, planPath = planPath, **options)
+        commitChanges()
+        print status
+    except WLSTException, e:
+        print "Redeploy failed"
+        print str(e)
+        discardChanges()

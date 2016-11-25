@@ -44,7 +44,18 @@ sub main {
         'apppath',
         'configname',
         'targets',
-        'is_library'
+        'is_library',
+        ### new options ###
+        'stage_mode',
+        'deployment_plan',
+        'plan_path',
+        'additional_options',
+        'archive_version',
+        'plan_version',
+        'retire_gracefully',
+        'retire_timeout',
+        'version_identifier',
+        'upload'
     );
 
     my $is_library = 'false';
@@ -55,6 +66,19 @@ sub main {
     unless ($check->{ok}) {
         $wl->bail_out($check->{msg});
     }
+
+    if ($params->{plan_path}) {
+        if (-e $params->{plan_path} && -d $params->{plan_path}) {
+            $wl->bail_out("$params->{plan_path} exists and it is a directory");
+        }
+        if (!-e $params->{plan_path}) {
+            if (!$params->{deployment_plan}) {
+                $wl->bail_out("$params->{plan_path} doesn't exist and it's content was not provided");
+            }
+            open(my $fh, '>', $params->{plan_path});
+            close $fh;
+        }
+    }
     my $cred = $wl->get_credentials($params->{configname});
     my $render_params = {
         username => $cred->{user},
@@ -64,7 +88,18 @@ sub main {
         targets => $params->{targets},
         app_name => $params->{appname},
         app_path => $params->{apppath},
-        is_library => $is_library
+        is_library => $is_library,
+        ### new options ###
+        stage_mode => $params->{stage_mode},
+        # deployment_plan => $params->{deployment_plan},
+        plan_path => $params->{plan_path},
+        additional_options => $params->{additional_options},
+        archive_version => $params->{archive_version},
+        plan_version => $params->{plan_version},
+        retire_gracefully => $params->{retire_gracefully},
+        retire_timeout => $params->{retire_timeout},
+        version_identifier => $params->{version_identifier},
+        upload => $params->{upload}
     };
 
     my $template_path = '/myProject/jython/deploy_app.jython';

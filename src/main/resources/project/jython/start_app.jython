@@ -54,6 +54,11 @@ if not checkIfApplicationExists(application_name, version_identifier, ''):
     print "Application %s (version: %s) doesn't exists" % (application_name, version_identifier)
     sys.exit(1)
 
+appStatus = getApplicationState(application_name, version_identifier, '')
+for status in appStatus:
+    if status == 'STATE_ACTIVE':
+        print 'WARNING' + ':' + 'Application is already started.'
+
 print "Starting application with options: %s" % (optionsDict)
 status = startApplication(application_name, **optionsDict)
 print status
