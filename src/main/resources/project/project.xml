@@ -1700,7 +1700,7 @@
                   </propertySheet>
                 </property>
                 <property>
-                  <propertyName>gracefulmode</propertyName>
+                  <propertyName>retire_gracefully</propertyName>
                   <propertySheet>
                     <property>
                       <propertyName>checkedValue</propertyName>
@@ -1769,9 +1769,9 @@
         <type>entry</type>
       </formalParameter>
       <formalParameter>
-        <formalParameterName>gracefulmode</formalParameterName>
+        <formalParameterName>retire_gracefully</formalParameterName>
         <defaultValue/>
-        <description>Enables stopping the application in Graceful Mode (after existing HTTP clients have completed their work).</description>
+        <description>Retirement policy to gracefully retire an application only after it has completed all in-flight work. This policy is only meaningful for stop and redeploy operations and is mutually exclusive to the retire timeout policy.</description>
         <required>0</required>
         <type>checkbox</type>
       </formalParameter>

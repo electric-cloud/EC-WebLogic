@@ -63,7 +63,11 @@ def getApplication(appName, appVersion = '', appPlanVersion = ''):
         elif len(version_array) == 3:
             name, version, plan_version = version_array
 
-        if name == appName and version == appVersion and plan_version == appPlanVersion:
+        if name == appName:
+            if appVersion != '*' and appVersion != version:
+                continue
+            if appPlanVersion != '*' and appPlanVersion != plan_version:
+                continue
             result = deployment
 
     return result
@@ -86,7 +90,7 @@ def getApplicationState(appName, appVersion = '', appPlanVersion = ''):
     return applicationState
 
 # checks if application exists:
-def checkIfApplicationExists(appName, appVersion = '', appPlanVersion = ''):
+def checkIfApplicationExists(appName, appVersion = '*', appPlanVersion = '*'):
     app = getApplication(appName, appVersion, appPlanVersion)
     if app:
         return 1
