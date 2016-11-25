@@ -40,8 +40,8 @@ version_identifier = r'''
 [% version_identifier %]
 '''.strip()
 
-graceful_mode = r'''
-[% gracefulmode %]
+retire_gracefully = r'''
+[% retire_gracefully %]
 '''.strip()
 
 optionsDict = {};
@@ -52,7 +52,7 @@ if additional_options:
 if version_identifier:
     optionsDict['versionIdentifier'] = version_identifier
 
-optionsDict['retireGracefully'] = graceful_mode
+optionsDict['retireGracefully'] = retire_gracefully
 
 print "Undeploying application with options: %s" % (optionsDict)
 

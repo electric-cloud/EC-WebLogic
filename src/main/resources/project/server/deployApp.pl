@@ -59,8 +59,12 @@ sub main {
     );
 
     my $is_library = 'false';
+    my $upload = 'false';
     if ($params->{is_library}) {
         $is_library = 'true';
+    }
+    if ($params->{upload}) {
+        $upload = 'true';
     }
     my $check = $wl->check_executable($params->{wlstabspath});
     unless ($check->{ok}) {
@@ -99,7 +103,7 @@ sub main {
         retire_gracefully => $params->{retire_gracefully},
         retire_timeout => $params->{retire_timeout},
         version_identifier => $params->{version_identifier},
-        upload => $params->{upload}
+        upload => $upload
     };
 
     my $template_path = '/myProject/jython/deploy_app.jython';

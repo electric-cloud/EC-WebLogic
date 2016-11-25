@@ -40,17 +40,17 @@ sub main {
     my $params = $wl->get_params_as_hashref(
         'appname',
         'wlstabspath',
-        'gracefulmode',
+        'retire_gracefully',
         'configname',
         'version_identifier',
         'additional_options'
     );
 
     my $cred = $wl->get_credentials($params->{configname});
-    my $gracefulmode = 'false';
+    my $retire_gracefully = 'false';
 
-    if ($params->{gracefulmode}) {
-        $params->{gracefulmode} = 'true'
+    if ($params->{retire_gracefully}) {
+        $retire_gracefully = $params->{retire_gracefully};
     }
 
     print "AdditionalOptions: $params->{additional_options}\n";
@@ -59,7 +59,7 @@ sub main {
         password => $cred->{password},
         admin_url => $params->{weblogic_url},
         app_name => $params->{appname},
-        gracefulmode => $gracefulmode,
+        retire_gracefully => $retire_gracefully,
         additional_options => $params->{additional_options},
         version_identifier => $params->{version_identifier},
     };
