@@ -16,6 +16,7 @@
 
 # imports
 import re
+import sys
 
 # end of imports
 
@@ -44,25 +45,30 @@ def parseOptions(options):
         optionsDict[arguments[0]]=arguments[1]
     return optionsDict
 
-
 # checks if application exists:
-def checkIfApplicationExists(appName, appVersion):
-    print 'Checking AppName: %s with Version: %s for existance' % (appName, appVersion)
+def checkIfApplicationExists(appName, appVersion = '', appPlanVersion = ''):
+    found = 0
     for deployment in cmo.getAppDeployments():
-        tempName = deployment.getName()
+        deployment_name = deployment.getName()
         name = ''
         version = ''
-        if re.match('#', tempName):
-            name, version = tempName.split('#')
-        else:
-            name = tempName
+        plan_version = ''
 
-        if name == appName:
-            if appVersion:
-                if appVersion != version:
-                    return 0
-            return 1
-    return 0
+        version_array = []
+        version_array = deployment_name.split('#')
+    
+        if len(version_array) == 1:
+            name = version_array[0]
+        elif len(version_array) == 2:
+            name, version = version_array
+        elif len(version_array) == 3:
+            name, version, plan_version = version_array
+
+        if name == appName and version == appVersion and plan_version == appPlanVersion:
+            found = 1
+            
+    return found
+
 
 def runDeploy(appName, appPath, deployParams, options):
     try:

@@ -54,9 +54,9 @@
         <required>0</required>
     </formElement>
     <formElement>
-        <type>entry</type>
+        <type>textarea</type>
         <label>Additional Options:</label>
-        <property>options</property>
+        <property>additional_options</property>
         <documentation>Comma-separated list of deployment options, specified as name-value pairs. For example: block=false,createPlan=true</documentation>
         <required>0</required>
     </formElement>

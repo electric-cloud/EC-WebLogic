@@ -116,7 +116,7 @@ if upload:
 if version_identifier:
     optionsDict['versionIdentifier'] = version_identifier
 
-application_exists = checkIfApplicationExists(application_name, version_identifier)
+application_exists = checkIfApplicationExists(application_name, version_identifier, plan_version)
 if application_exists:
     print "Redeploy"
     runRedeploy(application_name, application_path, plan_path, optionsDict)

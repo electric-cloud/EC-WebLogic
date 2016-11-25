@@ -52,7 +52,7 @@
         <documentation>
             Timeout in seconds for cluster shutdown.
         </documentation>
-        <value>360</value>
+        <value>300</value>
         <required>0</required>
     </formElement>
     <formElement>
