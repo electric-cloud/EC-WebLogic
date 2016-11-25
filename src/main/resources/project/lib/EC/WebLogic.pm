@@ -142,6 +142,9 @@ sub process_response {
             if ($result->{$where} =~ m/WLSTException:\s(.+)$/is) {
                 $self->bail_out($1);
             }
+            if ($result->{$where} =~ m/ERROR:(.+)$/s) {
+                $self->bail_out($1);
+            }
         }
         $self->error();
         return;

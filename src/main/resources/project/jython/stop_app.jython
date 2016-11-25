@@ -51,7 +51,7 @@ if version_identifier:
     optionsDict['versionIdentifier'] = version_identifier
 
 if not checkIfApplicationExists(application_name, version_identifier, ''):
-    print "Application %s (version: %s) doesn't exists" % (application_name, version_identifier)
+    print 'ERROR' + ':' + "Application %s (version: %s) doesn't exist." % (application_name, version_identifier)
     sys.exit(1)
 
 appStatus = getApplicationState(application_name, version_identifier, '')
