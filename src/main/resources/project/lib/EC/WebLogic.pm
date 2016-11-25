@@ -146,6 +146,11 @@ sub process_response {
         $self->error();
         return;
     }
+    my @matches = $result->{stdout} =~ m/WARNING:(.+?)$/gm;
+    if (@matches) {
+        $self->warning( join("\n", @matches));
+        return;
+    }
     $self->success();
     return;
 }

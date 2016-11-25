@@ -79,7 +79,7 @@ upload = r'''
 '''.strip()
 
 # end of parameters
-
+system.exit(0)
 print 'Deploying jar...'
 connect(username, password, admin_url)
 
@@ -116,6 +116,7 @@ if upload:
 if version_identifier:
     optionsDict['versionIdentifier'] = version_identifier
 
+# checks application for existence
 application_exists = checkIfApplicationExists(application_name, version_identifier, plan_version)
 if application_exists:
     print "Redeploy"

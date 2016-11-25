@@ -127,7 +127,9 @@
     <formElement>
         <label>Retire gracefully</label>
         <property>retire_gracefully</property>
-        <type>entry</type>
+        <type>checkbox</type>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
         <required>0</required>
         <documentation>Retirement policy to gracefully retire an application only after it has completed all in-flight work. This policy is only meaningful for stop and redeploy operations and is mutually exclusive to the retire timeout policy.</documentation>
     </formElement>

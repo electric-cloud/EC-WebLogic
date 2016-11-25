@@ -1599,7 +1599,7 @@
           <defaultValue/>
           <description>Retirement policy to gracefully retire an application only after it has completed all in-flight work. This policy is only meaningful for stop and redeploy operations and is mutually exclusive to the retire timeout policy.</description>
           <required>0</required>
-          <type>entry</type>
+          <type>checkbox</type>
       </formalParameter>
       
       <formalParameter>
