@@ -40,8 +40,6 @@ version_identifier = r'''
 [% version_identifier %]
 '''.strip()
 
-connect(username, password, admin_url)
-
 optionsDict = {}
 
 if additional_options:
@@ -50,17 +48,29 @@ if additional_options:
 if version_identifier:
     optionsDict['versionIdentifier'] = version_identifier
 
-if not checkIfApplicationExists(application_name, version_identifier, ''):
-    if not version_identifier:
-        version_identifier = '*'
+connect(username, password, admin_url)
 
+if not version_identifier:
+    version_identifier = '*'
+
+plan_version = '*'
+
+if 'planVersion' in optionsDict.keys():
+    plan_version = optionsDict['planVersion']
+
+appCount = checkIfApplicationExists(application_name, version_identifier, plan_version)
+
+if not appCount:
     print 'ERROR' + ':' + "Application %s (version: %s) doesn't exist." % (application_name, version_identifier)
     sys.exit(1)
+elif appCount > 1:
+    print "WARNING" + ':' + "There are more than 1 (" + str(appCount) + ") applications found."
 
-appStatus = getApplicationState(application_name, version_identifier, '')
-for status in appStatus:
-    if status == 'STATE_PREPARED' or status == 'STATE_RETIRED':
-        print 'WARNING' + ':' + 'Application is already stoppped.'
+statusCheck = isApplicationHasStatus(application_name, version_identifier, plan_version, ['STATE_PREPARED', 'STATE_RETIRED'])
+print statusCheck
+if statusCheck:
+    for app in statusCheck:
+        print 'WARNING' + ':' + 'Application ' + app  + ' is already stopped.'
 
 print "Stopping application with options: %s" % (optionsDict)
 status = stopApplication(application_name, **optionsDict)

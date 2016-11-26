@@ -45,8 +45,9 @@ def parseOptions(options):
         optionsDict[arguments[0]]=arguments[1]
     return optionsDict
 
+# appName parameter is mandatory. Use * for appVersion and appPlanVersion to get all.
 def getApplication(appName, appVersion = '', appPlanVersion = ''):
-    result = None
+    result = []
     for deployment in cmo.getAppDeployments():
         deployment_name = deployment.getName()
         name = ''
@@ -68,34 +69,64 @@ def getApplication(appName, appVersion = '', appPlanVersion = ''):
                 continue
             if appPlanVersion != '*' and appPlanVersion != plan_version:
                 continue
-            result = deployment
+            result.append(deployment)
 
     return result
 
 def getApplicationState(appName, appVersion = '', appPlanVersion = ''):
-    deployment = getApplication(appName, appVersion, appPlanVersion)
-    print "Deployment: "
-    print deployment
-    domainConfig()
-    cd ('/AppDeployments/' + deployment.getName() + '/Targets')
-    mytargets = ls(returnMap='true')
-    domainRuntime()
-    cd('AppRuntimeStateRuntime')
-    cd('AppRuntimeStateRuntime')
-    applicationState = []
-    for targetinst in mytargets:
-        currentState = cmo.getCurrentState(deployment.getName(), targetinst)
-        applicationState.append(currentState)
+    deployments = getApplication(appName, appVersion, appPlanVersion)
+    applicationState = {}
+
+    for deployment in deployments:
+        domainConfig()
+        deploymentName = deployment.getName()
+        cd ('/AppDeployments/' + deploymentName + '/Targets')
+        applicationState[deploymentName] = []
+        mytargets = ls(returnMap='true')
+        domainRuntime()
+        cd('AppRuntimeStateRuntime')
+        cd('AppRuntimeStateRuntime')
+
+        for targetinst in mytargets:
+            currentState = cmo.getCurrentState(deploymentName, targetinst)
+            print "Curstate: --- " + currentState + "---\n"
+            applicationState[deploymentName].append(currentState)
 
     return applicationState
 
 # checks if application exists:
-def checkIfApplicationExists(appName, appVersion = '*', appPlanVersion = '*'):
+def checkIfApplicationExists(appName, appVersion = '', appPlanVersion = ''):
+    if not appVersion:
+        appVersion = '*'
+    if not appPlanVersion:
+        appPlanVersion = '*'
+
     app = getApplication(appName, appVersion, appPlanVersion)
     if app:
-        return 1
+        return len(app)
     return 0
 
+def isApplicationHasStatus(appName, appVersion, appPlanVersion, appStatuses):
+    states = getApplicationState(appName, appVersion, appPlanVersion)
+    print "States:"
+    print states
+    print "app statuses: "
+    print appStatuses
+    result = []
+    if not states:
+        return result
+    for key in states.keys():
+        print "Key: " + key
+        for state in states[key]:
+            print "State: " + state
+            if state in appStatuses:
+                print "Stat is in appstatuses"
+                result.append(key)
+                break
+
+    return result
+        
+    
 def runDeploy(appName, appPath, deployParams, options):
     try:
         startChanges()

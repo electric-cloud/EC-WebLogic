@@ -57,7 +57,7 @@ sub main {
     my $render_params = {
         username => $cred->{user},
         password => $cred->{password},
-        admin_url => $params->{weblogic_url},
+        admin_url => $cred->{weblogic_url},
         app_name => $params->{appname},
         retire_gracefully => $retire_gracefully,
         additional_options => $params->{additional_options},

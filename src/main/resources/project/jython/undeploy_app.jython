@@ -58,10 +58,15 @@ print "Undeploying application with options: %s" % (optionsDict)
 
 connect(username, password, admin_url)
 
-if not checkIfApplicationExists(application_name, version_identifier, ''):
-    if not version_identifier:
-        version_identifier = '*'
+if not version_identifier:
+    version_identifier = '*'
 
+plan_version = '*'
+
+if 'planVersion' in optionsDict.keys():
+    plan_version = optionsDict['planVersion']
+
+if not checkIfApplicationExists(application_name, version_identifier, plan_version):
     print 'ERROR' + ':' + "Application %s (version: %s) doesn't exist." % (application_name, version_identifier)
     sys.exit(1)
 

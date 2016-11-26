@@ -116,6 +116,9 @@ if upload:
 if version_identifier:
     optionsDict['versionIdentifier'] = version_identifier
 
+if plan_version:
+    optionsDict['planVersion'] = plan_version
+
 # checks application for existence
 application_exists = checkIfApplicationExists(application_name, version_identifier, plan_version)
 if application_exists:
