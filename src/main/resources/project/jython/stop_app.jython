@@ -64,7 +64,7 @@ if not appCount:
     print 'ERROR' + ':' + "Application %s (version: %s) doesn't exist." % (application_name, version_identifier)
     sys.exit(1)
 elif appCount > 1:
-    print "WARNING" + ':' + "There are more than 1(" + str(appCount) + ") applications found."
+    print "WARNING" + ':' + "There are more than 1 (" + str(appCount) + ") applications found."
 
 statusCheck = isApplicationHasStatus(application_name, version_identifier, plan_version, ['STATE_PREPARED', 'STATE_RETIRED'])
 print statusCheck
