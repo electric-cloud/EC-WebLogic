@@ -79,10 +79,12 @@ sub main {
             if (!$params->{deployment_plan}) {
                 $wl->bail_out("$params->{plan_path} doesn't exist and it's content was not provided");
             }
-            open(my $fh, '>', $params->{plan_path});
+            open(my $fh, '>', $params->{plan_path}) or $wl->bail_out("Can't open file $params->{plan_path} for writing: $!");
+            print $fh $params->{deployment_plan};
             close $fh;
         }
     }
+
     my $cred = $wl->get_credentials($params->{configname});
     my $render_params = {
         username => $cred->{user},
