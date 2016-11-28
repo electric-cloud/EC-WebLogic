@@ -152,7 +152,10 @@ sub write_deployment_plan {
     if (!$params{overwrite} && -e $params{path} && -s $params{path} && $params{content}) {
         $self->bail_out(qq|File $params{path} is already exists and not empty. Can't overwrite it without "Overwrite deployment plan?" flag enabled.|);
     }
-
+    # if only path present, but no content, we don't need to write.
+    if ($params{path} && !$params{content}) {
+        return 1;
+    }
     open(my $fh, '>:encoding(UTF-8)', $params{path});
     print $fh $params{content};
     close $fh;
