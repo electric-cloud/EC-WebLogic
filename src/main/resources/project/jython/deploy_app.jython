@@ -120,7 +120,7 @@ if plan_version:
     optionsDict['planVersion'] = plan_version
 
 # checks application for existence
-application_exists = checkIfApplicationExists(application_name, version_identifier, plan_version)
+application_exists = checkIfApplicationExists(application_name, '*', '*')
 
 print "Deployment Options: %s\nAddiotional Options: %s\n" % (deploymentOptions, optionsDict)
 if application_exists:
