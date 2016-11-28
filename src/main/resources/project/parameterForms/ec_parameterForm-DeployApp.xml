@@ -44,7 +44,7 @@
         <required>1</required>
     </formElement>
     <formElement>
-        <label>Is library:</label>
+        <label>Is library?:</label>
         <property>is_library</property>
         <documentation>Is library?</documentation>
         <required>1</required>
@@ -66,100 +66,152 @@
         <documentation>Targets on which to deploy the application or module (comma-separated list of the target servers, clusters, or virtual hosts).</documentation>
         <required>1</required>
     </formElement>
-
     <formElement>
-        <label>Stage mode</label>
+        <label>Stage mode:</label>
         <property>stage_mode</property>
         <type>select</type>
         <option><name>stage</name><value>stage</value></option>
         <option><name>nostage</name><value>nostage</value></option>
         <option><name>external_stage</name><value>external_stage</value></option>
         <required>0</required>
-        <documentation>Staging mode for the application you are deploying. (Notes: Drop-down values: stage, nostage, and external_stage. Ref: http://docs.oracle.com/middleware/12212/wls/DEPGD/deploy.htm#DEPGD235)</documentation>
+        <documentation>
+            Staging mode for the application you are deploying.
+            Possible values are: stage, nostage, and external_stage.
+            If not provided, default stage mode will be used.
+            See <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="http://docs.oracle.com/middleware/12212/wls/DEPGD/deploy.htm#DEPGD235">Oracle documentation</a> for details.
+        </documentation>
+        <htmlDocumentation>
+            Staging mode for the application you are deploying.<br />
+            Possible values are: stage, nostage, and external_stage.<br />
+            If not provided, default stage mode will be used.<br />
+            See <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="http://docs.oracle.com/middleware/12212/wls/DEPGD/deploy.htm#DEPGD235">Oracle documentation</a> for details.
+        </htmlDocumentation>
     </formElement>
-    
-
     <formElement>
-        <label>Deployment plan content</label>
-        <property>deployment_plan</property>
-        <type>textarea</type>
-        <required>0</required>
-        <documentation>A WebLogic Server deployment plan is an XML document that you use to configure an application for deployment to a specific WebLogic Server environment.</documentation>
-    </formElement>
-
-
-    <formElement>
-        <label>Deployment plan path</label>
+        <label>Deployment plan path:</label>
         <property>plan_path</property>
         <type>entry</type>
         <required>0</required>
-        <documentation>Path to read a deployment plan (if there is one) or to save a new one from the Deployment plan content parameter.</documentation>
+        <documentation>
+            Path to read a deployment plan (if there is one) or to save a new one from the Deployment plan content parameter.
+        </documentation>
     </formElement>
-
-
     <formElement>
-        <label>Additional Options</label>
-        <property>additional_options</property>
-        <type>textarea</type>
-        <required>0</required>
-        <documentation>Comma-separated list of deployment options, specified as name-value pairs. Refer to WLST deploy documentation (The options, which are not included in this form).</documentation>
-    </formElement>
-
-
-    <formElement>
-        <label>Archive version</label>
-        <property>archive_version</property>
-        <type>entry</type>
-        <required>0</required>
-        <documentation>Archive version number. Is used for production redeployment, specifies the application version which is going to be retired, while versionIdentifier specifies a new version. Archive version stays along with the new one.</documentation>
-    </formElement>
-
-
-    <formElement>
-        <label>Plan version</label>
+        <label>Plan version:</label>
         <property>plan_version</property>
         <type>entry</type>
         <required>0</required>
-        <documentation>Plan version number</documentation>
+        <documentation>Plan version number.</documentation>
+    </formElement>
+    <formElement>
+        <label>Deployment plan content:</label>
+        <property>deployment_plan</property>
+        <type>textarea</type>
+        <required>0</required>
+        <documentation>
+            A WebLogic Server deployment plan is an XML document that you use to configure an application for deployment to a specific WebLogic Server environment.
+        </documentation>
+    </formElement>
+    <formElement>
+        <label>Overwrite deployment plan?:</label>
+        <property>overwrite_deployment_plan</property>
+        <type>checkbox</type>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <required>0</required>
+        <documentation>
+            If checked, deployment plan will be overwritten, if deployment plan content has been provided and deployment plan file already exists.
+            This option defaults to false.
+        </documentation>
+        <htmlDocumentation>
+            If checked, deployment plan will be overwritten, if deployment plan content has been provided and deployment plan file already exists.<br />
+            This option defaults to false.
+        </htmlDocumentation>
+    </formElement>
+    <formElement>
+        <label>Additional Options:</label>
+        <property>additional_options</property>
+        <type>textarea</type>
+        <required>0</required>
+        <documentation>
+            Comma-separated list of deployment options, specified as name-value pairs.
+            Refer to WLST deploy documentation (The options, which are not included in this form).
+        </documentation>
+        <htmlDocumentation>
+            Comma-separated list of deployment options, specified as name-value pairs.<br/>
+            Refer to WLST deploy documentation (The options, which are not included in this form).
+        </htmlDocumentation>
+    </formElement>
+    <formElement>
+        <label>Archive version:</label>
+        <property>archive_version</property>
+        <type>entry</type>
+        <required>0</required>
+        <documentation>
+            Archive version number.
+            Is used for production redeployment, specifies the application version which is going to be retired, while versionIdentifier specifies a new version.
+            Archive version stays along with the new one.
+        </documentation>
+        <htmlDocumentation>
+            Archive version number.<br />
+            Is used for production redeployment, specifies the application version which is going to be retired, while versionIdentifier specifies a new version.<br />
+            Archive version stays along with the new one.
+        </htmlDocumentation>
     </formElement>
 
-
     <formElement>
-        <label>Retire gracefully</label>
+        <label>Retire gracefully:</label>
         <property>retire_gracefully</property>
         <type>checkbox</type>
         <checkedValue>1</checkedValue>
         <uncheckedValue>0</uncheckedValue>
         <required>0</required>
-        <documentation>Retirement policy to gracefully retire an application only after it has completed all in-flight work. This policy is only meaningful for stop and redeploy operations and is mutually exclusive to the retire timeout policy.</documentation>
+        <documentation>
+            Retirement policy to gracefully retire an application only after it has completed all in-flight work.
+            This policy is only meaningful for stop and redeploy operations and is mutually exclusive to the retire timeout policy.
+        </documentation>
+        <htmlDocumentation>
+            Retirement policy to gracefully retire an application only after it has completed all in-flight work.<br />
+            This policy is only meaningful for stop and redeploy operations and is mutually exclusive to the retire timeout policy.
+        </htmlDocumentation>
     </formElement>
-
-
     <formElement>
-        <label>Retire timeout</label>
+        <label>Retire timeout:</label>
         <property>retire_timeout</property>
         <type>entry</type>
         <required>0</required>
-        <documentation>Time (in seconds) WLST waits before retiring an application that has been replaced with a newer version. This option default to -1, which specifies graceful timeout.</documentation>
+        <documentation>
+            Time (in seconds) WLST waits before retiring an application that has been replaced with a newer version.
+            This option default to -1, which specifies graceful timeout.
+        </documentation>
+        <htmlDocumentation>
+            Time (in seconds) WLST waits before retiring an application that has been replaced with a newer version.<br />
+            This option default to -1, which specifies graceful timeout.
+        </htmlDocumentation>
     </formElement>
-
-
     <formElement>
-        <label>Version identifier</label>
+        <label>Version identifier:</label>
         <property>version_identifier</property>
         <type>entry</type>
         <required>0</required>
         <documentation>Version Identifier</documentation>
     </formElement>
-
-
     <formElement>
-        <label>Upload</label>
+        <label>Upload?:</label>
         <property>upload</property>
         <type>checkbox</type>
         <checkedValue>1</checkedValue>
         <uncheckedValue>0</uncheckedValue>
         <required>0</required>
-        <documentation>Optional. Boolean value specifying whether the application files are uploaded to the WebLogic Server Administration Server'’s upload directory prior to deployment. Use this option when you are on a different machine from the Administration Server and you cannot copy the deployment files by other means. This option defaults to false.</documentation>
+        <documentation>
+            Optional. Boolean value specifying whether the application files are uploaded to the WebLogic Server Administration Server's upload directory prior to deployment.
+            Use this option when you are on a different machine from the Administration Server and you cannot copy the deployment files by other means.
+            This option defaults to false.
+        </documentation>
+        <htmlDocumentation>
+            Optional. Boolean value specifying whether the application files are uploaded to the WebLogic Server Administration Server's upload directory prior to deployment.<br />
+            Use this option when you are on a different machine from the Administration Server and you cannot copy the deployment files by other means. <br />
+            This option defaults to false.
+        </htmlDocumentation>
     </formElement>
 </editor>
