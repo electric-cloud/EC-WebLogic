@@ -51,8 +51,12 @@ if additional_options:
     optionsDict = parseOptions(additional_options)
 
 # check application
-if not checkIfApplicationExists(application_name, '', ''):
+appCount = checkIfApplicationExists(application_name, '', '')
+if appCount == 0
     print "Application %s doesn't exists" % (application_name)
+    sys.exit(1)
+elif appCount > 1:
+    print "There are more than 1 (" + str(appCount) + ") applications found. Please, provide Application Version."
     sys.exit(1)
 
 startChanges()
