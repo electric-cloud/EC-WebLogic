@@ -104,9 +104,6 @@ if additional_options:
 if archive_version:
     optionsDict['archiveVersion'] = archive_version
 
-if retire_timeout:
-    optionsDict['retireTimeout'] = retire_timeout
-
 if retire_gracefully:
     optionsDict['retireGracefully'] = retire_gracefully
 
@@ -125,6 +122,9 @@ application_exists = checkIfApplicationExists(application_name, '*', '*')
 print "Deployment Options: %s\nAddiotional Options: %s\n" % (deploymentOptions, optionsDict)
 if application_exists:
     print "Redeployment:"
+    if retire_timeout:
+        optionsDict['retireTimeout'] = retire_timeout
+
     runRedeploy(application_name, application_path, plan_path, optionsDict)
 else:
     print "Deployment:"
