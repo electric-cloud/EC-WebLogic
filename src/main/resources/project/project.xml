@@ -5540,6 +5540,16 @@
                   </propertySheet>
                 </property>
                 <property>
+                  <propertyName>overwrite_deployment_plan</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
                   <propertyName>additional_options</propertyName>
                   <propertySheet>
                     <property>
@@ -5595,6 +5605,16 @@
         <description>Comma-separated list of deployment options, specified as name-value pairs.</description>
         <required>0</required>
         <type>textarea</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>overwrite_deployment_plan</formalParameterName>
+        <defaultValue/>
+        <description>
+            If checked, deployment plan will be overwritten, if deployment plan content has been provided and deployment plan file already exists.
+            This option defaults to false.
+        </description>
+        <required>0</required>
+        <type>checkbox</type>
       </formalParameter>
       <step>
         <stepName>UpdateAppConfig</stepName>

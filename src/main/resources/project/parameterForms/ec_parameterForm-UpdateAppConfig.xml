@@ -54,6 +54,22 @@
         <required>0</required>
     </formElement>
     <formElement>
+        <label>Overwrite deployment plan?:</label>
+        <property>overwrite_deployment_plan</property>
+        <type>checkbox</type>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <required>0</required>
+        <documentation>
+            If checked, deployment plan will be overwritten, if deployment plan content has been provided and deployment plan file already exists.
+            This option defaults to false.
+        </documentation>
+        <htmlDocumentation>
+            If checked, deployment plan will be overwritten, if deployment plan content has been provided and deployment plan file already exists.<br />
+            This option defaults to false.
+        </htmlDocumentation>
+    </formElement>
+    <formElement>
         <type>textarea</type>
         <label>Additional Options:</label>
         <property>additional_options</property>
