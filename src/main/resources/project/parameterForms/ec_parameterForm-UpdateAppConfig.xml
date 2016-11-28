@@ -40,6 +40,13 @@
         <required>1</required>
     </formElement>
     <formElement>
+        <label>Application version:</label>
+        <property>version_identifier</property>
+        <type>entry</type>
+        <required>0</required>
+        <documentation>Application version to update.</documentation>
+    </formElement>
+    <formElement>
         <type>entry</type>
         <label>Plan Path:</label>
         <property>plan_path</property>

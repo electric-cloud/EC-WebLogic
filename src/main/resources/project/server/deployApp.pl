@@ -61,11 +61,16 @@ sub main {
 
     my $is_library = 'false';
     my $upload = 'false';
+    my $retire_gracefully = 'false';
+
     if ($params->{is_library}) {
         $is_library = 'true';
     }
     if ($params->{upload}) {
         $upload = 'true';
+    }
+    if ($params->{retire_gracefully}) {
+        $retire_gracefully = 'true';
     }
     my $check = $wl->check_executable($params->{wlstabspath});
     unless ($check->{ok}) {
@@ -95,7 +100,7 @@ sub main {
         additional_options => $params->{additional_options},
         archive_version => $params->{archive_version},
         plan_version => $params->{plan_version},
-        retire_gracefully => $params->{retire_gracefully},
+        retire_gracefully => $retire_gracefully,
         retire_timeout => $params->{retire_timeout},
         version_identifier => $params->{version_identifier},
         upload => $upload

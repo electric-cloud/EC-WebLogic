@@ -121,11 +121,13 @@ if plan_version:
 
 # checks application for existence
 application_exists = checkIfApplicationExists(application_name, version_identifier, plan_version)
+
+print "Deployment Options: %s\nAddiotional Options: %s\n" % (deploymentOptions, optionsDict)
 if application_exists:
-    print "Redeploy"
+    print "Redeployment:"
     runRedeploy(application_name, application_path, plan_path, optionsDict)
 else:
-    print "Deploy"
+    print "Deployment:"
     runDeploy(application_name, application_path, deploymentOptions, optionsDict);
 
 print "Done"
