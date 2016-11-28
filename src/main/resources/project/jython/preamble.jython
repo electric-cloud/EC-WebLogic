@@ -142,6 +142,7 @@ def runDeploy(appName, appPath, deployParams, options):
         print "Deploy failed"
         print str(e)
         discardChanges()
+        sys.exit(1)
 
 def runRedeploy(appName, appPath, planPath, options):
     try:
@@ -155,3 +156,4 @@ def runRedeploy(appName, appPath, planPath, options):
         print "Redeploy failed"
         print str(e)
         discardChanges()
+        sys.exit(1)
