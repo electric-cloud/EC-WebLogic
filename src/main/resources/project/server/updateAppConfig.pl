@@ -41,7 +41,9 @@ sub main {
         plan_path
         deployment_plan
         additional_options
+        overwrite_deployment_plan
     });
+
 
     my $cred = $wl->get_credentials($params->{configname});
 
@@ -51,21 +53,12 @@ sub main {
         $wl->bail_out($check->{msg});
     }
 
-    # if 
-    if (!-e $params->{plan_path}) {
-        if (!$params->{deployment_plan}) {
-            $wl->bail_out("Deployment plan $params->{plan_path} doesn't exist and it's content wasn't provided.");
-        }
-        my $deployment_plan = $params->{deployment_plan};
-        open(my $fh, '>', $params->{plan_path}) or do {
-            $wl->bail_out("Can't open file $params->{plan_path} for writing: $!");
-        };
-        print $fh $deployment_plan;
-        close $fh;
-    }
-    elsif (-e $params->{plan_path} && -d $params->{plan_path}) {
-        $wl->bail_out("$params->{plan_path} exists and it is a directory. Absolute path to deployment plan file is expected");
-    }
+    $wl->write_deployment_plan(
+        path => $params->{plan_path},
+        content => $params->{deployment_plan},
+        overwrite => $params->{overwrite_deployment_plan}
+    );
+
     my $render_params = {
         wl_username => $cred->{user},
         wl_password => $cred->{password},

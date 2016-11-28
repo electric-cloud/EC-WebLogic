@@ -134,7 +134,7 @@ sub write_deployment_plan {
     }
     # if only overwrite checkbox provided
     if ($params{overwrite} && !$params{content}) {
-        $self->bail_out(q|"Overwrite deployment plan?" flag should be used along with "Deployment plan path" and "Deployment plan content" parameters|);
+        $self->bail_out(q|"Overwrite deployment plan?" flag should be used along with "Deployment plan path" and "Deployment plan content" parameters.|);
     }
     # deployment plan content was provided. No path was provided.
     if ($params{content} && !$params{path}) {
