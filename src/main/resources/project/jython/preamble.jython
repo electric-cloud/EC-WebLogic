@@ -135,7 +135,9 @@ def runDeploy(appName, appPath, deployParams, options):
         params.update(options)
         status = deploy(appName = appName, path = appPath, **params)
         commitChanges()
-        print status
+        if status.isFailed():
+            print 'ERROR' + ':' + status.getMessage()
+            sys.exit(1)
     except WLSTException, e:
         print "Deploy failed"
         print str(e)
@@ -146,7 +148,9 @@ def runRedeploy(appName, appPath, planPath, options):
         startChanges()
         status = redeploy(appName = appName, appPath = appPath, planPath = planPath, **options)
         commitChanges()
-        print status
+        if status.isFailed():
+            print 'ERROR' + ':' + status.getMessage()
+            sys.exit(1)
     except WLSTException, e:
         print "Redeploy failed"
         print str(e)
