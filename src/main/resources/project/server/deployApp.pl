@@ -55,9 +55,11 @@ sub main {
         'retire_gracefully',
         'retire_timeout',
         'version_identifier',
-        'upload'
+        'upload',
+        'overwrite_deployment_plan'
     );
 
+    print Dumper $params;
     my $is_library = 'false';
     my $upload = 'false';
     if ($params->{is_library}) {
@@ -70,22 +72,12 @@ sub main {
     unless ($check->{ok}) {
         $wl->bail_out($check->{msg});
     }
-    if ($params->{plan_path}) {
-        if (-e $params->{plan_path} && -d $params->{plan_path}) {
-            $wl->bail_out("$params->{plan_path} exists and it is a directory");
-        }
-        if (-e $params->{plan_path} && -s $params->{plan_path} && $params->{deployment_plan}) {
-            $wl->bail_out("File $params->{plan_path} is already exists and not empty. Can't overwrite it");
-        }
-        if (!-e $params->{plan_path}) {
-            if (!$params->{deployment_plan}) {
-                $wl->bail_out("$params->{plan_path} doesn't exist and it's content was not provided");
-            }
-            open(my $fh, '>', $params->{plan_path}) or $wl->bail_out("Can't open file $params->{plan_path} for writing: $!");
-            print $fh $params->{deployment_plan};
-            close $fh;
-        }
-    }
+
+    $wl->write_deployment_plan(
+        path => $params->{plan_path},
+        content => $params->{deployment_plan},
+        overwrite => $params->{overwrite_deployment_plan}
+    );
 
     my $cred = $wl->get_credentials($params->{configname});
     my $render_params = {

@@ -125,6 +125,41 @@ sub get_common_credentials {
 }
 
 
+sub write_deployment_plan {
+    my ($self, %params) = @_;
+
+    # no options was provided, so doing nothing.
+    if (!$params{path} && !$params{content} && !$params{overwrite}) {
+        return 1;
+    }
+    # if only overwrite checkbox provided
+    if ($params{overwrite} && !$params{content}) {
+        $self->bail_out(q|"Overwrite deployment plan?" flag should be used along with "Deployment plan path" and "Deployment plan content" parameters|);
+    }
+    # deployment plan content was provided. No path was provided.
+    if ($params{content} && !$params{path}) {
+        $self->bail_out("Missing Deployment Path parameter. It is required, when Deployment Plan Content is provided.");
+    }
+    # if deployment plan file is empty and no content provided
+    if ($params{path} && !$params{content} && !-s $params{path}) {
+        $self->bail_out("Deployment plan $params{path} is empty.");
+    }
+    # deployment plan already exists and it is a directory.
+    if (-e $params{path} && -d $params{path}) {
+        $self->bail_out("$params{path} exists and it is a directory. Full path to the file is expected.");
+    }
+    # no overwrite flag was provided, file exists and not empty
+    if (!$params{overwrite} && -e $params{path} && -s $params{path} && $params{content}) {
+        $self->bail_out(qq|File $params{path} is already exists and not empty. Can't overwrite it without "Overwrite deployment plan?" flag enabled.|);
+    }
+
+    open(my $fh, '>', $params{path});
+    print $fh $params{content};
+    close $fh;
+    return 1;
+}
+
+
 sub process_response {
     my ($self, $result) = @_;
 
