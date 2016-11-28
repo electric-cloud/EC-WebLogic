@@ -59,7 +59,6 @@ sub main {
         'overwrite_deployment_plan'
     );
 
-    print Dumper $params;
     my $is_library = 'false';
     my $upload = 'false';
     if ($params->{is_library}) {

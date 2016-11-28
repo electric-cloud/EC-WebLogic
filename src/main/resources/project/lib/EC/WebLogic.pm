@@ -153,7 +153,7 @@ sub write_deployment_plan {
         $self->bail_out(qq|File $params{path} is already exists and not empty. Can't overwrite it without "Overwrite deployment plan?" flag enabled.|);
     }
 
-    open(my $fh, '>', $params{path});
+    open(my $fh, '>:encoding(UTF-8)', $params{path});
     print $fh $params{content};
     close $fh;
     return 1;
