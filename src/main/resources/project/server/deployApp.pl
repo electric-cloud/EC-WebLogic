@@ -70,10 +70,12 @@ sub main {
     unless ($check->{ok}) {
         $wl->bail_out($check->{msg});
     }
-
     if ($params->{plan_path}) {
         if (-e $params->{plan_path} && -d $params->{plan_path}) {
             $wl->bail_out("$params->{plan_path} exists and it is a directory");
+        }
+        if (-e $params->{plan_path} && -s $params->{plan_path} && $params->{deployment_plan}) {
+            $wl->bail_out("File $params->{plan_path} is already exists and not empty. Can't overwrite it");
         }
         if (!-e $params->{plan_path}) {
             if (!$params->{deployment_plan}) {
