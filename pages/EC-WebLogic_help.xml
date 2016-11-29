@@ -2519,9 +2519,9 @@
     <h2>@PLUGIN_KEY@ 3.2.3</h2>
     <ul>
         <li>Marked UpdateApp procedure as deprecated.</li>
-        <li>Added UpdateAppConfiguration procedure.</li>
+        <li>UpdateAppConfiguration procedure has been added.</li>
         <li>
-            Added additional parameters to following procedures:
+            Additional have been added parameters to the following procedures:
             <ul>
                 <li>StartApp</li>
                 <li>StopApp</li>
@@ -2530,7 +2530,7 @@
             </ul>
         </li>
         <li>DeployApp does redeployment if application already exists.</li>
-        <li>StartApp and StopApp has been improved and throws a warning if application is already in the desired state.</li>
+        <li>StartApp and StopApp have been improved and warning is being thrown if application is already in the desired state.</li>
     </ul>
     <h2>@PLUGIN_KEY@ 3.2.2</h2>
     <ul>

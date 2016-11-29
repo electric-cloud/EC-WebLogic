@@ -53,7 +53,7 @@
     <required>0</required>
   </formElement>
   <formElement>
-    <type>entry</type>
+    <type>textarea</type>
     <label>Additional Options:</label>
     <property>additional_options</property>
     <documentation>
