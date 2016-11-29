@@ -12,7 +12,7 @@
             <h1>Oracle WebLogic Server</h1>
             <p>Plugin Version @PLUGIN_VERSION@</p>
             <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade" />
-            <p>Revised on July 4, 2016</p>
+            <p>Revised on Nov 29, 2016</p>
             <h1>Contents</h1>
             <ul>
                 <li><p><a href="#overview">Overview</a></p></li>
@@ -1165,16 +1165,20 @@
                     <tbody>
                         <tr>
                             <td class="required">Configuration Name</td>
-                            <td>Name of the configuration to use when the URL and credentials for the Administration Server are retrieved.</td>
+                            <td>
+                                Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.
+                            </td>
                         </tr>
                         <tr>
-                            <td>Wlst Script Absolute Path</td>
+                            <td class="required">Wlst Script Absolute Path</td>
                             <td>Absolute path to the WLST, such as /path/to/wlst
                             or wlst.sh.</td>
                         </tr>
                         <tr>
                             <td class="required">Application Name</td>
-                            <td>Deployment name to assign to a newly deployed application or standalone module. </td>
+                            <td>
+                                Deployment name to assign to a newly-deployed application or standalone module. i.e: 'webapp'.
+                            </td>
                         </tr>
                         <tr>
                             <td class="required">Is Library</td>
@@ -1186,12 +1190,93 @@
                         </tr>
                         <tr>
                             <td class="required">Targets</td>
-                            <td>Targets on which to deploy the application or module in a comma-separated list
-                            of the target servers, clusters, and virtual hosts.</td>
+                            <td>
+                                Targets on which to deploy the application or module in a comma-separated list
+                                of the target servers, clusters, and virtual hosts.
+                            </td>
+                        </tr>
+
+                        
+                        <tr>
+                            <td>Stage mode</td>
+                            <td>
+                                Staging mode for the application you are deploying.
+                                Possible values are: stage, nostage, and external_stage.
+                                If not provided, default stage mode will be used.
+                                See <a target="_blank" href="http://docs.oracle.com/middleware/12212/wls/DEPGD/deploy.htm#DEPGD235">Oracle documentation</a> for details.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Deployment plan path</td>
+                            <td>Path to read a deployment plan (if there is one) or to save a new one from the Deployment plan content parameter.</td>
+                        </tr>
+
+                        <tr>
+                            <td>Plan version</td>
+                            <td>Deployment plan version.</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>Deployment plan content</td>
+                            <td>A WebLogic Server deployment plan is an XML document that you use to configure an application for deployment to a specific WebLogic Server environment.</td>
                         </tr>
                         <tr>
-                            <td>Additional Commands</td>
-                            <td>Additional commands to be entered in the WLST.</td>
+                            <td>Overwrite deployment plan?</td>
+                            <td>
+                                If checked, deployment plan will be overwritten, if deployment plan content has been provided and deployment plan file already exists.
+                                This option defaults to false.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Additional Options</td>
+                            <td>
+                                Comma-separated list of deployment options, specified as name-value pairs.
+                                Refer to WLST deploy documentation (The options, which are not included in this form).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Archive version</td>
+                            <td>
+                                Archive version number.
+                                Is used for production redeployment, specifies the application version which is going to be retired, while versionIdentifier specifies a new version.
+                                Archive version stays along with the new one.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Retire gracefully?</td>
+                            <td>
+                                Retirement policy to gracefully retire an application only after it has completed all in-flight work.
+                                This policy is only meaningful for stop and redeploy operations and is mutually exclusive to the retire timeout policy.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Retire timeout</td>
+                            <td>
+                                Time (in seconds) WLST waits before retiring an application that has been replaced with a newer version.
+                                This option default to -1, which specifies graceful timeout.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Version identifier</td>
+                            <td>Version identifier that is being used by production redeployment.</td>
+                        </tr>
+                        <tr>
+                            <td>Upload?</td>
+                            <td>
+                                Optional. Boolean value specifying whether the application files are uploaded to the WebLogic Server Administration Server's upload directory prior to deployment.
+                                Use this option when you are on a different machine from the Administration Server and you cannot copy the deployment files by other means.
+                                This option defaults to false.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Remote?</td>
+                            <td>
+                                Boolean value specifying whether the operation will be remote from the file system that contains the source.
+                                Use this option when you are on a different machine from the Administration Server and the deployment files
+                                are already at the specified location where the Administration Server is located.
+                                This option defaults to false.
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -1383,7 +1468,7 @@
             <img src="../../plugins/EC-WebLogic/images/RunDeployer/EC-WLSRunDep3.png" />
             <p>In the <b>RunDeployer</b> step, click the Log button to see the diagnostic information:</p>
             <br />
-            <img src="../../plugins/EC-WebLogic/images/RunDeployer/EC-WLSRunDep4.png" />.
+            <img src="../../plugins/EC-WebLogic/images/RunDeployer/EC-WLSRunDep4.png" />
         </div>
         <div id="RunWLST"> <a name="RunWLST" id="RunWLST"></a>
         <h2>RunWLST</h2>
@@ -1557,16 +1642,27 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="required">Application Name</td>
-                    <td>Name of the application to start, such as "webapp". </td>
+                    <td class="required">WLST Absolute Path</td>
+                    <td>Absolute path to the WLST, such as /path/to/wlst.cmd or wlst.sh.</td>
                 </tr>
                 <tr>
                     <td class="required">Configuration Name</td>
-                    <td>Name of the configuration to be used for retrieving Administration Server URL and credentials. </td>
+                    <td>Name of the configuration to be used for retrieving Administration Server URL and credentials.</td>
                 </tr>
                 <tr>
-                    <td class="required">WLST Absolute Path</td>
-                    <td>Absolute path to the WLST, such as /path/to/wlst.cmd or wlst.sh. </td>
+                    <td class="required">Application Name</td>
+                    <td>Name of the application to start, such as "webapp".</td>
+                </tr>
+                <tr>
+                    <td>Application Version</td>
+                    <td>Specific application version to be started.</td>
+                </tr>
+                <tr>
+                    <td>Additional options</td>
+                    <td>
+                        Additional options for startApplication API.<br />
+                        See <a target="_blank" href="https://docs.oracle.com/middleware/12212/wls/WLSTC/reference.htm#WLSTC119">deploy</a> function for reference.
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -1842,8 +1938,7 @@
             <tbody>
                 <tr>
                     <td class="required">WLST Absolute Path</td>
-                    <td>Absolute path to the WLST, such as /path/to/wlst.cmd or wlst.sh.
-                    </td>
+                    <td>Absolute path to the WLST, such as /path/to/wlst.cmd or wlst.sh.</td>
                 </tr>
                 <tr>
                     <td>Configuration Name</td>
@@ -1853,7 +1948,18 @@
                 </tr>
                 <tr>
                     <td class="required">Application Name</td>
-                    <td>Name of the application to stop, such as "webapp". </td>
+                    <td>Name of the application to stop, such as "webapp".</td>
+                </tr>
+                <tr>
+                    <td>Application Version</td>
+                    <td>Specific application version to be stopped.</td>
+                </tr>
+                <tr>
+                    <td>Additional options</td>
+                    <td>
+                        Additional options for startApplication API.<br />
+                        See <a target="_blank" href="https://docs.oracle.com/middleware/12212/wls/WLSTC/reference.htm#WLSTC119">deploy</a> function for reference.
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -2144,8 +2250,10 @@
             <tbody>
                 <tr>
                     <td class="required">Configuration Name</td>
-                    <td>Name of the configuration to be used when the Administration Server URL and credentials
-                    are retrieved.</td>
+                    <td>
+                        Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+                        To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.
+                    </td>
                 </tr>
                 <tr>
                     <td class="required">Wlst Script Absolute Path</td>
@@ -2154,12 +2262,34 @@
                 </tr>
                 <tr>
                     <td class="required">Application Name</td>
-                    <td>Name of the application to undeploy, such as "webapp". </td>
+                    <td>
+                        Name of the application to undeploy, such as "webapp".
+                    </td>
                 </tr>
                 <tr>
                     <td>Enable Graceful Mode</td>
-                    <td>Enables stopping the application in Graceful Mode after the existing HTTP clients
-                    have completed their work.</td>
+                    <td>
+                        Enables stopping the application in Graceful Mode after the existing HTTP clients
+                        have completed their work.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Application Version</td>
+                    <td>
+                        Specified a single application version to be undeployed. See <a target = "_blank" href="http://docs.oracle.com/middleware/12212/wls/DEPGD/redeploy.htm#DEPGD270">Requirements and Restrictions for Production Redeployment</a> for reference.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Additional options</td>
+                    <td>
+                        Additional options for undeploy API call. (See <a target="_blank" href="https://docs.oracle.com/middleware/12212/wls/WLSTC/reference.htm#WLSTC119">deploy</a> function for reference).
+                    </td>
+                </tr>
+                <tr>
+                    <td>Give Up on Error?</td>
+                    <td>
+                        If checked, any ambiguous situation will be treated as fatal error. Defaults to false.
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -2315,12 +2445,24 @@
                         <td>Name of the application which is to be updated.</td>
                     </tr>
                     <tr>
+                        <td>Application version</td>
+                        <td>Application version to update.</td>
+                    </tr>
+                    <tr>
                         <td class="required">Plan Path</td>
                         <td>Absolute path to the deployment plan file. If file doesn't exist, new file will be created with Deployment Plan Content.</td>
                     </tr>
+
                     <tr>
-                        <td>Deployment Plan</td>
-                        <td>Content of the deployment plan. Required, if there is no plan_path file.</td>
+                        <td>Deployment Plan Content</td>
+                        <td>Content of the deployment plan. Required, if the file named plan_path does not exist or empty.</td>
+                    </tr>
+                    <tr>
+                        <td>Overwrite deployment plan?</td>
+                        <td>
+                            If checked, deployment plan will be overwritten, if deployment plan content has been provided and deployment plan file already exists.
+                            This option defaults to false.
+                        </td>
                     </tr>
                     <tr>
                         <td>Additional Options</td>
@@ -2374,6 +2516,22 @@
     <p>This is the <i>HelloWorld.jython</i> file used in the <i>Supplied File</i> option:</p>
     <img src="../../plugins/EC-WebLogic/images/RunWLST/EC-WLSRunWLST6.png" />
     <h1 id="rns">Release Notes</h1>
+    <h2>@PLUGIN_KEY@ 3.2.3</h2>
+    <ul>
+        <li>UpdateApp procedure has been marked as deprecated.</li>
+        <li>UpdateAppConfiguration procedure has been added.</li>
+        <li>
+            Additional have been added parameters to the following procedures:
+            <ul>
+                <li>StartApp</li>
+                <li>StopApp</li>
+                <li>UndeployApp</li>
+                <li>DeployApp</li>
+            </ul>
+        </li>
+        <li>DeployApp does redeployment if application already exists.</li>
+        <li>StartApp and StopApp have been improved and warning is being thrown if application is already in the desired state.</li>
+    </ul>
     <h2>@PLUGIN_KEY@ 3.2.2</h2>
     <ul>
         <li>Added missing documentation.</li>

@@ -46,7 +46,7 @@
     <formElement>
         <label>Is library?:</label>
         <property>is_library</property>
-        <documentation>Is library?</documentation>
+        <documentation>Select this parameter if the application is library.</documentation>
         <required>1</required>
         <type>checkbox</type>
         <checkedValue>1</checkedValue>
@@ -101,7 +101,7 @@
         <property>plan_version</property>
         <type>entry</type>
         <required>0</required>
-        <documentation>Plan version number.</documentation>
+        <documentation>Deployment plan version.</documentation>
     </formElement>
     <formElement>
         <label>Deployment plan content:</label>
@@ -160,7 +160,7 @@
     </formElement>
 
     <formElement>
-        <label>Retire gracefully:</label>
+        <label>Retire gracefully?:</label>
         <property>retire_gracefully</property>
         <type>checkbox</type>
         <checkedValue>1</checkedValue>
@@ -194,7 +194,7 @@
         <property>version_identifier</property>
         <type>entry</type>
         <required>0</required>
-        <documentation>Version Identifier</documentation>
+        <documentation>Version identifier that is being used by production redeployment.</documentation>
     </formElement>
     <formElement>
         <label>Upload?:</label>

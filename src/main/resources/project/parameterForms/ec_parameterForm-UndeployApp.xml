@@ -50,7 +50,13 @@
         <checkedValue>1</checkedValue>
         <uncheckedValue>0</uncheckedValue>
         <required>0</required>
-        <documentation>Retirement policy to gracefully retire an application only after it has completed all in-flight work. This policy is only meaningful for stop and redeploy operations and is mutually exclusive to the retire timeout policy.</documentation>
+        <documentation>
+            Retirement policy to gracefully retire an application only after it has completed all in-flight work. This policy is only meaningful for stop and redeploy operations and is mutually exclusive to the retire timeout policy.
+        </documentation>
+        <htmlDocumentation>
+            Retirement policy to gracefully retire an application only after it has completed all in-flight work.<br />
+            This policy is only meaningful for stop and redeploy operations and is mutually exclusive to the retire timeout policy.
+        </htmlDocumentation>
     </formElement>
     
     <formElement>
@@ -76,6 +82,7 @@
         <property>give_up</property>
         <checkedValue>1</checkedValue>
         <uncheckedValue>0</uncheckedValue>
+        <value>0</value>
         <required>0</required>
         <documentation>
             If checked, any ambiguous situation will be treated as fatal error. Defaults to false.

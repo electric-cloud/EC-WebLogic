@@ -53,8 +53,8 @@
     <required>0</required>
   </formElement>
   <formElement>
-    <type>entry</type>
-    <label>Additional options:</label>
+    <type>textarea</type>
+    <label>Additional Options:</label>
     <property>additional_options</property>
     <documentation>
         Additional options for stopApplication API. (See <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="https://docs.oracle.com/middleware/12212/wls/WLSTC/reference.htm#WLSTC119">deploy</a> function for reference).
