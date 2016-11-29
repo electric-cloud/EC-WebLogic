@@ -1502,6 +1502,16 @@
                         </property>
                     </propertySheet>
                 </property>
+                <property>
+                    <propertyName>remote</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>formType</propertyName>
+                            <expandable>1</expandable>
+                            <value>standard</value>
+                        </property>
+                    </propertySheet>
+                </property>
               </propertySheet>
             </property>
           </propertySheet>
@@ -1652,6 +1662,17 @@
           <description>
               Optional. Boolean value specifying whether the application files are uploaded to the WebLogic Server Administration Server's upload directory prior to deployment.
               Use this option when you are on a different machine from the Administration Server and you cannot copy the deployment files by other means.
+              This option defaults to false.
+          </description>
+          <required>0</required>
+          <type>checkbox</type>
+      </formalParameter>
+      <formalParameter>
+          <formalParameterName>remote</formalParameterName>
+          <defaultValue>0</defaultValue>
+          <description>
+              Boolean value specifying whether the operation will be remote from the file system that contains the source.
+              Use this option when you are on a different machine from the Administration Server and the deployment files are already at the specified location where the Administration Server is located.
               This option defaults to false.
           </description>
           <required>0</required>

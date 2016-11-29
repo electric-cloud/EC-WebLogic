@@ -56,18 +56,26 @@ sub main {
         'retire_timeout',
         'version_identifier',
         'upload',
-        'overwrite_deployment_plan'
+        'overwrite_deployment_plan',
+        'remote'
     );
 
     my $is_library = 'false';
     my $upload = 'false';
+    my $remote = 'false';
     my $retire_gracefully = 'false';
 
+    if ($params->{upload} && $params->{remote}) {
+        $wl->bail_out(q|"Remote?" and "Upload?" options couldn't be used at the same time.|);
+    }
     if ($params->{is_library}) {
         $is_library = 'true';
     }
     if ($params->{upload}) {
         $upload = 'true';
+    }
+    if ($params->{remote}) {
+        $remote = 'true';
     }
     if ($params->{retire_gracefully}) {
         $retire_gracefully = 'true';
