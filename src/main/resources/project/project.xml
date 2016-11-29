@@ -1788,6 +1788,33 @@
                     </property>
                   </propertySheet>
                 </property>
+
+                <property>
+                  <propertyName>give_up</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>checkedValue</propertyName>
+                      <expandable>1</expandable>
+                      <value>1</value>
+                    </property>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                    <property>
+                      <propertyName>initiallyChecked</propertyName>
+                      <expandable>1</expandable>
+                      <value>0</value>
+                    </property>
+                    <property>
+                      <propertyName>uncheckedValue</propertyName>
+                      <expandable>1</expandable>
+                      <value>0</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
                 <property>
                   <propertyName>configname</propertyName>
                   <propertySheet>
@@ -1866,6 +1893,15 @@
           <description>If checked, all retired versions of the application will be undeployed.</description>
           <required>0</required>
           <type>textarea</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>give_up</formalParameterName>
+        <defaultValue/>
+        <description>
+            If checked, any ambiguous situation will be treated as fatal error. Defaults to false.
+        </description>
+        <required>0</required>
+        <type>checkbox</type>
       </formalParameter>
       <step>
         <stepName>UndeployApp</stepName>

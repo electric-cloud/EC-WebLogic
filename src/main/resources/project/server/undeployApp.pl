@@ -43,7 +43,8 @@ sub main {
         'retire_gracefully',
         'configname',
         'version_identifier',
-        'additional_options'
+        'additional_options',
+        'give_up'
     );
 
     my $cred = $wl->get_credentials($params->{configname});
@@ -62,6 +63,7 @@ sub main {
         retire_gracefully => $retire_gracefully,
         additional_options => $params->{additional_options},
         version_identifier => $params->{version_identifier},
+        give_up => $params->{give_up}
     };
 
     my $template_path = '/myProject/jython/undeploy_app.jython';

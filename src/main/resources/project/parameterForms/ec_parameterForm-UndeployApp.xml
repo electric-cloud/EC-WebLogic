@@ -70,6 +70,16 @@
         </documentation>
         <required>0</required>
     </formElement>
-
+    <formElement>
+        <type>checkbox</type>
+        <label>Give Up on Error?:</label>
+        <property>give_up</property>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <required>0</required>
+        <documentation>
+            If checked, any ambiguous situation will be treated as fatal error. Defaults to false.
+        </documentation>
+    </formElement>
 </editor>
 
