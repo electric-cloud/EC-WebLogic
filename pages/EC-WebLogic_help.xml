@@ -12,7 +12,7 @@
             <h1>Oracle WebLogic Server</h1>
             <p>Plugin Version @PLUGIN_VERSION@</p>
             <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade" />
-            <p>Revised on Nov 28, 2016</p>
+            <p>Revised on Nov 29, 2016</p>
             <h1>Contents</h1>
             <ul>
                 <li><p><a href="#overview">Overview</a></p></li>
@@ -1269,6 +1269,15 @@
                                 This option defaults to false.
                             </td>
                         </tr>
+                        <tr>
+                            <td>Remote?</td>
+                            <td>
+                                Boolean value specifying whether the operation will be remote from the file system that contains the source.
+                                Use this option when you are on a different machine from the Administration Server and the deployment files
+                                are already at the specified location where the Administration Server is located.
+                                This option defaults to false.
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
                 </li>
@@ -1459,7 +1468,7 @@
             <img src="../../plugins/EC-WebLogic/images/RunDeployer/EC-WLSRunDep3.png" />
             <p>In the <b>RunDeployer</b> step, click the Log button to see the diagnostic information:</p>
             <br />
-            <img src="../../plugins/EC-WebLogic/images/RunDeployer/EC-WLSRunDep4.png" />.
+            <img src="../../plugins/EC-WebLogic/images/RunDeployer/EC-WLSRunDep4.png" />
         </div>
         <div id="RunWLST"> <a name="RunWLST" id="RunWLST"></a>
         <h2>RunWLST</h2>
@@ -2241,8 +2250,10 @@
             <tbody>
                 <tr>
                     <td class="required">Configuration Name</td>
-                    <td>Name of the configuration to be used when the Administration Server URL and credentials
-                    are retrieved.</td>
+                    <td>
+                        Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+                        To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.
+                    </td>
                 </tr>
                 <tr>
                     <td class="required">Wlst Script Absolute Path</td>
@@ -2251,12 +2262,34 @@
                 </tr>
                 <tr>
                     <td class="required">Application Name</td>
-                    <td>Name of the application to undeploy, such as "webapp". </td>
+                    <td>
+                        Name of the application to undeploy, such as "webapp".
+                    </td>
                 </tr>
                 <tr>
                     <td>Enable Graceful Mode</td>
-                    <td>Enables stopping the application in Graceful Mode after the existing HTTP clients
-                    have completed their work.</td>
+                    <td>
+                        Enables stopping the application in Graceful Mode after the existing HTTP clients
+                        have completed their work.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Application Version</td>
+                    <td>
+                        Specified a single application version to be undeployed. See <a target = "_blank" href="http://docs.oracle.com/middleware/12212/wls/DEPGD/redeploy.htm#DEPGD270">Requirements and Restrictions for Production Redeployment</a> for reference.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Additional options</td>
+                    <td>
+                        Additional options for undeploy API call. (See <a target="_blank" href="https://docs.oracle.com/middleware/12212/wls/WLSTC/reference.htm#WLSTC119">deploy</a> function for reference).
+                    </td>
+                </tr>
+                <tr>
+                    <td>Give Up on Error?</td>
+                    <td>
+                        If checked, any ambiguous situation will be treated as fatal error. Defaults to false.
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -2412,12 +2445,24 @@
                         <td>Name of the application which is to be updated.</td>
                     </tr>
                     <tr>
+                        <td>Application version</td>
+                        <td>Application version to update.</td>
+                    </tr>
+                    <tr>
                         <td class="required">Plan Path</td>
                         <td>Absolute path to the deployment plan file. If file doesn't exist, new file will be created with Deployment Plan Content.</td>
                     </tr>
+
                     <tr>
-                        <td>Deployment Plan</td>
-                        <td>Content of the deployment plan. Required, if there is no plan_path file.</td>
+                        <td>Deployment Plan Content</td>
+                        <td>Content of the deployment plan. Required, if the file named plan_path does not exist or empty.</td>
+                    </tr>
+                    <tr>
+                        <td>Overwrite deployment plan?</td>
+                        <td>
+                            If checked, deployment plan will be overwritten, if deployment plan content has been provided and deployment plan file already exists.
+                            This option defaults to false.
+                        </td>
                     </tr>
                     <tr>
                         <td>Additional Options</td>
@@ -2471,6 +2516,22 @@
     <p>This is the <i>HelloWorld.jython</i> file used in the <i>Supplied File</i> option:</p>
     <img src="../../plugins/EC-WebLogic/images/RunWLST/EC-WLSRunWLST6.png" />
     <h1 id="rns">Release Notes</h1>
+    <h2>@PLUGIN_KEY@ 3.2.3</h2>
+    <ul>
+        <li>Marked UpdateApp procedure as deprecated.</li>
+        <li>Added UpdateAppConfiguration procedure.</li>
+        <li>
+            Added additional parameters to following procedures:
+            <ul>
+                <li>StartApp</li>
+                <li>StopApp</li>
+                <li>UndeployApp</li>
+                <li>DeployApp</li>
+            </ul>
+        </li>
+        <li>DeployApp does redeployment if application already exists.</li>
+        <li>StartApp and StopApp has been improved and throws a warning if application is already in the desired state.</li>
+    </ul>
     <h2>@PLUGIN_KEY@ 3.2.2</h2>
     <ul>
         <li>Added missing documentation.</li>

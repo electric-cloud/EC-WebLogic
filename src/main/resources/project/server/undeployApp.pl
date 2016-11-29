@@ -54,7 +54,11 @@ sub main {
         $retire_gracefully = $params->{retire_gracefully};
     }
 
-    print "AdditionalOptions: $params->{additional_options}\n";
+    $wl->out(1, "AdditionalOptions: $params->{additional_options}");
+    my $give_up = 0;
+    if ($params->{give_up}) {
+        $give_up = 1;
+    }
     my $render_params = {
         username => $cred->{user},
         password => $cred->{password},
@@ -63,7 +67,7 @@ sub main {
         retire_gracefully => $retire_gracefully,
         additional_options => $params->{additional_options},
         version_identifier => $params->{version_identifier},
-        give_up => $params->{give_up}
+        give_up => $give_up
     };
 
     my $template_path = '/myProject/jython/undeploy_app.jython';

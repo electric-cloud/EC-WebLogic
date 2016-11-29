@@ -108,19 +108,12 @@ def checkIfApplicationExists(appName, appVersion = '', appPlanVersion = ''):
 
 def isApplicationHasStatus(appName, appVersion, appPlanVersion, appStatuses):
     states = getApplicationState(appName, appVersion, appPlanVersion)
-    print "States:"
-    print states
-    print "app statuses: "
-    print appStatuses
     result = []
     if not states:
         return result
     for key in states.keys():
-        print "Key: " + key
         for state in states[key]:
-            print "State: " + state
             if state in appStatuses:
-                print "Stat is in appstatuses"
                 result.append(key)
                 break
 
