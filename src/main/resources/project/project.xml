@@ -1502,6 +1502,16 @@
                         </property>
                     </propertySheet>
                 </property>
+                <property>
+                    <propertyName>remote</propertyName>
+                    <propertySheet>
+                        <property>
+                            <propertyName>formType</propertyName>
+                            <expandable>1</expandable>
+                            <value>standard</value>
+                        </property>
+                    </propertySheet>
+                </property>
               </propertySheet>
             </property>
           </propertySheet>
@@ -1658,6 +1668,17 @@
           <type>checkbox</type>
       </formalParameter>
       <formalParameter>
+          <formalParameterName>remote</formalParameterName>
+          <defaultValue>0</defaultValue>
+          <description>
+              Boolean value specifying whether the operation will be remote from the file system that contains the source.
+              Use this option when you are on a different machine from the Administration Server and the deployment files are already at the specified location where the Administration Server is located.
+              This option defaults to false.
+          </description>
+          <required>0</required>
+          <type>checkbox</type>
+      </formalParameter>
+      <formalParameter>
           <formalParameterName>overwrite_deployment_plan</formalParameterName>
           <defaultValue>0</defaultValue>
           <description>
@@ -1767,6 +1788,33 @@
                     </property>
                   </propertySheet>
                 </property>
+
+                <property>
+                  <propertyName>give_up</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>checkedValue</propertyName>
+                      <expandable>1</expandable>
+                      <value>1</value>
+                    </property>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                    <property>
+                      <propertyName>initiallyChecked</propertyName>
+                      <expandable>1</expandable>
+                      <value>0</value>
+                    </property>
+                    <property>
+                      <propertyName>uncheckedValue</propertyName>
+                      <expandable>1</expandable>
+                      <value>0</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                
                 <property>
                   <propertyName>configname</propertyName>
                   <propertySheet>
@@ -1845,6 +1893,15 @@
           <description>If checked, all retired versions of the application will be undeployed.</description>
           <required>0</required>
           <type>textarea</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>give_up</formalParameterName>
+        <defaultValue/>
+        <description>
+            If checked, any ambiguous situation will be treated as fatal error. Defaults to false.
+        </description>
+        <required>0</required>
+        <type>checkbox</type>
       </formalParameter>
       <step>
         <stepName>UndeployApp</stepName>
@@ -5520,6 +5577,16 @@
                   </propertySheet>
                 </property>
                 <property>
+                  <propertyName>version_identifier</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
                   <propertyName>plan_path</propertyName>
                   <propertySheet>
                     <property>
@@ -5583,6 +5650,13 @@
         <defaultValue/>
         <description>Name of the already deployed app which is to be updated.</description>
         <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>version_identifier</formalParameterName>
+        <defaultValue/>
+        <description>Application version to be updated.</description>
+        <required>0</required>
         <type>entry</type>
       </formalParameter>
       <formalParameter>

@@ -41,18 +41,35 @@ additional_options = r'''
 [% additional_options %]
 '''.strip()
 
+version_identifier = r'''
+[% version_identifier %]
+'''.strip()
+
 timeout = 300000
 
 connect(wl_username, wl_password, admin_url)
 
+plan_version = '*'
 optionsDict = {}
 
 if additional_options:
     optionsDict = parseOptions(additional_options)
 
+if version_identifier:
+    optionsDict['versionIdentifier'] = version_identifier
+else:
+    version_identifier = '*'
+
+if 'planVersion' in optionsDict.keys():
+    plan_version = optionsDict['planVersion']
+
 # check application
-if not checkIfApplicationExists(application_name, '', ''):
-    print "Application %s doesn't exists" % (application_name)
+appCount = checkIfApplicationExists(application_name, version_identifier, plan_version)
+if appCount == 0:
+    print 'ERROR' + ':' + "Application %s doesn't exists" % (application_name)
+    sys.exit(1)
+elif appCount > 1:
+    print 'ERROR' + ':' + "There are more than 1 (" + str(appCount) + ") applications found. Please, provide Application Version."
     sys.exit(1)
 
 startChanges()

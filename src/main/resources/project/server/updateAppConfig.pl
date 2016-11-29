@@ -42,6 +42,7 @@ sub main {
         deployment_plan
         additional_options
         overwrite_deployment_plan
+        version_identifier
     });
 
 
