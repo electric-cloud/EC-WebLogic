@@ -44,6 +44,11 @@ retire_gracefully = r'''
 [% retire_gracefully %]
 '''.strip()
 
+give_up = r'''
+[% give_up %]
+'''.strip()
+
+give_up = int(give_up);
 optionsDict = {};
 
 if additional_options:
@@ -66,18 +71,31 @@ plan_version = '*'
 if 'planVersion' in optionsDict.keys():
     plan_version = optionsDict['planVersion']
 
-if not checkIfApplicationExists(application_name, version_identifier, plan_version):
+appCount = checkIfApplicationExists(application_name, version_identifier, plan_version)
+# if not checkIfApplicationExists(application_name, version_identifier, plan_version):
+if not appCount and give_up:
     print 'ERROR' + ':' + "Application %s (version: %s) doesn't exist." % (application_name, version_identifier)
     sys.exit(1)
-
+elif not appCount and not give_up:
+    print 'WARNING' + ':' + "Application %s (version: %s) doesn't exist." % (application_name, version_identifier)
+elif appCount > 1 and give_up:
+    print "ERROR" + ':' + "There are more than 1 (" + str(appCount) + ") applications found."
+    sys.exit(1)
+elif appCount > 1 and not give_up:
+    print "WARNING" + ':' + "There are more than 1 (" + str(appCount) + ") applications found."
+    
+    
 startChanges()
 status = ""
 try:
     status = undeploy(application_name, '', **optionsDict)
     commitChanges()
+    if status.isFailed():
+        print 'ERROR' + ':' + status.getMessage()
+        sys.exit(1)
 except WLSTException, e:
     discardChanges()
     print('Undeploy Application Exception: ' + str(e))
     sys.exit(1)
 
-print status
+print "Done"
