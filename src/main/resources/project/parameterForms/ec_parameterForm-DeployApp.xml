@@ -214,4 +214,23 @@
             This option defaults to false.
         </htmlDocumentation>
     </formElement>
+    <formElement>
+        <label>Remote?:</label>
+        <property>remote</property>
+        <type>checkbox</type>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <required>0</required>
+        <documentation>
+            Boolean value specifying whether the operation will be remote from the file system that contains the source.
+            Use this option when you are on a different machine from the Administration Server and the deployment files are already at the specified location where the Administration Server is located.
+            This option defaults to false.
+        </documentation>
+        <htmlDocumentation>
+            Boolean value specifying whether the operation will be remote from the file system that contains the source.
+            Use this option when you are on a different machine from the Administration Server and the deployment files are<br />
+            already at the specified location where the Administration Server is located.
+            This option defaults to false.
+        </htmlDocumentation>
+    </formElement>
 </editor>

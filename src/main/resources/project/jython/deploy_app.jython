@@ -78,6 +78,10 @@ upload = r'''
 [% upload %]
 '''.strip()
 
+remote = r'''
+[% remote %]
+'''.strip()
+
 # end of parameters
 
 print 'Deploying application...'
@@ -109,6 +113,9 @@ if retire_gracefully:
 
 if upload:
     optionsDict['upload'] = upload
+
+if remote:
+    optionsDict['remote'] = remote
 
 if version_identifier:
     optionsDict['versionIdentifier'] = version_identifier
