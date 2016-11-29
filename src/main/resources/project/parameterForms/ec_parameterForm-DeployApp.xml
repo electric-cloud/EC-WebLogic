@@ -101,7 +101,7 @@
         <property>plan_version</property>
         <type>entry</type>
         <required>0</required>
-        <documentation>Plan version number.</documentation>
+        <documentation>Deployment plan version.</documentation>
     </formElement>
     <formElement>
         <label>Deployment plan content:</label>

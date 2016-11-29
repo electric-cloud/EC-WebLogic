@@ -1214,7 +1214,7 @@
 
                         <tr>
                             <td>Plan version</td>
-                            <td>Path to read a deployment plan (if there is one) or to save a new one from the Deployment plan content parameter.</td>
+                            <td>Deployment plan version.</td>
                         </tr>
                         
                         <tr>
@@ -2518,7 +2518,7 @@
     <h1 id="rns">Release Notes</h1>
     <h2>@PLUGIN_KEY@ 3.2.3</h2>
     <ul>
-        <li>Marked UpdateApp procedure as deprecated.</li>
+        <li>UpdateApp procedure has been marked as deprecated.</li>
         <li>UpdateAppConfiguration procedure has been added.</li>
         <li>
             Additional have been added parameters to the following procedures:
