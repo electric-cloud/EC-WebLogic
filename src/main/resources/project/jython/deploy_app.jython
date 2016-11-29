@@ -82,12 +82,17 @@ remote = r'''
 [% remote %]
 '''.strip()
 
+
+is_library = r'''
+[% is_library %]
+'''.strip()
+
 # end of parameters
 
 print 'Deploying application...'
 connect(username, password, admin_url)
 
-# deployment options 
+# deployment options
 deploymentOptions = {}
 
 if targets:
@@ -122,6 +127,9 @@ if version_identifier:
 
 if plan_version:
     optionsDict['planVersion'] = plan_version
+
+if is_library == 'true':
+    optionsDict['libraryModule'] = 'true'
 
 # checks application for existence
 application_exists = checkIfApplicationExists(application_name, '*', '*')
