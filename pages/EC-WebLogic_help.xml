@@ -2416,7 +2416,7 @@
     <div id="UpdateAppConfig">
         <a name="UpdateAppConfig" id="UpdateAppConfig"></a>
         <h2>UpdateAppConfig</h2>
-        <p>This procedure can be used to update an application confiration.</p>
+        <p>This procedure can be used to update an application configuration.</p>
         <h3>Input</h3>
         <ol>
             <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
@@ -2455,7 +2455,7 @@
 
                     <tr>
                         <td>Deployment Plan Content</td>
-                        <td>Content of the deployment plan. Required, if the file named plan_path does not exist or empty.</td>
+                        <td>Content of the deployment plan. Required, if the file specified on Plan Path doesn't exist or empty.</td>
                     </tr>
                     <tr>
                         <td>Overwrite deployment plan?</td>
