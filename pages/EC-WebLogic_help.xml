@@ -1149,7 +1149,7 @@
             </div>
             <div id="DeployApp"> <a name="DeployApp" id="DeployApp"></a>
             <h2>DeployApp</h2>
-            <p>This procedure deploys an application or module using WLST.</p>
+            <p>This procedure deploys an application or a module using WLST. If application or module is already exists, it will be redeployed.</p>
             <h3>Input</h3>
             <ol>
                 <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
@@ -2416,7 +2416,7 @@
     <div id="UpdateAppConfig">
         <a name="UpdateAppConfig" id="UpdateAppConfig"></a>
         <h2>UpdateAppConfig</h2>
-        <p>This procedure can be used to update an application confiration.</p>
+        <p>This procedure can be used to update an application configuration.</p>
         <h3>Input</h3>
         <ol>
             <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
@@ -2455,7 +2455,7 @@
 
                     <tr>
                         <td>Deployment Plan Content</td>
-                        <td>Content of the deployment plan. Required, if the file named plan_path does not exist or empty.</td>
+                        <td>Content of the deployment plan. Required, if the file specified on Plan Path doesn't exist or empty.</td>
                     </tr>
                     <tr>
                         <td>Overwrite deployment plan?</td>
@@ -2519,9 +2519,16 @@
     <h2>@PLUGIN_KEY@ 3.2.3</h2>
     <ul>
         <li>UpdateApp procedure has been marked as deprecated.</li>
-        <li>UpdateAppConfiguration procedure has been added.</li>
         <li>
-            Additional have been added parameters to the following procedures:
+            Following procedures have been added:
+            <ul>
+                <li>UpdateAppConfig</li>
+                <li>StartCluster</li>
+                <li>StopCluster</li>
+            </ul>
+        </li>
+        <li>
+            Additional parameters have been added to the following procedures:
             <ul>
                 <li>StartApp</li>
                 <li>StopApp</li>
