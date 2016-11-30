@@ -78,13 +78,14 @@ if not appCount and give_up:
     sys.exit(1)
 elif not appCount and not give_up:
     print 'WARNING' + ':' + "Application %s (version: %s) doesn't exist." % (application_name, version_identifier)
+    sys.exit(0)
 elif appCount > 1 and give_up:
     print "ERROR" + ':' + "There are more than 1 (" + str(appCount) + ") applications found."
     sys.exit(1)
 elif appCount > 1 and not give_up:
     print "WARNING" + ':' + "There are more than 1 (" + str(appCount) + ") applications found."
-    
-    
+
+
 startChanges()
 status = ""
 try:
