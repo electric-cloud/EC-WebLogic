@@ -2519,9 +2519,16 @@
     <h2>@PLUGIN_KEY@ 3.2.3</h2>
     <ul>
         <li>UpdateApp procedure has been marked as deprecated.</li>
-        <li>UpdateAppConfiguration procedure has been added.</li>
         <li>
-            Additional have been added parameters to the following procedures:
+            Following procedures have been added:
+            <ul>
+                <li>UpdateAppConfig</li>
+                <li>StartCluster</li>
+                <li>StopCluster</li>
+            </ul>
+        </li>
+        <li>
+            Additional parameters have been added to the following procedures:
             <ul>
                 <li>StartApp</li>
                 <li>StopApp</li>
