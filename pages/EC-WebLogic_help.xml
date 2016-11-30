@@ -1149,7 +1149,7 @@
             </div>
             <div id="DeployApp"> <a name="DeployApp" id="DeployApp"></a>
             <h2>DeployApp</h2>
-            <p>This procedure deploys an application or module using WLST.</p>
+            <p>This procedure deploys an application or a module using WLST. If application or module is already exists, it will be redeployed.</p>
             <h3>Input</h3>
             <ol>
                 <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
