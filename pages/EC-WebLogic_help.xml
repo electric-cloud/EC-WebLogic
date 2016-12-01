@@ -143,6 +143,7 @@
                             <td>JAVA_VENDOR</td>
                             <td>JAVA_VENDOR environment variable. It should be used to specify the Java vendor value when setting the JAVA_HOME parameter to point to a specific JDK. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, the option JAVA_HOME should be also set. </td>
                         </tr>
+                        
                         <tr>
                             <td class="required">Login as</td>
                             <td>
@@ -154,8 +155,23 @@
                             </td>
                         </tr>
                         <tr>
+                            <td>Enable named sessions?</td>
+                            <td>
+                                If checked, each WebLogic edit session will have unique name assigned. Defaults to false.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Enable exclusive sessions?</td>
+                            <td>
+                                If checked, each WebLogic edit session will try to be exclusive. Defaults to false.
+                            </td>
+                        </tr>
+                        <tr>
                             <td class="required">Debug level</td>
-                            <td>Verbosity level of output. By default, debug level is set to 1.</td>
+                            <td>
+                                Verbosity level of output. By default, debug level is set to 1.
+                                Debug level, higher debug level - more debug messages. Warning: on debug level 10 and more passwords will be revealed in a procedure logs.
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -2538,6 +2554,8 @@
         </li>
         <li>DeployApp does redeployment if application already exists.</li>
         <li>StartApp and StopApp have been improved and warning is being thrown if application is already in the desired state.</li>
+        <li>Support of named edit sessions has been added.</li>
+        <li>Support of exclusive edit sessions has been added.</li>
     </ul>
     <h2>@PLUGIN_KEY@ 3.2.2</h2>
     <ul>
