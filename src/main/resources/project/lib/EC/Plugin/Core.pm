@@ -584,7 +584,9 @@ sub _syscall_win32 {
         $self->out(1, "Missing ENV for result folder. Result folder set to .");
         $result_folder = '.';
     }
-    $command .= qq| 1> "$result_folder/command.stdout" 2> "$result_folder/command.stderr"|;
+    my $stderr_filename = 'command_' . gen_random_numbers(42) . '.stderr';
+    my $stdout_filename = 'command_' . gen_random_numbers(42) . '.stdout';
+    $command .= qq| 1> "$result_folder/$stdout_filename" 2> "$result_folder/$stderr_filename"|;
     if (is_win) {
         $self->dbg("MSWin32 detected");
         $ENV{NOPAUSE} = 1;
@@ -597,20 +599,27 @@ sub _syscall_win32 {
         code => $? >> 8,
     };
 
-    open my $stderr, "$result_folder/command.stderr" or croak "Can't open stderr: $@";
-    open my $stdout, "$result_folder/command.stdout" or croak "Can't open stdout: $@";
+    open my $stderr, "$result_folder/$stderr_filename" or croak "Can't open stderr file ($stderr_file) : $!";
+    open my $stdout, "$result_folder/$stdout_filename" or croak "Can't open stdout file ($stdout_file) : $!";
     $retval->{stdout} = join '', <$stdout>;
     $retval->{stderr} = join '', <$stderr>;
     close $stdout;
     close $stderr;
 
     # Cleaning up
-    unlink("$result_folder/command.stderr");
-    unlink("$result_folder/command.stdout");
+    unlink("$result_folder/$stderr_filename");
+    unlink("$result_folder/$stdout_filename");
 
     return $retval;
 }
 
+sub gen_random_numbers {
+    my ($mod) = @_;
+
+    my $rand = rand($mod);
+    $rand =~ s/\.//s;
+    return $rand;
+}
 
 =item B<is_win>
 
