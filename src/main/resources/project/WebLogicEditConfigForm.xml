@@ -1,63 +1,88 @@
 <!--
 
-     Copyright 2015 Electric Cloud, Inc.
+Copyright 2015 Electric Cloud, Inc.
 
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-         http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0
 
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
 -->
 <editor>
-  <formElement>
-    <type>entry</type>
-    <label>WebLogic URL:</label>
-    <property>weblogic_url</property>
-    <value></value>
-    <documentation>URL of WebLogic server (must include protocol, server and port).</documentation>
-    <required>1</required>
-  </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>WebLogic URL:</label>
+        <property>weblogic_url</property>
+        <value></value>
+        <documentation>URL of WebLogic server (must include protocol, server and port).</documentation>
+        <required>1</required>
+    </formElement>
 
-  <formElement>
-    <type>entry</type>
-    <label>JAVA_HOME:</label>
-    <property>java_home</property>
-    <value></value>
-    <documentation>JAVA_HOME environment variable, i.e. path to bin, where java executable is located. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, JAVA_VENDOR should be also set.</documentation>
-    <required>0</required>
-  </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>JAVA_HOME:</label>
+        <property>java_home</property>
+        <value></value>
+        <documentation>JAVA_HOME environment variable, i.e. path to bin, where java executable is located. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, JAVA_VENDOR should be also set.</documentation>
+        <required>0</required>
+    </formElement>
 
-  <formElement>
-    <type>entry</type>
-    <label>JAVA_VENDOR:</label>
-    <property>java_vendor</property>
-    <value></value>
-    <documentation>JAVA_VENDOR environment variable, use it to specify java vendor. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, the option JAVA_HOME should be also set.</documentation>
-    <required>0</required>
-  </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>JAVA_VENDOR:</label>
+        <property>java_vendor</property>
+        <value></value>
+        <documentation>JAVA_VENDOR environment variable, use it to specify java vendor. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, the option JAVA_HOME should be also set.</documentation>
+        <required>0</required>
+    </formElement>
 
-  <formElement>
-    <type>credential</type>
-    <label>Login as:</label>
-    <property>credential</property>
-    <value></value>
-    <required>0</required>
-  </formElement>
+    <formElement>
+        <type>credential</type>
+        <label>Login as:</label>
+        <property>credential</property>
+        <value></value>
+        <required>0</required>
+    </formElement>
 
-  <formElement>
-    <type>entry</type>
-    <label>Debug level:</label>
-    <property>debug_level</property>
-    <value></value>
-    <documentation>Debug level, higher debug level - more debug messages.</documentation>
-    <required>1</required>
-  </formElement>
+    <formElement>
+        <type>checkbox</type>
+        <label>Enable named sessions?:</label>
+        <property>enable_named_sessions</property>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <value>0</value>
+        <required>0</required>
+        <documentation>
+            If checked, each WebLogic edit session will have unique name assigned. Defaults to false.
+        </documentation>
+    </formElement>
+    
+    <formElement>
+        <type>checkbox</type>
+        <label>Enable exclusive sessions?:</label>
+        <property>enable_exclusive_sessions</property>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <value>0</value>
+        <required>0</required>
+        <documentation>
+            If checked, each WebLogic edit session will try to be exclusive. Defaults to false.
+        </documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Debug level:</label>
+        <property>debug_level</property>
+        <value></value>
+        <documentation>Debug level, higher debug level - more debug messages.</documentation>
+        <required>1</required>
+    </formElement>
 
 </editor>

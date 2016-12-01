@@ -17,12 +17,42 @@
 # imports
 import re
 import sys
+import string
+import random
 
 # end of imports
 
+def isNamedSessionEnabled():
+    if [% enable_named_sessions %]:
+        return 1
+    else:
+        return 0
+
+def isExclusiveSessionEnabled():
+    if [% enable_exclusive_sessions %]:
+        return 1
+    else:
+        return 0
+
+def genRandomSessionName(l):
+    result = 'ElectricFlowEditSession_'
+    for _ in range(l):
+        result = result + random.choice(string.lowercase)
+
+    return result
+
 def startChanges():
-    edit()
-    startEdit()
+    if isNamedSessionEnabled():
+        print "Named sessions are enabled"
+        edit(genRandomSessionName(12))
+    else:
+        edit()
+
+    if isExclusiveSessionEnabled():
+        print "Exclusive sessions are enabled"
+        startEdit(exclusive='true')
+    else:
+        startEdit()
 
 # Saves and activates changes
 def commitChanges(lockTimeout = None):
