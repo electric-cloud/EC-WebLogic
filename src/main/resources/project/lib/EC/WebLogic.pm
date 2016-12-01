@@ -84,7 +84,9 @@ sub get_credentials {
             java_home => 'java_home',
             java_vendor => 'java_vendor',
             weblogic_url => 'weblogic_url',
-            debug_level => 'debug_level'
+            debug_level => 'debug_level',
+            enable_exclusive_sessions => 'enable_exclusive_sessions',
+            enable_named_sessions => 'enable_named_sessions'
         },
         'weblogic_cfgs');
 
@@ -102,6 +104,7 @@ sub get_credentials {
         $self->out(10, "JAVA_VENDOR was set to $cred->{java_vendor}");
     }
 
+    $self->{_credentials} = $cred;
     return $cred;
 }
 
@@ -283,7 +286,20 @@ sub render_template_from_property {
     my ($self, $template_name, $params) = @_;
 
     $params ||= {};
-    $params->{preamble} = $self->get_param('/myProject/jython/preamble.jython');
+
+    my $preamble_params = {
+        enable_exclusive_sessions => 0,
+        enable_named_sessions => 0
+    };
+
+    if ($self->{_credentials}->{enable_exclusive_sessions}) {
+        $preamble_params->{enable_exclusive_sessions} = 1;
+    }
+    if ($self->{_credentials}->{enable_named_sessions}) {
+        $preamble_params->{enable_named_sessions} = 1;
+    }
+    $params->{preamble} = $self->SUPER::render_template_from_property('/myProject/jython/preamble.jython', $preamble_params);
+    # $params->{preamble} = $self->get_param('/myProject/jython/preamble.jython');
     return $self->SUPER::render_template_from_property($template_name, $params);
 }
 
