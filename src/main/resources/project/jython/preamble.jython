@@ -50,7 +50,7 @@ def startChanges():
 
     if isExclusiveSessionEnabled():
         print "Exclusive sessions are enabled"
-        startEdit(exclusive='true')
+        startEdit(300000, 300000, 'true')
     else:
         startEdit()
 
