@@ -599,8 +599,8 @@ sub _syscall_win32 {
         code => $? >> 8,
     };
 
-    open my $stderr, "$result_folder/$stderr_filename" or croak "Can't open stderr file ($stderr_file) : $!";
-    open my $stdout, "$result_folder/$stdout_filename" or croak "Can't open stdout file ($stdout_file) : $!";
+    open my $stderr, "$result_folder/$stderr_filename" or croak "Can't open stderr file ($stderr_filename) : $!";
+    open my $stdout, "$result_folder/$stdout_filename" or croak "Can't open stdout file ($stdout_filename) : $!";
     $retval->{stdout} = join '', <$stdout>;
     $retval->{stderr} = join '', <$stderr>;
     close $stdout;
