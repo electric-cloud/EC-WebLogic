@@ -292,12 +292,10 @@ sub render_template_from_property {
         enable_named_sessions => 0
     };
 
-    if ($self->{_credentials}->{enable_exclusive_sessions}) {
-        $preamble_params->{enable_exclusive_sessions} = 1;
-    }
     if ($self->{_credentials}->{enable_named_sessions}) {
         $preamble_params->{enable_named_sessions} = 1;
     }
+
     $params->{preamble} = $self->SUPER::render_template_from_property('/myProject/jython/preamble.jython', $preamble_params);
     # $params->{preamble} = $self->get_param('/myProject/jython/preamble.jython');
     return $self->SUPER::render_template_from_property($template_name, $params);

@@ -63,19 +63,6 @@ limitations under the License.
             If checked, each WebLogic edit session will have unique name assigned. Defaults to false.
         </documentation>
     </formElement>
-    
-    <formElement>
-        <type>checkbox</type>
-        <label>Enable exclusive sessions?:</label>
-        <property>enable_exclusive_sessions</property>
-        <checkedValue>1</checkedValue>
-        <uncheckedValue>0</uncheckedValue>
-        <value>0</value>
-        <required>0</required>
-        <documentation>
-            If checked, each WebLogic edit session will try to be exclusive. Defaults to false.
-        </documentation>
-    </formElement>
     <formElement>
         <type>entry</type>
         <label>Debug level:</label>

@@ -29,10 +29,7 @@ def isNamedSessionEnabled():
         return 0
 
 def isExclusiveSessionEnabled():
-    if [% enable_exclusive_sessions %]:
-        return 1
-    else:
-        return 0
+    return 0
 
 def genRandomSessionName(l):
     result = 'ElectricFlowEditSession_'
