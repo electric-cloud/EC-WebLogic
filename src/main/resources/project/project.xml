@@ -403,16 +403,6 @@
                   </propertySheet>
                 </property>
                 <property>
-                  <propertyName>enable_exclusive_sessions</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                  </propertySheet>
-                </property>
-                <property>
                   <propertyName>enable_named_sessions</propertyName>
                   <propertySheet>
                     <property>
@@ -495,15 +485,6 @@
           <defaultValue/>
           <description>
               If checked, each WebLogic edit session will have unique name assigned. Defaults to false.
-          </description>
-          <required>0</required>
-          <type>checkbox</type>
-      </formalParameter>
-      <formalParameter>
-          <formalParameterName>enable_exclusive_sessions</formalParameterName>
-          <defaultValue/>
-          <description>
-              If checked, each WebLogic edit session will try to be exclusive. Defaults to false.
           </description>
           <required>0</required>
           <type>checkbox</type>

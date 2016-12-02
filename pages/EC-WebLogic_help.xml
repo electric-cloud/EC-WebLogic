@@ -161,12 +161,6 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Enable exclusive sessions?</td>
-                            <td>
-                                If checked, each WebLogic edit session will try to be exclusive. Defaults to false.
-                            </td>
-                        </tr>
-                        <tr>
                             <td class="required">Debug level</td>
                             <td>
                                 Verbosity level of output. By default, debug level is set to 1.
