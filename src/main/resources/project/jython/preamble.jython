@@ -46,7 +46,7 @@ randSessionName = genRandomSessionName(12)
 def startChanges():
     if isNamedSessionEnabled():
         print "Named sessions are enabled"
-        print "Generated Session name is %s" % (randSessionName)
+        print "Generated edit session name is %s" % (randSessionName)
         edit(randSessionName)
     else:
         edit()
