@@ -32,8 +32,8 @@ sub main {
         plugin_key   => $PLUGIN_KEY
     );
 
-    #Every additional option should have following format <OPTION_NAME1>=<OPTION_VALUE1>, <OPTION_NAME2>=<OPTION_VALUE2>
-    #Options separated by commas
+    # Every additional option should have following format <OPTION_NAME1>=<OPTION_VALUE1>, <OPTION_NAME2>=<OPTION_VALUE2>
+    # Options separated by commas
     my $params = $wl->get_params_as_hashref(qw{
         wlst_abs_path
         app_name
@@ -61,12 +61,13 @@ sub main {
     );
 
     my $render_params = {
-        wl_username => $cred->{user},
-        wl_password => $cred->{password},
-        admin_url   => $cred->{weblogic_url},
-        app_name    => $params->{app_name},
-        plan_path   => $params->{plan_path},
-        additional_options     => $params->{additional_options},
+        wl_username        => $cred->{user},
+        wl_password        => $cred->{password},
+        admin_url          => $cred->{weblogic_url},
+        app_name           => $params->{app_name},
+        plan_path          => $params->{plan_path},
+        additional_options => $params->{additional_options},
+        version_identifier => $params->{version_identifier}
     };
     my $template_path = '/myProject/jython/update_app_config.jython';
     my $template = $wl->render_template_from_property($template_path, $render_params);

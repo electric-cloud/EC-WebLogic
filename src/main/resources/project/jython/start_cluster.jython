@@ -13,14 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-import time as pytime 
-def startCluster(clustername):
-    try:
-        start(clustername, "Cluster", block='false');
-    except Exception, e:
-        print 'Error while starting cluster', e
-        dumpStack()
-        return
+
+[% preamble %]
 
 userName = r'''
 [% username %]
@@ -45,12 +39,13 @@ timeout = r'''
 timeout = int(timeout)
 
 connect(userName, password, weblogicURL)
+
+runningServers = isClusterHasStatus(clusterName, ['RUNNING'])
+if runningServers:
+    print "WARNING" + ':' + "%s server(s) are already running." % (runningServers)
+
 startCluster(clusterName)
-cluster = ('/Clusters/' + clusterName)
-cd(cluster)
-print state(clusterName, 'Cluster')
-servers = cmo.getServers()
-print servers
+servers = getClusterMembers(clusterName)
 domainRuntime()
 errorsCount = 0
 timeSpent = 0

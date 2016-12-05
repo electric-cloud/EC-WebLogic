@@ -13,15 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-import sys
 
-def shutdownCluster(clustername, timeout, ignoreSessions, forceShutdown):
-    try:
-        shutdown(clustername, "Cluster", ignoreSessions, timeout, forceShutdown);
-    except Exception, e:
-        print 'Error while shutting down cluster',e
-        dumpStack()
-        return
+[% preamble %]
 
 userName = r'''
 [% username %]
@@ -64,12 +57,12 @@ else:
     forceShutdown = 'false'
 
 connect(userName, password, weblogicURL)
+stoppedServers = isClusterHasStatus(clusterName, ['SHUTDOWN'])
+if stoppedServers:
+    print "WARNING" + ':' + "%s server(s) are already stopped." % (stoppedServers)
 shutdownCluster(clusterName, timeout, ignoreSessions, forceShutdown)
-cluster = ('/Clusters/' + clusterName)
-cd(cluster)
-print state(clusterName, 'Cluster')
-servers = cmo.getServers()
-print servers
+serverConfig()
+servers = getClusterMembers(clusterName)
 domainRuntime()
 errorsCount = 0;
 for server in servers:

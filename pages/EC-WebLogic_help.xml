@@ -2548,6 +2548,7 @@
         </li>
         <li>DeployApp does redeployment if application already exists.</li>
         <li>StartApp and StopApp have been improved and warning is being thrown if application is already in the desired state.</li>
+        <li>StartCluster and StopCluster have been improved and warning is being thrown if cluster is already in the desired state.</li>
         <li>Support of named edit sessions has been added.</li>
     </ul>
     <h2>@PLUGIN_KEY@ 3.2.2</h2>
