@@ -15,10 +15,12 @@
 #
 
 # imports
+
 import re
 import sys
 import string
 import random
+import time as pytime
 
 # end of imports
 
@@ -186,3 +188,41 @@ def runRedeploy(appName, appPath, planPath, options):
         print str(e)
         discardChanges()
         sys.exit(1)
+
+def startCluster(clustername):
+    try:
+        start(clustername, "Cluster", block='false');
+    except Exception, e:
+        print 'Error while starting cluster', e
+        dumpStack()
+        return
+
+def getClusterMembers(clusterName):
+    serverConfig()
+    cd('/')
+    cluster = ('/Clusters/' + clusterName)
+    cd(cluster)
+    servers = cmo.getServers()
+    return servers
+    
+def shutdownCluster(clustername, timeout, ignoreSessions, forceShutdown):
+    try:
+        shutdown(clustername, "Cluster", ignoreSessions, timeout, forceShutdown);
+    except Exception, e:
+        print 'Error while shutting down cluster',e
+        dumpStack()
+        return
+
+def isClusterHasStatus(clusterName, clusterStatuses):
+    serverConfig()
+    retval = []
+    servers = getClusterMembers(clusterName)
+    print "Clustername: %s" % (clusterName)
+    domainRuntime()
+    for server in servers:
+        srv = server.getName()
+        status = cmo.lookupServerLifeCycleRuntime(srv).getState()
+        if status in clusterStatuses:
+            retval.append(srv)
+    return retval
+    

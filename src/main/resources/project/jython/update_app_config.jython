@@ -66,7 +66,7 @@ if 'planVersion' in optionsDict.keys():
 # check application
 appCount = checkIfApplicationExists(application_name, version_identifier, plan_version)
 if appCount == 0:
-    print 'ERROR' + ':' + "Application %s doesn't exists" % (application_name)
+    print 'ERROR' + ':' + "Application %s (version: %s) doesn't exists" % (application_name, version_identifier)
     sys.exit(1)
 elif appCount > 1:
     print 'ERROR' + ':' + "There are more than 1 (" + str(appCount) + ") applications found. Please, provide Application Version."
