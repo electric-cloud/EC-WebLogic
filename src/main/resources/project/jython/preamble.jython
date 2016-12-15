@@ -23,10 +23,27 @@ import random
 import time as pytime
 
 # end of imports
+print "WebLogic version is: %s" % (version)
+def determineWebLogicVersion():
+    result = re.match('^\s*?WebLogic\sServer\s(\d+)', version)
+    versionNumber = int(result.group(1))
+    return versionNumber
 
+def terminateEditSession(sessionName):
+    wlVersion = determineWebLogicVersion()
+    if wlVersion < 12:
+        print "WARNING" + ':' + "Named Sessions are not available prior to Weblogic Server 12. Your version is: " + version
+    else:
+        destroyEditSession(sessionName)
+    return 1
+    
 def isNamedSessionEnabled():
     if [% enable_named_sessions %]:
-        return 1
+        if determineWebLogicVersion() < 12:
+            print "WARNING" + ':' + "Named Sessions are not available prior to Weblogic Server 12. Your version is: " + version
+            return 0
+        else:
+            return 1
     else:
         return 0
 
@@ -65,14 +82,14 @@ def commitChanges(lockTimeout = None):
     activate(**params)
     if isNamedSessionEnabled():
         print "Terminating edit session %s" % (randSessionName)
-        destroyEditSession(randSessionName)
+        terminateEditSession(randSessionName)
 
 
 def discardChanges():
     stopEdit('y')
     if isNamedSessionEnabled():
         print "Terminating edit session %s" % (randSessionName)
-        destroyEditSession(randSessionName)
+        terminateEditSession(randSessionName)
 
 # add parse function
 def parseOptions(options):
