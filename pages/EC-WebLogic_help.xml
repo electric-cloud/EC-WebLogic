@@ -157,7 +157,7 @@
                         <tr>
                             <td>Enable named sessions?</td>
                             <td>
-                                If checked, each WebLogic edit session will have unique name assigned. Defaults to false.
+                                If checked, each WebLogic edit session will have unique name assigned. Named sessions are not supported by WebLogic server prior to 12 version. Defaults to false.
                             </td>
                         </tr>
                         <tr>
