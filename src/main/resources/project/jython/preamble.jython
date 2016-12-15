@@ -29,7 +29,7 @@ def determineWebLogicVersion():
     versionNumber = int(result.group(1))
     return versionNumber
 
-def terminateEdiSession(sessionName):
+def terminateEditSession(sessionName):
     wlVersion = determineWebLogicVersion()
     if wlVersion < 12:
         print "WARNING" + ':' + "Named Sessions are not available prior to Weblogic Server 12. Your version is: " + version
@@ -83,7 +83,7 @@ def commitChanges(lockTimeout = None):
     if isNamedSessionEnabled():
         print "Terminating edit session %s" % (randSessionName)
         # destroyEditSession(randSessionName)
-        terminateEdiSession(randSessionName)
+        terminateEditSession(randSessionName)
 
 
 def discardChanges():
@@ -91,7 +91,7 @@ def discardChanges():
     if isNamedSessionEnabled():
         print "Terminating edit session %s" % (randSessionName)
         # destroyEditSession(randSessionName)
-        terminateEdiSession(randSessionName)
+        terminateEditSession(randSessionName)
 
 # add parse function
 def parseOptions(options):
