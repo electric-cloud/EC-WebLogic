@@ -250,6 +250,13 @@ my %updateAppConfig = (
     category    => "Application Server"
 );
 
+my %checkClusterStatus = (
+    label       => "WebLogic - Check Cluster Status",
+    procedure   => "CheckClusterStatus",
+    description => "Check Cluster Status",
+    category    => "Application Server"
+);
+
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/EC-WebLogic - Start App");
 $batch->deleteProperty(
@@ -339,6 +346,8 @@ $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Update Application (DEPRECATED)");
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Update Application Config");
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Check Cluster Status");
 
 @::createStepPickerSteps = (
     \%startApp,                    \%stopApp,
@@ -355,11 +364,12 @@ $batch->deleteProperty(
     \%addUserToGroup,              \%removeUserFromGroup,
     \%changeUserPassword,          \%unlockUserAccount,
     \%updateApp,                   \%createDomain,
-    \%createTemplate,              \%createCluster,               
-    \%addServerToCluster,          \%configureUserLockoutManager, 
+    \%createTemplate,              \%createCluster,
+    \%addServerToCluster,          \%configureUserLockoutManager,
     \%deleteCluster,               \%createManagedServer,
     \%deleteManagedServer,         \%startCluster,
-    \%stopCluster,                 \%updateAppConfig
+    \%stopCluster,                 \%updateAppConfig,
+    \%checkClusterStatus
 );
 
 if ( $upgradeAction eq "upgrade" ) {
@@ -764,6 +774,14 @@ if ( $upgradeAction eq "upgrade" ) {
                 {
                     procedureName => 'UpdateAppConfig',
                     stepName      => 'UpdateAppConfig'
+                }
+            );
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'CheckClusterStatus',
+                    stepName      => 'CheckClusterStatus'
                 }
             );
         }

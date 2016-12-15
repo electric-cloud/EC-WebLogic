@@ -154,6 +154,10 @@
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="update_app_config.jython"]/value</xpath>
   </file>
   <file>
+    <path>jython/check_cluster_status.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="check_cluster_status.jython"]/value</xpath>
+  </file>
+  <file>
     <path>WebLogicCreateConfigForm.xml</path>
     <xpath>//property[propertyName="ui_forms"]/propertySheet/property[propertyName="WebLogicCreateConfigForm"]/value</xpath>
   </file>
