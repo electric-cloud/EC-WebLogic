@@ -82,7 +82,6 @@ def commitChanges(lockTimeout = None):
     activate(**params)
     if isNamedSessionEnabled():
         print "Terminating edit session %s" % (randSessionName)
-        # destroyEditSession(randSessionName)
         terminateEditSession(randSessionName)
 
 
@@ -90,7 +89,6 @@ def discardChanges():
     stopEdit('y')
     if isNamedSessionEnabled():
         print "Terminating edit session %s" % (randSessionName)
-        # destroyEditSession(randSessionName)
         terminateEditSession(randSessionName)
 
 # add parse function
