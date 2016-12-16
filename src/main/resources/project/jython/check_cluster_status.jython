@@ -41,6 +41,7 @@ max_elapsed_time = r'''
 '''.strip()
 max_elapsed_time = int(max_elapsed_time)
 
+sleep_time = 5
 connect(username, password, admin_url)
 
 print "Cluster %s status:" % (cluster_name);
@@ -59,8 +60,8 @@ while (1) :
     print "\n===\n";
     if max_elapsed_time == 0:
         break
-    pytime.sleep(5)
-    time_spent += 5
+    pytime.sleep(sleep_time)
+    time_spent += sleep_time
     if time_spent >= max_elapsed_time:
         break
 
@@ -70,5 +71,4 @@ if servers_in_wrong_state > 0:
 else:
     print "Criteria was met."
     sys.exit(0)
-    
 
