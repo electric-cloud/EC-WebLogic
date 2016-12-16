@@ -14,20 +14,61 @@
 #  limitations under the License.
 #
 
-state = ""
+[% preamble %]
 
-try:
-    connect(r'[% username %]', r'[% password %]', r'[% admin_url %]')
+username = r'''
+[% username %]
+'''.strip()
 
+password = r'''
+[% password %]
+'''.strip()
 
-except WLSTException:
+admin_url = r'''
+[% admin_url %]
+'''.strip()
 
-    state = "NO_SERVER_FOUND"
+cluster_name = r'''
+[% cluster_name %]
+'''.strip()
 
+success_criteria = r'''
+[% success_criteria %]
+'''.strip()
+
+max_elapsed_time = r'''
+[% maxelapsedtime %]
+'''.strip()
+max_elapsed_time = int(max_elapsed_time)
+
+connect(username, password, admin_url)
+
+print "Cluster %s status:" % (cluster_name);
+time_spent = 0
+servers_in_wrong_state = 0
+while (1) :
+    clusterStatus = getClusterStatus(cluster_name)
+    servers_in_wrong_state = 0;
+    for serverName in clusterStatus.keys():
+        print "Server: %s Status: %s" % (serverName, clusterStatus[serverName])
+        sys.stdout.flush()
+        if success_criteria != clusterStatus[serverName]:
+            servers_in_wrong_state += 1
+    if not servers_in_wrong_state:
+        break
+    print "\n===\n";
+    if max_elapsed_time == 0:
+        break
+    pytime.sleep(5)
+    time_spent += 5
+    if time_spent >= max_elapsed_time:
+        break
+
+if servers_in_wrong_state > 0:
+    print "ERROR:Criteria wasn't met."
+    sys.exit(1)
 else:
+    print "Criteria was met."
+    sys.exit(0)
+    
 
-    domainRuntime()
-
-    state = cmo.lookupServerLifeCycleRuntime('[% servername %]').getState()
-
-print "Server State: " + state

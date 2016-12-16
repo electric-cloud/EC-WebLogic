@@ -422,6 +422,10 @@
     <xpath>//procedure[procedureName="ConfigureUserLockoutManager"]/step[stepName="ConfigureUserLockoutManager"]/command</xpath>
   </file>
   <file>
+    <path>server/checkClusterStatus.pl</path>
+    <xpath>//procedure[procedureName="CheckClusterStatus"]/step[stepName="CheckClusterStatus"]/command</xpath>
+  </file>
+  <file>
     <path>conf/createcfg.pl</path>
     <xpath>//procedure[procedureName="CreateConfiguration"]/step[stepName="CreateConfiguration"]/command</xpath>
   </file>
@@ -588,5 +592,9 @@
   <file>
     <path>parameterForms/ec_parameterForm-StopCluster.xml</path>
     <xpath>//procedure[procedureName="StopCluster"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-CheckClusterStatus.xml</path>
+    <xpath>//procedure[procedureName="CheckClusterStatus"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
   </file>
 </fileset>
