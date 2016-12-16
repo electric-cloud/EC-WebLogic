@@ -174,7 +174,6 @@ def isApplicationHasStatus(appName, appVersion, appPlanVersion, appStatuses):
 
     return result
         
-    
 def runDeploy(appName, appPath, deployParams, options):
     try:
         startChanges()
@@ -221,7 +220,7 @@ def getClusterMembers(clusterName):
     cd(cluster)
     servers = cmo.getServers()
     return servers
-    
+
 def shutdownCluster(clustername, timeout, ignoreSessions, forceShutdown):
     try:
         shutdown(clustername, "Cluster", ignoreSessions, timeout, forceShutdown);
@@ -241,5 +240,15 @@ def isClusterHasStatus(clusterName, clusterStatuses):
         status = cmo.lookupServerLifeCycleRuntime(srv).getState()
         if status in clusterStatuses:
             retval.append(srv)
+    return retval
+
+def getClusterStatus(clusterName):
+    serverConfig()
+    retval = {}
+    servers = getClusterMembers(clusterName)
+    domainRuntime()
+    for server in servers:
+        srv = server.getName()
+        retval[srv] = cmo.lookupServerLifeCycleRuntime(srv).getState()
     return retval
     

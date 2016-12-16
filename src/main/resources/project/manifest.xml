@@ -154,6 +154,10 @@
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="update_app_config.jython"]/value</xpath>
   </file>
   <file>
+    <path>jython/check_cluster_status.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="check_cluster_status.jython"]/value</xpath>
+  </file>
+  <file>
     <path>WebLogicCreateConfigForm.xml</path>
     <xpath>//property[propertyName="ui_forms"]/propertySheet/property[propertyName="WebLogicCreateConfigForm"]/value</xpath>
   </file>
@@ -418,6 +422,10 @@
     <xpath>//procedure[procedureName="ConfigureUserLockoutManager"]/step[stepName="ConfigureUserLockoutManager"]/command</xpath>
   </file>
   <file>
+    <path>server/checkClusterStatus.pl</path>
+    <xpath>//procedure[procedureName="CheckClusterStatus"]/step[stepName="CheckClusterStatus"]/command</xpath>
+  </file>
+  <file>
     <path>conf/createcfg.pl</path>
     <xpath>//procedure[procedureName="CreateConfiguration"]/step[stepName="CreateConfiguration"]/command</xpath>
   </file>
@@ -584,5 +592,9 @@
   <file>
     <path>parameterForms/ec_parameterForm-StopCluster.xml</path>
     <xpath>//procedure[procedureName="StopCluster"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-CheckClusterStatus.xml</path>
+    <xpath>//procedure[procedureName="CheckClusterStatus"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
   </file>
 </fileset>

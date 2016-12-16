@@ -1,0 +1,74 @@
+#
+#  Copyright 2016 Electric Cloud, Inc.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+
+[% preamble %]
+
+username = r'''
+[% username %]
+'''.strip()
+
+password = r'''
+[% password %]
+'''.strip()
+
+admin_url = r'''
+[% admin_url %]
+'''.strip()
+
+cluster_name = r'''
+[% cluster_name %]
+'''.strip()
+
+success_criteria = r'''
+[% success_criteria %]
+'''.strip()
+
+max_elapsed_time = r'''
+[% maxelapsedtime %]
+'''.strip()
+max_elapsed_time = int(max_elapsed_time)
+
+sleep_time = 5
+connect(username, password, admin_url)
+
+print "Cluster %s status:" % (cluster_name);
+time_spent = 0
+servers_in_wrong_state = 0
+while (1) :
+    clusterStatus = getClusterStatus(cluster_name)
+    servers_in_wrong_state = 0;
+    for serverName in clusterStatus.keys():
+        print "Server: %s Status: %s" % (serverName, clusterStatus[serverName])
+        sys.stdout.flush()
+        if success_criteria != clusterStatus[serverName]:
+            servers_in_wrong_state += 1
+    if not servers_in_wrong_state:
+        break
+    print "\n===\n";
+    if max_elapsed_time == 0:
+        break
+    pytime.sleep(sleep_time)
+    time_spent += sleep_time
+    if time_spent >= max_elapsed_time:
+        break
+
+if servers_in_wrong_state > 0:
+    print "ERROR:Criteria wasn't met."
+    sys.exit(1)
+else:
+    print "Criteria was met."
+    sys.exit(0)
+
