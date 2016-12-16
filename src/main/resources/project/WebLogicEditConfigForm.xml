@@ -60,7 +60,7 @@ limitations under the License.
         <value>0</value>
         <required>0</required>
         <documentation>
-            If checked, each WebLogic edit session will have unique name assigned. Defaults to false.
+            If checked, each WebLogic edit session will have unique name assigned. Named sessions are not supported by WebLogic server prior to 12 version. Defaults to false.
         </documentation>
     </formElement>
     <formElement>
