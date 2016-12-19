@@ -23,24 +23,37 @@ import random
 import time as pytime
 
 # end of imports
+
+MINIMAL_VERSION_FOR_NAMED_SESSIONS = '12.2.1.1'
+
 print "WebLogic version is: %s" % (version)
 def determineWebLogicVersion():
-    result = re.match('^\s*?WebLogic\sServer\s(\d+)', version)
-    versionNumber = int(result.group(1))
+    result = re.match('^\s*?WebLogic\sServer\s([\d.]+)\s', version)
+    versionNumber = result.group(1)
     return versionNumber
+
+# compares 2 versions.
+# returns 1 if version1 > version2
+# returns -1 if version1 < version2
+# returns 0 if versions are the same.
+def compareVersions(version1, version2):
+    def normalize(v):
+        return [int(x) for x in re.sub(r'(\.0+)*$','', v).split(".")]
+    return cmp(normalize(version1), normalize(version2))
 
 def terminateEditSession(sessionName):
     wlVersion = determineWebLogicVersion()
-    if wlVersion < 12:
-        print "WARNING" + ':' + "Named Sessions are not available prior to Weblogic Server 12. Your version is: " + version
+    if compareVersions(wlVersion, MINIMAL_VERSION_FOR_NAMED_SESSIONS) < 0:
+        print "WARNING" + ':' + "Named Sessions are not available prior to Weblogic Server " +  MINIMAL_VERSION_FOR_NAMED_SESSIONS + ". Your version is: " + version
     else:
         destroyEditSession(sessionName)
     return 1
     
 def isNamedSessionEnabled():
     if [% enable_named_sessions %]:
-        if determineWebLogicVersion() < 12:
-            print "WARNING" + ':' + "Named Sessions are not available prior to Weblogic Server 12. Your version is: " + version
+        wlVersion = determineWebLogicVersion()
+        if compareVersions(wlVersion, MINIMAL_VERSION_FOR_NAMED_SESSIONS) < 0:
+            print "WARNING" + ':' + "Named Sessions are not available prior to Weblogic Server " + MINIMAL_VERSION_FOR_NAMED_SESSIONS + ". Your version is: " + version
             return 0
         else:
             return 1
@@ -217,7 +230,13 @@ def getClusterMembers(clusterName):
     serverConfig()
     cd('/')
     cluster = ('/Clusters/' + clusterName)
-    cd(cluster)
+    try:
+        cd(cluster)
+    except Exception, e:
+        print "ERROR" + ":" + "Cluster " + clusterName + " doesn't exist."
+        print "Exception: %s" % (e)
+        dumpStack()
+        sys.exit(1)
     servers = cmo.getServers()
     return servers
 

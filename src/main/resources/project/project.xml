@@ -437,6 +437,16 @@
                     </property>
                   </propertySheet>
                 </property>
+                <property>
+                  <propertyName>mw_home</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
 
               </propertySheet>
             </property>
@@ -473,6 +483,13 @@
       </formalParameter>
       <formalParameter>
         <formalParameterName>java_vendor</formalParameterName>
+        <defaultValue/>
+        <description>JAVA_VENDOR</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>mw_home</formalParameterName>
         <defaultValue/>
         <description>JAVA_VENDOR</description>
         <required>0</required>
