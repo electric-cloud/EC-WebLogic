@@ -83,6 +83,7 @@ sub get_credentials {
             password => 'password',
             java_home => 'java_home',
             java_vendor => 'java_vendor',
+            mw_home => 'mw_home',
             weblogic_url => 'weblogic_url',
             debug_level => 'debug_level',
             enable_exclusive_sessions => 'enable_exclusive_sessions',
@@ -102,6 +103,10 @@ sub get_credentials {
     if ($cred->{java_vendor}) {
         $ENV{JAVA_VENDOR} = $cred->{java_vendor};
         $self->out(10, "JAVA_VENDOR was set to $cred->{java_vendor}");
+    }
+    if ($cred->{mw_home}) {
+        $ENV{MW_HOME} = $cred->{mw_home};
+        $self->out(10, "MW_HOME was set to $cred->{mw_home}");
     }
 
     $self->{_credentials} = $cred;
@@ -191,6 +196,8 @@ sub process_response {
         return;
     }
     my @matches = $result->{stdout} =~ m/WARNING:(.+?)$/gm;
+    my %seen = ();
+    @matches = grep {!$seen{$_}++} @matches;
     if (@matches) {
         $self->warning( join("\n", @matches));
         return;
