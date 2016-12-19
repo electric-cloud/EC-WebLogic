@@ -46,11 +46,11 @@
     <required>1</required>
     <documentation>Indicates the expected correct result to be obtained when running checking the server.</documentation>
     <option>
-      <name>Cluster running</name>
+      <name>All servers are running</name>
       <value>RUNNING</value>
     </option>
     <option>
-      <name>Cluster not running</name>
+      <name>All servers are NOT running</name>
       <value>NOT_RUNNING</value>
     </option>
   </formElement>
