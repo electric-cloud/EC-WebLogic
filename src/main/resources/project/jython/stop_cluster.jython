@@ -57,20 +57,37 @@ else:
     forceShutdown = 'false'
 
 connect(userName, password, weblogicURL)
+
 stoppedServers = isClusterHasStatus(clusterName, ['SHUTDOWN'])
 if stoppedServers:
     print "WARNING" + ':' + "%s server(s) are already stopped." % (stoppedServers)
-shutdownCluster(clusterName, timeout, ignoreSessions, forceShutdown)
-serverConfig()
+
+shutdownCluster(clusterName, 0, ignoreSessions, forceShutdown)
 servers = getClusterMembers(clusterName)
 domainRuntime()
 errorsCount = 0;
-for server in servers:
-    srv = server.getName()
-    status = cmo.lookupServerLifeCycleRuntime(srv).getState()
-    if status != 'SHUTDOWN':
+timeSpent = 0;
+
+while 1:
+    notOk = 0
+    for server in servers:
+        srv = server.getName()
+        status = cmo.lookupServerLifeCycleRuntime(srv).getState()
+        if status != 'SHUTDOWN':
+            notOk += 1
+            print srv + ': ' + status
+    if timeSpent >= timeout:
+        print "Timed out."
         errorsCount += 1
-    print srv + ': ' + status
+        break
+
+    if notOk > 0:
+        print "Waiting for cluster to stop"
+        pytime.sleep(5)
+        timeSpent += 5
+    else:
+        print "Cluster was successfully stopped."
+        break
 
 if errorsCount > 0:
     print "Error occured during stopping cluster %s\n" % (clusterName)

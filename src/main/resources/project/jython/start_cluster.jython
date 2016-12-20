@@ -49,6 +49,7 @@ servers = getClusterMembers(clusterName)
 domainRuntime()
 errorsCount = 0
 timeSpent = 0
+
 while 1:
     notOk = 0
     for server in servers:

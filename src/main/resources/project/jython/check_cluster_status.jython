@@ -47,7 +47,7 @@ connect(username, password, admin_url)
 print "Cluster %s status:" % (cluster_name);
 time_spent = 0
 servers_in_wrong_state = 0
-while (1) :
+while 1:
     clusterStatus = getClusterStatus(cluster_name)
     servers_in_wrong_state = 0;
     for serverName in clusterStatus.keys():
