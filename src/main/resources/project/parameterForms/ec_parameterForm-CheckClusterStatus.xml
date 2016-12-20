@@ -44,7 +44,7 @@
     <label>Success Criteria:</label>
     <property>successcriteria</property>
     <required>1</required>
-    <documentation>Indicates the expected correct result to be obtained when running checking the server.</documentation>
+    <documentation>Indicates the expected correct result to be obtained when running checking the cluster.</documentation>
     <option>
       <name>All servers are running</name>
       <value>RUNNING</value>
