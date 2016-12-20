@@ -242,7 +242,7 @@ def getClusterMembers(clusterName):
 
 def shutdownCluster(clustername, timeout, ignoreSessions, forceShutdown):
     try:
-        shutdown(clustername, "Cluster", ignoreSessions, timeout, forceShutdown);
+        shutdown(clustername, "Cluster", ignoreSessions, timeout, forceShutdown, 'false');
     except Exception, e:
         print 'Error while shutting down cluster',e
         dumpStack()
