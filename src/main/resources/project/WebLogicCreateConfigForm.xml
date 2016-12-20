@@ -54,7 +54,7 @@ limitations under the License.
         <label>MW_HOME:</label>
         <property>mw_home</property>
         <value></value>
-        <documentation>MW_HOME environment variable, use it to WebLogic Home directory. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances.</documentation>
+        <documentation>MW_HOME environment variable, use it to specify WebLogic Home directory. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances.</documentation>
         <required>0</required>
     </formElement>
     <formElement>
