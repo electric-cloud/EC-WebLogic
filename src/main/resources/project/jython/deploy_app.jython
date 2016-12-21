@@ -74,14 +74,13 @@ version_identifier = r'''
 [% version_identifier %]
 '''.strip()
 
-upload = r'''
+uploadOption = r'''
 [% upload %]
 '''.strip()
 
-remote = r'''
+remoteOption = r'''
 [% remote %]
 '''.strip()
-
 
 is_library = r'''
 [% is_library %]
@@ -116,11 +115,11 @@ if archive_version:
 if retire_gracefully:
     optionsDict['retireGracefully'] = retire_gracefully
 
-if upload:
-    optionsDict['upload'] = upload
+if uploadOption:
+    optionsDict['upload'] = uploadOption
 
-if remote:
-    optionsDict['remote'] = remote
+if remoteOption:
+    optionsDict['remote'] = remoteOption
 
 if version_identifier:
     optionsDict['versionIdentifier'] = version_identifier
