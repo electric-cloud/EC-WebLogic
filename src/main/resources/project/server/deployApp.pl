@@ -111,7 +111,8 @@ sub main {
         retire_gracefully => $retire_gracefully,
         retire_timeout => $params->{retire_timeout},
         version_identifier => $params->{version_identifier},
-        upload => $upload
+        upload => $upload,
+        remote => $remote
     };
 
     my $template_path = '/myProject/jython/deploy_app.jython';
