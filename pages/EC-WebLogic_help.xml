@@ -1700,6 +1700,7 @@
     <div id="StartApp"> <a name="StartApp" id="StartApp"></a>
     <h2>StartApp</h2>
     <p>This procedures starts an application.</p>
+    <p>If application is already started, warning will be thrown.</p>
     <h3>Input</h3>
     <ol>
         <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
@@ -1754,6 +1755,7 @@
     <div id="StartCluster"> <a name="StartCluster" id="StartCluster"></a>
     <h2>StartCluster</h2>
     <p>This procedures starts a cluster.</p>
+    <p>If cluster has a servers in the RUNNING state, warning will be thrown.</p>
     <h3>Input</h3>
     <ol>
         <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
@@ -1995,6 +1997,7 @@
     <div id="StopApp"> <a name="StopApp" id="StopApp"></a>
     <h2>StopApp</h2>
     <p>This procedure stops an application.</p>
+    <p>If application is already stopped, warning will be thrown.</p>
     <h3>Input</h3>
     <ol>
         <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
@@ -2051,6 +2054,7 @@
     <div id="StopCluster"> <a name="StopCluster" id="StopCluster"></a>
     <h2>StopCluster</h2>
     <p>This procedures stops a cluster.</p>
+    <p>If cluster has a servers in the SHUTDOWN state, warning will be thrown.</p>
     <h3>Input</h3>
     <ol>
         <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
@@ -2612,7 +2616,7 @@
         <li>DeployApp does redeployment if application already exists.</li>
         <li>StartApp and StopApp have been improved and warning is being thrown if application is already in the desired state.</li>
         <li>StartCluster and StopCluster have been improved and warning is being thrown if cluster is already in the desired state.</li>
-        <li>Support of named edit sessions has been added.</li>
+        <li>Support of named edit sessions (concurrent edit sessions) has been added. If WebLogic server doesn't have support of the named edit sessions, warning will be thrown.</li>
         <li>MW_HOME environment variable has been added to the plugin configuration.</li>
     </ul>
     <h2>@PLUGIN_KEY@ 3.2.2</h2>
