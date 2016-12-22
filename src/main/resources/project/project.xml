@@ -5893,7 +5893,7 @@
       <formalParameter>
         <formalParameterName>deployment_plan</formalParameterName>
         <defaultValue/>
-        <description>Content of the deployment plan. Required, if the file mentioned in "Plan Path" doesn't exist or empty.</description>
+        <description>Content of the deployment plan. Required, if the file mentioned in "plan_path" doesn't exist or empty.</description>
         <required>0</required>
         <type>textarea</type>
       </formalParameter>
