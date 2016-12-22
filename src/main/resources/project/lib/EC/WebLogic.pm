@@ -27,6 +27,7 @@ use base 'EC::Plugin::Core';
 
 our $ENABLE_PARALLEL_EXEC_SUPPORT = 1;
 
+
 sub parallel_exec_support {
     my ($p) = @_;
 
@@ -34,6 +35,19 @@ sub parallel_exec_support {
         $ENABLE_PARALLEL_EXEC_SUPPORT = $p;
     }
     return $ENABLE_PARALLEL_EXEC_SUPPORT;
+}
+
+
+sub out {
+    my ($self, $level, @message) = @_;
+
+    if ($self->{_credentials}->{password}) {
+        my $password = $self->{_credentials}->{password};
+        $password = quotemeta($password);
+        map {s/$password/********/gms;$_} @message;
+    }
+    $level ||= 1;
+    return $self->SUPER::out(1, @message);
 }
 
 
