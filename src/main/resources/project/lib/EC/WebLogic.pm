@@ -27,7 +27,7 @@ use base 'EC::Plugin::Core';
 
 our $ENABLE_PARALLEL_EXEC_SUPPORT = 1;
 
-
+# functions 
 sub parallel_exec_support {
     my ($p) = @_;
 
