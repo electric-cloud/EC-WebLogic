@@ -470,7 +470,7 @@
       <formalParameter>
         <formalParameterName>debug_level</formalParameterName>
         <defaultValue/>
-        <description>Debug level.</description>
+        <description>Verbosity level of output. By default, debug level is set to 1. Higher debug level - more debug messages. Maximal debug level is 10.</description>
         <required>1</required>
         <type>entry</type>
       </formalParameter>
@@ -1875,7 +1875,7 @@
       <formalParameter>
           <formalParameterName>version_identifier</formalParameterName>
           <defaultValue/>
-          <description>Version Identifier</description>
+          <description>Version identifier that is being used by production redeployment. A string, that uniquely identifies the current application version across all versions of the same application.</description>
           <required>0</required>
           <type>entry</type>
       </formalParameter>
@@ -2107,7 +2107,7 @@
       <formalParameter>
           <formalParameterName>version_identifier</formalParameterName>
           <defaultValue/>
-          <description>Specified a single application version to be undeployed. For production redeployment.</description>
+          <description>Specifies a single application version to be undeployed. For production redeployment.</description>
           <required>0</required>
           <type>entry</type>
       </formalParameter>
@@ -5893,7 +5893,7 @@
       <formalParameter>
         <formalParameterName>deployment_plan</formalParameterName>
         <defaultValue/>
-        <description>Content of the deployment plan. Required, if there is no plan_path file.</description>
+        <description>Content of the deployment plan. Required, if the file mentioned in "Plan Path" doesn't exist or empty.</description>
         <required>0</required>
         <type>textarea</type>
       </formalParameter>

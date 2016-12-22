@@ -85,10 +85,7 @@
             support for the encryption of data transmissions, as well
             as authentication and authorization mechanisms, make
             applications and secure.</p>
-            <p>
-                For more information about WebLogic, go to <a href="http://www.oracle.com/technetwork/middleware/weblogic/overview/index.html">
-                WebLogic home page</a>.
-            </p>
+            <p>For more information about WebLogic, go to <a href="http://www.oracle.com/technetwork/middleware/weblogic/overview/index.html">WebLogic home page</a>.</p>
             <h2>ElectricFlow Integration to WebLogic</h2>
             <!-- The integration description should answer the questions:
                  How deep does our integration go? Why should I care? What general
@@ -169,7 +166,7 @@
                             <td class="required">Debug level</td>
                             <td>
                                 Verbosity level of output. By default, debug level is set to 1.
-                                Debug level, higher debug level - more debug messages. Warning: on debug level 10 and more passwords will be revealed in a procedure logs.
+                                Debug level, higher debug level - more debug messages. Maximal debug level is 10.
                             </td>
                         </tr>
                     </tbody>
@@ -1331,7 +1328,10 @@
                         </tr>
                         <tr>
                             <td>Version identifier</td>
-                            <td>Version identifier that is being used by production redeployment.</td>
+                            <td>
+                                Version identifier that is being used by production redeployment.
+                                A string, that uniquely identifies the current application version across all versions of the same application.
+                            </td>
                         </tr>
                         <tr>
                             <td>Upload?</td>
@@ -2353,7 +2353,7 @@
                 <tr>
                     <td>Application Version</td>
                     <td>
-                        Specified a single application version to be undeployed. See <a target = "_blank" href="http://docs.oracle.com/middleware/12212/wls/DEPGD/redeploy.htm#DEPGD270">Requirements and Restrictions for Production Redeployment</a> for reference.
+                        Specifies a single application version to be undeployed. See <a target = "_blank" href="http://docs.oracle.com/middleware/12212/wls/DEPGD/redeploy.htm#DEPGD270">Requirements and Restrictions for Production Redeployment</a> for reference.
                     </td>
                 </tr>
                 <tr>
@@ -2532,7 +2532,7 @@
 
                     <tr>
                         <td>Deployment Plan Content</td>
-                        <td>Content of the deployment plan. Required, if the file specified on Plan Path doesn't exist or empty.</td>
+                        <td>Content of the deployment plan. Required, if the file mentioned in "Plan Path" doesn't exist or empty.</td>
                     </tr>
                     <tr>
                         <td>Overwrite deployment plan?</td>
