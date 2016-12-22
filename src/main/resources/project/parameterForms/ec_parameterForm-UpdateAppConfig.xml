@@ -57,7 +57,7 @@
         <type>textarea</type>
         <label>Deployment Plan Content:</label>
         <property>deployment_plan</property>
-        <documentation>Content of the deployment plan. Required, if the file named plan_path does not exist or empty.</documentation>
+        <documentation>Content of the deployment plan. Required, if the file mentioned in "Plan Path" doesn't exist or empty.</documentation>
         <required>0</required>
     </formElement>
     <formElement>

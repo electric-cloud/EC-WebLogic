@@ -64,7 +64,7 @@
         <label>Application Version:</label>
         <property>version_identifier</property>
         <documentation>
-            Specified a single application version to be undeployed. See <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="http://docs.oracle.com/middleware/12212/wls/DEPGD/redeploy.htm#DEPGD270">Requirements and Restrictions for Production Redeployment</a> for reference.
+            Specifies a single application version to be undeployed. See <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="http://docs.oracle.com/middleware/12212/wls/DEPGD/redeploy.htm#DEPGD270">Requirements and Restrictions for Production Redeployment</a> for reference.
         </documentation>
         <required>0</required>
     </formElement>

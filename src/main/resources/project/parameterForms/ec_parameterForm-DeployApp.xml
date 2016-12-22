@@ -194,7 +194,9 @@
         <property>version_identifier</property>
         <type>entry</type>
         <required>0</required>
-        <documentation>Version identifier that is being used by production redeployment.</documentation>
+        <documentation>
+            Version identifier that is being used by production redeployment. A string, that uniquely identifies the current application version across all versions of the same application.
+        </documentation>
     </formElement>
     <formElement>
         <label>Upload?:</label>
