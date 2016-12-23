@@ -51,7 +51,7 @@ sub main {
     my $retire_gracefully = 'false';
 
     if ($params->{retire_gracefully}) {
-        $retire_gracefully = $params->{retire_gracefully};
+        $retire_gracefully = 'true';
     }
 
     $wl->out(1, "AdditionalOptions: $params->{additional_options}");
