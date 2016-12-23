@@ -12,7 +12,7 @@
             <h1>Oracle WebLogic Server</h1>
             <p>Plugin Version @PLUGIN_VERSION@</p>
             <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade" />
-            <p>Revised on Nov 29, 2016</p>
+            <p>Revised on Dec 23, 2016</p>
             <h1>Contents</h1>
             <ul>
                 <li><p><a href="#overview">Overview</a></p></li>
@@ -98,7 +98,15 @@
             using this integration. You can use Jython scripting to create script files
             or to enter a new embedded file.</p>
             <h2>Integrated Version</h2>
-            <p>This plugin was developed and tested against WebLogic Server Version: 12.2.1.0.0.</p>
+            <p>
+                This plugin was developed and tested against following WebLogic Server Versions:
+                <ul>
+                    <li>12.2.1.0.0 on Windows</li>
+                    <li>12.2.1.0.0 on Linux</li>
+                    <li>10.3.6.0 on Windows</li>
+                    <li>10.3.6.0 on Linux</li>
+                </ul>
+            </p>
             <p>IMPORTANT: For all parameter descriptions in this document, required parameters are shown in <span class="required">bold italics</span>.</p>
             <p>
                 IMPORTANT: In the ElectricFlow UI, go to the Home page, open the Main Menu, and click <b>Admin</b> &gt; <b>Plugins</b> to open the
@@ -1312,11 +1320,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Retire gracefully? (DEPRECATED)</td>
+                            <td>Retire gracefully?</td>
                             <td>
                                 Retirement policy to gracefully retire an application only after it has completed all in-flight work.
                                 This policy is only meaningful for stop and redeploy operations and is mutually exclusive to the retire timeout policy.
-                                <b>This parameter is DEPRECATED and will be removed in the next release.</b>
                             </td>
                         </tr>
                         <tr>
@@ -2344,10 +2351,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Enable Graceful Mode</td>
+                    <td>Retire Gracefully (DEPRECATED)</td>
                     <td>
-                        Enables stopping the application in Graceful Mode after the existing HTTP clients
-                        have completed their work.
+                        Retirement policy to gracefully retire an application only after it has completed all in-flight work.
+                        This policy is only meaningful for stop and redeploy operations and is mutually exclusive to the retire timeout policy.
+                        <b>This parameter is DEPRECATED and will be removed in the next release.</b>
                     </td>
                 </tr>
                 <tr>

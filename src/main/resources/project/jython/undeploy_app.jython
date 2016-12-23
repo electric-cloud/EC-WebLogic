@@ -58,7 +58,7 @@ if version_identifier:
     optionsDict['versionIdentifier'] = version_identifier
 
 if retire_gracefully == 'true':
-    print "WARNING" + ':' + "Retire Gracefully checkbox is DEPRECATED and will be removed in the next release."
+    print "WARNING" + ':' + '"Retire Gracefully?" checkbox is DEPRECATED and will be removed in the next release.'
 
 optionsDict['retireGracefully'] = retire_gracefully
 
