@@ -25,6 +25,7 @@ import time as pytime
 # end of imports
 
 MINIMAL_VERSION_FOR_NAMED_SESSIONS = '12.2.1.1'
+MINIMAL_VERSION_FOR_REDEPLOYMENT = '12.0.0.0'
 
 print "WebLogic version is: %s" % (version)
 def determineWebLogicVersion():
@@ -40,6 +41,13 @@ def compareVersions(version1, version2):
     def normalize(v):
         return [int(x) for x in re.sub(r'(\.0+)*$','', v).split(".")]
     return cmp(normalize(version1), normalize(version2))
+
+def isRedeploymentPossible():
+    wlVersion = determineWebLogicVersion()
+    if compareVersions(wlVersion, MINIMAL_VERSION_FOR_REDEPLOYMENT) < 0:
+        return 0;
+    else:
+        return 1
 
 def terminateEditSession(sessionName):
     wlVersion = determineWebLogicVersion()

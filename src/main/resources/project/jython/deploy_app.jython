@@ -134,7 +134,9 @@ if is_library == 'true':
 application_exists = checkIfApplicationExists(application_name, '*', '*')
 
 print "Deployment Options: %s\nAddiotional Options: %s\n" % (deploymentOptions, optionsDict)
-if application_exists:
+# redeploy() call is enabled only if weblogic version is > 12.
+# for additional info, please, refer to https://community.oracle.com/message/14159256#14159256
+if application_exists and isRedeploymentPossible():
     print "Redeployment:"
     if retire_timeout:
         optionsDict['retireTimeout'] = retire_timeout

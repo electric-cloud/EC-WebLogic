@@ -45,17 +45,18 @@
   
     <formElement>
         <type>checkbox</type>
-        <label>Retire Gracefully:</label>
+        <label>Retire Gracefully?: (DEPRECATED)</label>
         <property>retire_gracefully</property>
         <checkedValue>1</checkedValue>
         <uncheckedValue>0</uncheckedValue>
         <required>0</required>
         <documentation>
-            Retirement policy to gracefully retire an application only after it has completed all in-flight work. This policy is only meaningful for stop and redeploy operations and is mutually exclusive to the retire timeout policy.
+            Retirement policy to gracefully retire an application only after it has completed all in-flight work. This policy is only meaningful for stop and redeploy operations and is mutually exclusive to the retire timeout policy. This parameter is DEPRECATED and will be removed in the next release.
         </documentation>
         <htmlDocumentation>
             Retirement policy to gracefully retire an application only after it has completed all in-flight work.<br />
             This policy is only meaningful for stop and redeploy operations and is mutually exclusive to the retire timeout policy.
+            <b>This parameter is DEPRECATED and will be removed in the next release.</b>
         </htmlDocumentation>
     </formElement>
     
