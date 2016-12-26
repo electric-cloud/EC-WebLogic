@@ -55,6 +55,7 @@ sub after_init_hook {
     my ($self, %params) = @_;
 
     $self->{plugin_name} = 'EC-WebLogic';
+    $self->{_credentials} = {};
     my $dryrun = 0;
 
     if ($self->{plugin_key}) {
