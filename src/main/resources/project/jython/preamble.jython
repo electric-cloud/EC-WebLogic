@@ -122,16 +122,24 @@ def parseOptions(options):
     return optionsDict
 
 # appName parameter is mandatory. Use * for appVersion and appPlanVersion to get all.
-def getApplication(appName, appVersion = '', appPlanVersion = ''):
+def getApplication(appName, appVersion = '', appPlanVersion = '', isLibrary = 0):
     result = []
-    for deployment in cmo.getAppDeployments():
+    deployments = [];
+    if not isLibrary:
+        deployments = cmo.getAppDeployments()
+    else:
+        deployments = cmo.getLibraries()
+    for deployment in deployments:
         deployment_name = deployment.getName()
         name = ''
         version = ''
         plan_version = ''
 
         version_array = []
-        version_array = deployment_name.split('#')
+        if not isLibrary:
+            version_array = deployment_name.split('#')
+        else:
+            version_array = re.split('[#@]', deployment_name)
 
         if len(version_array) == 1:
             name = version_array[0]
@@ -178,6 +186,17 @@ def checkIfApplicationExists(appName, appVersion = '', appPlanVersion = ''):
         appPlanVersion = '*'
 
     app = getApplication(appName, appVersion, appPlanVersion)
+    if app:
+        return len(app)
+    return 0
+
+def checkIfLibraryExists(appName, appVersion = '', appPlanVersion = ''):
+    if not appVersion:
+        appVersion = '*'
+    if not appPlanVersion:
+        appPlanVersion = '*'
+
+    app = getApplication(appName, appVersion, appPlanVersion, 1)
     if app:
         return len(app)
     return 0
