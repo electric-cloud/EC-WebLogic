@@ -88,14 +88,12 @@ if not appCount:
         del optionsDict['versionIdentifier']
     lib_spec_version = '*'
     lib_impl_version = '*'
-    # libSpecVersion libImplVersion
     if 'libSpecVersion' in optionsDict.keys():
         lib_spec_version = optionsDict['libSpecVersion']
     if 'libImplVersion' in optionsDict.keys():
         lib_impl_version = optionsDict['libImplVersion']
 
     appCount = checkIfLibraryExists(application_name, lib_spec_version, lib_impl_version)
-    # item is not an application, but library. So, we need to map versions, if necessary
 
 if not appCount and give_up:
     print 'ERROR' + ':' + "Application %s (version: %s) doesn't exist." % (application_name, version_identifier)
