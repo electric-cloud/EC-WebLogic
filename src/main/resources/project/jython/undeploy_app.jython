@@ -75,18 +75,40 @@ if 'planVersion' in optionsDict.keys():
     plan_version = optionsDict['planVersion']
 
 appCount = checkIfApplicationExists(application_name, version_identifier, plan_version)
-# if not checkIfApplicationExists(application_name, version_identifier, plan_version):
+if not appCount:
+    print "Applications not found. Trying libraries";
+    if 'planVersion' in optionsDict.keys():
+        print 'WARNING' + ':' + "planVersion is not valid key for library undeployment, it has been deleted."
+        del optionsDict['planVersion']
+    if 'versionIdentifier' in optionsDict.keys():
+        print 'WARNING' + ':' + "versionIdentifier is not valid key for library undeployment."
+        if not 'libSpecVersion' in optionsDict.keys():
+            print 'WARNING' + ':' + "libSpecVersion parameter was not found. versionIdentifier parameter has been mapped to libSpecVersion."
+            optionsDict['libSpecVersion'] = optionsDict['versionIdentifier']
+        del optionsDict['versionIdentifier']
+    if 'archiveVersion' in optionsDict.keys():
+        print 'WARNING' + ':' + "archiveVersion is not valid key for library undeployment, it has been deleted."
+        del optionsDict['archiveVersion']
+    lib_spec_version = '*'
+    lib_impl_version = '*'
+    if 'libSpecVersion' in optionsDict.keys():
+        lib_spec_version = optionsDict['libSpecVersion']
+    if 'libImplVersion' in optionsDict.keys():
+        lib_impl_version = optionsDict['libImplVersion']
+
+    appCount = checkIfLibraryExists(application_name, lib_spec_version, lib_impl_version)
+
 if not appCount and give_up:
-    print 'ERROR' + ':' + "Application %s (version: %s) doesn't exist." % (application_name, version_identifier)
+    print 'ERROR' + ':' + "Application or Library %s (version: %s) doesn't exist." % (application_name, version_identifier)
     sys.exit(1)
 elif not appCount and not give_up:
-    print 'WARNING' + ':' + "Application %s (version: %s) doesn't exist." % (application_name, version_identifier)
+    print 'WARNING' + ':' + "Application or Library %s (version: %s) doesn't exist." % (application_name, version_identifier)
     sys.exit(0)
 elif appCount > 1 and give_up:
-    print "ERROR" + ':' + "There are more than 1 (" + str(appCount) + ") applications found."
+    print "ERROR" + ':' + "There are more than 1 (" + str(appCount) + ") applications or liraries found."
     sys.exit(1)
 elif appCount > 1 and not give_up:
-    print "WARNING" + ':' + "There are more than 1 (" + str(appCount) + ") applications found."
+    print "WARNING" + ':' + "There are more than 1 (" + str(appCount) + ") applications or libraries found."
 
 
 startChanges()
