@@ -190,15 +190,15 @@ def checkIfApplicationExists(appName, appVersion = '', appPlanVersion = ''):
         return len(app)
     return 0
 
-def checkIfLibraryExists(appName, appVersion = '', appPlanVersion = ''):
-    if not appVersion:
-        appVersion = '*'
-    if not appPlanVersion:
-        appPlanVersion = '*'
+def checkIfLibraryExists(libName, libSpecVersion = '', libImplVersion = ''):
+    if not libSpecVersion:
+        libSpecVersion = '*'
+    if not libImplVersion:
+        libImplVersion = '*'
 
-    app = getApplication(appName, appVersion, appPlanVersion, 1)
-    if app:
-        return len(app)
+    libs = getApplication(libName, libSpecVersion, libImplVersion, 1)
+    if libs:
+        return len(libs)
     return 0
 
 def isApplicationHasStatus(appName, appVersion, appPlanVersion, appStatuses):
