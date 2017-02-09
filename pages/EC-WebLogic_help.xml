@@ -101,10 +101,10 @@
             <p>
                 This plugin was developed and tested against following WebLogic Server Versions:
                 <ul>
-                    <li>12.2.1.1.0 on Windows</li>
-                    <li>12.2.1.1.0 on Linux</li>
-                    <li>10.3.6.0 on Windows</li>
-                    <li>10.3.6.0 on Linux</li>
+                    <li>12c (12.2.1.1.0) on Windows</li>
+                    <li>12c (12.2.1.1.0) on Linux</li>
+                    <li>11g (10.3.6.0) on Windows</li>
+                    <li>11g (10.3.6.0) on Linux</li>
                 </ul>
             </p>
             <p>IMPORTANT: For all parameter descriptions in this document, required parameters are shown in <span class="required">bold italics</span>.</p>
