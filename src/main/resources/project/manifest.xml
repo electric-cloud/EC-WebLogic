@@ -158,6 +158,10 @@
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="check_cluster_status.jython"]/value</xpath>
   </file>
   <file>
+    <path>jython/create_jms_resource.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_jms_resource.jython"]/value</xpath>
+  </file>
+  <file>
     <path>WebLogicCreateConfigForm.xml</path>
     <xpath>//property[propertyName="ui_forms"]/propertySheet/property[propertyName="WebLogicCreateConfigForm"]/value</xpath>
   </file>
@@ -426,6 +430,10 @@
     <xpath>//procedure[procedureName="CheckClusterStatus"]/step[stepName="CheckClusterStatus"]/command</xpath>
   </file>
   <file>
+    <path>server/createJMSResource.pl</path>
+    <xpath>//procedure[procedureName="CreateJMSResource"]/step[stepName="CreateJMSResource"]/command</xpath>
+  </file>
+  <file>
     <path>conf/createcfg.pl</path>
     <xpath>//procedure[procedureName="CreateConfiguration"]/step[stepName="CreateConfiguration"]/command</xpath>
   </file>
@@ -596,5 +604,9 @@
   <file>
     <path>parameterForms/ec_parameterForm-CheckClusterStatus.xml</path>
     <xpath>//procedure[procedureName="CheckClusterStatus"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-CreateJMSResource.xml</path>
+    <xpath>//procedure[procedureName="CreateJMSResource"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
   </file>
 </fileset>

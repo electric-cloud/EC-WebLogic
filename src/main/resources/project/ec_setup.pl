@@ -257,6 +257,13 @@ my %checkClusterStatus = (
     category    => "Application Server"
 );
 
+my %createJMSResource = (
+    label       => "WebLogic - Create JMS Resource",
+    procedure   => "CreateJMSResource",
+    description => "Creates JMS resource",
+    category    => "Application Server"
+);
+
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/EC-WebLogic - Start App");
 $batch->deleteProperty(
@@ -349,6 +356,8 @@ $batch->deleteProperty(
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Check Cluster Status");
 
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Create JMS Resource");
 @::createStepPickerSteps = (
     \%startApp,                    \%stopApp,
     \%checkServerStatus,           \%deployApp,
@@ -369,7 +378,7 @@ $batch->deleteProperty(
     \%deleteCluster,               \%createManagedServer,
     \%deleteManagedServer,         \%startCluster,
     \%stopCluster,                 \%updateAppConfig,
-    \%checkClusterStatus
+    \%checkClusterStatus,          \%createJMSResource
 );
 
 if ( $upgradeAction eq "upgrade" ) {
@@ -782,6 +791,14 @@ if ( $upgradeAction eq "upgrade" ) {
                 {
                     procedureName => 'CheckClusterStatus',
                     stepName      => 'CheckClusterStatus'
+                }
+            );
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'CreateJMSResource',
+                    stepName      => 'CreateJMSResource'
                 }
             );
         }
