@@ -3524,7 +3524,7 @@
                   </propertySheet>
                 </property>
                 <property>
-                  <propertyName>username</propertyName>
+                  <propertyName>ds_credential</propertyName>
                   <propertySheet>
                     <property>
                       <propertyName>formType</propertyName>
@@ -3533,21 +3533,32 @@
                     </property>
                   </propertySheet>
                 </property>
-                <property>
-                  <propertyName>password</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                  </propertySheet>
-                </property>
+                <!-- <property> -->
+                <!--   <propertyName>username</propertyName> -->
+                <!--   <propertySheet> -->
+                <!--     <property> -->
+                <!--       <propertyName>formType</propertyName> -->
+                <!--       <expandable>1</expandable> -->
+                <!--       <value>standard</value> -->
+                <!--     </property> -->
+                <!--   </propertySheet> -->
+                <!-- </property> -->
+                <!-- <property> -->
+                <!--   <propertyName>password</propertyName> -->
+                <!--   <propertySheet> -->
+                <!--     <property> -->
+                <!--       <propertyName>formType</propertyName> -->
+                <!--       <expandable>1</expandable> -->
+                <!--       <value>standard</value> -->
+                <!--     </property> -->
+                <!--   </propertySheet> -->
+                <!-- </property> -->
               </propertySheet>
             </property>
           </propertySheet>
         </property>
-      </propertySheet>
+    </propertySheet>
+
       <formalParameter>
         <formalParameterName>configname</formalParameterName>
         <defaultValue/>
@@ -3605,19 +3616,26 @@
         <type>entry</type>
       </formalParameter>
       <formalParameter>
-        <formalParameterName>username</formalParameterName>
+        <formalParameterName>ds_credential</formalParameterName>
         <defaultValue/>
-        <description>The user to connect to the database.</description>
+        <description>Credential for datasource.</description>
         <required>1</required>
-        <type>entry</type>
+        <type>credential</type>
       </formalParameter>
-      <formalParameter>
-        <formalParameterName>password</formalParameterName>
-        <defaultValue/>
-        <description>The password attribute passed to the JDBC driver when creating physical database connections. The value is stored in an encrypted form in the descriptor file and when displayed on the Administration Console.</description>
-        <required>1</required>
-        <type>entry</type>
-      </formalParameter>
+      <!-- <formalParameter> -->
+      <!--   <formalParameterName>username</formalParameterName> -->
+      <!--   <defaultValue/> -->
+      <!--   <description>The user to connect to the database.</description> -->
+      <!--   <required>1</required> -->
+      <!--   <type>entry</type> -->
+      <!-- </formalParameter> -->
+      <!-- <formalParameter> -->
+      <!--   <formalParameterName>password</formalParameterName> -->
+      <!--   <defaultValue/> -->
+      <!--   <description>The password attribute passed to the JDBC driver when creating physical database connections. The value is stored in an encrypted form in the descriptor file and when displayed on the Administration Console.</description> -->
+      <!--   <required>1</required> -->
+      <!--   <type>entry</type> -->
+      <!-- </formalParameter> -->
       <step>
         <stepName>CreateDatasource</stepName>
         <alwaysRun>0</alwaysRun>
@@ -3651,6 +3669,9 @@
             </propertySheet>
           </property>
         </propertySheet>
+        <attachedParameters>
+            <formalParameterName>ds_credential</formalParameterName>
+        </attachedParameters>
       </step>
   </procedure>
 

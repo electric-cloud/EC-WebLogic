@@ -1,99 +1,109 @@
 <!--
 
-     Copyright 2015 Electric Cloud, Inc.
+Copyright 2015 Electric Cloud, Inc.
 
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-         http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0
 
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
 -->
 <editor>
-  <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateDatasource</help>
-  <formElement>
+    <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateDatasource</help>
+<formElement>
     <type>entry</type>
     <label>Configuration:</label>
     <property>configname</property>
     <documentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</documentation>
     <htmlDocumentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="/commander/pages/@PLUGIN_NAME@/configurations">configuration page</a>.</htmlDocumentation>
     <required>1</required>
-  </formElement>
-  <formElement>
+</formElement>
+<formElement>
     <type>entry</type>
     <label>WLST Absolute Path:</label>
     <property>wlstabspath</property>
     <required>1</required>
     <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
-  </formElement>
-  <formElement>
+</formElement>
+<formElement>
     <type>entry</type>
     <label>Datasource Name:</label>
     <property>dsname</property>
     <documentation>A unique name that identifies this Datasource in the WebLogic domain.</documentation>
     <required>1</required>
-  </formElement>
-  <formElement>
+</formElement>
+<formElement>
     <type>entry</type>
     <label>Database:</label>
     <property>dsdbname</property>
     <documentation>The database used by the Datasource.</documentation>
     <required>1</required>
-  </formElement>
-  <formElement>
+</formElement>
+<formElement>
     <type>entry</type>
     <label>Server Instance:</label>
     <property>target</property>
     <documentation>Instance name of the Server to include the Datasource. i.e: 'AdminServer'.</documentation>
     <required>1</required>
-  </formElement>
-  <formElement>
+</formElement>
+<formElement>
     <type>entry</type>
     <label>Datasource JNDI:</label>
     <property>jndiname</property>
     <documentation>
-      The JNDI path to where this Datasource is bound. By default, the JNDI name is the name of the Datasource. Applications that look up the JNDI path will get a "javax.sql.Datasource" instance that corresponds to this Datasource.
+        The JNDI path to where this Datasource is bound. By default, the JNDI name is the name of the Datasource. Applications that look up the JNDI path will get a "javax.sql.Datasource" instance that corresponds to this Datasource.
     </documentation>
     <required>0</required>
-  </formElement>
-  <formElement>
+</formElement>
+<formElement>
     <type>entry</type>
     <label>Datasource Driver Class:</label>
     <property>driverclass</property>
     <documentation>
-      The full package name of JDBC driver class used to create the physical database connections in the connection pool. (Note that this driver class must be in the classpath of any server to which it is deployed).
+        The full package name of JDBC driver class used to create the physical database connections in the connection pool. (Note that this driver class must be in the classpath of any server to which it is deployed).
     </documentation>
     <required>1</required>
-  </formElement>
-  <formElement><type>entry</type>
-  <label>Datasource URL:</label>
-  <property>driverurl</property>
-  <documentation>
-    The URL of the database to connect to. The format of the URL varies by JDBC driver. The URL is passed to the JDBC driver to create the physical database connections.
-  </documentation>
-  <required>1</required>
-  </formElement>
-  <formElement>
+</formElement>
+<formElement>
     <type>entry</type>
-    <label>Database User:</label>
-    <property>username</property>
-    <documentation>The user to connect to the database.</documentation>
-    <required>1</required>
-  </formElement>
-  <formElement>
-    <type>entry</type>
-    <label>Database Password:</label>
-    <property>password</property>
+    <label>Datasource URL:</label>
+    <property>driverurl</property>
     <documentation>
-      The password attribute passed to the JDBC driver when creating physical database connections. The value is stored in an encrypted form in the descriptor file and when displayed on the Administration Console.
+    The URL of the database to connect to. The format of the URL varies by JDBC driver. The URL is passed to the JDBC driver to create the physical database connections.
     </documentation>
     <required>1</required>
-  </formElement>	
+</formElement>
+<formElement>
+    <type>credential</type>
+    <label>Datasource Credentials</label>
+    <property>ds_credential</property>
+    <documentation>
+        Credentials for datasource.
+    </documentation>
+    <required>1</required>
+</formElement>
+<!-- <formElement> -->
+<!--   <type>entry</type> -->
+<!--   <label>Database User:</label> -->
+<!--   <property>username</property> -->
+<!--   <documentation>The user to connect to the database.</documentation> -->
+<!--   <required>1</required> -->
+<!-- </formElement> -->
+<!-- <formElement> -->
+<!--   <type>entry</type> -->
+<!--   <label>Database Password:</label> -->
+<!--   <property>password</property> -->
+<!--   <documentation> -->
+<!--     The password attribute passed to the JDBC driver when creating physical database connections. The value is stored in an encrypted form in the descriptor file and when displayed on the Administration Console. -->
+<!--   </documentation> -->
+<!--   <required>1</required> -->
+<!-- </formElement>	 -->
 </editor>
 
