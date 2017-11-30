@@ -264,6 +264,13 @@ my %createJMSResource = (
     category    => "Application Server"
 );
 
+my %createOrUpdateDatasource = (
+    label       => "WebLogic - Create Or Update Datasource",
+    procedure   => "CreateOrUpdateDatasource",
+    description => "Create or update datasource",
+    category    => "Application Server"
+);
+
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/EC-WebLogic - Start App");
 $batch->deleteProperty(
@@ -358,6 +365,10 @@ $batch->deleteProperty(
 
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Create JMS Resource");
+
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update Datasource");
+
 @::createStepPickerSteps = (
     \%startApp,                    \%stopApp,
     \%checkServerStatus,           \%deployApp,
@@ -378,7 +389,8 @@ $batch->deleteProperty(
     \%deleteCluster,               \%createManagedServer,
     \%deleteManagedServer,         \%startCluster,
     \%stopCluster,                 \%updateAppConfig,
-    \%checkClusterStatus,          \%createJMSResource
+    \%checkClusterStatus,          \%createJMSResource,
+    \%createOrUpdateDatasource
 );
 
 if ( $upgradeAction eq "upgrade" ) {
@@ -799,6 +811,15 @@ if ( $upgradeAction eq "upgrade" ) {
                 {
                     procedureName => 'CreateJMSResource',
                     stepName      => 'CreateJMSResource'
+                }
+            );
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'CreateOrUpdateDatasource',
+                    stepName      => 'CreateOrUpdateDatasource'
                 }
             );
         }
