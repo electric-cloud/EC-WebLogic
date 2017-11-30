@@ -1,0 +1,158 @@
+#
+#  Copyright 2016 Electric Cloud, Inc.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+
+[% preamble %]
+
+# parameters section
+username = r'''
+[% username %]
+'''.strip()
+
+password = r'''
+[% password %]
+'''.strip()
+
+admin_url = r'''
+[% admin_url %]
+'''.strip()
+
+ds_name = r'''
+[% ds_name %]
+'''.strip()
+
+ds_database_name = r'''
+[% ds_database_name %]
+'''.strip()
+
+server_name = r'''
+[% server_name %]
+'''.strip()
+
+ds_jndi_name = r'''
+[% ds_jndi_name %]
+'''.strip()
+
+ds_driver_class = r'''
+[% ds_driver_class %]
+'''.strip()
+
+ds_driver_url = r'''
+[% ds_driver_url %]
+'''.strip()
+
+ds_user_name = r'''
+[% ds_user_name %]
+'''.strip()
+
+ds_password = r'''
+[% ds_password %]
+'''.strip()
+
+ds_initial_poolsize = r'''
+[% ds_initial_poolsize %]
+'''.strip()
+ds_intial_poolsize = int(ds_initial_poolsize)
+
+ds_min_poolsize = r'''
+[% ds_min_poolsize %]
+'''.strip()
+ds_min_poolsize = int(ds_min_poolsize)
+
+ds_max_poolsize = r'''
+[% ds_max_poolsize %]
+'''.strip()
+ds_max_poolsize = int(ds_max_poolsize)
+
+ds_test_table = r'''
+[% ds_test_table %]
+'''.strip()
+
+## end of parameters
+mode = 'create'
+connect(username, password, admin_url)
+startChanges()
+print "Creating datasource"
+
+allServers=domainRuntimeService.getServerRuntimes();
+allJDBCResources = cmo.getJDBCSystemResources()
+print allJDBCResources
+
+globalJdbcResource = None
+for jdbcResource in allJDBCResources:
+    if jdbcResource.getName() == ds_name:
+        mode = 'edit'
+        globalJdbcResource = jdbcResource
+
+try:
+    if mode == 'edit':
+        print "Datasource %s already exists, editing." % (ds_name)
+    else:
+        cd('/')
+        globalJdbcResource = create(ds_name, 'JDBCSystemResource')
+        globalJdbcResource.getJDBCResource().setName(ds_name)
+
+    # starting from here we have globalJdbcResource variable which is referencing new/old ds.
+    targetCmo = cmo
+    # Configure JNDI
+    theresource = globalJdbcResource.getJDBCResource()
+    jdbcresourceparams = theresource.getJDBCDataSourceParams()
+    jdbcresourceparams.setJNDINames([ds_jndi_name])
+    # jdbcresourceparams.setGlobalTransactionsProtocol(‚TwoPhaseCommit‘)
+
+    # Configure the connection pool
+    pool = theresource.getJDBCConnectionPoolParams()
+    # print "Initial poolsize '%s'" % (ds_initial_poolsize)
+    pool.setInitialCapacity(int(ds_initial_poolsize))
+    pool.setMaxCapacity(int(ds_max_poolsize))
+    pool.setMinCapacity(int(ds_min_poolsize))
+    # pool.setStatementCacheType(cachetype)
+    # pool.setStatementCacheSize(cachesize)
+    # pool.setTestConnectionsOnReserve(testreserve)
+    # pool.setTestFrequencySeconds(testfreq)
+    # pool.setSecondsToTrustAnIdlePoolConnection(trustidle)
+    # pool.setShrinkFrequencySeconds(shrink)
+    pool.setTestTableName(ds_test_table)
+
+    # Configure JDBC Driver:
+    driver = theresource.getJDBCDriverParams()
+    driver.setDriverName(ds_driver_class)
+    driver.setUrl(ds_driver_url)
+    driver.setPassword(ds_password)
+    driverprops = driver.getProperties()
+    if mode == 'edit':
+        driverprops.destroyProperty(driverprops.lookupProperty('user'))
+
+    userprop = driverprops.createProperty('user')
+    userprop.setValue(ds_user_name)
+
+    # Set data source target
+    # globalJdbcResource.addTarget(targetCmo)
+    cd ('/')
+    cd('/SystemResources/' + ds_name )
+    set('Targets',jarray.array([ObjectName('com.bea:Name=' + server_name + ',Type=Server')],ObjectName))
+    # set('Targets',jarray.array([ObjectName('com.bea:Name=AdminServer,Type=Server')],ObjectName))
+    # arr = jarray.array([ObjectName('com.bea:Name=AdminServer,Type=Server')], ObjectName)
+    # print arr
+    # set('Targets', arr)
+
+except WLSTException, e:
+    print "Failed to create/edit datasource"
+    print str(e)
+    discardChanges()
+    sys.exit(1)
+
+# everyghing is fine, commiting
+commitChanges()
