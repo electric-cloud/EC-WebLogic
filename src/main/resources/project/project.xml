@@ -3899,7 +3899,7 @@
         <formalParameterName>ds_credential</formalParameterName>
         <defaultValue/>
         <description>Credential for datasource.</description>
-        <required>1</required>
+        <required>0</required>
         <type>credential</type>
       </formalParameter>
 
@@ -3917,7 +3917,7 @@
           <description>
               Datasource min poolsize
           </description>
-          <required>1</required>
+          <required>0</required>
           <type>entry</type>
       </formalParameter>
       <formalParameter>
@@ -3926,14 +3926,14 @@
           <description>
               Datasource max poolsize
           </description>
-          <required>1</required>
+          <required>0</required>
           <type>entry</type>
       </formalParameter>
       <formalParameter>
           <formalParameterName>ds_test_table</formalParameterName>
           <defaultValue/>
           <description>ds_test_table</description>
-          <required>1</required>
+          <required>0</required>
           <type>entry</type>
       </formalParameter>
       <step>
@@ -4125,7 +4125,7 @@
         <formalParameterName>jms_server_name</formalParameterName>
         <defaultValue/>
         <description>jms_server_name</description>
-        <required>0</required>
+        <required>1</required>
         <type>entry</type>
       </formalParameter>
       <formalParameter>

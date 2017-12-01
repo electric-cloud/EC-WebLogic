@@ -195,8 +195,8 @@ $xpath = $ec->attachCredential($projName, $credName,
 $errors .= $ec->checkAllErrors($xpath);
 
 $xpath = $ec->attachCredential($projName, $credName,
-    {procedureName => 'CreateJMSResource',
-     stepName => 'CreateJMSResource'});
+    {procedureName => 'CreateOrUpdateJMSResource',
+     stepName => 'CreateOrUpdateJMSResource'});
 $errors .= $ec->checkAllErrors($xpath);
 
 $xpath = $ec->attachCredential($projName, $credName,

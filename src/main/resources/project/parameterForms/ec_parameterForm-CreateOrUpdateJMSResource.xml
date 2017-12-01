@@ -78,7 +78,7 @@
         <label>JMS Server Name:</label>
         <property>jms_server_name</property>
         <documentation>JMS server name.</documentation>
-        <required>0</required>
+        <required>1</required>
     </formElement>
     
 </editor>

@@ -80,7 +80,7 @@ limitations under the License.
     <documentation>
         Credentials for datasource.
     </documentation>
-    <required>1</required>
+    <required>0</required>
 </formElement>
 <formElement>
     <type>entry</type>
