@@ -189,7 +189,7 @@
             <value/>
           </property>
           <property>
-            <propertyName>create_jms_resource.jython</propertyName>
+            <propertyName>create_or_update_jms_resource.jython</propertyName>
             <expandable>1</expandable>
             <value/>
           </property>
@@ -3680,7 +3680,7 @@
       </step>
   </procedure>
 
-      <procedure>
+  <procedure>
       <procedureName>CreateOrUpdateDatasource</procedureName>
       <description>Creates or updates a Datasource</description>
       <jobNameTemplate>weblogic-createOrUpdateDatasource-$[jobId]</jobNameTemplate>
@@ -3721,16 +3721,6 @@
                 </property>
                 <property>
                   <propertyName>dsname</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                  </propertySheet>
-                </property>
-                <property>
-                  <propertyName>dsdbname</propertyName>
                   <propertySheet>
                     <property>
                       <propertyName>formType</propertyName>
@@ -3878,13 +3868,6 @@
         <type>entry</type>
       </formalParameter>
       <formalParameter>
-        <formalParameterName>dsdbname</formalParameterName>
-        <defaultValue/>
-        <description>The database used by the Datasource.</description>
-        <required>1</required>
-        <type>entry</type>
-      </formalParameter>
-      <formalParameter>
         <formalParameterName>target</formalParameterName>
         <defaultValue/>
         <description>Instance name of the Server to include the Datasource. i.e: 'AdminServer'.</description>
@@ -3993,9 +3976,9 @@
   </procedure>
   
   <procedure>
-      <procedureName>CreateJMSResource</procedureName>
-      <description>Creates a JMS resoutce</description>
-      <jobNameTemplate>weblogic-createJMSResource-$[jobId]</jobNameTemplate>
+      <procedureName>CreateOrUpdateJMSResource</procedureName>
+      <description>Creates or updates a JMS resource</description>
+      <jobNameTemplate>weblogic-createOrUpdateJMSResource-$[jobId]</jobNameTemplate>
       <resourceName/>
       <workspaceName/>
       <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
@@ -4153,7 +4136,7 @@
         <type>entry</type>
       </formalParameter>
       <step>
-        <stepName>CreateJMSResource</stepName>
+        <stepName>CreateOrUpdateJMSResource</stepName>
         <alwaysRun>0</alwaysRun>
         <broadcast>0</broadcast>
         <command/>
@@ -4171,7 +4154,7 @@
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
         <workspaceName/>
-        <procedureName>CreateJMSResource</procedureName>
+        <procedureName>CreateOrUpdateJMSResource</procedureName>
         <projectName>EC-WebLogic</projectName>
         <propertySheet>
           <property>

@@ -33,10 +33,6 @@ ds_name = r'''
 [% ds_name %]
 '''.strip()
 
-ds_database_name = r'''
-[% ds_database_name %]
-'''.strip()
-
 server_name = r'''
 [% server_name %]
 '''.strip()
@@ -109,23 +105,33 @@ try:
     # Configure JNDI
     theresource = globalJdbcResource.getJDBCResource()
     jdbcresourceparams = theresource.getJDBCDataSourceParams()
-    jdbcresourceparams.setJNDINames([ds_jndi_name])
+
+    # setting jndi name only if it is present
+    if ds_jndi_name:
+        jdbcresourceparams.setJNDINames([ds_jndi_name])
     # jdbcresourceparams.setGlobalTransactionsProtocol(‚TwoPhaseCommit‘)
 
     # Configure the connection pool
     pool = theresource.getJDBCConnectionPoolParams()
     # print "Initial poolsize '%s'" % (ds_initial_poolsize)
-    pool.setInitialCapacity(int(ds_initial_poolsize))
-    pool.setMaxCapacity(int(ds_max_poolsize))
-    pool.setMinCapacity(int(ds_min_poolsize))
+    if ds_initial_poolsize:
+        pool.setInitialCapacity(int(ds_initial_poolsize))
+    if ds_max_poolsize:
+        pool.setMaxCapacity(int(ds_max_poolsize))
+    if ds_min_poolsize:
+        pool.setMinCapacity(int(ds_min_poolsize))
+    if ds_test_table:
+        pool.setTestTableName(ds_test_table)
+
+    ### Following parameters are possible to add, they will be added later.
     # pool.setStatementCacheType(cachetype)
     # pool.setStatementCacheSize(cachesize)
     # pool.setTestConnectionsOnReserve(testreserve)
     # pool.setTestFrequencySeconds(testfreq)
     # pool.setSecondsToTrustAnIdlePoolConnection(trustidle)
     # pool.setShrinkFrequencySeconds(shrink)
-    pool.setTestTableName(ds_test_table)
-
+    ### End of parameters.
+    
     # Configure JDBC Driver:
     driver = theresource.getJDBCDriverParams()
     driver.setDriverName(ds_driver_class)

@@ -60,7 +60,7 @@ sub main {
           subdeployment_name => $params->{subdeployment_name},
 
       };
-      my $template_path = '/myProject/jython/create_jms_resource.jython';
+      my $template_path = '/myProject/jython/create_or_update_jms_resource.jython';
       my $template =
         $wl->render_template_from_property( $template_path, $render_params );
 

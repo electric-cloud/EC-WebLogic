@@ -41,13 +41,6 @@ limitations under the License.
 </formElement>
 <formElement>
     <type>entry</type>
-    <label>Database:</label>
-    <property>dsdbname</property>
-    <documentation>The database used by the Datasource.</documentation>
-    <required>1</required>
-</formElement>
-<formElement>
-    <type>entry</type>
     <label>Server Instance:</label>
     <property>target</property>
     <documentation>Instance name of the Server to include the Datasource. i.e: 'AdminServer'.</documentation>

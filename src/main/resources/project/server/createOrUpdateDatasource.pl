@@ -35,7 +35,6 @@ sub main {
       my $params = $wl->get_params_as_hashref(
           'configname',
           'dsname',
-          'dsdbname',
           'target',
           'driverurl',
           'jndiname',
@@ -62,7 +61,6 @@ sub main {
           weblogic_url => $cred->{weblogic_url},
 
           ds_name          => $params->{dsname},
-          ds_database_name => $params->{dsdbname},
           server_name      => $params->{target},
           ds_jndi_name     => $params->{jndiname},
           ds_driver_class  => $params->{driverclass},

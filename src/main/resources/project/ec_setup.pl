@@ -257,10 +257,10 @@ my %checkClusterStatus = (
     category    => "Application Server"
 );
 
-my %createJMSResource = (
-    label       => "WebLogic - Create JMS Resource",
-    procedure   => "CreateJMSResource",
-    description => "Creates JMS resource",
+my %createOrUpdateJMSResource = (
+    label       => "WebLogic - Create Or Update JMS Resource",
+    procedure   => "CreateOrUpdateJMSResource",
+    description => "Creates or updates JMS resource",
     category    => "Application Server"
 );
 
@@ -364,7 +364,10 @@ $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Check Cluster Status");
 
 $batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Create JMS Resource");
+    "/server/ec_customEditors/pickerStep/WebLogic - Create Or JMS Resource");
+
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update JMS Resource");
 
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update Datasource");
@@ -389,7 +392,7 @@ $batch->deleteProperty(
     \%deleteCluster,               \%createManagedServer,
     \%deleteManagedServer,         \%startCluster,
     \%stopCluster,                 \%updateAppConfig,
-    \%checkClusterStatus,          \%createJMSResource,
+    \%checkClusterStatus,          \%createOrUpdateJMSResource,
     \%createOrUpdateDatasource
 );
 
@@ -809,8 +812,8 @@ if ( $upgradeAction eq "upgrade" ) {
                 "\$[/plugins/$pluginName/project]",
                 $cred,
                 {
-                    procedureName => 'CreateJMSResource',
-                    stepName      => 'CreateJMSResource'
+                    procedureName => 'CreateOrUpdateJMSResource',
+                    stepName      => 'CreateOrUpdateJMSResource'
                 }
             );
 
