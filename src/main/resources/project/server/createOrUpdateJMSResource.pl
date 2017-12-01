@@ -34,41 +34,33 @@ sub main {
       );
       my $params = $wl->get_params_as_hashref(
           'configname',
-          'dsname',
-          'dsdbname',
-          'target',
-          'driverurl',
-          'jndiname',
-          'driverclass',
-          'wlstabspath',
-          'ds_credential'
-          #'username',
-          #'password',
+
+          'jms_resource_type',
+          'jms_module_name',
+          'jms_resource_name',
+          'jndi_name',
+          'jms_server_name',
+          'subdeployment_name',
+          'wlstabspath'
       );
       my $cred = $wl->get_credentials( $params->{configname} );
       if ( $cred->{java_home} ) {
           $wl->out( 1, "JAVA_HOME was provided" );
-      }
-      if ($params->{ds_credential}) {
-          my $ds_cred = $wl->get_step_credential($params->{ds_credential});
-          $params->{username} = $ds_cred->{userName};
-          $params->{password} = $ds_cred->{password};
       }
       my $render_params = {
           username     => $cred->{user},
           password     => $cred->{password},
           weblogic_url => $cred->{weblogic_url},
 
-          ds_name          => $params->{dsname},
-          ds_database_name => $params->{dsdbname},
-          server_name      => $params->{target},
-          ds_jndi_name     => $params->{jndiname},
-          ds_driver_class  => $params->{driverclass},
-          ds_driver_url    => $params->{driverurl},
-          ds_user_name     => $params->{username},
-          ds_password      => $params->{password}
+          jms_resource_type  => $params->{jms_resource_type},
+          jms_module_name    => $params->{jms_module_name},
+          jms_resource_name  => $params->{jms_resource_name},
+          jndi_name          => $params->{jndi_name},
+          jms_server_name    => $params->{jms_server_name},
+          subdeployment_name => $params->{subdeployment_name},
+
       };
-      my $template_path = '/myProject/jython/create_datasource.jython';
+      my $template_path = '/myProject/jython/create_or_update_jms_resource.jython';
       my $template =
         $wl->render_template_from_property( $template_path, $render_params );
 
