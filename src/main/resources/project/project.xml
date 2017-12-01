@@ -4125,7 +4125,7 @@
         <formalParameterName>jms_server_name</formalParameterName>
         <defaultValue/>
         <description>jms_server_name</description>
-        <required>1</required>
+        <required>0</required>
         <type>entry</type>
       </formalParameter>
       <formalParameter>

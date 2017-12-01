@@ -75,46 +75,46 @@ limitations under the License.
 </formElement>
 <formElement>
     <type>credential</type>
-    <label>Datasource Credentials</label>
+    <label>Datasource Credentials:</label>
     <property>ds_credential</property>
     <documentation>
-        Credentials for datasource.
+        Credentials for database to esablish connection.
     </documentation>
     <required>0</required>
 </formElement>
 <formElement>
     <type>entry</type>
-    <label>Initial poolsize</label>
+    <label>Initial Pool Size:</label>
     <property>ds_initial_poolsize</property>
     <documentation>
-        Initial poolsize
+        Initial size of connection pool.
     </documentation>
     <required>0</required>
 </formElement>
 <formElement>
     <type>entry</type>
-    <label>Min poolsize</label>
+    <label>Minimal Pool Size:</label>
     <property>ds_min_poolsize</property>
     <documentation>
-        Credentials for datasource.
+        Minimal size of connection pool.
     </documentation>
     <required>0</required>
 </formElement>
 <formElement>
     <type>entry</type>
-    <label>Max poolsize</label>
+    <label>Maximal Pool Size:</label>
     <property>ds_max_poolsize</property>
     <documentation>
-        Max poolsize
+        Maximal size of connection pool.
     </documentation>
     <required>0</required>
 </formElement>
 <formElement>
     <type>entry</type>
-    <label>Datasource test table</label>
+    <label>Test SQL Statement:</label>
     <property>ds_test_table</property>
     <documentation>
-        Datasource test table
+        SQL Statement to test connection to database.
     </documentation>
     <required>0</required>
 </formElement>

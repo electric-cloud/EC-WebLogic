@@ -40,7 +40,7 @@
         <option><name>Topic</name><value>topic</value></option>
         <required>1</required>
         <documentation>
-            JMS resource type
+            JMS resource type.
         </documentation>
 
     </formElement>
@@ -55,7 +55,7 @@
         <type>entry</type>
         <label>JMS module name:</label>
         <property>jms_module_name</property>
-        <documentation>JMS resource name.</documentation>
+        <documentation>JMS module name.</documentation>
         <required>1</required>
     </formElement>
 
@@ -63,14 +63,14 @@
         <type>entry</type>
         <label>JNDI name:</label>
         <property>jndi_name</property>
-        <documentation>JNDI name.</documentation>
+        <documentation>JMS resource JNDI name.</documentation>
         <required>0</required>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Subdeployment name:</label>
         <property>subdeployment_name</property>
-        <documentation>Subdeployment name.</documentation>
+        <documentation>Name of subdeployment.</documentation>
         <required>0</required>
     </formElement>
     <formElement>
@@ -78,7 +78,7 @@
         <label>JMS Server Name:</label>
         <property>jms_server_name</property>
         <documentation>JMS server name.</documentation>
-        <required>1</required>
+        <required>0</required>
     </formElement>
     
 </editor>
