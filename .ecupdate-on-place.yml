@@ -1,0 +1,103 @@
+---
+- file: .*?jython.*\.(jython)
+  push:
+    command: setProperty
+    server: '10.200.1.150'
+    args:
+      propertyName: |
+        my @path = File::Spec->splitdir($FILENAME);
+        my $step_file_name = pop @path;
+        '/projects/EC-WebLogic-3.2.4.0/properties/jython/' . $step_file_name
+      value: FILE_CONTENT
+
+- file: .*?matchers.*\.(pl)
+  push:
+    command: setProperty
+    server: '10.200.1.150'
+    args:
+      propertyName: |
+        my @path = File::Spec->splitdir($FILENAME);
+        my $step_file_name = pop @path;
+        $step_file_name =~ s/\..+$//;
+        $step_file_name =~ s/Matchers$//;
+        '/projects/EC-WebLogic-3.2.4.0/properties/' . lc($step_file_name) . '_matchers'
+      value: FILE_CONTENT
+
+- file: .*?parameterForms.*\.(xml)
+  push:
+    command: setProperty
+    server: '10.200.1.150'
+    args:
+      propertyName: |
+        my @path = File::Spec->splitdir($FILENAME);
+        my $step_file_name = pop @path;
+        $step_file_name =~ s/\..+$//;
+        $step_file_name =~ s/^ec_parameterForm-//;
+        '/projects/EC-WebLogic-3.2.4.0/procedures/'.$step_file_name.'/ec_parameterForm'
+      value: FILE_CONTENT
+
+- file: .*?Plugin.*Core\.pm
+  push:
+    command: setProperty
+    server: '10.200.1.150'
+    args:
+      propertyName: /projects/EC-WebLogic-3.2.4.0/properties/EC::Plugin::Core
+      value: FILE_CONTENT
+
+- file: .*?EC.*WebLogic\.pm
+  push:
+    command: setProperty
+    server: '10.200.1.150'
+    args:
+      propertyName: /projects/EC-WebLogic-3.2.4.0/properties/EC::WebLogic
+      value: FILE_CONTENT
+
+- file: .*(ec_setup\.pl|preamble\.pl)
+  push:
+    command: setProperty
+    server: '10.200.1.150'
+    args:
+      propertyName: |
+        my @path = File::Spec->splitdir($FILENAME);
+        my $step_file_name = pop @path;
+        $step_file_name =~ s/\..+$//;
+        '/projects/EC-WebLogic-3.2.4.0/properties/' . $step_file_name
+      value: FILE_CONTENT
+
+- file: .*(WebLogicCreateConfigForm\.xml|WebLogicEditConfigForm\.xml)
+  push:
+    command: setProperty
+    server: '10.200.1.150'
+    args:
+      propertyName: |
+        my @path = File::Spec->splitdir($FILENAME);
+        my $step_file_name = pop @path;
+        $step_file_name =~ s/\..+$//;
+        '/projects/EC-WebLogic-3.2.4.0/properties/ui_forms/' . $step_file_name
+      value: FILE_CONTENT
+
+- file: .*?server.*\.(pl)
+  push:
+    command: modifyStep
+    server: '10.200.1.150'
+    args:
+      stepName: |
+        # perl
+        my @path = File::Spec->splitdir($FILENAME);
+        my $step_file_name = pop @path;
+        $step_file_name =~ s/\..+$//;
+        ucfirst($step_file_name);
+      procedureName: |
+        # perl
+        my @path = File::Spec->splitdir($FILENAME);
+        my $step_file_name = pop @path;
+        $step_file_name =~ s/\..+$//;
+        ucfirst($step_file_name);
+      projectName: 'EC-WebLogic-3.2.4.0'
+      command: FILE_CONTENT
+
+
+  
+
+
+
