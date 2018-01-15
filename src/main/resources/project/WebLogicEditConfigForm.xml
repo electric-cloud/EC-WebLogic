@@ -83,7 +83,7 @@ limitations under the License.
     </formElement>
     <formElement>
         <type>select</type>
-        <label>Debug level:</label>
+        <label>Debug Level:</label>
         <property>debug_level</property>
         <required>0</required>
         <value>0</value>
