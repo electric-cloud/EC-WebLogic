@@ -1,5 +1,5 @@
 #
-#  Copyright 2015 Electric Cloud, Inc.
+#  Copyright 2017 Electric Cloud, Inc.
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -38,8 +38,10 @@ sub main {
           'configname', 'cluster_name' );
 
       my $cred  = $wl->get_credentials( $params->{configname} );
-      my $check = $wl->check_executable( $params->{wlst_abs_path} );
+      $params->{wlst_abs_path} = $cred->{wlst_path} unless ($params->{wlst_abs_path});
 
+      my $check = $wl->check_executable( $params->{wlst_abs_path} );
+      
       if ( !$check->{ok} ) {
           $wl->bail_out( $check->{msg} );
       }

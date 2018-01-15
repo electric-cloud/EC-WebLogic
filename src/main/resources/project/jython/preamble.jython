@@ -54,7 +54,7 @@ def terminateEditSession(sessionName):
     if compareVersions(wlVersion, MINIMAL_VERSION_FOR_NAMED_SESSIONS) < 0:
         print "WARNING" + ':' + "Named Sessions are not available prior to Weblogic Server " +  MINIMAL_VERSION_FOR_NAMED_SESSIONS + ". Your version is: " + version
     else:
-        destroyEditSession(sessionName)
+        destroyEditSession(sessionName, force = true)
     return 1
     
 def isNamedSessionEnabled():

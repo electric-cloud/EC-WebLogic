@@ -41,6 +41,8 @@ sub main {
       );
 
       my $cred  = $wl->get_credentials( $params->{configname} );
+
+      $params->{wlst_abs_path} = $cred->{wlst_path} unless ($params->{wlst_abs_path});
       my $check = $wl->check_executable( $params->{wlst_abs_path} );
       if ( !$check->{ok} ) {
           $wl->bail_out( $check->{msg} );

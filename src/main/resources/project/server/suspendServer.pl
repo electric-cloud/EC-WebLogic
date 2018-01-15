@@ -51,11 +51,16 @@ sub main {
     if (!$params->{timeoutserver}) {
         $params->{timeoutserver} = 0;
     }
+    
+    my $cred = $wl->get_credentials($params->{configname});
+    #TO BE CHANGED TO THE NAME WITH _ _
+    $params->{wlstabspath} = $cred->{wlst_path} unless ($params->{wlstabspath});
+
     my $check = $wl->check_executable($params->{wlstabspath});
     unless ($check->{ok}) {
         $wl->bail_out($check->{msg});
     }
-    my $cred = $wl->get_credentials($params->{configname});
+    
 
     for my $key (qw/ignoresessions force block/) {
         if ($params->{$key}) {
