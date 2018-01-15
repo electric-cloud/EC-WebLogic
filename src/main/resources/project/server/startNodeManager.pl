@@ -34,8 +34,15 @@ sub main {
     );
     my $params = $wl->get_params_as_hashref(
         'scriptlocation',
-        'maxelapsedtime'
+        'maxelapsedtime',
+        'configname' #configuration
     );
+
+    my ($config_name, $cred);
+    if ($params->{configname}){
+        $config_name = $params->{configname};
+        $cred = $wl->get_credentials($config_name);
+    }
 
     $params->{maxelapsedtime} ||= 60;
     if ($params->{maxelapsedtime} !~ m/^\d+$/s) {

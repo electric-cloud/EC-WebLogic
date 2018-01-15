@@ -37,12 +37,20 @@ sub main {
         'credentialName',
         'maxelapsedtime',
         'targeturl',
-        'successcriteria'
+        'successcriteria',
+        'configname'
     );
-    my $cred = {};
+    
+    my ($config_name, $cred);
+    if ($params->{configname}){
+        $config_name = $params->{configname};
+        $cred = $wl->get_credentials($config_name);
+    }
+
+    my $basic_cred = {};
 
     if ($params->{credentialName}) {
-        $cred = $wl->get_common_credentials('credentialName');
+        $basic_cred = $wl->get_common_credentials('credentialName');
     }
     $wl->out(1, "Testing url: ", $params->{targeturl});
     my $ua = LWP::UserAgent->new();
@@ -53,8 +61,8 @@ sub main {
         $wl->out(1, "Timeout set to ", $params->{maxelapsedtime});
     }
 
-    if (%$cred) {
-        $req->authorization_basic($cred->{user}, $cred->{password});
+    if (%$basic_cred) {
+        $req->authorization_basic($basic_cred->{user}, $basic_cred->{password});
     }
 
     my $regexps = {

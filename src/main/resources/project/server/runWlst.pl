@@ -40,8 +40,17 @@ sub main {
         'scriptfilepath', # jython script abs path
         'additionalcommands', # additional commands for jython
         'webjarpath', # path to wl.jar, will be included in the classpath
-        'additional_envs' # additional environment variables
+        'additional_envs', # additional environment variables
+        'configname' #configuration
     );
+
+
+    my ($config_name, $cred);
+    if ($params->{configname}){
+        $config_name = $params->{configname};
+        $cred = $wl->get_credentials($config_name);
+    }
+
 
     if ($params->{additional_envs}) {
         my $tagsmap = $wl->parse_tagsmap($params->{additional_envs});
@@ -50,6 +59,11 @@ sub main {
             $ENV{$key} = $tagsmap->{$key};
         }
     }
+    
+    if ($cred){
+        $params->{wlstabspath} = $cred->{wlst_path} unless ($params->{wlstabspath});
+    }
+
     my %wl_params = (
         shell => $params->{wlstabspath},
         script_path => $params->{scriptfilepath}
