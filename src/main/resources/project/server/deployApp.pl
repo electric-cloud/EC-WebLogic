@@ -80,6 +80,11 @@ sub main {
     if ($params->{retire_gracefully}) {
         $retire_gracefully = 'true';
     }
+
+    my $cred = $wl->get_credentials($params->{configname});
+    #TO BE CHANGED TO THE NAME WITH _ _
+    $params->{wlstabspath} = $cred->{wlst_path} unless ($params->{wlstabspath});
+
     my $check = $wl->check_executable($params->{wlstabspath});
     unless ($check->{ok}) {
         $wl->bail_out($check->{msg});
@@ -91,7 +96,7 @@ sub main {
         overwrite => $params->{overwrite_deployment_plan}
     );
 
-    my $cred = $wl->get_credentials($params->{configname});
+    
     my $render_params = {
         username => $cred->{user},
         password => $cred->{password},

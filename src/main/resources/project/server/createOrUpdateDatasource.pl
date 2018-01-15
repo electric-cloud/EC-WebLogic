@@ -50,6 +50,11 @@ sub main {
       if ( $cred->{java_home} ) {
           $wl->out( 1, "JAVA_HOME was provided" );
       }
+
+      #TO BE CHANGED TO THE NAME WITH _ _
+      $params->{wlstabspath} = $cred->{wlst_path} unless ($params->{wlstabspath});
+
+
       if ($params->{ds_credential}) {
           my $ds_cred = $wl->get_step_credential($params->{ds_credential});
           $params->{username} = $ds_cred->{userName};

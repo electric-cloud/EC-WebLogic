@@ -43,6 +43,8 @@ sub main {
 
     my $cred = $wl->get_credentials($params->{configname});
 
+    #TO BE CHANGED TO THE NAME WITH _ _
+    $params->{wlstabspath} = $cred->{wlst_path} unless ($params->{wlstabspath});
     my $check = $wl->check_executable($params->{wlstabspath});
 
     if (!$check->{ok}) {

@@ -47,6 +47,10 @@ sub main {
       if ( $cred->{java_home} ) {
           $wl->out( 1, "JAVA_HOME was provided" );
       }
+
+      #TO BE CHANGED TO THE NAME WITH _ _
+      $params->{wlstabspath} = $cred->{wlst_path} unless ($params->{wlstabspath});
+
       my $render_params = {
           username     => $cred->{user},
           password     => $cred->{password},
