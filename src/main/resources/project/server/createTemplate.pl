@@ -36,11 +36,20 @@ sub main {
     my $params = $wl->get_params_as_hashref(
         'wlst_abs_path',
         'template_name',
-        'domain_directory'
+        'domain_directory',
+        'configname'
     );
 
-    $params->{wlst_abs_path} = $cred->{wlst_path} unless ($params->{wlst_abs_path});
+    my ($config_name, $cred);
+    if ($params->{configname}){
+        $config_name = $params->{configname};
+        $cred = $wl->get_credentials($config_name);
+    }
 
+    if ($cred){
+        $params->{wlst_abs_path} = $cred->{wlst_path} unless ($params->{wlst_abs_path});
+    }
+    
     my $check = $wl->check_executable($params->{wlst_abs_path});
 
     if (!$check->{ok}) {
