@@ -95,9 +95,32 @@ class TestHelper extends SpockTestSupport {
         }
 
         importDSL(dslFile, options);
+        
         if (pluginConfig){
             createConfiguration(pluginConfig, [recreate: true])
         }
+
+        def flowRuntimeId = runPipeline(projName, pipeName)
+
+        waitUntil {
+            try {
+                pipelineCompleted(flowRuntimeId)
+            } catch (Exception e) {
+                println e.getMessage()
+            }
+        }
+
+        assert flowRuntimeId
+        return flowRuntimeId
+    }
+
+    def runNWaitPipeline(String projName, pipeName){
+        def projName = options.projName
+        def pipeName = options.pipeName
+
+        assert projName
+        assert pipeName
+
 
         def flowRuntimeId = runPipeline(projName, pipeName)
 
