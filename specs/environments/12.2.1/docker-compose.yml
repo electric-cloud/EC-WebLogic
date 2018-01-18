@@ -1,0 +1,29 @@
+version: '3'
+services:
+  electric-flow:
+    image: "ecdocker/eflow-ce-server"
+    ports:
+      - "8000:8000"
+      - "8443:8443"
+      - "443:443"
+      - "80:80"
+    networks:
+      - internal
+    container_name: electricflow
+    entrypoint: ["/bin/bash"]
+    command:  ["-c", 
+               "/home/ecloud/startup.sh"
+            ]
+    tty: true
+  sonarqube:
+    image: "electricflow/weblogic:12.2.1-generic"
+    ports:
+      - "7001:7001"
+      - "7808:7808"
+    networks:
+      - internal
+    container_name: weblogic
+    tty: true
+networks:
+  internal:
+    driver: bridge
