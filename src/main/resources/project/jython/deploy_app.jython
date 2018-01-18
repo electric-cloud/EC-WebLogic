@@ -14,6 +14,8 @@
 #  limitations under the License.
 #
 
+from javax.enterprise.deploy.spi.status import ProgressListener
+
 [% preamble %]
 
 # parameters section

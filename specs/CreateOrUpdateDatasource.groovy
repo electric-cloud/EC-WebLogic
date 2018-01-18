@@ -28,7 +28,7 @@ class CreateDataSource extends TestHelper {
         then: 'wait untill process is completed'
         
 
-        assert waitNCheckLog(flowRuntimeId, pipeStage, 'DONE')
+        assert waitNCheckLog(flowRuntimeId, pipeStage, 'Done')
     }
 
 }

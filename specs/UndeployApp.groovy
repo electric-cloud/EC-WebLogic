@@ -9,7 +9,7 @@ import TestHelper
 // @Stepwise
 //@Ignore
 @Unroll
-class DeployApp extends TestHelper {
+class UndeployApp extends TestHelper {
 
     def projName = 'Test Weblogic'
     def pluginConfig = 'local'
@@ -20,7 +20,7 @@ class DeployApp extends TestHelper {
         
     }
 
-    def "Deploy App"() {
+    def "Undeploy App"() {
         when: 'process runs'
         def flowRuntimeId = runNWaitPipeline(projName, 'WebLogic - DemoApp - Undeploy')
 
