@@ -1,0 +1,195 @@
+#
+#  Copyright 2016 Electric Cloud, Inc.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+
+[% preamble %]
+
+# parameters section
+
+username = r'''
+[% username %]
+'''.strip()
+
+password = r'''
+[% password %]
+'''.strip()
+
+admin_url = r'''
+[% admin_url %]
+'''.strip()
+
+cf_name = r'''
+[% cf_name %]
+'''.strip()
+
+jndi_name = r'''
+[% jndi_name %]
+'''.strip()
+
+cf_sharing_policy = r'''
+[% cf_sharing_policy %]
+'''.strip()
+
+cf_client_id_policy = r'''
+[% cf_client_id_policy %]
+'''.strip()
+
+cf_max_messages_per_session = r'''
+[% cf_max_messages_per_session %]
+'''.strip()
+
+cf_xa_enabled = r'''
+[% cf_xa_enabled %]
+'''.strip()
+
+cf_attach_jmsx_userid = r'''
+[% cf_attach_jmsx_userid %]
+'''.strip()
+
+jms_module_name = r'''
+[% jms_module_name %]
+'''.strip()
+
+jms_server_name = r'''
+[% jms_server_name %]
+'''.strip()
+
+subdeployment_name = r'''
+[% subdeployment_name %]
+'''.strip()
+
+
+def getJMSModulePath(jms_module_name):
+    return "/JMSSystemResources/%s/JMSResource/%s"%(jms_module_name,jms_module_name)
+
+def getConnectionFactoryPath(jms_module_name,cf_name):
+    return "%s/ConnectionFactories/%s"%(getJMSModulePath(jms_module_name),cf_name) 
+
+def getSubDeploymentPath(jms_module_name, subdeployment_name):
+    return "/JMSSystemResources/%s/SubDeployments/%s" % (jms_module_name, subdeployment_name)
+
+def getJMSServerPath(jms_server_name):
+    return "/JMSServers/%s" % (jms_server_name)
+
+def cdJMSModulePath(jms_module_name):
+    cd(getJMSModulePath(jms_module_name))
+
+def cdConnectionFactoryPath(jms_module_name,cf_name):
+    cd(getConnectionFactoryPath(jms_module_name,cf_name))
+
+def cdSubDeploymentPath(jms_module_name, subdeployment_name):
+    cd(getSubDeploymentPath(jms_module_name, subdeployment_name)) 
+
+def checkJMSModule(jms_module_name):
+    jmsModule = getMBean(getJMSModulePath(jms_module_name))
+    if jmsModule is None:
+        return 0
+    return 1
+
+def getJMSServer(jms_server_name):
+    return getMBean(getJMSServerPath(jms_server_name))
+
+def getConnectionFactory(jms_module_name,cf_name):
+    return getMBean(getConnectionFactoryPath(jms_module_name,cf_name))
+
+def checkJMSServer(jms_server_name):
+    server = getMBean(getJMSServerPath(jms_server_name))
+    if server is None:
+        return 0
+    return 1
+
+def checkSubDeployment(jms_module_name, subdeployment_name):
+    subDeployment = getMBean(getSubDeploymentPath(jms_module_name, subdeployment_name))
+    if subDeployment is None:
+        return 0
+    return 1
+
+def createJMSModule(jms_module_name, jms_server_name):
+    if not checkJMSModule(jms_module_name):
+        print_info 'Trying to create JMS Module ' + jms_module_name
+        cd('/')
+        cmo.createJMSSystemResource(jms_module_name)
+        print_info 'JMS Module '+ jms_module_name +'was created'
+        cdJMSModulePath(jms_module_name)
+        if jms_server_name and checkServer(jms_server_name):
+            cmo.addTarget(getServer(jms_server_name))
+        elif jms_server_name and not checkServer(jms_server_name)
+            warn "JMS Server %s does not exist. It was not added to created JMS Module %s"%(jms_server_name, jms_module_name)
+        return 1
+    else:
+        warn "WARNING: "+jms_module_name+" exists"
+    return 0
+
+def createSubDeployment(jms_module_name, subdeployment_name):
+    cdJMSModulePath(jms_module_name)
+    cmo.createSubDeployment(subDeploymentName)
+
+
+
+connect(username, password, admin_url)
+
+try:
+    startChanges()
+    cd('/')
+    if not checkJMSModule(jms_module_name):
+        warn "JMS Module %s does not exist" % (jms_module_name)
+        createJMSModule(jms_module_name, jms_server_name)
+    
+    cdJMSModulePath(jms_module_name)
+
+    mode = 'edit'
+
+    if not getConnectionFactory(jms_module_name,cf_name):
+        mode = 'create'
+        print_debug 'Working in CREATE mode'
+        print_info 'Trying to create Connection factory ' + cf_name
+        cmo.createConnectionFactory(cf_name)
+        print_info 'Trying to create JMS Module ' + jms_module_name
+    else:
+        print_debug 'Working in UPDATE mode. Resource exists'
+
+
+    # cd to created resource
+    cdConnectionFactoryPath(jms_module_name,cf_name)
+    if jndi_name:
+        print_debug "Applying JNDI "+jndi_name
+        set('JNDIName', jndi_name)
+    else:
+        #usually JNDI should be defined to work with connection factory from app via JMS module
+        warn "You did not define JNDI"
+
+
+    if subdeployment_name:
+        if not checkSubDeployment(jms_module_name, subdeployment_name):
+            print_info "SubDeployment %s does not exist in JMS Module %s"%(subdeployment_name, jms_module_name)
+            createSubDeployment(jms_module_name, subdeployment_name)
+            print_info "SubDeployment %s was created in JMS Module %s"%(subdeployment_name, jms_module_name)
+            cdConnectionFactoryPath(jms_module_name,cf_name)
+        set('SubDeploymentName', subdeployment_name)
+        cdSubDeploymentPath(jms_module_name, subdeployment_name)
+        if jms_server_name and checkServer(jms_server_name):
+            cmo.addTarget(getServer(jms_server_name))
+        elif jms_server_name and not checkServer(jms_server_name)
+            warn "JMS Server %s does not exist. It was not added to Connection Factory"%(jms_server_name)
+
+
+except WLSTException, e:
+    print "Failed to create JMS resource"
+    print str(e)
+    discardChanges()
+    sys.exit(1)
+
+# everyghing is fine, commiting
+commitChanges()
