@@ -132,6 +132,10 @@
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_managed_server.jython"]/value</xpath>
   </file>
   <file>
+    <path>jython/create_or_update_connection_factory.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_connection_factory.jython"]/value</xpath>
+  </file>
+  <file>
     <path>jython/delete_managed_server.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_managed_server.jython"]/value</xpath>
   </file>
@@ -297,6 +301,10 @@
   <file>
     <path>server/startManagedServer.pl</path>
     <xpath>//procedure[procedureName="StartManagedServer"]/step[stepName="StartInstance"]/command</xpath>
+  </file>
+  <file>
+    <path>server/createOrUpdateConnectionFactory.pl</path>
+    <xpath>//procedure[procedureName="StartManagedServer"]/step[stepName="CreateOrUpdateConnectionFactory"]/command</xpath>
   </file>
   <file>
     <path>server/startNodeManager.pl</path>
@@ -594,6 +602,10 @@
   <file>
     <path>parameterForms/ec_parameterForm-CreateManagedServer.xml</path>
     <xpath>//procedure[procedureName="CreateManagedServer"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-CreateOrUpdateConnectionFactory.xml</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateConnectionFactory"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
   </file>
   <file>
     <path>parameterForms/ec_parameterForm-DeleteManagedServer.xml</path>

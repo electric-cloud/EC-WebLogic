@@ -79,7 +79,7 @@
         <type>check</type>
         <label>Attach JMSX userid:</label>
         <property>cf_attach_jmsx_userid</property>
-        <documentation>hould the authenticated user name be attached to sent messages if the JMS destination is configured to support this behavior?</documentation>
+        <documentation>Should the authenticated user name be attached to sent messages if the JMS destination is configured to support this behavior?</documentation>
         <value>0</value>
     </formElement>
     <formElement>
