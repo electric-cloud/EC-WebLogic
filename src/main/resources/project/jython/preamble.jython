@@ -21,8 +21,28 @@ import sys
 import string
 import random
 import time as pytime
+import warnings
 
 # end of imports
+
+debug_level = r'''
+[% debug_level %]
+'''.strip()
+debug_level = int(debug_level)
+
+
+def warn(message):
+    warnings.warn("WARNING: " + message)
+
+def print_info(message):
+    if debug_level > 0:
+        print "[INFO] " + message
+
+def print_debug(message):
+    if debug_level > 1:
+        print "[DEBUG] " + message
+
+
 
 MINIMAL_VERSION_FOR_NAMED_SESSIONS = '12.2.1.1'
 MINIMAL_VERSION_FOR_REDEPLOYMENT = '12.0.0.0'

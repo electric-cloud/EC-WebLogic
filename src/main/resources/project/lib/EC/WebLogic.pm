@@ -323,7 +323,8 @@ sub render_template_from_property {
 
     my $preamble_params = {
         enable_exclusive_sessions => 0,
-        enable_named_sessions => 0
+        enable_named_sessions => 0,
+        debug_level => $self->{_credentials}->{debug_level}
     };
 
     if ($self->{_credentials}->{enable_named_sessions}) {
