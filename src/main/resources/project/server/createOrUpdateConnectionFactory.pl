@@ -58,14 +58,6 @@ sub main {
           username     => $cred->{user},
           password     => $cred->{password},
           weblogic_url => $cred->{weblogic_url},
-
-          cf_name  => $params->{cf_name},
-          jms_module_name    => $params->{jms_module_name},
-          jms_resource_name  => $params->{jms_resource_name},
-          jndi_name          => $params->{jndi_name},
-          jms_server_name    => $params->{jms_server_name},
-          subdeployment_name => $params->{subdeployment_name},
-
       };
 
       #rewrite to map when get chance

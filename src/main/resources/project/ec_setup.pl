@@ -264,6 +264,13 @@ my %createOrUpdateJMSResource = (
     category    => "Application Server"
 );
 
+my %createOrUpdateConnectionFactory = (
+    label       => "WebLogic - Create Or Update Connection Factory",
+    procedure   => "CreateOrUpdateConnectionFactory",
+    description => "Creates or updates Connection Factory",
+    category    => "Application Server"
+);
+
 my %createOrUpdateDatasource = (
     label       => "WebLogic - Create Or Update Datasource",
     procedure   => "CreateOrUpdateDatasource",
@@ -368,6 +375,9 @@ $batch->deleteProperty(
 
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update JMS Resource");
+
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update Connection Factory");
 
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update Datasource");
