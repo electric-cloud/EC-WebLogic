@@ -69,17 +69,21 @@
         <value>10</value>
     </formElement>
     <formElement>
-        <type>check</type>
+        <type>checkbox</type>
         <label>XA connection factory enabled:</label>
         <property>cf_xa_enabled</property>
         <documentation>Should this connection factory create sessions that are JTA aware, and create XA queues and XA topics?</documentation>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
         <value>1</value>
     </formElement>
     <formElement>
-        <type>check</type>
+        <type>checkbox</type>
         <label>Attach JMSX userid:</label>
         <property>cf_attach_jmsx_userid</property>
         <documentation>Should the authenticated user name be attached to sent messages if the JMS destination is configured to support this behavior?</documentation>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
         <value>0</value>
     </formElement>
     <formElement>
