@@ -44,6 +44,7 @@ sub main {
           'jms_module_name',
           'subdeployment_name',
           'jms_server_name',
+          'server_name'
           
       );
       my $cred = $wl->get_credentials( $params->{configname} );
@@ -51,13 +52,13 @@ sub main {
           $wl->out( 1, "JAVA_HOME was provided" );
       }
 
-      #TO BE CHANGED TO THE NAME WITH _ _
       $params->{wlst_abs_path} = $cred->{wlst_path} unless ($params->{wlst_abs_path});
 
       my $render_params = {
           username     => $cred->{user},
           password     => $cred->{password},
           weblogic_url => $cred->{weblogic_url},
+          admin_url => $cred->{weblogic_url},
       };
 
       #rewrite to map when get chance
@@ -68,11 +69,13 @@ sub main {
         $wl->render_template_from_property( $template_path, $render_params );
 
       $wl->out( 10, "Generated script:\n", $template );
+
       my $res = $wl->execute_jython_script(
           shell          => $params->{wlst_abs_path},
           script_path    => $ENV{COMMANDER_WORKSPACE} . '/exec.jython',
           script_content => $template,
       );
+
 
       $wl->process_response($res);
       return;

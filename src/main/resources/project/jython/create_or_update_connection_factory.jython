@@ -50,13 +50,18 @@ cf_max_messages_per_session = r'''
 [% cf_max_messages_per_session %]
 '''.strip()
 
+cf_max_messages_per_session = int(cf_max_messages_per_session)
+
 cf_xa_enabled = r'''
 [% cf_xa_enabled %]
 '''.strip()
+cf_xa_enabled = int(cf_xa_enabled)
 
 cf_attach_jmsx_userid = r'''
 [% cf_attach_jmsx_userid %]
 '''.strip()
+cf_attach_jmsx_userid = int(cf_attach_jmsx_userid)
+
 
 jms_module_name = r'''
 [% jms_module_name %]
@@ -66,13 +71,21 @@ jms_server_name = r'''
 [% jms_server_name %]
 '''.strip()
 
+server_name = r'''
+[% server_name %]
+'''.strip()
+
 subdeployment_name = r'''
 [% subdeployment_name %]
 '''.strip()
 
 
+
+def getJMSSystemResourcePath(jms_module_name):
+    return "/JMSSystemResources/%s"%(jms_module_name)
+
 def getJMSModulePath(jms_module_name):
-    return "/JMSSystemResources/%s/JMSResource/%s"%(jms_module_name,jms_module_name)
+    return "%s/JMSResource/%s"%(getJMSSystemResourcePath(jms_module_name),jms_module_name)
 
 def getConnectionFactoryPath(jms_module_name,cf_name):
     return "%s/ConnectionFactories/%s"%(getJMSModulePath(jms_module_name),cf_name) 
@@ -82,6 +95,12 @@ def getSubDeploymentPath(jms_module_name, subdeployment_name):
 
 def getJMSServerPath(jms_server_name):
     return "/JMSServers/%s" % (jms_server_name)
+
+def getServerPath(server_name):
+    return "/Servers/%s" % (server_name)
+
+def cdJMSSystemResourcePath(jms_module_name):
+    cd(getJMSSystemResourcePath(jms_module_name))
 
 def cdJMSModulePath(jms_module_name):
     cd(getJMSModulePath(jms_module_name))
@@ -101,11 +120,20 @@ def checkJMSModule(jms_module_name):
 def getJMSServer(jms_server_name):
     return getMBean(getJMSServerPath(jms_server_name))
 
+def getServer(server_name):
+    return getMBean(getServerPath(server_name))
+
 def getConnectionFactory(jms_module_name,cf_name):
     return getMBean(getConnectionFactoryPath(jms_module_name,cf_name))
 
 def checkJMSServer(jms_server_name):
     server = getMBean(getJMSServerPath(jms_server_name))
+    if server is None:
+        return 0
+    return 1
+
+def checkServer(server_name):
+    server = getMBean(getServerPath(server_name))
     if server is None:
         return 0
     return 1
@@ -116,25 +144,26 @@ def checkSubDeployment(jms_module_name, subdeployment_name):
         return 0
     return 1
 
-def createJMSModule(jms_module_name, jms_server_name):
+def createJMSModule(jms_module_name, jms_server_name, server_name):
     if not checkJMSModule(jms_module_name):
-        print_info 'Trying to create JMS Module ' + jms_module_name
+        print_info('Trying to create JMS Module ' + jms_module_name)
         cd('/')
         cmo.createJMSSystemResource(jms_module_name)
-        print_info 'JMS Module '+ jms_module_name +'was created'
-        cdJMSModulePath(jms_module_name)
-        if jms_server_name and checkServer(jms_server_name):
-            cmo.addTarget(getServer(jms_server_name))
-        elif jms_server_name and not checkServer(jms_server_name)
-            warn "JMS Server %s does not exist. It was not added to created JMS Module %s"%(jms_server_name, jms_module_name)
+        print_info('JMS Module '+ jms_module_name +' was created')
+        cdJMSSystemResourcePath(jms_module_name)
+        if server_name and checkServer(server_name):
+            print_info("Adding target %s to JMS Module %s"%(server_name,jms_module_name))
+            cmo.addTarget(getServer(server_name))
+        elif server_name and not checkServer(server_name):
+            warn("Server %s does not exist. It was not added to created JMS Module %s"%(server_name, jms_module_name))
         return 1
     else:
-        warn "WARNING: "+jms_module_name+" exists"
+        warn(jms_module_name+" exists")
     return 0
 
 def createSubDeployment(jms_module_name, subdeployment_name):
-    cdJMSModulePath(jms_module_name)
-    cmo.createSubDeployment(subDeploymentName)
+    cdJMSSystemResourcePath(jms_module_name)
+    cmo.createSubDeployment(subdeployment_name)
 
 
 
@@ -144,8 +173,8 @@ try:
     startChanges()
     cd('/')
     if not checkJMSModule(jms_module_name):
-        warn "JMS Module %s does not exist" % (jms_module_name)
-        createJMSModule(jms_module_name, jms_server_name)
+        warn("JMS Module %s does not exist" % (jms_module_name))
+        createJMSModule(jms_module_name, jms_server_name, server_name)
     
     cdJMSModulePath(jms_module_name)
 
@@ -153,40 +182,75 @@ try:
 
     if not getConnectionFactory(jms_module_name,cf_name):
         mode = 'create'
-        print_debug 'Working in CREATE mode'
-        print_info 'Trying to create Connection factory ' + cf_name
-        cmo.createConnectionFactory(cf_name)
-        print_info 'Trying to create JMS Module ' + jms_module_name
+        print_debug('Working in CREATE mode')
+        print_info('Trying to create Connection factory ' + cf_name)
+        cf = cmo.createConnectionFactory(cf_name)
+        print_info('Trying to create JMS Module ' + jms_module_name)
     else:
-        print_debug 'Working in UPDATE mode. Resource exists'
+        print_debug('Working in UPDATE mode. Resource exists')
 
 
     # cd to created resource
     cdConnectionFactoryPath(jms_module_name,cf_name)
     if jndi_name:
-        print_debug "Applying JNDI "+jndi_name
+        print_debug("Applying JNDI "+jndi_name)
         set('JNDIName', jndi_name)
     else:
         #usually JNDI should be defined to work with connection factory from app via JMS module
-        warn "You did not define JNDI"
+        warn("You did not define JNDI")
+
+    cd(getConnectionFactoryPath(jms_module_name,cf_name)+'/ClientParams/'+cf_name)
+    # Set Subscription Sharing Policy
+    print_debug("Set Subscription Sharing Policy to %s"%(cf_sharing_policy))
+    cmo.setSubscriptionSharingPolicy(cf_sharing_policy)
+    # Set Client ID Policy     
+    print_debug("Set Client ID Policy to %s"%(cf_client_id_policy))
+    cmo.setClientIdPolicy(cf_client_id_policy)
+
+    # Set Max Messages per Session
+    if cf_max_messages_per_session:
+        print_debug("Set Max Messages per Session: %s"%(cf_max_messages_per_session))
+        cmo.setMessagesMaximum(cf_max_messages_per_session)
+
+    # Set XA
+    cd(getConnectionFactoryPath(jms_module_name,cf_name)+'/TransactionParams/'+cf_name)
+    if cf_xa_enabled:
+        cf_xa_enabled = True
+    else:
+        cf_xa_enabled = False
+    print_debug("Set XA connection factory enabled: %s"%(cf_xa_enabled))
+    cmo.setXAConnectionFactoryEnabled(cf_xa_enabled)
+
+    # Attach JMSX UserID
+    cd(getConnectionFactoryPath(jms_module_name,cf_name)+'/SecurityParams/'+cf_name)
+    if cf_attach_jmsx_userid:
+        cf_attach_jmsx_userid = True
+    else:
+        cf_attach_jmsx_userid = False
+    print_debug("Set attach JMSX userid: %s"%(cf_attach_jmsx_userid))    
+    cmo.setAttachJMSXUserId(cf_attach_jmsx_userid)
+    
+    cdConnectionFactoryPath(jms_module_name,cf_name)
+
 
 
     if subdeployment_name:
         if not checkSubDeployment(jms_module_name, subdeployment_name):
-            print_info "SubDeployment %s does not exist in JMS Module %s"%(subdeployment_name, jms_module_name)
+            print_info("SubDeployment %s does not exist in JMS Module %s"%(subdeployment_name, jms_module_name))
             createSubDeployment(jms_module_name, subdeployment_name)
-            print_info "SubDeployment %s was created in JMS Module %s"%(subdeployment_name, jms_module_name)
+            print_info("SubDeployment %s was created in JMS Module %s"%(subdeployment_name, jms_module_name))
             cdConnectionFactoryPath(jms_module_name,cf_name)
         set('SubDeploymentName', subdeployment_name)
         cdSubDeploymentPath(jms_module_name, subdeployment_name)
-        if jms_server_name and checkServer(jms_server_name):
-            cmo.addTarget(getServer(jms_server_name))
-        elif jms_server_name and not checkServer(jms_server_name)
-            warn "JMS Server %s does not exist. It was not added to Connection Factory"%(jms_server_name)
+        if jms_server_name and checkJMSServer(jms_server_name):
+            print_info("Adding target %s to SubDeployment %s"%(jms_server_name,subdeployment_name))
+            cmo.addTarget(getJMSServer(jms_server_name))
+        elif jms_server_name and not checkJMSServer(jms_server_name):
+            warn("JMS Server %s does not exist. It was not added to Connection Factory"%(jms_server_name))
 
 
 except WLSTException, e:
-    print "Failed to create JMS resource"
+    print "Failed to create Connection Factory"
     print str(e)
     discardChanges()
     sys.exit(1)

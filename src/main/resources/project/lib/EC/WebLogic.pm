@@ -100,6 +100,7 @@ sub get_credentials {
             java_vendor => 'java_vendor',
             mw_home => 'mw_home',
             weblogic_url => 'weblogic_url',
+            wlst_path => 'wlst_path',
             debug_level => 'debug_level',
             enable_exclusive_sessions => 'enable_exclusive_sessions',
             enable_named_sessions => 'enable_named_sessions'

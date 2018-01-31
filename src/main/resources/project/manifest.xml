@@ -304,7 +304,7 @@
   </file>
   <file>
     <path>server/createOrUpdateConnectionFactory.pl</path>
-    <xpath>//procedure[procedureName="StartManagedServer"]/step[stepName="CreateOrUpdateConnectionFactory"]/command</xpath>
+    <xpath>//procedure[procedureName="CreateOrUpdateConnectionFactory"]/step[stepName="CreateOrUpdateConnectionFactory"]/command</xpath>
   </file>
   <file>
     <path>server/startNodeManager.pl</path>

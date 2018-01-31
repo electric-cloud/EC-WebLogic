@@ -35,11 +35,11 @@ def warn(message):
     warnings.warn("WARNING: " + message)
 
 def print_info(message):
-    if debug_level > 0:
+    if debug_level >= 0:
         print "[INFO] " + message
 
 def print_debug(message):
-    if debug_level > 1:
+    if debug_level >= 1:
         print "[DEBUG] " + message
 
 

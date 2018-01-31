@@ -443,6 +443,16 @@
                   </propertySheet>
                 </property>
                 <property>
+                  <propertyName>wlst_path</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
                   <propertyName>java_vendor</propertyName>
                   <propertySheet>
                     <property>
@@ -493,6 +503,13 @@
         <formalParameterName>java_home</formalParameterName>
         <defaultValue/>
         <description>JAVA_HOME environment variable. It should be used when java is not in the path, or a different JDK needs to be used. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, JAVA_VENDOR should be also set.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>wlst_path</formalParameterName>
+        <defaultValue/>
+        <description>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.</description>
         <required>0</required>
         <type>entry</type>
       </formalParameter>
@@ -4109,6 +4126,16 @@
                     </property>
                   </propertySheet>
                 </property>
+                <property>
+                  <propertyName>server_name</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
               </propertySheet>
             </property>
           </propertySheet>
@@ -4118,6 +4145,13 @@
         <formalParameterName>configname</formalParameterName>
         <defaultValue/>
         <description>Configuration name from which the Admin URL and credentials will be read.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>cf_name</formalParameterName>
+        <defaultValue/>
+        <description>What would you like to name your new connection factory?</description>
         <required>1</required>
         <type>entry</type>
       </formalParameter>
@@ -4181,6 +4215,13 @@
         <formalParameterName>jms_server_name</formalParameterName>
         <defaultValue/>
         <description>jms_server_name</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>server_name</formalParameterName>
+        <defaultValue/>
+        <description>Server name is required if you're not sure that JMS Module exists. If it does not - procedure will create JMS module and add Server as target to it.</description>
         <required>0</required>
         <type>entry</type>
       </formalParameter>

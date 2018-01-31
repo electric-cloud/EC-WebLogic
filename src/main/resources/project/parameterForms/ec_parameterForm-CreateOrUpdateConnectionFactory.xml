@@ -107,5 +107,11 @@
         <documentation>JMS server name.</documentation>
         <required>0</required>
     </formElement>
-    
+    <formElement>
+        <type>entry</type>
+        <label>Server Name:</label>
+        <property>server_name</property>
+        <documentation>Server name is required if you're not sure that JMS Module exists. If it does not - procedure will create JMS module and add Server as target to it.</documentation>
+        <required>0</required>
+    </formElement>
 </editor>
