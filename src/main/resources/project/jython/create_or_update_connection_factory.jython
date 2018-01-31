@@ -161,6 +161,26 @@ def createJMSModule(jms_module_name, jms_server_name, server_name):
         warn(jms_module_name+" exists")
     return 0
 
+def updateJMSModule(jms_module_name, jms_server_name, server_name):
+    if checkJMSModule(jms_module_name):
+        print_info('Updating JMS Module ' + jms_module_name)
+        cd('/')
+        cdJMSSystemResourcePath(jms_module_name)
+        if server_name and checkServer(server_name):
+            print_info("Adding target %s to JMS Module %s"%(server_name,jms_module_name))
+            targets = []
+            for t in get('Targets'):
+                targets.append(t)
+            targets.append(getServer(server_name).objectName)
+            set('Targets', jarray.array(targets, ObjectName))
+        elif server_name and not checkServer(server_name):
+            warn("Server %s does not exist. It was not added to JMS Module %s"%(server_name, jms_module_name))
+        return 1
+    else:
+        warn(jms_module_name+" does not exist")
+    return 0
+
+
 def createSubDeployment(jms_module_name, subdeployment_name):
     cdJMSSystemResourcePath(jms_module_name)
     cmo.createSubDeployment(subdeployment_name)
@@ -188,6 +208,8 @@ try:
         print_info('Trying to create JMS Module ' + jms_module_name)
     else:
         print_debug('Working in UPDATE mode. Resource exists')
+        updateJMSModule(jms_module_name, jms_server_name, server_name)
+
 
 
     # cd to created resource
@@ -244,7 +266,11 @@ try:
         cdSubDeploymentPath(jms_module_name, subdeployment_name)
         if jms_server_name and checkJMSServer(jms_server_name):
             print_info("Adding target %s to SubDeployment %s"%(jms_server_name,subdeployment_name))
-            cmo.addTarget(getJMSServer(jms_server_name))
+            targets = []
+            for t in get('Targets'):
+                targets.append(t)
+            targets.append(getJMSServer(jms_server_name).objectName)
+            set('Targets', jarray.array(targets, ObjectName))
         elif jms_server_name and not checkJMSServer(jms_server_name):
             warn("JMS Server %s does not exist. It was not added to Connection Factory"%(jms_server_name))
 
