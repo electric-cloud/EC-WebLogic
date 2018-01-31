@@ -4010,6 +4010,16 @@
                   </propertySheet>
                 </property>
                 <property>
+                  <propertyName>cf_name</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
                   <propertyName>jndi_name</propertyName>
                   <propertySheet>
                     <property>

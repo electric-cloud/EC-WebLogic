@@ -403,7 +403,7 @@ $batch->deleteProperty(
     \%deleteManagedServer,         \%startCluster,
     \%stopCluster,                 \%updateAppConfig,
     \%checkClusterStatus,          \%createOrUpdateJMSResource,
-    \%createOrUpdateDatasource
+    \%createOrUpdateDatasource,    \%createOrUpdateConnectionFactory
 );
 
 if ( $upgradeAction eq "upgrade" ) {
@@ -824,6 +824,15 @@ if ( $upgradeAction eq "upgrade" ) {
                 {
                     procedureName => 'CreateOrUpdateJMSResource',
                     stepName      => 'CreateOrUpdateJMSResource'
+                }
+            );
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'CreateOrUpdateConnectionFactory',
+                    stepName      => 'CreateOrUpdateConnectionFactory'
                 }
             );
 
