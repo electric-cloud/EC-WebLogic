@@ -205,10 +205,92 @@ $xpath = $ec->attachCredential($projName, $credName,
 $errors .= $ec->checkAllErrors($xpath);
 
 $xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'CreateOrUpdateDistributedQueue',
+     stepName => 'CreateOrUpdateDistributedQueue'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'CreateOrUpdateDistributedTopic',
+     stepName => 'CreateOrUpdateDistributedTopic'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'CreateOrUpdateForeignServer',
+     stepName => 'CreateOrUpdateForeignServer'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'CreateOrUpdateMailSession',
+     stepName => 'CreateOrUpdateMailSession'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'CreateOrUpdateQuota',
+     stepName => 'CreateOrUpdateQuota'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'CreateOrUpdateFileStore',
+     stepName => 'CreateOrUpdateFileStore'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'CreateOrUpdateJDBCStore',
+     stepName => 'CreateOrUpdateJDBCStore'});
+$errors .= $ec->checkAllErrors($xpath);
+
+
+$xpath = $ec->attachCredential($projName, $credName,
     {procedureName => 'CreateOrUpdateDatasource',
      stepName => 'CreateOrUpdateDatasource'});
 $errors .= $ec->checkAllErrors($xpath);
 
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'DeleteConnectionFactory',
+     stepName => 'DeleteConnectionFactory'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'DeleteDistributedQueue',
+     stepName => 'DeleteDistributedQueue'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'DeleteDistributedTopic',
+     stepName => 'DeleteDistributedTopic'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'DeleteForeignServer',
+     stepName => 'DeleteForeignServer'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'DeleteMailSession',
+     stepName => 'DeleteMailSession'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'DeleteQuota',
+     stepName => 'DeleteQuota'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'DeleteFileStore',
+     stepName => 'DeleteFileStore'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'DeleteJDBCStore',
+     stepName => 'DeleteJDBCStore'});
+$errors .= $ec->checkAllErrors($xpath);
+
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'DeleteDatasource',
+     stepName => 'DeleteDatasource'});
+$errors .= $ec->checkAllErrors($xpath);
 
 if ($errors ne '') {
 

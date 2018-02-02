@@ -307,6 +307,66 @@
     <xpath>//procedure[procedureName="CreateOrUpdateConnectionFactory"]/step[stepName="CreateOrUpdateConnectionFactory"]/command</xpath>
   </file>
   <file>
+    <path>server/deleteConnectionFactory.pl</path>
+    <xpath>//procedure[procedureName="DeleteConnectionFactory"]/step[stepName="DeleteConnectionFactory"]/command</xpath>
+  </file>
+  <file>
+    <path>server/createOrUpdateDistributedQueue.pl</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateDistributedQueue"]/step[stepName="CreateOrUpdateDistributedQueue"]/command</xpath>
+  </file>
+  <file>
+    <path>server/deleteDistributedQueue.pl</path>
+    <xpath>//procedure[procedureName="DeleteDistributedQueue"]/step[stepName="DeleteDistributedQueue"]/command</xpath>
+  </file>
+  <file>
+    <path>server/createOrUpdateDistributedTopic.pl</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateDistributedTopic"]/step[stepName="CreateOrUpdateDistributedTopic"]/command</xpath>
+  </file>
+  <file>
+    <path>server/deleteDistributedTopic.pl</path>
+    <xpath>//procedure[procedureName="DeleteDistributedTopic"]/step[stepName="DeleteDistributedTopic"]/command</xpath>
+  </file>
+  <file>
+    <path>server/createOrUpdateForeignServer.pl</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateForeignServer"]/step[stepName="CreateOrUpdateForeignServer"]/command</xpath>
+  </file>
+  <file>
+    <path>server/deleteForeignServer.pl</path>
+    <xpath>//procedure[procedureName="DeleteForeignServer"]/step[stepName="DeleteForeignServer"]/command</xpath>
+  </file>
+  <file>
+    <path>server/createOrUpdateMailSession.pl</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateMailSession"]/step[stepName="CreateOrUpdateMailSession"]/command</xpath>
+  </file>
+  <file>
+    <path>server/deleteDistributedMailSession.pl</path>
+    <xpath>//procedure[procedureName="DeleteDistributedMailSession"]/step[stepName="DeleteDistributedMailSession"]/command</xpath>
+  </file>
+  <file>
+    <path>server/createOrUpdateQuota.pl</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateQuota"]/step[stepName="CreateOrUpdateQuota"]/command</xpath>
+  </file>
+  <file>
+    <path>server/deleteQuota.pl</path>
+    <xpath>//procedure[procedureName="DeleteQuota"]/step[stepName="DeleteQuota"]/command</xpath>
+  </file>
+  <file>
+    <path>server/createOrUpdateFileStore.pl</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateFileStore"]/step[stepName="CreateOrUpdateFileStore"]/command</xpath>
+  </file>
+  <file>
+    <path>server/deleteFileStore.pl</path>
+    <xpath>//procedure[procedureName="DeleteFileStore"]/step[stepName="DeleteFileStore"]/command</xpath>
+  </file>
+  <file>
+    <path>server/createOrUpdateJDBCStore.pl</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateJDBCStore"]/step[stepName="CreateOrUpdateJDBCStore"]/command</xpath>
+  </file>
+  <file>
+    <path>server/deleteJDBCStore.pl</path>
+    <xpath>//procedure[procedureName="DeleteJDBCStore"]/step[stepName="DeleteJDBCStore"]/command</xpath>
+  </file>
+  <file>
     <path>server/startNodeManager.pl</path>
     <xpath>//procedure[procedureName="StartNodeManager"]/step[stepName="StartNodeManager"]/command</xpath>
   </file>
@@ -606,6 +666,58 @@
   <file>
     <path>parameterForms/ec_parameterForm-CreateOrUpdateConnectionFactory.xml</path>
     <xpath>//procedure[procedureName="CreateOrUpdateConnectionFactory"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-DeleteConnectionFactory.xml</path>
+    <xpath>//procedure[procedureName="DeleteConnectionFactory"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-CreateOrUpdateDistributedQueue.xml</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateDistributedQueue"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-DeleteDistributedQueue.xml</path>
+    <xpath>//procedure[procedureName="DeleteDistributedQueue"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-CreateOrUpdateDistributedTopic.xml</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateDistributedTopic"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-DeleteDistributedTopic.xml</path>
+    <xpath>//procedure[procedureName="DeleteDistributedTopic"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-CreateOrUpdateMailSession.xml</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateMailSession"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-DeleteMailSession</path>
+    <xpath>//procedure[procedureName="DeleteMailSession"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-CreateOrUpdateQuota.xml</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateQuota"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-DeleteQuota.xml</path>
+    <xpath>//procedure[procedureName="DeleteQuota"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-CreateOrUpdateFileStore.xml</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateFileStore"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-DeleteFileStore.xml</path>
+    <xpath>//procedure[procedureName="DeleteFileStore"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-CreateOrUpdateJDBCStore.xml</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateJDBCStore"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-DeleteJDBCStore.xml</path>
+    <xpath>//procedure[procedureName="DeleteJDBCStore"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
   </file>
   <file>
     <path>parameterForms/ec_parameterForm-DeleteManagedServer.xml</path>

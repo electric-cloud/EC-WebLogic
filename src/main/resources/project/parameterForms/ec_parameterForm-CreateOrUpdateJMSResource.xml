@@ -42,7 +42,6 @@
         <documentation>
             JMS resource type.
         </documentation>
-
     </formElement>
     <formElement>
         <type>entry</type>
@@ -58,7 +57,6 @@
         <documentation>JMS module name.</documentation>
         <required>1</required>
     </formElement>
-
     <formElement>
         <type>entry</type>
         <label>JNDI name:</label>
@@ -79,6 +77,5 @@
         <property>jms_server_name</property>
         <documentation>JMS server name.</documentation>
         <required>0</required>
-    </formElement>
-    
+    </formElement>   
 </editor>
