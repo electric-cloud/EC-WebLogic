@@ -23,6 +23,11 @@
                     <value>weblogic_cfgs</value>
                 </property>
                 <property>
+                    <propertyName>form</propertyName>
+                    <expandable>1</expandable>
+                    <value>$[/projects/@PLUGIN_KEY@-@PLUGIN_VERSION@/ui_forms/WebLogicCreateConfigForm]</value>
+                </property>
+                <property>
                     <propertyName>fields</propertyName>
                     <description/>
                     <propertySheet>
