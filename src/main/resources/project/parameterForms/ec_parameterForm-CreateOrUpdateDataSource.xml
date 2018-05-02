@@ -41,13 +41,6 @@ limitations under the License.
 </formElement>
 <formElement>
     <type>entry</type>
-    <label>Database:</label>
-    <property>dsdbname</property>
-    <documentation>The database used by the Datasource.</documentation>
-    <required>1</required>
-</formElement>
-<formElement>
-    <type>entry</type>
     <label>Server Instance:</label>
     <property>target</property>
     <documentation>Instance name of the Server to include the Datasource. i.e: 'AdminServer'.</documentation>
@@ -82,28 +75,48 @@ limitations under the License.
 </formElement>
 <formElement>
     <type>credential</type>
-    <label>Datasource Credentials</label>
+    <label>Datasource Credentials:</label>
     <property>ds_credential</property>
     <documentation>
-        Credentials for datasource.
+        Credentials for database to esablish connection.
     </documentation>
-    <required>1</required>
+    <required>0</required>
 </formElement>
-<!-- <formElement> -->
-<!--   <type>entry</type> -->
-<!--   <label>Database User:</label> -->
-<!--   <property>username</property> -->
-<!--   <documentation>The user to connect to the database.</documentation> -->
-<!--   <required>1</required> -->
-<!-- </formElement> -->
-<!-- <formElement> -->
-<!--   <type>entry</type> -->
-<!--   <label>Database Password:</label> -->
-<!--   <property>password</property> -->
-<!--   <documentation> -->
-<!--     The password attribute passed to the JDBC driver when creating physical database connections. The value is stored in an encrypted form in the descriptor file and when displayed on the Administration Console. -->
-<!--   </documentation> -->
-<!--   <required>1</required> -->
-<!-- </formElement>	 -->
+<formElement>
+    <type>entry</type>
+    <label>Initial Pool Size:</label>
+    <property>ds_initial_poolsize</property>
+    <documentation>
+        Initial size of connection pool.
+    </documentation>
+    <required>0</required>
+</formElement>
+<formElement>
+    <type>entry</type>
+    <label>Minimal Pool Size:</label>
+    <property>ds_min_poolsize</property>
+    <documentation>
+        Minimal size of connection pool.
+    </documentation>
+    <required>0</required>
+</formElement>
+<formElement>
+    <type>entry</type>
+    <label>Maximal Pool Size:</label>
+    <property>ds_max_poolsize</property>
+    <documentation>
+        Maximal size of connection pool.
+    </documentation>
+    <required>0</required>
+</formElement>
+<formElement>
+    <type>entry</type>
+    <label>Test SQL Statement:</label>
+    <property>ds_test_table</property>
+    <documentation>
+        SQL Statement to test connection to database.
+    </documentation>
+    <required>0</required>
+</formElement>
 </editor>
 

@@ -35,15 +35,16 @@ sub main {
       my $params = $wl->get_params_as_hashref(
           'configname',
           'dsname',
-          'dsdbname',
           'target',
           'driverurl',
           'jndiname',
           'driverclass',
           'wlstabspath',
-          'ds_credential'
-          #'username',
-          #'password',
+          'ds_credential',
+          'ds_initial_poolsize',
+          'ds_min_poolsize',
+          'ds_max_poolsize',
+          'ds_test_table'
       );
       my $cred = $wl->get_credentials( $params->{configname} );
       if ( $cred->{java_home} ) {
@@ -60,15 +61,19 @@ sub main {
           weblogic_url => $cred->{weblogic_url},
 
           ds_name          => $params->{dsname},
-          ds_database_name => $params->{dsdbname},
           server_name      => $params->{target},
           ds_jndi_name     => $params->{jndiname},
           ds_driver_class  => $params->{driverclass},
           ds_driver_url    => $params->{driverurl},
           ds_user_name     => $params->{username},
-          ds_password      => $params->{password}
+          ds_password      => $params->{password},
+          ds_initial_poolsize => $params->{ds_initial_poolsize},
+          ds_min_poolsize => $params->{ds_min_poolsize},
+          ds_max_poolsize => $params->{ds_max_poolsize},
+          ds_test_table => $params->{ds_test_table}
       };
-      my $template_path = '/myProject/jython/create_datasource.jython';
+      print Dumper $params;
+      my $template_path = '/myProject/jython/create_or_update_datasource.jython';
       my $template =
         $wl->render_template_from_property( $template_path, $render_params );
 

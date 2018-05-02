@@ -28,6 +28,8 @@
                     <li><a href="#ConfigureUserLockoutManager">ConfigureUserLockoutManager</a></li>
                     <li><a href="#CreateCluster">CreateCluster</a></li>
                     <li><a href="#CreateDatasource">CreateDatasource</a></li>
+                    <li><a href="#CreateOrUpdateDatasource">CreateOrUpdateDatasource</a></li>
+                    <li><a href="#CreateOrUpdateJMSResource">CreateOrUpdateJMSResource</a></li>
                     <li><a href="#CreateDomain">CreateDomain</a></li>
                     <li><a href="#CreateGroup">CreateGroup</a></li>
                     <li><a href="#CreateManagedServer">CreateManagedServer</a></li>
@@ -799,6 +801,143 @@
                 <br />
                 <img src="../../plugins/EC-WebLogic/images/CreateDataSource/CreateDataSource4.png" />
                 </p>
+            </div>
+            <div id="CreateOrUpdateDatasource">
+                <a name="CreateOrUpdateDatasource" id="CreateOrUpdateDatasource"></a>
+                <h2>CreateOrUpdateDatasource</h2>
+                <p>This procedure creates or updates a datasource in WebLogic.</p>
+                <h3>Input</h3>
+                <ol>
+                    <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
+                    <li>Go to the CreateOrUpdateDatasource procedure.</li>
+                    <li>Enter the following parameters:<br />
+                    <table class="grid">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="required">Configuration</td>
+                                <td>Configuration name from which the Admin URL and credentials are read.</td>
+                            </tr>
+                            <tr>
+                                <td class="required">WLST Absolute Path</td>
+                                <td>Absolute path to WLST, such as /path/to/wlst.cmd or wlst.sh.</td>
+                            </tr>
+                            <tr>
+                                <td class="required">Datasource Name</td>
+                                <td>A unique name for the datasource in the WebLogic domain.</td>
+                            </tr>
+                            <tr>
+                                <td class="required">Server Instance</td>
+                                <td>Instance name of the server that includes the datasource, such as AdminServer.</td>
+                            </tr>
+                            <tr>
+                                <td>Datasource JNDI</td>
+                                <td>The JNDI path to which this datasource is bound. By default, the JNDI name is the name of the datasource. Applications that look up the JNDI path will get a "javax.sql.Datasource" instance that corresponds to the datasource.</td>
+                            </tr>
+                            <tr>
+                                <td class="required">Datasource Driver Class</td>
+                                <td>The full package name of JDBC driver class used to create the physical database connections in the connection pool. This driver class must be in the classpath of any server to which it is deployed.</td>
+                            </tr>
+                            <tr>
+                                <td class="required">Datasource URL</td>
+                                <td>The URL of the database to connect to. The format of the URL varies by JDBC driver. The URL is passed to the JDBC driver to create the physical database connections.</td>
+                            </tr>
+                            <tr>
+                                <td>Datasource Credential</td>
+                                <td>Credentials for database to esablish connection.</td>
+                            </tr>
+                            <tr>
+                                <td>Initial Pool Size</td>
+                                <td>Initial size of connection pool.</td>
+                            </tr>
+                            <tr>
+                                <td>Minimal Pool Size</td>
+                                <td>Minimal size of connection pool.</td>
+                            </tr>
+                            <tr>
+                                <td>Maximal Pool Size</td>
+                                <td>Maximal size of connection pool.</td>
+                            </tr>
+                            <tr>
+                                <td>Test SQL Statement</td>
+                                <td>SQL Statement to test connection to database.</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    </li>
+                    <br />
+                    <img src="../../plugins/EC-WebLogic/images/CreateOrUpdateDataSource/Form.png" />
+                    <br />
+                </ol>
+                <h3>Output</h3>
+                <p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The datasource was created/updated successfully.</p>
+                <img src="../../plugins/EC-WebLogic/images/CreateOrUpdateDataSource/Result.png" />
+            </div>
+            <div id="CreateOrUpdateJMSResource">
+                <a name="CreateOrUpdateJMSResource" id="CreateOrUpdateJMSResource"></a>
+                <h2>CreateOrUpdateJMSResource</h2>
+                <p>This procedure creates or updates JMS resource.</p>
+                <h3>Input</h3>
+                <ol>
+                    <li>In the Main Menu, click <b>Admin</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
+                    <li>Go to the CreateOrUpdateJMSResource procedure.</li>
+                    <li>Enter the following parameters:<br />
+                    <table class="grid">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="required">Configuration</td>
+                                <td>Configuration name from which the Admin URL and credentials are read.</td>
+                            </tr>
+                            <tr>
+                                <td class="required">WLST Absolute Path</td>
+                                <td>Absolute path to WLST, such as /path/to/wlst.cmd or wlst.sh.</td>
+                            </tr>
+                            <tr>
+                                <td class="required">JMS resource type</td>
+                                <td>JMS resource type.</td>
+                            </tr>
+                            <tr>
+                                <td class="required">JMS resource name</td>
+                                <td>JMS resource name.</td>
+                            </tr>
+                            <tr>
+                                <td>JMS module name</td>
+                                <td>JMS module name.</td>
+                            </tr>
+                            <tr>
+                                <td>JNDI name</td>
+                                <td>JMS resource JNDI name.</td>
+                            </tr>
+                            <tr>
+                                <td>Subdeployment name</td>
+                                <td>Name of subdeployment.</td>
+                            </tr>
+                            <tr>
+                                <td>JMS Server Name</td>
+                                <td>JMS Server Name.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </li>
+                    <br />
+                    <img src="../../plugins/EC-WebLogic/images/CreateOrUpdateJMSResource/Form.png" />
+                    <br />
+                </ol>
+                <h3>Output</h3>
+                <p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The JMS resource was created/updated successfully.</p>
+                <img src="../../plugins/EC-WebLogic/images/CreateOrUpdateJMSResource/Result.png" />
             </div>
             <div id="CreateDomain">
                 <a name="CreateDomain" id="CreateDomain"></a>

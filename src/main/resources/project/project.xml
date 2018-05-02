@@ -244,9 +244,19 @@
             <value/>
           </property>
           <property>
+            <propertyName>create_or_update_jms_resource.jython</propertyName>
+            <expandable>1</expandable>
+            <value/>
+          </property>
+          <property>
             <propertyName>create_datasource.jython</propertyName>
             <expandable>1</expandable>
             <value/>
+          </property>
+          <property>
+              <propertyName>create_or_update_datasource.jython</propertyName>
+              <expandable>1</expandable>
+              <value/>
           </property>
           <property>
             <propertyName>delete_datasource.jython</propertyName>
@@ -3574,7 +3584,7 @@
                   </propertySheet>
                 </property>
                 <property>
-                  <propertyName>username</propertyName>
+                  <propertyName>ds_credential</propertyName>
                   <propertySheet>
                     <property>
                       <propertyName>formType</propertyName>
@@ -3583,21 +3593,32 @@
                     </property>
                   </propertySheet>
                 </property>
-                <property>
-                  <propertyName>password</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                  </propertySheet>
-                </property>
+                <!-- <property> -->
+                <!--   <propertyName>username</propertyName> -->
+                <!--   <propertySheet> -->
+                <!--     <property> -->
+                <!--       <propertyName>formType</propertyName> -->
+                <!--       <expandable>1</expandable> -->
+                <!--       <value>standard</value> -->
+                <!--     </property> -->
+                <!--   </propertySheet> -->
+                <!-- </property> -->
+                <!-- <property> -->
+                <!--   <propertyName>password</propertyName> -->
+                <!--   <propertySheet> -->
+                <!--     <property> -->
+                <!--       <propertyName>formType</propertyName> -->
+                <!--       <expandable>1</expandable> -->
+                <!--       <value>standard</value> -->
+                <!--     </property> -->
+                <!--   </propertySheet> -->
+                <!-- </property> -->
               </propertySheet>
             </property>
           </propertySheet>
         </property>
-      </propertySheet>
+    </propertySheet>
+
       <formalParameter>
         <formalParameterName>configname</formalParameterName>
         <defaultValue/>
@@ -3655,19 +3676,26 @@
         <type>entry</type>
       </formalParameter>
       <formalParameter>
-        <formalParameterName>username</formalParameterName>
+        <formalParameterName>ds_credential</formalParameterName>
         <defaultValue/>
-        <description>The user to connect to the database.</description>
+        <description>Credential for datasource.</description>
         <required>1</required>
-        <type>entry</type>
+        <type>credential</type>
       </formalParameter>
-      <formalParameter>
-        <formalParameterName>password</formalParameterName>
-        <defaultValue/>
-        <description>The password attribute passed to the JDBC driver when creating physical database connections. The value is stored in an encrypted form in the descriptor file and when displayed on the Administration Console.</description>
-        <required>1</required>
-        <type>entry</type>
-      </formalParameter>
+      <!-- <formalParameter> -->
+      <!--   <formalParameterName>username</formalParameterName> -->
+      <!--   <defaultValue/> -->
+      <!--   <description>The user to connect to the database.</description> -->
+      <!--   <required>1</required> -->
+      <!--   <type>entry</type> -->
+      <!-- </formalParameter> -->
+      <!-- <formalParameter> -->
+      <!--   <formalParameterName>password</formalParameterName> -->
+      <!--   <defaultValue/> -->
+      <!--   <description>The password attribute passed to the JDBC driver when creating physical database connections. The value is stored in an encrypted form in the descriptor file and when displayed on the Administration Console.</description> -->
+      <!--   <required>1</required> -->
+      <!--   <type>entry</type> -->
+      <!-- </formalParameter> -->
       <step>
         <stepName>CreateDatasource</stepName>
         <alwaysRun>0</alwaysRun>
@@ -3701,8 +3729,503 @@
             </propertySheet>
           </property>
         </propertySheet>
+        <attachedParameters>
+            <formalParameterName>ds_credential</formalParameterName>
+        </attachedParameters>
       </step>
-    </procedure>
+  </procedure>
+
+  <procedure>
+      <procedureName>CreateOrUpdateDatasource</procedureName>
+      <description>Creates or updates a Datasource</description>
+      <jobNameTemplate>weblogic-createOrUpdateDatasource-$[jobId]</jobNameTemplate>
+      <resourceName/>
+      <workspaceName/>
+      <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+      <propertySheet>
+        <property>
+          <propertyName>ec_parameterForm</propertyName>
+          <expandable>1</expandable>
+          <value/>
+        </property>
+        <property>
+          <propertyName>ec_customEditorData</propertyName>
+          <propertySheet>
+            <property>
+              <propertyName>parameters</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>configname</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>wlstabspath</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>dsname</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>target</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>driverurl</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>jndiname</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>driverclass</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>ds_credential</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+
+                <property>
+                  <propertyName>ds_initial_poolsize</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>ds_min_poolsize</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>ds_max_poolsize</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>ds_test_table</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <!-- <property> -->
+                <!--   <propertyName>username</propertyName> -->
+                <!--   <propertySheet> -->
+                <!--     <property> -->
+                <!--       <propertyName>formType</propertyName> -->
+                <!--       <expandable>1</expandable> -->
+                <!--       <value>standard</value> -->
+                <!--     </property> -->
+                <!--   </propertySheet> -->
+                <!-- </property> -->
+                <!-- <property> -->
+                <!--   <propertyName>password</propertyName> -->
+                <!--   <propertySheet> -->
+                <!--     <property> -->
+                <!--       <propertyName>formType</propertyName> -->
+                <!--       <expandable>1</expandable> -->
+                <!--       <value>standard</value> -->
+                <!--     </property> -->
+                <!--   </propertySheet> -->
+                <!-- </property> -->
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+    </propertySheet>
+
+      <formalParameter>
+        <formalParameterName>configname</formalParameterName>
+        <defaultValue/>
+        <description>Configuration name from which the Admin URL and credentials will be read.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>wlstabspath</formalParameterName>
+        <defaultValue/>
+        <description>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>dsname</formalParameterName>
+        <defaultValue/>
+        <description>A unique name that identifies this Datasource in the WebLogic domain.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>target</formalParameterName>
+        <defaultValue/>
+        <description>Instance name of the Server to include the Datasource. i.e: 'AdminServer'.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>driverurl</formalParameterName>
+        <defaultValue/>
+        <description>The URL of the database to connect to. The format of the URL varies by JDBC driver. The URL is passed to the JDBC driver to create the physical database connections.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>jndiname</formalParameterName>
+        <defaultValue/>
+        <description>The JNDI path to where this Datasource is bound. By default, the JNDI name is the name of the Datasource. Applications that look up the JNDI path will get a "javax.sql.Datasource" instance that corresponds to this Datasource.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>driverclass</formalParameterName>
+        <defaultValue/>
+        <description>The full package name of JDBC driver class used to create the physical database connections in the connection pool. (Note that this driver class must be in the classpath of any server to which it is deployed).</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>ds_credential</formalParameterName>
+        <defaultValue/>
+        <description>Credential for datasource.</description>
+        <required>0</required>
+        <type>credential</type>
+      </formalParameter>
+
+      
+      <formalParameter>
+          <formalParameterName>ds_initial_poolsize</formalParameterName>
+          <defaultValue/>
+          <description>Datasource initial poolsize</description>
+          <required>0</required>
+          <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+          <formalParameterName>ds_min_poolsize</formalParameterName>
+          <defaultValue/>
+          <description>
+              Datasource min poolsize
+          </description>
+          <required>0</required>
+          <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+          <formalParameterName>ds_max_poolsize</formalParameterName>
+          <defaultValue/>
+          <description>
+              Datasource max poolsize
+          </description>
+          <required>0</required>
+          <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+          <formalParameterName>ds_test_table</formalParameterName>
+          <defaultValue/>
+          <description>ds_test_table</description>
+          <required>0</required>
+          <type>entry</type>
+      </formalParameter>
+      <step>
+        <stepName>CreateOrUpdateDatasource</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command/>
+        <condition/>
+        <description/>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName/>
+        <parallel>0</parallel>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName/>
+        <retries>0</retries>
+        <shell>ec-perl</shell>
+        <timeLimit/>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory/>
+        <workspaceName/>
+        <procedureName>CreateOrUpdateDatasource</procedureName>
+        <projectName>EC-WebLogic</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+        <attachedParameters>
+            <formalParameterName>ds_credential</formalParameterName>
+        </attachedParameters>
+      </step>
+  </procedure>
+  
+  <procedure>
+      <procedureName>CreateOrUpdateJMSResource</procedureName>
+      <description>Creates or updates a JMS resource</description>
+      <jobNameTemplate>weblogic-createOrUpdateJMSResource-$[jobId]</jobNameTemplate>
+      <resourceName/>
+      <workspaceName/>
+      <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+      <propertySheet>
+        <property>
+          <propertyName>ec_parameterForm</propertyName>
+          <expandable>1</expandable>
+          <value/>
+        </property>
+        <property>
+          <propertyName>ec_customEditorData</propertyName>
+          <propertySheet>
+            <property>
+              <propertyName>parameters</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>configname</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>wlstabspath</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>jms_resource_type</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>jms_module_name</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>jms_resource_name</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>jndi_name</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>jms_server_name</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>subdeployment_name</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+      </propertySheet>
+      <formalParameter>
+        <formalParameterName>configname</formalParameterName>
+        <defaultValue/>
+        <description>Configuration name from which the Admin URL and credentials will be read.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>wlstabspath</formalParameterName>
+        <defaultValue/>
+        <description>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>jms_resource_type</formalParameterName>
+        <defaultValue/>
+        <description>jms_resource_type</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>jms_module_name</formalParameterName>
+        <defaultValue/>
+        <description>jms_module_name</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>jms_resource_name</formalParameterName>
+        <defaultValue/>
+        <description>jms_resource_name</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>jndi_name</formalParameterName>
+        <defaultValue/>
+        <description>jndi_name</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>jms_server_name</formalParameterName>
+        <defaultValue/>
+        <description>jms_server_name</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>subdeployment_name</formalParameterName>
+        <defaultValue/>
+        <description>subdeployment_name</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      <step>
+        <stepName>CreateOrUpdateJMSResource</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command/>
+        <condition/>
+        <description/>
+        <errorHandling>failProcedure</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName/>
+        <parallel>0</parallel>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName/>
+        <retries>0</retries>
+        <shell>ec-perl</shell>
+        <timeLimit/>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory/>
+        <workspaceName/>
+        <procedureName>CreateOrUpdateJMSResource</procedureName>
+        <projectName>EC-WebLogic</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+      </step>
+  </procedure>
+  
     <procedure>
       <procedureName>DeleteDatasource</procedureName>
       <description>Deletes a Datasource</description>
