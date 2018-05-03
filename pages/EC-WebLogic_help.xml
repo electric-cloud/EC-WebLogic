@@ -2740,6 +2740,11 @@
     <p>This is the <i>HelloWorld.jython</i> file used in the <i>Supplied File</i> option:</p>
     <img src="../../plugins/EC-WebLogic/images/RunWLST/EC-WLSRunWLST6.png" />
     <h1 id="rns">Release Notes</h1>
+    <h2>@PLUGIN_KEY@ 3.2.4</h2>
+    <ul>
+        <li>Configured the plugin to allow the ElectricFlow UI to render the plugin procedure parameters entirely using the configured form XMLs.</li>
+        <li>Enabled the plugin for managing the plugin configurations in-line when defining an application process step or a pipeline stage task.</li>
+    </ul>
     <h2>@PLUGIN_KEY@ 3.2.3</h2>
     <ul>
         <li>UpdateApp procedure has been marked as deprecated.</li>
