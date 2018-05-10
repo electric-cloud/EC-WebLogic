@@ -204,6 +204,11 @@ $xpath = $ec->attachCredential($projName, $credName,
      stepName => 'CreateOrUpdateDatasource'});
 $errors .= $ec->checkAllErrors($xpath);
 
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'CreateOrUpdateConnectionFactory',
+     stepName => 'CreateOrUpdateConnectionFactory'});
+$errors .= $ec->checkAllErrors($xpath);
+
 
 if ($errors ne '') {
 

@@ -27,7 +27,7 @@ use base 'EC::Plugin::Core';
 
 our $ENABLE_PARALLEL_EXEC_SUPPORT = 1;
 
-# functions 
+# functions
 sub parallel_exec_support {
     my ($p) = @_;
 
@@ -244,7 +244,7 @@ sub execute_jython_script {
     my ($self, %params) = @_;
 
     if (!$params{shell}) {
-        croak "Missing shell param";
+        $self->bail_out("Missing shell param, please provide path to wlst.sh pr wlst.cmd either in configuration or in the form params.");
     }
 
     my $check = $self->dryrun() ?

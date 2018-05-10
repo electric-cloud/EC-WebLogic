@@ -39,6 +39,7 @@
     <path>jython/check_server_status.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="check_server_status.jython"]/value</xpath>
   </file>
+
   <file>
     <path>jython/create_datasource.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_datasource.jython"]/value</xpath>
@@ -626,5 +627,17 @@
   <file>
     <path>parameterForms/ec_parameterForm-CreateOrUpdateDataSource.xml</path>
     <xpath>//procedure[procedureName="CreateOrUpdateDatasource"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>server/createOrUpdateConnectionFactory.pl</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateConnectionFactory"]/step[stepName="CreateOrUpdateConnectionFactory"]/command</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-CreateOrUpdateConnectionFactory.xml</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateConnectionFactory"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/create_or_update_connection_factory.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_connection_factory.jython"]/value</xpath>
   </file>
 </fileset>

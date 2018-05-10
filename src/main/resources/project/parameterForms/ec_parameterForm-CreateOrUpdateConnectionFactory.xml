@@ -1,0 +1,124 @@
+<!--
+
+     Copyright 2015 Electric Cloud, Inc.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
+<editor>
+    <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateOrUpdateConnectionFactory.xml</help>
+    <formElement>
+        <type>entry</type>
+        <label>Configuration Name:</label>
+        <property>configname</property>
+        <documentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</documentation>
+        <htmlDocumentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="/commander/pages/@PLUGIN_NAME@/configurations">configuration page</a>.</htmlDocumentation>
+        <required>1</required>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>WLST Absolute Path:</label>
+        <property>wlstabspath</property>
+        <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
+        <required>1</required>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Connection factory name:</label>
+        <property>cf_name</property>
+        <documentation>What would you like to name your new connection factory?</documentation>
+        <required>1</required>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>JNDI name:</label>
+        <property>jndi_name</property>
+        <documentation>What JNDI Name would you like to use to look up your new connection factory?</documentation>
+        <required>0</required>
+    </formElement>
+    <formElement>
+        <label>Subscription sharing policy:</label>
+        <property>cf_sharing_policy</property>
+        <type>select</type>
+        <option><name>Exclusive</name><value>exclusive</value></option>
+        <option><name>Sharable</name><value>sharable</value></option>
+        <required>1</required>
+        <documentation>
+            The Connection Factory Subscription Sharing Policy Subscribers can be used to control which subscribers can access new subscriptions. Should subscriptions created using this factory be sharable?
+        </documentation>
+    </formElement>
+    <formElement>
+        <label>Client id policy:</label>
+        <property>cf_client_id_policy</property>
+        <type>select</type>
+        <option><name>Restricted</name><value>restricted</value></option>
+        <option><name>Unrestricted</name><value>unrestricted</value></option>
+        <required>1</required>
+        <documentation>
+            The Client ID Policy indicates whether more than one JMS connection can use the same Client ID. Oracle recommends setting the Client ID policy to Unrestricted if sharing durable subscribers. Subscriptions created with different Client ID policies are always treated as independent subscriptions. What Client ID Policy would you like to use?
+        </documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Maximum messages per session:</label>
+        <property>cf_max_messages_per_session</property>
+        <documentation>A connection factory can limit the number of messages that can queued for an asynchronous session. Should this connection factory impose a limit?</documentation>
+        <value>10</value>
+    </formElement>
+    <formElement>
+        <type>checkbox</type>
+        <label>XA connection factory enabled:</label>
+        <property>cf_xa_enabled</property>
+        <documentation>Should this connection factory create sessions that are JTA aware, and create XA queues and XA topics?</documentation>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <value>1</value>
+    </formElement>
+    <formElement>
+        <type>checkbox</type>
+        <label>Attach JMSX userid:</label>
+        <property>cf_attach_jmsx_userid</property>
+        <documentation>Should the authenticated user name be attached to sent messages if the JMS destination is configured to support this behavior?</documentation>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <value>0</value>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>JMS module name:</label>
+        <property>jms_module_name</property>
+        <documentation>JMS module name.</documentation>
+        <required>1</required>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Subdeployment name:</label>
+        <property>subdeployment_name</property>
+        <documentation>Name of subdeployment.</documentation>
+        <required>0</required>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>JMS Server Name:</label>
+        <property>jms_server_name</property>
+        <documentation>JMS server name.</documentation>
+        <required>0</required>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Server Name:</label>
+        <property>server_name</property>
+        <documentation>Server name is required if you're not sure that JMS Module exists. If it does not - procedure will create JMS module and add Server as target to it.</documentation>
+        <required>0</required>
+    </formElement>
+</editor>

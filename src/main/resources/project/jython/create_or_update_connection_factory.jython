@@ -1,0 +1,178 @@
+#
+#  Copyright 2016 Electric Cloud, Inc.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+
+[% preamble %]
+
+# parameters section
+
+username = r'''
+[% username %]
+'''.strip()
+
+password = r'''
+[% password %]
+'''.strip()
+
+admin_url = r'''
+[% admin_url %]
+'''.strip()
+
+cf_name = r'''
+[% cf_name %]
+'''.strip()
+
+jndi_name = r'''
+[% jndi_name %]
+'''.strip()
+
+cf_sharing_policy = r'''
+[% cf_sharing_policy %]
+'''.strip()
+
+cf_client_id_policy = r'''
+[% cf_client_id_policy %]
+'''.strip()
+
+cf_max_messages_per_session = r'''
+[% cf_max_messages_per_session %]
+'''.strip()
+
+cf_max_messages_per_session = int(cf_max_messages_per_session)
+
+cf_xa_enabled = r'''
+[% cf_xa_enabled %]
+'''.strip()
+cf_xa_enabled = int(cf_xa_enabled)
+
+cf_attach_jmsx_userid = r'''
+[% cf_attach_jmsx_userid %]
+'''.strip()
+cf_attach_jmsx_userid = int(cf_attach_jmsx_userid)
+
+jms_module_name = r'''
+[% jms_module_name %]
+'''.strip()
+
+jms_server_name = r'''
+[% jms_server_name %]
+'''.strip()
+
+server_name = r'''
+[% server_name %]
+'''.strip()
+
+subdeployment_name = r'''
+[% subdeployment_name %]
+'''.strip()
+
+
+
+connect(username, password, admin_url)
+
+try:
+    startChanges()
+    cd('/')
+    if not checkJMSModule(jms_module_name):
+        warn("JMS Module %s does not exist" % (jms_module_name))
+        createJMSModule(jms_module_name, jms_server_name, server_name)
+
+    cdJMSModulePath(jms_module_name)
+
+    mode = 'edit'
+
+    if not getConnectionFactory(jms_module_name,cf_name):
+        mode = 'create'
+        print_debug('Working in CREATE mode')
+        print_info('Trying to create Connection factory ' + cf_name)
+        cf = cmo.createConnectionFactory(cf_name)
+        print_info('Trying to create JMS Module ' + jms_module_name)
+    else:
+        print_debug('Working in UPDATE mode. Resource exists')
+        updateJMSModule(jms_module_name, jms_server_name, server_name)
+
+
+
+    # cd to created resource
+    cdConnectionFactoryPath(jms_module_name,cf_name)
+    if jndi_name:
+        print_debug("Applying JNDI "+jndi_name)
+        set('JNDIName', jndi_name)
+    else:
+        #usually JNDI should be defined to work with connection factory from app via JMS module
+        warn("You did not define JNDI")
+
+    cd(getConnectionFactoryPath(jms_module_name,cf_name)+'/ClientParams/'+cf_name)
+    # Set Subscription Sharing Policy
+    print_debug("Set Subscription Sharing Policy to %s"%(cf_sharing_policy))
+    cmo.setSubscriptionSharingPolicy(cf_sharing_policy)
+    # Set Client ID Policy
+    print_debug("Set Client ID Policy to %s"%(cf_client_id_policy))
+    cmo.setClientIdPolicy(cf_client_id_policy)
+
+    # Set Max Messages per Session
+    if cf_max_messages_per_session:
+        print_debug("Set Max Messages per Session: %s"%(cf_max_messages_per_session))
+        cmo.setMessagesMaximum(cf_max_messages_per_session)
+
+    # Set XA
+    cd(getConnectionFactoryPath(jms_module_name,cf_name)+'/TransactionParams/'+cf_name)
+    if cf_xa_enabled:
+        cf_xa_enabled = True
+    else:
+        cf_xa_enabled = False
+    print_debug("Set XA connection factory enabled: %s"%(cf_xa_enabled))
+    cmo.setXAConnectionFactoryEnabled(cf_xa_enabled)
+
+    # Attach JMSX UserID
+    cd(getConnectionFactoryPath(jms_module_name,cf_name)+'/SecurityParams/'+cf_name)
+    if cf_attach_jmsx_userid:
+        cf_attach_jmsx_userid = True
+    else:
+        cf_attach_jmsx_userid = False
+    print_debug("Set attach JMSX userid: %s"%(cf_attach_jmsx_userid))
+    cmo.setAttachJMSXUserId(cf_attach_jmsx_userid)
+
+    cdConnectionFactoryPath(jms_module_name,cf_name)
+
+
+
+    if subdeployment_name:
+        if not checkSubDeployment(jms_module_name, subdeployment_name):
+            print_info("SubDeployment %s does not exist in JMS Module %s"%(subdeployment_name, jms_module_name))
+            createSubDeployment(jms_module_name, subdeployment_name)
+            print_info("SubDeployment %s was created in JMS Module %s"%(subdeployment_name, jms_module_name))
+            cdConnectionFactoryPath(jms_module_name,cf_name)
+        set('SubDeploymentName', subdeployment_name)
+        cdSubDeploymentPath(jms_module_name, subdeployment_name)
+        if jms_server_name and checkJMSServer(jms_server_name):
+            print_info("Adding target %s to SubDeployment %s"%(jms_server_name,subdeployment_name))
+            targets = []
+            for t in get('Targets'):
+                targets.append(t)
+            targets.append(getJMSServer(jms_server_name).objectName)
+            set('Targets', jarray.array(targets, ObjectName))
+        elif jms_server_name and not checkJMSServer(jms_server_name):
+            warn("JMS Server %s does not exist. It was not added to Connection Factory"%(jms_server_name))
+
+
+except WLSTException, e:
+    print "Failed to create Connection Factory"
+    print str(e)
+    discardChanges()
+    sys.exit(1)
+
+# everyghing is fine, commiting
+commitChanges()

@@ -271,6 +271,15 @@ my %createOrUpdateDatasource = (
     category    => "Application Server"
 );
 
+
+my %createOrUpdateConnectionFactory = (
+    label       => "WebLogic - Create Or Update Connection Factory",
+    procedure   => "CreateOrUpdateConnectionFactory",
+    description => "Creates or updates Connection Factory",
+    category    => "Application Server"
+);
+
+
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/EC-WebLogic - Start App");
 $batch->deleteProperty(
@@ -371,6 +380,9 @@ $batch->deleteProperty(
 
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update Datasource");
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update Connection Factory");
+
 
 @::createStepPickerSteps = (
     \%startApp,                    \%stopApp,
@@ -393,7 +405,7 @@ $batch->deleteProperty(
     \%deleteManagedServer,         \%startCluster,
     \%stopCluster,                 \%updateAppConfig,
     \%checkClusterStatus,          \%createOrUpdateJMSResource,
-    \%createOrUpdateDatasource
+    \%createOrUpdateDatasource,    \%createOrUpdateConnectionFactory
 );
 
 if ( $upgradeAction eq "upgrade" ) {
@@ -823,6 +835,15 @@ if ( $upgradeAction eq "upgrade" ) {
                 {
                     procedureName => 'CreateOrUpdateDatasource',
                     stepName      => 'CreateOrUpdateDatasource'
+                }
+            );
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'CreateOrUpdateConnectionFactory',
+                    stepName      => 'CreateOrUpdateConnectionFactory'
                 }
             );
         }

@@ -764,15 +764,18 @@ sub get_params_as_hashref {
         next unless defined $param;
         $retval->{$param_name} = trim_input($param);
     }
+    for my $name (sort keys %$retval) {
+        $self->out(0, qq{Got paramter "$name" with value "$retval->{$name}"\n});
+    }
     return $retval;
 }
 
-sub  trim_input { 
+sub  trim_input {
     my $s = shift;
 
     #remove leading and trailing spaces
     $s =~ s/^\s+|\s+$//g;
-    return $s 
+    return $s
 }
 
 sub render_template_from_property {
@@ -912,7 +915,7 @@ our $ESCAPE = 0;
 Returns rendered template. Accepts as parameters file or handle
 and variables hashref(key=>value).
 
-=back 
+=back
 
 =cut
 
