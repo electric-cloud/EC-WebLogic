@@ -12,7 +12,7 @@
             <h1>Oracle WebLogic Server</h1>
             <p>Plugin Version @PLUGIN_VERSION@</p>
             <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade" />
-            <p>Revised on Dec 23, 2016</p>
+            <p>Revised on Apr 29, 2018</p>
             <h1>Contents</h1>
             <ul>
                 <li><p><a href="#overview">Overview</a></p></li>
