@@ -46,21 +46,10 @@ cf_client_id_policy = r'''
 [% cf_client_id_policy %]
 '''.strip()
 
-cf_max_messages_per_session = r'''
-[% cf_max_messages_per_session %]
-'''.strip()
+cf_max_messages_per_session = read_int_parameter(r'''[% cf_max_messages_per_session %]''', None)
+cf_xa_enabled = read_bool_parameter(r'''[% cf_xa_enabled %]''')
+cf_attach_jmsx_userid = read_bool_parameter(r'''[% cf_attach_jmsx_userid %]''')
 
-cf_max_messages_per_session = int(cf_max_messages_per_session)
-
-cf_xa_enabled = r'''
-[% cf_xa_enabled %]
-'''.strip()
-cf_xa_enabled = int(cf_xa_enabled)
-
-cf_attach_jmsx_userid = r'''
-[% cf_attach_jmsx_userid %]
-'''.strip()
-cf_attach_jmsx_userid = int(cf_attach_jmsx_userid)
 
 jms_module_name = r'''
 [% jms_module_name %]

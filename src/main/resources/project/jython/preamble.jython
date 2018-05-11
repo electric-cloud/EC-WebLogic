@@ -427,3 +427,18 @@ def getClusterStatus(clusterName):
         retval[srv] = cmo.lookupServerLifeCycleRuntime(srv).getState()
     return retval
 
+
+def read_bool_parameter(value):
+    value = value.strip()
+    if value:
+        return True
+    else:
+        return False
+
+def read_int_parameter(value, default_value = 0):
+    value = value.strip()
+    if value:
+        return int(value)
+    else:
+        return default_value
+
