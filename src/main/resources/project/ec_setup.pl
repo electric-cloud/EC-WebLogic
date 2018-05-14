@@ -271,7 +271,6 @@ my %createOrUpdateDatasource = (
     category    => "Application Server"
 );
 
-
 my %createOrUpdateConnectionFactory = (
     label       => "WebLogic - Create Or Update Connection Factory",
     procedure   => "CreateOrUpdateConnectionFactory",
@@ -375,11 +374,9 @@ $batch->deleteProperty(
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Create Or JMS Resource");
 
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update JMS Resource");
+# $batch->deleteProperty(
+#     "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update Datasource");
 
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update Datasource");
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update Connection Factory");
 
@@ -404,8 +401,7 @@ $batch->deleteProperty(
     \%deleteCluster,               \%createManagedServer,
     \%deleteManagedServer,         \%startCluster,
     \%stopCluster,                 \%updateAppConfig,
-    \%checkClusterStatus,          \%createOrUpdateJMSResource,
-    \%createOrUpdateDatasource,    \%createOrUpdateConnectionFactory
+    \%checkClusterStatus,          \%createOrUpdateConnectionFactory
 );
 
 if ( $upgradeAction eq "upgrade" ) {
@@ -820,23 +816,15 @@ if ( $upgradeAction eq "upgrade" ) {
                     stepName      => 'CheckClusterStatus'
                 }
             );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateOrUpdateJMSResource',
-                    stepName      => 'CreateOrUpdateJMSResource'
-                }
-            );
 
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateOrUpdateDatasource',
-                    stepName      => 'CreateOrUpdateDatasource'
-                }
-            );
+            # $batch->attachCredential(
+            #     "\$[/plugins/$pluginName/project]",
+            #     $cred,
+            #     {
+            #         procedureName => 'CreateOrUpdateDatasource',
+            #         stepName      => 'CreateOrUpdateDatasource'
+            #     }
+            # );
 
             $batch->attachCredential(
                 "\$[/plugins/$pluginName/project]",

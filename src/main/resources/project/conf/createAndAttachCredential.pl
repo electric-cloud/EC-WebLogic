@@ -194,15 +194,10 @@ $xpath = $ec->attachCredential($projName, $credName,
      stepName => 'CheckClusterStatus'});
 $errors .= $ec->checkAllErrors($xpath);
 
-$xpath = $ec->attachCredential($projName, $credName,
-    {procedureName => 'CreateOrUpdateJMSResource',
-     stepName => 'CreateOrUpdateJMSResource'});
-$errors .= $ec->checkAllErrors($xpath);
-
-$xpath = $ec->attachCredential($projName, $credName,
-    {procedureName => 'CreateOrUpdateDatasource',
-     stepName => 'CreateOrUpdateDatasource'});
-$errors .= $ec->checkAllErrors($xpath);
+# $xpath = $ec->attachCredential($projName, $credName,
+#     {procedureName => 'CreateOrUpdateDatasource',
+#      stepName => 'CreateOrUpdateDatasource'});
+# $errors .= $ec->checkAllErrors($xpath);
 
 $xpath = $ec->attachCredential($projName, $credName,
     {procedureName => 'CreateOrUpdateConnectionFactory',

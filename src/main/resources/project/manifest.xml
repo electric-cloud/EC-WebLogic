@@ -39,7 +39,6 @@
     <path>jython/check_server_status.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="check_server_status.jython"]/value</xpath>
   </file>
-
   <file>
     <path>jython/create_datasource.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_datasource.jython"]/value</xpath>
@@ -160,15 +159,11 @@
     <path>jython/check_cluster_status.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="check_cluster_status.jython"]/value</xpath>
   </file>
-  <file>
-    <path>jython/create_or_update_jms_resource.jython</path>
-    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_jms_resource.jython"]/value</xpath>
-  </file>
-  <file>
+<!--   <file>
     <path>jython/create_or_update_datasource.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_datasource.jython"]/value</xpath>
   </file>
-  <!-- create/edit config forms starting from here -->
+ -->  <!-- create/edit config forms starting from here -->
   <file>
     <path>WebLogicCreateConfigForm.xml</path>
     <xpath>//property[propertyName="ui_forms"]/propertySheet/property[propertyName="WebLogicCreateConfigForm"]/value</xpath>
