@@ -1,0 +1,101 @@
+#
+#  Copyright 2016 Electric Cloud, Inc.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+
+[% preamble %]
+
+# parameters section
+
+username = r'''
+[% username %]
+'''.strip()
+
+password = r'''
+[% password %]
+'''.strip()
+
+admin_url = r'''
+[% admin_url %]
+'''.strip()
+
+jms_resource_type = r'''
+[% jms_resource_type %]
+'''.strip()
+
+jms_module_name = r'''
+[% jms_module_name %]
+'''.strip()
+
+jms_resource_name = r'''
+[% jms_resource_name %]
+'''.strip()
+
+jndi_name = r'''
+[% jndi_name %]
+'''.strip()
+
+jms_server_name = r'''
+[% jms_server_name %]
+'''.strip()
+
+subdeployment_name = r'''
+[% subdeployment_name %]
+'''.strip()
+
+resource_path = ''
+if jms_resource_type == 'topic':
+    resource_path = '/Topics/'
+elif jms_resource_type == 'queue':
+    resource_path = '/Queues/'
+else:
+    print 'Wrong JMS Resource Type: %s' % (jms_resource_type)
+    sys.exit(1)
+
+# end of parameters
+connect(username, password, admin_url)
+
+try:
+    startChanges()
+    cd('/')
+    cd('/JMSSystemResources/' + jms_module_name + '/JMSResource/' + jms_module_name)
+    mode = 'create'
+    if not getMBean('/JMSSystemResources/' + jms_module_name + '/JMSResource/' + jms_module_name + resource_path + jms_resource_name):
+        mode = 'edit'
+
+    if mode == 'edit':
+        if jms_resource_type == 'topic':
+            cmo.createTopic(jms_resource_name)
+        else:
+            cmo.createQueue(jms_resource_name)
+
+    # cd to created resource
+    cd('/JMSSystemResources/' + jms_module_name + '/JMSResource/' + jms_module_name + resource_path + jms_resource_name)
+    if jndi_name:
+        set('JNDIName', jndi_name)
+
+    if subdeployment_name:
+        set('SubDeploymentName', subdeployment_name)
+        cd('/JMSSystemResources/' + jms_module_name + '/SubDeployments/' + subdeployment_name)
+        if jms_server_name:
+            cmo.addTarget(getMBean('/JMSServers/' + jms_server_name))
+
+except WLSTException, e:
+    print "Failed to create JMS resource"
+    print str(e)
+    discardChanges()
+    sys.exit(1)
+
+# everyghing is fine, commiting
+commitChanges()

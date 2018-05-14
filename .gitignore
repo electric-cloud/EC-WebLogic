@@ -11,3 +11,5 @@
 /target
 /export
 /staging
+.ecupdate-on-place.yml
+.onsave

@@ -14,6 +14,8 @@
 #  limitations under the License.
 #
 
+from javax.enterprise.deploy.spi.status import ProgressListener
+
 [% preamble %]
 
 # parameters section
@@ -140,7 +142,7 @@ if application_exists and isRedeploymentPossible():
     print "Redeployment:"
     if retire_timeout:
         optionsDict['retireTimeout'] = retire_timeout
-
+    
     runRedeploy(application_name, application_path, plan_path, optionsDict)
 else:
     print "Deployment:"

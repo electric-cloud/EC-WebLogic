@@ -47,6 +47,7 @@ sub main {
     }
     $params->{wlstabspath} = $wl->esc_args($params->{wlstabspath});
 
+
     my $config_name = $params->{configname};
 
     if ($params->{maxelapsedtime} && $params->{maxelapsedtime} !~ m/^\d+$/s) {
@@ -60,6 +61,10 @@ sub main {
     if ($cred->{java_home}) {
         $ENV{JAVA_HOME} = $cred->{java_home};
     }
+    
+    #TO BE CHANGED TO THE NAME WITH _ _
+    $params->{wlstabspath} = $cred->{wlst_path} unless ($params->{wlstabspath});
+
     my $render_params = {
         username => $cred->{user},
         password => $cred->{password},

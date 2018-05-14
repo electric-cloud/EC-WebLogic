@@ -52,11 +52,16 @@ sub main {
         $params->{block} = 'false';
     }
 
+
+    my $cred = $wl->get_credentials($params->{configname});
+    #TO BE CHANGED TO THE NAME WITH _ _
+    $params->{wlstabspath} = $cred->{wlst_path} unless ($params->{wlstabspath});
+
     my $check = $wl->check_executable($params->{wlstabspath});
     unless ($check->{ok}) {
         $wl->bail_out($check->{msg});
     }
-    my $cred = $wl->get_credentials($params->{configname});
+    
 
     my $render_params = {
         username => $cred->{user},

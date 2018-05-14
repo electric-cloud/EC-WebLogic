@@ -1,0 +1,143 @@
+#
+#  Copyright 2016 Electric Cloud, Inc.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+
+[% preamble %]
+
+# parameters section
+
+username = r'''
+[% username %]
+'''.strip()
+
+password = r'''
+[% password %]
+'''.strip()
+
+admin_url = r'''
+[% admin_url %]
+'''.strip()
+
+dq_name = r'''
+[% cf_name %]
+'''.strip()
+
+jndi_name = r'''
+[% jndi_name %]
+'''.strip()
+
+destination_type = r'''
+[% destination_type %]
+'''.strip()
+
+template = r'''
+[% template %]
+'''.strip()
+
+jms_module_name = r'''
+[% jms_module_name %]
+'''.strip()
+
+jms_server_name = r'''
+[% jms_server_name %]
+'''.strip()
+
+server_name = r'''
+[% server_name %]
+'''.strip()
+
+subdeployment_name = r'''
+[% subdeployment_name %]
+'''.strip()
+
+def getDistributedQueuePath(jms_module_name,dq_name):
+    return "%s/UniformDistributedQueues/%s"%(getJMSModulePath(jms_module_name),dq_name) 
+
+def getDistributedQueue(jms_module_name,dq_name):
+    return getMBean(getDistributedQueuePath(jms_module_name,dq_name))
+
+def cdDistributedQueuePath(jms_module_name,dq_name):
+    cd(getDistributedQueuePath(jms_module_name,dq_name))
+
+connect(username, password, admin_url)
+
+myNewDistributedQueue=create(dQueueName, 'UniformDistributedQueue')
+
+    myNewDistributedQueue.setJNDIName(dQueueJNDIName)
+
+    myNewDistributedQueue.setSubDeploymentName(mySubDeployment)
+
+try:
+    startChanges()
+    cd('/')
+    if not checkJMSModule(jms_module_name):
+        warn("JMS Module %s does not exist" % (jms_module_name))
+        createJMSModule(jms_module_name, jms_server_name, server_name)
+    
+    cdJMSModulePath(jms_module_name)
+
+    mode = 'edit'
+
+    if not getDistributedQueue(jms_module_name,dq_name):
+        mode = 'create'
+        print_debug('Working in CREATE mode')
+        print_info('Trying to create Uniform Distributed Queue ' + dq_name)
+        dq = create(dq_name, 'UniformDistributedQueue')
+    else:
+        print_debug('Working in UPDATE mode. Resource exists')
+        updateJMSModule(jms_module_name, jms_server_name, server_name)
+
+
+
+    # cd to created resource
+    cdDistributedQueuePath(jms_module_name,dq_name)
+    if jndi_name:
+        print_debug("Applying JNDI "+jndi_name)
+        set('JNDIName', jndi_name)
+        
+    else:
+        #usually JNDI should be defined to work with connection factory from app via JMS module
+        warn("You did not define JNDI")
+
+    #destination_type, template management research
+
+
+    if subdeployment_name:
+        if not checkSubDeployment(jms_module_name, subdeployment_name):
+            print_info("SubDeployment %s does not exist in JMS Module %s"%(subdeployment_name, jms_module_name))
+            createSubDeployment(jms_module_name, subdeployment_name)
+            print_info("SubDeployment %s was created in JMS Module %s"%(subdeployment_name, jms_module_name))
+            cdDistributedQueuePath(jms_module_name,dq_name)
+        set('SubDeploymentName', subdeployment_name)
+        cdSubDeploymentPath(jms_module_name, subdeployment_name)
+        if jms_server_name and checkJMSServer(jms_server_name):
+            print_info("Adding target %s to SubDeployment %s"%(jms_server_name,subdeployment_name))
+            targets = []
+            for t in get('Targets'):
+                targets.append(t)
+            targets.append(getJMSServer(jms_server_name).objectName)
+            set('Targets', jarray.array(targets, ObjectName))
+        elif jms_server_name and not checkJMSServer(jms_server_name):
+            warn("JMS Server %s does not exist. It was not added to Connection Factory"%(jms_server_name))
+
+
+except WLSTException, e:
+    print "Failed to create Distributed Queue"
+    print str(e)
+    discardChanges()
+    sys.exit(1)
+
+# everyghing is fine, commiting
+commitChanges()

@@ -100,6 +100,7 @@ sub get_credentials {
             java_vendor => 'java_vendor',
             mw_home => 'mw_home',
             weblogic_url => 'weblogic_url',
+            wlst_path => 'wlst_path',
             debug_level => 'debug_level',
             enable_exclusive_sessions => 'enable_exclusive_sessions',
             enable_named_sessions => 'enable_named_sessions'
@@ -147,6 +148,18 @@ sub get_common_credentials {
     return $credentials;
 }
 
+
+sub get_step_credential {
+    my ($self, $cred_name) = @_;
+
+    return {} unless $cred_name;
+
+    my $xpath = $self->ec->getFullCredential($cred_name);
+    my $user_name = $xpath->findvalue('//userName')->string_value;
+    my $password = $xpath->findvalue('//password')->string_value;
+
+    return {userName => $user_name, password => $password};
+}
 
 sub write_deployment_plan {
     my ($self, %params) = @_;
@@ -311,7 +324,8 @@ sub render_template_from_property {
 
     my $preamble_params = {
         enable_exclusive_sessions => 0,
-        enable_named_sessions => 0
+        enable_named_sessions => 0,
+        debug_level => $self->{_credentials}->{debug_level}
     };
 
     if ($self->{_credentials}->{enable_named_sessions}) {

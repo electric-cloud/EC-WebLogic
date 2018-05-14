@@ -45,6 +45,8 @@ sub main {
 
     my $cred = $wl->get_credentials($params->{configname});
     my $user_cred = $wl->get_common_credentials('user_credentials');
+
+    $params->{wlst_abs_path} = $cred->{wlst_path} unless ($params->{wlst_abs_path});
     my $check = $wl->check_executable($params->{wlst_abs_path});
 
     if (!$check->{ok}) {

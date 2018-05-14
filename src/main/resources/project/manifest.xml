@@ -17,6 +17,7 @@
 
 -->
 <fileset>
+    <!-- perl and jython modules starts from here -->
   <file>
     <path>lib/EC/Plugin/Core.pm</path>
     <xpath>//property[propertyName="EC::Plugin::Core"]/value</xpath>
@@ -33,6 +34,7 @@
     <path>jython/preamble.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="preamble.jython"]/value</xpath>
   </file>
+  <!-- Procedures jython scripts starting from here  -->
   <file>
     <path>jython/check_server_status.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="check_server_status.jython"]/value</xpath>
@@ -134,6 +136,70 @@
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_managed_server.jython"]/value</xpath>
   </file>
   <file>
+    <path>jython/create_or_update_connection_factory.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_connection_factory.jython"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/delete_connection_factory.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_connection_factory.jython"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/create_or_update_distributed_queue.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_distributed_queue.jython"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/delete_distributed_queue.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_distributed_queue.jython"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/create_or_update_foreign_server.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_foreign_server.jython"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/delete_foreign_server.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_foreign_server.jython"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/create_or_update_distributed_topic.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_distributed_topic.jython"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/delete_distributed_topic.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_distributed_topic.jython"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/create_or_update_mail_session.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_mail_session.jython"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/delete_mail_session.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_mail_session.jython"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/create_or_update_quota.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_quota.jython"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/delete_quota.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_quota.jython"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/create_or_update_file_store.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_file_store.jython"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/delete_file_store.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_file_store.jython"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/create_or_update_jdbc_store.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_jdbc_store.jython"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/delete_jdbc_store.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_jdbc_store.jython"]/value</xpath>
+  </file>
+  <file>
     <path>jython/add_server_to_cluster.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="add_server_to_cluster.jython"]/value</xpath>
   </file>
@@ -158,6 +224,15 @@
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="check_cluster_status.jython"]/value</xpath>
   </file>
   <file>
+    <path>jython/create_or_update_jms_resource.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_jms_resource.jython"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/create_or_update_datasource.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_datasource.jython"]/value</xpath>
+  </file>
+  <!-- create/edit config forms starting from here -->
+  <file>
     <path>WebLogicCreateConfigForm.xml</path>
     <xpath>//property[propertyName="ui_forms"]/propertySheet/property[propertyName="WebLogicCreateConfigForm"]/value</xpath>
   </file>
@@ -165,6 +240,7 @@
     <path>WebLogicEditConfigForm.xml</path>
     <xpath>//property[propertyName="ui_forms"]/propertySheet/property[propertyName="WebLogicEditConfigForm"]/value</xpath>
   </file>
+  <!-- postp code starts from here -->
   <file>
     <path>matchers/stopServerMatchers.pl</path>
     <xpath>//property[propertyName="stopserver_matchers"]/value</xpath>
@@ -261,6 +337,7 @@
     <path>matchers/configureUserLockoutManagerMatchers.pl</path>
     <xpath>//property[propertyName="configureuserlockoutmanager_matchers"]/value</xpath>
   </file>
+  <!-- perl procedures code -->
   <file>
     <path>server/startAdministrationServer.pl</path>
     <xpath>//procedure[procedureName="StartAdminServer"]/step[stepName="StartAdminServer"]/command</xpath>
@@ -284,6 +361,70 @@
   <file>
     <path>server/startManagedServer.pl</path>
     <xpath>//procedure[procedureName="StartManagedServer"]/step[stepName="StartInstance"]/command</xpath>
+  </file>
+  <file>
+    <path>server/createOrUpdateConnectionFactory.pl</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateConnectionFactory"]/step[stepName="CreateOrUpdateConnectionFactory"]/command</xpath>
+  </file>
+  <file>
+    <path>server/deleteConnectionFactory.pl</path>
+    <xpath>//procedure[procedureName="DeleteConnectionFactory"]/step[stepName="DeleteConnectionFactory"]/command</xpath>
+  </file>
+  <file>
+    <path>server/createOrUpdateDistributedQueue.pl</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateDistributedQueue"]/step[stepName="CreateOrUpdateDistributedQueue"]/command</xpath>
+  </file>
+  <file>
+    <path>server/deleteDistributedQueue.pl</path>
+    <xpath>//procedure[procedureName="DeleteDistributedQueue"]/step[stepName="DeleteDistributedQueue"]/command</xpath>
+  </file>
+  <file>
+    <path>server/createOrUpdateDistributedTopic.pl</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateDistributedTopic"]/step[stepName="CreateOrUpdateDistributedTopic"]/command</xpath>
+  </file>
+  <file>
+    <path>server/deleteDistributedTopic.pl</path>
+    <xpath>//procedure[procedureName="DeleteDistributedTopic"]/step[stepName="DeleteDistributedTopic"]/command</xpath>
+  </file>
+  <file>
+    <path>server/createOrUpdateForeignServer.pl</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateForeignServer"]/step[stepName="CreateOrUpdateForeignServer"]/command</xpath>
+  </file>
+  <file>
+    <path>server/deleteForeignServer.pl</path>
+    <xpath>//procedure[procedureName="DeleteForeignServer"]/step[stepName="DeleteForeignServer"]/command</xpath>
+  </file>
+  <file>
+    <path>server/createOrUpdateMailSession.pl</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateMailSession"]/step[stepName="CreateOrUpdateMailSession"]/command</xpath>
+  </file>
+  <file>
+    <path>server/deleteDistributedMailSession.pl</path>
+    <xpath>//procedure[procedureName="DeleteDistributedMailSession"]/step[stepName="DeleteDistributedMailSession"]/command</xpath>
+  </file>
+  <file>
+    <path>server/createOrUpdateQuota.pl</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateQuota"]/step[stepName="CreateOrUpdateQuota"]/command</xpath>
+  </file>
+  <file>
+    <path>server/deleteQuota.pl</path>
+    <xpath>//procedure[procedureName="DeleteQuota"]/step[stepName="DeleteQuota"]/command</xpath>
+  </file>
+  <file>
+    <path>server/createOrUpdateFileStore.pl</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateFileStore"]/step[stepName="CreateOrUpdateFileStore"]/command</xpath>
+  </file>
+  <file>
+    <path>server/deleteFileStore.pl</path>
+    <xpath>//procedure[procedureName="DeleteFileStore"]/step[stepName="DeleteFileStore"]/command</xpath>
+  </file>
+  <file>
+    <path>server/createOrUpdateJDBCStore.pl</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateJDBCStore"]/step[stepName="CreateOrUpdateJDBCStore"]/command</xpath>
+  </file>
+  <file>
+    <path>server/deleteJDBCStore.pl</path>
+    <xpath>//procedure[procedureName="DeleteJDBCStore"]/step[stepName="DeleteJDBCStore"]/command</xpath>
   </file>
   <file>
     <path>server/startNodeManager.pl</path>
@@ -425,6 +566,15 @@
     <path>server/checkClusterStatus.pl</path>
     <xpath>//procedure[procedureName="CheckClusterStatus"]/step[stepName="CheckClusterStatus"]/command</xpath>
   </file>
+  <file>
+    <path>server/createOrUpdateJMSResource.pl</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateJMSResource"]/step[stepName="CreateOrUpdateJMSResource"]/command</xpath>
+  </file>
+  <file>
+    <path>server/createOrUpdateDatasource.pl</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateDatasource"]/step[stepName="CreateOrUpdateDatasource"]/command</xpath>
+  </file>
+  <!-- config management procedures -->
   <file>
     <path>conf/createcfg.pl</path>
     <xpath>//procedure[procedureName="CreateConfiguration"]/step[stepName="CreateConfiguration"]/command</xpath>
@@ -574,6 +724,62 @@
     <xpath>//procedure[procedureName="CreateManagedServer"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
   </file>
   <file>
+    <path>parameterForms/ec_parameterForm-CreateOrUpdateConnectionFactory.xml</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateConnectionFactory"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-DeleteConnectionFactory.xml</path>
+    <xpath>//procedure[procedureName="DeleteConnectionFactory"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-CreateOrUpdateDistributedQueue.xml</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateDistributedQueue"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-DeleteDistributedQueue.xml</path>
+    <xpath>//procedure[procedureName="DeleteDistributedQueue"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-CreateOrUpdateDistributedTopic.xml</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateDistributedTopic"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-DeleteDistributedTopic.xml</path>
+    <xpath>//procedure[procedureName="DeleteDistributedTopic"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-CreateOrUpdateMailSession.xml</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateMailSession"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-DeleteMailSession.xml</path>
+    <xpath>//procedure[procedureName="DeleteMailSession"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-CreateOrUpdateQuota.xml</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateQuota"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-DeleteQuota.xml</path>
+    <xpath>//procedure[procedureName="DeleteQuota"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-CreateOrUpdateFileStore.xml</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateFileStore"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-DeleteFileStore.xml</path>
+    <xpath>//procedure[procedureName="DeleteFileStore"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-CreateOrUpdateJDBCStore.xml</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateJDBCStore"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-DeleteJDBCStore.xml</path>
+    <xpath>//procedure[procedureName="DeleteJDBCStore"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
     <path>parameterForms/ec_parameterForm-DeleteManagedServer.xml</path>
     <xpath>//procedure[procedureName="DeleteManagedServer"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
   </file>
@@ -596,5 +802,13 @@
   <file>
     <path>parameterForms/ec_parameterForm-CheckClusterStatus.xml</path>
     <xpath>//procedure[procedureName="CheckClusterStatus"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-CreateOrUpdateJMSResource.xml</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateJMSResource"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-CreateOrUpdateDataSource.xml</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateDatasource"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
   </file>
 </fileset>

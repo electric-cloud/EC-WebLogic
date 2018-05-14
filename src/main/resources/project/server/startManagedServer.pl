@@ -44,6 +44,10 @@ sub main {
 
     $params->{maxelapsedtime} ||= 180;
     my $cred = $wl->get_credentials($params->{configname});
+
+    #TO BE CHANGED TO THE NAME WITH _ _
+    $params->{wlstabspath} = $cred->{wlst_path} unless ($params->{wlstabspath});
+    
     if ($params->{maxelapsedtime} !~ m/^\d+$/s) {
         $wl->bail_out("Timeout should be a positive integer value");
     }

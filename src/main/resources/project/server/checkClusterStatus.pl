@@ -40,6 +40,9 @@ sub main {
     });
 
     $wl->out(1, "Executable file: ", $params->{wlstabspath});
+
+    #TO BE CHANGED TO THE NAME WITH _ _
+    $params->{wlstabspath} = $cred->{wlst_path} unless ($params->{wlstabspath});
     my $check = $wl->check_executable($params->{wlstabspath});
 
     unless ($check->{ok}) {

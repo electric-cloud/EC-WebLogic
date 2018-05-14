@@ -257,6 +257,146 @@ my %checkClusterStatus = (
     category    => "Application Server"
 );
 
+my %createOrUpdateJMSResource = (
+    label       => "WebLogic - Create Or Update JMS Resource",
+    procedure   => "CreateOrUpdateJMSResource",
+    description => "Creates or updates JMS resource",
+    category    => "Application Server"
+);
+
+my %createOrUpdateConnectionFactory = (
+    label       => "WebLogic - Create Or Update Connection Factory",
+    procedure   => "CreateOrUpdateConnectionFactory",
+    description => "Creates or updates Connection Factory",
+    category    => "Application Server"
+);
+
+my %createOrUpdateDistributedQueue = (
+    label       => "WebLogic - Create Or Update Distributed Queue",
+    procedure   => "CreateOrUpdateDistributedQueue",
+    description => "Creates or updates Distributed Queue",
+    category    => "Application Server"
+);
+
+
+my %createOrUpdateDistributedTopic = (
+    label       => "WebLogic - Create Or Update Distributed Topic",
+    procedure   => "CreateOrUpdateDistributedTopic",
+    description => "Creates or updates Distributed Topic",
+    category    => "Application Server"
+);
+
+
+my %createOrUpdateForeignServer = (
+    label       => "WebLogic - Create Or Update Foreign Server",
+    procedure   => "CreateOrUpdateForeignServer",
+    description => "Creates or updates Foreign Server",
+    category    => "Application Server"
+);
+
+
+my %createOrUpdateMailSession = (
+    label       => "WebLogic - Create Or Update Mail Session",
+    procedure   => "CreateOrUpdateMailSession",
+    description => "Creates or updates Mail Session",
+    category    => "Application Server"
+);
+
+
+my %createOrUpdateQuota = (
+    label       => "WebLogic - Create Or Update Quota",
+    procedure   => "CreateOrUpdateQuota",
+    description => "Creates or updates Quota",
+    category    => "Application Server"
+);
+
+
+my %createOrUpdateFileStore = (
+    label       => "WebLogic - Create Or Update File Store",
+    procedure   => "CreateOrUpdateFileStore",
+    description => "Creates or updates File Store",
+    category    => "Application Server"
+);
+
+my %createOrUpdateJDBCStore = (
+    label       => "WebLogic - Create Or Update JDBC Store",
+    procedure   => "CreateOrUpdateJDBCStore",
+    description => "Creates or updates JDBC Store",
+    category    => "Application Server"
+);
+
+my %deleteConnectionFactory = (
+    label       => "WebLogic - Create Or Update Connection Factory",
+    procedure   => "DeleteConnectionFactory",
+    description => "Deletes Connection Factory",
+    category    => "Application Server"
+);
+
+my %deleteDistributedQueue = (
+    label       => "WebLogic - Create Or Update Distributed Queue",
+    procedure   => "DeleteDistributedQueue",
+    description => "Deletes Distributed Queue",
+    category    => "Application Server"
+);
+
+
+my %deleteDistributedTopic = (
+    label       => "WebLogic - Create Or Update Distributed Topic",
+    procedure   => "DeleteDistributedTopic",
+    description => "Deletes Distributed Topic",
+    category    => "Application Server"
+);
+
+
+my %deleteForeignServer = (
+    label       => "WebLogic - Create Or Update Foreign Server",
+    procedure   => "DeleteForeignServer",
+    description => "Deletes Foreign Server",
+    category    => "Application Server"
+);
+
+
+my %deleteMailSession = (
+    label       => "WebLogic - Create Or Update Mail Session",
+    procedure   => "DeleteMailSession",
+    description => "Deletes Mail Session",
+    category    => "Application Server"
+);
+
+
+my %deleteQuota = (
+    label       => "WebLogic - Create Or Update Quota",
+    procedure   => "DeleteQuota",
+    description => "Deletes Quota",
+    category    => "Application Server"
+);
+
+
+my %deleteFileStore = (
+    label       => "WebLogic - Create Or Update File Store",
+    procedure   => "DeleteFileStore",
+    description => "Deletes File Store",
+    category    => "Application Server"
+);
+
+my %deleteJDBCStore = (
+    label       => "WebLogic - Create Or Update JDBC Store",
+    procedure   => "DeleteJDBCStorey",
+    description => "Deletes JDBC Store",
+    category    => "Application Server"
+);
+
+
+my %createOrUpdateDatasource = (
+    label       => "WebLogic - Create Or Update Datasource",
+    procedure   => "CreateOrUpdateDatasource",
+    description => "Create or update datasource",
+    category    => "Application Server"
+);
+
+
+
+
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/EC-WebLogic - Start App");
 $batch->deleteProperty(
@@ -349,6 +489,64 @@ $batch->deleteProperty(
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Check Cluster Status");
 
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Create Or JMS Resource");
+
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update JMS Resource");
+
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update Connection Factory");
+
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Delete Connection Factory");
+
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update Distributed Queue");
+
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Delete Distributed Queue");
+
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update Distributed Topic");
+
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Delete Distributed Topic");
+
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update Foreign Server");
+
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Delete Foreign Server");
+
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update Mail Session");
+
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Delete Mail Session");
+
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update Quota");
+
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Delete Quota");
+
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update File Store");
+
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Delete Connection File Store");
+
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update JDBC Store");
+
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Delete JDBC Store");
+
+
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update Datasource");
+
 @::createStepPickerSteps = (
     \%startApp,                    \%stopApp,
     \%checkServerStatus,           \%deployApp,
@@ -369,7 +567,17 @@ $batch->deleteProperty(
     \%deleteCluster,               \%createManagedServer,
     \%deleteManagedServer,         \%startCluster,
     \%stopCluster,                 \%updateAppConfig,
-    \%checkClusterStatus
+    \%checkClusterStatus,          \%createOrUpdateJMSResource,
+    \%createOrUpdateDatasource,    
+    \%createOrUpdateConnectionFactory, \%deleteConnectionFactory,
+    \%createOrUpdateDistributedQueue, \%deleteDistributedQueue,
+    \%createOrUpdateDistributedTopic, \%deleteDistributedTopic,
+    \%createOrUpdateForeignServer, \%deleteForeignServer,
+    \%createOrUpdateMailSession, \%deleteMailSession,
+    \%createOrUpdateQuota, \%deleteQuota,
+    \%createOrUpdateFileStore, \%deleteFileStore,
+    \%createOrUpdateJDBCStore, \%deleteJDBCStore,
+
 );
 
 if ( $upgradeAction eq "upgrade" ) {
@@ -782,6 +990,151 @@ if ( $upgradeAction eq "upgrade" ) {
                 {
                     procedureName => 'CheckClusterStatus',
                     stepName      => 'CheckClusterStatus'
+                }
+            );
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'CreateOrUpdateJMSResource',
+                    stepName      => 'CreateOrUpdateJMSResource'
+                }
+            );
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'CreateOrUpdateConnectionFactory',
+                    stepName      => 'CreateOrUpdateConnectionFactory'
+                }
+            );
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'DeleteConnectionFactory',
+                    stepName      => 'DeleteConnectionFactory'
+                }
+            );
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'CreateOrUpdateDistributedQueue',
+                    stepName      => 'CreateOrUpdateDistributedQueue'
+                }
+            );
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'DeleteDistributedQueue',
+                    stepName      => 'DeleteDistributedQueue'
+                }
+            );
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'CreateOrUpdateDistributedTopic',
+                    stepName      => 'CreateOrUpdateDistributedTopic'
+                }
+            );
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'DeleteDistributedTopic',
+                    stepName      => 'DeleteDistributedTopic'
+                }
+            );
+
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'CreateOrUpdateForeignServer',
+                    stepName      => 'CreateOrUpdateForeignServer'
+                }
+            );
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'DeleteForeignServer',
+                    stepName      => 'DeleteForeignServer'
+                }
+            );
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'CreateOrUpdateMailSession',
+                    stepName      => 'CreateOrUpdateMailSession'
+                }
+            );
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'DeleteQuota',
+                    stepName      => 'DeleteQuota'
+                }
+            );
+
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'CreateOrUpdateFileStore',
+                    stepName      => 'CreateOrUpdateFileStore'
+                }
+            );
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'DeleteFileStore',
+                    stepName      => 'DeleteFileStore'
+                }
+            );
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'CreateOrUpdateJDBCStore',
+                    stepName      => 'CreateOrUpdateJDBCStore'
+                }
+            );
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'DeleteJDBCStore',
+                    stepName      => 'DeleteJDBCStore'
+                }
+            );
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'CreateOrUpdateDatasource',
+                    stepName      => 'CreateOrUpdateDatasource'
                 }
             );
         }
