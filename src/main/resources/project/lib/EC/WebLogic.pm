@@ -37,7 +37,6 @@ sub parallel_exec_support {
     return $ENABLE_PARALLEL_EXEC_SUPPORT;
 }
 
-
 sub out {
     my ($self, $level, @message) = @_;
 
@@ -49,7 +48,6 @@ sub out {
     $level ||= 1;
     return $self->SUPER::out(1, @message);
 }
-
 
 sub after_init_hook {
     my ($self, %params) = @_;
@@ -69,6 +67,8 @@ sub after_init_hook {
         $self->dbg("Dryrun enabled");
         $self->dryrun(1);
     }
+
+    print "Using plugin \@PLUGIN_NAME@\n";
 }
 
 
@@ -102,7 +102,8 @@ sub get_credentials {
             weblogic_url => 'weblogic_url',
             debug_level => 'debug_level',
             enable_exclusive_sessions => 'enable_exclusive_sessions',
-            enable_named_sessions => 'enable_named_sessions'
+            enable_named_sessions => 'enable_named_sessions',
+            wlst_path => 'wlst_path'
         },
         'weblogic_cfgs');
 
@@ -323,11 +324,14 @@ sub render_template_from_property {
 
     my $preamble_params = {
         enable_exclusive_sessions => 0,
-        enable_named_sessions => 0
+        enable_named_sessions => 0,
     };
 
     if ($self->{_credentials}->{enable_named_sessions}) {
         $preamble_params->{enable_named_sessions} = 1;
+    }
+    if ($self->{_credentials}->{debug_level}) {
+        $preamble_params->{debug_level} = $self->{_credentials}->{debug_level};
     }
 
     $params->{preamble} = $self->SUPER::render_template_from_property('/myProject/jython/preamble.jython', $preamble_params);
@@ -335,6 +339,17 @@ sub render_template_from_property {
     return $self->SUPER::render_template_from_property($template_name, $params);
 }
 
+
+sub get_wlst_path {
+    my ($self, $params, $cred) = @_;
+
+    my $retval = $params->{wlstabspath};
+    return $retval if $retval;
+    $retval = $cred->{wlst_path};
+    return $retval if $retval;
+
+    $self->bail_out("WLST Path was not provided");
+}
 
 1;
 

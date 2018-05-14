@@ -27,13 +27,6 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>WLST Absolute Path:</label>
-        <property>wlstabspath</property>
-        <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
-        <required>1</required>
-    </formElement>
-    <formElement>
-        <type>entry</type>
         <label>Connection factory name:</label>
         <property>cf_name</property>
         <documentation>What would you like to name your new connection factory?</documentation>

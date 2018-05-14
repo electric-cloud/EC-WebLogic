@@ -68,7 +68,7 @@ my $cfg = new ElectricCommander::PropDB($ec,"/myProject/weblogic_cfgs");
 
 # add all the options as properties
 foreach my $key (keys % {$opts}) {
-    if ($key eq 'config') { 
+    if ($key eq 'config') {
         next;
     }
     $cfg->setCol("$opts->{config}",$key,"$opts->{$key}");

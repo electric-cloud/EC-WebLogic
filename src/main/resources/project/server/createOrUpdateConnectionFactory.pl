@@ -21,6 +21,7 @@ my $PROJECT_NAME = '$[/myProject/projectName]';
 my $PLUGIN_NAME = '@PLUGIN_NAME@';
 my $PLUGIN_KEY  = '@PLUGIN_KEY@';
 use Data::Dumper;
+use File::Spec;
 
 $| = 1;
 
@@ -34,7 +35,6 @@ sub main {
     );
     my $params = $wl->get_params_as_hashref(
         'configname',
-        'wlstabspath',
         'cf_name',
         'jndi_name',
         'cf_sharing_policy',
@@ -47,7 +47,7 @@ sub main {
         'jms_server_name',
         'server_name'
     );
-    my $cred = $wl->get_credentials( $params->{configname} );
+    my $cred = $wl->get_credentials($params->{configname});
     if ( $cred->{java_home} ) {
         $wl->out( 1, "JAVA_HOME was provided" );
     }
@@ -57,8 +57,10 @@ sub main {
         username     => $cred->{user},
         password     => $cred->{password},
         weblogic_url => $cred->{weblogic_url},
-        admin_url => $cred->{weblogic_url},
+        admin_url    => $cred->{weblogic_url},
     };
+
+    my $wlst_path = $wl->get_wlst_path($params, $cred);
 
     #rewrite to map when get chance
     $render_params->{$_} = $params->{$_} foreach keys %{ $params };
@@ -66,15 +68,13 @@ sub main {
     my $template_path = '/myProject/jython/create_or_update_connection_factory.jython';
     my $template = $wl->render_template_from_property( $template_path, $render_params );
 
-    $wl->out( 10, "Generated script:\n", $template );
+    $wl->out(2, "Generated script:\n", $template);
 
     my $res = $wl->execute_jython_script(
-        shell          => $params->{wlstabspath},
-        script_path    => $ENV{COMMANDER_WORKSPACE} . '/exec.jython',
+        shell          => $wlst_path,
+        script_path    => File::Spec->catfile($ENV{COMMANDER_WORKSPACE}, 'exec.jython'),
         script_content => $template,
     );
-
-
     $wl->process_response($res);
     return;
 }

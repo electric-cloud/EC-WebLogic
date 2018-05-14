@@ -28,6 +28,7 @@ import warnings
 debug_level = r'''
 [% debug_level %]
 '''.strip()
+
 if debug_level:
     debug_level = int(debug_level)
 else :
@@ -44,11 +45,11 @@ def warn(message):
 
 def print_info(message):
     if debug_level >= 0:
-        print "[INFO] " + message
+        print "[WLST INFO] " + message
 
 def print_debug(message):
     if debug_level >= 1:
-        print "[DEBUG] " + message
+        print "[WLST DEBUG] " + message
 
 
 def getJMSSystemResourcePath(jms_module_name):
