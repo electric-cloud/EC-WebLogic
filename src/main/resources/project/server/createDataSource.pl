@@ -33,26 +33,13 @@ sub main {
           plugin_key   => $PLUGIN_KEY
       );
       my $params = $wl->get_params_as_hashref(
-          'configname',
-          'dsname',
-          'dsdbname',
-          'target',
-          'driverurl',
-          'jndiname',
-          'driverclass',
-          'wlstabspath',
-          'ds_credential'
-          #'username',
-          #'password',
+          'configname', 'dsname',   'dsdbname',    'target',
+          'driverurl',  'jndiname', 'driverclass', 'username',
+          'password',   'wlstabspath'
       );
       my $cred = $wl->get_credentials( $params->{configname} );
       if ( $cred->{java_home} ) {
           $wl->out( 1, "JAVA_HOME was provided" );
-      }
-      if ($params->{ds_credential}) {
-          my $ds_cred = $wl->get_step_credential($params->{ds_credential});
-          $params->{username} = $ds_cred->{userName};
-          $params->{password} = $ds_cred->{password};
       }
       my $render_params = {
           username     => $cred->{user},
