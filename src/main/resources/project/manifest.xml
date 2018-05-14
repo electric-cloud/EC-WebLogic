@@ -17,7 +17,6 @@
 
 -->
 <fileset>
-    <!-- perl and jython modules starts from here -->
   <file>
     <path>lib/EC/Plugin/Core.pm</path>
     <xpath>//property[propertyName="EC::Plugin::Core"]/value</xpath>
@@ -34,7 +33,6 @@
     <path>jython/preamble.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="preamble.jython"]/value</xpath>
   </file>
-  <!-- Procedures jython scripts starting from here  -->
   <file>
     <path>jython/check_server_status.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="check_server_status.jython"]/value</xpath>
@@ -160,15 +158,6 @@
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="check_cluster_status.jython"]/value</xpath>
   </file>
   <file>
-    <path>jython/create_or_update_jms_resource.jython</path>
-    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_jms_resource.jython"]/value</xpath>
-  </file>
-  <file>
-    <path>jython/create_or_update_datasource.jython</path>
-    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_datasource.jython"]/value</xpath>
-  </file>
-  <!-- create/edit config forms starting from here -->
-  <file>
     <path>WebLogicCreateConfigForm.xml</path>
     <xpath>//property[propertyName="ui_forms"]/propertySheet/property[propertyName="WebLogicCreateConfigForm"]/value</xpath>
   </file>
@@ -176,7 +165,6 @@
     <path>WebLogicEditConfigForm.xml</path>
     <xpath>//property[propertyName="ui_forms"]/propertySheet/property[propertyName="WebLogicEditConfigForm"]/value</xpath>
   </file>
-  <!-- postp code starts from here -->
   <file>
     <path>matchers/stopServerMatchers.pl</path>
     <xpath>//property[propertyName="stopserver_matchers"]/value</xpath>
@@ -273,7 +261,6 @@
     <path>matchers/configureUserLockoutManagerMatchers.pl</path>
     <xpath>//property[propertyName="configureuserlockoutmanager_matchers"]/value</xpath>
   </file>
-  <!-- perl procedures code -->
   <file>
     <path>server/startAdministrationServer.pl</path>
     <xpath>//procedure[procedureName="StartAdminServer"]/step[stepName="StartAdminServer"]/command</xpath>
@@ -438,15 +425,6 @@
     <path>server/checkClusterStatus.pl</path>
     <xpath>//procedure[procedureName="CheckClusterStatus"]/step[stepName="CheckClusterStatus"]/command</xpath>
   </file>
-  <file>
-    <path>server/createOrUpdateJMSResource.pl</path>
-    <xpath>//procedure[procedureName="CreateOrUpdateJMSResource"]/step[stepName="CreateOrUpdateJMSResource"]/command</xpath>
-  </file>
-  <file>
-    <path>server/createOrUpdateDatasource.pl</path>
-    <xpath>//procedure[procedureName="CreateOrUpdateDatasource"]/step[stepName="CreateOrUpdateDatasource"]/command</xpath>
-  </file>
-  <!-- config management procedures -->
   <file>
     <path>conf/createcfg.pl</path>
     <xpath>//procedure[procedureName="CreateConfiguration"]/step[stepName="CreateConfiguration"]/command</xpath>
@@ -618,13 +596,5 @@
   <file>
     <path>parameterForms/ec_parameterForm-CheckClusterStatus.xml</path>
     <xpath>//procedure[procedureName="CheckClusterStatus"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
-  </file>
-  <file>
-    <path>parameterForms/ec_parameterForm-CreateOrUpdateJMSResource.xml</path>
-    <xpath>//procedure[procedureName="CreateOrUpdateJMSResource"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
-  </file>
-  <file>
-    <path>parameterForms/ec_parameterForm-CreateOrUpdateDataSource.xml</path>
-    <xpath>//procedure[procedureName="CreateOrUpdateDatasource"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
   </file>
 </fileset>
