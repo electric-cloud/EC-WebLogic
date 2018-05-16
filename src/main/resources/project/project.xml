@@ -433,6 +433,16 @@
                   </propertySheet>
                 </property>
                 <property>
+                  <propertyName>wlst_path</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
                   <propertyName>weblogic_url</propertyName>
                   <propertySheet>
                     <property>
@@ -513,6 +523,13 @@
         <defaultValue/>
         <description>Configuration Name</description>
         <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>wlst_path</formalParameterName>
+        <defaultValue/>
+        <description>WLST Script Absolute Path</description>
+        <required>0</required>
         <type>entry</type>
       </formalParameter>
       <formalParameter>
@@ -1685,7 +1702,7 @@
                         </property>
                     </propertySheet>
                 </property>
-                
+
                 <property>
                     <propertyName>plan_path</propertyName>
                     <propertySheet>
@@ -1727,7 +1744,7 @@
                         </property>
                     </propertySheet>
                 </property>
-                
+
                 <property>
                     <propertyName>plan_version</propertyName>
                     <propertySheet>
@@ -1749,7 +1766,7 @@
                         </property>
                     </propertySheet>
                 </property>
-                
+
                 <property>
                     <propertyName>retire_timeout</propertyName>
                     <propertySheet>
@@ -1760,7 +1777,7 @@
                         </property>
                     </propertySheet>
                 </property>
-                
+
                 <property>
                     <propertyName>version_identifier</propertyName>
                     <propertySheet>
@@ -1904,7 +1921,7 @@
           <required>0</required>
           <type>entry</type>
       </formalParameter>
-      
+
       <formalParameter>
           <formalParameterName>retire_gracefully</formalParameterName>
           <defaultValue/>
@@ -1915,7 +1932,7 @@
           <required>0</required>
           <type>checkbox</type>
       </formalParameter>
-      
+
       <formalParameter>
           <formalParameterName>retire_timeout</formalParameterName>
           <defaultValue/>
@@ -1926,7 +1943,7 @@
           <required>0</required>
           <type>entry</type>
       </formalParameter>
-      
+
       <formalParameter>
           <formalParameterName>version_identifier</formalParameterName>
           <defaultValue/>
@@ -1967,7 +1984,7 @@
           <required>0</required>
           <type>checkbox</type>
       </formalParameter>
-      
+
       <step>
         <stepName>DeployApp</stepName>
         <alwaysRun>0</alwaysRun>
@@ -2093,7 +2110,7 @@
                     </property>
                   </propertySheet>
                 </property>
-                
+
                 <property>
                   <propertyName>configname</propertyName>
                   <propertySheet>
