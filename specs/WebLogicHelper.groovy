@@ -51,7 +51,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
         )
     }
 
-
     static def runWLST(code) {
         code = code.trim()
         println "+++$code+++"
@@ -81,6 +80,81 @@ class WebLogicHelper extends PluginSpockTestSupport {
         """
         println result
         result
+    }
+
+    def runCommand(command) {
+        logger.debug("Command: $command")
+        def stdout = new StringBuilder()
+        def stderr = new StringBuilder()
+        def process = command.execute()
+        process.consumeProcessOutput(stdout, stderr)
+        process.waitForOrKill(20 * 1000)
+        logger.debug("STDOUT: $stdout")
+        logger.debug("STDERR: $stderr")
+        logger.debug("Exit code: ${process.exitValue()}")
+        def text = "$stdout\n$stderr"
+        assert process.exitValue() == 0
+        text
+    }
+
+    def publishArtifact(String artifactName, String version, String resName) {
+        File resource = new File(this.getClass().getResource("/resources/${resName}").toURI())
+
+        String commanderServer = System.getProperty("COMMANDER_SERVER") ?: 'localhost'
+        String username = System.getProperty('COMMANDER_USER') ?: 'admin'
+        String password = System.getProperty('COMMANDER_PASSWORD') ?: 'changeme'
+        String commanderHome = System.getenv('COMMANDER_HOME')
+        assert commanderHome
+
+        File ectool = new File(commanderHome, "bin/ectool")
+        assert ectool.exists()
+        logger.debug(ectool.absolutePath.toString())
+
+        String command = "${ectool.absolutePath} --server $commanderServer "
+        runCommand("${command} login ${username} ${password}")
+
+        runCommand("${command} deleteArtifactVersion ${artifactName}:${version}")
+
+        String publishCommand = "${command} publishArtifactVersion --version $version --artifactName ${artifactName} "
+        if (resource.directory) {
+            publishCommand += "--fromDirectory ${resource}"
+        }
+        else {
+            publishCommand += "--fromDirectory ${resource.parentFile} --includePatterns $resName"
+        }
+        runCommand(publishCommand)
+    }
+
+    def downloadArtifact(String artifactName, String destinationDirectory, String resource){
+
+        def procName = 'Retrieve'
+        dslFile 'dsl/procedures.dsl', [
+                projectName : HELPER_PROJECT,
+                procedureName : procName,
+                subProjectName : '/plugins/EC-Artifact/project',
+                resourceName : resource,
+                params : [
+                        'artifactName' : artifactName,
+                        'artifactVersionLocationProperty': '/myJob/retrievedArtifactVersions/retrieved',
+                        'overwrite' : 'update',
+                        'retrieveToDirectory' : destinationDirectory,
+                ]
+        ]
+//
+
+        runProcedure("""
+            runProcedure(
+                projectName : '$HELPER_PROJECT',
+                procedureName: '$procName',
+                resourceName: '$resource',
+                actualParameter: [
+                   'artifactName' : 'test:sample',
+                   'artifactVersionLocationProperty': '/myJob/retrievedArtifactVersions/retrieved',
+                   'overwrite' : 'update',
+                   'retrieveToDirectory' : '${destinationDirectory}'
+                ]
+            )
+        """, getResourceName())
     }
 
 }

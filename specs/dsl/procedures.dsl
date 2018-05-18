@@ -2,6 +2,8 @@ def projName = args.projectName
 def procName = args.procedureName
 def resName = args.resourceName
 def params = args.params
+def subProject = args.subProjectName ?: '/plugins/EC-WebLogic/project'
+
 
 project projName, {
     procedure procName, {
@@ -13,7 +15,7 @@ project projName, {
 
         step 'RunProcedure', {
             resourceName = resName
-            subproject = '/plugins/EC-WebLogic/project'
+            subproject = subProject
             subprocedure = procName
 
             params.each { k, v ->
