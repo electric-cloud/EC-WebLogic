@@ -67,7 +67,6 @@ sub after_init_hook {
         $self->dbg("Dryrun enabled");
         $self->dryrun(1);
     }
-
     print "Using plugin \@PLUGIN_NAME@\n";
 }
 
@@ -92,6 +91,8 @@ sub generate_exec_path {
 sub get_credentials {
     my ($self, $config_name) = @_;
 
+    $config_name ||= 'configname';
+
     my $cred = $self->SUPER::get_credentials(
         $config_name => {
             userName => 'user',
@@ -103,7 +104,7 @@ sub get_credentials {
             debug_level => 'debug_level',
             enable_exclusive_sessions => 'enable_exclusive_sessions',
             enable_named_sessions => 'enable_named_sessions',
-            wlst_path => 'wlst_path'
+            wlst_path => 'wlst_path',
         },
         'weblogic_cfgs');
 
@@ -334,11 +335,34 @@ sub render_template_from_property {
         $preamble_params->{debug_level} = $self->{_credentials}->{debug_level};
     }
 
+    if ($self->{_credentials}->{debug_level}) {
+        $preamble_params->{debug_level} = $self->{_credentials}->{debug_level};
+    }
+
     $params->{preamble} = $self->SUPER::render_template_from_property('/myProject/jython/preamble.jython', $preamble_params);
     # $params->{preamble} = $self->get_param('/myProject/jython/preamble.jython');
     return $self->SUPER::render_template_from_property($template_name, $params);
 }
 
+sub get_wlst_path {
+    my ($self, $params, $cred) = @_;
+
+    my $retval = '';
+    if ($params) {
+        $retval = $params->{wlstabspath};
+    }
+    else {
+        $retval = $self->get_param('wlstabspath');
+    }
+    return $retval if $retval;
+    unless($cred) {
+        $cred = $self->get_credentials;
+    }
+    $retval = $cred->{wlst_path};
+    return $retval if $retval;
+
+    $self->bail_out("WLST Path was not provided");
+}
 
 sub get_wlst_path {
     my ($self, $params, $cred) = @_;
