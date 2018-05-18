@@ -26,142 +26,107 @@ password = r'''
 [% password %]
 '''.strip()
 
-admin_url = r'''
+adminUrl = r'''
 [% admin_url %]
 '''.strip()
 
-cf_name = r'''
+cfName = r'''
 [% cf_name %]
 '''.strip()
 
-jndi_name = r'''
+jndiName = r'''
 [% jndi_name %]
 '''.strip()
 
-cf_sharing_policy = r'''
+cfSharingPolicy = r'''
 [% cf_sharing_policy %]
 '''.strip()
 
-cf_client_id_policy = r'''
+clientIDPolicy = r'''
 [% cf_client_id_policy %]
 '''.strip()
 
-cf_max_messages_per_session = read_int_parameter(r'''[% cf_max_messages_per_session %]''', None)
-cf_xa_enabled = read_bool_parameter(r'''[% cf_xa_enabled %]''')
-cf_attach_jmsx_userid = read_bool_parameter(r'''[% cf_attach_jmsx_userid %]''')
+maxMessagesPerSession = readInt(r'''[% cf_max_messages_per_session %]''', None)
+xaEnabled = readBool(r'''[% cf_xa_enabled %]''')
+attachJMSXUserId = readBool(r'''[% cf_attach_jmsx_userid %]''')
 
+jmsModuleName = readString(r'''[% jms_module_name %]''')
 
-jms_module_name = r'''
-[% jms_module_name %]
-'''.strip()
-
-jms_server_name = r'''
+jmsServerName = r'''
 [% jms_server_name %]
 '''.strip()
 
-server_name = r'''
+serverName = r'''
 [% server_name %]
 '''.strip()
 
-subdeployment_name = r'''
+subdeploymentName = r'''
 [% subdeployment_name %]
 '''.strip()
 
+additionalOptions = readString('''[% additional_options %]'''.strip(), '')
+updateAction = readString(r'''[% update_action %]''', 'do_nothing')
 
-
-connect(username, password, admin_url)
+connect(username, password, adminUrl)
 
 try:
     startChanges()
-    cd('/')
-    if not checkJMSModule(jms_module_name):
-        warn("JMS Module %s does not exist" % (jms_module_name))
-        createJMSModule(jms_module_name, jms_server_name, server_name)
+    jmsResource = getJMSResource(jmsModuleName)
+    print_debug("Found JMS Resource %s" % jmsModuleName)
+    if jmsResource == None:
+        raise Exception("JMS Resource %s does not exist" % jmsModuleName)
 
-    cdJMSModulePath(jms_module_name)
-
-    mode = 'edit'
-
-    if not getConnectionFactory(jms_module_name,cf_name):
-        mode = 'create'
-        print_debug('Working in CREATE mode')
-        print_info('Trying to create Connection factory ' + cf_name)
-        cf = cmo.createConnectionFactory(cf_name)
-        print_info('Trying to create JMS Module ' + jms_module_name)
+    cf = getMBean(getConnectionFactoryPath(jmsModuleName, cfName))
+    if cf == None:
+        print_info("Connection Factory %s does not exist" % cfName)
+        cf = jmsResource.createConnectionFactory(cfName)
+        print_info("Created Connection Factory %s" % cfName)
     else:
-        print_debug('Working in UPDATE mode. Resource exists')
-        updateJMSModule(jms_module_name, jms_server_name, server_name)
+        print_info("Found Connection Factory %s in the module %s" % (cfName, jmsModuleName))
+        if updateAction == 'do_nothing':
+            print_info("No action is required")
+            discardChanges()
+            sys.exit(0)
+        elif updateAction == 'remove_and_create':
+            deleteConnectionFactory(jmsModuleName, cfName)
+            cf = jmsResource.createConnectionFactory(cfName)
+            print_info("Created Connection Factory %s" % cfName)
 
+    if not isEmpty(subdeploymentName):
+        subdeployment = createOrUpdateSubdeployment(jmsModuleName, subdeploymentName, jmsServerName)
 
+    cd(getConnectionFactoryPath(jmsModuleName, cfName))
+    set('JNDIName', jndiName)
 
-    # cd to created resource
-    cdConnectionFactoryPath(jms_module_name,cf_name)
-    if jndi_name:
-        print_debug("Applying JNDI "+jndi_name)
-        set('JNDIName', jndi_name)
+    if not isEmpty(subdeploymentName):
+        set('SubDeploymentName', subdeploymentName)
+        print_debug("Set subdeployment name to %s" % subdeploymentName)
     else:
-        #usually JNDI should be defined to work with connection factory from app via JMS module
-        warn("You did not define JNDI")
+        set('DefaultTargetingEnabled', True)
+        print_debug("Set default targeting")
 
-    cd(getConnectionFactoryPath(jms_module_name,cf_name)+'/ClientParams/'+cf_name)
-    # Set Subscription Sharing Policy
-    print_debug("Set Subscription Sharing Policy to %s"%(cf_sharing_policy))
-    cmo.setSubscriptionSharingPolicy(cf_sharing_policy)
-    # Set Client ID Policy
-    print_debug("Set Client ID Policy to %s"%(cf_client_id_policy))
-    cmo.setClientIdPolicy(cf_client_id_policy)
+    # ClientParams
+    cd('%s/ClientParams/%s' % (getConnectionFactoryPath(jmsModuleName, cfName), cfName))
+    set('SubscriptionSharingPolicy', cfSharingPolicy)
+    set('ClientIdPolicy', clientIDPolicy)
+    if maxMessagesPerSession > 0:
+        set('MessagesMaximum', maxMessagesPerSession)
 
-    # Set Max Messages per Session
-    if cf_max_messages_per_session:
-        print_debug("Set Max Messages per Session: %s"%(cf_max_messages_per_session))
-        cmo.setMessagesMaximum(cf_max_messages_per_session)
+    # TransactionParams
+    cd('%s/TransactionParams/%s' % (getConnectionFactoryPath(jmsModuleName, cfName), cfName))
+    set('XAConnectionFactoryEnabled', xaEnabled)
 
-    # Set XA
-    cd(getConnectionFactoryPath(jms_module_name,cf_name)+'/TransactionParams/'+cf_name)
-    if cf_xa_enabled:
-        cf_xa_enabled = True
-    else:
-        cf_xa_enabled = False
-    print_debug("Set XA connection factory enabled: %s"%(cf_xa_enabled))
-    cmo.setXAConnectionFactoryEnabled(cf_xa_enabled)
+    options = parseOptions(additionalOptions, delimeter = '\n+')
+    print_info("Additional Options: %s" % options)
+    for groupName in options.keys():
+        cd(getConnectionFactoryPath(jmsModuleName, cfName, groupName))
+        opts = options[groupName]
+        for name, value in opts.items():
+            print_info('%s: %s -> %s' % (groupName, name, value))
+            set(name, value)
 
-    # Attach JMSX UserID
-    cd(getConnectionFactoryPath(jms_module_name,cf_name)+'/SecurityParams/'+cf_name)
-    if cf_attach_jmsx_userid:
-        cf_attach_jmsx_userid = True
-    else:
-        cf_attach_jmsx_userid = False
-    print_debug("Set attach JMSX userid: %s"%(cf_attach_jmsx_userid))
-    cmo.setAttachJMSXUserId(cf_attach_jmsx_userid)
+except Exception, e:
+    discardAndExit(e, "Failed to create Connection Factory")
 
-    cdConnectionFactoryPath(jms_module_name,cf_name)
-
-
-
-    if subdeployment_name:
-        if not checkSubDeployment(jms_module_name, subdeployment_name):
-            print_info("SubDeployment %s does not exist in JMS Module %s"%(subdeployment_name, jms_module_name))
-            createSubDeployment(jms_module_name, subdeployment_name)
-            print_info("SubDeployment %s was created in JMS Module %s"%(subdeployment_name, jms_module_name))
-            cdConnectionFactoryPath(jms_module_name,cf_name)
-        set('SubDeploymentName', subdeployment_name)
-        cdSubDeploymentPath(jms_module_name, subdeployment_name)
-        if jms_server_name and checkJMSServer(jms_server_name):
-            print_info("Adding target %s to SubDeployment %s"%(jms_server_name,subdeployment_name))
-            targets = []
-            for t in get('Targets'):
-                targets.append(t)
-            targets.append(getJMSServer(jms_server_name).objectName)
-            set('Targets', jarray.array(targets, ObjectName))
-        elif jms_server_name and not checkJMSServer(jms_server_name):
-            warn("JMS Server %s does not exist. It was not added to Connection Factory"%(jms_server_name))
-
-
-except WLSTException, e:
-    print "Failed to create Connection Factory"
-    print str(e)
-    discardChanges()
-    sys.exit(1)
-
-# everyghing is fine, commiting
+# eveything is fine, commiting
 commitChanges()

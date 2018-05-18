@@ -364,16 +364,5 @@ sub get_wlst_path {
     $self->bail_out("WLST Path was not provided");
 }
 
-sub get_wlst_path {
-    my ($self, $params, $cred) = @_;
-
-    my $retval = $params->{wlstabspath};
-    return $retval if $retval;
-    $retval = $cred->{wlst_path};
-    return $retval if $retval;
-
-    $self->bail_out("WLST Path was not provided");
-}
-
 1;
 
