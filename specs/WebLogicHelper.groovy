@@ -3,6 +3,7 @@ import com.electriccloud.spec.*
 
 class WebLogicHelper extends PluginSpockTestSupport {
     static final def HELPER_PROJECT = 'EC-WebLogic Specs Helper'
+    static final def SUCCESS_RESPONSE = '200'
 
     static def getWlstPath() {
         def path = System.getenv('WEBLOGIC_WLST_PATH')
@@ -33,21 +34,21 @@ class WebLogicHelper extends PluginSpockTestSupport {
         def username = getUsername()
         def password = getPassword()
         def pluginConfig = [
-            weblogic_url  : endpoint,
-            enable_named_sessions: 'true',
-            debug_level: '10'
+                weblogic_url         : endpoint,
+                enable_named_sessions: 'true',
+                debug_level          : '10'
         ]
         def props = [confPath: 'weblogic_cfgs']
         if (System.getenv('RECREATE_CONFIG')) {
             props.recreate = true
         }
         createPluginConfiguration(
-            'EC-WebLogic',
-            configName,
-            pluginConfig,
-            username,
-            password,
-            props
+                'EC-WebLogic',
+                configName,
+                pluginConfig,
+                username,
+                password,
+                props
         )
     }
 
@@ -118,26 +119,25 @@ class WebLogicHelper extends PluginSpockTestSupport {
         String publishCommand = "${command} publishArtifactVersion --version $version --artifactName ${artifactName} "
         if (resource.directory) {
             publishCommand += "--fromDirectory ${resource}"
-        }
-        else {
+        } else {
             publishCommand += "--fromDirectory ${resource.parentFile} --includePatterns $resName"
         }
         runCommand(publishCommand)
     }
 
-    def downloadArtifact(String artifactName, String destinationDirectory, String resource){
+    def downloadArtifact(String artifactName, String destinationDirectory, String resource) {
 
         def procName = 'Retrieve'
         dslFile 'dsl/procedures.dsl', [
-                projectName : HELPER_PROJECT,
+                projectName   : HELPER_PROJECT,
                 procedureName : procName,
-                subProjectName : '/plugins/EC-Artifact/project',
-                resourceName : resource,
-                params : [
-                        'artifactName' : artifactName,
+                subProjectName: '/plugins/EC-Artifact/project',
+                resourceName  : resource,
+                params        : [
+                        'artifactName'                   : artifactName,
                         'artifactVersionLocationProperty': '/myJob/retrievedArtifactVersions/retrieved',
-                        'overwrite' : 'update',
-                        'retrieveToDirectory' : destinationDirectory,
+                        'overwrite'                      : 'update',
+                        'retrieveToDirectory'            : destinationDirectory,
                 ]
         ]
 //
@@ -157,4 +157,66 @@ class WebLogicHelper extends PluginSpockTestSupport {
         """, getResourceName())
     }
 
+    def checkUrl(String url, String resource) {
+
+        dslFile('dsl/checkURL.dsl', [
+                projectName : HELPER_PROJECT,
+                resourceName: resource,
+                URL         : url
+        ])
+
+        def result = runProcedure("""
+   runProcedure(
+       projectName: '$HELPER_PROJECT',
+       procedureName: 'CheckURL',
+       resourceName: '$resourceName'
+   )
+""", getResourceName())
+
+        logger.debug(result.toString())
+
+        def text = null
+
+        def code = getJobProperty("/myJob/code", result.jobId)
+        if (code == SUCCESS_RESPONSE) {
+            text = getJobProperty("/myJob/text", result.jobId)
+        }
+
+        [
+                code: code,
+                text: text
+        ]
+    }
+
+    def runProcedure(String dslString, resourceName = null, timeout = 120) {
+        assert dslString
+        def result = dsl(dslString)
+
+        assert result.jobId
+        def jobId = result.jobId
+
+        def status = jobStatus(jobId).status
+        def counter = 1
+        while (status != 'completed'){
+            status = jobStatus(jobId).status
+
+            logger.debug("status: " + status)
+
+            if (counter < 32){
+                counter *= 2
+                logger.debug("Sleeping " + counter + " seconds")
+
+                sleep(counter * 1000)
+            }
+            else if (counter > timeout){
+                throw new RuntimeException("Timeout on jobCompleted : " + result.jobId)
+            }
+        }
+
+        def logs = readJobLogs(result.jobId, resourceName)
+        def outcome = jobStatus(result.jobId).outcome
+        [logs: logs, outcome: outcome, jobId: result.jobId]
+    }
 }
+
+
