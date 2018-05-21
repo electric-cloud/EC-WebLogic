@@ -49,31 +49,28 @@ class DeployApp extends WebLogicHelper {
                 params: params
         ]
 
-        //TODO: check why falling using this one
-        // This adds 120 seconds to test run time
-        try {
-            downloadArtifact(artifactName, directory, weblogicResource)
-        }
-        catch (Throwable e){
-            logger.debug("Job succeeds (and file is really downloaded) but test is failing")
-        }
+        downloadArtifact(artifactName, directory, weblogicResource)
 
-
-        // Check page procedure
-        def targetUrl = 'http://weblogic:7001/sample/hello.jsp'
-        dslFile "dsl/procedures.dsl", [
-                projectName: projectName,
-                subProjectName : '/plugins/EC-WebLogic/project',
-                procedureName: 'CheckPageStatus',
-                params: [
-                    successcriteria : 'pagefound',
-                    targeturl      : targetUrl
-                ]
-        ]
+//        // Check page procedure
+//        def targetUrl = 'http://weblogic:7001/sample/hello.jsp'
+//        dslFile "dsl/procedures.dsl", [
+//                projectName: projectName,
+//                subProjectName : '/plugins/EC-WebLogic/project',
+//                procedureName: 'CheckPageStatus',
+//                params: [
+//                    successcriteria : 'pagefound',
+//                    targeturl      : targetUrl
+//                ]
+//        ]
     }
 
     def 'Deploy application'() {
         given:
+        // Check application don't exists
+        def pageBeforeDeploy = checkUrl("http://localhost:7001/sample/hello.jsp", getResourceName())
+
+        assert pageBeforeDeploy.code != SUCCESS_RESPONSE
+
         def applicationName = 'sample'
         def applicationWarPath = "$directory/$filename"
         when:
@@ -91,29 +88,34 @@ class DeployApp extends WebLogicHelper {
         )
         """, getResourceName())
         then:
-        logger.debug(result.logs)
+//        logger.debug(result.logs)
         assert result.outcome == 'success'
+
+        def pageAfterDeploy = checkUrl("http://localhost:7001/sample/hello.jsp", getResourceName())
+        assert pageAfterDeploy.code == SUCCESS_RESPONSE
     }
 
-    def 'Check deployment'() {
-        given:
-        def targetUrl = "http://${getResourceName()}:7001/sample/hello.jsp"
 
-        when:
-        def result = runProcedure("""
-          runProcedure(
-            projectName: '$projectName',
-            procedureName : 'CheckPageStatus',
-              actualParameter: [
-                successcriteria : 'pagefound',
-                targeturl      : '$targetUrl'
-              ]
-          )""", getResourceName())
-        then:
-        logger.debug(result.logs)
-        assert result.outcome == 'success'
-    }
+//    def 'Check deployment'() {
+//        given:
+//        def pr = 1
+//
+//        when:
+//        def result = runProcedure("""
+//          runProcedure(
+//            projectName: '$projectName',
+//            procedureName : 'CheckPageStatus',
+//              actualParameter: [
+//                successcriteria : 'pagefound',
+//                targeturl      : '$targetUrl'
+//              ]
+//          )""", getResourceName())
+//        then:
+//        logger.debug(result.logs)
+//        assert result.outcome == 'success'
+//    }
 
+    // TODO: remove ( Will be set by Build procedure )
     def setupRepository(String serverHost) {
         dsl """
         repository 'default', {
