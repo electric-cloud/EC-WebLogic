@@ -37,6 +37,7 @@ sub parallel_exec_support {
     return $ENABLE_PARALLEL_EXEC_SUPPORT;
 }
 
+
 sub out {
     my ($self, $level, @message) = @_;
 
@@ -48,6 +49,7 @@ sub out {
     $level ||= 1;
     return $self->SUPER::out(1, @message);
 }
+
 
 sub after_init_hook {
     my ($self, %params) = @_;
@@ -67,7 +69,6 @@ sub after_init_hook {
         $self->dbg("Dryrun enabled");
         $self->dryrun(1);
     }
-
     print "Using plugin \@PLUGIN_NAME@\n";
 }
 
@@ -92,6 +93,8 @@ sub generate_exec_path {
 sub get_credentials {
     my ($self, $config_name) = @_;
 
+    $config_name ||= 'configname';
+
     my $cred = $self->SUPER::get_credentials(
         $config_name => {
             userName => 'user',
@@ -103,7 +106,7 @@ sub get_credentials {
             debug_level => 'debug_level',
             enable_exclusive_sessions => 'enable_exclusive_sessions',
             enable_named_sessions => 'enable_named_sessions',
-            wlst_path => 'wlst_path'
+            wlst_path => 'wlst_path',
         },
         'weblogic_cfgs');
 
@@ -245,7 +248,7 @@ sub execute_jython_script {
     my ($self, %params) = @_;
 
     if (!$params{shell}) {
-        $self->bail_out("Missing shell param, please provide path to wlst.sh pr wlst.cmd either in configuration or in the form params.");
+        croak "Missing shell param";
     }
 
     my $check = $self->dryrun() ?
@@ -330,6 +333,7 @@ sub render_template_from_property {
     if ($self->{_credentials}->{enable_named_sessions}) {
         $preamble_params->{enable_named_sessions} = 1;
     }
+
     if ($self->{_credentials}->{debug_level}) {
         $preamble_params->{debug_level} = $self->{_credentials}->{debug_level};
     }
@@ -339,12 +343,20 @@ sub render_template_from_property {
     return $self->SUPER::render_template_from_property($template_name, $params);
 }
 
-
 sub get_wlst_path {
     my ($self, $params, $cred) = @_;
 
-    my $retval = $params->{wlstabspath};
+    my $retval = '';
+    if ($params) {
+        $retval = $params->{wlstabspath};
+    }
+    else {
+        $retval = $self->get_param('wlstabspath');
+    }
     return $retval if $retval;
+    unless($cred) {
+        $cred = $self->get_credentials;
+    }
     $retval = $cred->{wlst_path};
     return $retval if $retval;
 
