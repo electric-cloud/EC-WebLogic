@@ -7122,6 +7122,7 @@
     
 
 
+
 <procedure>
   <description>Creates or updates a Connection Factory</description>
   <jobNameTemplate>weblogic-createOrUpdateConnectionFactory-$[jobId]</jobNameTemplate>
@@ -7135,6 +7136,36 @@
           <propertyName>parameters</propertyName>
           <propertySheet>
             <property>
+              <propertyName>jms_module_name</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>subdeployment_name</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>cf_sharing_policy</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
               <propertyName>additional_options</propertyName>
               <propertySheet>
                 <property>
@@ -7145,7 +7176,7 @@
               </propertySheet>
             </property>
             <property>
-              <propertyName>update_action</propertyName>
+              <propertyName>configname</propertyName>
               <propertySheet>
                 <property>
                   <propertyName>formType</propertyName>
@@ -7185,7 +7216,7 @@
               </propertySheet>
             </property>
             <property>
-              <propertyName>jms_module_name</propertyName>
+              <propertyName>cf_client_id_policy</propertyName>
               <propertySheet>
                 <property>
                   <propertyName>formType</propertyName>
@@ -7195,27 +7226,7 @@
               </propertySheet>
             </property>
             <property>
-              <propertyName>subdeployment_name</propertyName>
-              <propertySheet>
-                <property>
-                  <propertyName>formType</propertyName>
-                  <value>standard</value>
-                  <expandable>1</expandable>
-                </property>
-              </propertySheet>
-            </property>
-            <property>
-              <propertyName>cf_sharing_policy</propertyName>
-              <propertySheet>
-                <property>
-                  <propertyName>formType</propertyName>
-                  <value>standard</value>
-                  <expandable>1</expandable>
-                </property>
-              </propertySheet>
-            </property>
-            <property>
-              <propertyName>configname</propertyName>
+              <propertyName>jms_server_name</propertyName>
               <propertySheet>
                 <property>
                   <propertyName>formType</propertyName>
@@ -7235,17 +7246,7 @@
               </propertySheet>
             </property>
             <property>
-              <propertyName>cf_client_id_policy</propertyName>
-              <propertySheet>
-                <property>
-                  <propertyName>formType</propertyName>
-                  <value>standard</value>
-                  <expandable>1</expandable>
-                </property>
-              </propertySheet>
-            </property>
-            <property>
-              <propertyName>jms_server_name</propertyName>
+              <propertyName>update_action</propertyName>
               <propertySheet>
                 <property>
                   <propertyName>formType</propertyName>
@@ -7309,12 +7310,14 @@
     <type>entry</type>
   </formalParameter>
   <formalParameter>
+    <defaultValue>10</defaultValue>
     <description>This  limit specifies the number of messages that can be queued for an asynchronous session. Default value  is 10.</description>
     <formalParameterName>cf_max_messages_per_session</formalParameterName>
     <required>0</required>
     <type>entry</type>
   </formalParameter>
   <formalParameter>
+    <defaultValue>1</defaultValue>
     <description>Indicates if this connection factory should  create XA queues and XA topics in order to accommodate JTA aware transactions. Default is Yes.</description>
     <formalParameterName>cf_xa_enabled</formalParameterName>
     <required>0</required>
@@ -7335,6 +7338,7 @@
     <type>entry</type>
   </formalParameter>
   <formalParameter>
+    <defaultValue>do_nothing</defaultValue>
     <description>This parameter controls as to what the Update Action should be when a Connection Factory with the same name exists:
 Do Nothing  (Default) -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
 Remove and Create - The procedure would remove existing Connection Factory and recreate it based on new parameters passed.

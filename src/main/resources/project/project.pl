@@ -294,7 +294,7 @@ sub make_formal_parameters {
         my $required = $element->findvalue('required');
         my $doc = $element->findvalue('documentation')->string_value;
         $type = 'entry' if $type =~ /select/;
-        my $default = $element->findvalue('value');
+        my $default = $element->findvalue('value')->string_value;
 
         my $param = make_node({
             type => $type,

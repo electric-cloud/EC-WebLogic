@@ -46,7 +46,7 @@ clientIDPolicy = r'''
 [% cf_client_id_policy %]
 '''.strip()
 
-maxMessagesPerSession = readInt(r'''[% cf_max_messages_per_session %]''', None)
+maxMessagesPerSession = readInt(r'''[% cf_max_messages_per_session %]''', 0)
 xaEnabled = readBool(r'''[% cf_xa_enabled %]''')
 attachJMSXUserId = readBool(r'''[% cf_attach_jmsx_userid %]''')
 
@@ -77,6 +77,7 @@ try:
         raise Exception("JMS Resource %s does not exist" % jmsModuleName)
 
     cf = getMBean(getConnectionFactoryPath(jmsModuleName, cfName))
+    update = False
     if cf == None:
         print_info("Connection Factory %s does not exist" % cfName)
         cf = jmsResource.createConnectionFactory(cfName)
@@ -91,6 +92,9 @@ try:
             deleteConnectionFactory(jmsModuleName, cfName)
             cf = jmsResource.createConnectionFactory(cfName)
             print_info("Created Connection Factory %s" % cfName)
+        elif updateAction == 'selective_update':
+            print_info("Selective update")
+            update = True
 
     if not isEmpty(subdeploymentName):
         subdeployment = createOrUpdateSubdeployment(jmsModuleName, subdeploymentName, jmsServerName)
