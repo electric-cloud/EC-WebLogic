@@ -352,7 +352,7 @@ sub get_wlst_path {
         $retval = $params->{wlstabspath};
     }
     else {
-        $retval = $self->get_param('wlstabspath');
+        $retval = eval {$self->ec->getProperty('wlstabspath')->findvalue('//value')->string_value};
     }
     return $retval if $retval;
     unless($cred) {

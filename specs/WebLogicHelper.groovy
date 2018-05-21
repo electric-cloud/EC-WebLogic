@@ -28,14 +28,19 @@ class WebLogicHelper extends PluginSpockTestSupport {
         password
     }
 
+    static def getEndpoint() {
+        return 't3://localhost:7001'
+    }
+
     def createConfig(configName) {
-        def endpoint = 't3://localhost:7001'
+        def endpoint = getEndpoint()
         def username = getUsername()
         def password = getPassword()
         def pluginConfig = [
             weblogic_url  : endpoint,
             enable_named_sessions: 'true',
-            debug_level: '10'
+            debug_level: '10',
+            wlst_path: getWlstPath(),
         ]
         def props = [confPath: 'weblogic_cfgs']
         if (System.getenv('RECREATE_CONFIG')) {
@@ -52,34 +57,34 @@ class WebLogicHelper extends PluginSpockTestSupport {
     }
 
 
-    static def runWLST(code) {
+    def runWLST(code) {
         code = code.trim()
-        println "+++$code+++"
+        def resourceName = getResourceName()
+        def procedureName = 'RunWLST'
         dsl """
             project '${HELPER_PROJECT}', {
-                procedure 'runWlst', {
+                procedure '${procedureName}', {
                     step 'runCommand', {
                         resourceName = '${getResourceName()}'
                         shell = '${getWlstPath()}'
-                        command = '''\$[wlst_code]'''
+                        command = '''\$[code]'''
                     }
 
-                    formalParameter 'wlst_code', {
+                    formalParameter 'code', {
                         type = 'textarea'
                     }
                 }
             }
         """
-        def result = runProcedureDsl """
+        def result = runProcedure("""
             runProcedure(
                 projectName: '${HELPER_PROJECT}',
-                procedureName: 'runWlst',
+                procedureName: '${procedureName}',
                 actualParameter: [
-                    'wlst_code': '''$code'''
+                    code: '''$code'''
                 ]
             )
-        """
-        println result
+        """, resourceName)
         result
     }
 

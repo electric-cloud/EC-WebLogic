@@ -44,7 +44,8 @@ sub main {
         'jms_module_name',
         'subdeployment_name',
         'jms_server_name',
-        'update_action'
+        'update_action',
+        'additional_options'
     );
     my $cred = $wl->get_credentials($params->{configname});
     if ( $cred->{java_home} ) {

@@ -255,7 +255,7 @@ def discardAndExit(e, message = None):
 
 # add parse function
 def parseOptions(options, delimeter = '\\s*,\\s*'):
-    print "Options: %s" % (options)
+    print_info("Options: %s" % (options))
     optionsDict = {}
     for nextArgument in re.split(delimeter, options):
         if nextArgument != '':
@@ -498,7 +498,7 @@ def deleteConnectionFactory(jmsModuleName, cfName):
     if isEmpty(jmsModuleName):
         raise Exception("JMS Module Name is not provided")
     if isEmpty(cfName):
-        raise Exceptin("Connection Factory name is not provided")
+        raise Exception("Connection Factory name is not provided")
     bean = getMBean('%s/ConnectionFactories/' % getJMSModulePath(jmsModuleName))
     cfBean = getMBean(getConnectionFactoryPath(jmsModuleName, cfName))
     if cfBean != None:

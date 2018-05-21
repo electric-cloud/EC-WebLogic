@@ -122,12 +122,11 @@ try:
 
     options = parseOptions(additionalOptions, delimeter = '\n+')
     print_info("Additional Options: %s" % options)
-    for groupName in options.keys():
-        cd(getConnectionFactoryPath(jmsModuleName, cfName, groupName))
-        opts = options[groupName]
-        for name, value in opts.items():
-            print_info('%s: %s -> %s' % (groupName, name, value))
-            set(name, value)
+    for key, value in options.items():
+        (groupName, paramName) = key.split('.')
+        cd(getConnectionFactoryPath(jmsModuleName, cfName) + '/' + groupName + '/' + cfName)
+        print_info("Setting additional option %s/%s -> %s" % (groupName, paramName, value))
+        set(paramName, value)
 
 except Exception, e:
     discardAndExit(e, "Failed to create Connection Factory")
