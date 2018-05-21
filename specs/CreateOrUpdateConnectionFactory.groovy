@@ -5,7 +5,6 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
     static def procedureName = 'CreateOrUpdateConnectionFactory'
     static def params = [
         configname: configName,
-        wlstabspath: getWlstPath(),
         cf_name: '',
         jndi_name: '',
         cf_sharing_policy: '',
@@ -68,5 +67,6 @@ else:
     # cmo.createSubDeployment(’subdeployment0′)
     activate()
 """
+        code
     }
 }
