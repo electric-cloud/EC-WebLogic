@@ -4,34 +4,25 @@ class UndeployApp extends WebLogicHelper {
     static def projectName = "EC-WebLogic Specs $procedureName"
     static def configName = 'EC-Specs WebLogic Config'
     static def params = [
-            configname               : configName,
-            wlstabspath              : getWlstPath(),
-            appname                  : 'sample',
+            configname        : configName,
+            wlstabspath       : getWlstPath(),
+            appname           : 'sample',
 
-            apppath                  : "",
-            targets                  : '',
-            is_library               : '',
-            stage_mode               : '',
-            plan_path                : '',
-            deployment_plan          : '',
-            overwrite_deployment_plan: '',
-            additional_options       : '',
-            archive_version          : '',
-            retire_gracefully        : '',
-            retire_timeout           : '',
-            version_identifier       : '',
-            upload                   : '',
-            remote                   : '',
+            retire_gracefully : '',
+            version_identifier: '',
+            give_up           : '',
+
+            additional_options: '',
     ]
 
     def doSetupSpec() {
         createConfig(configName)
 
         dslFile "dsl/procedures.dsl", [
-                projectName: projectName,
+                projectName  : projectName,
                 procedureName: procedureName,
-                resourceName: getResourceName(),
-                params: params
+                resourceName : getResourceName(),
+                params       : params
         ]
 
     }
@@ -41,9 +32,12 @@ class UndeployApp extends WebLogicHelper {
         // Check application don't exists
         def pageBeforeDeploy = checkUrl("http://localhost:7001/sample/hello.jsp", getResourceName())
 
-        assert pageBeforeDeploy.code == SUCCESS_RESPONSE
 
-        def applicationName = 'sample'
+        def applicationPath = "$REMOTE_DIRECTORY/$FILENAME"
+
+        if (pageBeforeDeploy.code != SUCCESS_RESPONSE) {
+            DeployApplication(APPLICATION_NAME, "$applicationPath")
+        }
 
         when:
         def result = runProcedure("""
@@ -53,8 +47,7 @@ class UndeployApp extends WebLogicHelper {
             actualParameter: [
                  configname : '$configName',
                  wlstabspath: '$wlstPath',
-                 appname : '$applicationName',
-                 targets : '',
+                 appname : '$APPLICATION_NAME'
             ]
         )
         """, getResourceName())
@@ -65,4 +58,25 @@ class UndeployApp extends WebLogicHelper {
         assert pageAfterDeploy.code != SUCCESS_RESPONSE
     }
 
+    def DeployApplication(
+            def applicationName = APPLICATION_NAME, def applicationWarPath = "$REMOTE_DIRECTORY/$FILENAME") {
+
+        def result = runProcedure("""
+        runProcedure(
+            projectName: '/plugins/EC-WebLogic/project',
+            procedureName: 'DeployApp',
+            resourceName: '${getResourceName()}',
+            actualParameter: [
+                 configname : '$configName',
+                 wlstabspath: '$wlstPath',
+                 appname : '$applicationName',
+                 apppath : "$applicationWarPath",
+                 targets : 'AdminServer',
+                 is_library : ""
+            ]
+        )
+        """, getResourceName())
+
+        return result.outcome == 'success'
+    }
 }

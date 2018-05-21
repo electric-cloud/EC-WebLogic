@@ -43,9 +43,6 @@ if ($res->is_success()) {
     $ec->setProperty('/myJob/text', $bytes); 
     print $bytes;
 }
-else {
-    exit -1;
-}
 
 print "after_response";
 exit 0;

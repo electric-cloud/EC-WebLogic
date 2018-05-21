@@ -2,8 +2,7 @@ class DeployApp extends WebLogicHelper {
 
     static def artifactName = 'test:sample'
     static def version = '1.0'
-    static def filename = 'sample.war'
-    static def directory = '/tmp'
+
     static def weblogicResource = getResourceName()
 
     static def procedureName = 'DeployApp'
@@ -13,7 +12,7 @@ class DeployApp extends WebLogicHelper {
             configname               : configName,
             wlstabspath              : getWlstPath(),
             appname                  : 'sample',
-            apppath                  : "$directory/$filename",
+            apppath                  : "$REMOTE_DIRECTORY/$FILENAME",
             targets                  : 'AdminServer',
 
             is_library               : '',
@@ -40,7 +39,7 @@ class DeployApp extends WebLogicHelper {
         setupRepository(serverHostname)
         setupResource(weblogicResource)
 
-        publishArtifact(artifactName, version, filename)
+        publishArtifact(artifactName, version, FILENAME)
 
         dslFile "dsl/procedures.dsl", [
                 projectName: projectName,
@@ -49,7 +48,7 @@ class DeployApp extends WebLogicHelper {
                 params: params
         ]
 
-        downloadArtifact(artifactName, directory, weblogicResource)
+        downloadArtifact(artifactName, REMOTE_DIRECTORY, weblogicResource)
 
 //        // Check page procedure
 //        def targetUrl = 'http://weblogic:7001/sample/hello.jsp'
@@ -69,10 +68,11 @@ class DeployApp extends WebLogicHelper {
         // Check application don't exists
         def pageBeforeDeploy = checkUrl("http://localhost:7001/sample/hello.jsp", getResourceName())
 
-        assert pageBeforeDeploy.code != SUCCESS_RESPONSE
+        if (pageBeforeDeploy.code != SUCCESS_RESPONSE){
+            undeployApplication(APPLICATION_NAME)
+        }
 
-        def applicationName = 'sample'
-        def applicationWarPath = "$directory/$filename"
+        def applicationWarPath = "$REMOTE_DIRECTORY/$FILENAME"
         when:
         def result = runProcedure("""
         runProcedure(
@@ -81,7 +81,7 @@ class DeployApp extends WebLogicHelper {
             actualParameter: [
                  configname : '$configName',
                  wlstabspath: '$wlstPath',
-                 appname : '$applicationName',
+                 appname : '$APPLICATION_NAME',
                  apppath : "$applicationWarPath",
                  targets : 'AdminServer',
             ]
@@ -131,5 +131,22 @@ class DeployApp extends WebLogicHelper {
             port = 7808
           }
         """
+    }
+
+    def undeployApplication(def applicationName = APPLICATION_NAME){
+        def result = runProcedure("""
+        runProcedure(
+            projectName: '/plugins/EC-WebLogic/project',
+            procedureName: 'UndeployApp',
+            resourceName: '${getResourceName()}',
+            actualParameter: [
+                 configname : '$configName',
+                 wlstabspath: '$wlstPath',
+                 appname : '$applicationName'
+            ]
+        )
+        """, getResourceName())
+
+        return result.outcome == 'success'
     }
 }
