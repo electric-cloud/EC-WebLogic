@@ -26,13 +26,20 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
         deleteProject(projectName)
         createJMSModule(jmsModuleName)
         createConfig(configName)
+
+        // TODO create resource
         dslFile "dsl/procedures.dsl", [
             projectName: projectName,
             procedureName: procedureName,
             resourceName: getResourceName(),
             params: params,
-            deleteProcedureName: deleteProcedureName,
-            deleteParams: [
+        ]
+
+        dslFile 'dsl/procedures.dsl', [
+            projectName: projectName,
+            procedureName: deleteProcedureName,
+            resourceName: getResourceName(),
+            params: [
                 configname: configName,
                 cf_name: '',
                 jms_module_name: ''
