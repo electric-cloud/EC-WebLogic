@@ -5,6 +5,8 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
     static def jmsModuleName = 'TestJMSModule'
     static def configName = 'EC-Specs WebLogic Config'
     static def procedureName = 'CreateOrUpdateConnectionFactory'
+    static def deleteProcedureName = 'DeleteConnectionFactory'
+
     static def params = [
         configname: configName,
         cf_name: '',
@@ -21,20 +23,25 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
     ]
 
     def doSetupSpec() {
+        deleteProject(projectName)
         createJMSModule(jmsModuleName)
         createConfig(configName)
         dslFile "dsl/procedures.dsl", [
             projectName: projectName,
             procedureName: procedureName,
             resourceName: getResourceName(),
-            params: params
+            params: params,
+            deleteProcedureName: deleteProcedureName,
+            deleteParams: [
+                configname: configName,
+                cf_name: '',
+                jms_module_name: ''
+            ]
         ]
     }
 
     def doCleanupSpec() {
-        dsl """
-        deleteProject(projectName: '$projectName')
-        """
+        deleteProject(projectName)
     }
 
     def 'create connection factory'() {
@@ -65,7 +72,6 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
         deleteConnectionFactory(jmsModuleName, cfName)
     }
 
-    @IgnoreRest
     def 'with additional options'() {
         given:
         def cfName = 'SpecConnectionFactory'
@@ -133,11 +139,82 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
         )
         """, getResourceName()
         then:
-        println result.logs
         assert result.outcome == 'success'
         assert result.logs =~ /Found Connection Factory $cfName in the module $jmsModuleName/
         cleanup:
         deleteConnectionFactory(jmsModuleName, cfName)
+    }
+
+    def "delete connection factory"() {
+        given:
+        def cfName = 'SpecUpdatedCF'
+        def result = runProcedure """
+        runProcedure(
+            projectName: '$projectName',
+            procedureName: '$procedureName',
+            actualParameter: [
+                cf_name: '$cfName',
+                jms_module_name: '$jmsModuleName',
+                cf_sharing_policy: 'Exclusive',
+                cf_client_id_policy: 'Restricted'
+            ]
+        )
+        """, getResourceName()
+
+        assert result.outcome == 'success'
+        when:
+        result = runProcedure """
+        runProcedure(
+            projectName: '$projectName',
+            procedureName: '$deleteProcedureName',
+            actualParameter: [
+                cf_name: '$cfName',
+                jms_module_name: '$jmsModuleName'
+            ]
+        )
+        """, getResourceName()
+        then:
+        assert result.outcome == 'success'
+        assert result.logs =~ /Removed Connection Factory $cfName from the module $jmsModuleName/
+    }
+
+    def "delete non-existing connection factory"() {
+        given:
+        def cfName = 'NoSuchCF'
+        when:
+        def result = runProcedure """
+        runProcedure(
+            projectName: '$projectName',
+            procedureName: '$deleteProcedureName',
+            actualParameter: [
+                cf_name: '$cfName',
+                jms_module_name: '$jmsModuleName'
+            ]
+        )
+        """, getResourceName()
+        then:
+        assert result.outcome == 'success'
+        assert result.logs =~ /Connection Factory $cfName does not exist in the module $jmsModuleName/
+    }
+
+    def "delete non-existing connection factory from non-existing jms module"() {
+        given:
+        def cfName = 'NoSuchCF'
+        def jmsModule = 'NoSuhModule'
+        when:
+        def result = runProcedure """
+        runProcedure(
+            projectName: '$projectName',
+            procedureName: '$deleteProcedureName',
+            actualParameter: [
+                cf_name: '$cfName',
+                jms_module_name: '$jmsModule'
+            ]
+        )
+        """, getResourceName()
+        then:
+        assert result.outcome == 'success'
+        assert result.logs =~ /Connection Factory $cfName does not exist in the module $jmsModule/
     }
 
     def createJMSModule(name) {

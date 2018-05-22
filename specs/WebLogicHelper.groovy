@@ -88,4 +88,9 @@ class WebLogicHelper extends PluginSpockTestSupport {
         result
     }
 
+    def deleteProject(name) {
+        dsl """
+        deleteProject(projectName: '$name')
+        """
+    }
 }

@@ -248,7 +248,7 @@ def discardChanges():
 def discardAndExit(e, message = None):
     discardChanges()
     if message:
-        print message
+        print 'Error: ' + message
     print str(e)
     dumpStack()
     sys.exit(1)
