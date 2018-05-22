@@ -1,10 +1,9 @@
 def projName = args.projectName
-def procName = args.procedureName
 def resName = args.resourceName
 def params = args.params
 
 project projName, {
-    procedure procName, {
+    procedure 'Retrieve', {
         params.each { k, defaultValue ->
             formalParameter k, defaultValue: defaultValue, {
                 type = 'textarea'
@@ -13,8 +12,8 @@ project projName, {
 
         step 'RunProcedure', {
             resourceName = resName
-            subproject = subProject
-            subprocedure = procName
+            subproject = '/plugins/EC-Artifact/project'
+            subprocedure = 'Retrieve'
 
             params.each { k, v ->
                 actualParameter k, '$[' + k + ']'

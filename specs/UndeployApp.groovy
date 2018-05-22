@@ -1,82 +1,69 @@
+import spock.lang.Ignore
+
 class UndeployApp extends WebLogicHelper {
 
     static def procedureName = 'UndeployApp'
     static def projectName = "EC-WebLogic Specs $procedureName"
     static def configName = 'EC-Specs WebLogic Config'
-    static def params = [
-            configname        : configName,
-            wlstabspath       : getWlstPath(),
-            appname           : 'sample',
 
-            retire_gracefully : '',
-            version_identifier: '',
-            give_up           : '',
-
-            additional_options: '',
-    ]
 
     def doSetupSpec() {
+        deleteProject(projectName)
         createConfig(configName)
-
-        dslFile "dsl/procedures.dsl", [
-                projectName  : projectName,
-                procedureName: procedureName,
-                resourceName : getResourceName(),
-                params       : params
-        ]
+        setupResource(getResourceName())
 
     }
 
+    @Ignore
     def 'Undeploy application'() {
+
         given:
         // Check application don't exists
         def pageBeforeDeploy = checkUrl("http://localhost:7001/sample/hello.jsp", getResourceName())
 
+        if (pageBeforeDeploy.code == NOT_FOUND_RESPONSE) {
+            DeployApplication(configName, projectName, [
+                    configName        : configName,
+                    wlstabspath              : getWlstPath(),
+                    appname                  : 'sample',
+                    apppath                  : "$REMOTE_DIRECTORY/$FILENAME",
+                    targets                  : 'AdminServer',
 
-        def applicationPath = "$REMOTE_DIRECTORY/$FILENAME"
-
-        if (pageBeforeDeploy.code != SUCCESS_RESPONSE) {
-            DeployApplication(APPLICATION_NAME, "$applicationPath")
+                    is_library               : '',
+                    stage_mode               : '',
+                    plan_path                : '',
+                    deployment_plan          : '',
+                    overwrite_deployment_plan: '',
+                    additional_options       : '',
+                    archive_version          : '',
+                    retire_gracefully        : '',
+                    retire_timeout           : '',
+                    version_identifier       : '',
+                    upload                   : '',
+                    remote                   : '',
+            ])
+            deleteProject(projectName)
         }
 
         when:
-        def result = runProcedure("""
-        runProcedure(
-            projectName: '$projectName',
-            procedureName: '$procedureName',
-            actualParameter: [
-                 configname : '$configName',
-                 wlstabspath: '$wlstPath',
-                 appname : '$APPLICATION_NAME'
-            ]
-        )
-        """, getResourceName())
+        def result = UndeployApplication(configName, projectName, [
+                configName: configName,
+                wlstabspath       : getWlstPath(),
+                appname           : 'sample',
+
+                retire_gracefully : '',
+                version_identifier: '',
+                give_up           : '',
+
+                additional_options: '',
+        ])
+
         then:
         assert result.outcome == 'success'
 
         def pageAfterDeploy = checkUrl("http://localhost:7001/sample/hello.jsp", getResourceName())
-        assert pageAfterDeploy.code != SUCCESS_RESPONSE
+        assert pageAfterDeploy.code == NOT_FOUND_RESPONSE
     }
 
-    def DeployApplication(
-            def applicationName = APPLICATION_NAME, def applicationWarPath = "$REMOTE_DIRECTORY/$FILENAME") {
 
-        def result = runProcedure("""
-        runProcedure(
-            projectName: '/plugins/EC-WebLogic/project',
-            procedureName: 'DeployApp',
-            resourceName: '${getResourceName()}',
-            actualParameter: [
-                 configname : '$configName',
-                 wlstabspath: '$wlstPath',
-                 appname : '$applicationName',
-                 apppath : "$applicationWarPath",
-                 targets : 'AdminServer',
-                 is_library : ""
-            ]
-        )
-        """, getResourceName())
-
-        return result.outcome == 'success'
-    }
 }

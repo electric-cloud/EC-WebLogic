@@ -4,10 +4,45 @@ import com.electriccloud.spec.*
 class WebLogicHelper extends PluginSpockTestSupport {
     static final def HELPER_PROJECT = 'EC-WebLogic Specs Helper'
     static final def SUCCESS_RESPONSE = '200'
+    static final def NOT_FOUND_RESPONSE = '404'
 
     static def FILENAME = 'sample.war'
     static def REMOTE_DIRECTORY = '/tmp'
     static def APPLICATION_NAME = 'sample'
+
+    static def UNDEPLOY_PARAMS = [
+//            configname        : configName,
+            wlstabspath       : getWlstPath(),
+            appname           : 'sample',
+
+            retire_gracefully : '',
+            version_identifier: '',
+            give_up           : '',
+
+            additional_options: '',
+    ]
+
+    static def DEPLOY_PARAMS = [
+//            configname               : configName,
+            wlstabspath              : getWlstPath(),
+            appname                  : 'sample',
+            apppath                  : "$REMOTE_DIRECTORY/$FILENAME",
+            targets                  : 'AdminServer',
+
+            is_library               : '',
+            stage_mode               : '',
+            plan_path                : '',
+            deployment_plan          : '',
+            overwrite_deployment_plan: '',
+            additional_options       : '',
+            archive_version          : '',
+            retire_gracefully        : '',
+            retire_timeout           : '',
+            version_identifier       : '',
+            upload                   : '',
+            remote                   : '',
+    ]
+
 
     static def getWlstPath() {
         def path = System.getenv('WEBLOGIC_WLST_PATH')
@@ -19,6 +54,12 @@ class WebLogicHelper extends PluginSpockTestSupport {
         def resName = System.getenv('WEBLOGIC_RES_NAME')
         assert resName
         resName
+    }
+
+    static def getResourceHost() {
+        def resHost = System.getenv('WEBLOGIC_RES_HOST') ?: getResourceName()
+        assert resHost
+        resHost
     }
 
     static def getUsername() {
@@ -57,6 +98,17 @@ class WebLogicHelper extends PluginSpockTestSupport {
         )
     }
 
+    def setupResource(String resourceName = getResourceName()) {
+        def host = getResourceHost()
+
+        dsl """
+          resource '$resourceName', {
+            hostName = '$host'
+            port = 7808
+          }
+        """
+    }
+
     static def runWLST(code) {
         code = code.trim()
         println "+++$code+++"
@@ -88,6 +140,12 @@ class WebLogicHelper extends PluginSpockTestSupport {
         result
     }
 
+    def deleteProject(name) {
+        dsl """
+        deleteProject(projectName: '$name')
+        """
+    }
+
     def runCommand(command) {
         logger.debug("Command: $command")
         def stdout = new StringBuilder()
@@ -109,7 +167,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         String commanderServer = System.getProperty("COMMANDER_SERVER") ?: 'localhost'
         String username = System.getProperty('COMMANDER_USER') ?: 'admin'
         String password = System.getProperty('COMMANDER_PASSWORD') ?: 'changeme'
-        String commanderHome = System.getenv('COMMANDER_HOME')
+        String commanderHome = System.getenv('COMMANDER_HOME') ?: '/opt/EC/'
         assert commanderHome
 
         File ectool = new File(commanderHome, "bin/ectool")
@@ -132,11 +190,8 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
     def downloadArtifact(String artifactName, String destinationDirectory, String resource) {
 
-        def procName = 'Retrieve'
-        dslFile 'dsl/procedures.dsl', [
+        dslFile 'dsl/retrieveArtifact.dsl', [
                 projectName   : HELPER_PROJECT,
-                procedureName : procName,
-                subProjectName: '/plugins/EC-Artifact/project',
                 resourceName  : resource,
                 params        : [
                         'artifactName'                   : artifactName,
@@ -150,8 +205,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         runProcedure("""
             runProcedure(
                 projectName : '$HELPER_PROJECT',
-                procedureName: '$procName',
-                resourceName: '$resource',
+                procedureName: 'Retrieve',
                 actualParameter: [
                    'artifactName' : 'test:sample',
                    'artifactVersionLocationProperty': '/myJob/retrievedArtifactVersions/retrieved',
@@ -193,6 +247,60 @@ class WebLogicHelper extends PluginSpockTestSupport {
         ]
     }
 
+    def UndeployApplication(def configName, def projectName, def params){
+
+        def wlstPath = getWlstPath()
+
+        dslFile "dsl/procedures.dsl", [
+                projectName  : projectName,
+                procedureName: 'UndeployApp',
+                resourceName : getResourceName(),
+                params       : params
+        ]
+
+        def result = runProcedure("""
+        runProcedure(
+            projectName: '$projectName',
+            procedureName: 'UndeployApp',
+            actualParameter: [
+//                 configname : '$configName',
+                 wlstabspath: '$wlstPath',
+                 appname : '$APPLICATION_NAME'
+            ]
+        )
+        """, getResourceName())
+
+        return result
+    }
+
+    def DeployApplication(def configName, def projectName, def params) {
+
+        def wlstPath = getWlstPath()
+
+        dslFile "dsl/procedures.dsl", [
+                projectName  : projectName,
+                procedureName: 'DeployApp',
+                resourceName : getResourceName(),
+                params: params
+        ]
+
+        def result = runProcedure("""
+        runProcedure(
+            projectName: '$projectName',
+            procedureName: 'DeployApp',
+            actualParameter: [
+                 configname : '$configName',
+                 wlstabspath: '$wlstPath',
+                 appname : '$APPLICATION_NAME',
+                 apppath : "$REMOTE_DIRECTORY/$FILENAME",
+                 targets : 'AdminServer',
+                 is_library : ""
+            ]
+        )
+        """, getResourceName())
+
+        return result
+    }
 }
 
 

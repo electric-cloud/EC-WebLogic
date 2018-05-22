@@ -1,3 +1,5 @@
+import spock.lang.Ignore
+
 class CreateOrUpdateConnectionFactory extends WebLogicHelper {
     static def projectName = 'EC-WebLogic Specs CreateOrUpdateConnectionFactory'
     static def jmsModuleName = 'TestJMSModule'
@@ -29,6 +31,7 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
         ]
     }
 
+    @Ignore
     def 'create connection factory'() {
         given:
         def cfName = 'SpecConnectionFactory'
