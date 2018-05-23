@@ -8,13 +8,11 @@ class UndeployApp extends WebLogicHelper {
 
 
     def doSetupSpec() {
-        deleteProject(projectName)
         createConfig(configName)
         setupResource(getResourceName())
 
     }
 
-    @Ignore
     def 'Undeploy application'() {
 
         given:
@@ -22,8 +20,9 @@ class UndeployApp extends WebLogicHelper {
         def pageBeforeDeploy = checkUrl("http://localhost:7001/sample/hello.jsp", getResourceName())
 
         if (pageBeforeDeploy.code == NOT_FOUND_RESPONSE) {
-            DeployApplication(configName, projectName, [
-                    configName        : configName,
+            deleteProject(projectName)
+            DeployApplication(projectName, [
+                    configname               : configName,
                     wlstabspath              : getWlstPath(),
                     appname                  : 'sample',
                     apppath                  : "$REMOTE_DIRECTORY/$FILENAME",
@@ -42,12 +41,12 @@ class UndeployApp extends WebLogicHelper {
                     upload                   : '',
                     remote                   : '',
             ])
-            deleteProject(projectName)
         }
 
         when:
-        def result = UndeployApplication(configName, projectName, [
-                configName: configName,
+        deleteProject(projectName)
+        def result = UndeployApplication(projectName, [
+                configname        : configName,
                 wlstabspath       : getWlstPath(),
                 appname           : 'sample',
 

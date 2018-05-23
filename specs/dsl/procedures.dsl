@@ -13,7 +13,7 @@ project projName, {
 
         step 'RunProcedure', {
             resourceName = resName
-            subproject = subProject
+            subproject = '/plugins/EC-WebLogic/project'
             subprocedure = procName
 
             params.each { k, v ->

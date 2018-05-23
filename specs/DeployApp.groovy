@@ -10,22 +10,24 @@ class DeployApp extends WebLogicHelper {
     static def configName = 'EC-Specs WebLogic Config'
 
     def doSetupSpec() {
-        deleteProject(projectName)
         createConfig(configName)
+
         setupResource(getResourceName())
 
         publishArtifact(artifactName, version, FILENAME)
         downloadArtifact(artifactName, REMOTE_DIRECTORY, getResourceName())
     }
 
+//    @Ignore
     def 'Deploy application'() {
         given:
         // Check application don't exists
         def pageBeforeDeploy = checkUrl("http://localhost:7001/sample/hello.jsp", getResourceName())
 
         if (pageBeforeDeploy.code == NOT_FOUND_RESPONSE) {
-            UndeployApplication(configName, projectName, [
-//                    configName        : configName,
+            deleteProject(projectName)
+            UndeployApplication(projectName, [
+                    configname        : configName,
                     wlstabspath       : getWlstPath(),
                     appname           : 'sample',
 
@@ -33,15 +35,14 @@ class DeployApp extends WebLogicHelper {
                     version_identifier: '',
                     give_up           : '',
 
-                    additional_options: '',
+                    additional_options: ''
             ])
-            deleteProject(projectName)
         }
 
-
         when:
-        def result = DeployApplication(configName, projectName, [
-                configName: configName,
+        deleteProject(projectName)
+        def result = DeployApplication(projectName, [
+                configname               : configName,
                 wlstabspath              : getWlstPath(),
                 appname                  : 'sample',
                 apppath                  : "$REMOTE_DIRECTORY/$FILENAME",
@@ -58,7 +59,7 @@ class DeployApp extends WebLogicHelper {
                 retire_timeout           : '',
                 version_identifier       : '',
                 upload                   : '',
-                remote                   : '',
+                remote                   : ''
         ])
 
         then:

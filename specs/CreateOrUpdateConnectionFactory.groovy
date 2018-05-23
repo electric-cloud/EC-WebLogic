@@ -31,7 +31,6 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
         ]
     }
 
-    @Ignore
     def 'create connection factory'() {
         given:
         def cfName = 'SpecConnectionFactory'

@@ -12,35 +12,35 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
     static def UNDEPLOY_PARAMS = [
 //            configname        : configName,
-            wlstabspath       : getWlstPath(),
-            appname           : 'sample',
+wlstabspath       : getWlstPath(),
+appname           : 'sample',
 
-            retire_gracefully : '',
-            version_identifier: '',
-            give_up           : '',
+retire_gracefully : '',
+version_identifier: '',
+give_up           : '',
 
-            additional_options: '',
+additional_options: '',
     ]
 
     static def DEPLOY_PARAMS = [
 //            configname               : configName,
-            wlstabspath              : getWlstPath(),
-            appname                  : 'sample',
-            apppath                  : "$REMOTE_DIRECTORY/$FILENAME",
-            targets                  : 'AdminServer',
+wlstabspath              : getWlstPath(),
+appname                  : 'sample',
+apppath                  : "$REMOTE_DIRECTORY/$FILENAME",
+targets                  : 'AdminServer',
 
-            is_library               : '',
-            stage_mode               : '',
-            plan_path                : '',
-            deployment_plan          : '',
-            overwrite_deployment_plan: '',
-            additional_options       : '',
-            archive_version          : '',
-            retire_gracefully        : '',
-            retire_timeout           : '',
-            version_identifier       : '',
-            upload                   : '',
-            remote                   : '',
+is_library               : '',
+stage_mode               : '',
+plan_path                : '',
+deployment_plan          : '',
+overwrite_deployment_plan: '',
+additional_options       : '',
+archive_version          : '',
+retire_gracefully        : '',
+retire_timeout           : '',
+version_identifier       : '',
+upload                   : '',
+remote                   : '',
     ]
 
 
@@ -191,9 +191,9 @@ class WebLogicHelper extends PluginSpockTestSupport {
     def downloadArtifact(String artifactName, String destinationDirectory, String resource) {
 
         dslFile 'dsl/retrieveArtifact.dsl', [
-                projectName   : HELPER_PROJECT,
-                resourceName  : resource,
-                params        : [
+                projectName : HELPER_PROJECT,
+                resourceName: resource,
+                params      : [
                         'artifactName'                   : artifactName,
                         'artifactVersionLocationProperty': '/myJob/retrievedArtifactVersions/retrieved',
                         'overwrite'                      : 'update',
@@ -247,10 +247,9 @@ class WebLogicHelper extends PluginSpockTestSupport {
         ]
     }
 
-    def UndeployApplication(def configName, def projectName, def params){
-
+    def UndeployApplication(String projectName, def params) {
         def wlstPath = getWlstPath()
-
+        deleteProject(projectName)
         dslFile "dsl/procedures.dsl", [
                 projectName  : projectName,
                 procedureName: 'UndeployApp',
@@ -263,25 +262,26 @@ class WebLogicHelper extends PluginSpockTestSupport {
             projectName: '$projectName',
             procedureName: 'UndeployApp',
             actualParameter: [
-//                 configname : '$configName',
                  wlstabspath: '$wlstPath',
                  appname : '$APPLICATION_NAME'
             ]
         )
         """, getResourceName())
 
+
         return result
     }
 
-    def DeployApplication(def configName, def projectName, def params) {
+    def DeployApplication(def projectName, def params) {
 
         def wlstPath = getWlstPath()
+
 
         dslFile "dsl/procedures.dsl", [
                 projectName  : projectName,
                 procedureName: 'DeployApp',
                 resourceName : getResourceName(),
-                params: params
+                params       : params
         ]
 
         def result = runProcedure("""
@@ -289,7 +289,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
             projectName: '$projectName',
             procedureName: 'DeployApp',
             actualParameter: [
-                 configname : '$configName',
                  wlstabspath: '$wlstPath',
                  appname : '$APPLICATION_NAME',
                  apppath : "$REMOTE_DIRECTORY/$FILENAME",
