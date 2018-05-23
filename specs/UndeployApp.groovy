@@ -8,9 +8,12 @@ class UndeployApp extends WebLogicHelper {
 
 
     def doSetupSpec() {
-        createConfig(configName)
         setupResource()
+        createConfig(configName)
+    }
 
+    def doCleanupSpec() {
+        deleteProject(projectName)
     }
 
     def 'Undeploy application'() {
@@ -21,7 +24,7 @@ class UndeployApp extends WebLogicHelper {
 
         if (pageBeforeDeploy.code == NOT_FOUND_RESPONSE) {
             deleteProject(projectName)
-            DeployApplication(projectName, [
+            def deploy = DeployApplication(projectName, [
                     configname               : configName,
                     wlstabspath              : getWlstPath(),
                     appname                  : 'sample',
@@ -41,6 +44,7 @@ class UndeployApp extends WebLogicHelper {
                     upload                   : '',
                     remote                   : '',
             ])
+            assert deploy.outcome == 'success'
         }
 
         when:

@@ -21,14 +21,19 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
     ]
 
     def doSetupSpec() {
-        createJMSModule(jmsModuleName)
+        setupResource()
         createConfig(configName)
+        createJMSModule(jmsModuleName)
         dslFile "dsl/procedures.dsl", [
             projectName: projectName,
             procedureName: procedureName,
             resourceName: getResourceName(),
             params: params
         ]
+    }
+
+    def doCleanupSpec() {
+        deleteProject(projectName)
     }
 
     def 'create connection factory'() {

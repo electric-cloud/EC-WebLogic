@@ -11,13 +11,16 @@ class DeployApp extends WebLogicHelper {
 
     def doSetupSpec() {
         createConfig(configName)
-
         setupResource()
 
         publishArtifact(artifactName, version, FILENAME)
         downloadArtifact(artifactName, REMOTE_DIRECTORY, getResourceName())
     }
 
+
+    def doCleanupSpec() {
+        deleteProject(projectName)
+    }
 //    @Ignore
     def 'Deploy application'() {
         given:
@@ -26,7 +29,7 @@ class DeployApp extends WebLogicHelper {
 
         if (pageBeforeDeploy.code == NOT_FOUND_RESPONSE) {
             deleteProject(projectName)
-            UndeployApplication(projectName, [
+            def undeploy = UndeployApplication(projectName, [
                     configname        : configName,
                     wlstabspath       : getWlstPath(),
                     appname           : 'sample',
@@ -37,6 +40,7 @@ class DeployApp extends WebLogicHelper {
 
                     additional_options: ''
             ])
+            assert (undeploy.outcome == 'success' || undeploy.outcome == 'warning')
         }
 
         when:

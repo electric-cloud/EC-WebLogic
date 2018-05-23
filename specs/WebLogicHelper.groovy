@@ -15,6 +15,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
         deleteProject(HELPER_PROJECT)
     }
 
+    def doCleanupSpec() {
+        deleteProject(HELPER_PROJECT)
+    }
+
     static def getWlstPath() {
         def path = System.getenv('WEBLOGIC_WLST_PATH')
         assert path
