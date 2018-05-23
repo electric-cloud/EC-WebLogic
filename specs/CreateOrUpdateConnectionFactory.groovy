@@ -21,6 +21,9 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
     ]
 
     def doSetupSpec() {
+        dsl """
+        deleteProject(projectName: '$projectName')
+        """
         createJMSModule(jmsModuleName)
         createConfig(configName)
         dslFile "dsl/procedures.dsl", [
@@ -32,9 +35,9 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
     }
 
     def doCleanupSpec() {
-        dsl """
-        deleteProject(projectName: '$projectName')
-        """
+        // dsl """
+        // deleteProject(projectName: '$projectName')
+        // """
     }
 
     def 'create connection factory'() {
@@ -65,7 +68,6 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
         deleteConnectionFactory(jmsModuleName, cfName)
     }
 
-    @IgnoreRest
     def 'with additional options'() {
         given:
         def cfName = 'SpecConnectionFactory'
@@ -93,13 +95,15 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
         assert result.logs =~ /Created Connection Factory $cfName/
         def prop = getConnectionFactoryProperty(jmsModuleName, cfName, 'DefaultDeliveryParams', 'DefaultPriority')
         println prop.logs
-        // cleanup:
-        // deleteConnectionFactory(jmsModuleName, cfName)
+        cleanup:
+        deleteConnectionFactory(jmsModuleName, cfName)
     }
 
-    def "selective update"() {
+    @IgnoreRest
+    def 'recreate'() {
         given:
         def cfName = 'SpecUpdatedCF'
+        deleteConnectionFactory(jmsModuleName, cfName)
         def oldJNDI = 'oldJNDI'
         def newJNDI = 'newJNDI'
         def result = runProcedure """
@@ -115,7 +119,8 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
             ]
         )
         """, getResourceName()
-
+        def jmsServerName = 'jmsServer1'
+        createJMSServer(jmsServerName)
         assert result.outcome == 'success'
         when:
         result = runProcedure """
@@ -128,14 +133,67 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
                 jms_module_name: '$jmsModuleName',
                 cf_sharing_policy: 'Exclusive',
                 cf_client_id_policy: 'Restricted',
-                update_action: 'selective_update'
+                update_action: 'remove_and_create',
+                subdeployment_name: 'Sub1',
+                jms_server_name: '$jmsServerName'
             ]
         )
         """, getResourceName()
         then:
-        println result.logs
+        logger.debug(result.logs)
+        assert result.outcome == 'success'
+        cleanup:
+        deleteConnectionFactory(jmsModuleName, cfName)
+
+    }
+
+    @IgnoreRest
+    def "selective update"() {
+        given:
+        def cfName = 'SpecUpdatedCF'
+        deleteConnectionFactory(jmsModuleName, cfName)
+        def oldJNDI = 'oldJNDI'
+        def newJNDI = 'newJNDI'
+        def result = runProcedure """
+        runProcedure(
+            projectName: '$projectName',
+            procedureName: '$procedureName',
+            actualParameter: [
+                cf_name: '$cfName',
+                jndi_name: '$oldJNDI',
+                jms_module_name: '$jmsModuleName',
+                cf_sharing_policy: 'Exclusive',
+                cf_client_id_policy: 'Restricted'
+            ]
+        )
+        """, getResourceName()
+        def jmsServerName = 'jmsServer1'
+        createJMSServer(jmsServerName)
+        assert result.outcome == 'success'
+        when:
+        result = runProcedure """
+        runProcedure(
+            projectName: '$projectName',
+            procedureName: '$procedureName',
+            actualParameter: [
+                cf_name: '$cfName',
+                jndi_name: '$newJNDI',
+                jms_module_name: '$jmsModuleName',
+                cf_sharing_policy: 'Exclusive',
+                cf_client_id_policy: 'Restricted',
+                update_action: 'selective_update',
+                subdeployment_name: 'Sub1',
+                jms_server_name: '$jmsServerName'
+            ]
+        )
+        """, getResourceName()
+        then:
+        logger.info(result.logs)
         assert result.outcome == 'success'
         assert result.logs =~ /Found Connection Factory $cfName in the module $jmsModuleName/
+        assert result.logs =~ /Set JNDI Name to $newJNDI/
+        def properties = getJobProperties(result.jobId)
+        assert properties.WebLogicServerRestartRequired == 'true'
         cleanup:
         deleteConnectionFactory(jmsModuleName, cfName)
     }
@@ -211,11 +269,36 @@ group = '$group'
 propName = '$propName'
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 cd(getConnectionFactoryPath(module, cfName) + '/' + group + '/' + cfName)
-ls()
+print "PROPERTY: %s" % get(propName)
 """
         def result = runWLST(code)
         assert result.outcome == 'success'
         // TODO retrieve property
+        result
+    }
+
+    def createJMSServer(name) {
+        def code = """
+connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+
+jmsServerName = '$name'
+targetName = '${getAdminServerName()}'
+
+bean = getMBean('/JMSServers/%s' % jmsServerName)
+if bean == None:
+    edit()
+    startEdit()
+    cd('/')
+    print "Creating JMS Server %s" % jmsServerName
+    cmo.createJMSServer(jmsServerName)
+    cd("/JMSServers/%s" % jmsServerName)
+    cmo.addTarget(getMBean("/Servers/%s" % targetName))
+    activate()
+else:
+    print "JMS Server already exists"
+"""
+        def result = runWLST(code)
+        assert result.outcome == 'success'
         result
     }
 }

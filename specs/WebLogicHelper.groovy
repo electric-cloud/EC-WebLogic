@@ -28,6 +28,11 @@ class WebLogicHelper extends PluginSpockTestSupport {
         password
     }
 
+    static def getAdminServerName() {
+        def adminServerName = 'AdminServer'
+        return adminServerName
+    }
+
     static def getEndpoint() {
         return 't3://localhost:7001'
     }

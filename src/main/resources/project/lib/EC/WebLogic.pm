@@ -231,6 +231,8 @@ sub process_response {
         $self->warning( join("\n", @matches));
         return;
     }
+    my $restart = $result->{stdout} =~ m/that require server re-start/;
+    $self->ec->setProperty('/myJob/WebLogicServerRestartRequired', ($restart ? 'true' : 'false'));
     $self->success();
     return;
 }

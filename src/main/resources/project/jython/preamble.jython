@@ -227,8 +227,23 @@ def startChanges():
     else:
         startEdit()
 
+sessionStarted = False
+def startChangesOnce():
+    if not sessionStarted:
+        startChanges()
+        sessionStarted = True
+
+def isEditSessionStarted():
+    return sessionStarted
+
+def commitChangesOnce(lockTimeout = None):
+    if sessionStarted:
+        commitChanges(lockTimeout)
+        sessionStarted = False
+
 # Saves and activates changes
 def commitChanges(lockTimeout = None):
+    sessionStarted = False
     save()
     params = {'block': 'true'}
     if lockTimeout:
@@ -489,9 +504,16 @@ def createOrUpdateSubdeployment(jmsModuleName, subName, jmsServerName):
     jmsServerBean = getMBean('/JMSServers/' + jmsServerName)
     if jmsServerBean == None:
         raise Exception('JMS Server %s does not exist' % jmsServerName)
+    currentTargets = subdeployment.getTargets()
+    for target in currentTargets:
+        print_debug('Found target: %s' % target.objectName)
+        if target.objectName == jmsServerBean.objectName:
+            print_info('Target %s is already in the list of targets' % jmsServerBean.objectName)
+            return
+
     targets = [jmsServerBean.objectName]
     set('Targets', jarray.array(targets, ObjectName))
-    print_debug("Set JMS Server Targets: %s" % targets)
+    print_info("Set JMS Subdeployment Targets: %s" % targets)
     return subdeployment
 
 def deleteConnectionFactory(jmsModuleName, cfName):
