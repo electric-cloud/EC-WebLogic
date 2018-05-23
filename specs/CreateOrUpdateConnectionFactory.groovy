@@ -96,7 +96,6 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
         deleteConnectionFactory(jmsModuleName, cfName)
     }
 
-    @IgnoreRest
     def 'recreate'() {
         given:
         def cfName = 'SpecUpdatedCF'
@@ -144,7 +143,6 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
 
     }
 
-    @IgnoreRest
     def "selective update"() {
         given:
         def cfName = 'SpecUpdatedCF'
