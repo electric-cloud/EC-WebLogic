@@ -1,23 +1,21 @@
-import spock.lang.Ignore
-
 class CreateOrUpdateConnectionFactory extends WebLogicHelper {
     static def projectName = 'EC-WebLogic Specs CreateOrUpdateConnectionFactory'
     static def jmsModuleName = 'TestJMSModule'
     static def configName = 'EC-Specs WebLogic Config'
     static def procedureName = 'CreateOrUpdateConnectionFactory'
     static def params = [
-        configname: configName,
-        cf_name: '',
-        jndi_name: '',
-        cf_sharing_policy: '',
-        cf_client_id_policy: '',
-        cf_max_messages_per_session: '',
-        cf_xa_enabled: '',
-        cf_attach_jmsx_userid: '',
-        jms_module_name: '',
-        subdeployment_name: '',
-        jms_server_name: '',
-        server_name: '',
+            configname                 : configName,
+            cf_name                    : '',
+            jndi_name                  : '',
+            cf_sharing_policy          : '',
+            cf_client_id_policy        : '',
+            cf_max_messages_per_session: '',
+            cf_xa_enabled              : '',
+            cf_attach_jmsx_userid      : '',
+            jms_module_name            : '',
+            subdeployment_name         : '',
+            jms_server_name            : '',
+            server_name                : '',
     ]
 
     def doSetupSpec() {
@@ -25,10 +23,10 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
         createConfig(configName)
         createJMSModule(jmsModuleName)
         dslFile "dsl/procedures.dsl", [
-            projectName: projectName,
-            procedureName: procedureName,
-            resourceName: getResourceName(),
-            params: params
+                projectName  : projectName,
+                procedureName: procedureName,
+                resourceName : getResourceName(),
+                params       : params
         ]
     }
 

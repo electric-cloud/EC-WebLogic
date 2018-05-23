@@ -1,5 +1,3 @@
-import spock.lang.Ignore
-
 class UndeployApp extends WebLogicHelper {
 
     static def procedureName = 'UndeployApp'
@@ -23,7 +21,6 @@ class UndeployApp extends WebLogicHelper {
         def pageBeforeDeploy = checkUrl("http://localhost:7001/sample/hello.jsp")
 
         if (pageBeforeDeploy.code == NOT_FOUND_RESPONSE) {
-            deleteProject(projectName)
             def deploy = DeployApplication(projectName, [
                     configname               : configName,
                     wlstabspath              : getWlstPath(),
@@ -44,7 +41,8 @@ class UndeployApp extends WebLogicHelper {
                     upload                   : '',
                     remote                   : '',
             ])
-            assert deploy.outcome == 'success'
+            assert (deploy.outcome == 'success' || deploy.outcome == 'warning')
+            deleteProject(projectName)
         }
 
         when:

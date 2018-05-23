@@ -1,5 +1,4 @@
-import spock.lang.*
-import com.electriccloud.spec.*
+import com.electriccloud.spec.PluginSpockTestSupport
 
 class WebLogicHelper extends PluginSpockTestSupport {
     static final def HELPER_PROJECT = 'EC-WebLogic Specs Helper'
@@ -251,7 +250,11 @@ class WebLogicHelper extends PluginSpockTestSupport {
     def DeployApplication(def projectName, def params) {
 
         def wlstPath = getWlstPath()
+        def artifactName = 'test:sample'
+        def version = '1.0'
 
+        publishArtifact(artifactName, version, FILENAME)
+        downloadArtifact(artifactName, REMOTE_DIRECTORY, getResourceName())
 
         dslFile 'dsl/procedures.dsl', [
                 projectName  : projectName,

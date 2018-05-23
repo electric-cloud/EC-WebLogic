@@ -1,9 +1,4 @@
-import spock.lang.Ignore
-
 class DeployApp extends WebLogicHelper {
-
-    static def artifactName = 'test:sample'
-    static def version = '1.0'
 
     static def procedureName = 'DeployApp'
     static def projectName = "EC-WebLogic Specs $procedureName"
@@ -12,23 +7,18 @@ class DeployApp extends WebLogicHelper {
     def doSetupSpec() {
         createConfig(configName)
         setupResource()
-
-        publishArtifact(artifactName, version, FILENAME)
-        downloadArtifact(artifactName, REMOTE_DIRECTORY, getResourceName())
     }
-
 
     def doCleanupSpec() {
         deleteProject(projectName)
     }
-//    @Ignore
+
     def 'Deploy application'() {
         given:
         // Check application don't exists
         def pageBeforeDeploy = checkUrl("http://localhost:7001/sample/hello.jsp")
 
         if (pageBeforeDeploy.code == NOT_FOUND_RESPONSE) {
-            deleteProject(projectName)
             def undeploy = UndeployApplication(projectName, [
                     configname        : configName,
                     wlstabspath       : getWlstPath(),
@@ -41,10 +31,10 @@ class DeployApp extends WebLogicHelper {
                     additional_options: ''
             ])
             assert (undeploy.outcome == 'success' || undeploy.outcome == 'warning')
+            deleteProject(projectName)
         }
 
         when:
-        deleteProject(projectName)
         def result = DeployApplication(projectName, [
                 configname               : configName,
                 wlstabspath              : getWlstPath(),
