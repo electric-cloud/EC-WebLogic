@@ -191,18 +191,18 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
     def checkUrl(String url) {
 
-        dslFile('dsl/checkURL.dsl', [
+        dslFile 'dsl/checkURL.dsl', [
                 projectName : HELPER_PROJECT,
                 resourceName: getResourceName(),
                 URL         : url
-        ])
+        ]
 
         def result = runProcedure("""
    runProcedure(
        projectName: '$HELPER_PROJECT',
        procedureName: 'CheckURL',
    )
-""")
+""", getResourceName())
 
         logger.debug(result.toString())
 
@@ -222,7 +222,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
     def UndeployApplication(String projectName, def params) {
         def wlstPath = getWlstPath()
         deleteProject(projectName)
-        dslFile "dsl/procedures.dsl", [
+        dslFile 'dsl/procedures.dsl', [
                 projectName  : projectName,
                 procedureName: 'UndeployApp',
                 resourceName : getResourceName(),
@@ -249,7 +249,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         def wlstPath = getWlstPath()
 
 
-        dslFile "dsl/procedures.dsl", [
+        dslFile 'dsl/procedures.dsl', [
                 projectName  : projectName,
                 procedureName: 'DeployApp',
                 resourceName : getResourceName(),
