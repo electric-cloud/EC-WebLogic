@@ -388,6 +388,11 @@
               <expandable>1</expandable>
               <value/>
           </property>
+          <property>
+              <propertyName>create_or_update_jms_module.jython</propertyName>
+              <expandable>1</expandable>
+              <value/>
+          </property>
         </propertySheet>
       </property>
       <property>
@@ -7097,5 +7102,103 @@
         </propertySheet>
       </step>
     </procedure>
+
+<procedure>
+  <description>Creates or updates JMS Module</description>
+  <jobNameTemplate>weblogic-createOrUpdateJMSModule-$[jobId]</jobNameTemplate>
+  <procedureName>CreateOrUpdateJMSModule</procedureName>
+  <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+  <propertySheet>
+    <property>
+      <propertyName>ec_customEditorData</propertyName>
+      <propertySheet>
+        <property>
+          <propertyName>parameters</propertyName>
+          <propertySheet>
+            <property>
+              <propertyName>ecp_weblogic_targets</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_jms_module_name</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>configname</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+      </propertySheet>
+    </property>
+    <property>
+      <propertyName>ec_parameterForm</propertyName>
+      <value />
+      <expandable>1</expandable>
+    </property>
+  </propertySheet>
+  <formalParameter>
+    <defaultValue />
+    <description>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</description>
+    <formalParameterName>configname</formalParameterName>
+    <required>1</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>A unique name for the JMS System Module.</description>
+    <formalParameterName>ecp_weblogic_jms_module_name</formalParameterName>
+    <required>1</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>
+      Comma-separated list of target servers or clusters, e.g. AdminServer.</description>
+    <formalParameterName>ecp_weblogic_targets</formalParameterName>
+    <required>1</required>
+    <type>textarea</type>
+  </formalParameter>
+  <step>
+    <alwaysRun>0</alwaysRun>
+    <broadcast>0</broadcast>
+    <command />
+    <condition />
+    <description />
+    <errorHandling>failProcedure</errorHandling>
+    <exclusive>0</exclusive>
+    <logFileName />
+    <parallel>0</parallel>
+    <procedureName>CreateOrUpdateJMSModule</procedureName>
+    <projectName>EC-WebLogic</projectName>
+    <releaseExclusive>0</releaseExclusive>
+    <resourceName />
+    <retries>0</retries>
+    <shell>ec-perl</shell>
+    <stepName>CreateOrUpdateJMSModule</stepName>
+    <timeLimit />
+    <timeLimitUnits>minutes</timeLimitUnits>
+    <workingDirectory />
+    <workspaceName />
+  </step>
+</procedure>
 </project>
 </exportedData>
