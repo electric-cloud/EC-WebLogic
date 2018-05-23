@@ -194,6 +194,17 @@ $xpath = $ec->attachCredential($projName, $credName,
      stepName => 'CheckClusterStatus'});
 $errors .= $ec->checkAllErrors($xpath);
 
+# $xpath = $ec->attachCredential($projName, $credName,
+#     {procedureName => 'CreateOrUpdateDatasource',
+#      stepName => 'CreateOrUpdateDatasource'});
+# $errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'CreateOrUpdateConnectionFactory',
+     stepName => 'CreateOrUpdateConnectionFactory'});
+$errors .= $ec->checkAllErrors($xpath);
+
+
 if ($errors ne '') {
 
     # Cleanup the partially created configuration we just created
