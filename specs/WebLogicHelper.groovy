@@ -10,39 +10,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
     static def REMOTE_DIRECTORY = '/tmp'
     static def APPLICATION_NAME = 'sample'
 
-    static def UNDEPLOY_PARAMS = [
-//            configname        : configName,
-wlstabspath       : getWlstPath(),
-appname           : 'sample',
-
-retire_gracefully : '',
-version_identifier: '',
-give_up           : '',
-
-additional_options: '',
-    ]
-
-    static def DEPLOY_PARAMS = [
-//            configname               : configName,
-wlstabspath              : getWlstPath(),
-appname                  : 'sample',
-apppath                  : "$REMOTE_DIRECTORY/$FILENAME",
-targets                  : 'AdminServer',
-
-is_library               : '',
-stage_mode               : '',
-plan_path                : '',
-deployment_plan          : '',
-overwrite_deployment_plan: '',
-additional_options       : '',
-archive_version          : '',
-retire_gracefully        : '',
-retire_timeout           : '',
-version_identifier       : '',
-upload                   : '',
-remote                   : '',
-    ]
-
+    def doSetupSpec() {
+        setupResource()
+        deleteProject(HELPER_PROJECT)
+    }
 
     static def getWlstPath() {
         def path = System.getenv('WEBLOGIC_WLST_PATH')
@@ -88,6 +59,7 @@ remote                   : '',
         if (System.getenv('RECREATE_CONFIG')) {
             props.recreate = true
         }
+
         createPluginConfiguration(
                 'EC-WebLogic',
                 configName,
@@ -98,11 +70,12 @@ remote                   : '',
         )
     }
 
-    def setupResource(String resourceName = getResourceName()) {
+    def setupResource() {
         def host = getResourceHost()
+        def name = getResourceName() ?: host
 
         dsl """
-          resource '$resourceName', {
+          resource '$name', {
             hostName = '$host'
             port = 7808
           }
@@ -216,11 +189,11 @@ remote                   : '',
         """, getResourceName())
     }
 
-    def checkUrl(String url, String resource) {
+    def checkUrl(String url) {
 
         dslFile('dsl/checkURL.dsl', [
                 projectName : HELPER_PROJECT,
-                resourceName: resource,
+                resourceName: getResourceName(),
                 URL         : url
         ])
 
@@ -228,9 +201,8 @@ remote                   : '',
    runProcedure(
        projectName: '$HELPER_PROJECT',
        procedureName: 'CheckURL',
-       resourceName: '$resourceName'
    )
-""", getResourceName())
+""")
 
         logger.debug(result.toString())
 

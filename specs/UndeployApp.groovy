@@ -9,7 +9,7 @@ class UndeployApp extends WebLogicHelper {
 
     def doSetupSpec() {
         createConfig(configName)
-        setupResource(getResourceName())
+        setupResource()
 
     }
 
@@ -17,7 +17,7 @@ class UndeployApp extends WebLogicHelper {
 
         given:
         // Check application don't exists
-        def pageBeforeDeploy = checkUrl("http://localhost:7001/sample/hello.jsp", getResourceName())
+        def pageBeforeDeploy = checkUrl("http://localhost:7001/sample/hello.jsp")
 
         if (pageBeforeDeploy.code == NOT_FOUND_RESPONSE) {
             deleteProject(projectName)
@@ -60,7 +60,7 @@ class UndeployApp extends WebLogicHelper {
         then:
         assert result.outcome == 'success'
 
-        def pageAfterDeploy = checkUrl("http://localhost:7001/sample/hello.jsp", getResourceName())
+        def pageAfterDeploy = checkUrl("http://localhost:7001/sample/hello.jsp")
         assert pageAfterDeploy.code == NOT_FOUND_RESPONSE
     }
 

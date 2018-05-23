@@ -1,6 +1,6 @@
 def projName = args.projectName
 def procName = args.procedureName
-def resName = args.resourceName
+def resName = args.resourceName ?: 'weblogic'
 def params = args.params
 
 project projName, {

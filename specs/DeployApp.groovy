@@ -12,7 +12,7 @@ class DeployApp extends WebLogicHelper {
     def doSetupSpec() {
         createConfig(configName)
 
-        setupResource(getResourceName())
+        setupResource()
 
         publishArtifact(artifactName, version, FILENAME)
         downloadArtifact(artifactName, REMOTE_DIRECTORY, getResourceName())
@@ -22,7 +22,7 @@ class DeployApp extends WebLogicHelper {
     def 'Deploy application'() {
         given:
         // Check application don't exists
-        def pageBeforeDeploy = checkUrl("http://localhost:7001/sample/hello.jsp", getResourceName())
+        def pageBeforeDeploy = checkUrl("http://localhost:7001/sample/hello.jsp")
 
         if (pageBeforeDeploy.code == NOT_FOUND_RESPONSE) {
             deleteProject(projectName)
@@ -65,7 +65,7 @@ class DeployApp extends WebLogicHelper {
         then:
         assert result.outcome == 'success'
 
-        def pageAfterDeploy = checkUrl("http://localhost:7001/sample/hello.jsp", getResourceName())
+        def pageAfterDeploy = checkUrl("http://localhost:7001/sample/hello.jsp")
         assert pageAfterDeploy.code == SUCCESS_RESPONSE
     }
 
