@@ -483,16 +483,6 @@
                   </propertySheet>
                 </property>
                 <property>
-                  <propertyName>wlst_path</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                  </propertySheet>
-                </property>
-                <property>
                   <propertyName>enable_named_sessions</propertyName>
                   <propertySheet>
                     <property>
@@ -557,13 +547,6 @@
         <defaultValue/>
         <description>URL of WebLogic Server (must include protocol, server and port).</description>
         <required>1</required>
-        <type>entry</type>
-      </formalParameter>
-      <formalParameter>
-        <formalParameterName>wlst_path</formalParameterName>
-        <defaultValue/>
-        <description>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.</description>
-        <required>0</required>
         <type>entry</type>
       </formalParameter>
       <formalParameter>

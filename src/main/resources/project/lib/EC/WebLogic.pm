@@ -37,6 +37,7 @@ sub parallel_exec_support {
     return $ENABLE_PARALLEL_EXEC_SUPPORT;
 }
 
+
 sub out {
     my ($self, $level, @message) = @_;
 
@@ -48,6 +49,7 @@ sub out {
     $level ||= 1;
     return $self->SUPER::out(1, @message);
 }
+
 
 sub after_init_hook {
     my ($self, %params) = @_;
@@ -231,6 +233,8 @@ sub process_response {
         $self->warning( join("\n", @matches));
         return;
     }
+    my $restart = $result->{stdout} =~ m/that require server re-start/;
+    $self->ec->setProperty('/myJob/WebLogicServerRestartRequired', ($restart ? 'true' : 'false'));
     $self->success();
     return;
 }
@@ -246,7 +250,7 @@ sub execute_jython_script {
     my ($self, %params) = @_;
 
     if (!$params{shell}) {
-        $self->bail_out("Missing shell param, please provide path to wlst.sh pr wlst.cmd either in configuration or in the form params.");
+        croak "Missing shell param";
     }
 
     my $check = $self->dryrun() ?
@@ -330,9 +334,6 @@ sub render_template_from_property {
 
     if ($self->{_credentials}->{enable_named_sessions}) {
         $preamble_params->{enable_named_sessions} = 1;
-    }
-    if ($self->{_credentials}->{debug_level}) {
-        $preamble_params->{debug_level} = $self->{_credentials}->{debug_level};
     }
 
     if ($self->{_credentials}->{debug_level}) {
