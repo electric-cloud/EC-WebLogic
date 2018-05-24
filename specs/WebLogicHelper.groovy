@@ -225,8 +225,9 @@ class WebLogicHelper extends PluginSpockTestSupport {
     }
 
     def UndeployApplication(String projectName, def params) {
+
         def wlstPath = getWlstPath()
-        deleteProject(projectName)
+
         dslFile 'dsl/procedures.dsl', [
                 projectName  : projectName,
                 procedureName: 'UndeployApp',
@@ -244,7 +245,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
             ]
         )
         """, getResourceName())
-
 
         return result
     }
@@ -275,6 +275,63 @@ class WebLogicHelper extends PluginSpockTestSupport {
                  apppath : "$REMOTE_DIRECTORY/$FILENAME",
                  targets : 'AdminServer',
                  is_library : ""
+            ]
+        )
+        """, getResourceName())
+
+        return result
+    }
+
+    def StartApplication(def projectName, def params) {
+
+        def wlstPath = getWlstPath()
+
+        dslFile 'dsl/procedures.dsl', [
+                projectName  : projectName,
+                procedureName: 'StartApp',
+                resourceName : getResourceName(),
+                params       : params
+        ]
+
+        def result = runProcedure("""
+        runProcedure(
+            projectName: '$projectName',
+            procedureName: 'StartApp',
+            actualParameter: [
+                 wlstabspath: '$wlstPath',
+                 appname    : '$APPLICATION_NAME',
+
+                 additional_options : "",
+//                 envscriptpath      : ""
+                 version_identifier : ""
+            ]
+        )
+        """, getResourceName())
+
+        return result
+    }
+
+    def StopApplication(def projectName, def params) {
+
+        def wlstPath = getWlstPath()
+
+        dslFile 'dsl/procedures.dsl', [
+                projectName  : projectName,
+                procedureName: 'StopApp',
+                resourceName : getResourceName(),
+                params       : params
+        ]
+
+        def result = runProcedure("""
+        runProcedure(
+            projectName: '$projectName',
+            procedureName: 'StopApp',
+            actualParameter: [
+                 wlstabspath: '$wlstPath',
+                 appname    : '$APPLICATION_NAME',
+
+                 additional_options : "",
+                 version_identifier : ""
             ]
         )
         """, getResourceName())
