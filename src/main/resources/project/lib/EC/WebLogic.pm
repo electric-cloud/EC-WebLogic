@@ -233,6 +233,8 @@ sub process_response {
         $self->warning( join("\n", @matches));
         return;
     }
+    my $restart = $result->{stdout} =~ m/that require server re-start/;
+    $self->ec->setProperty('/myJob/WebLogicServerRestartRequired', ($restart ? 'true' : 'false'));
     $self->success();
     return;
 }
@@ -351,7 +353,7 @@ sub get_wlst_path {
         $retval = $params->{wlstabspath};
     }
     else {
-        $retval = $self->get_param('wlstabspath');
+        $retval = eval {$self->ec->getProperty('wlstabspath')->findvalue('//value')->string_value};
     }
     return $retval if $retval;
     unless($cred) {

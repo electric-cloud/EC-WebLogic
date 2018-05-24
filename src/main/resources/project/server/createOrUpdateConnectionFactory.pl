@@ -41,17 +41,16 @@ sub main {
         'cf_client_id_policy',
         'cf_max_messages_per_session',
         'cf_xa_enabled',
-        'cf_attach_jmsx_userid',
         'jms_module_name',
         'subdeployment_name',
         'jms_server_name',
-        'server_name'
+        'update_action',
+        'additional_options'
     );
     my $cred = $wl->get_credentials($params->{configname});
     if ( $cred->{java_home} ) {
         $wl->out( 1, "JAVA_HOME was provided" );
     }
-    $params->{wlstabspath} = $cred->{wlst_path} unless ($params->{wlstabspath});
 
     my $render_params = {
         username     => $cred->{user},
@@ -60,7 +59,7 @@ sub main {
         admin_url    => $cred->{weblogic_url},
     };
 
-    my $wlst_path = $wl->get_wlst_path($params, $cred);
+    my $wlst_path = $wl->get_wlst_path();
 
     #rewrite to map when get chance
     $render_params->{$_} = $params->{$_} foreach keys %{ $params };
