@@ -72,12 +72,12 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
         def queue = getQueue(jmsModuleName, queueName)
         println queue
         assert queue.jndiName == jndiName
+        assert queue.subdeploymentName == queueName
         // TODO subdeployment name
         cleanup:
         deleteJMSQueue(jmsModuleName, queueName)
     }
 
-    @IgnoreRest
     def 'create jms queue with additional options'() {
         given:
         def queueName = randomize('SpecQueue')
