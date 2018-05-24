@@ -84,6 +84,7 @@ try:
     else:
         print_info("Found Connection Factory %s in the module %s" % (cfName, jmsModuleName))
         if updateAction == 'do_nothing':
+            discardChanges()
             print_info("No action is required")
             sys.exit(0)
         elif updateAction == 'remove_and_create':
