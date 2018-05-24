@@ -45,6 +45,9 @@ def isEmpty(value):
 def warn(message):
     warnings.warn("WARNING: " + message)
 
+def print_error(message):
+    print "ERROR:" + message
+
 def print_info(message):
     if debug_level >= 0:
         print "[WLST INFO] " + message
@@ -263,7 +266,7 @@ def discardChanges():
 def discardAndExit(e, message = None):
     discardChanges()
     if message:
-        print message
+        print 'Error: ' + message
     print str(e)
     dumpStack()
     sys.exit(1)

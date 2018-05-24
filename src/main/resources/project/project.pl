@@ -13,7 +13,7 @@ my $mode = 'restore';
 
 my $project_xml_path = $ARGV[0] || File::Spec->catfile(dirname($0), 'project.xml');
 my $manifest_path = $ARGV[1] || File::Spec->catfile(dirname($0), 'manifest.xml');
-my $procedure_name = 'CreateOrUpdateConnectionFactory';
+my $procedure_name = 'DeleteConnectionFactory';
 
 my $proj = {procedures => []};
 my $project = XML::XPath->new(filename => $project_xml_path);
@@ -169,6 +169,7 @@ else {
 
 
 
+        my $replaced = 0;
         while($content =~ /(<procedure>.*?<\/procedure>)/gmxsc) {
             my $proc = $1;
             if ($proc =~ /<procedureName>$procedure_name/xms) {
@@ -178,12 +179,19 @@ else {
                 print $fh $content;
                 close $fh;
                 print "Replaced procedure $procedure_name\n";
+                $replaced = 1;
                 last;
             }
         }
 
+        if (!$replaced) {
+            $content =~ s/<\/project>/$procedure_xml\n<\/project>/xms;
+            open my $fh, ">$proj_path" or die $!;
+            print $fh $content;
+            close $fh;
+            print "Added procedure $procedure_name\n";
+        }
     }
-
 }
 
 sub tidy {
