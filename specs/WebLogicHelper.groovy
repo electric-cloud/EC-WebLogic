@@ -288,7 +288,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
         return result
     }
->>>>>>> 5dce44c131c964450de99cc244915c97538d562b
 }
 
 
