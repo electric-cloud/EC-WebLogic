@@ -5,7 +5,7 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
     static def jmsModuleName = 'TestJMSModule'
     static def configName = 'EC-Specs WebLogic Config'
     static def procedureName = 'CreateOrUpdateJMSQueue'
-    static def deleteProcedureName = 'DeleteConnectionFactory'
+    static def deleteProcedureName = 'DeleteJMSQueue'
 
     static def params = [
         configname: configName,
@@ -31,16 +31,16 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
             params: params,
         ]
 
-        // dslFile 'dsl/procedures.dsl', [
-        //     projectName: projectName,
-        //     procedureName: deleteProcedureName,
-        //     resourceName: getResourceName(),
-        //     params: [
-        //         configname: configName,
-        //         cf_name: '',
-        //         jms_module_name: ''
-        //     ]
-        // ]
+        dslFile 'dsl/procedures.dsl', [
+            projectName: projectName,
+            procedureName: deleteProcedureName,
+            resourceName: getResourceName(),
+            params: [
+                configname: configName,
+                ecp_weblogic_jms_module_name: '',
+                ecp_weblogic_jms_queue_name: ''
+            ]
+        ]
     }
 
     def doCleanupSpec() {
@@ -184,6 +184,56 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
         cleanup:
         deleteJMSQueue(jmsModuleName, queueName)
         deleteSubDeployment(jmsModuleName, subdeploymentName)
+    }
+
+    def 'delete jms queue'() {
+        given:
+        def queueName = randomize('SpecQueue')
+        def result = runProcedure("""
+        runProcedure(
+            projectName: '$projectName',
+            procedureName: '$procedureName',
+            actualParameter: [
+                ecp_weblogic_jms_module_name: '$jmsModuleName',
+                ecp_weblogic_jms_queue_name: '$queueName',
+            ]
+        )
+        """, getResourceName())
+        when:
+        result = runProcedure """
+            runProcedure(
+                projectName: '$projectName',
+                procedureName: '$deleteProcedureName',
+                actualParameter: [
+                    ecp_weblogic_jms_module_name: '$jmsModuleName',
+                    ecp_weblogic_jms_queue_name: '$queueName'
+                ]
+            )
+        """, getResourceName()
+        then:
+        assert result.outcome == 'success'
+        logger.info(result.logs)
+        assert result.logs =~ /Removed JMS Queue $queueName from the module $jmsModuleName/
+    }
+
+    def "delete non-existing queue"() {
+        given:
+        def queueName = randomize('SpecQueue')
+        deleteJMSQueue(jmsModuleName, queueName)
+        when:
+        def result = runProcedure """
+            runProcedure(
+                projectName: '$projectName',
+                procedureName: '$deleteProcedureName',
+                actualParameter: [
+                    ecp_weblogic_jms_module_name: '$jmsModuleName',
+                    ecp_weblogic_jms_queue_name: '$queueName'
+                ]
+            )
+        """, getResourceName()
+        then:
+        assert result.outcome == 'error'
+        assert result.logs =~ /JMS Queue $queueName does not exist in the module $jmsModuleName/
     }
 
     def deleteJMSQueue(moduleName, name) {
