@@ -204,6 +204,11 @@ $xpath = $ec->attachCredential($projName, $credName,
      stepName => 'CreateOrUpdateConnectionFactory'});
 $errors .= $ec->checkAllErrors($xpath);
 
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'DeleteConnectionFactory',
+     stepName => 'DeleteConnectionFactory'});
+$errors .= $ec->checkAllErrors($xpath);
+
 
 if ($errors ne '') {
 

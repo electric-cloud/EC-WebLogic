@@ -393,6 +393,11 @@
             <expandable>1</expandable>
             <value/>
           </property>
+          <property>
+            <propertyName>delete_connection_factory.jython</propertyName>
+            <expandable>1</expandable>
+            <value/>
+          </property>
         </propertySheet>
       </property>
       <property>
@@ -7102,268 +7107,361 @@
         </propertySheet>
       </step>
     </procedure>
-    <procedure>
-      <procedureName>CreateOrUpdateConnectionFactory</procedureName>
-      <description>Creates or updates a Connection Factory</description>
-      <jobNameTemplate>weblogic-createOrUpdateConnectionFactory-$[jobId]</jobNameTemplate>
-      <resourceName/>
-      <workspaceName/>
-      <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+
+
+
+
+<procedure>
+  <description>Creates or updates a Connection Factory</description>
+  <jobNameTemplate>weblogic-createOrUpdateConnectionFactory-$[jobId]</jobNameTemplate>
+  <procedureName>CreateOrUpdateConnectionFactory</procedureName>
+  <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+  <propertySheet>
+    <property>
+      <propertyName>ec_customEditorData</propertyName>
       <propertySheet>
         <property>
-          <propertyName>ec_parameterForm</propertyName>
-          <expandable>1</expandable>
-          <value/>
-        </property>
-        <property>
-          <propertyName>ec_customEditorData</propertyName>
+          <propertyName>parameters</propertyName>
           <propertySheet>
             <property>
-              <propertyName>parameters</propertyName>
+              <propertyName>jms_module_name</propertyName>
               <propertySheet>
                 <property>
-                  <propertyName>configname</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                  </propertySheet>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
                 </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>subdeployment_name</propertyName>
+              <propertySheet>
                 <property>
-                  <propertyName>cf_name</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                  </propertySheet>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
                 </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>cf_sharing_policy</propertyName>
+              <propertySheet>
                 <property>
-                  <propertyName>jndi_name</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                  </propertySheet>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
                 </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>additional_options</propertyName>
+              <propertySheet>
                 <property>
-                  <propertyName>cf_sharing_policy</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                  </propertySheet>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
                 </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>configname</propertyName>
+              <propertySheet>
                 <property>
-                  <propertyName>cf_client_id_policy</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                  </propertySheet>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
                 </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>cf_xa_enabled</propertyName>
+              <propertySheet>
                 <property>
-                  <propertyName>cf_max_messages_per_session</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                  </propertySheet>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
                 </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>cf_max_messages_per_session</propertyName>
+              <propertySheet>
                 <property>
-                  <propertyName>cf_xa_enabled</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                  </propertySheet>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
                 </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>cf_name</propertyName>
+              <propertySheet>
                 <property>
-                  <propertyName>cf_attach_jmsx_userid</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                  </propertySheet>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
                 </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>cf_client_id_policy</propertyName>
+              <propertySheet>
                 <property>
-                  <propertyName>jms_module_name</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                  </propertySheet>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
                 </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>jms_server_name</propertyName>
+              <propertySheet>
                 <property>
-                  <propertyName>subdeployment_name</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                  </propertySheet>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
                 </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>jndi_name</propertyName>
+              <propertySheet>
                 <property>
-                  <propertyName>jms_server_name</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                  </propertySheet>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
                 </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>update_action</propertyName>
+              <propertySheet>
                 <property>
-                  <propertyName>server_name</propertyName>
-                  <propertySheet>
-                    <property>
-                      <propertyName>formType</propertyName>
-                      <expandable>1</expandable>
-                      <value>standard</value>
-                    </property>
-                  </propertySheet>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
                 </property>
               </propertySheet>
             </property>
           </propertySheet>
         </property>
       </propertySheet>
-      <formalParameter>
-        <formalParameterName>configname</formalParameterName>
-        <defaultValue/>
-        <description>Configuration name from which the Admin URL and credentials will be read.</description>
-        <required>1</required>
-        <type>entry</type>
-      </formalParameter>
-      <formalParameter>
-        <formalParameterName>cf_name</formalParameterName>
-        <defaultValue/>
-        <description>What would you like to name your new connection factory?</description>
-        <required>1</required>
-        <type>entry</type>
-      </formalParameter>
-      <formalParameter>
-        <formalParameterName>jndi_name</formalParameterName>
-        <defaultValue/>
-        <description>What JNDI Name would you like to use to look up your new connection factory?</description>
-        <required>0</required>
-        <type>entry</type>
-      </formalParameter>
-      <formalParameter>
-        <formalParameterName>cf_sharing_policy</formalParameterName>
-        <defaultValue/>
-        <description>The Connection Factory Subscription Sharing Policy Subscribers can be used to control which subscribers can access new subscriptions. Should subscriptions created using this factory be sharable?</description>
-        <required>0</required>
-        <type>select</type>
-      </formalParameter>
-      <formalParameter>
-        <formalParameterName>cf_client_id_policy</formalParameterName>
-        <defaultValue/>
-        <description>The Client ID Policy indicates whether more than one JMS connection can use the same Client ID. Oracle recommends setting the Client ID policy to Unrestricted if sharing durable subscribers. Subscriptions created with different Client ID policies are always treated as independent subscriptions. What Client ID Policy would you like to use?</description>
-        <required>0</required>
-        <type>select</type>
-      </formalParameter>
-      <formalParameter>
-        <formalParameterName>cf_max_messages_per_session</formalParameterName>
-        <defaultValue/>
-        <description>A connection factory can limit the number of messages that can queued for an asynchronous session. Should this connection factory impose a limit?</description>
-        <required>0</required>
-        <type>entry</type>
-      </formalParameter>
-      <formalParameter>
-        <formalParameterName>cf_xa_enabled</formalParameterName>
-        <defaultValue/>
-        <description>Should this connection factory create sessions that are JTA aware, and create XA queues and XA topics?</description>
-        <required>0</required>
-        <type>entry</type>
-      </formalParameter>
-      <formalParameter>
-        <formalParameterName>cf_attach_jmsx_userid</formalParameterName>
-        <defaultValue/>
-        <description>Should the authenticated user name be attached to sent messages if the JMS destination is configured to support this behavior?</description>
-        <required>0</required>
-        <type>entry</type>
-      </formalParameter>
-      <formalParameter>
-        <formalParameterName>jms_module_name</formalParameterName>
-        <defaultValue/>
-        <description>jms_module_name</description>
-        <required>1</required>
-        <type>entry</type>
-      </formalParameter>
-      <formalParameter>
-        <formalParameterName>subdeployment_name</formalParameterName>
-        <defaultValue/>
-        <description>subdeployment_name</description>
-        <required>0</required>
-        <type>entry</type>
-      </formalParameter>
-      <formalParameter>
-        <formalParameterName>jms_server_name</formalParameterName>
-        <defaultValue/>
-        <description>jms_server_name</description>
-        <required>0</required>
-        <type>entry</type>
-      </formalParameter>
-      <formalParameter>
-        <formalParameterName>server_name</formalParameterName>
-        <defaultValue/>
-        <description>Server name is required if you're not sure that JMS Module exists. If it does not - procedure will create JMS module and add Server as target to it.</description>
-        <required>0</required>
-        <type>entry</type>
-      </formalParameter>
-      <step>
-        <stepName>CreateOrUpdateConnectionFactory</stepName>
-        <alwaysRun>0</alwaysRun>
-        <broadcast>0</broadcast>
-        <command/>
-        <condition/>
-        <description/>
-        <errorHandling>failProcedure</errorHandling>
-        <exclusive>0</exclusive>
-        <logFileName/>
-        <parallel>0</parallel>
-        <releaseExclusive>0</releaseExclusive>
-        <resourceName/>
-        <retries>0</retries>
-        <shell>ec-perl</shell>
-        <timeLimit/>
-        <timeLimitUnits>minutes</timeLimitUnits>
-        <workingDirectory/>
-        <workspaceName/>
-        <procedureName>CreateOrUpdateConnectionFactory</procedureName>
-        <projectName>EC-WebLogic</projectName>
-        <propertySheet>
-          <property>
-            <propertyName>ec_customEditorData</propertyName>
-            <propertySheet>
-              <property>
-                <propertyName>formType</propertyName>
-                <expandable>1</expandable>
-                <value>command</value>
-              </property>
-            </propertySheet>
-          </property>
-        </propertySheet>
-      </step>
-  </procedure>
+    </property>
+    <property>
+      <propertyName>ec_parameterForm</propertyName>
+      <value />
+      <expandable>1</expandable>
+    </property>
+  </propertySheet>
+  <formalParameter>
+    <defaultValue />
+    <description>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</description>
+    <formalParameterName>configname</formalParameterName>
+    <required>1</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>Unique name of the Connection Factory that is created.</description>
+    <formalParameterName>cf_name</formalParameterName>
+    <required>1</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>Name of the JMS module in which the Connection Factory is created.</description>
+    <formalParameterName>jms_module_name</formalParameterName>
+    <required>1</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>The Connection Factory Subscription Sharing Policy Subscribers can be used to control which subscribers can access new subscriptions.Values can be either Sharable or Exclusive.
+        </description>
+    <formalParameterName>cf_sharing_policy</formalParameterName>
+    <required>1</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>The Client ID Policy indicates whether more than one JMS connection can use the same Client ID. Oracle recommends setting the Client ID policy to Unrestricted if sharing durable subscribers. Subscriptions created with different Client ID policies are always treated as independent subscriptions.
+        </description>
+    <formalParameterName>cf_client_id_policy</formalParameterName>
+    <required>1</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>JNDI Name is used to lookup the Connection factory using JNDI lookup. If the connection factory is created without passing this parameter, it can be only used in an Application Scoped context.</description>
+    <formalParameterName>jndi_name</formalParameterName>
+    <required>0</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue>10</defaultValue>
+    <description>This  limit specifies the number of messages that can be queued for an asynchronous session. Default value  is 10.</description>
+    <formalParameterName>cf_max_messages_per_session</formalParameterName>
+    <required>0</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue>1</defaultValue>
+    <description>Indicates if this connection factory should  create XA queues and XA topics in order to accommodate JTA aware transactions. Default is Yes.</description>
+    <formalParameterName>cf_xa_enabled</formalParameterName>
+    <required>0</required>
+    <type>checkbox</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>Name of Subdeployment. Required only if you do not  want default targeting and instead want to use advanced targeting.</description>
+    <formalParameterName>subdeployment_name</formalParameterName>
+    <required>0</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>JMS Server Name. Required only if you do not  want default targeting and instead want to use advanced targeting.</description>
+    <formalParameterName>jms_server_name</formalParameterName>
+    <required>0</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue>do_nothing</defaultValue>
+    <description>This parameter controls as to what the Update Action should be when a Connection Factory with the same name exists:
+Do Nothing  (Default) -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
+Remove and Create - The procedure would remove existing Connection Factory and recreate it based on new parameters passed.
+Selective Update - The procedure would update existing Connection Factory for only parameters that we have designed to be updatable out of the box, based on what we think makes sense.
+</description>
+    <formalParameterName>update_action</formalParameterName>
+    <required>0</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>Use this option to pass related parameters that pertain to Delivery, Client, Transaction or Flow Control.</description>
+    <formalParameterName>additional_options</formalParameterName>
+    <required>0</required>
+    <type>textarea</type>
+  </formalParameter>
+  <step>
+    <alwaysRun>0</alwaysRun>
+    <broadcast>0</broadcast>
+    <command />
+    <condition />
+    <description />
+    <errorHandling>failProcedure</errorHandling>
+    <exclusive>0</exclusive>
+    <logFileName />
+    <parallel>0</parallel>
+    <procedureName>CreateOrUpdateConnectionFactory</procedureName>
+    <projectName>EC-WebLogic</projectName>
+    <releaseExclusive>0</releaseExclusive>
+    <resourceName />
+    <retries>0</retries>
+    <shell>ec-perl</shell>
+    <stepName>CreateOrUpdateConnectionFactory</stepName>
+    <timeLimit />
+    <timeLimitUnits>minutes</timeLimitUnits>
+    <workingDirectory />
+    <workspaceName />
+  </step>
+</procedure>
+
+<procedure>
+  <description>Deletes Connection Factory</description>
+  <jobNameTemplate>weblogic-deleteConnectionFactory-$[jobId]</jobNameTemplate>
+  <procedureName>DeleteConnectionFactory</procedureName>
+  <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+  <propertySheet>
+    <property>
+      <propertyName>ec_parameterForm</propertyName>
+      <value />
+      <expandable>1</expandable>
+    </property>
+    <property>
+      <propertyName>ec_customEditorData</propertyName>
+      <propertySheet>
+        <property>
+          <propertyName>parameters</propertyName>
+          <propertySheet>
+            <property>
+              <propertyName>jms_module_name</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>configname</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>cf_name</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+      </propertySheet>
+    </property>
+  </propertySheet>
+  <formalParameter>
+    <defaultValue />
+    <description>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</description>
+    <formalParameterName>configname</formalParameterName>
+    <required>1</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>Unique name of the Connection Factory that is created.</description>
+    <formalParameterName>cf_name</formalParameterName>
+    <required>1</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>Name of the JMS module in which the Connection Factory is created.</description>
+    <formalParameterName>jms_module_name</formalParameterName>
+    <required>1</required>
+    <type>entry</type>
+  </formalParameter>
+  <step>
+    <alwaysRun>0</alwaysRun>
+    <broadcast>0</broadcast>
+    <command />
+    <condition />
+    <description />
+    <errorHandling>failProcedure</errorHandling>
+    <exclusive>0</exclusive>
+    <logFileName />
+    <parallel>0</parallel>
+    <procedureName>DeleteConnectionFactory</procedureName>
+    <projectName>EC-WebLogic</projectName>
+    <releaseExclusive>0</releaseExclusive>
+    <resourceName />
+    <retries>0</retries>
+    <shell>ec-perl</shell>
+    <stepName>DeleteConnectionFactory</stepName>
+    <timeLimit />
+    <timeLimitUnits>minutes</timeLimitUnits>
+    <workingDirectory />
+    <workspaceName />
+  </step>
+</procedure>
 </project>
 </exportedData>

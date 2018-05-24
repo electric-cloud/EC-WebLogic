@@ -36,16 +36,7 @@ sub main {
     my $params = $wl->get_params_as_hashref(
         'configname',
         'cf_name',
-        'jndi_name',
-        'cf_sharing_policy',
-        'cf_client_id_policy',
-        'cf_max_messages_per_session',
-        'cf_xa_enabled',
         'jms_module_name',
-        'subdeployment_name',
-        'jms_server_name',
-        'update_action',
-        'additional_options'
     );
     my $cred = $wl->get_credentials($params->{configname});
     if ( $cred->{java_home} ) {
@@ -57,14 +48,15 @@ sub main {
         password     => $cred->{password},
         weblogic_url => $cred->{weblogic_url},
         admin_url    => $cred->{weblogic_url},
+        %{$params}
     };
 
     my $wlst_path = $wl->get_wlst_path();
 
     #rewrite to map when get chance
-    $render_params->{$_} = $params->{$_} foreach keys %{ $params };
+    # $render_params->{$_} = $params->{$_} foreach keys %{ $params };
 
-    my $template_path = '/myProject/jython/create_or_update_connection_factory.jython';
+    my $template_path = '/myProject/jython/delete_connection_factory.jython';
     my $template = $wl->render_template_from_property( $template_path, $render_params );
 
     $wl->out(2, "Generated script:\n", $template);

@@ -27,91 +27,106 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Connection factory name:</label>
+        <label>Connection Factory Name:</label>
         <property>cf_name</property>
-        <documentation>What would you like to name your new connection factory?</documentation>
+        <documentation>Unique name of the Connection Factory that is created.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>JNDI name:</label>
-        <property>jndi_name</property>
-        <documentation>What JNDI Name would you like to use to look up your new connection factory?</documentation>
-        <required>0</required>
+        <label>JMS Module Name:</label>
+        <property>jms_module_name</property>
+        <documentation>Name of the JMS module in which the Connection Factory is created.</documentation>
+        <required>1</required>
     </formElement>
     <formElement>
-        <label>Subscription sharing policy:</label>
+        <label>Subscription Sharing Policy:</label>
         <property>cf_sharing_policy</property>
         <type>select</type>
         <option><name>Exclusive</name><value>exclusive</value></option>
         <option><name>Sharable</name><value>sharable</value></option>
         <required>1</required>
-        <documentation>
-            The Connection Factory Subscription Sharing Policy Subscribers can be used to control which subscribers can access new subscriptions. Should subscriptions created using this factory be sharable?
+        <documentation>The Connection Factory Subscription Sharing Policy Subscribers can be used to control which subscribers can access new subscriptions.Values can be either Sharable or Exclusive.
         </documentation>
     </formElement>
     <formElement>
-        <label>Client id policy:</label>
+        <label>Client ID Policy:</label>
         <property>cf_client_id_policy</property>
         <type>select</type>
         <option><name>Restricted</name><value>restricted</value></option>
         <option><name>Unrestricted</name><value>unrestricted</value></option>
         <required>1</required>
-        <documentation>
-            The Client ID Policy indicates whether more than one JMS connection can use the same Client ID. Oracle recommends setting the Client ID policy to Unrestricted if sharing durable subscribers. Subscriptions created with different Client ID policies are always treated as independent subscriptions. What Client ID Policy would you like to use?
+        <documentation>The Client ID Policy indicates whether more than one JMS connection can use the same Client ID. Oracle recommends setting the Client ID policy to Unrestricted if sharing durable subscribers. Subscriptions created with different Client ID policies are always treated as independent subscriptions.
         </documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Maximum messages per session:</label>
+        <label>JNDI Name:</label>
+        <property>jndi_name</property>
+        <documentation>JNDI Name is used to lookup the Connection factory using JNDI lookup. If the connection factory is created without passing this parameter, it can be only used in an Application Scoped context.</documentation>
+        <required>0</required>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Maximum Messages per Session:</label>
         <property>cf_max_messages_per_session</property>
-        <documentation>A connection factory can limit the number of messages that can queued for an asynchronous session. Should this connection factory impose a limit?</documentation>
+        <documentation>This  limit specifies the number of messages that can be queued for an asynchronous session. Default value  is 10.</documentation>
         <value>10</value>
+        <required>0</required>
     </formElement>
     <formElement>
         <type>checkbox</type>
-        <label>XA connection factory enabled:</label>
+        <label>XA Connection Factory Enabled?:</label>
         <property>cf_xa_enabled</property>
-        <documentation>Should this connection factory create sessions that are JTA aware, and create XA queues and XA topics?</documentation>
+        <documentation>Indicates if this connection factory should  create XA queues and XA topics in order to accommodate JTA aware transactions. Default is Yes.</documentation>
         <checkedValue>1</checkedValue>
         <uncheckedValue>0</uncheckedValue>
         <value>1</value>
-    </formElement>
-    <formElement>
-        <type>checkbox</type>
-        <label>Attach JMSX userid:</label>
-        <property>cf_attach_jmsx_userid</property>
-        <documentation>Should the authenticated user name be attached to sent messages if the JMS destination is configured to support this behavior?</documentation>
-        <checkedValue>1</checkedValue>
-        <uncheckedValue>0</uncheckedValue>
-        <value>0</value>
+        <required>0</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>JMS module name:</label>
-        <property>jms_module_name</property>
-        <documentation>JMS module name.</documentation>
-        <required>1</required>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Subdeployment name:</label>
+        <label>Subdeployment Name:</label>
         <property>subdeployment_name</property>
-        <documentation>Name of subdeployment.</documentation>
+        <documentation>Name of Subdeployment. Required only if you do not  want default targeting and instead want to use advanced targeting.</documentation>
         <required>0</required>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>JMS Server Name:</label>
         <property>jms_server_name</property>
-        <documentation>JMS server name.</documentation>
+        <documentation>JMS Server Name. Required only if you do not  want default targeting and instead want to use advanced targeting.</documentation>
         <required>0</required>
     </formElement>
     <formElement>
-        <type>entry</type>
-        <label>Server Name:</label>
-        <property>server_name</property>
-        <documentation>Server name is required if you're not sure that JMS Module exists. If it does not - procedure will create JMS module and add Server as target to it.</documentation>
+        <type>select</type>
+        <label>Update Action:</label>
+        <property>update_action</property>
+        <documentation>This parameter controls as to what the Update Action should be when a Connection Factory with the same name exists:
+Do Nothing  (Default) -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
+Remove and Create - The procedure would remove existing Connection Factory and recreate it based on new parameters passed.
+Selective Update - The procedure would update existing Connection Factory for only parameters that we have designed to be updatable out of the box, based on what we think makes sense.
+</documentation>
         <required>0</required>
+        <option>
+            <name>Do Nothing</name>
+            <value>do_nothing</value>
+        </option>
+        <option>
+            <name>Remove and Create</name>
+            <value>remove_and_create</value>
+        </option>
+        <option>
+            <name>Selective Update</name>
+            <value>selective_update</value>
+        </option>
+        <value>do_nothing</value>
+    </formElement>
+    <formElement>
+        <type>textarea</type>
+        <label>Additional Options:</label>
+        <required>0</required>
+        <documentation>Use this option to pass related parameters that pertain to Delivery, Client, Transaction or Flow Control.</documentation>
+        <property>additional_options</property>
     </formElement>
 </editor>

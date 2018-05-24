@@ -39,9 +39,14 @@ MINIMAL_VERSION_FOR_REDEPLOYMENT = '12.0.0.0'
 
 print "WebLogic version is: %s" % (version)
 
+def isEmpty(value):
+    return value == None or value == ''
 
 def warn(message):
     warnings.warn("WARNING: " + message)
+
+def print_error(message):
+    print "ERROR:" + message
 
 def print_info(message):
     if debug_level >= 0:
@@ -51,7 +56,6 @@ def print_debug(message):
     if debug_level >= 1:
         print "[WLST DEBUG] " + message
 
-
 def getJMSSystemResourcePath(jms_module_name):
     return "/JMSSystemResources/%s"%(jms_module_name)
 
@@ -59,7 +63,7 @@ def getJMSModulePath(jms_module_name):
     return "%s/JMSResource/%s"%(getJMSSystemResourcePath(jms_module_name),jms_module_name)
 
 def getConnectionFactoryPath(jms_module_name,cf_name):
-    return "%s/ConnectionFactories/%s"%(getJMSModulePath(jms_module_name),cf_name)
+    return "/JMSSystemResources/%s/JMSResource/%s/ConnectionFactories/%s" % (jms_module_name, jms_module_name, cf_name)
 
 def getSubDeploymentPath(jms_module_name, subdeployment_name):
     return "/JMSSystemResources/%s/SubDeployments/%s" % (jms_module_name, subdeployment_name)
@@ -69,6 +73,9 @@ def getJMSServerPath(jms_server_name):
 
 def getServerPath(server_name):
     return "/Servers/%s" % (server_name)
+
+def getConnectionFactoryParamsPath(jms_module_name, cf_name, group_name):
+    return '/JMSSystemResources/%s/JMSResource/%s/ConnectionFactories/%s/%s/%s' % (jms_name, jms_name, cf_name, group_name, cf_name)
 
 def cdJMSSystemResourcePath(jms_module_name):
     cd(getJMSSystemResourcePath(jms_module_name))
@@ -223,8 +230,23 @@ def startChanges():
     else:
         startEdit()
 
+sessionStarted = False
+def startChangesOnce():
+    if not sessionStarted:
+        startChanges()
+        sessionStarted = True
+
+def isEditSessionStarted():
+    return sessionStarted
+
+def commitChangesOnce(lockTimeout = None):
+    if sessionStarted:
+        commitChanges(lockTimeout)
+        sessionStarted = False
+
 # Saves and activates changes
 def commitChanges(lockTimeout = None):
+    sessionStarted = False
     save()
     params = {'block': 'true'}
     if lockTimeout:
@@ -241,13 +263,22 @@ def discardChanges():
         print "Terminating edit session %s" % (randSessionName)
         terminateEditSession(randSessionName)
 
+def discardAndExit(e, message = None):
+    discardChanges()
+    if message:
+        print 'Error: ' + message
+    print str(e)
+    dumpStack()
+    sys.exit(1)
+
 # add parse function
-def parseOptions(options):
-    print "Options: %s" % (options)
+def parseOptions(options, delimeter = '\\s*,\\s*'):
+    print_info("Options: %s" % (options))
     optionsDict = {}
-    for nextArgument in re.split('\s*,\s*', options):
-        arguments = nextArgument.split('=')
-        optionsDict[arguments[0]]=arguments[1]
+    for nextArgument in re.split(delimeter, options):
+        if nextArgument != '':
+            arguments = re.split('\\s*=\\s*', nextArgument)
+            optionsDict[arguments[0]]=arguments[1]
     return optionsDict
 
 # appName parameter is mandatory. Use * for appVersion and appPlanVersion to get all.
@@ -429,17 +460,75 @@ def getClusterStatus(clusterName):
     return retval
 
 
-def read_bool_parameter(value):
+def getJMSResource(name):
+    if isEmpty(name):
+        raise Exception("No JMS Module Name is provided")
+    mbean = getMBean('/JMSSystemResources/%s' % name)
+    if mbean == None:
+        return None
+    else:
+        print_debug("Got JMS Bean %s" % mbean)
+        return mbean.getJMSResource()
+
+def readBool(value):
     value = value.strip()
     if value:
         return True
     else:
         return False
 
-def read_int_parameter(value, default_value = 0):
+def readInt(value, default_value = 0):
     value = value.strip()
     if value:
         return int(value)
     else:
         return default_value
+
+def readString(value, default_value = ''):
+    value = value.strip()
+    if value:
+        return value
+    else:
+        return default_value
+
+def createOrUpdateSubdeployment(jmsModuleName, subName, jmsServerName):
+    subdeployment = getMBean(getSubDeploymentPath(jmsModuleName, subName))
+    if subdeployment == None:
+        print_info("Subdeployment %s does not exist" % subName)
+        jmsModuleBean = getMBean('/JMSSystemResources/' + jmsModuleName)
+        if jmsModuleBean == None:
+            raise Exception('JMS Resource %s does not exist' % jmsModuleName)
+        subdeployment = jmsModuleBean.createSubDeployment(subName)
+        print_info("Created Subdeployment %s" % subName)
+
+    cd(getSubDeploymentPath(jmsModuleName, subName))
+    if jmsServerName == '':
+        raise Exception('JMS Server Name is not provided!')
+    jmsServerBean = getMBean('/JMSServers/' + jmsServerName)
+    if jmsServerBean == None:
+        raise Exception('JMS Server %s does not exist' % jmsServerName)
+    currentTargets = subdeployment.getTargets()
+    for target in currentTargets:
+        print_debug('Found target: %s' % target.objectName)
+        if target.objectName == jmsServerBean.objectName:
+            print_info('Target %s is already in the list of targets' % jmsServerBean.objectName)
+            return
+
+    targets = [jmsServerBean.objectName]
+    set('Targets', jarray.array(targets, ObjectName))
+    print_info("Set JMS Subdeployment Targets: %s" % targets)
+    return subdeployment
+
+def deleteConnectionFactory(jmsModuleName, cfName):
+    if isEmpty(jmsModuleName):
+        raise Exception("JMS Module Name is not provided")
+    if isEmpty(cfName):
+        raise Exception("Connection Factory name is not provided")
+    bean = getMBean('%s/ConnectionFactories/' % getJMSModulePath(jmsModuleName))
+    cfBean = getMBean(getConnectionFactoryPath(jmsModuleName, cfName))
+    if cfBean != None:
+        bean.destroyConnectionFactory(cfBean)
+        print_info("Removed Connection Factory %s from the module %s" % (cfName, jmsModuleName))
+    else:
+        print_info("Connection Factory %s does not exist in the module %s" % (cfName, jmsModuleName))
 
