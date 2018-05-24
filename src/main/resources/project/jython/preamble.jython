@@ -45,6 +45,9 @@ def isEmpty(value):
 def warn(message):
     warnings.warn("WARNING: " + message)
 
+def print_error(message):
+    print "ERROR:" + message
+
 def print_info(message):
     if debug_level >= 0:
         print "[WLST INFO] " + message

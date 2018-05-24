@@ -256,7 +256,7 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
         )
         """, getResourceName()
         then:
-        assert result.outcome == 'success'
+        assert result.outcome == 'error'
         assert result.logs =~ /Connection Factory $cfName does not exist in the module $jmsModuleName/
     }
 
@@ -276,7 +276,7 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
         )
         """, getResourceName()
         then:
-        assert result.outcome == 'success'
+        assert result.outcome == 'error'
         assert result.logs =~ /Connection Factory $cfName does not exist in the module $jmsModule/
     }
 

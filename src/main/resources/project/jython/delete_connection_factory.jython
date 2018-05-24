@@ -36,9 +36,8 @@ jmsModuleName = readString(r'''[% jms_module_name %]''')
 connect(username, password, adminUrl)
 cfBean = getMBean(getConnectionFactoryPath(jmsModuleName, cfName))
 if cfBean == None:
-    print_info("Connection Factory %s does not exist in the module %s" % (cfName, jmsModuleName))
-    sys.exit(0)
-    # TODO
+    print_error("Connection Factory %s does not exist in the module %s" % (cfName, jmsModuleName))
+    sys.exit(-1)
 
 try:
     startChanges()
