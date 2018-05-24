@@ -9,6 +9,8 @@ class WebLogicHelper extends PluginSpockTestSupport {
     static def REMOTE_DIRECTORY = '/tmp'
     static def APPLICATION_NAME = 'sample'
 
+    static def APPLICATION_PAGE_URL = "http://localhost:7001/sample/hello.jsp"
+
     def doSetupSpec() {
         setupResource()
         deleteProject(HELPER_PROJECT)

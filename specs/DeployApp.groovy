@@ -16,13 +16,13 @@ class DeployApp extends WebLogicHelper {
     def 'Deploy application'() {
         given:
         // Check application don't exists
-        def pageBeforeDeploy = checkUrl("http://localhost:7001/sample/hello.jsp")
+        def pageBeforeDeploy = checkUrl(APPLICATION_PAGE_URL)
 
         if (pageBeforeDeploy.code == NOT_FOUND_RESPONSE) {
             def undeploy = UndeployApplication(projectName, [
                     configname        : configName,
                     wlstabspath       : getWlstPath(),
-                    appname           : 'sample',
+                    appname           : APPLICATION_NAME,
 
                     retire_gracefully : '',
                     version_identifier: '',
@@ -38,7 +38,7 @@ class DeployApp extends WebLogicHelper {
         def result = DeployApplication(projectName, [
                 configname               : configName,
                 wlstabspath              : getWlstPath(),
-                appname                  : 'sample',
+                appname                  : APPLICATION_NAME,
                 apppath                  : "$REMOTE_DIRECTORY/$FILENAME",
                 targets                  : 'AdminServer',
 
@@ -59,7 +59,7 @@ class DeployApp extends WebLogicHelper {
         then:
         assert result.outcome == 'success'
 
-        def pageAfterDeploy = checkUrl("http://localhost:7001/sample/hello.jsp")
+        def pageAfterDeploy = checkUrl(APPLICATION_PAGE_URL)
         assert pageAfterDeploy.code == SUCCESS_RESPONSE
     }
 
