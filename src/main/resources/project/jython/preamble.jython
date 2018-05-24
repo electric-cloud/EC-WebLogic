@@ -71,6 +71,9 @@ def getSubDeploymentPath(jms_module_name, subdeployment_name):
 def getJMSServerPath(jms_server_name):
     return "/JMSServers/%s" % (jms_server_name)
 
+def getJMSQueuePath(jmsModule, queue):
+    return "/JMSSystemResources/%s/JMSResource/%s/Queues/%s" % (jmsModule, jmsModule, queue)
+
 def getServerPath(server_name):
     return "/Servers/%s" % (server_name)
 
@@ -502,8 +505,10 @@ def createOrUpdateSubdeployment(jmsModuleName, subName, jmsServerName):
         print_info("Created Subdeployment %s" % subName)
 
     cd(getSubDeploymentPath(jmsModuleName, subName))
-    if jmsServerName == '':
-        raise Exception('JMS Server Name is not provided!')
+    if isEmpty(jmsServerName):
+        print_info("No JMS Server name is provided, will not set subdeployment targeting")
+        return
+
     jmsServerBean = getMBean('/JMSServers/' + jmsServerName)
     if jmsServerBean == None:
         raise Exception('JMS Server %s does not exist' % jmsServerName)
@@ -532,3 +537,16 @@ def deleteConnectionFactory(jmsModuleName, cfName):
     else:
         print_info("Connection Factory %s does not exist in the module %s" % (cfName, jmsModuleName))
 
+def deleteJMSQueue(jmsModuleName, queueName):
+    if isEmpty(jmsModuleName):
+        raise Exception("JMS Module Name is not provided")
+    if isEmpty(queueName):
+        raise Exception("Queue name is not provided")
+
+    bean = getMBean('%s/Queues/' % getJMSModulePath(jmsModuleName))
+    queueBean = getMBean(getJMSQueuePath(jmsModuleName, queueName))
+    if queueBean != None:
+        bean.destroyQueue(queueBean)
+        print_info("Removed JMS Queue %s from the module %s" % (queueName, jmsModuleName))
+    else:
+        print_info("JMS Queue %s does not exist in the module %s" % (queueName, jmsModuleName))

@@ -1,4 +1,5 @@
 import com.electriccloud.spec.PluginSpockTestSupport
+import groovy.json.*
 
 class WebLogicHelper extends PluginSpockTestSupport {
     static final def HELPER_PROJECT = 'EC-WebLogic Specs Helper'
@@ -288,6 +289,135 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
         return result
     }
+
+    def createJMSModule(name) {
+        def code = """
+resource_name = '$name'
+target = 'AdminServer'
+connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+cd('/')
+edit()
+if cmo.lookupJMSSystemResource(resource_name):
+    print "Resource %s alreay exists" % resource_name
+else:
+    startEdit()
+    cmo.createJMSSystemResource(resource_name)
+    cd("/JMSSystemResources/%s" % resource_name)
+    cmo.addTarget(getMBean("/Servers/%s" % target))
+    activate()
+"""
+        def result = runWLST(code)
+        assert result.outcome == 'success'
+    }
+
+
+    def createJMSServer(name) {
+        def code = """
+connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+
+jmsServerName = '$name'
+targetName = '${getAdminServerName()}'
+
+bean = getMBean('/JMSServers/%s' % jmsServerName)
+if bean == None:
+    edit()
+    startEdit()
+    cd('/')
+    print "Creating JMS Server %s" % jmsServerName
+    cmo.createJMSServer(jmsServerName)
+    cd("/JMSServers/%s" % jmsServerName)
+    cmo.addTarget(getMBean("/Servers/%s" % targetName))
+    activate()
+else:
+    print "JMS Server already exists"
+"""
+        def result = runWLST(code)
+        assert result.outcome == 'success'
+        result
+    }
+
+    def createSubDeployment(moduleName, subName, serverName) {
+        def code = """
+def getSubDeploymentPath(jms_module_name, subdeployment_name):
+    return "/JMSSystemResources/%s/SubDeployments/%s" % (jms_module_name, subdeployment_name)
+
+def createOrUpdateSubdeployment(jmsModuleName, subName, jmsServerName):
+    subdeployment = getMBean(getSubDeploymentPath(jmsModuleName, subName))
+    if subdeployment == None:
+        print("Subdeployment %s does not exist" % subName)
+        jmsModuleBean = getMBean('/JMSSystemResources/' + jmsModuleName)
+        if jmsModuleBean == None:
+            raise Exception('JMS Resource %s does not exist' % jmsModuleName)
+        subdeployment = jmsModuleBean.createSubDeployment(subName)
+        print("Created Subdeployment %s" % subName)
+
+    cd(getSubDeploymentPath(jmsModuleName, subName))
+    if jmsServerName == '':
+        raise Exception('JMS Server Name is not provided!')
+
+    jmsServerBean = getMBean('/JMSServers/' + jmsServerName)
+    if jmsServerBean == None:
+        raise Exception('JMS Server %s does not exist' % jmsServerName)
+    currentTargets = subdeployment.getTargets()
+    for target in currentTargets:
+        print('Found target: %s' % target.objectName)
+        if target.objectName == jmsServerBean.objectName:
+            print('Target %s is already in the list of targets' % jmsServerBean.objectName)
+            return
+
+    targets = [jmsServerBean.objectName]
+    set('Targets', jarray.array(targets, ObjectName))
+    print "Set JMS Subdeployment Targets: %s" % targets
+    return subdeployment
+
+connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+edit()
+startEdit()
+createOrUpdateSubdeployment('$moduleName', '$subName', '$serverName')
+activate()
+"""
+        def result = runWLST(code)
+        assert result.outcome == 'success'
+    }
+
+    def deleteSubDeployment(moduleName, subName) {
+        def code = """
+def getSubDeploymentPath(jms_module_name, subdeployment_name):
+    return "/JMSSystemResources/%s/SubDeployments/%s" % (jms_module_name, subdeployment_name)
+
+def deleteSubDeployment(jmsModuleName, subName):
+    jmsModuleBean = getMBean('/JMSSystemResources/' + jmsModuleName)
+    subBean = getMBean(getSubDeploymentPath(jmsModuleName, subName))
+    if subBean != None:
+        jmsModuleBean.destroySubDeployment(subBean)
+        print "Deleted subdeployment"
+    else:
+        print "Subdeployment does not exist"
+
+connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+edit()
+startEdit()
+deleteSubDeployment('$moduleName', '$subName')
+activate()
+"""
+        def result = runWLST(code)
+        assert result.outcome == 'success'
+    }
+
+    def getQueue(jmsModule, queue) {
+        def code = """
+connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+module = '$jmsModule'
+queue = '$queue'
+cd('/JMSSystemResources/%s/JMSResource/%s/Queues/%s' % (module, module, queue))
+jndiName = get('JNDIName')
+subdeployment = get('SubDeploymentName')
+print 'JSON{"jndiName": "%s", "subdeploymentName": "%s"}/JSON' % (jndiName, subdeployment)
+"""
+        def result = runWLST(code)
+        assert result.outcome == 'success'
+        def group = (result.logs =~ /JSON(\{.+?\})\/JSON/)
+        def json = group[0][1]
+        return new JsonSlurper().parseText(json)
+    }
 }
-
-
