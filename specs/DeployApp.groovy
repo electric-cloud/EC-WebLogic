@@ -14,7 +14,7 @@ class DeployApp extends WebLogicHelper {
         deleteProject(projectName)
     }
 
-    @Ignore
+
     def 'Deploy application - positive'() {
         given:
         // Check application don't exists
@@ -32,7 +32,7 @@ class DeployApp extends WebLogicHelper {
 
                     additional_options: ''
             ])
-            assert (undeploy.outcome == 'success')
+            assert (undeploy.outcome == 'success' || undeploy.outcome == 'warning')
             deleteProject(projectName)
         }
 
@@ -70,7 +70,7 @@ class DeployApp extends WebLogicHelper {
         deleteProject(projectName)
     }
 
-    @Ignore
+
     def 'Redeploy existing application - positive'() {
         given:
         // Check application don't exists
@@ -163,7 +163,7 @@ class DeployApp extends WebLogicHelper {
         then:
 
         assert result.outcome == 'error'
-//        assert (result.logs ?: '') =~ /not exists/
+        assert result.logs =~ /No file or directory found at the specified application path: $file_path/
 
         cleanup:
         deleteProject(projectName)
