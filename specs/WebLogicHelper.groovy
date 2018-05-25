@@ -1,5 +1,6 @@
 import com.electriccloud.spec.PluginSpockTestSupport
 import groovy.json.*
+import spock.util.concurrent.PollingConditions
 
 class WebLogicHelper extends PluginSpockTestSupport {
     static final def HELPER_PROJECT = 'EC-WebLogic Specs Helper'
@@ -19,7 +20,22 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
     def doCleanupSpec() {
         deleteProject(HELPER_PROJECT)
+//        deleteProject('EC-Spec Helper')
     }
+
+//    def runProcedure(dslString, resourceName = null, timeout = 120) {
+//        assert dslString
+//        def result = dsl(dslString)
+//
+//        PollingConditions poll = createPoll(timeout)
+//        poll.eventually {
+//            jobCompleted(result.jobId)
+//        }
+//
+//        def logs = readJobLogs(result.jobId, resourceName)
+//        def outcome = jobStatus(result.jobId).outcome
+//        [logs: logs, outcome: outcome, jobId: result.jobId]
+//    }
 
     static def getWlstPath() {
         def path = System.getenv('WEBLOGIC_WLST_PATH')
@@ -280,13 +296,13 @@ class WebLogicHelper extends PluginSpockTestSupport {
             procedureName: 'DeployApp',
             actualParameter: [
                  wlstabspath: '$wlstPath',
-                 appname : '$APPLICATION_NAME',
-                 apppath : "$REMOTE_DIRECTORY/$FILENAME",
+                 appname : '${params.appname}',
+                 apppath : "${params.apppath}",
                  targets : 'AdminServer',
                  is_library : ""
             ]
         )
-        """, getResourceName())
+        """)
 
         return result
     }

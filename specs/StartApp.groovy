@@ -70,4 +70,22 @@ class StartApp extends WebLogicHelper {
         assert pageAfterDeploy.code == SUCCESS_RESPONSE
     }
 
+    def 'Start unexisting application - negative'() {
+        given:
+        deleteProject(projectName)
+        def unexisting_app_name = '__' + APPLICATION_NAME + '__un3x1st3nt'
+
+        when:
+        def result = StartApplication(projectName, [
+                configname        : configName,
+                wlstabspath       : getWlstPath(),
+                appname           : unexisting_app_name,
+                additional_options: "",
+                version_identifier: ""
+        ])
+
+        then:
+        assert result.outcome == 'warning'
+    }
+
 }
