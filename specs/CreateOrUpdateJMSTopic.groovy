@@ -5,7 +5,7 @@ class CreateOrUpdateJMSTopic extends WebLogicHelper {
     static def jmsModuleName = 'TestJMSModule'
     static def configName = 'EC-Specs WebLogic Config'
     static def procedureName = 'CreateOrUpdateJMSTopic'
-    static def deleteProcedureName = 'DeleteJMSQueue'
+    static def deleteProcedureName = 'DeleteJMSTopic'
 
     static def params = [
         configname: configName,
@@ -30,20 +30,20 @@ class CreateOrUpdateJMSTopic extends WebLogicHelper {
             params: params,
         ]
 
-        // dslFile 'dsl/procedures.dsl', [
-        //     projectName: projectName,
-        //     procedureName: deleteProcedureName,
-        //     resourceName: getResourceName(),
-        //     params: [
-        //         configname: configName,
-        //         ecp_weblogic_jms_module_name: '',
-        //         ecp_weblogic_jms_queue_name: ''
-        //     ]
-        // ]
+        dslFile 'dsl/procedures.dsl', [
+            projectName: projectName,
+            procedureName: deleteProcedureName,
+            resourceName: getResourceName(),
+            params: [
+                configname: configName,
+                ecp_weblogic_jms_module_name: '',
+                ecp_weblogic_jms_topic_name: ''
+            ]
+        ]
     }
 
     def doCleanupSpec() {
-        // deleteProject(projectName)
+        deleteProject(projectName)
     }
 
     def 'create jms topic'() {
@@ -118,7 +118,7 @@ class CreateOrUpdateJMSTopic extends WebLogicHelper {
         def topicName = 'SpecTopic'
         def oldJNDIName = 'TestJNDIName'
         def newJNDIName = 'NewJNDIName'
-        deleteJMSQueue(jmsModuleName, queueName)
+        deleteJMSTopic(jmsModuleName, topicName)
         def result = runProcedure("""
         runProcedure(
             projectName: '$projectName',
@@ -126,7 +126,7 @@ class CreateOrUpdateJMSTopic extends WebLogicHelper {
             actualParameter: [
                 ecp_weblogic_jms_module_name: '$jmsModuleName',
                 ecp_weblogic_jndi_name: '$oldJNDIName',
-                ecp_weblogic_jms_queue_name: '$queueName',
+                ecp_weblogic_jms_topic_name: '$topicName',
             ]
         )
         """, getResourceName())
@@ -142,7 +142,7 @@ class CreateOrUpdateJMSTopic extends WebLogicHelper {
             actualParameter: [
                 ecp_weblogic_jms_module_name: '$jmsModuleName',
                 ecp_weblogic_jndi_name: '$newJNDIName',
-                ecp_weblogic_jms_queue_name: '$queueName',
+                ecp_weblogic_jms_topic_name: '$topicName',
                 ecp_weblogic_update_action: 'remove_and_create',
                 ecp_weblogic_subdeployment_name: '$subdeploymentName',
             ]
@@ -156,6 +156,54 @@ class CreateOrUpdateJMSTopic extends WebLogicHelper {
         deleteSubDeployment(jmsModuleName, subdeploymentName)
     }
 
+    def 'delete jms topic'() {
+        given:
+        def topicName = 'SpecTopic'
+        def result = runProcedure("""
+        runProcedure(
+            projectName: '$projectName',
+            procedureName: '$procedureName',
+            actualParameter: [
+                ecp_weblogic_jms_module_name: '$jmsModuleName',
+                ecp_weblogic_jms_topic_name: '$topicName',
+            ]
+        )
+        """, getResourceName())
+        when:
+        result = runProcedure """
+        runProcedure(
+            projectName: '$projectName',
+            procedureName: '$deleteProcedureName',
+            actualParameter: [
+                ecp_weblogic_jms_module_name: '$jmsModuleName',
+                ecp_weblogic_jms_topic_name: '$topicName'
+            ]
+        )
+        """, getResourceName()
+        then:
+        logger.debug(result.logs)
+        assert result.outcome == 'success'
+        assert result.logs =~ /Removed JMS Topic $topicName from the module $jmsModuleName/
+    }
+
+    def 'delete non-existing jms topic'() {
+        given:
+        def topicName = 'NoSuchTopic'
+        when:
+        def result = runProcedure """
+        runProcedure(
+            projectName: '$projectName',
+            procedureName: '$deleteProcedureName',
+            actualParameter: [
+                ecp_weblogic_jms_module_name: '$jmsModuleName',
+                ecp_weblogic_jms_topic_name: '$topicName'
+            ]
+        )
+        """, getResourceName()
+        then:
+        logger.debug(result.logs)
+        assert result.outcome == 'error'
+    }
 
     def deleteJMSTopic(moduleName, name) {
         def code = """

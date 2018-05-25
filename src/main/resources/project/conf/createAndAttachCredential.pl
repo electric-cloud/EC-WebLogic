@@ -225,6 +225,12 @@ $xpath = $ec->attachCredential($projName, $credName,
 $errors .= $ec->checkAllErrors($xpath);
 
 
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'DeleteJMSTopic',
+     stepName => 'DeleteJMSTopic'});
+$errors .= $ec->checkAllErrors($xpath);
+
+
 if ($errors ne '') {
 
     # Cleanup the partially created configuration we just created
