@@ -30,8 +30,13 @@ adminUrl = r'''
 [% admin_url %]
 '''.strip()
 
-topicName = readString(r'''[% ecp_weblogic_jms_topic_name %]''', '')
-jmsModuleName = readString(r'''[% ecp_weblogic_jms_module_name %]''', '')
+topicName = r'''
+[% ecp_weblogic_jms_topic_name %]
+'''.strip()
+
+jmsModuleName = r'''
+[% ecp_weblogic_jms_module_name %]
+'''.strip()
 
 connect(username, password, adminUrl)
 jmsTopic = getMBean(getJMSTopicPath(jmsModuleName, topicName))

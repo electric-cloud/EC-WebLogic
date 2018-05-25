@@ -30,8 +30,13 @@ adminUrl = r'''
 [% admin_url %]
 '''.strip()
 
-queueName = readString(r'''[% ecp_weblogic_jms_queue_name %]''', '')
-jmsModuleName = readString(r'''[% ecp_weblogic_jms_module_name %]''', '')
+queueName = r'''
+[% ecp_weblogic_jms_queue_name %]
+'''.strip()
+
+jmsModuleName = r'''
+[% ecp_weblogic_jms_module_name %]
+'''.strip()
 
 connect(username, password, adminUrl)
 jmsQueue = getMBean(getJMSQueuePath(jmsModuleName, queueName))

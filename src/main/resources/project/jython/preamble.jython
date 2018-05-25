@@ -509,8 +509,7 @@ def createOrUpdateSubdeployment(jmsModuleName, subName, jmsServerName):
 
     cd(getSubDeploymentPath(jmsModuleName, subName))
     if isEmpty(jmsServerName):
-        print_info("No JMS Server name is provided, will not set subdeployment targeting")
-        return
+        raise Exception("No JMS Server name is provided")
 
     jmsServerBean = getMBean('/JMSServers/' + jmsServerName)
     if jmsServerBean == None:

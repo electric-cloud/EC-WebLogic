@@ -30,8 +30,13 @@ adminUrl = r'''
 [% admin_url %]
 '''.strip()
 
-cfName = readString(r'''[% cf_name %]''')
-jmsModuleName = readString(r'''[% jms_module_name %]''')
+cfName = r'''
+[% cf_name %]
+'''.strip()
+
+jmsModuleName = r'''
+[% jms_module_name %]
+'''.strip()
 
 connect(username, password, adminUrl)
 cfBean = getMBean(getConnectionFactoryPath(jmsModuleName, cfName))

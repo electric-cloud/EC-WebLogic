@@ -38,18 +38,20 @@ jndiName = r'''
 [% ecp_weblogic_jndi_name %]
 '''.strip()
 
-jmsModuleName = readString(r'''[% ecp_weblogic_jms_module_name %]''')
-
-jmsServerName = r'''
-[% ecp_weblogic_jms_server_name %]
+jmsModuleName = r'''
+[% ecp_weblogic_jms_module_name %]
 '''.strip()
 
 subdeploymentName = r'''
 [% ecp_weblogic_subdeployment_name %]
 '''.strip()
+additionalOptions = r'''
+[% ecp_weblogic_additional_options %]
+'''.strip()
 
-additionalOptions = readString('''[% ecp_weblogic_additional_options %]'''.strip(), '')
-updateAction = readString(r'''[% ecp_weblogic_update_action %]''', 'do_nothing')
+updateAction = readString(r'''
+[% ecp_weblogic_update_action %]
+''', 'do_nothing')
 
 connect(username, password, adminUrl)
 
@@ -78,9 +80,6 @@ try:
         else:
             update = True
             print_info("Doing selective update")
-
-    if not isEmpty(subdeploymentName):
-        subdeployment = createOrUpdateSubdeployment(jmsModuleName, subdeploymentName, jmsServerName)
 
     cd(getJMSTopicPath(jmsModuleName, topicName))
     if get('JNDIName') != jndiName:
