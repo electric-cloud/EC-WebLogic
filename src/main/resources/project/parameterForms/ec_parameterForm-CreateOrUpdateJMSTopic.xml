@@ -27,8 +27,8 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>JMS Queue Name:</label>
-        <property>ecp_weblogic_jms_queue_name</property>
+        <label>JMS Topic Name:</label>
+        <property>ecp_weblogic_jms_topic_name</property>
         <documentation>Unique name of the JMS Queue Name that is going to be created or updated.
 </documentation>
         <required>1</required>
@@ -37,7 +37,7 @@
         <type>entry</type>
         <label>JMS Module Name:</label>
         <property>ecp_weblogic_jms_module_name</property>
-        <documentation>Name of the JMS module in which the JMS Queue is created. If there is already a JMS Queue with the specified name, it will be updated.
+        <documentation>Name of the JMS module in which the JMS Topic is created. If there is already a JMS Topic with the specified name, it will be updated.
 </documentation>
         <required>1</required>
     </formElement>
@@ -45,7 +45,7 @@
         <type>entry</type>
         <label>JNDI Name:</label>
         <property>ecp_weblogic_jndi_name</property>
-        <documentation>JNDI Name is used to lookup the JMS Queue using JNDI lookup. If the JMS Queue is created without passing this parameter, it can be only used in an Application Scoped context.
+        <documentation>JNDI Name is used to lookup the JMS Topic using JNDI lookup. If the JMS Topic is created without passing this parameter, it can be only used in an Application Scoped context.
 </documentation>
         <required>0</required>
     </formElement>
@@ -53,7 +53,7 @@
         <type>entry</type>
         <label>Subdeployment Name:</label>
         <property>ecp_weblogic_subdeployment_name</property>
-        <documentation>Name of Subdeployment. Required in order to deploy the Queue. If this is not specified the Queue will not be usable.
+        <documentation>Name of Subdeployment. Required in order to deploy the Topic. If this is not specified the Topic will not be usable.
 </documentation>
         <required>0</required>
     </formElement>
@@ -63,8 +63,8 @@
         <property>ecp_weblogic_update_action</property>
         <documentation>This parameter controls as to what the Update Action should be when a Connection Factory with the same name exists:
 Do Nothing  (Default) -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
-Remove and Create - The procedure would remove existing Connection Factory and recreate it based on new parameters passed.
-Selective Update - The procedure would update existing Connection Factory for only parameters that we have designed to be updatable out of the box, based on what we think makes sense.
+Remove and Create - The procedure would remove existing JMS Topic and recreate it based on new parameters passed.
+Selective Update - The procedure would update existing JMS Topic for only parameters that we have designed to be updatable out of the box, based on what we think makes sense.
 </documentation>
         <required>0</required>
         <option>
@@ -85,7 +85,7 @@ Selective Update - The procedure would update existing Connection Factory for on
         <type>textarea</type>
         <label>Additional Options:</label>
         <required>0</required>
-        <documentation>Use this option to pass related parameters that pertain to Delivery, Client, Transaction or Flow Control.</documentation>
+        <documentation>Use this option to specify general or advanced parameters, message thresholds and quota, message delivery over-rides, message logging and message delivery failure options, topic multicast parameters.</documentation>
         <property>ecp_weblogic_additional_options</property>
     </formElement>
 </editor>

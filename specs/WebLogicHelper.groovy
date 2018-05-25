@@ -420,4 +420,21 @@ print 'JSON{"jndiName": "%s", "subdeploymentName": "%s"}/JSON' % (jndiName, subd
         def json = group[0][1]
         return new JsonSlurper().parseText(json)
     }
+
+    def getTopic(jmsModule, topic) {
+        def code = """
+connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+module = '$jmsModule'
+topic = '$topic'
+cd('/JMSSystemResources/%s/JMSResource/%s/Topics/%s' % (module, module, topic))
+jndiName = get('JNDIName')
+subdeployment = get('SubDeploymentName')
+print 'JSON{"jndiName": "%s", "subdeploymentName": "%s"}/JSON' % (jndiName, subdeployment)
+"""
+        def result = runWLST(code)
+        assert result.outcome == 'success'
+        def group = (result.logs =~ /JSON(\{.+?\})\/JSON/)
+        def json = group[0][1]
+        return new JsonSlurper().parseText(json)
+    }
 }
