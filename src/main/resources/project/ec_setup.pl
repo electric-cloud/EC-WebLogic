@@ -257,6 +257,49 @@ my %checkClusterStatus = (
     category    => "Application Server"
 );
 
+my %createOrUpdateJMSResource = (
+    label       => "WebLogic - Create Or Update JMS Resource",
+    procedure   => "CreateOrUpdateJMSResource",
+    description => "Creates or updates JMS resource",
+    category    => "Application Server"
+);
+
+my %createOrUpdateDatasource = (
+    label       => "WebLogic - Create Or Update Datasource",
+    procedure   => "CreateOrUpdateDatasource",
+    description => "Create or update datasource",
+    category    => "Application Server"
+);
+
+my %createOrUpdateConnectionFactory = (
+    label       => "WebLogic - Create Or Update Connection Factory",
+    procedure   => "CreateOrUpdateConnectionFactory",
+    description => "Creates or updates Connection Factory",
+    category    => "Application Server"
+);
+
+my %deleteConnectionFactory = (
+    label       => "WebLogic - Delete Connection Factory",
+    procedure   => "DeleteConnectionFactory",
+    description => "Deletes Connection Factory",
+    category    => "Application Server"
+);
+
+
+my %createOrUpdateJMSQueue = (
+    label       => "WebLogic - Create Or Update JMS Queue",
+    procedure   => "CreateOrUpdateJMSQueue",
+    description => "Creates or updates JMS Queue",
+    category    => "Application Server"
+);
+
+my %deleteJMSQueue = (
+    label       => "WebLogic - Delete JMS Queue",
+    procedure   => "DeleteJMSQueue",
+    description => "Deletes JMS Queue",
+    category    => "Application Server"
+);
+
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/EC-WebLogic - Start App");
 $batch->deleteProperty(
@@ -349,6 +392,22 @@ $batch->deleteProperty(
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Check Cluster Status");
 
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Create Or JMS Resource");
+
+# $batch->deleteProperty(
+#     "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update Datasource");
+
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update Connection Factory");
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Delete Connection Factory");
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update JMS Queue");
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Delete JMS Queue");
+
+
 @::createStepPickerSteps = (
     \%startApp,                    \%stopApp,
     \%checkServerStatus,           \%deployApp,
@@ -369,7 +428,8 @@ $batch->deleteProperty(
     \%deleteCluster,               \%createManagedServer,
     \%deleteManagedServer,         \%startCluster,
     \%stopCluster,                 \%updateAppConfig,
-    \%checkClusterStatus
+    \%checkClusterStatus,          \%createOrUpdateConnectionFactory,
+    \%deleteConnectionFactory, \%createOrUpdateJMSQueue
 );
 
 if ( $upgradeAction eq "upgrade" ) {
@@ -782,6 +842,51 @@ if ( $upgradeAction eq "upgrade" ) {
                 {
                     procedureName => 'CheckClusterStatus',
                     stepName      => 'CheckClusterStatus'
+                }
+            );
+
+            # $batch->attachCredential(
+            #     "\$[/plugins/$pluginName/project]",
+            #     $cred,
+            #     {
+            #         procedureName => 'CreateOrUpdateDatasource',
+            #         stepName      => 'CreateOrUpdateDatasource'
+            #     }
+            # );
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'CreateOrUpdateConnectionFactory',
+                    stepName      => 'CreateOrUpdateConnectionFactory'
+                }
+            );
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'DeleteConnectionFactory',
+                    stepName      => 'DeleteConnectionFactory'
+                }
+            );
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'CreateOrUpdateJMSQueue',
+                    stepName      => 'CreateOrUpdateJMSQueue'
+                }
+            );
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'DeleteJMSQueue',
+                    stepName      => 'DeleteJMSQueue'
                 }
             );
         }

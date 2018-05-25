@@ -1,0 +1,151 @@
+#
+#  Copyright 2016 Electric Cloud, Inc.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+
+[% preamble %]
+
+# parameters section
+
+username = r'''
+[% username %]
+'''.strip()
+
+password = r'''
+[% password %]
+'''.strip()
+
+adminUrl = r'''
+[% admin_url %]
+'''.strip()
+
+cfName = r'''
+[% cf_name %]
+'''.strip()
+
+jndiName = r'''
+[% jndi_name %]
+'''.strip()
+
+cfSharingPolicy = r'''
+[% cf_sharing_policy %]
+'''.strip()
+
+clientIDPolicy = r'''
+[% cf_client_id_policy %]
+'''.strip()
+
+maxMessagesPerSession = readInt(r'''[% cf_max_messages_per_session %]''', 0)
+xaEnabled = readBool(r'''[% cf_xa_enabled %]''')
+attachJMSXUserId = readBool(r'''[% cf_attach_jmsx_userid %]''')
+
+jmsModuleName = readString(r'''[% jms_module_name %]''')
+
+jmsServerName = r'''
+[% jms_server_name %]
+'''.strip()
+
+serverName = r'''
+[% server_name %]
+'''.strip()
+
+subdeploymentName = r'''
+[% subdeployment_name %]
+'''.strip()
+
+additionalOptions = readString('''[% additional_options %]'''.strip(), '')
+updateAction = readString(r'''[% update_action %]''', 'do_nothing')
+
+connect(username, password, adminUrl)
+
+try:
+    startChanges()
+    jmsResource = getJMSResource(jmsModuleName)
+    print_debug("Found JMS Resource %s" % jmsModuleName)
+    if jmsResource == None:
+        raise Exception("JMS Resource %s does not exist" % jmsModuleName)
+    cf = getMBean(getConnectionFactoryPath(jmsModuleName, cfName))
+    update = False
+    if cf == None:
+        print_info("Connection Factory %s does not exist" % cfName)
+        cf = jmsResource.createConnectionFactory(cfName)
+        print_info("Created Connection Factory %s" % cfName)
+    else:
+        print_info("Found Connection Factory %s in the module %s" % (cfName, jmsModuleName))
+        if updateAction == 'do_nothing':
+            discardChanges()
+            print_info("No action is required")
+            sys.exit(0)
+        elif updateAction == 'remove_and_create':
+            deleteConnectionFactory(jmsModuleName, cfName)
+            cf = jmsResource.createConnectionFactory(cfName)
+            print_info("Created Connection Factory %s" % cfName)
+        elif updateAction == 'selective_update':
+            print_info("Selective update")
+            update = True
+
+    if not isEmpty(subdeploymentName):
+        subdeployment = createOrUpdateSubdeployment(jmsModuleName, subdeploymentName, jmsServerName)
+
+    cd(getConnectionFactoryPath(jmsModuleName, cfName))
+    if get('JNDIName') != jndiName:
+        set('JNDIName', jndiName)
+        print_info("Set JNDI Name to %s" % jndiName)
+    else:
+        print_info("JNDI name is not changed")
+
+    if not isEmpty(subdeploymentName):
+        if get('SubDeploymentName') != subdeploymentName:
+            # Removing Default Targeting
+            set('DefaultTargetingEnabled', False)
+            set('SubDeploymentName', subdeploymentName)
+            print_info("Set subdeployment name to %s" % subdeploymentName)
+        else:
+            print_info("Subdeployment name is not changed")
+    else:
+        if not update:
+            set('DefaultTargetingEnabled', True)
+            print_info("Set default targeting")
+        else:
+            print_info("Will not change targeting for Connection Factory")
+
+    if not update:
+        # ClientParams
+        cd('%s/ClientParams/%s' % (getConnectionFactoryPath(jmsModuleName, cfName), cfName))
+        set('SubscriptionSharingPolicy', cfSharingPolicy)
+        print_debug('Set SubscriptionSharingPolicy to %s' % cfSharingPolicy)
+        set('ClientIdPolicy', clientIDPolicy)
+        print_debug('Set ClientIdPolicy to %s' % clientIDPolicy)
+        if maxMessagesPerSession > 0:
+            set('MessagesMaximum', maxMessagesPerSession)
+            print_debug('Set MessagesMaximum to %s' % maxMessagesPerSession)
+
+        # TransactionParams
+        cd('%s/TransactionParams/%s' % (getConnectionFactoryPath(jmsModuleName, cfName), cfName))
+        set('XAConnectionFactoryEnabled', xaEnabled)
+        print_debug('Set XAConnectionFactoryEnabled to %s' % xaEnabled)
+
+        options = parseOptions(additionalOptions, delimeter = '\n+')
+        print_info("Additional Options: %s" % options)
+        for key, value in options.items():
+            (groupName, paramName) = key.split('.')
+            cd(getConnectionFactoryPath(jmsModuleName, cfName) + '/' + groupName + '/' + cfName)
+            print_info("Setting additional option %s/%s -> %s" % (groupName, paramName, value))
+            set(paramName, value)
+
+except Exception, e:
+    discardAndExit(e, "Failed to create Connection Factory")
+
+# eveything is fine, commiting
+commitChanges()

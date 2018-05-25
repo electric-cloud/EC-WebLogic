@@ -764,6 +764,9 @@ sub get_params_as_hashref {
         next unless defined $param;
         $retval->{$param_name} = trim_input($param);
     }
+    for my $name (sort keys %$retval) {
+        $self->out(0, qq{Got parameter "$name" with value "$retval->{$name}"\n});
+    }
     return $retval;
 }
 
