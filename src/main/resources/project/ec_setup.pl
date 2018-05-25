@@ -300,6 +300,20 @@ my %deleteJMSQueue = (
     category    => "Application Server"
 );
 
+my %createOrUpdateJMSTopic = (
+    label       => "WebLogic - Create Or Update JMS Topic",
+    procedure   => "CreateOrUpdateJMSTopic",
+    description => "Creates or updates JMS Topic",
+    category    => "Application Server"
+);
+
+my %deleteJMSTopic = (
+    label       => "WebLogic - Delete JMS Topic",
+    procedure   => "DeleteJMSTopic",
+    description => "Deletes JMS Topic",
+    category    => "Application Server"
+);
+
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/EC-WebLogic - Start App");
 $batch->deleteProperty(
@@ -406,6 +420,10 @@ $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update JMS Queue");
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Delete JMS Queue");
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update JMS Topic");
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Delete JMS Topic");
 
 
 @::createStepPickerSteps = (
@@ -429,7 +447,8 @@ $batch->deleteProperty(
     \%deleteManagedServer,         \%startCluster,
     \%stopCluster,                 \%updateAppConfig,
     \%checkClusterStatus,          \%createOrUpdateConnectionFactory,
-    \%deleteConnectionFactory, \%createOrUpdateJMSQueue
+    \%deleteConnectionFactory, \%createOrUpdateJMSQueue,
+    \%createOrUpdateJMSTopic, \%deleteJMSTopic
 );
 
 if ( $upgradeAction eq "upgrade" ) {
@@ -887,6 +906,23 @@ if ( $upgradeAction eq "upgrade" ) {
                 {
                     procedureName => 'DeleteJMSQueue',
                     stepName      => 'DeleteJMSQueue'
+                }
+            );
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'CreateOrUpdateJMSTopic',
+                    stepName      => 'CreateOrUpdateJMSTopic'
+                }
+            );
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'DeleteJMSTopic',
+                    stepName      => 'DeleteJMSTopic'
                 }
             );
         }

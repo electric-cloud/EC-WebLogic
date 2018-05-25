@@ -30,8 +30,8 @@ adminUrl = r'''
 [% admin_url %]
 '''.strip()
 
-queueName = r'''
-[% ecp_weblogic_jms_queue_name %]
+topicName = r'''
+[% ecp_weblogic_jms_topic_name %]
 '''.strip()
 
 jndiName = r'''
@@ -45,15 +45,13 @@ jmsModuleName = r'''
 subdeploymentName = r'''
 [% ecp_weblogic_subdeployment_name %]
 '''.strip()
-
 additionalOptions = r'''
 [% ecp_weblogic_additional_options %]
 '''.strip()
 
-updateAction = r'''
+updateAction = readString(r'''
 [% ecp_weblogic_update_action %]
-'''.strip()
-updateAction = readString(updateAction, 'do_nothing')
+''', 'do_nothing')
 
 connect(username, password, adminUrl)
 
@@ -63,27 +61,27 @@ try:
     print_debug("Found JMS Resource %s" % jmsModuleName)
     if jmsResource == None:
         raise Exception("JMS Resource %s does not exist" % jmsModuleName)
-    jmsQueue = getMBean(getJMSQueuePath(jmsModuleName, queueName))
+    jmsTopic = getMBean(getJMSTopicPath(jmsModuleName, topicName))
     update = False
-    if jmsQueue == None:
-        print_info("JMS Queue %s does not exist" % queueName)
-        jmsQueue = jmsResource.createQueue(queueName)
-        print_info("Created Queue %s" % queueName)
+    if jmsTopic == None:
+        print_info("JMS Topic %s does not exist" % topicName)
+        jmsTopic = jmsResource.createTopic(topicName)
+        print_info("Created Topic %s" % topicName)
     else:
-        print_info("Found JMS Queue %s in the module %s" % (queueName, jmsModuleName))
+        print_info("Found JMS Topic %s in the module %s" % (topicName, jmsModuleName))
         if updateAction == 'do_nothing':
             discardChanges()
             print_info("No action is required")
             sys.exit(0)
         elif updateAction == 'remove_and_create':
-            deleteJMSQueue(jmsModuleName, queueName)
-            jmsQueue = jmsResource.createQueue(queueName)
-            print_info("Created Queue %s" % queueName)
+            deleteJMSTopic(jmsModuleName, topicName)
+            jmsTopic = jmsResource.createTopic(topicName)
+            print_info("Created Topic %s" % topicName)
         else:
             update = True
             print_info("Doing selective update")
 
-    cd(getJMSQueuePath(jmsModuleName, queueName))
+    cd(getJMSTopicPath(jmsModuleName, topicName))
     if get('JNDIName') != jndiName:
         set('JNDIName', jndiName)
         print_info('Set JNDI Name %s' % jndiName)
@@ -103,7 +101,7 @@ try:
         for key, value in options.items():
             if key.find('.') != -1:
                 (groupName, paramName) = key.split('.')
-                cd(getJMSQueuePath(jmsModuleName, queueName) + '/' + groupName + '/' + queueName)
+                cd(getJMSTopicPath(jmsModuleName, topicName) + '/' + groupName + '/' + topicName)
                 print_info("Setting additional option %s/%s -> %s" % (groupName, paramName, value))
                 set(paramName, value)
             else:
@@ -111,7 +109,7 @@ try:
                 set(key, value)
 
 except Exception, e:
-    discardAndExit(e, "Failed to create JMS Queue")
+    discardAndExit(e, "Failed to create JMS Topic")
 
 # eveything is fine, commiting
 commitChanges()

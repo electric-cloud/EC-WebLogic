@@ -30,25 +30,24 @@ adminUrl = r'''
 [% admin_url %]
 '''.strip()
 
-cfName = r'''
-[% cf_name %]
+topicName = r'''
+[% ecp_weblogic_jms_topic_name %]
 '''.strip()
 
 jmsModuleName = r'''
-[% jms_module_name %]
+[% ecp_weblogic_jms_module_name %]
 '''.strip()
 
 connect(username, password, adminUrl)
-cfBean = getMBean(getConnectionFactoryPath(jmsModuleName, cfName))
-if cfBean == None:
-    print_error("Connection Factory %s does not exist in the module %s" % (cfName, jmsModuleName))
+jmsTopic = getMBean(getJMSTopicPath(jmsModuleName, topicName))
+if jmsTopic == None:
+    print_error("JMS Topic %s does not exist in the module %s" % (topicName, jmsModuleName))
     sys.exit(-1)
-
 try:
     startChanges()
-    deleteConnectionFactory(jmsModuleName, cfName)
-except Exception, e:
-    discardAndExit(e, "Failed to delete Connection Factory")
+    deleteJMSTopic(jmsModuleName, topicName)
 
-# eveything is fine, commiting
+except Exception, e:
+    discardAndExit(e, "Failed to delete JMS Topic")
+
 commitChanges()

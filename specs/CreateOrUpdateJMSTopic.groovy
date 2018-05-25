@@ -1,16 +1,16 @@
 import spock.lang.*
 
-class CreateOrUpdateJMSQueue extends WebLogicHelper {
-    static def projectName = 'EC-WebLogic Specs CreateOrUpdateJMSQueue'
+class CreateOrUpdateJMSTopic extends WebLogicHelper {
+    static def projectName = 'EC-WebLogic Specs CreateOrUpdateJMSTopic'
     static def jmsModuleName = 'TestJMSModule'
     static def configName = 'EC-Specs WebLogic Config'
-    static def procedureName = 'CreateOrUpdateJMSQueue'
-    static def deleteProcedureName = 'DeleteJMSQueue'
+    static def procedureName = 'CreateOrUpdateJMSTopic'
+    static def deleteProcedureName = 'DeleteJMSTopic'
 
     static def params = [
         configname: configName,
         ecp_weblogic_jms_module_name: '',
-        ecp_weblogic_jms_queue_name: '',
+        ecp_weblogic_jms_topic_name: '',
         ecp_weblogic_subdeployment_name: '',
         ecp_weblogic_update_action: 'do_nothing',
         ecp_weblogic_additional_options: '',
@@ -37,20 +37,20 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
             params: [
                 configname: configName,
                 ecp_weblogic_jms_module_name: '',
-                ecp_weblogic_jms_queue_name: ''
+                ecp_weblogic_jms_topic_name: ''
             ]
         ]
     }
 
     def doCleanupSpec() {
-        // deleteProject(projectName)
+        deleteProject(projectName)
     }
 
-    def 'create jms queue'() {
+    def 'create jms topic'() {
         given:
-        def queueName = 'SpecQueue'
+        def topicName = 'SpecTopic'
         def jndiName = 'TestJNDIName'
-        deleteJMSQueue(jmsModuleName, queueName)
+        deleteJMSTopic(jmsModuleName, topicName)
         when:
         def result = runProcedure("""
         runProcedure(
@@ -59,57 +59,28 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
             actualParameter: [
                 ecp_weblogic_jms_module_name: '$jmsModuleName',
                 ecp_weblogic_jndi_name: '$jndiName',
-                ecp_weblogic_jms_queue_name: '$queueName',
+                ecp_weblogic_jms_topic_name: '$topicName',
             ]
         )
         """, getResourceName())
         then:
         logger.debug(result.logs)
         assert result.outcome == 'success'
-        assert result.logs =~ /Queue $queueName does not exist/
-        assert result.logs =~ /Created Queue $queueName/
-        def queue = getQueue(jmsModuleName, queueName)
-        println queue
-        assert queue.jndiName == jndiName
-        assert queue.subdeploymentName == queueName
-        // TODO subdeployment name
+        assert result.logs =~ /Topic $topicName does not exist/
+        assert result.logs =~ /Created Topic $topicName/
+        def topic = getTopic(jmsModuleName, topicName)
+        assert topic.jndiName == jndiName
+        assert topic.subdeploymentName == topicName
         cleanup:
-        deleteJMSQueue(jmsModuleName, queueName)
+        deleteJMSTopic(jmsModuleName, topicName)
     }
 
-    def 'create jms queue with additional options'() {
+    def 'update jms topic'() {
         given:
-        def queueName = randomize('SpecQueue')
-        def jndiName = 'TestJNDIName'
-        deleteJMSQueue(jmsModuleName, queueName)
-        when:
-        def result = runProcedure("""
-        runProcedure(
-            projectName: '$projectName',
-            procedureName: '$procedureName',
-            actualParameter: [
-                ecp_weblogic_jms_module_name: '$jmsModuleName',
-                ecp_weblogic_jndi_name: '$jndiName',
-                ecp_weblogic_jms_queue_name: '$queueName',
-                ecp_weblogic_additional_options: 'MaximumMessageSize=1024'
-            ]
-        )
-        """, getResourceName())
-        then:
-        logger.debug(result.logs)
-        assert result.outcome == 'success'
-        assert result.logs =~ /Queue $queueName does not exist/
-        assert result.logs =~ /Created Queue $queueName/
-        cleanup:
-        deleteJMSQueue(jmsModuleName, queueName)
-    }
-
-    def 'update jms queue'() {
-        given:
-        def queueName = 'SpecQueue'
+        def topicName = 'SpecTopic'
         def oldJNDIName = 'TestJNDIName'
         def newJNDIName = 'NewJNDIName'
-        deleteJMSQueue(jmsModuleName, queueName)
+        deleteJMSTopic(jmsModuleName, topicName)
         def result = runProcedure("""
         runProcedure(
             projectName: '$projectName',
@@ -117,37 +88,37 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
             actualParameter: [
                 ecp_weblogic_jms_module_name: '$jmsModuleName',
                 ecp_weblogic_jndi_name: '$oldJNDIName',
-                ecp_weblogic_jms_queue_name: '$queueName',
+                ecp_weblogic_jms_topic_name: '$topicName',
             ]
         )
         """, getResourceName())
         when:
-        result = runProcedure """
+        result = runProcedure("""
         runProcedure(
             projectName: '$projectName',
             procedureName: '$procedureName',
             actualParameter: [
                 ecp_weblogic_jms_module_name: '$jmsModuleName',
                 ecp_weblogic_jndi_name: '$newJNDIName',
-                ecp_weblogic_jms_queue_name: '$queueName',
+                ecp_weblogic_jms_topic_name: '$topicName',
                 ecp_weblogic_update_action: 'selective_update'
             ]
         )
-        """, getResourceName()
+        """, getResourceName())
         then:
         logger.info(result.logs)
         assert result.outcome == 'success'
         assert result.logs =~ /Set JNDI Name $newJNDIName/
         cleanup:
-        deleteJMSQueue(jmsModuleName, queueName)
+        deleteJMSTopic(jmsModuleName, topicName)
     }
 
-    def 'recreate jms queue'() {
+    def 'recreate jms topic'() {
         given:
-        def queueName = 'SpecQueue'
+        def topicName = 'SpecTopic'
         def oldJNDIName = 'TestJNDIName'
         def newJNDIName = 'NewJNDIName'
-        deleteJMSQueue(jmsModuleName, queueName)
+        deleteJMSTopic(jmsModuleName, topicName)
         def result = runProcedure("""
         runProcedure(
             projectName: '$projectName',
@@ -155,7 +126,7 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
             actualParameter: [
                 ecp_weblogic_jms_module_name: '$jmsModuleName',
                 ecp_weblogic_jndi_name: '$oldJNDIName',
-                ecp_weblogic_jms_queue_name: '$queueName',
+                ecp_weblogic_jms_topic_name: '$topicName',
             ]
         )
         """, getResourceName())
@@ -164,78 +135,77 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
         def subdeploymentName = randomize('TestSubdeployment')
         createSubDeployment(jmsModuleName, subdeploymentName, jmsServerName)
         when:
-        result = runProcedure """
+        result = runProcedure("""
         runProcedure(
             projectName: '$projectName',
             procedureName: '$procedureName',
             actualParameter: [
                 ecp_weblogic_jms_module_name: '$jmsModuleName',
                 ecp_weblogic_jndi_name: '$newJNDIName',
-                ecp_weblogic_jms_queue_name: '$queueName',
+                ecp_weblogic_jms_topic_name: '$topicName',
                 ecp_weblogic_update_action: 'remove_and_create',
                 ecp_weblogic_subdeployment_name: '$subdeploymentName',
             ]
         )
-        """, getResourceName()
+        """, getResourceName())
         then:
         logger.info(result.logs)
         assert result.outcome == 'success'
         cleanup:
-        deleteJMSQueue(jmsModuleName, queueName)
+        deleteJMSTopic(jmsModuleName, topicName)
         deleteSubDeployment(jmsModuleName, subdeploymentName)
     }
 
-    def 'delete jms queue'() {
+    def 'delete jms topic'() {
         given:
-        def queueName = randomize('SpecQueue')
+        def topicName = 'SpecTopic'
         def result = runProcedure("""
         runProcedure(
             projectName: '$projectName',
             procedureName: '$procedureName',
             actualParameter: [
                 ecp_weblogic_jms_module_name: '$jmsModuleName',
-                ecp_weblogic_jms_queue_name: '$queueName',
+                ecp_weblogic_jms_topic_name: '$topicName',
             ]
         )
         """, getResourceName())
         when:
         result = runProcedure """
-            runProcedure(
-                projectName: '$projectName',
-                procedureName: '$deleteProcedureName',
-                actualParameter: [
-                    ecp_weblogic_jms_module_name: '$jmsModuleName',
-                    ecp_weblogic_jms_queue_name: '$queueName'
-                ]
-            )
+        runProcedure(
+            projectName: '$projectName',
+            procedureName: '$deleteProcedureName',
+            actualParameter: [
+                ecp_weblogic_jms_module_name: '$jmsModuleName',
+                ecp_weblogic_jms_topic_name: '$topicName'
+            ]
+        )
         """, getResourceName()
         then:
+        logger.debug(result.logs)
         assert result.outcome == 'success'
-        logger.info(result.logs)
-        assert result.logs =~ /Removed JMS Queue $queueName from the module $jmsModuleName/
+        assert result.logs =~ /Removed JMS Topic $topicName from the module $jmsModuleName/
     }
 
-    def "delete non-existing queue"() {
+    def 'delete non-existing jms topic'() {
         given:
-        def queueName = randomize('SpecQueue')
-        deleteJMSQueue(jmsModuleName, queueName)
+        def topicName = 'NoSuchTopic'
         when:
         def result = runProcedure """
-            runProcedure(
-                projectName: '$projectName',
-                procedureName: '$deleteProcedureName',
-                actualParameter: [
-                    ecp_weblogic_jms_module_name: '$jmsModuleName',
-                    ecp_weblogic_jms_queue_name: '$queueName'
-                ]
-            )
+        runProcedure(
+            projectName: '$projectName',
+            procedureName: '$deleteProcedureName',
+            actualParameter: [
+                ecp_weblogic_jms_module_name: '$jmsModuleName',
+                ecp_weblogic_jms_topic_name: '$topicName'
+            ]
+        )
         """, getResourceName()
         then:
+        logger.debug(result.logs)
         assert result.outcome == 'error'
-        assert result.logs =~ /JMS Queue $queueName does not exist in the module $jmsModuleName/
     }
 
-    def deleteJMSQueue(moduleName, name) {
+    def deleteJMSTopic(moduleName, name) {
         def code = """
 def getJMSSystemResourcePath(jms_module_name):
     return "/JMSSystemResources/%s"%(jms_module_name)
@@ -243,27 +213,27 @@ def getJMSSystemResourcePath(jms_module_name):
 def getJMSModulePath(jms_module_name):
     return "%s/JMSResource/%s"%(getJMSSystemResourcePath(jms_module_name),jms_module_name)
 
-def getQueuePath(jms_module_name,queue_name):
-    return "/JMSSystemResources/%s/JMSResource/%s/Queues/%s" % (jms_module_name, jms_module_name, queue_name)
+def getTopicPath(jms_module_name,queue_name):
+    return "/JMSSystemResources/%s/JMSResource/%s/Topics/%s" % (jms_module_name, jms_module_name, queue_name)
 
-def deleteQueue(jmsModuleName, cfName):
-    bean = getMBean('%s/Queues/' % getJMSModulePath(jmsModuleName))
-    queueBean = getMBean(getQueuePath(jmsModuleName, cfName))
+def deleteTopic(jmsModuleName, cfName):
+    bean = getMBean('%s/Topics/' % getJMSModulePath(jmsModuleName))
+    queueBean = getMBean(getTopicPath(jmsModuleName, cfName))
     if queueBean != None:
-        bean.destroyQueue(queueBean)
-        print("Removed Queue %s from the module %s" % (cfName, jmsModuleName))
+        bean.destroyTopic(queueBean)
+        print("Removed Topic %s from the module %s" % (cfName, jmsModuleName))
     else:
-        print("Queue %s does not exist in the module %s" % (cfName, jmsModuleName))
+        print("Topic %s does not exist in the module %s" % (cfName, jmsModuleName))
 
 
 moduleName = '$moduleName'
-queueName = '$name'
+topicName = '$name'
 
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 edit()
 startEdit()
 try:
-    deleteQueue(moduleName, queueName)
+    deleteTopic(moduleName, topicName)
     activate()
 except Exception, e:
     stopEdit('y')
