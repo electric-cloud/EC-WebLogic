@@ -443,6 +443,10 @@
     <xpath>//procedure[procedureName="CreateOrUpdateJMSQueue"]/step[stepName="CreateOrUpdateJMSQueue"]/command</xpath>
   </file>
   <file>
+    <path>server/createOrUpdateJMSTopic.pl</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateJMSTopic"]/step[stepName="CreateOrUpdateJMSTopic"]/command</xpath>
+  </file>
+  <file>
     <path>server/createOrUpdateDatasource.pl</path>
     <xpath>//procedure[procedureName="CreateOrUpdateDatasource"]/step[stepName="CreateOrUpdateDatasource"]/command</xpath>
   </file>
@@ -656,6 +660,10 @@
     <xpath>//procedure[procedureName="DeleteJMSQueue"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
   </file>
   <file>
+    <path>parameterForms/ec_parameterForm-CreateOrUpdateJMSTopic.xml</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateJMSTopic"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
     <path>jython/create_or_update_connection_factory.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_connection_factory.jython"]/value</xpath>
   </file>
@@ -670,5 +678,9 @@
   <file>
     <path>jython/delete_jms_queue.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_jms_queue.jython"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/create_or_update_jms_topic.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_jms_topic.jython"]/value</xpath>
   </file>
 </fileset>

@@ -74,6 +74,9 @@ def getJMSServerPath(jms_server_name):
 def getJMSQueuePath(jmsModule, queue):
     return "/JMSSystemResources/%s/JMSResource/%s/Queues/%s" % (jmsModule, jmsModule, queue)
 
+def getJMSTopicPath(jmsModule, topic):
+    return "/JMSSystemResources/%s/JMSResource/%s/Topics/%s" % (jmsModule, jmsModule, topic)
+
 def getServerPath(server_name):
     return "/Servers/%s" % (server_name)
 
@@ -550,3 +553,17 @@ def deleteJMSQueue(jmsModuleName, queueName):
         print_info("Removed JMS Queue %s from the module %s" % (queueName, jmsModuleName))
     else:
         print_info("JMS Queue %s does not exist in the module %s" % (queueName, jmsModuleName))
+
+def deleteJMSTopic(jmsModuleName, topicName):
+    if isEmpty(jmsModuleName):
+        raise Exception("JMS Module Name is not provided")
+    if isEmpty(topicName):
+        raise Exception("Topic name is not provided")
+
+    bean = getMBean('%s/Topics/' % getJMSModulePath(jmsModuleName))
+    topicBean = getMBean(getJMSTopicPath(jmsModuleName, topicName))
+    if topicBean != None:
+        bean.destroyTopic(topicBean)
+        print_info("Removed JMS Topic %s from the module %s" % (topicName, jmsModuleName))
+    else:
+        print_info("JMS Topic %s does not exist in the module %s" % (topicName, jmsModuleName))

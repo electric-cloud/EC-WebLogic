@@ -404,6 +404,11 @@
             <value/>
           </property>
           <property>
+            <propertyName>create_or_update_jms_topic.jython</propertyName>
+            <expandable>1</expandable>
+            <value/>
+          </property>
+          <property>
             <propertyName>delete_jms_queue.jython</propertyName>
             <expandable>1</expandable>
             <value/>
@@ -7474,6 +7479,7 @@ Selective Update - The procedure would update existing Connection Factory for on
   </step>
 </procedure>
 
+
 <procedure>
   <description>Creates or updates JMS Queue</description>
   <jobNameTemplate>weblogic-createOrUpdateJMSQueue-$[jobId]</jobNameTemplate>
@@ -7481,53 +7487,18 @@ Selective Update - The procedure would update existing Connection Factory for on
   <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
   <propertySheet>
     <property>
+      <propertyName>ec_parameterForm</propertyName>
+      <value />
+      <expandable>1</expandable>
+    </property>
+    <property>
       <propertyName>ec_customEditorData</propertyName>
       <propertySheet>
         <property>
           <propertyName>parameters</propertyName>
           <propertySheet>
             <property>
-              <propertyName>ecp_weblogic_jms_module_name</propertyName>
-              <propertySheet>
-                <property>
-                  <propertyName>formType</propertyName>
-                  <value>standard</value>
-                  <expandable>1</expandable>
-                </property>
-              </propertySheet>
-            </property>
-            <property>
               <propertyName>ecp_weblogic_subdeployment_name</propertyName>
-              <propertySheet>
-                <property>
-                  <propertyName>formType</propertyName>
-                  <value>standard</value>
-                  <expandable>1</expandable>
-                </property>
-              </propertySheet>
-            </property>
-            <property>
-              <propertyName>ecp_weblogic_jms_queue_name</propertyName>
-              <propertySheet>
-                <property>
-                  <propertyName>formType</propertyName>
-                  <value>standard</value>
-                  <expandable>1</expandable>
-                </property>
-              </propertySheet>
-            </property>
-            <property>
-              <propertyName>ecp_weblogic_jms_server_name</propertyName>
-              <propertySheet>
-                <property>
-                  <propertyName>formType</propertyName>
-                  <value>standard</value>
-                  <expandable>1</expandable>
-                </property>
-              </propertySheet>
-            </property>
-            <property>
-              <propertyName>ecp_weblogic_additional_options</propertyName>
               <propertySheet>
                 <property>
                   <propertyName>formType</propertyName>
@@ -7547,7 +7518,37 @@ Selective Update - The procedure would update existing Connection Factory for on
               </propertySheet>
             </property>
             <property>
+              <propertyName>ecp_weblogic_additional_options</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_jms_queue_name</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
               <propertyName>ecp_weblogic_update_action</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_jms_module_name</propertyName>
               <propertySheet>
                 <property>
                   <propertyName>formType</propertyName>
@@ -7569,11 +7570,6 @@ Selective Update - The procedure would update existing Connection Factory for on
           </propertySheet>
         </property>
       </propertySheet>
-    </property>
-    <property>
-      <propertyName>ec_parameterForm</propertyName>
-      <value />
-      <expandable>1</expandable>
     </property>
   </propertySheet>
   <formalParameter>
@@ -7612,13 +7608,6 @@ Selective Update - The procedure would update existing Connection Factory for on
     <description>Name of Subdeployment. Required in order to deploy the Queue. If this is not specified the Queue will not be usable.
 </description>
     <formalParameterName>ecp_weblogic_subdeployment_name</formalParameterName>
-    <required>0</required>
-    <type>entry</type>
-  </formalParameter>
-  <formalParameter>
-    <defaultValue />
-    <description>JMS Server Name. Required only if you do not  want default targeting and instead want to use advanced targeting.</description>
-    <formalParameterName>ecp_weblogic_jms_server_name</formalParameterName>
     <required>0</required>
     <type>entry</type>
   </formalParameter>
@@ -7756,6 +7745,181 @@ Selective Update - The procedure would update existing Connection Factory for on
     <retries>0</retries>
     <shell>ec-perl</shell>
     <stepName>DeleteJMSQueue</stepName>
+    <timeLimit />
+    <timeLimitUnits>minutes</timeLimitUnits>
+    <workingDirectory />
+    <workspaceName />
+  </step>
+</procedure>
+
+
+
+<procedure>
+  <description>Creates or updates JMS Topic</description>
+  <jobNameTemplate>weblogic-createOrUpdateJMSTopic-$[jobId]</jobNameTemplate>
+  <procedureName>CreateOrUpdateJMSTopic</procedureName>
+  <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+  <propertySheet>
+    <property>
+      <propertyName>ec_customEditorData</propertyName>
+      <propertySheet>
+        <property>
+          <propertyName>parameters</propertyName>
+          <propertySheet>
+            <property>
+              <propertyName>ecp_weblogic_additional_options</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_update_action</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_subdeployment_name</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_jms_topic_name</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_jms_module_name</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_jndi_name</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>configname</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+      </propertySheet>
+    </property>
+    <property>
+      <propertyName>ec_parameterForm</propertyName>
+      <value />
+      <expandable>1</expandable>
+    </property>
+  </propertySheet>
+  <formalParameter>
+    <defaultValue />
+    <description>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</description>
+    <formalParameterName>configname</formalParameterName>
+    <required>1</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>Unique name of the JMS Queue Name that is going to be created or updated.
+</description>
+    <formalParameterName>ecp_weblogic_jms_topic_name</formalParameterName>
+    <required>1</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>Name of the JMS module in which the JMS Topic is created. If there is already a JMS Topic with the specified name, it will be updated.
+</description>
+    <formalParameterName>ecp_weblogic_jms_module_name</formalParameterName>
+    <required>1</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>JNDI Name is used to lookup the JMS Topic using JNDI lookup. If the JMS Topic is created without passing this parameter, it can be only used in an Application Scoped context.
+</description>
+    <formalParameterName>ecp_weblogic_jndi_name</formalParameterName>
+    <required>0</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>Name of Subdeployment. Required in order to deploy the Topic. If this is not specified the Topic will not be usable.
+</description>
+    <formalParameterName>ecp_weblogic_subdeployment_name</formalParameterName>
+    <required>0</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue>do_nothing</defaultValue>
+    <description>This parameter controls as to what the Update Action should be when a Connection Factory with the same name exists:
+Do Nothing  (Default) -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
+Remove and Create - The procedure would remove existing JMS Topic and recreate it based on new parameters passed.
+Selective Update - The procedure would update existing JMS Topic for only parameters that we have designed to be updatable out of the box, based on what we think makes sense.
+</description>
+    <formalParameterName>ecp_weblogic_update_action</formalParameterName>
+    <required>0</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>Use this option to specify general or advanced parameters, message thresholds and quota, message delivery over-rides, message logging and message delivery failure options, topic multicast parameters.</description>
+    <formalParameterName>ecp_weblogic_additional_options</formalParameterName>
+    <required>0</required>
+    <type>textarea</type>
+  </formalParameter>
+  <step>
+    <alwaysRun>0</alwaysRun>
+    <broadcast>0</broadcast>
+    <command />
+    <condition />
+    <description />
+    <errorHandling>failProcedure</errorHandling>
+    <exclusive>0</exclusive>
+    <logFileName />
+    <parallel>0</parallel>
+    <procedureName>CreateOrUpdateJMSTopic</procedureName>
+    <projectName>EC-WebLogic</projectName>
+    <releaseExclusive>0</releaseExclusive>
+    <resourceName />
+    <retries>0</retries>
+    <shell>ec-perl</shell>
+    <stepName>CreateOrUpdateJMSTopic</stepName>
     <timeLimit />
     <timeLimitUnits>minutes</timeLimitUnits>
     <workingDirectory />
