@@ -1,3 +1,5 @@
+package ignored
+
 class UndeployApp extends WebLogicHelper {
 
     static def procedureName = 'UndeployApp'
@@ -18,14 +20,14 @@ class UndeployApp extends WebLogicHelper {
 
         given:
         // Check application don't exists
-        def pageBeforeDeploy = checkUrl(APPLICATION_PAGE_URL)
+        def pageBeforeDeploy = checkUrl(WebLogicHelper.APPLICATION_PAGE_URL)
 
-        if (pageBeforeDeploy.code == NOT_FOUND_RESPONSE) {
+        if (pageBeforeDeploy.code == WebLogicHelper.NOT_FOUND_RESPONSE) {
             def deploy = DeployApplication(projectName, [
                     configname               : configName,
-                    wlstabspath              : getWlstPath(),
-                    appname                  : APPLICATION_NAME,
-                    apppath                  : "$REMOTE_DIRECTORY/$FILENAME",
+                    wlstabspath              : WebLogicHelper.getWlstPath(),
+                    appname                  : WebLogicHelper.APPLICATION_NAME,
+                    apppath                  : "$WebLogicHelper.REMOTE_DIRECTORY/$WebLogicHelper.FILENAME",
                     targets                  : 'AdminServer',
 
                     is_library               : '',
@@ -49,8 +51,8 @@ class UndeployApp extends WebLogicHelper {
         deleteProject(projectName)
         def result = UndeployApplication(projectName, [
                 configname        : configName,
-                wlstabspath       : getWlstPath(),
-                appname           : APPLICATION_NAME,
+                wlstabspath       : WebLogicHelper.getWlstPath(),
+                appname           : WebLogicHelper.APPLICATION_NAME,
 
                 retire_gracefully : '',
                 version_identifier: '',
@@ -62,8 +64,8 @@ class UndeployApp extends WebLogicHelper {
         then:
         assert result.outcome == 'success'
 
-        def pageAfterDeploy = checkUrl(APPLICATION_PAGE_URL)
-        assert pageAfterDeploy.code == NOT_FOUND_RESPONSE
+        def pageAfterDeploy = checkUrl(WebLogicHelper.APPLICATION_PAGE_URL)
+        assert pageAfterDeploy.code == WebLogicHelper.NOT_FOUND_RESPONSE
     }
 
 

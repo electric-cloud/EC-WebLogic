@@ -1,3 +1,5 @@
+
+
 class StopApp extends WebLogicHelper {
 
     static def procedureName = 'StartApp'
@@ -18,9 +20,9 @@ class StopApp extends WebLogicHelper {
         // Application can be not deployed or already stopped
         def deploy = DeployApplication(projectName, [
                 configname               : configName,
-                wlstabspath              : getWlstPath(),
-                appname                  : APPLICATION_NAME,
-                apppath                  : "$REMOTE_DIRECTORY/$FILENAME",
+                wlstabspath              : WebLogicHelper.getWlstPath(),
+                appname                  : WebLogicHelper.APPLICATION_NAME,
+                apppath                  : "$WebLogicHelper.REMOTE_DIRECTORY/$WebLogicHelper.FILENAME",
                 targets                  : 'AdminServer',
 
                 is_library               : '',
@@ -41,8 +43,8 @@ class StopApp extends WebLogicHelper {
 
         def start = StartApplication(projectName, [
                 configname        : configName,
-                wlstabspath       : getWlstPath(),
-                appname           : APPLICATION_NAME,
+                wlstabspath       : WebLogicHelper.getWlstPath(),
+                appname           : WebLogicHelper.APPLICATION_NAME,
 
                 additional_options: "",
                 version_identifier: ""
@@ -53,8 +55,8 @@ class StopApp extends WebLogicHelper {
         when:
         def result = StopApplication(projectName, [
                 configname        : configName,
-                wlstabspath       : getWlstPath(),
-                appname           : APPLICATION_NAME,
+                wlstabspath       : WebLogicHelper.getWlstPath(),
+                appname           : WebLogicHelper.APPLICATION_NAME,
 
                 additional_options: "",
                 version_identifier: ""
@@ -63,8 +65,8 @@ class StopApp extends WebLogicHelper {
         then:
         assert result.outcome == 'success'
 
-        def pageAfterDeploy = checkUrl(APPLICATION_PAGE_URL)
-        assert pageAfterDeploy.code == NOT_FOUND_RESPONSE
+        def pageAfterDeploy = checkUrl(WebLogicHelper.APPLICATION_PAGE_URL)
+        assert pageAfterDeploy.code == WebLogicHelper.NOT_FOUND_RESPONSE
     }
 
 }

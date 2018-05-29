@@ -1,3 +1,5 @@
+
+
 class StartApp extends WebLogicHelper {
 
     static def procedureName = 'StartApp'
@@ -18,9 +20,9 @@ class StartApp extends WebLogicHelper {
         // Application can be not deployed or already running
         def deploy = DeployApplication(projectName, [
                 configname               : configName,
-                wlstabspath              : getWlstPath(),
-                appname                  : APPLICATION_NAME,
-                apppath                  : "$REMOTE_DIRECTORY/$FILENAME",
+                wlstabspath              : WebLogicHelper.getWlstPath(),
+                appname                  : WebLogicHelper.APPLICATION_NAME,
+                apppath                  : "$WebLogicHelper.REMOTE_DIRECTORY/$WebLogicHelper.FILENAME",
                 targets                  : 'AdminServer',
 
                 is_library               : '',
@@ -41,8 +43,8 @@ class StartApp extends WebLogicHelper {
 
         def stop = StopApplication(projectName, [
                 configname        : configName,
-                wlstabspath       : getWlstPath(),
-                appname           : APPLICATION_NAME,
+                wlstabspath       : WebLogicHelper.getWlstPath(),
+                appname           : WebLogicHelper.APPLICATION_NAME,
 
                 additional_options: "",
                 version_identifier: ""
@@ -55,8 +57,8 @@ class StartApp extends WebLogicHelper {
         when:
         def result = StartApplication(projectName, [
                 configname        : configName,
-                wlstabspath       : getWlstPath(),
-                appname           : APPLICATION_NAME,
+                wlstabspath       : WebLogicHelper.getWlstPath(),
+                appname           : WebLogicHelper.APPLICATION_NAME,
 
 //                envscriptpath     : "",
                 additional_options: "",
@@ -66,19 +68,19 @@ class StartApp extends WebLogicHelper {
         then:
         assert result.outcome == 'success'
 
-        def pageAfterDeploy = checkUrl(APPLICATION_PAGE_URL)
-        assert pageAfterDeploy.code == SUCCESS_RESPONSE
+        def pageAfterDeploy = checkUrl(WebLogicHelper.APPLICATION_PAGE_URL)
+        assert pageAfterDeploy.code == WebLogicHelper.SUCCESS_RESPONSE
     }
 
     def 'Start unexisting application - negative'() {
         given:
         deleteProject(projectName)
-        def unexisting_app_name = '__' + APPLICATION_NAME + '__un3x1st3nt'
+        def unexisting_app_name = '__' + WebLogicHelper.APPLICATION_NAME + '__un3x1st3nt'
 
         when:
         def result = StartApplication(projectName, [
                 configname        : configName,
-                wlstabspath       : getWlstPath(),
+                wlstabspath       : WebLogicHelper.getWlstPath(),
                 appname           : unexisting_app_name,
                 additional_options: "",
                 version_identifier: ""

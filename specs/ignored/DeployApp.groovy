@@ -1,3 +1,6 @@
+package ignored
+
+import com.electriccloud.spec.SpockTestSupport
 import spock.lang.*
 class DeployApp extends WebLogicHelper {
 
@@ -18,13 +21,13 @@ class DeployApp extends WebLogicHelper {
     def 'Deploy application - positive'() {
         given:
         // Check application don't exists
-        def pageBeforeDeploy = checkUrl(APPLICATION_PAGE_URL)
+        def pageBeforeDeploy = checkUrl(WebLogicHelper.APPLICATION_PAGE_URL)
 
-        if (pageBeforeDeploy.code == NOT_FOUND_RESPONSE) {
+        if (pageBeforeDeploy.code == WebLogicHelper.NOT_FOUND_RESPONSE) {
             def undeploy = UndeployApplication(projectName, [
                     configname        : configName,
-                    wlstabspath       : getWlstPath(),
-                    appname           : APPLICATION_NAME,
+                    wlstabspath       : WebLogicHelper.getWlstPath(),
+                    appname           : WebLogicHelper.APPLICATION_NAME,
 
                     retire_gracefully : '',
                     version_identifier: '',
@@ -39,9 +42,9 @@ class DeployApp extends WebLogicHelper {
         when:
         def result = DeployApplication(projectName, [
                 configname               : configName,
-                wlstabspath              : getWlstPath(),
-                appname                  : APPLICATION_NAME,
-                apppath                  : "$REMOTE_DIRECTORY/$FILENAME",
+                wlstabspath              : WebLogicHelper.getWlstPath(),
+                appname                  : WebLogicHelper.APPLICATION_NAME,
+                apppath                  : "$WebLogicHelper.REMOTE_DIRECTORY/$WebLogicHelper.FILENAME",
                 targets                  : 'AdminServer',
 
                 is_library               : '',
@@ -59,12 +62,12 @@ class DeployApp extends WebLogicHelper {
         ])
 
         then:
-        logger.debug("LOGS" + result.logs)
+        SpockTestSupport.logger.debug("LOGS" + result.logs)
 
         assert result.outcome == 'success'
 
-        def pageAfterDeploy = checkUrl(APPLICATION_PAGE_URL)
-        assert pageAfterDeploy.code == SUCCESS_RESPONSE
+        def pageAfterDeploy = checkUrl(WebLogicHelper.APPLICATION_PAGE_URL)
+        assert pageAfterDeploy.code == WebLogicHelper.SUCCESS_RESPONSE
 
         cleanup:
         deleteProject(projectName)
@@ -74,14 +77,14 @@ class DeployApp extends WebLogicHelper {
     def 'Redeploy existing application - positive'() {
         given:
         // Check application don't exists
-        def pageBeforeDeploy = checkUrl(APPLICATION_PAGE_URL)
+        def pageBeforeDeploy = checkUrl(WebLogicHelper.APPLICATION_PAGE_URL)
 
-        if (pageBeforeDeploy.code == NOT_FOUND_RESPONSE) {
+        if (pageBeforeDeploy.code == WebLogicHelper.NOT_FOUND_RESPONSE) {
             def pre_test_deploy = DeployApplication(projectName, [
                     configname               : configName,
-                    wlstabspath              : getWlstPath(),
-                    appname                  : APPLICATION_NAME,
-                    apppath                  : "$REMOTE_DIRECTORY/$FILENAME",
+                    wlstabspath              : WebLogicHelper.getWlstPath(),
+                    appname                  : WebLogicHelper.APPLICATION_NAME,
+                    apppath                  : "$WebLogicHelper.REMOTE_DIRECTORY/$WebLogicHelper.FILENAME",
                     targets                  : 'AdminServer',
 
                     is_library               : '',
@@ -105,9 +108,9 @@ class DeployApp extends WebLogicHelper {
         when:
         def result = DeployApplication(projectName, [
                 configname               : configName,
-                wlstabspath              : getWlstPath(),
-                appname                  : APPLICATION_NAME,
-                apppath                  : "$REMOTE_DIRECTORY/$FILENAME",
+                wlstabspath              : WebLogicHelper.getWlstPath(),
+                appname                  : WebLogicHelper.APPLICATION_NAME,
+                apppath                  : "$WebLogicHelper.REMOTE_DIRECTORY/$WebLogicHelper.FILENAME",
                 targets                  : 'AdminServer',
 
                 is_library               : '',
@@ -127,8 +130,8 @@ class DeployApp extends WebLogicHelper {
         then:
         assert result.outcome == 'success'
 
-        def pageAfterDeploy = checkUrl(APPLICATION_PAGE_URL)
-        assert pageAfterDeploy.code == SUCCESS_RESPONSE
+        def pageAfterDeploy = checkUrl(WebLogicHelper.APPLICATION_PAGE_URL)
+        assert pageAfterDeploy.code == WebLogicHelper.SUCCESS_RESPONSE
 
         cleanup:
         deleteProject(projectName)
@@ -136,12 +139,12 @@ class DeployApp extends WebLogicHelper {
 
     def 'Deploy from unexisting file - negative'() {
         given:
-        def file_path = REMOTE_DIRECTORY + '/' + FILENAME + '.notexistent_path.war'
-        def application_name = APPLICATION_NAME + '_postfix_for_unexistent_app_name'
+        def file_path = WebLogicHelper.REMOTE_DIRECTORY + '/' + WebLogicHelper.FILENAME + '.notexistent_path.war'
+        def application_name = WebLogicHelper.APPLICATION_NAME + '_postfix_for_unexistent_app_name'
         when:
         def result = DeployApplication(projectName, [
                 configname               : configName,
-                wlstabspath              : getWlstPath(),
+                wlstabspath              : WebLogicHelper.getWlstPath(),
                 appname                  : application_name,
                 apppath                  : "$file_path",
                 targets                  : 'AdminServer',
