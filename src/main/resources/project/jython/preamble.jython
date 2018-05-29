@@ -45,6 +45,9 @@ def isEmpty(value):
 def warn(message):
     warnings.warn("WARNING: " + message)
 
+def print_summary(message):
+    print 'SUMMARY: ' + message
+
 def print_error(message):
     print "ERROR:" + message
 
@@ -539,6 +542,18 @@ def deleteConnectionFactory(jmsModuleName, cfName):
     else:
         print_info("Connection Factory %s does not exist in the module %s" % (cfName, jmsModuleName))
 
+def deleteJMSModule(jmsModuleName):
+    if isEmpty(jmsModuleName):
+        raise Exception("JMS Module Name is not provided")
+    bean = getMBean(getJMSSystemResourcePath(jmsModuleName))
+    if bean == None:
+        print_info("JMS Module %s does not exist" % jmsModuleName)
+    else:
+        cd('/')
+        cmo.destroyJMSSystemResource(bean)
+        print_info("JMS Module %s has been deleted" % jmsModuleName)
+
+
 def deleteJMSQueue(jmsModuleName, queueName):
     if isEmpty(jmsModuleName):
         raise Exception("JMS Module Name is not provided")
@@ -566,3 +581,15 @@ def deleteJMSTopic(jmsModuleName, topicName):
         print_info("Removed JMS Topic %s from the module %s" % (topicName, jmsModuleName))
     else:
         print_info("JMS Topic %s does not exist in the module %s" % (topicName, jmsModuleName))
+
+
+
+def getTargetBean(targetName):
+    bean = getMBean('/Servers/' + targetName)
+    if bean == None:
+        bean = getMBean('/Clusters/' + targetName)
+
+    if bean == None:
+        raise Exception("Target %s was not found in Servers or Clusters, please check the name of the target." % targetName)
+
+    return bean

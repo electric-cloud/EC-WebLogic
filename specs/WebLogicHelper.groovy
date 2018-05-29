@@ -437,4 +437,50 @@ print 'JSON{"jndiName": "%s", "subdeploymentName": "%s"}/JSON' % (jndiName, subd
         def json = group[0][1]
         return new JsonSlurper().parseText(json)
     }
+
+    def deleteJMSModule(jmsModule) {
+        assert jmsModule
+        def code = """
+connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+module = '$jmsModule'
+cd('/')
+bean = getMBean('/JMSSystemResources/' + module)
+print bean
+edit()
+startEdit()
+if bean != None:
+    cmo.destroyJMSSystemResource(bean)
+else:
+    print "JMS Module %s does not exist" % module
+activate()
+
+"""
+        def result = runWLST(code)
+        assert result.outcome == 'success'
+    }
+
+
+
+    def ensureManagedServer(msName) {
+        def code = """
+msName = '$msName'
+connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+cd('/')
+bean = getMBean('/Servers/' + msName)
+print bean
+if bean == None:
+    edit()
+    startEdit()
+    cmo.createServer(msName)
+    cd('/Servers/' + msName)
+    cmo.setListenAddress('localhost')
+    cmo.setListenPort(int('7001'))
+    activate()
+else:
+    print "Server %s already exists" % msName
+"""
+        def result = runWLST(code)
+        assert result.outcome == 'success'
+    }
+
 }

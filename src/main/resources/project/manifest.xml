@@ -165,6 +165,10 @@
   </file>
  -->  <!-- create/edit config forms starting from here -->
   <file>
+    <path>jython/create_or_update_jms_module.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_jms_module.jython"]/value</xpath>
+  </file>
+  <file>
     <path>WebLogicCreateConfigForm.xml</path>
     <xpath>//property[propertyName="ui_forms"]/propertySheet/property[propertyName="WebLogicCreateConfigForm"]/value</xpath>
   </file>
@@ -435,8 +439,8 @@
     <xpath>//procedure[procedureName="CheckClusterStatus"]/step[stepName="CheckClusterStatus"]/command</xpath>
   </file>
   <file>
-    <path>server/createOrUpdateJMSResource.pl</path>
-    <xpath>//procedure[procedureName="CreateOrUpdateJMSResource"]/step[stepName="CreateOrUpdateJMSResource"]/command</xpath>
+    <path>server/createOrUpdateJMSModule.pl</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateJMSModule"]/step[stepName="CreateOrUpdateJMSModule"]/command</xpath>
   </file>
   <file>
     <path>server/createOrUpdateJMSQueue.pl</path>
