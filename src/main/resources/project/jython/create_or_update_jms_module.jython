@@ -13,3 +13,76 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+
+
+[% preamble %]
+
+# parameters section
+
+username = r'''
+[% username %]
+'''.strip()
+
+password = r'''
+[% password %]
+'''.strip()
+
+adminUrl = r'''
+[% admin_url %]
+'''.strip()
+
+jmsModuleName = r'''
+[% ecp_weblogic_jms_module_name %]
+'''.strip()
+
+targetName = r'''
+[% ecp_weblogic_target %]
+'''.strip()
+
+updateAction = r'''
+[% ecp_weblogic_update_action %]
+'''.strip()
+updateAction = readString(updateAction, 'do_nothing')
+
+successMessage = ''
+
+connect(username, password, adminUrl)
+
+
+try:
+    startChanges()
+    update = False
+    jmsSystemResource = getMBean(getJMSSystemResourcePath(jmsModuleName))
+    cd('/')
+    if jmsSystemResource == None:
+        print_info("JMS System Module %s does not exist" % jmsModuleName)
+        jmsSystemResource = cmo.createJMSSystemResource(jmsModuleName)
+        successMessage = 'Created JMS System Module %s' % jmsModuleName
+    else:
+        if updateAction == 'do_nothing':
+            print_summary("JMS System Module %s exists, no further action is required" % jmsModuleName)
+            discardChanges()
+            sys.exit(0)
+        elif updateAction == 'remove_and_create':
+            successMessage = 'Recreated JMS System Module %s' % jmsModuleName
+            print_info("JMS System Module %s already exists" % jmsModuleName)
+            deleteJMSModule(jmsModuleName)
+            jmsSystemResource = cmo.createJMSSystemResource(jmsModuleName)
+        else:
+            print_info("Doing selective update")
+            update = True
+            successMessage = 'Updated JMS System Module %s' % jmsModuleName
+
+    target = getTargetBean(targetName)
+    targets = [target.objectName]
+    cd(getJMSSystemResourcePath(jmsModuleName))
+    print_info("Setting target to %s" % target.objectName)
+    set('Targets', jarray.array(targets, ObjectName))
+
+except Exception, e:
+    discardAndExit(e, "Failed to create JMS Module")
+
+commitChanges()
+if successMessage != '':
+    print_summary(successMessage)
+

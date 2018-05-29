@@ -439,8 +439,8 @@
     <xpath>//procedure[procedureName="CheckClusterStatus"]/step[stepName="CheckClusterStatus"]/command</xpath>
   </file>
   <file>
-    <path>server/createOrUpdateJMSResource.pl</path>
-    <xpath>//procedure[procedureName="CreateOrUpdateJMSResource"]/step[stepName="CreateOrUpdateJMSResource"]/command</xpath>
+    <path>server/createOrUpdateJMSModule.pl</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateJMSModule"]/step[stepName="CreateOrUpdateJMSModule"]/command</xpath>
   </file>
   <file>
     <path>server/createOrUpdateJMSQueue.pl</path>

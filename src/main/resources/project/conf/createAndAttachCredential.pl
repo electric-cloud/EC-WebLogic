@@ -230,6 +230,11 @@ $xpath = $ec->attachCredential($projName, $credName,
      stepName => 'DeleteJMSTopic'});
 $errors .= $ec->checkAllErrors($xpath);
 
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'CreateOrUpdateJMSModule',
+     stepName => 'CreateOrUpdateJMSModule'});
+$errors .= $ec->checkAllErrors($xpath);
+
 
 if ($errors ne '') {
 

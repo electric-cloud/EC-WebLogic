@@ -29,16 +29,39 @@
     <type>entry</type>
     <label>JMS Module Name:</label>
     <property>ecp_weblogic_jms_module_name</property>
-    <documentation>A unique name for the JMS System Module.</documentation>
+    <documentation>Unique name of the JMS system Module to be created or updated.</documentation>
     <required>1</required>
   </formElement>
   <formElement>
     <type>textarea</type>
-    <label>Targets:</label>
-    <property>ecp_weblogic_targets</property>
-    <documentation>
-      Comma-separated list of target servers or clusters, e.g. AdminServer.</documentation>
+    <label>Default Target:</label>
+    <property>ecp_weblogic_target</property>
+    <documentation>The Server or cluster to which the JMS system module would be deployed.</documentation>
     <required>1</required>
+  </formElement>
+  <formElement>
+    <type>select</type>
+    <label>Update Action:</label>
+    <property>ecp_weblogic_update_action</property>
+    <documentation>This parameter controls as to what the Update Action should be when a JMS Module with the same name exists :
+Do Nothing  (Default) -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
+Remove and Create - The procedure would remove existing JMS Module and recreate it based on new parameters passed.
+Selective Update - The procedure would update existing JMS Module for only parameters that we have designed to be updatable out of the box, based on what we think makes sense.The logic for this scenario is in the logic section below.
+</documentation>
+    <required>0</required>
+    <option>
+      <value>do_nothing</value>
+      <name>Do Nothing</name>
+    </option>
+    <option>
+      <value>remove_and_create</value>
+      <name>Remove and Create</name>
+    </option>
+    <option>
+      <value>selective_update</value>
+      <name>Selective Update</name>
+    </option>
+    <value>do_nothing</value>
   </formElement>
 </editor>
 

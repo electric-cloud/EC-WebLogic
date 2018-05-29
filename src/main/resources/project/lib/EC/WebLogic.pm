@@ -14,6 +14,7 @@
 #  limitations under the License.
 #
 
+# test
 package EC::WebLogic;
 use strict;
 use warnings;
@@ -235,7 +236,11 @@ sub process_response {
     }
     my $restart = $result->{stdout} =~ m/that require server re-start/;
     $self->ec->setProperty('/myJob/WebLogicServerRestartRequired', ($restart ? 'true' : 'false'));
-    $self->success();
+    my $summary = '';
+    if ($result->{stdout} =~ m/SUMMARY:\s*(.+)/) {
+        $summary = $1;
+    }
+    $self->success($summary);
     return;
 }
 
