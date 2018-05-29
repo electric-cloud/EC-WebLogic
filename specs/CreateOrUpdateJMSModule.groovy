@@ -25,16 +25,15 @@ class CreateOrUpdateJMSModule extends WebLogicHelper {
             params: params,
         ]
 
-        // dslFile 'dsl/procedures.dsl', [
-        //     projectName: projectName,
-        //     procedureName: deleteProcedureName,
-        //     resourceName: getResourceName(),
-        //     params: [
-        //         configname: configName,
-        //         ecp_weblogic_jms_module_name: '',
-        //         ecp_weblogic_jms_topic_name: ''
-        //     ]
-        // ]
+        dslFile 'dsl/procedures.dsl', [
+            projectName: projectName,
+            procedureName: deleteProcedureName,
+            resourceName: getResourceName(),
+            params: [
+                configname: configName,
+                ecp_weblogic_jms_module_name: '',
+            ]
+        ]
     }
 
     def doCleanupSpec() {
@@ -109,6 +108,53 @@ class CreateOrUpdateJMSModule extends WebLogicHelper {
         deleteJMSModule(jmsModuleName)
         where:
         action << ['do_nothing', 'selective_update', 'remove_and_create']
+    }
+
+    def 'delete jms module'() {
+        given:
+        def jmsModuleName = randomize('SpecModule')
+        deleteJMSModule(jmsModuleName)
+        def result = runProcedure("""
+        runProcedure(
+            projectName: '$projectName',
+            procedureName: '$procedureName',
+            actualParameter: [
+                ecp_weblogic_jms_module_name: '$jmsModuleName',
+                ecp_weblogic_target: 'AdminServer',
+            ]
+        )
+        """, getResourceName())
+        assert result.outcome == 'success'
+        when:
+        result = runProcedure("""
+        runProcedure(
+            projectName: '$projectName',
+            procedureName: '$deleteProcedureName',
+            actualParameter: [
+                ecp_weblogic_jms_module_name: '$jmsModuleName',
+            ]
+        )
+        """, getResourceName())
+        then:
+        logger.debug(result.logs)
+        assert result.outcome == 'success'
+        assert result.logs =~ /Deleted JMS System Module/
+    }
+
+    def 'fails to delete non-existing module'() {
+        when:
+        def result = runProcedure("""
+        runProcedure(
+            projectName: '$projectName',
+            procedureName: '$deleteProcedureName',
+            actualParameter: [
+                ecp_weblogic_jms_module_name: 'NoSuchModule',
+            ]
+        )
+        """, getResourceName())
+        then:
+        logger.debug(result.logs)
+        assert result.outcome == 'error'
     }
 
 }

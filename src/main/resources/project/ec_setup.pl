@@ -285,7 +285,6 @@ my %deleteConnectionFactory = (
     category    => "Application Server"
 );
 
-
 my %createOrUpdateJMSQueue = (
     label       => "WebLogic - Create Or Update JMS Queue",
     procedure   => "CreateOrUpdateJMSQueue",
@@ -311,6 +310,13 @@ my %deleteJMSTopic = (
     label       => "WebLogic - Delete JMS Topic",
     procedure   => "DeleteJMSTopic",
     description => "Deletes JMS Topic",
+    category    => "Application Server"
+);
+
+my %deleteJMSModule = (
+    label       => "WebLogic - Delete JMS Module",
+    procedure   => "DeleteJMSModule",
+    description => "Deletes JMS module",
     category    => "Application Server"
 );
 
@@ -426,6 +432,8 @@ $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Delete JMS Topic");
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update JMS Module");
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Delete JMS Module");
 
 
 @::createStepPickerSteps = (
@@ -451,7 +459,7 @@ $batch->deleteProperty(
     \%checkClusterStatus,          \%createOrUpdateConnectionFactory,
     \%deleteConnectionFactory,     \%createOrUpdateJMSQueue,
     \%createOrUpdateJMSTopic,      \%deleteJMSTopic,
-    \%createOrUpdateJMSModule
+    \%createOrUpdateJMSModule,     \%deleteJMSModule
 );
 
 if ( $upgradeAction eq "upgrade" ) {
@@ -934,6 +942,14 @@ if ( $upgradeAction eq "upgrade" ) {
                 {
                     procedureName => 'CreateOrUpdateJMSModule',
                     stepName      => 'CreateOrUpdateJMSModule'
+                }
+            );
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'DeleteJMSModule',
+                    stepName      => 'DeleteJMSModule'
                 }
             );
         }
