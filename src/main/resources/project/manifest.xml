@@ -165,6 +165,10 @@
   </file>
  -->  <!-- create/edit config forms starting from here -->
   <file>
+    <path>jython/create_or_update_jms_module.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_jms_module.jython"]/value</xpath>
+  </file>
+  <file>
     <path>WebLogicCreateConfigForm.xml</path>
     <xpath>//property[propertyName="ui_forms"]/propertySheet/property[propertyName="WebLogicCreateConfigForm"]/value</xpath>
   </file>
@@ -435,16 +439,28 @@
     <xpath>//procedure[procedureName="CheckClusterStatus"]/step[stepName="CheckClusterStatus"]/command</xpath>
   </file>
   <file>
-    <path>server/createOrUpdateJMSResource.pl</path>
-    <xpath>//procedure[procedureName="CreateOrUpdateJMSResource"]/step[stepName="CreateOrUpdateJMSResource"]/command</xpath>
+    <path>server/createOrUpdateJMSModule.pl</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateJMSModule"]/step[stepName="CreateOrUpdateJMSModule"]/command</xpath>
   </file>
   <file>
     <path>server/createOrUpdateJMSQueue.pl</path>
     <xpath>//procedure[procedureName="CreateOrUpdateJMSQueue"]/step[stepName="CreateOrUpdateJMSQueue"]/command</xpath>
   </file>
   <file>
+    <path>server/createOrUpdateJMSTopic.pl</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateJMSTopic"]/step[stepName="CreateOrUpdateJMSTopic"]/command</xpath>
+  </file>
+  <file>
+    <path>server/deleteJMSTopic.pl</path>
+    <xpath>//procedure[procedureName="DeleteJMSTopic"]/step[stepName="DeleteJMSTopic"]/command</xpath>
+  </file>
+  <file>
     <path>server/createOrUpdateDatasource.pl</path>
     <xpath>//procedure[procedureName="CreateOrUpdateDatasource"]/step[stepName="CreateOrUpdateDatasource"]/command</xpath>
+  </file>
+  <file>
+    <path>server/deleteJMSModule.pl</path>
+    <xpath>//procedure[procedureName="DeleteJMSModule"]/step[stepName="DeleteJMSModule"]/command</xpath>
   </file>
   <!-- config management procedures -->
   <file>
@@ -656,6 +672,18 @@
     <xpath>//procedure[procedureName="DeleteJMSQueue"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
   </file>
   <file>
+    <path>parameterForms/ec_parameterForm-CreateOrUpdateJMSTopic.xml</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateJMSTopic"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-DeleteJMSTopic.xml</path>
+    <xpath>//procedure[procedureName="DeleteJMSTopic"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-DeleteJMSModule.xml</path>
+    <xpath>//procedure[procedureName="DeleteJMSModule"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
     <path>jython/create_or_update_connection_factory.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_connection_factory.jython"]/value</xpath>
   </file>
@@ -670,5 +698,17 @@
   <file>
     <path>jython/delete_jms_queue.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_jms_queue.jython"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/create_or_update_jms_topic.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_jms_topic.jython"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/delete_jms_topic.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_jms_topic.jython"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/delete_jms_module.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_jms_module.jython"]/value</xpath>
   </file>
 </fileset>

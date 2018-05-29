@@ -14,6 +14,7 @@
 #  limitations under the License.
 #
 
+
 [% preamble %]
 
 # parameters section
@@ -30,25 +31,27 @@ adminUrl = r'''
 [% admin_url %]
 '''.strip()
 
-cfName = r'''
-[% cf_name %]
+jmsModuleName = r'''
+[% ecp_weblogic_jms_module_name %]
 '''.strip()
 
-jmsModuleName = r'''
-[% jms_module_name %]
-'''.strip()
+successMessage = ''
 
 connect(username, password, adminUrl)
-cfBean = getMBean(getConnectionFactoryPath(jmsModuleName, cfName))
-if cfBean == None:
-    print_error("Connection Factory %s does not exist in the module %s" % (cfName, jmsModuleName))
+bean = getMBean(getJMSSystemResourcePath(jmsModuleName))
+if bean == None:
+    print_error("JMS System Module %s does not exist" % jmsModuleName)
     sys.exit(-1)
 
 try:
     startChanges()
-    deleteConnectionFactory(jmsModuleName, cfName)
-except Exception, e:
-    discardAndExit(e, "Failed to delete Connection Factory")
+    deleteJMSModule(jmsModuleName)
+    successMessage = 'Deleted JMS System Module %s' % jmsModuleName
 
-# eveything is fine, commiting
+except Exception, e:
+    discardAndExit(e, "Failed to delete JMS Module")
+
 commitChanges()
+if successMessage != '':
+    print_summary(successMessage)
+

@@ -257,10 +257,10 @@ my %checkClusterStatus = (
     category    => "Application Server"
 );
 
-my %createOrUpdateJMSResource = (
-    label       => "WebLogic - Create Or Update JMS Resource",
-    procedure   => "CreateOrUpdateJMSResource",
-    description => "Creates or updates JMS resource",
+my %createOrUpdateJMSModule = (
+    label       => "WebLogic - Create Or Update JMS Module",
+    procedure   => "CreateOrUpdateJMSModule",
+    description => "Creates or updates JMS module",
     category    => "Application Server"
 );
 
@@ -285,7 +285,6 @@ my %deleteConnectionFactory = (
     category    => "Application Server"
 );
 
-
 my %createOrUpdateJMSQueue = (
     label       => "WebLogic - Create Or Update JMS Queue",
     procedure   => "CreateOrUpdateJMSQueue",
@@ -297,6 +296,27 @@ my %deleteJMSQueue = (
     label       => "WebLogic - Delete JMS Queue",
     procedure   => "DeleteJMSQueue",
     description => "Deletes JMS Queue",
+    category    => "Application Server"
+);
+
+my %createOrUpdateJMSTopic = (
+    label       => "WebLogic - Create Or Update JMS Topic",
+    procedure   => "CreateOrUpdateJMSTopic",
+    description => "Creates or updates JMS Topic",
+    category    => "Application Server"
+);
+
+my %deleteJMSTopic = (
+    label       => "WebLogic - Delete JMS Topic",
+    procedure   => "DeleteJMSTopic",
+    description => "Deletes JMS Topic",
+    category    => "Application Server"
+);
+
+my %deleteJMSModule = (
+    label       => "WebLogic - Delete JMS Module",
+    procedure   => "DeleteJMSModule",
+    description => "Deletes JMS module",
     category    => "Application Server"
 );
 
@@ -406,6 +426,14 @@ $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update JMS Queue");
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Delete JMS Queue");
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update JMS Topic");
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Delete JMS Topic");
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update JMS Module");
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Delete JMS Module");
 
 
 @::createStepPickerSteps = (
@@ -429,7 +457,9 @@ $batch->deleteProperty(
     \%deleteManagedServer,         \%startCluster,
     \%stopCluster,                 \%updateAppConfig,
     \%checkClusterStatus,          \%createOrUpdateConnectionFactory,
-    \%deleteConnectionFactory, \%createOrUpdateJMSQueue
+    \%deleteConnectionFactory,     \%createOrUpdateJMSQueue,
+    \%createOrUpdateJMSTopic,      \%deleteJMSTopic,
+    \%createOrUpdateJMSModule,     \%deleteJMSModule
 );
 
 if ( $upgradeAction eq "upgrade" ) {
@@ -887,6 +917,39 @@ if ( $upgradeAction eq "upgrade" ) {
                 {
                     procedureName => 'DeleteJMSQueue',
                     stepName      => 'DeleteJMSQueue'
+                }
+            );
+
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'CreateOrUpdateJMSTopic',
+                    stepName      => 'CreateOrUpdateJMSTopic'
+                }
+            );
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'DeleteJMSTopic',
+                    stepName      => 'DeleteJMSTopic'
+                }
+            );
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'CreateOrUpdateJMSModule',
+                    stepName      => 'CreateOrUpdateJMSModule'
+                }
+            );
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'DeleteJMSModule',
+                    stepName      => 'DeleteJMSModule'
                 }
             );
         }

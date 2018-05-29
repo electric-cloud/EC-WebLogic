@@ -46,11 +46,24 @@ clientIDPolicy = r'''
 [% cf_client_id_policy %]
 '''.strip()
 
-maxMessagesPerSession = readInt(r'''[% cf_max_messages_per_session %]''', 0)
-xaEnabled = readBool(r'''[% cf_xa_enabled %]''')
-attachJMSXUserId = readBool(r'''[% cf_attach_jmsx_userid %]''')
+maxMessagesPerSession = r'''
+[% cf_max_messages_per_session %]
+'''.strip()
+maxMessagesPerSession = readInt(maxMessagesPerSession, 0)
 
-jmsModuleName = readString(r'''[% jms_module_name %]''')
+xaEnabled = r'''
+[% cf_xa_enabled %]
+'''.strip()
+xaEnabled = readBool(xaEnabled)
+
+attachJMSXUserId = r'''
+[% cf_attach_jmsx_userid %]
+'''.strip()
+attachJMSXUserId = readBool(attachJMSXUserId)
+
+jmsModuleName = r'''
+[% jms_module_name %]
+'''.strip()
 
 jmsServerName = r'''
 [% jms_server_name %]
@@ -64,8 +77,14 @@ subdeploymentName = r'''
 [% subdeployment_name %]
 '''.strip()
 
-additionalOptions = readString('''[% additional_options %]'''.strip(), '')
-updateAction = readString(r'''[% update_action %]''', 'do_nothing')
+additionalOptions = r'''
+[% additional_options %]
+'''.strip()
+
+updateAction = r'''
+[% update_action %]
+'''.strip()
+updateAction = readString(updateAction, 'do_nothing')
 
 connect(username, password, adminUrl)
 
