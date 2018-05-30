@@ -5,6 +5,7 @@ def params = args.params
 
 project projName, {
     procedure procName, {
+        resourceName = resName
         params.each { k, defaultValue ->
             formalParameter k, defaultValue: defaultValue, {
                 type = 'textarea'
