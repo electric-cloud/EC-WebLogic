@@ -261,7 +261,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
                 projectName: '$projectName',
                 procedureName: '$procedureName',
                 actualParameter: $params_str_arr
-                
+
             )
                 """, resourceName
         )
@@ -382,10 +382,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
         return result
     }
 
-    def createJMSModule(name) {
-        def code = """
+    def createJMSModule(name, targets = 'AdminServer') {
+        def code = """import re
 resource_name = '$name'
-target = 'AdminServer'
+targets = '$targets'
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 cd('/')
 edit()
@@ -395,7 +395,13 @@ else:
     startEdit()
     cmo.createJMSSystemResource(resource_name)
     cd("/JMSSystemResources/%s" % resource_name)
-    cmo.addTarget(getMBean("/Servers/%s" % target))
+    if targets != '':
+        for targetName in re.split('\\\\s*,\\\\s*', targets):
+            targetBean = getMBean('/Servers/' + targetName)
+            if targetBean == None:
+                targetBean = getMBean('/Clusters/' + targetName)
+            cmo.addTarget(targetBean)
+            print "Adding target %s" % targetBean.objectName
     activate()
 """
         def result = runWLST(code)
@@ -575,6 +581,41 @@ else:
         assert result.outcome == 'success'
     }
 
+
+
+    def ensureCluster(clName) {
+        def code = """
+clName = '$clName'
+connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+cd('/')
+bean = getMBean('/Clusters/' + clName)
+print bean
+if bean == None:
+    edit()
+    startEdit()
+    cmo.createCluster(clName)
+    cd('/Clusters/' + clName)
+    cmo.setClusterMessagingMode('unicast')
+    cmo.setClusterBroadcastChannel('')
+    cmo.setClusterAddress('localhost')
+    activate()
+else:
+    print "Cluster %s already exists" % clName
+"""
+        def result = runWLST(code)
+        assert result.outcome == 'success'
+    }
+
+    def discardChanges() {
+        def code = """connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+try:
+    stopEdit('y')
+except WLSTException, e:
+    print str(e)
+"""
+        def result = runWLST(code)
+        assert result.outcome == 'success'
+    }
 
     def createWorkspace(def workspaceName) {
         def isWindows = System.getenv("IS_WINDOWS");

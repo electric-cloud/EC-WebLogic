@@ -27,6 +27,7 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
 
     def doSetupSpec() {
         setupResource()
+        discardChanges()
         deleteProject(projectName)
         createJMSModule(jmsModuleName)
         createConfig(configName)

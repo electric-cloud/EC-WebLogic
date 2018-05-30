@@ -582,7 +582,18 @@ def deleteJMSTopic(jmsModuleName, topicName):
     else:
         print_info("JMS Topic %s does not exist in the module %s" % (topicName, jmsModuleName))
 
-
+def deleteSubDeployment(jmsModuleName, subdeploymentName):
+    if isEmpty(jmsModuleName):
+        raise Exception("JMS Module Name is not provided")
+    if isEmpty(subdeploymentName):
+        raise Exception("Subdeployment name is not provided")
+    bean = getMBean(getJMSSystemResourcePath(jmsModuleName))
+    subBean = getMBean(getSubDeploymentPath(jmsModuleName, subdeploymentName))
+    if subBean != None:
+        bean.destroySubDeployment(subBean)
+        print_info("Removed subdeployment %s from the module %s" % (subdeploymentName, jmsModuleName))
+    else:
+        print_info("Subdeployment %s does not exist in the module %s" % (subdeploymentName, jmsModuleName))
 
 def getTargetBean(targetName):
     bean = getMBean('/Servers/' + targetName)
@@ -591,5 +602,12 @@ def getTargetBean(targetName):
 
     if bean == None:
         raise Exception("Target %s was not found in Servers or Clusters, please check the name of the target." % targetName)
-
     return bean
+
+def targetName(targetBean, failIfNone = False):
+    if targetBean == None:
+        if failIfNone:
+            raise Exception("Target Bean is not provided")
+        else:
+            return "None"
+    return targetBean.type + ' "' + targetBean.name + '"'
