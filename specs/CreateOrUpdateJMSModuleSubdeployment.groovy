@@ -204,7 +204,6 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
     }
 
 
-    @IgnoreRest
     def 'delete subdeployment'() {
         given:
         def jmsModuleName = randomize('SpecModule')
