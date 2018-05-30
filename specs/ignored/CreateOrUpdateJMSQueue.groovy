@@ -1,3 +1,6 @@
+package ignored
+
+import com.electriccloud.spec.SpockTestSupport
 import spock.lang.*
 
 class CreateOrUpdateJMSQueue extends WebLogicHelper {
@@ -26,14 +29,14 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
         dslFile "dsl/procedures.dsl", [
             projectName: projectName,
             procedureName: procedureName,
-            resourceName: getResourceName(),
+            resourceName: WebLogicHelper.getResourceName(),
             params: params,
         ]
 
         dslFile 'dsl/procedures.dsl', [
             projectName: projectName,
             procedureName: deleteProcedureName,
-            resourceName: getResourceName(),
+            resourceName: WebLogicHelper.getResourceName(),
             params: [
                 configname: configName,
                 ecp_weblogic_jms_module_name: '',
@@ -62,9 +65,9 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
                 ecp_weblogic_jms_queue_name: '$queueName',
             ]
         )
-        """, getResourceName())
+        """, WebLogicHelper.getResourceName())
         then:
-        logger.debug(result.logs)
+        SpockTestSupport.logger.debug(result.logs)
         assert result.outcome == 'success'
         assert result.logs =~ /Queue $queueName does not exist/
         assert result.logs =~ /Created Queue $queueName/
@@ -79,7 +82,7 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
 
     def 'create jms queue with additional options'() {
         given:
-        def queueName = randomize('SpecQueue')
+        def queueName = SpockTestSupport.randomize('SpecQueue')
         def jndiName = 'TestJNDIName'
         deleteJMSQueue(jmsModuleName, queueName)
         when:
@@ -94,9 +97,9 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
                 ecp_weblogic_additional_options: 'MaximumMessageSize=1024'
             ]
         )
-        """, getResourceName())
+        """, WebLogicHelper.getResourceName())
         then:
-        logger.debug(result.logs)
+        SpockTestSupport.logger.debug(result.logs)
         assert result.outcome == 'success'
         assert result.logs =~ /Queue $queueName does not exist/
         assert result.logs =~ /Created Queue $queueName/
@@ -120,7 +123,7 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
                 ecp_weblogic_jms_queue_name: '$queueName',
             ]
         )
-        """, getResourceName())
+        """, WebLogicHelper.getResourceName())
         when:
         result = runProcedure """
         runProcedure(
@@ -133,9 +136,9 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
                 ecp_weblogic_update_action: 'selective_update'
             ]
         )
-        """, getResourceName()
+        """, WebLogicHelper.getResourceName()
         then:
-        logger.info(result.logs)
+        SpockTestSupport.logger.info(result.logs)
         assert result.outcome == 'success'
         assert result.logs =~ /Set JNDI Name $newJNDIName/
         cleanup:
@@ -158,10 +161,10 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
                 ecp_weblogic_jms_queue_name: '$queueName',
             ]
         )
-        """, getResourceName())
+        """, WebLogicHelper.getResourceName())
         def jmsServerName = 'TestJMSServer'
         createJMSServer(jmsServerName)
-        def subdeploymentName = randomize('TestSubdeployment')
+        def subdeploymentName = SpockTestSupport.randomize('TestSubdeployment')
         createSubDeployment(jmsModuleName, subdeploymentName, jmsServerName)
         when:
         result = runProcedure """
@@ -176,9 +179,9 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
                 ecp_weblogic_subdeployment_name: '$subdeploymentName',
             ]
         )
-        """, getResourceName()
+        """, WebLogicHelper.getResourceName()
         then:
-        logger.info(result.logs)
+        SpockTestSupport.logger.info(result.logs)
         assert result.outcome == 'success'
         cleanup:
         deleteJMSQueue(jmsModuleName, queueName)
@@ -187,7 +190,7 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
 
     def 'delete jms queue'() {
         given:
-        def queueName = randomize('SpecQueue')
+        def queueName = SpockTestSupport.randomize('SpecQueue')
         def result = runProcedure("""
         runProcedure(
             projectName: '$projectName',
@@ -197,7 +200,7 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
                 ecp_weblogic_jms_queue_name: '$queueName',
             ]
         )
-        """, getResourceName())
+        """, WebLogicHelper.getResourceName())
         when:
         result = runProcedure """
             runProcedure(
@@ -208,16 +211,16 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
                     ecp_weblogic_jms_queue_name: '$queueName'
                 ]
             )
-        """, getResourceName()
+        """, WebLogicHelper.getResourceName()
         then:
         assert result.outcome == 'success'
-        logger.info(result.logs)
+        SpockTestSupport.logger.info(result.logs)
         assert result.logs =~ /Removed JMS Queue $queueName from the module $jmsModuleName/
     }
 
     def "delete non-existing queue"() {
         given:
-        def queueName = randomize('SpecQueue')
+        def queueName = SpockTestSupport.randomize('SpecQueue')
         deleteJMSQueue(jmsModuleName, queueName)
         when:
         def result = runProcedure """
@@ -229,7 +232,7 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
                     ecp_weblogic_jms_queue_name: '$queueName'
                 ]
             )
-        """, getResourceName()
+        """, WebLogicHelper.getResourceName()
         then:
         assert result.outcome == 'error'
         assert result.logs =~ /JMS Queue $queueName does not exist in the module $jmsModuleName/
@@ -259,7 +262,7 @@ def deleteQueue(jmsModuleName, cfName):
 moduleName = '$moduleName'
 queueName = '$name'
 
-connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+connect('${WebLogicHelper.getUsername()}', '${WebLogicHelper.getPassword()}', '${WebLogicHelper.getEndpoint()}')
 edit()
 startEdit()
 try:

@@ -1,5 +1,7 @@
 import com.electriccloud.spec.PluginSpockTestSupport
 import groovy.json.*
+import spock.lang.Shared
+import spock.util.concurrent.PollingConditions
 
 class WebLogicHelper extends PluginSpockTestSupport {
     static final def HELPER_PROJECT = 'EC-WebLogic Specs Helper'
@@ -9,6 +11,9 @@ class WebLogicHelper extends PluginSpockTestSupport {
     static def FILENAME = 'sample.war'
     static def REMOTE_DIRECTORY = '/tmp'
     static def APPLICATION_NAME = 'sample'
+    static def APPLICATION_PAGE_URL = "http://localhost:7001/sample/hello.jsp"
+
+    static final def CONFIG_NAME = 'EC-Specs WebLogic Config'
 
     def doSetupSpec() {
         setupResource()
@@ -17,18 +22,19 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
     def doCleanupSpec() {
         deleteProject(HELPER_PROJECT)
+//        deleteProject('EC-Spec Helper')
     }
 
     static def getWlstPath() {
         def path = System.getenv('WEBLOGIC_WLST_PATH')
         assert path
-        path
+        return path
     }
 
     static def getResourceName() {
         def resName = System.getenv('WEBLOGIC_RES_NAME')
         assert resName
-        resName
+        return resName
     }
 
     static def getResourceHost() {
@@ -232,6 +238,36 @@ class WebLogicHelper extends PluginSpockTestSupport {
         ]
     }
 
+    def runTestedProcedure(def projectName, procedureName, def params, def resourceName) {
+
+        deleteProject(projectName)
+
+        dslFile('dsl/procedures.dsl', [
+                projectName  : projectName,
+                procedureName: procedureName,
+                resourceName : resourceName,
+                params       : params
+        ])
+
+        // Stringify map
+        def params_str_arr = []
+        params.each() { k, v ->
+            params_str_arr.push(k + " : '" + (v ?: '') + "'")
+        }
+        logger.debug("Parameters string: " + params_str_arr.toString())
+
+        def result = runProcedure("""
+            runProcedure(
+                projectName: '$projectName',
+                procedureName: '$procedureName',
+                actualParameter: $params_str_arr
+                
+            )
+                """, resourceName
+        )
+        return result
+    }
+
     def UndeployApplication(String projectName, def params) {
         def wlstPath = getWlstPath()
         deleteProject(projectName)
@@ -252,7 +288,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
             ]
         )
         """, getResourceName())
-
 
         return result
     }
@@ -279,10 +314,67 @@ class WebLogicHelper extends PluginSpockTestSupport {
             procedureName: 'DeployApp',
             actualParameter: [
                  wlstabspath: '$wlstPath',
-                 appname : '$APPLICATION_NAME',
-                 apppath : "$REMOTE_DIRECTORY/$FILENAME",
+                 appname : '${params.appname}',
+                 apppath : "${params.apppath}",
                  targets : 'AdminServer',
                  is_library : ""
+            ]
+        )
+        """)
+
+        return result
+    }
+
+    def StartApplication(def projectName, def params) {
+
+        def wlstPath = getWlstPath()
+
+        dslFile 'dsl/procedures.dsl', [
+                projectName  : projectName,
+                procedureName: 'StartApp',
+                resourceName : getResourceName(),
+                params       : params
+        ]
+
+        def result = runProcedure("""
+        runProcedure(
+            projectName: '$projectName',
+            procedureName: 'StartApp',
+            actualParameter: [
+                 wlstabspath: '$wlstPath',
+                 appname    : '$APPLICATION_NAME',
+
+                 additional_options : "",
+//                 envscriptpath      : ""
+                 version_identifier : ""
+            ]
+        )
+        """, getResourceName())
+
+        return result
+    }
+
+    def StopApplication(def projectName, def params) {
+
+        def wlstPath = getWlstPath()
+
+        dslFile 'dsl/procedures.dsl', [
+                projectName  : projectName,
+                procedureName: 'StopApp',
+                resourceName : getResourceName(),
+                params       : params
+        ]
+
+        def result = runProcedure("""
+        runProcedure(
+            projectName: '$projectName',
+            procedureName: 'StopApp',
+            actualParameter: [
+                 wlstabspath: '$wlstPath',
+                 appname    : '$APPLICATION_NAME',
+
+                 additional_options : "",
+                 version_identifier : ""
             ]
         )
         """, getResourceName())
@@ -483,4 +575,52 @@ else:
         assert result.outcome == 'success'
     }
 
+
+    def createWorkspace(def workspaceName) {
+        def isWindows = System.getenv("IS_WINDOWS");
+        def workspacePath = "/tmp";
+        if (isWindows) {
+            workspacePath = "C:/workspace";
+        }
+        def workspaceResult = dsl """
+try {
+            createWorkspace(
+                workspaceName: '${workspaceName}',
+                agentDrivePath: '${workspacePath}',
+                agentUnixPath: '/tmp',
+                local: '1'
+            )
+} catch (Exception e) {}
+        """
+
+        return workspaceResult
+    }
+
+//    def getCurrentProcedureName(def jobId){
+//        assert jobId
+//        def currentProcedureName = null
+//        def property = "/myJob/procedureName"
+//        try {
+//            currentProcedureName = getJobProperty(property, jobId)
+//            println("Current Procedure Name: " + currentProcedureName)
+//        } catch (Throwable e) {
+//            logger.error("Can't retrieve Run Procedure Name from the property: '$property'; check job: " + jobId)
+//        }
+//        return currentProcedureName
+//    }
+
+
+    def getJobUpperStepSummary(def jobId){
+        assert jobId
+        def summary = null
+//        def currentProcedureName = getCurrentProcedureName(jobId)
+        def property = "/myJob/jobSteps/RunProcedure/summary"
+        println "Trying to get the summary, property: $property, jobId: $jobId"
+        try{
+            summary = getJobProperty(property, jobId)
+        } catch (Throwable e) {
+            logger.error("Can't retrieve Upper Step Summary from the property: '$property'; check job: " + jobId)
+        }
+        return summary
+    }
 }
