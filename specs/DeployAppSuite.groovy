@@ -198,7 +198,7 @@ class DeployAppSuite extends WebLogicHelper {
 //        def upperStepSummary = getJobUpperStepSummary(result.jobId)
 
         def upperStepSummary = getJobUpperStepSummary(result.jobId)
-        logger.info(upperStepSummary)
+        logger.info("[SUMMARY]" + upperStepSummary)
 
         expect: 'Outcome and Upper Summary verification'
         assert outcome == expectedOutcome
@@ -220,6 +220,8 @@ class DeployAppSuite extends WebLogicHelper {
         pluginConfigurationNames.correct | ''          | APPLICATION_NAME | "$REMOTE_DIRECTORY/$FILENAME" | ''            | checkBoxValues.unchecked | ''         | ''        | ''              | ''                        | ''                 | ''              | ''                | ''             | ''                 | ''     | ''     | expectedOutcomes.error   | expectedSummaryMessages.file_not_exists
 
     }
+
+
 
     def deployApp(def params, def resourceName) {
 

@@ -240,6 +240,8 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
     def runTestedProcedure(def projectName, procedureName, def params, def resourceName) {
 
+        deleteProject(projectName)
+
         dslFile('dsl/procedures.dsl', [
                 projectName  : projectName,
                 procedureName: procedureName,
@@ -252,7 +254,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         params.each() { k, v ->
             params_str_arr.push(k + " : '" + (v ?: '') + "'")
         }
-        logger.debug(params_str_arr.toString())
+        logger.debug("Parameters string: " + params_str_arr.toString())
 
         def result = runProcedure("""
             runProcedure(
@@ -263,9 +265,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
             )
                 """, resourceName
         )
-
-        deleteProject(projectName)
-
         return result
     }
 
@@ -597,26 +596,26 @@ try {
         return workspaceResult
     }
 
-    def getCurrentProcedureName(def jobId){
-        assert jobId
-        def currentProcedureName = null
-        def property = "/myJob/procedureName"
-        try {
-            currentProcedureName = getJobProperty(property, jobId)
-            println("Current Procedure Name: " + currentProcedureName)
-        } catch (Throwable e) {
-            logger.error("Can't retrieve Run Procedure Name from the property: '$property'; check job: " + jobId)
-        }
-        return currentProcedureName
-    }
+//    def getCurrentProcedureName(def jobId){
+//        assert jobId
+//        def currentProcedureName = null
+//        def property = "/myJob/procedureName"
+//        try {
+//            currentProcedureName = getJobProperty(property, jobId)
+//            println("Current Procedure Name: " + currentProcedureName)
+//        } catch (Throwable e) {
+//            logger.error("Can't retrieve Run Procedure Name from the property: '$property'; check job: " + jobId)
+//        }
+//        return currentProcedureName
+//    }
 
 
     def getJobUpperStepSummary(def jobId){
         assert jobId
         def summary = null
-        def currentProcedureName = getCurrentProcedureName(jobId)
-        def property = "/myJob/jobSteps/$currentProcedureName/summary"
-        println "Trying to get the summary for Procedure: $currentProcedureName, property: $property, jobId: $jobId"
+//        def currentProcedureName = getCurrentProcedureName(jobId)
+        def property = "/myJob/jobSteps/RunProcedure/summary"
+        println "Trying to get the summary, property: $property, jobId: $jobId"
         try{
             summary = getJobProperty(property, jobId)
         } catch (Throwable e) {
