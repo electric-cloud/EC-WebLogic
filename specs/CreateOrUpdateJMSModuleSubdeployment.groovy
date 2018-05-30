@@ -239,7 +239,6 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
         assert result.outcome == 'success'
     }
 
-    @IgnoreRest
     def 'fails to delete non-existing subdeployment'() {
         given:
         def jmsModuleName = 'SpecJMSModule'
