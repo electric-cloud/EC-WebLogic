@@ -1,14 +1,12 @@
-
-
 class StopApp extends WebLogicHelper {
 
     static def procedureName = 'StartApp'
     static def projectName = "EC-WebLogic Specs $procedureName"
-    static def configName = 'EC-Specs WebLogic Config'
+    static def configName = CONFIG_NAME
 
     def doSetupSpec() {
-        createConfig(configName)
         setupResource()
+        createConfig(CONFIG_NAME)
     }
 
     def doCleanupSpec() {

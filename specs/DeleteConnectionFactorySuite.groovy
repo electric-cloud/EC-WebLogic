@@ -107,13 +107,10 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
 
     def doSetupSpec() {
         setupResource()
+        createConfig(pluginConfigurationNames.correct)
 
         deleteProject(projectName)
         createJMSModule(jmsModuleNames.default)
-
-//        createConfig(pluginConfigurationNames.empty)
-        createConfig(pluginConfigurationNames.correct)
-        createConfig(pluginConfigurationNames.incorrect)
     }
 
     /**
@@ -122,9 +119,6 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
 
     def doCleanupSpec() {
         deleteProject(projectName)
-
-        deleteConfiguration('EC-WebLogic', pluginConfigurationNames.correct)
-        deleteConfiguration('EC-WebLogic', pluginConfigurationNames.incorrect)
     }
 
     /**

@@ -37,7 +37,7 @@ class CreateOrUpdateJMSModule extends WebLogicHelper {
     }
 
     def doCleanupSpec() {
-        // deleteProject(projectName)
+         deleteProject(projectName)
     }
 
     def 'create jms module'() {

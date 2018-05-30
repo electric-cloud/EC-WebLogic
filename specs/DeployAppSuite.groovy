@@ -43,13 +43,6 @@ class DeployAppSuite extends WebLogicHelper {
             incorrect: 'incorrect config Name',
     ]
 
-//    @Shared
-//    //* Optional Parameter
-//    def additionalOptions = [
-//            empty    : '',
-//            correct  : '-subscriptionDurability Durable',
-//            incorrect: 'incorrect Additional Options',
-//    ]
     /**
      * Verification Values: Assert values
      */
@@ -115,15 +108,10 @@ class DeployAppSuite extends WebLogicHelper {
     def doSetupSpec() {
         assert wlstPath
 
-        def resourceName = getResourceName()
         def artifactName = 'test:sample'
         def version = '1.0'
 
-        createWorkspace(resourceName)
-
-//        createConfig(pluginConfigurationNames.empty)
         createConfig(pluginConfigurationNames.correct)
-        createConfig(pluginConfigurationNames.incorrect)
 
         publishArtifact(artifactName, version, FILENAME)
         downloadArtifact(artifactName, REMOTE_DIRECTORY, getResourceName())
@@ -134,11 +122,7 @@ class DeployAppSuite extends WebLogicHelper {
      */
 
     def doCleanupSpec() {
-//        deleteProject(projectName)
-
-//        deleteConfiguration('EC-WebLogic', pluginConfigurationNames.empty)
-//        deleteConfiguration('EC-WebLogic', pluginConfigurationNames.correct)
-//        deleteConfiguration('EC-WebLogic', pluginConfigurationNames.incorrect)
+        deleteProject(projectName)
     }
 
     /**
