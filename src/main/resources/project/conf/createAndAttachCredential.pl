@@ -242,6 +242,12 @@ $xpath = $ec->attachCredential($projName, $credName,
 $errors .= $ec->checkAllErrors($xpath);
 
 
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'CreateOrUpdateJMSModuleSubdeployment',
+     stepName => 'CreateOrUpdateJMSModuleSubdeployment'});
+$errors .= $ec->checkAllErrors($xpath);
+
+
 if ($errors ne '') {
 
     # Cleanup the partially created configuration we just created

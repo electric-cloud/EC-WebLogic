@@ -1,0 +1,120 @@
+#
+#  Copyright 2016 Electric Cloud, Inc.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+
+
+[% preamble %]
+
+# parameters section
+
+username = r'''
+[% username %]
+'''.strip()
+
+password = r'''
+[% password %]
+'''.strip()
+
+adminUrl = r'''
+[% admin_url %]
+'''.strip()
+
+jmsModuleName = r'''
+[% ecp_weblogic_jms_module_name %]
+'''.strip()
+
+subdeploymentName = r'''
+[% ecp_weblogic_subdeployment_name %]
+'''.strip()
+
+targetNames = r'''
+[% ecp_weblogic_subdeployment_target_list %]
+'''.strip()
+
+updateAction = r'''
+[% ecp_weblogic_update_action %]
+'''.strip()
+updateAction = readString(updateAction, 'do_nothing')
+
+successMessage = ''
+
+connect(username, password, adminUrl)
+
+try:
+    startChanges()
+    jmsModule = getMBean(getJMSSystemResourcePath(jmsModuleName))
+    if jmsModule == None:
+        raise Exception("JMS Module %s does not exist" % jmsModuleName)
+
+    update = False
+    subdeployment = getMBean(getSubDeploymentPath(jmsModuleName, subdeploymentName))
+    if subdeployment == None:
+        print_info("Subdeployment %s does not exist" % subdeploymentName)
+        subdeployment = jmsModule.createSubDeployment(subdeploymentName)
+        successMessage = 'Created SubDeployment %s in the module %s' % (subdeploymentName, jmsModuleName)
+    else:
+        if updateAction == 'do_nothing':
+            print_summary("SubDeployment %s exists in the module %s, no further action is required" % (subdeploymentName, jmsModuleName))
+            discardChanges()
+            sys.exit(0)
+        elif updateAction == 'remove_and_create':
+            deleteSubDeployment(jmsModuleName, subdeploymentName)
+            subdeployment = jmsModule.createSubDeployment(subdeploymentName)
+            successMessage = 'Recreated subdeployment %s' % subdeploymentName
+        else:
+            print_info("Subdeployment %s already exists in the module %s, doing selective update" % (subdeploymentName, jmsModuleName))
+            update = True
+            successMessage = 'Selective update for subdeployment %s' % subdeploymentName
+
+    targetNamesList = re.split('\\s*,\\s*', targetNames)
+    newTargetList = map(lambda x: getTargetBean(x), targetNamesList)
+    currentTargetList = subdeployment.getTargets()
+
+    targetsToAdd = []
+    targetsToRemove = []
+
+    for target in newTargetList:
+        if not filter(lambda x: x.objectName == target.objectName, currentTargetList):
+            targetsToAdd.append(target)
+
+    for target in currentTargetList:
+        if not filter(lambda x: x.objectName == target.objectName, newTargetList):
+            targetsToRemove.append(target)
+
+    if targetsToAdd:
+        for target in targetsToAdd:
+            subdeployment.addTarget(target)
+            print_info("Adding target %s to the list of targets" % targetName(target))
+        successMessage += ': Added %s target(s)' % len(targetsToAdd)
+    else:
+        print_info("No new targets to add")
+        successMessage += ': No new targets to add'
+
+    if targetsToRemove:
+        for target in targetsToRemove:
+            subdeployment.removeTarget(target)
+            print_info("Removing target %s from the list of targets" % targetName(target))
+        successMessage += ', Removed %s target(s)' % len(targetsToRemove)
+    else:
+        print_info("No targets to remove")
+        successMessage += ', No targets to remove'
+
+except Exception, e:
+    discardAndExit(e, "Failed to create or update JMS Module Subdeployment")
+
+commitChanges()
+if successMessage != '':
+    print_summary(successMessage)
+
