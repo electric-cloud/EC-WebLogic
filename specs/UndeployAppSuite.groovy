@@ -105,15 +105,10 @@ class UndeployAppSuite extends WebLogicHelper {
     def doSetupSpec() {
         assert wlstPath
 
-        def resourceName = getResourceName()
         def artifactName = 'test:sample'
         def version = '1.0'
 
-        createWorkspace(resourceName)
-
-//        createConfig(pluginConfigurationNames.empty)
         createConfig(pluginConfigurationNames.correct)
-        createConfig(pluginConfigurationNames.incorrect)
 
         publishArtifact(artifactName, version, FILENAME)
         downloadArtifact(artifactName, REMOTE_DIRECTORY, getResourceName())

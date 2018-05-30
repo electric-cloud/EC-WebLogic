@@ -6,7 +6,7 @@ import spock.lang.*
 class CreateOrUpdateJMSQueue extends WebLogicHelper {
     static def projectName = 'EC-WebLogic Specs CreateOrUpdateJMSQueue'
     static def jmsModuleName = 'TestJMSModule'
-    static def configName = 'EC-Specs WebLogic Config'
+    static def configName = CONFIG_NAME
     static def procedureName = 'CreateOrUpdateJMSQueue'
     static def deleteProcedureName = 'DeleteJMSQueue'
 
@@ -24,7 +24,7 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
         setupResource()
         deleteProject(projectName)
         createJMSModule(jmsModuleName)
-        createConfig(configName)
+        createConfig(CONFIG_NAME)
 
         dslFile "dsl/procedures.dsl", [
             projectName: projectName,

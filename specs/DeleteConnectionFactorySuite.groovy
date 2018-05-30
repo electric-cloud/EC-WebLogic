@@ -107,13 +107,10 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
 
     def doSetupSpec() {
         setupResource()
+        createConfig(pluginConfigurationNames.correct)
 
         deleteProject(projectName)
         createJMSModule(jmsModuleNames.default)
-
-//        createConfig(pluginConfigurationNames.empty)
-        createConfig(pluginConfigurationNames.correct)
-        createConfig(pluginConfigurationNames.incorrect)
     }
 
     /**

@@ -143,9 +143,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         deleteProject(projectName)
         createJMSModule(jmsModuleName)
 
-//        createConfig(pluginConfigurationNames.empty)
         createConfig(pluginConfigurationNames.correct)
-        createConfig(pluginConfigurationNames.incorrect)
     }
 
     /**

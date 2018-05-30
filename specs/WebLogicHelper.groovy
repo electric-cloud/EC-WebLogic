@@ -1,7 +1,5 @@
 import com.electriccloud.spec.PluginSpockTestSupport
 import groovy.json.*
-import spock.lang.Shared
-import spock.util.concurrent.PollingConditions
 
 class WebLogicHelper extends PluginSpockTestSupport {
     static final def HELPER_PROJECT = 'EC-WebLogic Specs Helper'
@@ -18,6 +16,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
     def doSetupSpec() {
         setupResource()
         deleteProject(HELPER_PROJECT)
+        createConfig(CONFIG_NAME)
     }
 
     def doCleanupSpec() {
