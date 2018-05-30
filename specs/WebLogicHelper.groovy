@@ -594,24 +594,9 @@ try {
         return workspaceResult
     }
 
-//    def getCurrentProcedureName(def jobId){
-//        assert jobId
-//        def currentProcedureName = null
-//        def property = "/myJob/procedureName"
-//        try {
-//            currentProcedureName = getJobProperty(property, jobId)
-//            println("Current Procedure Name: " + currentProcedureName)
-//        } catch (Throwable e) {
-//            logger.error("Can't retrieve Run Procedure Name from the property: '$property'; check job: " + jobId)
-//        }
-//        return currentProcedureName
-//    }
-
-
     def getJobUpperStepSummary(def jobId){
         assert jobId
         def summary = null
-//        def currentProcedureName = getCurrentProcedureName(jobId)
         def property = "/myJob/jobSteps/RunProcedure/summary"
         println "Trying to get the summary, property: $property, jobId: $jobId"
         try{

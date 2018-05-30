@@ -114,6 +114,9 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
 
     // Procedure params
     def configname
+
+    // This is shared to allow interpolation in 'where' section
+    @Shared
     def cf_name
     def jndi_name
     def cf_sharing_policy
@@ -201,19 +204,18 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
             assert connectionFactoryExists(jms_module_name, cf_name)
         }
         assert debugLog.contains(expectedJobDetailedResult)
-//        assert upperStepSummary.contains(expectedSummaryMessage)
 
         cleanup:
-        if (connectionFactoryExists(jms_module_name, cf_name)) {
+        if (expectedOutcome == expectedOutcomes.success && outcome == expectedOutcomes.success) {
             deleteConnectionFactory(jms_module_name, cf_name)
         }
 
         where: 'The following params will be: '
         configname                       | cf_name                     | jndi_name         | cf_sharing_policy         | cf_client_id_policy       | jms_module_name | cf_max_messages_per_session | cf_xa_enabled | subdeployment_name | jms_server_name | update_action | additional_options                | expectedOutcome          | expectedJobDetailedResult
-        pluginConfigurationNames.correct | connectionFactories.correct | jndiNames.correct | sharingPolicies.exclusive | clientPolicies.restricted | jmsModuleName   | ''                          | ''            | ''                 | ''              | ''            | ''                                | expectedOutcomes.success | "Created Connection Factory "
+        pluginConfigurationNames.correct | connectionFactories.correct | jndiNames.correct | sharingPolicies.exclusive | clientPolicies.restricted | jmsModuleName   | ''                          | ''            | ''                 | ''              | ''            | ''                                | expectedOutcomes.success | "Created Connection Factory $cf_name"
 
         // with additional options
-        pluginConfigurationNames.correct | connectionFactories.correct | jndiNames.correct | sharingPolicies.exclusive | clientPolicies.restricted | jmsModuleName   | ''                          | ''            | ''                 | ''              | ''            | additionalOptions.defaultPriority | expectedOutcomes.success | "Created Connection Factory "
+        pluginConfigurationNames.correct | connectionFactories.correct | jndiNames.correct | sharingPolicies.exclusive | clientPolicies.restricted | jmsModuleName   | ''                          | ''            | ''                 | ''              | ''            | additionalOptions.defaultPriority | expectedOutcomes.success | "Created Connection Factory $cf_name"
     }
 
     def 'CreateOrUpdateConnectionFactory - update (recreate and selective)'() {
