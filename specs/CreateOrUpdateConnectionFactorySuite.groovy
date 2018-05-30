@@ -164,7 +164,6 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
      */
 
     @Unroll
-    //Positive Scenarios for delete should be first
     def "Create or Update Connection Factory. Positive - procedure"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
@@ -220,21 +219,51 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
 
         // with additional options
         pluginConfigurationNames.correct | connectionFactories.correct | jndiNames.correct | sharingPolicies.exclusive | clientPolicies.restricted | jmsModuleName   | ''                          | ''            | ''                 | ''              | ''            | additionalOptions.defaultPriority | expectedOutcomes.success | "Created Connection Factory "
+    }
 
-        // recreate
-//        /**/pluginConfigurationNames.correct | ''                               | ''        | ''                | ''                  | ''              | ''                          | ''            | ''                 | ''              | 'do_nothing'  | ''
-        // selective update
-//        /**/pluginConfigurationNames.correct | ''                               | ''        | ''                | ''                  | ''              | ''                          | ''            | ''                 | ''              | 'do_nothing'  | ''
+    def 'CreateOrUpdateConnectionFactory - update (recreate and selective)'() {
+        setup:
+        deleteConnectionFactory(jmsModuleName, connectionFactories.updated)
+        when:
+        def runParamsFirst = [
+                configname         : pluginConfigurationNames.correct,
+                cf_name            : connectionFactories.updated,
+                jndi_name          : jndiNames.recreateOld,
+                jms_module_name    : jmsModuleName,
+                cf_sharing_policy  : sharingPolicies.exclusive,
+                cf_client_id_policy: clientPolicies.restricted,
+        ]
 
-        /* MOVE TO SEPARATE SUITE */
+        def resultFirst = runTestedProcedure(projectName, procedureName, runParamsFirst, getResourceName())
+        assert resultFirst.outcome == 'success'
 
-        // delete connection factory
-//        /**/pluginConfigurationNames.correct | ''      | ''        | ''                | ''                  | ''              | ''                          | ''            | ''                 | ''              | 'do_nothing'  | ''
-        // delete non-existing connection factory
-//        /**/pluginConfigurationNames.correct | ''      | ''        | ''                | ''                  | ''              | ''                          | ''            | ''                 | ''              | 'do_nothing'  | ''
-        // delete non-existing connection factory from non-existing jms module
-        ///**/pluginConfigurationNames.correct | ''      | ''        | ''                | ''                  | ''              | ''                          | ''            | ''                 | ''              | 'do_nothing'  | ''
+        def jmsServerName = 'jmsServer1'
+        createJMSServer(jmsServerName)
+        and:
+        def runParamsSecond = [
+                configname         : pluginConfigurationNames.correct,
+                cf_name            : connectionFactories.updated,
+                jndi_name          : jndiNames.recreateNew,
+                jms_module_name    : jmsModuleName,
+                cf_sharing_policy  : sharingPolicies.exclusive,
+                cf_client_id_policy: clientPolicies.restricted,
+                update_action      : update_action,
+                subdeployment_name : 'Sub1',
+                jms_server_name    : jmsServerName
+        ]
 
+        def resultSecond = runTestedProcedure(projectName, procedureName, runParamsSecond, getResourceName())
+        then:
+        logger.debug(resultSecond.logs)
+        assert resultSecond.outcome == expectedOutcome
+
+        cleanup:
+        deleteConnectionFactory(jmsModuleName, connectionFactories.updated)
+
+        where:
+        update_action       | expectedOutcome
+        'remove_and_create' | expectedOutcomes.success
+        'selective_update'  | expectedOutcomes.success
     }
 
     def connectionFactoryExists(def moduleName, def name) {
