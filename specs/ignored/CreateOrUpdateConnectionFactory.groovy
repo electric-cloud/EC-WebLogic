@@ -1,3 +1,6 @@
+package ignored
+
+import com.electriccloud.spec.SpockTestSupport
 import spock.lang.*
 
 class CreateOrUpdateConnectionFactory extends WebLogicHelper {
@@ -8,18 +11,18 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
     static def deleteProcedureName = 'DeleteConnectionFactory'
 
     static def params = [
-        configname: configName,
-        cf_name: '',
-        jndi_name: '',
-        cf_sharing_policy: '',
-        cf_client_id_policy: '',
-        cf_max_messages_per_session: '',
-        cf_xa_enabled: '',
-        jms_module_name: '',
-        subdeployment_name: '',
-        jms_server_name: '',
-        update_action: 'do_nothing',
-        additional_options: ''
+            configname                 : configName,
+            cf_name                    : '',
+            jndi_name                  : '',
+            cf_sharing_policy          : '',
+            cf_client_id_policy        : '',
+            cf_max_messages_per_session: '',
+            cf_xa_enabled              : '',
+            jms_module_name            : '',
+            subdeployment_name         : '',
+            jms_server_name            : '',
+            update_action              : 'do_nothing',
+            additional_options         : ''
     ]
 
     def doSetupSpec() {
@@ -29,23 +32,22 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
         createJMSModule(jmsModuleName)
         createConfig(configName)
 
-        // TODO create resource
         dslFile "dsl/procedures.dsl", [
-            projectName: projectName,
-            procedureName: procedureName,
-            resourceName: getResourceName(),
-            params: params,
+                projectName  : projectName,
+                procedureName: procedureName,
+                resourceName : WebLogicHelper.getResourceName(),
+                params       : params,
         ]
 
         dslFile 'dsl/procedures.dsl', [
-            projectName: projectName,
-            procedureName: deleteProcedureName,
-            resourceName: getResourceName(),
-            params: [
-                configname: configName,
-                cf_name: '',
-                jms_module_name: ''
-            ]
+                projectName  : projectName,
+                procedureName: deleteProcedureName,
+                resourceName : WebLogicHelper.getResourceName(),
+                params       : [
+                        configname     : configName,
+                        cf_name        : '',
+                        jms_module_name: ''
+                ]
         ]
     }
 
@@ -71,9 +73,9 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
                 cf_client_id_policy: 'Restricted',
             ]
         )
-        """, getResourceName())
+        """, WebLogicHelper.getResourceName())
         then:
-        logger.debug(result.logs)
+        SpockTestSupport.logger.debug(result.logs)
         assert result.outcome == 'success'
         assert result.logs =~ /Connection Factory $cfName does not exist/
         assert result.logs =~ /Created Connection Factory $cfName/
@@ -100,9 +102,9 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
                 additional_options: 'DefaultDeliveryParams.DefaultPriority=5'
             ]
         )
-        """, getResourceName())
+        """, WebLogicHelper.getResourceName())
         then:
-        logger.debug(result.logs)
+        SpockTestSupport.logger.debug(result.logs)
         assert result.outcome == 'success'
         assert result.logs =~ /Connection Factory $cfName does not exist/
         assert result.logs =~ /Created Connection Factory $cfName/
@@ -130,7 +132,7 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
                 cf_client_id_policy: 'Restricted'
             ]
         )
-        """, getResourceName()
+        """, WebLogicHelper.getResourceName()
         def jmsServerName = 'jmsServer1'
         createJMSServer(jmsServerName)
         assert result.outcome == 'success'
@@ -150,9 +152,9 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
                 jms_server_name: '$jmsServerName'
             ]
         )
-        """, getResourceName()
+        """, WebLogicHelper.getResourceName()
         then:
-        logger.debug(result.logs)
+        SpockTestSupport.logger.debug(result.logs)
         assert result.outcome == 'success'
         cleanup:
         deleteConnectionFactory(jmsModuleName, cfName)
@@ -177,7 +179,7 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
                 cf_client_id_policy: 'Restricted'
             ]
         )
-        """, getResourceName()
+        """, WebLogicHelper.getResourceName()
         def jmsServerName = 'jmsServer1'
         createJMSServer(jmsServerName)
         assert result.outcome == 'success'
@@ -197,9 +199,9 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
                 jms_server_name: '$jmsServerName'
             ]
         )
-        """, getResourceName()
+        """, WebLogicHelper.getResourceName()
         then:
-        logger.info(result.logs)
+        SpockTestSupport.logger.info(result.logs)
         assert result.outcome == 'success'
         assert result.logs =~ /Found Connection Factory $cfName in the module $jmsModuleName/
         assert result.logs =~ /Set JNDI Name to $newJNDI/
@@ -223,7 +225,7 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
                 cf_client_id_policy: 'Restricted'
             ]
         )
-        """, getResourceName()
+        """, WebLogicHelper.getResourceName()
 
         assert result.outcome == 'success'
         when:
@@ -236,7 +238,7 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
                 jms_module_name: '$jmsModuleName'
             ]
         )
-        """, getResourceName()
+        """, WebLogicHelper.getResourceName()
         then:
         assert result.outcome == 'success'
         assert result.logs =~ /Removed Connection Factory $cfName from the module $jmsModuleName/
@@ -255,7 +257,7 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
                 jms_module_name: '$jmsModuleName'
             ]
         )
-        """, getResourceName()
+        """, WebLogicHelper.getResourceName()
         then:
         assert result.outcome == 'error'
         assert result.logs =~ /Connection Factory $cfName does not exist in the module $jmsModuleName/
@@ -275,7 +277,7 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
                 jms_module_name: '$jmsModule'
             ]
         )
-        """, getResourceName()
+        """, WebLogicHelper.getResourceName()
         then:
         assert result.outcome == 'error'
         assert result.logs =~ /Connection Factory $cfName does not exist in the module $jmsModule/
@@ -285,7 +287,7 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
         def code = """
 resource_name = '$name'
 target = 'AdminServer'
-connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+connect('${WebLogicHelper.getUsername()}', '${WebLogicHelper.getPassword()}', '${WebLogicHelper.getEndpoint()}')
 cd('/')
 edit()
 if cmo.lookupJMSSystemResource(resource_name):
@@ -326,7 +328,7 @@ def deleteConnectionFactory(jmsModuleName, cfName):
 moduleName = '$moduleName'
 cfName = '$name'
 
-connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+connect('${WebLogicHelper.getUsername()}', '${WebLogicHelper.getPassword()}', '${WebLogicHelper.getEndpoint()}')
 edit()
 startEdit()
 try:
@@ -350,7 +352,7 @@ module = '$module'
 cfName = '$cfName'
 group = '$group'
 propName = '$propName'
-connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+connect('${WebLogicHelper.getUsername()}', '${WebLogicHelper.getPassword()}', '${WebLogicHelper.getEndpoint()}')
 cd(getConnectionFactoryPath(module, cfName) + '/' + group + '/' + cfName)
 print "PROPERTY: %s" % get(propName)
 """
@@ -362,10 +364,10 @@ print "PROPERTY: %s" % get(propName)
 
     def createJMSServer(name) {
         def code = """
-connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+connect('${WebLogicHelper.getUsername()}', '${WebLogicHelper.getPassword()}', '${WebLogicHelper.getEndpoint()}')
 
 jmsServerName = '$name'
-targetName = '${getAdminServerName()}'
+targetName = '${WebLogicHelper.getAdminServerName()}'
 
 bean = getMBean('/JMSServers/%s' % jmsServerName)
 if bean == None:
