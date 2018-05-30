@@ -43,13 +43,6 @@ class DeployAppSuite extends WebLogicHelper {
             incorrect: 'incorrect config Name',
     ]
 
-//    @Shared
-//    //* Optional Parameter
-//    def additionalOptions = [
-//            empty    : '',
-//            correct  : '-subscriptionDurability Durable',
-//            incorrect: 'incorrect Additional Options',
-//    ]
     /**
      * Verification Values: Assert values
      */

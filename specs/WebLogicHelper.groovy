@@ -15,7 +15,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
     def doSetupSpec() {
         setupResource()
-        deleteProject(HELPER_PROJECT)
         createConfig(CONFIG_NAME)
     }
 

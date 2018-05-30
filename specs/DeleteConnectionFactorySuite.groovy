@@ -119,9 +119,6 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
 
     def doCleanupSpec() {
         deleteProject(projectName)
-
-        deleteConfiguration('EC-WebLogic', pluginConfigurationNames.correct)
-        deleteConfiguration('EC-WebLogic', pluginConfigurationNames.incorrect)
     }
 
     /**
