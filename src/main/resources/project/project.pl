@@ -13,7 +13,7 @@ my $mode = 'restore';
 
 my $project_xml_path = $ARGV[0] || File::Spec->catfile(dirname($0), 'project.xml');
 my $manifest_path = $ARGV[1] || File::Spec->catfile(dirname($0), 'manifest.xml');
-my $procedure_name = 'DeleteJMSModule';
+my $procedure_name = 'CreateOrUpdateJMSModuleSubdeployment';
 
 my $proj = {procedures => []};
 my $project = XML::XPath->new(filename => $project_xml_path);
