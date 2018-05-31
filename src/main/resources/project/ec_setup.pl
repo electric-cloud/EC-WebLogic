@@ -326,6 +326,13 @@ my %createOrUpdateJMSModuleSubdeployment = (
     category    => "Application Server"
 );
 
+my %deleteJMSModuleSubdeployment = (
+    label       => "WebLogic - Delete JMS Module Subdeployment",
+    procedure   => "DeleteJMSModuleSubdeployment",
+    description => "Deletes JMS module Subdeployment",
+    category    => "Application Server"
+);
+
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/EC-WebLogic - Start App");
 $batch->deleteProperty(
@@ -442,6 +449,8 @@ $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Delete JMS Module");
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update JMS Module Subdeployment");
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Delete JMS Module Subdeployment");
 
 
 @::createStepPickerSteps = (
@@ -468,7 +477,7 @@ $batch->deleteProperty(
     \%deleteConnectionFactory,     \%createOrUpdateJMSQueue,
     \%createOrUpdateJMSTopic,      \%deleteJMSTopic,
     \%createOrUpdateJMSModule,     \%deleteJMSModule,
-    \%createOrUpdateJMSModuleSubdeployment
+    \%createOrUpdateJMSModuleSubdeployment, \%deleteJMSModuleSubdeployment
 );
 
 if ( $upgradeAction eq "upgrade" ) {
@@ -967,6 +976,14 @@ if ( $upgradeAction eq "upgrade" ) {
                 {
                     procedureName => 'CreateOrUpdateJMSModuleSubdeployment',
                     stepName      => 'CreateOrUpdateJMSModuleSubdeployment'
+                }
+            );
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'DeleteJMSModuleSubdeployment',
+                    stepName      => 'DeleteJMSModuleSubdeployment'
                 }
             );
         }
