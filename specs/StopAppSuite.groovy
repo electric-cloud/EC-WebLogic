@@ -116,7 +116,7 @@ class StopAppSuite extends WebLogicHelper {
     def doCleanupSpec() {
         UndeployApplication(projectName,
                 [
-                        configname : configname,
+                        configname : CONFIG_NAME,
                         wlstabspath: wlstPath,
                         appname    : APPLICATION_NAME
                 ]
