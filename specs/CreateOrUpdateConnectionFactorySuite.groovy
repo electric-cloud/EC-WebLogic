@@ -180,9 +180,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
                 additional_options         : additional_options,
         ]
 
-        if (connectionFactoryExists(jms_module_name, cf_name)) {
-            deleteConnectionFactory(jms_module_name, cf_name)
-        }
+        deleteConnectionFactory(jms_module_name, cf_name)
 
         when: 'Procedure runs: '
 
