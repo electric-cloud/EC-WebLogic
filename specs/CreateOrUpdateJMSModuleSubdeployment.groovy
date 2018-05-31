@@ -27,15 +27,16 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
             params: params,
         ]
 
-        // dslFile 'dsl/procedures.dsl', [
-        //     projectName: projectName,
-        //     procedureName: deleteProcedureName,
-        //     resourceName: getResourceName(),
-        //     params: [
-        //         configname: configName,
-        //         ecp_weblogic_jms_module_name: '',
-        //     ]
-        // ]
+        dslFile 'dsl/procedures.dsl', [
+            projectName: projectName,
+            procedureName: deleteProcedureName,
+            resourceName: getResourceName(),
+            params: [
+                configname: configName,
+                ecp_weblogic_jms_module_name: '',
+                ecp_weblogic_subdeployment_name: ''
+            ]
+        ]
     }
 
     def doCleanupSpec() {
@@ -203,21 +204,23 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
     }
 
 
-    @Ignore
-    def 'delete jms module'() {
+    def 'delete subdeployment'() {
         given:
         def jmsModuleName = randomize('SpecModule')
-        deleteJMSModule(jmsModuleName)
-        def result = runProcedure("""
+        createJMSModule(jmsModuleName)
+        def subdeploymentName = 'sub1'
+        def result = runProcedure """
         runProcedure(
             projectName: '$projectName',
             procedureName: '$procedureName',
             actualParameter: [
                 ecp_weblogic_jms_module_name: '$jmsModuleName',
-                ecp_weblogic_target: 'AdminServer',
+                ecp_weblogic_subdeployment_target_list: 'AdminServer',
+                ecp_weblogic_update_action: 'selective_update',
+                ecp_weblogic_subdeployment_name: '$subdeploymentName'
             ]
         )
-        """, getResourceName())
+        """, getResourceName()
         assert result.outcome == 'success'
         when:
         result = runProcedure("""
@@ -226,30 +229,36 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
             procedureName: '$deleteProcedureName',
             actualParameter: [
                 ecp_weblogic_jms_module_name: '$jmsModuleName',
+                ecp_weblogic_subdeployment_name: '$subdeploymentName'
             ]
         )
         """, getResourceName())
         then:
         logger.debug(result.logs)
         assert result.outcome == 'success'
-        assert result.logs =~ /Deleted JMS System Module/
     }
 
-    @Ignore
-    def 'fails to delete non-existing module'() {
+    def 'fails to delete non-existing subdeployment'() {
+        given:
+        def jmsModuleName = 'SpecJMSModule'
+        createJMSModule(jmsModuleName)
+        def subdeploymentName = 'sub1'
         when:
         def result = runProcedure("""
         runProcedure(
             projectName: '$projectName',
             procedureName: '$deleteProcedureName',
             actualParameter: [
-                ecp_weblogic_jms_module_name: 'NoSuchModule',
+                ecp_weblogic_jms_module_name: '$jmsModuleName',
+                ecp_weblogic_subdeployment_name: '$subdeploymentName'
             ]
         )
         """, getResourceName())
         then:
         logger.debug(result.logs)
         assert result.outcome == 'error'
+        cleanup:
+        deleteJMSModule(jmsModuleName)
     }
 
 

@@ -656,6 +656,10 @@
     <xpath>//procedure[procedureName="CreateOrUpdateJMSModuleSubdeployment"]/step[stepName="CreateOrUpdateJMSModuleSubdeployment"]/command</xpath>
   </file>
   <file>
+    <path>server/deleteJMSModuleSubdeployment.pl</path>
+    <xpath>//procedure[procedureName="DeleteJMSModuleSubdeployment"]/step[stepName="DeleteJMSModuleSubdeployment"]/command</xpath>
+  </file>
+  <file>
     <path>server/deleteJMSQueue.pl</path>
     <xpath>//procedure[procedureName="DeleteJMSQueue"]/step[stepName="DeleteJMSQueue"]/command</xpath>
   </file>
@@ -692,6 +696,10 @@
     <xpath>//procedure[procedureName="CreateOrUpdateJMSModuleSubdeployment"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
   </file>
   <file>
+    <path>parameterForms/ec_parameterForm-DeleteJMSModuleSubdeployment.xml</path>
+    <xpath>//procedure[procedureName="DeleteJMSModuleSubDeployment"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
     <path>jython/create_or_update_connection_factory.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_connection_factory.jython"]/value</xpath>
   </file>
@@ -722,5 +730,9 @@
   <file>
     <path>jython/create_or_update_jms_module_subdeployment.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_jms_module_subdeployment.jython"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/delete_jms_module_subdeployment.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_jms_module_subdeployment.jython"]/value</xpath>
   </file>
 </fileset>

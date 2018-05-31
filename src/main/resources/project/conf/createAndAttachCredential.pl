@@ -247,6 +247,11 @@ $xpath = $ec->attachCredential($projName, $credName,
      stepName => 'CreateOrUpdateJMSModuleSubdeployment'});
 $errors .= $ec->checkAllErrors($xpath);
 
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'DeleteJMSModuleSubdeployment',
+     stepName => 'DeleteJMSModuleSubdeployment'});
+$errors .= $ec->checkAllErrors($xpath);
+
 
 if ($errors ne '') {
 
