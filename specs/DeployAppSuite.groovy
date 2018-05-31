@@ -130,16 +130,17 @@ class DeployAppSuite extends WebLogicHelper {
      */
 
     @Unroll
-    //Positive Scenarios for delete should be first
-    def "Deploy Application. Positive Scenarios and Extended Scenarios"() {
+    def "Deploy Application. with server '#targets'. Expected : #expectedOutcome : #expectedSummaryMessage"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
+                // Required
                 configname               : configname,
                 wlstabspath              : wlstabspath,
                 appname                  : appname,
                 apppath                  : apppath,
                 targets                  : targets,
 
+                // Optional
                 is_library               : is_library,
                 stage_mode               : stage_mode,
                 plan_path                : plan_path,
@@ -155,7 +156,6 @@ class DeployAppSuite extends WebLogicHelper {
         ]
 
         // Check that application is not installed already
-        // Check application don't exists
         def pageBeforeDeploy = checkUrl(APPLICATION_PAGE_URL)
         if (pageBeforeDeploy.code == SUCCESS_RESPONSE) {
             def undeploy = UndeployApplication(projectName, [
@@ -179,7 +179,6 @@ class DeployAppSuite extends WebLogicHelper {
         def debugLog = result.logs
 
         println "Procedure log:\n$debugLog\n"
-//        def upperStepSummary = getJobUpperStepSummary(result.jobId)
 
         def upperStepSummary = getJobUpperStepSummary(result.jobId)
         logger.info("[SUMMARY]" + upperStepSummary)
@@ -196,8 +195,10 @@ class DeployAppSuite extends WebLogicHelper {
 
         where: 'The following params will be: '
         configname                       | wlstabspath | appname          | apppath                       | targets       | is_library               | stage_mode | plan_path | deployment_plan | overwrite_deployment_plan | additional_options | archive_version | retire_gracefully | retire_timeout | version_identifier | upload | remote | expectedOutcome          | expectedSummaryMessage
+        // Simple positive
         pluginConfigurationNames.correct | wlstPath    | APPLICATION_NAME | "$REMOTE_DIRECTORY/$FILENAME" | ''            | ''                       | ''         | ''        | ''              | ''                        | ''                 | ''              | ''                | ''             | ''                 | ''     | ''     | expectedOutcomes.success | ''
-        //with TargetServerSpecified
+
+        // with TargetServerSpecified
         pluginConfigurationNames.correct | wlstPath    | APPLICATION_NAME | "$REMOTE_DIRECTORY/$FILENAME" | 'AdminServer' | checkBoxValues.unchecked | ''         | ''        | ''              | ''                        | ''                 | ''              | ''                | ''             | ''                 | ''     | ''     | expectedOutcomes.success | ''
 
         // Empty wlst path should return "File  doesn't exist"
@@ -205,37 +206,4 @@ class DeployAppSuite extends WebLogicHelper {
 
     }
 
-
-
-    def deployApp(def params, def resourceName) {
-
-        dslFile('dsl/procedures.dsl', [
-                projectName  : projectName,
-                procedureName: procedureName,
-                resourceName : resourceName,
-                params       : params
-        ])
-
-        // Stringify map
-        def params_str_arr = []
-        params.each() { k, v ->
-            params_str_arr.push(k + " : '" + (v ?: '') + "'")
-        }
-        logger.debug(params_str_arr.toString())
-
-
-        def result = runProcedure("""
-            runProcedure(
-                projectName: '$projectName',
-                procedureName: '$procedureName',
-                actualParameter: $params_str_arr
-                
-            )
-                """, resourceName
-        )
-
-        deleteProject(projectName)
-
-        return result
-    }
 }
