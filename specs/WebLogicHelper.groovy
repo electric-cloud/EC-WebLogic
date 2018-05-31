@@ -267,7 +267,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
     }
 
     def UndeployApplication(String projectName, def params) {
-        def wlstPath = getWlstPath()
         deleteProject(projectName)
         dslFile 'dsl/procedures.dsl', [
                 projectName  : projectName,
@@ -281,8 +280,8 @@ class WebLogicHelper extends PluginSpockTestSupport {
             projectName: '$projectName',
             procedureName: 'UndeployApp',
             actualParameter: [
-                 wlstabspath: '$wlstPath',
-                 appname : '$APPLICATION_NAME'
+                 wlstabspath: '${params.wlstabspath}',
+                 appname    : '${params.appname}'
             ]
         )
         """, getResourceName())
@@ -291,8 +290,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
     }
 
     def DeployApplication(def projectName, def params) {
-
-        def wlstPath = getWlstPath()
         def artifactName = 'test:sample'
         def version = '1.0'
 
@@ -311,10 +308,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
             projectName: '$projectName',
             procedureName: 'DeployApp',
             actualParameter: [
-                 wlstabspath: '$wlstPath',
-                 appname : '${params.appname}',
-                 apppath : "${params.apppath}",
-                 targets : 'AdminServer',
+                 wlstabspath: '${params.wlstabspath}',
+                 appname    : '${params.appname}',
+                 apppath    : "${params.apppath}",
+                 targets    : 'AdminServer',
                  is_library : ""
             ]
         )
@@ -324,9 +321,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
     }
 
     def StartApplication(def projectName, def params) {
-
-        def wlstPath = getWlstPath()
-
         dslFile 'dsl/procedures.dsl', [
                 projectName  : projectName,
                 procedureName: 'StartApp',
@@ -339,11 +333,11 @@ class WebLogicHelper extends PluginSpockTestSupport {
             projectName: '$projectName',
             procedureName: 'StartApp',
             actualParameter: [
-                 wlstabspath: '$wlstPath',
-                 appname    : '$APPLICATION_NAME',
+                 wlstabspath: '${params.wlstabspath}',
+                 appname    : '${params.appname}',
 
                  additional_options : "",
-//                 envscriptpath      : ""
+                 envscriptpath      : "",
                  version_identifier : ""
             ]
         )
@@ -353,9 +347,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
     }
 
     def StopApplication(def projectName, def params) {
-
-        def wlstPath = getWlstPath()
-
         dslFile 'dsl/procedures.dsl', [
                 projectName  : projectName,
                 procedureName: 'StopApp',
@@ -368,8 +359,8 @@ class WebLogicHelper extends PluginSpockTestSupport {
             projectName: '$projectName',
             procedureName: 'StopApp',
             actualParameter: [
-                 wlstabspath: '$wlstPath',
-                 appname    : '$APPLICATION_NAME',
+                 wlstabspath: '${params.wlstabspath}',
+                 appname    : '${params.appname}',
 
                  additional_options : "",
                  version_identifier : ""
@@ -613,6 +604,16 @@ except WLSTException, e:
 """
         def result = runWLST(code)
         assert result.outcome == 'success'
+    }
+
+    def stringifyArray(def params){
+        def params_str_arr = []
+        params.each() { k, v ->
+            params_str_arr.push(k + " : '" + (v ?: '') + "'")
+        }
+
+        // toString() will join with ', '
+        return params_str_arr.toString()
     }
 
     def createWorkspace(def workspaceName) {
