@@ -385,22 +385,25 @@ class WebLogicHelper extends PluginSpockTestSupport {
 resource_name = '$name'
 targets = '$targets'
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
-cd('/')
-edit()
 if cmo.lookupJMSSystemResource(resource_name):
     print "Resource %s alreay exists" % resource_name
 else:
-    startEdit()
-    cmo.createJMSSystemResource(resource_name)
-    cd("/JMSSystemResources/%s" % resource_name)
-    if targets != '':
-        for targetName in re.split('\\\\s*,\\\\s*', targets):
-            targetBean = getMBean('/Servers/' + targetName)
-            if targetBean == None:
-                targetBean = getMBean('/Clusters/' + targetName)
-            cmo.addTarget(targetBean)
-            print "Adding target %s" % targetBean.objectName
-    activate()
+    try:
+        cd('/')
+        edit()
+        startEdit()
+        cmo.createJMSSystemResource(resource_name)
+        cd("/JMSSystemResources/%s" % resource_name)
+        if targets != '':
+            for targetName in re.split('\\\\s*,\\\\s*', targets):
+                targetBean = getMBean('/Servers/' + targetName)
+                if targetBean == None:
+                    targetBean = getMBean('/Clusters/' + targetName)
+                cmo.addTarget(targetBean)
+                print "Adding target %s" % targetBean.objectName
+        activate()
+    except Exception, e:
+        stopChanges('y')
 """
         def result = runWLST(code)
         assert result.outcome == 'success'
@@ -609,10 +612,13 @@ else:
 try:
     stopEdit('y')
 except WLSTException, e:
+    print 'Cannot stop edit'
     print str(e)
 """
         def result = runWLST(code)
         assert result.outcome == 'success'
+        def notInEditTree = result.logs =~ /Cannot call Edit functions when you are not in the Edit tree/
+        return notInEditTree
     }
 
     def createWorkspace(def workspaceName) {

@@ -1,4 +1,4 @@
-import spock.lang.Shared
+import spock.lang.*
 import spock.lang.Unroll
 
 class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
@@ -142,7 +142,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
 
     def doSetupSpec() {
         setupResource()
-
+        discardChanges()
         deleteProject(projectName)
         createJMSModule(jmsModuleName)
 
@@ -154,7 +154,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
      */
 
     def doCleanupSpec() {
-        deleteProject(projectName)
+        // deleteProject(projectName)
     }
 
     /**
@@ -162,7 +162,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
      */
 
     @Unroll
-    def "Create or Update Connection Factory. Positive - procedure"() {
+    def "Create or Update Connection Factory. Positive - procedure configname: #configname, cf_name #cf_name"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
                 configname                 : configname,
@@ -180,9 +180,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
                 additional_options         : additional_options,
         ]
 
-        if (connectionFactoryExists(jms_module_name, cf_name)) {
-            deleteConnectionFactory(jms_module_name, cf_name)
-        }
+        deleteConnectionFactory(jms_module_name, cf_name)
 
         when: 'Procedure runs: '
 
@@ -206,10 +204,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         assert debugLog.contains(expectedJobDetailedResult)
 
         cleanup:
-        if (expectedOutcome == expectedOutcomes.success && outcome == expectedOutcomes.success) {
-            deleteConnectionFactory(jms_module_name, cf_name)
-        }
-
+        deleteConnectionFactory(jms_module_name, cf_name)
         where: 'The following params will be: '
         configname                       | cf_name                     | jndi_name         | cf_sharing_policy         | cf_client_id_policy       | jms_module_name | cf_max_messages_per_session | cf_xa_enabled | subdeployment_name | jms_server_name | update_action | additional_options                | expectedOutcome          | expectedJobDetailedResult
         pluginConfigurationNames.correct | connectionFactories.correct | jndiNames.correct | sharingPolicies.exclusive | clientPolicies.restricted | jmsModuleName   | ''                          | ''            | ''                 | ''              | ''            | ''                                | expectedOutcomes.success | "Created Connection Factory $cf_name"
@@ -218,9 +213,12 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         pluginConfigurationNames.correct | connectionFactories.correct | jndiNames.correct | sharingPolicies.exclusive | clientPolicies.restricted | jmsModuleName   | ''                          | ''            | ''                 | ''              | ''            | additionalOptions.defaultPriority | expectedOutcomes.success | "Created Connection Factory $cf_name"
     }
 
-    def 'CreateOrUpdateConnectionFactory - update (recreate and selective)'() {
+    @Unroll
+    // @IgnoreRest
+    def 'CreateOrUpdateConnectionFactory - update (#update_action)'() {
         setup:
         deleteConnectionFactory(jmsModuleName, connectionFactories.updated)
+        assert discardChanges()
         when:
         def runParamsFirst = [
                 configname         : pluginConfigurationNames.correct,
@@ -233,6 +231,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
 
         def resultFirst = runTestedProcedure(projectName, procedureName, runParamsFirst, getResourceName())
         assert resultFirst.outcome == 'success'
+        assert discardChanges()
 
         def jmsServerName = 'jmsServer1'
         createJMSServer(jmsServerName)
@@ -249,18 +248,23 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
                 jms_server_name    : jmsServerName
         ]
 
+        assert discardChanges()
         def resultSecond = runTestedProcedure(projectName, procedureName, runParamsSecond, getResourceName())
+        assert discardChanges()
+
         then:
         logger.debug(resultSecond.logs)
         assert resultSecond.outcome == expectedOutcome
 
         cleanup:
         deleteConnectionFactory(jmsModuleName, connectionFactories.updated)
+        assert discardChanges()
 
         where:
         update_action       | expectedOutcome
         'remove_and_create' | expectedOutcomes.success
         'selective_update'  | expectedOutcomes.success
+        'do_nothing'        | expectedOutcomes.success
     }
 
     def connectionFactoryExists(def moduleName, def name) {
@@ -298,26 +302,6 @@ except Exception, e:
         return (result.logs =~ /Connection Factory $name exists in module $moduleName/)
     }
 
-    def createJMSModule(name) {
-        def code = """
-resource_name = '$name'
-target = 'AdminServer'
-connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
-cd('/')
-edit()
-if cmo.lookupJMSSystemResource(resource_name):
-    print "Resource %s alreay exists" % resource_name
-else:
-    startEdit()
-    cmo.createJMSSystemResource(resource_name)
-    cd("/JMSSystemResources/%s" % resource_name)
-    cmo.addTarget(getMBean("/Servers/%s" % target))
-    activate()
-"""
-        def result = runWLST(code)
-        assert result.outcome == 'success'
-    }
-
     def deleteConnectionFactory(moduleName, name) {
         def code = """
 def getJMSSystemResourcePath(jms_module_name):
@@ -343,13 +327,14 @@ moduleName = '$moduleName'
 cfName = '$name'
 
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
-edit()
-startEdit()
-try:
+cfBean = getMBean(getConnectionFactoryPath(moduleName, cfName))
+if cfBean == None:
+    print "Connection Factory %s does not exist" % cfName
+else:
+    edit()
+    startEdit()
     deleteConnectionFactory(moduleName, cfName)
     activate()
-except Exception, e:
-    stopEdit('y')
 
 """
         def result = runWLST(code)

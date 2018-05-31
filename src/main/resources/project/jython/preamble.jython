@@ -522,7 +522,7 @@ def createOrUpdateSubdeployment(jmsModuleName, subName, jmsServerName):
         print_debug('Found target: %s' % target.objectName)
         if target.objectName == jmsServerBean.objectName:
             print_info('Target %s is already in the list of targets' % jmsServerBean.objectName)
-            return
+            return subdeployment
 
     targets = [jmsServerBean.objectName]
     set('Targets', jarray.array(targets, ObjectName))
