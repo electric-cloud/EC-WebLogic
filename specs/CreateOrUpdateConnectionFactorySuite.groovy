@@ -1,3 +1,4 @@
+import spock.lang.IgnoreRest
 import spock.lang.Shared
 import spock.lang.Unroll
 
