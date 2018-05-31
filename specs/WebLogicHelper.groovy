@@ -337,7 +337,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
                  appname    : '${params.appname}',
 
                  additional_options : "",
-                 envscriptpath      : "",
                  version_identifier : ""
             ]
         )
