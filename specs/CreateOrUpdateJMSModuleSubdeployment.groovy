@@ -49,16 +49,17 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
         def jmsModuleName = randomize('TestJMSModule')
         def subdeploymentName = 'sub1'
         deleteJMSModule(jmsModuleName)
-        createJMSModule(jmsModuleName, targets)
         def targetList = targets.split(/\s*,\s*/)
         targetList.each {
             if (it =~ /Cluster/) {
+                println "Creating cluster $it"
                 ensureCluster(it)
             }
             else {
-                ensureManagedServer(it)
+                ensureManagedServer(it, '7999')
             }
         }
+        createJMSModule(jmsModuleName, targets)
         when:
         def result = runProcedure("""
         runProcedure(
@@ -99,7 +100,7 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
         given:
         def serverName = 'TestSpecServer'
         def jmsModuleName = randomize('SpecModule')
-        ensureManagedServer(serverName)
+        ensureManagedServer(serverName, '7999')
         deleteJMSModule(jmsModuleName)
         createJMSModule(jmsModuleName, 'AdminServer, ' + serverName)
         def subdeploymentName = 'sub1'
@@ -153,11 +154,12 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
         def jmsModuleName = randomize('SpecJMSModule')
         def jmsModuleTargets = oldTargets + ',' + newTargets
         jmsModuleTargets.split(/\s*,\s*/).each {
-            if (it =~ /Cluster1/) {
+            if (it =~ /Cluster/) {
+                println 'Creating cluster'
                 ensureCluster(it)
             }
             else {
-                ensureManagedServer(it)
+                ensureManagedServer(it, '7999')
             }
         }
         deleteJMSModule(jmsModuleName)
@@ -268,7 +270,7 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
         deleteJMSModule(jmsModuleName)
         createJMSModule(jmsModuleName, 'AdminServer')
         def msName = 'TestManagedServer'
-        ensureManagedServer(msName)
+        ensureManagedServer(msName, '7999')
         def subdeploymentName = 'sub1'
         when:
         def result = runProcedure("""

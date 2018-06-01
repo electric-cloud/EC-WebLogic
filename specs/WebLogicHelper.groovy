@@ -375,6 +375,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         def code = """import re
 resource_name = '$name'
 targets = '$targets'
+print 'Targets ' + targets
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 cd('/')
 edit()
@@ -386,9 +387,11 @@ else:
     cd("/JMSSystemResources/%s" % resource_name)
     if targets != '':
         for targetName in re.split('\\\\s*,\\\\s*', targets):
+            print 'Target: ' + targetName
             targetBean = getMBean('/Servers/' + targetName)
             if targetBean == None:
                 targetBean = getMBean('/Clusters/' + targetName)
+                print 'Cluster: ' + targetName
             cmo.addTarget(targetBean)
             print "Adding target %s" % targetBean.objectName
     activate()
@@ -548,9 +551,10 @@ activate()
 
 
 
-    def ensureManagedServer(msName) {
+    def ensureManagedServer(msName, port) {
         def code = """
 msName = '$msName'
+port = '$port'
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 cd('/')
 bean = getMBean('/Servers/' + msName)
@@ -561,7 +565,7 @@ if bean == None:
     cmo.createServer(msName)
     cd('/Servers/' + msName)
     cmo.setListenAddress('localhost')
-    cmo.setListenPort(int('7001'))
+    cmo.setListenPort(int(port))
     activate()
 else:
     print "Server %s already exists" % msName
