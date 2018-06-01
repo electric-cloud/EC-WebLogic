@@ -1,3 +1,6 @@
+package ignored
+
+import com.electriccloud.spec.SpockTestSupport
 import spock.lang.*
 
 class CreateOrUpdateJMSModule extends WebLogicHelper {
@@ -21,14 +24,14 @@ class CreateOrUpdateJMSModule extends WebLogicHelper {
         dslFile "dsl/procedures.dsl", [
             projectName: projectName,
             procedureName: procedureName,
-            resourceName: getResourceName(),
+            resourceName: WebLogicHelper.getResourceName(),
             params: params,
         ]
 
         dslFile 'dsl/procedures.dsl', [
             projectName: projectName,
             procedureName: deleteProcedureName,
-            resourceName: getResourceName(),
+            resourceName: WebLogicHelper.getResourceName(),
             params: [
                 configname: configName,
                 ecp_weblogic_jms_module_name: '',
@@ -42,7 +45,7 @@ class CreateOrUpdateJMSModule extends WebLogicHelper {
 
     def 'create jms module'() {
         given:
-        def jmsModuleName = randomize('TestJMSModule')
+        def jmsModuleName = SpockTestSupport.randomize('TestJMSModule')
         when:
         def result = runProcedure("""
         runProcedure(
@@ -53,9 +56,9 @@ class CreateOrUpdateJMSModule extends WebLogicHelper {
                 ecp_weblogic_target: 'AdminServer',
             ]
         )
-        """, getResourceName())
+        """, WebLogicHelper.getResourceName())
         then:
-        logger.debug(result.logs)
+        SpockTestSupport.logger.debug(result.logs)
         assert result.outcome == 'success'
         cleanup:
         deleteJMSModule(jmsModuleName)
@@ -65,7 +68,7 @@ class CreateOrUpdateJMSModule extends WebLogicHelper {
     def 'update #action jms module'() {
         given:
         def serverName = 'TestSpecServer'
-        def jmsModuleName = randomize('SpecModule')
+        def jmsModuleName = SpockTestSupport.randomize('SpecModule')
         ensureManagedServer(serverName)
         deleteJMSModule(jmsModuleName)
         def result = runProcedure("""
@@ -77,7 +80,7 @@ class CreateOrUpdateJMSModule extends WebLogicHelper {
                 ecp_weblogic_target: 'AdminServer',
             ]
         )
-        """, getResourceName())
+        """, WebLogicHelper.getResourceName())
         assert result.outcome == 'success'
         when:
         result = runProcedure("""
@@ -90,9 +93,9 @@ class CreateOrUpdateJMSModule extends WebLogicHelper {
                 ecp_weblogic_update_action: '$action'
             ]
         )
-        """, getResourceName())
+        """, WebLogicHelper.getResourceName())
         then:
-        logger.debug(result.logs)
+        SpockTestSupport.logger.debug(result.logs)
         assert result.outcome == 'success'
 
         if (action == 'do_nothing') {
@@ -112,7 +115,7 @@ class CreateOrUpdateJMSModule extends WebLogicHelper {
 
     def 'delete jms module'() {
         given:
-        def jmsModuleName = randomize('SpecModule')
+        def jmsModuleName = SpockTestSupport.randomize('SpecModule')
         deleteJMSModule(jmsModuleName)
         def result = runProcedure("""
         runProcedure(
@@ -123,7 +126,7 @@ class CreateOrUpdateJMSModule extends WebLogicHelper {
                 ecp_weblogic_target: 'AdminServer',
             ]
         )
-        """, getResourceName())
+        """, WebLogicHelper.getResourceName())
         assert result.outcome == 'success'
         when:
         result = runProcedure("""
@@ -134,9 +137,9 @@ class CreateOrUpdateJMSModule extends WebLogicHelper {
                 ecp_weblogic_jms_module_name: '$jmsModuleName',
             ]
         )
-        """, getResourceName())
+        """, WebLogicHelper.getResourceName())
         then:
-        logger.debug(result.logs)
+        SpockTestSupport.logger.debug(result.logs)
         assert result.outcome == 'success'
         assert result.logs =~ /Deleted JMS System Module/
     }
@@ -151,9 +154,9 @@ class CreateOrUpdateJMSModule extends WebLogicHelper {
                 ecp_weblogic_jms_module_name: 'NoSuchModule',
             ]
         )
-        """, getResourceName())
+        """, WebLogicHelper.getResourceName())
         then:
-        logger.debug(result.logs)
+        SpockTestSupport.logger.debug(result.logs)
         assert result.outcome == 'error'
     }
 
