@@ -108,7 +108,7 @@ class StartAppSuite extends WebLogicHelper {
                         configname : CONFIG_NAME,
                         wlstabspath: getWlstPath(),
                         appname    : APPLICATION_NAME,
-                        apppath    : "$REMOTE_DIRECTORY/$FILENAME",
+                        apppath    : APPLICATION_PATH,
                         targets    : 'AdminServer',
                         is_library : ""
                 ]

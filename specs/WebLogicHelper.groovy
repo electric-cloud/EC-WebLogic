@@ -9,6 +9,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
     static def FILENAME = 'sample.war'
     static def REMOTE_DIRECTORY = '/tmp'
     static def APPLICATION_NAME = 'sample'
+    static def APPLICATION_PATH = "$REMOTE_DIRECTORY/$FILENAME"
     static def APPLICATION_PAGE_URL = "http://localhost:7001/sample/hello.jsp"
 
     static final def CONFIG_NAME = 'EC-Specs WebLogic Config'

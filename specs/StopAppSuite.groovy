@@ -102,7 +102,7 @@ class StopAppSuite extends WebLogicHelper {
                         configname : CONFIG_NAME,
                         wlstabspath: wlstPath,
                         appname    : APPLICATION_NAME,
-                        apppath    : "$REMOTE_DIRECTORY/$FILENAME",
+                        apppath    : APPLICATION_PATH,
                         targets    : 'AdminServer',
                         is_library : ""
                 ]
