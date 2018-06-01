@@ -27,15 +27,16 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
             params: params,
         ]
 
-        // dslFile 'dsl/procedures.dsl', [
-        //     projectName: projectName,
-        //     procedureName: deleteProcedureName,
-        //     resourceName: getResourceName(),
-        //     params: [
-        //         configname: configName,
-        //         ecp_weblogic_jms_module_name: '',
-        //     ]
-        // ]
+        dslFile 'dsl/procedures.dsl', [
+            projectName: projectName,
+            procedureName: deleteProcedureName,
+            resourceName: getResourceName(),
+            params: [
+                configname: configName,
+                ecp_weblogic_jms_module_name: '',
+                ecp_weblogic_subdeployment_name: ''
+            ]
+        ]
     }
 
     def doCleanupSpec() {
@@ -48,16 +49,17 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
         def jmsModuleName = randomize('TestJMSModule')
         def subdeploymentName = 'sub1'
         deleteJMSModule(jmsModuleName)
-        createJMSModule(jmsModuleName, targets)
         def targetList = targets.split(/\s*,\s*/)
         targetList.each {
             if (it =~ /Cluster/) {
+                println "Creating cluster $it"
                 ensureCluster(it)
             }
             else {
-                ensureManagedServer(it)
+                ensureManagedServer(it, '7999')
             }
         }
+        createJMSModule(jmsModuleName, targets)
         when:
         def result = runProcedure("""
         runProcedure(
@@ -98,7 +100,7 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
         given:
         def serverName = 'TestSpecServer'
         def jmsModuleName = randomize('SpecModule')
-        ensureManagedServer(serverName)
+        ensureManagedServer(serverName, '7999')
         deleteJMSModule(jmsModuleName)
         createJMSModule(jmsModuleName, 'AdminServer, ' + serverName)
         def subdeploymentName = 'sub1'
@@ -152,11 +154,12 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
         def jmsModuleName = randomize('SpecJMSModule')
         def jmsModuleTargets = oldTargets + ',' + newTargets
         jmsModuleTargets.split(/\s*,\s*/).each {
-            if (it =~ /Cluster1/) {
+            if (it =~ /Cluster/) {
+                println 'Creating cluster'
                 ensureCluster(it)
             }
             else {
-                ensureManagedServer(it)
+                ensureManagedServer(it, '7999')
             }
         }
         deleteJMSModule(jmsModuleName)
@@ -203,21 +206,23 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
     }
 
 
-    @Ignore
-    def 'delete jms module'() {
+    def 'delete subdeployment'() {
         given:
         def jmsModuleName = randomize('SpecModule')
-        deleteJMSModule(jmsModuleName)
-        def result = runProcedure("""
+        createJMSModule(jmsModuleName)
+        def subdeploymentName = 'sub1'
+        def result = runProcedure """
         runProcedure(
             projectName: '$projectName',
             procedureName: '$procedureName',
             actualParameter: [
                 ecp_weblogic_jms_module_name: '$jmsModuleName',
-                ecp_weblogic_target: 'AdminServer',
+                ecp_weblogic_subdeployment_target_list: 'AdminServer',
+                ecp_weblogic_update_action: 'selective_update',
+                ecp_weblogic_subdeployment_name: '$subdeploymentName'
             ]
         )
-        """, getResourceName())
+        """, getResourceName()
         assert result.outcome == 'success'
         when:
         result = runProcedure("""
@@ -226,30 +231,36 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
             procedureName: '$deleteProcedureName',
             actualParameter: [
                 ecp_weblogic_jms_module_name: '$jmsModuleName',
+                ecp_weblogic_subdeployment_name: '$subdeploymentName'
             ]
         )
         """, getResourceName())
         then:
         logger.debug(result.logs)
         assert result.outcome == 'success'
-        assert result.logs =~ /Deleted JMS System Module/
     }
 
-    @Ignore
-    def 'fails to delete non-existing module'() {
+    def 'fails to delete non-existing subdeployment'() {
+        given:
+        def jmsModuleName = 'SpecJMSModule'
+        createJMSModule(jmsModuleName)
+        def subdeploymentName = 'sub1'
         when:
         def result = runProcedure("""
         runProcedure(
             projectName: '$projectName',
             procedureName: '$deleteProcedureName',
             actualParameter: [
-                ecp_weblogic_jms_module_name: 'NoSuchModule',
+                ecp_weblogic_jms_module_name: '$jmsModuleName',
+                ecp_weblogic_subdeployment_name: '$subdeploymentName'
             ]
         )
         """, getResourceName())
         then:
         logger.debug(result.logs)
         assert result.outcome == 'error'
+        cleanup:
+        deleteJMSModule(jmsModuleName)
     }
 
 
@@ -259,7 +270,7 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
         deleteJMSModule(jmsModuleName)
         createJMSModule(jmsModuleName, 'AdminServer')
         def msName = 'TestManagedServer'
-        ensureManagedServer(msName)
+        ensureManagedServer(msName, '7999')
         def subdeploymentName = 'sub1'
         when:
         def result = runProcedure("""

@@ -1,4 +1,6 @@
-import spock.lang.*
+import spock.lang.Ignore
+import spock.lang.IgnoreRest
+import spock.lang.Shared
 import spock.lang.Unroll
 
 class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
@@ -83,8 +85,9 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
 
     @Shared
     def expectedLogParts = [
-            connectionFactory_created   : 'Created Connection Factory $cfName',
-            connectionFactory_not_exists: 'Connection Factory $cfName does not exist',
+////            Uses variables inside, so moved to datatable
+//            connectionFactory_created   : 'Created Connection Factory $cfName',
+//            connectionFactory_not_exists: 'Connection Factory $cfName does not exist',
     ]
 
     @Shared
@@ -215,7 +218,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
     }
 
     @Unroll
-    def 'CreateOrUpdateConnectionFactory - update (#update_action)'() {
+    def "CreateOrUpdateConnectionFactory - update_action : '#update_action'"() {
         setup:
         createJMSModule(jmsModuleName)
         def subdeploymentName = 'sub1'

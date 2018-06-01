@@ -9,6 +9,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
     static def FILENAME = 'sample.war'
     static def REMOTE_DIRECTORY = '/tmp'
     static def APPLICATION_NAME = 'sample'
+    static def APPLICATION_PATH = "$REMOTE_DIRECTORY/$FILENAME"
     static def APPLICATION_PAGE_URL = "http://localhost:7001/sample/hello.jsp"
 
     static final def CONFIG_NAME = 'EC-Specs WebLogic Config'
@@ -267,7 +268,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
     }
 
     def UndeployApplication(String projectName, def params) {
-        def wlstPath = getWlstPath()
         deleteProject(projectName)
         dslFile 'dsl/procedures.dsl', [
                 projectName  : projectName,
@@ -281,8 +281,8 @@ class WebLogicHelper extends PluginSpockTestSupport {
             projectName: '$projectName',
             procedureName: 'UndeployApp',
             actualParameter: [
-                 wlstabspath: '$wlstPath',
-                 appname : '$APPLICATION_NAME'
+                 wlstabspath: '${params.wlstabspath}',
+                 appname    : '${params.appname}'
             ]
         )
         """, getResourceName())
@@ -291,8 +291,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
     }
 
     def DeployApplication(def projectName, def params) {
-
-        def wlstPath = getWlstPath()
         def artifactName = 'test:sample'
         def version = '1.0'
 
@@ -311,10 +309,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
             projectName: '$projectName',
             procedureName: 'DeployApp',
             actualParameter: [
-                 wlstabspath: '$wlstPath',
-                 appname : '${params.appname}',
-                 apppath : "${params.apppath}",
-                 targets : 'AdminServer',
+                 wlstabspath: '${params.wlstabspath}',
+                 appname    : '${params.appname}',
+                 apppath    : "${params.apppath}",
+                 targets    : 'AdminServer',
                  is_library : ""
             ]
         )
@@ -324,9 +322,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
     }
 
     def StartApplication(def projectName, def params) {
-
-        def wlstPath = getWlstPath()
-
         dslFile 'dsl/procedures.dsl', [
                 projectName  : projectName,
                 procedureName: 'StartApp',
@@ -339,11 +334,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
             projectName: '$projectName',
             procedureName: 'StartApp',
             actualParameter: [
-                 wlstabspath: '$wlstPath',
-                 appname    : '$APPLICATION_NAME',
+                 wlstabspath: '${params.wlstabspath}',
+                 appname    : '${params.appname}',
 
                  additional_options : "",
-//                 envscriptpath      : ""
                  version_identifier : ""
             ]
         )
@@ -353,9 +347,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
     }
 
     def StopApplication(def projectName, def params) {
-
-        def wlstPath = getWlstPath()
-
         dslFile 'dsl/procedures.dsl', [
                 projectName  : projectName,
                 procedureName: 'StopApp',
@@ -368,8 +359,8 @@ class WebLogicHelper extends PluginSpockTestSupport {
             projectName: '$projectName',
             procedureName: 'StopApp',
             actualParameter: [
-                 wlstabspath: '$wlstPath',
-                 appname    : '$APPLICATION_NAME',
+                 wlstabspath: '${params.wlstabspath}',
+                 appname    : '${params.appname}',
 
                  additional_options : "",
                  version_identifier : ""
@@ -384,6 +375,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         def code = """import re
 resource_name = '$name'
 targets = '$targets'
+print 'Targets ' + targets
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 if cmo.lookupJMSSystemResource(resource_name):
     print "Resource %s alreay exists" % resource_name
@@ -404,6 +396,7 @@ else:
         activate()
     except Exception, e:
         stopChanges('y')
+
 """
         def result = runWLST(code)
         assert result.outcome == 'success'
@@ -560,9 +553,10 @@ activate()
 
 
 
-    def ensureManagedServer(msName) {
+    def ensureManagedServer(msName, port) {
         def code = """
 msName = '$msName'
+port = '$port'
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 cd('/')
 bean = getMBean('/Servers/' + msName)
@@ -573,7 +567,7 @@ if bean == None:
     cmo.createServer(msName)
     cd('/Servers/' + msName)
     cmo.setListenAddress('localhost')
-    cmo.setListenPort(int('7001'))
+    cmo.setListenPort(int(port))
     activate()
 else:
     print "Server %s already exists" % msName
@@ -619,6 +613,16 @@ except WLSTException, e:
         assert result.outcome == 'success'
         def notInEditTree = result.logs =~ /Cannot call Edit functions when you are not in the Edit tree/
         return notInEditTree
+    }
+
+    def stringifyArray(def params){
+        def params_str_arr = []
+        params.each() { k, v ->
+            params_str_arr.push(k + " : '" + (v ?: '') + "'")
+        }
+
+        // toString() will join with ', '
+        return params_str_arr.toString()
     }
 
     def createWorkspace(def workspaceName) {
