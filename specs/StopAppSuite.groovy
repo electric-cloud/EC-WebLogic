@@ -97,7 +97,7 @@ class StopAppSuite extends WebLogicHelper {
 
         createConfig(pluginConfigurationNames.correct)
 
-        DeployApplication(projectName,
+        def deployed = DeployApplication(projectName,
                 [
                         configname : CONFIG_NAME,
                         wlstabspath: wlstPath,
@@ -107,6 +107,8 @@ class StopAppSuite extends WebLogicHelper {
                         is_library : ""
                 ]
         )
+
+        assert deployed.outcome == 'success'
     }
 
     /**
