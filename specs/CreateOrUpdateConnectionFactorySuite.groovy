@@ -260,7 +260,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
 
         where:
         update_action       | expectedOutcome
-        'remove_and_create' | expectedOutcomes.success
+//        'remove_and_create' | expectedOutcomes.success
 //        'selective_update'  | expectedOutcomes.success
     }
 
