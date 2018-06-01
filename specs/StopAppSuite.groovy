@@ -97,16 +97,18 @@ class StopAppSuite extends WebLogicHelper {
 
         createConfig(pluginConfigurationNames.correct)
 
-        DeployApplication(projectName,
+        def deployed = DeployApplication(projectName,
                 [
                         configname : CONFIG_NAME,
                         wlstabspath: wlstPath,
                         appname    : APPLICATION_NAME,
-                        apppath    : "$REMOTE_DIRECTORY/$FILENAME",
+                        apppath    : APPLICATION_PATH,
                         targets    : 'AdminServer',
                         is_library : ""
                 ]
         )
+
+        assert deployed.outcome == 'success'
     }
 
     /**

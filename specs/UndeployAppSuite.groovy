@@ -146,7 +146,7 @@ class UndeployAppSuite extends WebLogicHelper {
                     configname : pluginConfigurationNames.correct,
                     wlstabspath: getWlstPath(),
                     appname    : appname,
-                    apppath    : "$REMOTE_DIRECTORY/$FILENAME",
+                    apppath    : APPLICATION_PATH,
                     targets    : 'AdminServer',
                     is_library : ""
             ])

@@ -196,13 +196,13 @@ class DeployAppSuite extends WebLogicHelper {
         where: 'The following params will be: '
         configname                       | wlstabspath | appname          | apppath                       | targets       | is_library               | stage_mode | plan_path | deployment_plan | overwrite_deployment_plan | additional_options | archive_version | retire_gracefully | retire_timeout | version_identifier | upload | remote | expectedOutcome          | expectedSummaryMessage
         // Simple positive
-        pluginConfigurationNames.correct | wlstPath    | APPLICATION_NAME | "$REMOTE_DIRECTORY/$FILENAME" | ''            | ''                       | ''         | ''        | ''              | ''                        | ''                 | ''              | ''                | ''             | ''                 | ''     | ''     | expectedOutcomes.success | ''
+        pluginConfigurationNames.correct | wlstPath    | APPLICATION_NAME | APPLICATION_PATH | ''            | ''                       | ''         | ''        | ''              | ''                        | ''                 | ''              | ''                | ''             | ''                 | ''     | ''     | expectedOutcomes.success | ''
 
         // with TargetServerSpecified
-        pluginConfigurationNames.correct | wlstPath    | APPLICATION_NAME | "$REMOTE_DIRECTORY/$FILENAME" | 'AdminServer' | checkBoxValues.unchecked | ''         | ''        | ''              | ''                        | ''                 | ''              | ''                | ''             | ''                 | ''     | ''     | expectedOutcomes.success | ''
+        pluginConfigurationNames.correct | wlstPath    | APPLICATION_NAME | APPLICATION_PATH | 'AdminServer' | checkBoxValues.unchecked | ''         | ''        | ''              | ''                        | ''                 | ''              | ''                | ''             | ''                 | ''     | ''     | expectedOutcomes.success | ''
 
         // Empty wlst path should return "File  doesn't exist"
-        pluginConfigurationNames.correct | ''          | APPLICATION_NAME | "$REMOTE_DIRECTORY/$FILENAME" | ''            | checkBoxValues.unchecked | ''         | ''        | ''              | ''                        | ''                 | ''              | ''                | ''             | ''                 | ''     | ''     | expectedOutcomes.error   | expectedSummaryMessages.file_not_exists
+        pluginConfigurationNames.correct | ''          | APPLICATION_NAME | APPLICATION_PATH | ''            | checkBoxValues.unchecked | ''         | ''        | ''              | ''                        | ''                 | ''              | ''                | ''             | ''                 | ''     | ''     | expectedOutcomes.error   | expectedSummaryMessages.file_not_exists
 
     }
 

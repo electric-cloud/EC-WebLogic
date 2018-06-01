@@ -1,5 +1,3 @@
-package ignored
-
 import com.electriccloud.spec.SpockTestSupport
 import spock.lang.*
 
@@ -11,13 +9,13 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
     static def deleteProcedureName = 'DeleteJMSQueue'
 
     static def params = [
-        configname: configName,
-        ecp_weblogic_jms_module_name: '',
-        ecp_weblogic_jms_queue_name: '',
-        ecp_weblogic_subdeployment_name: '',
-        ecp_weblogic_update_action: 'do_nothing',
-        ecp_weblogic_additional_options: '',
-        ecp_weblogic_jndi_name: ''
+            configname                     : configName,
+            ecp_weblogic_jms_module_name   : '',
+            ecp_weblogic_jms_queue_name    : '',
+            ecp_weblogic_subdeployment_name: '',
+            ecp_weblogic_update_action     : 'do_nothing',
+            ecp_weblogic_additional_options: '',
+            ecp_weblogic_jndi_name         : ''
     ]
 
     def doSetupSpec() {
@@ -27,21 +25,21 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
         createConfig(CONFIG_NAME)
 
         dslFile "dsl/procedures.dsl", [
-            projectName: projectName,
-            procedureName: procedureName,
-            resourceName: WebLogicHelper.getResourceName(),
-            params: params,
+                projectName  : projectName,
+                procedureName: procedureName,
+                resourceName : getResourceName(),
+                params       : params,
         ]
 
         dslFile 'dsl/procedures.dsl', [
-            projectName: projectName,
-            procedureName: deleteProcedureName,
-            resourceName: WebLogicHelper.getResourceName(),
-            params: [
-                configname: configName,
-                ecp_weblogic_jms_module_name: '',
-                ecp_weblogic_jms_queue_name: ''
-            ]
+                projectName  : projectName,
+                procedureName: deleteProcedureName,
+                resourceName : getResourceName(),
+                params       : [
+                        configname                  : configName,
+                        ecp_weblogic_jms_module_name: '',
+                        ecp_weblogic_jms_queue_name : ''
+                ]
         ]
     }
 
@@ -65,7 +63,7 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
                 ecp_weblogic_jms_queue_name: '$queueName',
             ]
         )
-        """, WebLogicHelper.getResourceName())
+        """, getResourceName())
         then:
         SpockTestSupport.logger.debug(result.logs)
         assert result.outcome == 'success'
@@ -97,7 +95,7 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
                 ecp_weblogic_additional_options: 'MaximumMessageSize=1024'
             ]
         )
-        """, WebLogicHelper.getResourceName())
+        """, getResourceName())
         then:
         SpockTestSupport.logger.debug(result.logs)
         assert result.outcome == 'success'
@@ -123,7 +121,7 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
                 ecp_weblogic_jms_queue_name: '$queueName',
             ]
         )
-        """, WebLogicHelper.getResourceName())
+        """, getResourceName())
         when:
         result = runProcedure """
         runProcedure(
@@ -136,7 +134,7 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
                 ecp_weblogic_update_action: 'selective_update'
             ]
         )
-        """, WebLogicHelper.getResourceName()
+        """, getResourceName()
         then:
         SpockTestSupport.logger.info(result.logs)
         assert result.outcome == 'success'
@@ -161,7 +159,7 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
                 ecp_weblogic_jms_queue_name: '$queueName',
             ]
         )
-        """, WebLogicHelper.getResourceName())
+        """, getResourceName())
         def jmsServerName = 'TestJMSServer'
         createJMSServer(jmsServerName)
         def subdeploymentName = SpockTestSupport.randomize('TestSubdeployment')
@@ -179,7 +177,7 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
                 ecp_weblogic_subdeployment_name: '$subdeploymentName',
             ]
         )
-        """, WebLogicHelper.getResourceName()
+        """, getResourceName()
         then:
         SpockTestSupport.logger.info(result.logs)
         assert result.outcome == 'success'
@@ -200,7 +198,7 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
                 ecp_weblogic_jms_queue_name: '$queueName',
             ]
         )
-        """, WebLogicHelper.getResourceName())
+        """, getResourceName())
         when:
         result = runProcedure """
             runProcedure(
@@ -211,7 +209,7 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
                     ecp_weblogic_jms_queue_name: '$queueName'
                 ]
             )
-        """, WebLogicHelper.getResourceName()
+        """, getResourceName()
         then:
         assert result.outcome == 'success'
         SpockTestSupport.logger.info(result.logs)
@@ -232,7 +230,7 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
                     ecp_weblogic_jms_queue_name: '$queueName'
                 ]
             )
-        """, WebLogicHelper.getResourceName()
+        """, getResourceName()
         then:
         assert result.outcome == 'error'
         assert result.logs =~ /JMS Queue $queueName does not exist in the module $jmsModuleName/
@@ -262,7 +260,7 @@ def deleteQueue(jmsModuleName, cfName):
 moduleName = '$moduleName'
 queueName = '$name'
 
-connect('${WebLogicHelper.getUsername()}', '${WebLogicHelper.getPassword()}', '${WebLogicHelper.getEndpoint()}')
+connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 edit()
 startEdit()
 try:

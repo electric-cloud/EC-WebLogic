@@ -1,3 +1,5 @@
+import spock.lang.Ignore
+import spock.lang.IgnoreRest
 import spock.lang.Shared
 import spock.lang.Unroll
 
@@ -83,8 +85,9 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
 
     @Shared
     def expectedLogParts = [
-            connectionFactory_created   : 'Created Connection Factory $cfName',
-            connectionFactory_not_exists: 'Connection Factory $cfName does not exist',
+////            Uses variables inside, so moved to datatable
+//            connectionFactory_created   : 'Created Connection Factory $cfName',
+//            connectionFactory_not_exists: 'Connection Factory $cfName does not exist',
     ]
 
     @Shared
@@ -162,7 +165,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
      */
 
     @Unroll
-    def "Create or Update Connection Factory. Positive - procedure"() {
+    def "Create or Update Connection Factory. additional options : '#additional_options'"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
                 configname                 : configname,
@@ -180,9 +183,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
                 additional_options         : additional_options,
         ]
 
-        if (connectionFactoryExists(jms_module_name, cf_name)) {
-            deleteConnectionFactory(jms_module_name, cf_name)
-        }
+        deleteConnectionFactory(jms_module_name, cf_name)
 
         when: 'Procedure runs: '
 
@@ -218,7 +219,9 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         pluginConfigurationNames.correct | connectionFactories.correct | jndiNames.correct | sharingPolicies.exclusive | clientPolicies.restricted | jmsModuleName   | ''                          | ''            | ''                 | ''              | ''            | additionalOptions.defaultPriority | expectedOutcomes.success | "Created Connection Factory $cf_name"
     }
 
-    def 'CreateOrUpdateConnectionFactory - update (recreate and selective)'() {
+    @Unroll
+    @Ignore
+    def "CreateOrUpdateConnectionFactory - update_action : '#update_action'"() {
         setup:
         deleteConnectionFactory(jmsModuleName, connectionFactories.updated)
         when:
@@ -306,7 +309,7 @@ connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 cd('/')
 edit()
 if cmo.lookupJMSSystemResource(resource_name):
-    print "Resource %s alreay exists" % resource_name
+    print "Resource %s already exists" % resource_name
 else:
     startEdit()
     cmo.createJMSSystemResource(resource_name)
