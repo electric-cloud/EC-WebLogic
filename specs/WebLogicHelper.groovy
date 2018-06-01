@@ -397,6 +397,27 @@ else:
         assert result.outcome == 'success'
     }
 
+    def deleteJMSServer(name) {
+        def code = """
+connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+
+jmsServerName = '$name'
+
+bean = getMBean('/JMSServers/%s' % jmsServerName)
+if bean == None:
+    print "JMS Server %s does not exist" % jmsServerName
+else:
+    edit()
+    startEdit()
+    cd('/')
+    print "Deleting JMS Server %s" % jmsServerName
+    cmo.destroyJMSServer(bean)
+    activate()
+"""
+        def result = runWLST(code)
+        assert result.outcome == 'success'
+    }
+
 
     def createJMSServer(name) {
         def code = """

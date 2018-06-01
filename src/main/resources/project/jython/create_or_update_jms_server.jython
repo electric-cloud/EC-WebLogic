@@ -1,0 +1,96 @@
+#
+#  Copyright 2016 Electric Cloud, Inc.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+
+
+[% preamble %]
+
+# parameters section
+
+username = r'''
+[% username %]
+'''.strip()
+
+password = r'''
+[% password %]
+'''.strip()
+
+adminUrl = r'''
+[% admin_url %]
+'''.strip()
+
+jmsServerName = r'''
+[% ecp_weblogic_jms_server_name %]
+'''.strip()
+
+tgName = r'''
+[% ecp_weblogic_target %]
+'''.strip()
+
+updateAction = r'''
+[% ecp_weblogic_update_action %]
+'''.strip()
+updateAction = readString(updateAction, 'do_nothing')
+
+successMessage = ''
+
+connect(username, password, adminUrl)
+try:
+    startChanges()
+    update = False
+    jmsServer = getMBean(getJMSServerPath(jmsServerName))
+    if jmsServer == None:
+        print_info("JMS Server %s does not exist" % jmsServerName)
+        jmsServer = cmo.createJMSServer(jmsServerName)
+    else:
+        if updateAction == 'do_nothing':
+            print_summary("JMS Server %s exists, no further action is required" % jmsServerName)
+            discardChanges()
+            sys.exit(0)
+        elif updateAction == 'remove_and_create':
+            successMessage = 'Recreated JMS Server %s' % jmsServerName
+            print_info('JMS Server %s already exists' % jmsServerName)
+            deleteJMSServer(jmsServerName)
+            jmsServer = cmo.createJMSServer(jmsServerName)
+        else:
+            print_info("JMS Server %s already exists, doing selective update" % jmsServerName)
+            successMessage = 'Updated JMS Server %s' % jmsServerName
+            update = True
+
+    if not isEmpty(tgName):
+        cd('/')
+        target = getTargetBean(tgName)
+        oldTargets = jmsServer.getTargets()
+        if len(oldTargets) == 1 and oldTargets[0].name == tgName:
+            print_info("Target %s does not need update" % tgName)
+            successMessage = 'Targets are not changed, update is not needed'
+        else:
+            for t in oldTargets:
+                path = getPath(t)
+                bean = getMBean(path)
+                jmsServer.removeTarget(bean)
+                print_info("Removing old target %s" % targetName(bean))
+                successMessage += ', Removed target %s' % targetName(bean)
+            jmsServer.addTarget(target)
+            print_info("Adding target %s" % targetName(target))
+            successMessage += ', Added target %s' % targetName(target)
+
+except Exception, e:
+    discardAndExit(e, "Failed to create JMS Module")
+
+commitChanges()
+if successMessage != '':
+    print_summary(successMessage)
+
