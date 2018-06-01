@@ -501,7 +501,8 @@ def readString(value, default_value = ''):
     else:
         return default_value
 
-def createOrUpdateSubdeployment(jmsModuleName, subName, jmsServerName):
+def createOrUpdateSubdeployment(jmsModuleName, subName, jmsTargetList = [], targetList = []):
+    # Subdeployment bean
     subdeployment = getMBean(getSubDeploymentPath(jmsModuleName, subName))
     if subdeployment == None:
         print_info("Subdeployment %s does not exist" % subName)
@@ -511,23 +512,42 @@ def createOrUpdateSubdeployment(jmsModuleName, subName, jmsServerName):
         subdeployment = jmsModuleBean.createSubDeployment(subName)
         print_info("Created Subdeployment %s" % subName)
 
-    cd(getSubDeploymentPath(jmsModuleName, subName))
-    if isEmpty(jmsServerName):
-        raise Exception("No JMS Server name is provided")
+    # Targeting
+    oldTargets = subdeployment.getTargets() # beans
+    oldJMSTargets = []
+    oldTargets = []
+    for t in subdeployment.targets:
+        if t.type == 'JMSServer':
+            oldJMSTargets.append(t)
+        else:
+            oldTargets.append(t)
 
-    jmsServerBean = getMBean('/JMSServers/' + jmsServerName)
-    if jmsServerBean == None:
-        raise Exception('JMS Server %s does not exist' % jmsServerName)
-    currentTargets = subdeployment.getTargets()
-    for target in currentTargets:
-        print_debug('Found target: %s' % target.objectName)
-        if target.objectName == jmsServerBean.objectName:
-            print_info('Target %s is already in the list of targets' % jmsServerBean.objectName)
-            return
+    # JMS Targets
+    for t in jmsTargetList:
+        if t.objectName in map(lambda x: x.objectName, oldJMSTargets):
+            print_debug('JMS Target %s is both in old and new lists' % t.objectName)
+        else:
+            subdeployment.addTarget(t)
 
-    targets = [jmsServerBean.objectName]
-    set('Targets', jarray.array(targets, ObjectName))
-    print_info("Set JMS Subdeployment Targets: %s" % targets)
+    for t in oldJMSTargets:
+        if t.objectName in map(lambda x: x.objectName, jmsTargetList):
+            print_debug('JMS Target %s is both in old and new lists' % t.objectName)
+        else:
+            subdeployment.removeTarget(t)
+
+    # Targets
+    for t in targetList:
+        if t.objectName in map(lambda x: x.objectName, oldTargets):
+            print_debug('Target %s is both in old and new lists' % t.objectName)
+        else:
+            subdeployment.addTarget(t)
+
+    for t in oldTargets:
+        if t.objectName in map(lambda x: x.objectName, targetList):
+            print_debug('Target %s is both in old and new lists' % t.objectName)
+        else:
+            subdeployment.removeTarget(t)
+
     return subdeployment
 
 def deleteConnectionFactory(jmsModuleName, cfName):
@@ -603,6 +623,12 @@ def getTargetBean(targetName):
 
     if bean == None:
         raise Exception("Target %s was not found in Servers or Clusters, please check the name of the target." % targetName)
+    return bean
+
+def getJMSTargetBean(targetName):
+    bean = getMBean('/JMSServers/%s' % targetName)
+    if bean == None:
+        raise Exception('JMS Server %s does not exist' % targetName)
     return bean
 
 def targetName(targetBean, failIfNone = False):

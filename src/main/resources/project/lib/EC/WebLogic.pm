@@ -237,6 +237,10 @@ sub process_response {
     my $restart = $result->{stdout} =~ m/that require server re-start/;
     $self->ec->setProperty('/myJob/WebLogicServerRestartRequired', ($restart ? 'true' : 'false'));
     my $summary = '';
+    if ($restart) {
+        $summary .= "\n" if $summary;
+        $summary .= "Server restart is required";
+    }
     if ($result->{stdout} =~ m/SUMMARY:\s*(.+)/) {
         $summary = $1;
     }

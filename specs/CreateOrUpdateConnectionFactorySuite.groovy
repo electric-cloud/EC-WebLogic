@@ -145,7 +145,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
 
     def doSetupSpec() {
         setupResource()
-
+        discardChanges()
         deleteProject(projectName)
         createJMSModule(jmsModuleName)
 
@@ -157,7 +157,8 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
      */
 
     def doCleanupSpec() {
-        deleteProject(projectName)
+        // deleteProject(projectName)
+        deleteJMSModule(jmsModuleName)
     }
 
     /**
@@ -165,7 +166,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
      */
 
     @Unroll
-    def "Create or Update Connection Factory. additional options : '#additional_options'"() {
+    def "Create or Update Connection Factory. Positive - procedure configname: #configname, cf_name #cf_name"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
                 configname                 : configname,
@@ -207,10 +208,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         assert debugLog.contains(expectedJobDetailedResult)
 
         cleanup:
-        if (expectedOutcome == expectedOutcomes.success && outcome == expectedOutcomes.success) {
-            deleteConnectionFactory(jms_module_name, cf_name)
-        }
-
+        deleteConnectionFactory(jms_module_name, cf_name)
         where: 'The following params will be: '
         configname                       | cf_name                     | jndi_name         | cf_sharing_policy         | cf_client_id_policy       | jms_module_name | cf_max_messages_per_session | cf_xa_enabled | subdeployment_name | jms_server_name | update_action | additional_options                | expectedOutcome          | expectedJobDetailedResult
         pluginConfigurationNames.correct | connectionFactories.correct | jndiNames.correct | sharingPolicies.exclusive | clientPolicies.restricted | jmsModuleName   | ''                          | ''            | ''                 | ''              | ''            | ''                                | expectedOutcomes.success | "Created Connection Factory $cf_name"
@@ -220,10 +218,10 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
     }
 
     @Unroll
-    @Ignore
     def "CreateOrUpdateConnectionFactory - update_action : '#update_action'"() {
         setup:
-        deleteConnectionFactory(jmsModuleName, connectionFactories.updated)
+        createJMSModule(jmsModuleName)
+        def subdeploymentName = 'sub1'
         when:
         def runParamsFirst = [
                 configname         : pluginConfigurationNames.correct,
@@ -248,22 +246,84 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
                 cf_sharing_policy  : sharingPolicies.exclusive,
                 cf_client_id_policy: clientPolicies.restricted,
                 update_action      : update_action,
-                subdeployment_name : 'Sub1',
+                subdeployment_name : subdeploymentName,
                 jms_server_name    : jmsServerName
         ]
 
         def resultSecond = runTestedProcedure(projectName, procedureName, runParamsSecond, getResourceName())
+
         then:
         logger.debug(resultSecond.logs)
         assert resultSecond.outcome == expectedOutcome
 
+        def resultTargets = getSubdeploymentTargets(jmsModuleName, subdeploymentName)
+        logger.debug(resultTargets.logs)
+        assert resultTargets.logs.contains(jmsServerName)
+
         cleanup:
         deleteConnectionFactory(jmsModuleName, connectionFactories.updated)
+        deleteSubDeployment(jmsModuleName, subdeploymentName)
 
         where:
         update_action       | expectedOutcome
         'remove_and_create' | expectedOutcomes.success
         'selective_update'  | expectedOutcomes.success
+        'do_nothing'        | expectedOutcomes.success
+    }
+
+    @Unroll
+    def 'update #updateAction change target to #newTarget'() {
+        setup:
+        def jmsServerName = 'jmsServer1'
+        createJMSServer(jmsServerName)
+        createJMSServer(newTarget)
+        def subdeploymentName = 'Sub1'
+        when:
+        def runParamsFirst = [
+                configname         : pluginConfigurationNames.correct,
+                cf_name            : connectionFactories.updated,
+                jndi_name          : jndiNames.recreateOld,
+                jms_module_name    : jmsModuleName,
+                cf_sharing_policy  : sharingPolicies.exclusive,
+                cf_client_id_policy: clientPolicies.restricted,
+                subdeployment_name : subdeploymentName,
+                jms_server_name    : jmsServerName
+        ]
+
+        def resultFirst = runTestedProcedure(projectName, procedureName, runParamsFirst, getResourceName())
+        assert resultFirst.outcome == 'success'
+
+        and:
+        def runParamsSecond = [
+                configname         : pluginConfigurationNames.correct,
+                cf_name            : connectionFactories.updated,
+                jndi_name          : jndiNames.recreateNew,
+                jms_module_name    : jmsModuleName,
+                cf_sharing_policy  : sharingPolicies.exclusive,
+                cf_client_id_policy: clientPolicies.restricted,
+                update_action      : updateAction,
+                subdeployment_name : subdeploymentName,
+                jms_server_name    : newTarget
+        ]
+
+        def resultSecond = runTestedProcedure(projectName, procedureName, runParamsSecond, getResourceName())
+
+        then:
+        logger.debug(resultSecond.logs)
+        assert resultSecond.outcome == 'success'
+
+        def resultTargets = getSubdeploymentTargets(jmsModuleName, subdeploymentName)
+        logger.debug(resultTargets.logs)
+        assert resultTargets.logs.contains(newTarget)
+
+        cleanup:
+        deleteConnectionFactory(jmsModuleName, connectionFactories.updated)
+        deleteSubDeployment(jmsModuleName, subdeploymentName)
+
+        where:
+        updateAction        | newTarget
+        'remove_and_create' | 'jmsServer2'
+        'selective_update'  | 'jmsServer1'
     }
 
     def connectionFactoryExists(def moduleName, def name) {
@@ -301,26 +361,6 @@ except Exception, e:
         return (result.logs =~ /Connection Factory $name exists in module $moduleName/)
     }
 
-    def createJMSModule(name) {
-        def code = """
-resource_name = '$name'
-target = 'AdminServer'
-connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
-cd('/')
-edit()
-if cmo.lookupJMSSystemResource(resource_name):
-    print "Resource %s already exists" % resource_name
-else:
-    startEdit()
-    cmo.createJMSSystemResource(resource_name)
-    cd("/JMSSystemResources/%s" % resource_name)
-    cmo.addTarget(getMBean("/Servers/%s" % target))
-    activate()
-"""
-        def result = runWLST(code)
-        assert result.outcome == 'success'
-    }
-
     def deleteConnectionFactory(moduleName, name) {
         def code = """
 def getJMSSystemResourcePath(jms_module_name):
@@ -346,13 +386,14 @@ moduleName = '$moduleName'
 cfName = '$name'
 
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
-edit()
-startEdit()
-try:
+cfBean = getMBean(getConnectionFactoryPath(moduleName, cfName))
+if cfBean == None:
+    print "Connection Factory %s does not exist" % cfName
+else:
+    edit()
+    startEdit()
     deleteConnectionFactory(moduleName, cfName)
     activate()
-except Exception, e:
-    stopEdit('y')
 
 """
         def result = runWLST(code)
@@ -397,6 +438,23 @@ if bean == None:
     activate()
 else:
     print "JMS Server already exists"
+"""
+        def result = runWLST(code)
+        assert result.outcome == 'success'
+        result
+    }
+
+
+    def getSubdeploymentTargets(module, subdeployment) {
+        def code = """
+module = '$module'
+subdeployment = '$subdeployment'
+connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+bean = getMBean('/JMSSystemResources/' + module + '/SubDeployments/' + subdeployment)
+print bean
+targets = bean.getTargets()
+for t in targets:
+    print 'Target: ' + str(t.objectName)
 """
         def result = runWLST(code)
         assert result.outcome == 'success'
