@@ -147,7 +147,6 @@ class StopAppSuite extends WebLogicHelper {
                 wlstabspath: wlstabspath,
 
                 additional_options : "",
-                envscriptpath      : "",
                 version_identifier : ""
         ])
 
