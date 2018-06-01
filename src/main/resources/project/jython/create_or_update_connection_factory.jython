@@ -114,15 +114,15 @@ try:
             print_info("Selective update")
             update = True
 
-    # if not isEmpty(subdeploymentName):
-    #     subdeployment = createOrUpdateSubdeployment(jmsModuleName, subdeploymentName, jmsServerName)
+    if not isEmpty(subdeploymentName):
+        subdeployment = createOrUpdateSubdeployment(jmsModuleName, subdeploymentName, jmsServerName)
 
-    # cd(getConnectionFactoryPath(jmsModuleName, cfName))
-    # if get('JNDIName') != jndiName:
-    #     set('JNDIName', jndiName)
-    #     print_info("Set JNDI Name to %s" % jndiName)
-    # else:
-    #     print_info("JNDI name is not changed")
+    cd(getConnectionFactoryPath(jmsModuleName, cfName))
+    if get('JNDIName') != jndiName:
+        set('JNDIName', jndiName)
+        print_info("Set JNDI Name to %s" % jndiName)
+    else:
+        print_info("JNDI name is not changed")
 
     # if not isEmpty(subdeploymentName):
     #     if get('SubDeploymentName') != subdeploymentName:
