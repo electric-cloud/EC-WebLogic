@@ -1,3 +1,4 @@
+import spock.lang.Ignore
 import spock.lang.IgnoreRest
 import spock.lang.Shared
 import spock.lang.Unroll
@@ -219,6 +220,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
     }
 
     @Unroll
+    @Ignore
     def "CreateOrUpdateConnectionFactory - update_action : '#update_action'"() {
         setup:
         deleteConnectionFactory(jmsModuleName, connectionFactories.updated)
@@ -260,8 +262,8 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
 
         where:
         update_action       | expectedOutcome
-//        'remove_and_create' | expectedOutcomes.success
-//        'selective_update'  | expectedOutcomes.success
+        'remove_and_create' | expectedOutcomes.success
+        'selective_update'  | expectedOutcomes.success
     }
 
     def connectionFactoryExists(def moduleName, def name) {
