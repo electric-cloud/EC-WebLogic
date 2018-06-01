@@ -616,6 +616,17 @@ def deleteSubDeployment(jmsModuleName, subdeploymentName):
     else:
         print_info("Subdeployment %s does not exist in the module %s" % (subdeploymentName, jmsModuleName))
 
+
+def deleteJMSServer(jmsServerName):
+    if isEmpty(jmsServerName):
+        raise Exception("JMS Server Name is not provided")
+    bean = getMBean(getJMSServerPath(jmsServerName))
+    if bean != None:
+        cmo.destroyJMSServer(bean)
+        print_info("Removed jms server %s" % jmsServerName)
+    else:
+        print_info("JMS Server %s does not exist" % jmsServerName)
+
 def getTargetBean(targetName):
     bean = getMBean('/Servers/' + targetName)
     if bean == None:
@@ -637,4 +648,4 @@ def targetName(targetBean, failIfNone = False):
             raise Exception("Target Bean is not provided")
         else:
             return "None"
-    return targetBean.type + ' "' + targetBean.name + '"'
+    return str(targetBean.type) + ' "' + str(targetBean.name) + '"'

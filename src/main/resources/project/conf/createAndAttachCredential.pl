@@ -241,7 +241,6 @@ $xpath = $ec->attachCredential($projName, $credName,
      stepName => 'DeleteJMSModule'});
 $errors .= $ec->checkAllErrors($xpath);
 
-
 $xpath = $ec->attachCredential($projName, $credName,
     {procedureName => 'CreateOrUpdateJMSModuleSubdeployment',
      stepName => 'CreateOrUpdateJMSModuleSubdeployment'});
@@ -250,6 +249,11 @@ $errors .= $ec->checkAllErrors($xpath);
 $xpath = $ec->attachCredential($projName, $credName,
     {procedureName => 'DeleteJMSModuleSubdeployment',
      stepName => 'DeleteJMSModuleSubdeployment'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'CreateOrUpdateJMSServer',
+     stepName => 'CreateOrUpdateJMSServer'});
 $errors .= $ec->checkAllErrors($xpath);
 
 
