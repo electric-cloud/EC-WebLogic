@@ -87,6 +87,24 @@ updateAction = r'''
 updateAction = readString(updateAction, 'do_nothing')
 
 connect(username, password, adminUrl)
+successMessage = ''
+
+
+# Subdeployment
+# Subdeployment must be created and the changes must be activated
+# Otherwise, the procedure will fail with "exception in prepare"
+subdeployment = None
+if not isEmpty(subdeploymentName):
+    try:
+        startChanges()
+        jmsTargets = []
+        if not isEmpty(jmsServerName):
+            jmsTargets.append(getJMSTargetBean(jmsServerName))
+        jmsTarget = getJMSTargetBean(jmsServerName)
+        subdeployment = createOrUpdateSubdeployment(jmsModuleName, subdeploymentName, jmsTargetList = jmsTargets)
+    except Exception, e:
+        discardAndExit(e, "Failed to create Subdeployment")
+    commitChanges()
 
 try:
     startChanges()
@@ -100,22 +118,23 @@ try:
         print_info("Connection Factory %s does not exist" % cfName)
         cf = jmsResource.createConnectionFactory(cfName)
         print_info("Created Connection Factory %s" % cfName)
+        successMessage = 'Created Connection Factory %s' % cfName
     else:
         print_info("Found Connection Factory %s in the module %s" % (cfName, jmsModuleName))
         if updateAction == 'do_nothing':
             discardChanges()
+            print_summary('Connection Factory %s exists, no further action is required' % cfName)
             print_info("No action is required")
             sys.exit(0)
         elif updateAction == 'remove_and_create':
             deleteConnectionFactory(jmsModuleName, cfName)
             cf = jmsResource.createConnectionFactory(cfName)
             print_info("Created Connection Factory %s" % cfName)
+            successMessage = 'Recreated Connection Factory %s' % cfName
         elif updateAction == 'selective_update':
             print_info("Selective update")
+            successMessage = 'Updated Connection Factory %s' % cfName
             update = True
-
-    if not isEmpty(subdeploymentName):
-        subdeployment = createOrUpdateSubdeployment(jmsModuleName, subdeploymentName, jmsServerName)
 
     cd(getConnectionFactoryPath(jmsModuleName, cfName))
     if get('JNDIName') != jndiName:
@@ -124,47 +143,56 @@ try:
     else:
         print_info("JNDI name is not changed")
 
-    # if not isEmpty(subdeploymentName):
-    #     if get('SubDeploymentName') != subdeploymentName:
-    #         # Removing Default Targeting
-    #         set('DefaultTargetingEnabled', False)
-    #         set('SubDeploymentName', subdeploymentName)
-    #         print_info("Set subdeployment name to %s" % subdeploymentName)
-    #     else:
-    #         print_info("Subdeployment name is not changed")
-    # else:
-    #     if not update:
-    #         set('DefaultTargetingEnabled', True)
-    #         print_info("Set default targeting")
-    #     else:
-    #         print_info("Will not change targeting for Connection Factory")
+    if not isEmpty(subdeploymentName):
+        if cf.getSubDeploymentName() != subdeploymentName:
+            # Removing Default Targeting
+            cf.setDefaultTargetingEnabled(False)
+            cf.setSubDeploymentName(subdeploymentName)
+            successMessage += ', Set Targeting to Subdeployment %s' % subdeploymentName
+            print_info("Set subdeployment name to %s" % subdeploymentName)
+        else:
+            print_info("Subdeployment name is not changed")
+            successMessage += ', Subdeployment name does not require update'
+    else:
+        if not update:
+            successMessage += ', Set Default Targeting'
+            cf.setDefaultTargetingEnabled(True)
+            print_info("Set default targeting")
+        else:
+            print_info("Will not change targeting for Connection Factory")
+            successMessage += ', Targeting will not be changed'
 
-    # if not update:
-    #     # ClientParams
-    #     cd('%s/ClientParams/%s' % (getConnectionFactoryPath(jmsModuleName, cfName), cfName))
-    #     set('SubscriptionSharingPolicy', cfSharingPolicy)
-    #     print_debug('Set SubscriptionSharingPolicy to %s' % cfSharingPolicy)
-    #     set('ClientIdPolicy', clientIDPolicy)
-    #     print_debug('Set ClientIdPolicy to %s' % clientIDPolicy)
-    #     if maxMessagesPerSession > 0:
-    #         set('MessagesMaximum', maxMessagesPerSession)
-    #         print_debug('Set MessagesMaximum to %s' % maxMessagesPerSession)
+    if not update:
+        # ClientParams
+        cd('%s/ClientParams/%s' % (getConnectionFactoryPath(jmsModuleName, cfName), cfName))
+        set('SubscriptionSharingPolicy', cfSharingPolicy)
+        print_debug('Set SubscriptionSharingPolicy to %s' % cfSharingPolicy)
+        set('ClientIdPolicy', clientIDPolicy)
+        print_debug('Set ClientIdPolicy to %s' % clientIDPolicy)
+        if maxMessagesPerSession > 0:
+            set('MessagesMaximum', maxMessagesPerSession)
+            print_debug('Set MessagesMaximum to %s' % maxMessagesPerSession)
 
-    #     # TransactionParams
-    #     cd('%s/TransactionParams/%s' % (getConnectionFactoryPath(jmsModuleName, cfName), cfName))
-    #     set('XAConnectionFactoryEnabled', xaEnabled)
-    #     print_debug('Set XAConnectionFactoryEnabled to %s' % xaEnabled)
+        # TransactionParams
+        cd('%s/TransactionParams/%s' % (getConnectionFactoryPath(jmsModuleName, cfName), cfName))
+        set('XAConnectionFactoryEnabled', xaEnabled)
+        print_debug('Set XAConnectionFactoryEnabled to %s' % xaEnabled)
 
-    #     options = parseOptions(additionalOptions, delimeter = '\n+')
-    #     print_info("Additional Options: %s" % options)
-    #     for key, value in options.items():
-    #         (groupName, paramName) = key.split('.')
-    #         cd(getConnectionFactoryPath(jmsModuleName, cfName) + '/' + groupName + '/' + cfName)
-    #         print_info("Setting additional option %s/%s -> %s" % (groupName, paramName, value))
-    #         set(paramName, value)
+        options = parseOptions(additionalOptions, delimeter = '\n+')
+        print_info("Additional Options: %s" % options)
+        for key, value in options.items():
+            (groupName, paramName) = key.split('.')
+            cd(getConnectionFactoryPath(jmsModuleName, cfName) + '/' + groupName + '/' + cfName)
+            print_info("Setting additional option %s/%s -> %s" % (groupName, paramName, value))
+            set(paramName, value)
 
 except Exception, e:
     discardAndExit(e, "Failed to create Connection Factory")
 
 # eveything is fine, commiting
+showChanges()
+validate()
 commitChanges()
+if successMessage != '':
+    print_summary(successMessage)
+
