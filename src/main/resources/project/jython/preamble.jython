@@ -49,7 +49,7 @@ def print_summary(message):
     print 'SUMMARY: ' + message
 
 def print_error(message):
-    print "ERROR:" + message
+    print "ERROR" + ":" + message
 
 def print_info(message):
     if debug_level >= 0:
@@ -275,8 +275,9 @@ def discardChanges():
 def discardAndExit(e, message = None):
     discardChanges()
     if message:
-        print 'Error: ' + message
-    print str(e)
+        print 'ERROR'+ ':' + message + " " + str(e)
+    else:
+        print 'ERROR'+ ':' +str(e)
     dumpStack()
     sys.exit(1)
 
