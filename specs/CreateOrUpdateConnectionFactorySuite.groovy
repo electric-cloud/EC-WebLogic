@@ -84,8 +84,9 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
 
     @Shared
     def expectedLogParts = [
-            connectionFactory_created   : 'Created Connection Factory $cfName',
-            connectionFactory_not_exists: 'Connection Factory $cfName does not exist',
+////            Uses variables inside, so moved to datatable
+//            connectionFactory_created   : 'Created Connection Factory $cfName',
+//            connectionFactory_not_exists: 'Connection Factory $cfName does not exist',
     ]
 
     @Shared
@@ -259,8 +260,8 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
 
         where:
         update_action       | expectedOutcome
-//        'remove_and_create' | expectedOutcomes.success
-        'selective_update'  | expectedOutcomes.success
+        'remove_and_create' | expectedOutcomes.success
+//        'selective_update'  | expectedOutcomes.success
     }
 
     def connectionFactoryExists(def moduleName, def name) {
@@ -306,7 +307,7 @@ connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 cd('/')
 edit()
 if cmo.lookupJMSSystemResource(resource_name):
-    print "Resource %s alreay exists" % resource_name
+    print "Resource %s already exists" % resource_name
 else:
     startEdit()
     cmo.createJMSSystemResource(resource_name)
