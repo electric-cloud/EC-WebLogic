@@ -692,12 +692,16 @@
     <xpath>//procedure[procedureName="DeleteJMSModule"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
   </file>
   <file>
+    <path>parameterForms/ec_parameterForm-CreateOrUpdateJMSModule.xml</path>
+    <xpath>//procedure[procedureName="CreateOrUpdateJMSModule"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
     <path>parameterForms/ec_parameterForm-CreateOrUpdateJMSModuleSubdeployment.xml</path>
     <xpath>//procedure[procedureName="CreateOrUpdateJMSModuleSubdeployment"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
   </file>
   <file>
     <path>parameterForms/ec_parameterForm-DeleteJMSModuleSubdeployment.xml</path>
-    <xpath>//procedure[procedureName="DeleteJMSModuleSubDeployment"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+    <xpath>//procedure[procedureName="DeleteJMSModuleSubdeployment"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
   </file>
   <file>
     <path>jython/create_or_update_connection_factory.jython</path>

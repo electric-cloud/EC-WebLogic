@@ -8383,9 +8383,6 @@ Selective Update - The procedure would update existing JMS Module for only param
     <workspaceName />
   </step>
 </procedure>
-
-
-
 <procedure>
   <description>Deletes JMS Module Subdeployment</description>
   <jobNameTemplate>weblogic-deleteJMSModuleSubdeployment-$[jobId]</jobNameTemplate>
