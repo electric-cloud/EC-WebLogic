@@ -58,6 +58,7 @@ try:
         if updateAction == 'do_nothing':
             print_summary("JMS Server %s exists, no further action is required" % jmsServerName)
             discardChanges()
+            successMessage = 'Created JMS Server %s' % jmsServerName
             sys.exit(0)
         elif updateAction == 'remove_and_create':
             successMessage = 'Recreated JMS Server %s' % jmsServerName

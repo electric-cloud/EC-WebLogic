@@ -256,6 +256,11 @@ $xpath = $ec->attachCredential($projName, $credName,
      stepName => 'CreateOrUpdateJMSServer'});
 $errors .= $ec->checkAllErrors($xpath);
 
+$xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'DeleteJMSServer',
+     stepName => 'DeleteJMSServer'});
+$errors .= $ec->checkAllErrors($xpath);
+
 
 if ($errors ne '') {
 
