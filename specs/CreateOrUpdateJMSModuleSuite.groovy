@@ -1,5 +1,4 @@
-import spock.lang.Shared
-import spock.lang.Unroll
+import spock.lang.*
 
 class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
     /**
@@ -149,7 +148,7 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
      */
 
     @Unroll
-    def "Create and Update JMS Module. Positive - procedure with params (module_name: #jmsModuleName, target: #target, update action: #updateAction)"() {
+    def "Create and Update JMS Module. Positive - procedure with params (Module: #jmsModuleName, target: #target, update action: #updateAction)"() {
         setup: 'Define the parameters for Procedure running'
 
         def runParams = [
@@ -160,7 +159,7 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
         ]
 
         deleteJMSModule(jmsModuleName)
-        ensureManagedServer(target)
+        ensureManagedServer(target, '7999')
 
         if (updateAction) {
             createJMSModule(jmsModuleName, targets.default)

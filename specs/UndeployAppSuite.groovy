@@ -108,6 +108,7 @@ class UndeployAppSuite extends WebLogicHelper {
         def artifactName = 'test:sample'
         def version = '1.0'
 
+        setupResource()
         createConfig(pluginConfigurationNames.correct)
 
         publishArtifact(artifactName, version, FILENAME)

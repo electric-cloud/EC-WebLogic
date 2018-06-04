@@ -45,7 +45,7 @@ class CreateOrUpdateJMSModule extends WebLogicHelper {
 
     def 'create jms module'() {
         given:
-        def jmsModuleName = SpockTestSupport.randomize('TestJMSModule')
+        def jmsModuleName = randomize('TestJMSModule')
         when:
         def result = runProcedure("""
         runProcedure(
@@ -58,7 +58,7 @@ class CreateOrUpdateJMSModule extends WebLogicHelper {
         )
         """, WebLogicHelper.getResourceName())
         then:
-        SpockTestSupport.logger.debug(result.logs)
+        logger.debug(result.logs)
         assert result.outcome == 'success'
         cleanup:
         deleteJMSModule(jmsModuleName)
@@ -68,7 +68,7 @@ class CreateOrUpdateJMSModule extends WebLogicHelper {
     def 'update #action jms module'() {
         given:
         def serverName = 'TestSpecServer'
-        def jmsModuleName = SpockTestSupport.randomize('SpecModule')
+        def jmsModuleName = randomize('SpecModule')
         ensureManagedServer(serverName)
         deleteJMSModule(jmsModuleName)
         def result = runProcedure("""
@@ -95,7 +95,7 @@ class CreateOrUpdateJMSModule extends WebLogicHelper {
         )
         """, WebLogicHelper.getResourceName())
         then:
-        SpockTestSupport.logger.debug(result.logs)
+        logger.debug(result.logs)
         assert result.outcome == 'success'
 
         if (action == 'do_nothing') {
@@ -115,7 +115,7 @@ class CreateOrUpdateJMSModule extends WebLogicHelper {
 
     def 'delete jms module'() {
         given:
-        def jmsModuleName = SpockTestSupport.randomize('SpecModule')
+        def jmsModuleName = randomize('SpecModule')
         deleteJMSModule(jmsModuleName)
         def result = runProcedure("""
         runProcedure(
@@ -139,7 +139,7 @@ class CreateOrUpdateJMSModule extends WebLogicHelper {
         )
         """, WebLogicHelper.getResourceName())
         then:
-        SpockTestSupport.logger.debug(result.logs)
+        logger.debug(result.logs)
         assert result.outcome == 'success'
         assert result.logs =~ /Deleted JMS System Module/
     }
@@ -156,7 +156,7 @@ class CreateOrUpdateJMSModule extends WebLogicHelper {
         )
         """, WebLogicHelper.getResourceName())
         then:
-        SpockTestSupport.logger.debug(result.logs)
+        logger.debug(result.logs)
         assert result.outcome == 'error'
     }
 

@@ -1,7 +1,4 @@
-import spock.lang.Ignore
-import spock.lang.IgnoreRest
-import spock.lang.Shared
-import spock.lang.Unroll
+import spock.lang.*
 
 class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
 
@@ -166,7 +163,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
      */
 
     @Unroll
-    def "Create or Update Connection Factory. Positive - procedure configname: #configname, cf_name #cf_name"() {
+    def "Create or Update Connection Factory. additional options : '#additional_options'"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
                 configname                 : configname,

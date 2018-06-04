@@ -1,5 +1,4 @@
-import spock.lang.Shared
-import spock.lang.Unroll
+import spock.lang.*
 
 class StopAppSuite extends WebLogicHelper {
     /**
@@ -95,6 +94,7 @@ class StopAppSuite extends WebLogicHelper {
     def doSetupSpec() {
         assert wlstPath
 
+        setupResource()
         createConfig(pluginConfigurationNames.correct)
 
         def deployed = DeployApplication(projectName,
