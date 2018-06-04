@@ -623,7 +623,7 @@ def deleteJMSServer(jmsServerName):
     bean = getMBean(getJMSServerPath(jmsServerName))
     if bean != None:
         cmo.destroyJMSServer(bean)
-        print_info("Removed jms server %s" % jmsServerName)
+        print_info("Removed JMS Server %s" % jmsServerName)
     else:
         print_info("JMS Server %s does not exist" % jmsServerName)
 

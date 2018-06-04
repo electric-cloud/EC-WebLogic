@@ -26,15 +26,15 @@ class CreateOrUpdateJMSServer extends WebLogicHelper {
             params: params,
         ]
 
-        // dslFile 'dsl/procedures.dsl', [
-        //     projectName: projectName,
-        //     procedureName: deleteProcedureName,
-        //     resourceName: getResourceName(),
-        //     params: [
-        //         configname: configName,
-        //         ecp_weblogic_jms_module_name: '',
-        //     ]
-        // ]
+        dslFile 'dsl/procedures.dsl', [
+            projectName: projectName,
+            procedureName: deleteProcedureName,
+            resourceName: getResourceName(),
+            params: [
+                configname: configName,
+                ecp_weblogic_jms_server_name: '',
+            ]
+        ]
     }
 
     def doCleanupSpec() {
@@ -42,7 +42,6 @@ class CreateOrUpdateJMSServer extends WebLogicHelper {
     }
 
     @Unroll
-    @IgnoreRest
     def 'create jms server'() {
         given:
         def jmsServerName = randomize('SpecJMSServer')
@@ -65,7 +64,6 @@ class CreateOrUpdateJMSServer extends WebLogicHelper {
     }
 
     @Unroll
-    @IgnoreRest
     def 'update #action jms server'() {
         given:
         def serverName = 'TestSpecServer'
@@ -114,16 +112,16 @@ class CreateOrUpdateJMSServer extends WebLogicHelper {
         action << ['do_nothing', 'selective_update', 'remove_and_create']
     }
 
-    def 'delete jms module'() {
+    @IgnoreRest
+    def 'delete jms server'() {
         given:
-        def jmsModuleName = randomize('SpecModule')
-        deleteJMSModule(jmsModuleName)
+        def jmsServerName = randomize('SpecJMSServer')
         def result = runProcedure("""
         runProcedure(
             projectName: '$projectName',
             procedureName: '$procedureName',
             actualParameter: [
-                ecp_weblogic_jms_module_name: '$jmsModuleName',
+                ecp_weblogic_jms_server_name: '$jmsServerName',
                 ecp_weblogic_target: 'AdminServer',
             ]
         )
@@ -135,24 +133,25 @@ class CreateOrUpdateJMSServer extends WebLogicHelper {
             projectName: '$projectName',
             procedureName: '$deleteProcedureName',
             actualParameter: [
-                ecp_weblogic_jms_module_name: '$jmsModuleName',
+                ecp_weblogic_jms_server_name: '$jmsServerName',
             ]
         )
         """, getResourceName())
         then:
         logger.debug(result.logs)
         assert result.outcome == 'success'
-        assert result.logs =~ /Deleted JMS System Module/
+        assert result.logs =~ /Removed JMS Server/
     }
 
-    def 'fails to delete non-existing module'() {
+    @IgnoreRest
+    def 'fails to delete non-existing server'() {
         when:
         def result = runProcedure("""
         runProcedure(
             projectName: '$projectName',
             procedureName: '$deleteProcedureName',
             actualParameter: [
-                ecp_weblogic_jms_module_name: 'NoSuchModule',
+                ecp_weblogic_jms_server_name: 'NoSuchServer',
             ]
         )
         """, getResourceName())
