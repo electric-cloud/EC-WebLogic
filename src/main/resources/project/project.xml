@@ -438,6 +438,11 @@
             <expandable>1</expandable>
             <value/>
           </property>
+          <property>
+            <propertyName>create_or_update_jms_server.jython</propertyName>
+            <expandable>1</expandable>
+            <value/>
+          </property>
         </propertySheet>
       </property>
       <property>

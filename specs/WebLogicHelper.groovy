@@ -574,7 +574,7 @@ activate()
 
 
 
-    def ensureManagedServer(msName, port) {
+    def ensureManagedServer(msName, port = '7999') {
         def code = """
 msName = '$msName'
 port = '$port'
