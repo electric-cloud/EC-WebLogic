@@ -112,7 +112,6 @@ class CreateOrUpdateJMSServer extends WebLogicHelper {
         action << ['do_nothing', 'selective_update', 'remove_and_create']
     }
 
-    @IgnoreRest
     def 'delete jms server'() {
         given:
         def jmsServerName = randomize('SpecJMSServer')
@@ -143,7 +142,6 @@ class CreateOrUpdateJMSServer extends WebLogicHelper {
         assert result.logs =~ /Removed JMS Server/
     }
 
-    @IgnoreRest
     def 'fails to delete non-existing server'() {
         when:
         def result = runProcedure("""
