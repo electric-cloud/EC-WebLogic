@@ -60,6 +60,11 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
             recreateNew: 'NewJNDIName',
     ]
 
+    @Shared
+    def jmsServers = [
+        first: 'firstJMSServer',
+        second: 'secondJMSServer'
+    ]
     /**
      * Verification Values: Assert values
      */
@@ -179,7 +184,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
                 cf_max_messages_per_session: cf_max_messages_per_session,
                 cf_xa_enabled              : cf_xa_enabled,
                 subdeployment_name         : subdeployment_name,
-                jms_server_name            : jms_server_name,
+                jms_server_list            : jms_server_name,
                 update_action              : update_action,
                 additional_options         : additional_options,
         ]
@@ -218,7 +223,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
     }
 
     @Unroll
-    def "CreateOrUpdateConnectionFactory - update_action : '#update_action'"() {
+    def "CreateOrUpdateConnectionFactory - update_action : '#update_action', jms_server_list: #jmsServerList, wls_instance_list: #wlstInstanceList"() {
         setup:
         createJMSModule(jmsModuleName)
         def subdeploymentName = 'sub1'
@@ -247,7 +252,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
                 cf_client_id_policy: clientPolicies.restricted,
                 update_action      : update_action,
                 subdeployment_name : subdeploymentName,
-                jms_server_name    : jmsServerName
+                jms_server_list    : jmsServerName
         ]
 
         def resultSecond = runTestedProcedure(projectName, procedureName, runParamsSecond, getResourceName())
@@ -272,28 +277,14 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
     }
 
     @Unroll
-    def 'update #updateAction change target to #newTarget'() {
+    def 'create with WLS target #wlstInstanceList, JMS target #jmsServerList'() {
         setup:
-        def jmsServerName = 'jmsServer1'
-        createJMSServer(jmsServerName)
-        createJMSServer(newTarget)
-        def subdeploymentName = 'Sub1'
+        def cfName = 'ConnectionFactoryWith Targets'
+        deleteConnectionFactory(jmsModuleName, cfName)
+        createJMSServer(jmsServers.first)
+        createJMSServer(jmsServers.second)
+        def subdeploymentName = cfName
         when:
-        def runParamsFirst = [
-                configname         : pluginConfigurationNames.correct,
-                cf_name            : connectionFactories.updated,
-                jndi_name          : jndiNames.recreateOld,
-                jms_module_name    : jmsModuleName,
-                cf_sharing_policy  : sharingPolicies.exclusive,
-                cf_client_id_policy: clientPolicies.restricted,
-                subdeployment_name : subdeploymentName,
-                jms_server_name    : jmsServerName
-        ]
-
-        def resultFirst = runTestedProcedure(projectName, procedureName, runParamsFirst, getResourceName())
-        assert resultFirst.outcome == 'success'
-
-        and:
         def runParamsSecond = [
                 configname         : pluginConfigurationNames.correct,
                 cf_name            : connectionFactories.updated,
@@ -301,9 +292,10 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
                 jms_module_name    : jmsModuleName,
                 cf_sharing_policy  : sharingPolicies.exclusive,
                 cf_client_id_policy: clientPolicies.restricted,
-                update_action      : updateAction,
+                update_action      : 'do_nothing',
                 subdeployment_name : subdeploymentName,
-                jms_server_name    : newTarget
+                jms_server_list    : jmsServerList,
+                wls_instance_list  : wlstInstanceList
         ]
 
         def resultSecond = runTestedProcedure(projectName, procedureName, runParamsSecond, getResourceName())
@@ -312,19 +304,22 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         logger.debug(resultSecond.logs)
         assert resultSecond.outcome == 'success'
 
-        def resultTargets = getSubdeploymentTargets(jmsModuleName, subdeploymentName)
-        logger.debug(resultTargets.logs)
-        assert resultTargets.logs.contains(newTarget)
+        // def resultTargets = getSubdeploymentTargets(jmsModuleName, subdeploymentName)
+        // logger.debug(resultTargets.logs)
+        // assert resultTargets.logs.contains(newTarget)
 
         cleanup:
         deleteConnectionFactory(jmsModuleName, connectionFactories.updated)
         deleteSubDeployment(jmsModuleName, subdeploymentName)
 
         where:
-        updateAction        | newTarget
-        'remove_and_create' | 'jmsServer2'
-        'selective_update'  | 'jmsServer1'
-    }
+        jmsServerList                              | wlstInstanceList
+        "${jmsServers.first}"                      | ""
+        "${jmsServers.second}"                     | 'AdminServer'
+        "${jmsServers.first}"                      | 'AdminServer'
+        ''                                         | 'AdminServer'
+        "${jmsServers.first}, ${jmsServers.second}"| 'AdminServer'
+     }
 
     def connectionFactoryExists(def moduleName, def name) {
         def code = """

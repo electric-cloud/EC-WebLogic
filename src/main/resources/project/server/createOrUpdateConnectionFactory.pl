@@ -43,7 +43,8 @@ sub main {
         'cf_xa_enabled',
         'jms_module_name',
         'subdeployment_name',
-        'jms_server_name',
+        'jms_server_list',
+        'wls_instance_list',
         'update_action',
         'additional_options'
     );

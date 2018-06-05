@@ -65,12 +65,12 @@ jmsModuleName = r'''
 [% jms_module_name %]
 '''.strip()
 
-jmsServerName = r'''
-[% jms_server_name %]
+jmsServerList = r'''
+[% jms_server_list %]
 '''.strip()
 
-serverName = r'''
-[% server_name %]
+wlsInstanceList = r'''
+[% wls_instance_list %]
 '''.strip()
 
 subdeploymentName = r'''
@@ -89,7 +89,6 @@ updateAction = readString(updateAction, 'do_nothing')
 connect(username, password, adminUrl)
 successMessage = ''
 
-
 # Subdeployment
 # Subdeployment must be created and the changes must be activated
 # Otherwise, the procedure will fail with "exception in prepare"
@@ -98,10 +97,18 @@ if not isEmpty(subdeploymentName):
     try:
         startChanges()
         jmsTargets = []
-        if not isEmpty(jmsServerName):
-            jmsTargets.append(getJMSTargetBean(jmsServerName))
-        jmsTarget = getJMSTargetBean(jmsServerName)
-        subdeployment = createOrUpdateSubdeployment(jmsModuleName, subdeploymentName, jmsTargetList = jmsTargets)
+        for jmsServerName in splitSeparatedString(jmsServerList):
+            if jmsServerName:
+                target = getJMSTargetBean(jmsServerName)
+                jmsTargets.append(target)
+
+        wlsTargets = []
+        for instanceName in splitSeparatedString(wlsInstanceList):
+            if instanceName:
+                wlsTargets.append(getTargetBean(instanceName))
+        if updateAction == 'remove_and_create':
+            deleteSubDeployment(jmsModuleName, subdeploymentName)
+        subdeployment = createOrUpdateSubdeployment(jmsModuleName, subdeploymentName, jmsTargetList = jmsTargets, targetList = wlsTargets, updateTargets = False)
     except Exception, e:
         discardAndExit(e, "Failed to create Subdeployment")
     commitChanges()
