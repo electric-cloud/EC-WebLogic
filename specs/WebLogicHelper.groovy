@@ -1,6 +1,8 @@
 import com.electriccloud.spec.PluginSpockTestSupport
 import groovy.json.*
 
+import javax.management.RuntimeErrorException
+
 class WebLogicHelper extends PluginSpockTestSupport {
     static final def HELPER_PROJECT = 'EC-WebLogic Specs Helper'
     static final def SUCCESS_RESPONSE = '200'
@@ -68,10 +70,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
         def username = getUsername()
         def password = getPassword()
         def pluginConfig = [
-            weblogic_url  : endpoint,
-            enable_named_sessions: 'true',
-            debug_level: '10',
-            wlst_path: getWlstPath(),
+                weblogic_url         : endpoint,
+                enable_named_sessions: 'true',
+                debug_level          : '10',
+                wlst_path            : getWlstPath(),
         ]
         def props = [confPath: 'weblogic_cfgs']
         if (System.getenv('RECREATE_CONFIG')) {
@@ -153,6 +155,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
     }
 
     def publishArtifact(String artifactName, String version, String resName) {
+        if (artifactExists(artifactName)) {
+            return
+        }
+
         File resource = new File(this.getClass().getResource("/resources/${resName}").toURI())
 
         String commanderServer = System.getProperty("COMMANDER_SERVER") ?: 'localhost'
@@ -205,6 +211,38 @@ class WebLogicHelper extends PluginSpockTestSupport {
                 ]
             )
         """, getResourceName())
+    }
+
+    def artifactExists(def artifactName) {
+//
+//        def versions = getArtifact('test:sample')
+//        logger.debug(versions.toString())
+//
+//        throw new RuntimeException("Hello")
+
+        dslFile 'dsl/artifactExists.dsl', [
+                projectName: HELPER_PROJECT,
+                resourceName: getResourceName(),
+                params     : [
+                        'artifactName': artifactName
+                ]
+        ]
+
+        def result = runProcedure("""
+           runProcedure(
+                projectName : '$HELPER_PROJECT',
+                procedureName: 'ArtifactExists',
+                actualParameter: [
+                        'artifactName': '$artifactName'
+                ]
+           )
+           """, getResourceName())
+
+        if (result.outcome && result.outcome == 'success') {
+            return true
+        }
+
+        return false
     }
 
     def checkUrl(String url) {
@@ -573,7 +611,6 @@ activate()
     }
 
 
-
     def ensureManagedServer(msName, port = '7999') {
         def code = """
 msName = '$msName'
@@ -596,7 +633,6 @@ else:
         def result = runWLST(code)
         assert result.outcome == 'success'
     }
-
 
 
     def ensureCluster(clName) {
@@ -636,7 +672,7 @@ except WLSTException, e:
         return notInEditTree
     }
 
-    def stringifyArray(def params){
+    def stringifyArray(def params) {
         def params_str_arr = []
         params.each() { k, v ->
             params_str_arr.push(k + " : '" + (v ?: '') + "'")
@@ -666,12 +702,12 @@ try {
         return workspaceResult
     }
 
-    def getJobUpperStepSummary(def jobId){
+    def getJobUpperStepSummary(def jobId) {
         assert jobId
         def summary = null
         def property = "/myJob/jobSteps/RunProcedure/summary"
         println "Trying to get the summary, property: $property, jobId: $jobId"
-        try{
+        try {
             summary = getJobProperty(property, jobId)
         } catch (Throwable e) {
             logger.error("Can't retrieve Upper Step Summary from the property: '$property'; check job: " + jobId)
