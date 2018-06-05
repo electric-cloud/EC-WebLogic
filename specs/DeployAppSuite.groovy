@@ -111,6 +111,7 @@ class DeployAppSuite extends WebLogicHelper {
         def artifactName = 'test:sample'
         def version = '1.0'
 
+        setupResource()
         createConfig(pluginConfigurationNames.correct)
 
         publishArtifact(artifactName, version, FILENAME)
@@ -189,12 +190,12 @@ class DeployAppSuite extends WebLogicHelper {
             def pageAfterDeploy = checkUrl(APPLICATION_PAGE_URL)
             assert pageAfterDeploy.code == SUCCESS_RESPONSE
         }
-        if (expectedSummaryMessage){
+        if (expectedSummaryMessage) {
             assert upperStepSummary.contains(expectedSummaryMessage)
         }
 
         where: 'The following params will be: '
-        configname                       | wlstabspath | appname          | apppath                       | targets       | is_library               | stage_mode | plan_path | deployment_plan | overwrite_deployment_plan | additional_options | archive_version | retire_gracefully | retire_timeout | version_identifier | upload | remote | expectedOutcome          | expectedSummaryMessage
+        configname                       | wlstabspath | appname          | apppath          | targets       | is_library               | stage_mode | plan_path | deployment_plan | overwrite_deployment_plan | additional_options | archive_version | retire_gracefully | retire_timeout | version_identifier | upload | remote | expectedOutcome          | expectedSummaryMessage
         // Simple positive
         pluginConfigurationNames.correct | wlstPath    | APPLICATION_NAME | APPLICATION_PATH | ''            | ''                       | ''         | ''        | ''              | ''                        | ''                 | ''              | ''                | ''             | ''                 | ''     | ''     | expectedOutcomes.success | ''
 

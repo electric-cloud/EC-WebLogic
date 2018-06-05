@@ -1,6 +1,4 @@
-import spock.lang.Shared
-import spock.lang.Unroll
-import spock.lang.IgnoreRest
+import spock.lang.*
 
 class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
     /**
@@ -88,14 +86,14 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
 
     @Shared
     def targets = [
-        default: 'AdminServer',
-        update : 'TestSpecServer',
-        single: 'AdminServer',
-        twoServers: 'AdminServer, ManagedServer1',
-        cluster: 'Cluster1',
-        nothing: '',
-        serverAndCluster: 'ManagedServer2, Cluster1',
-        managedServer: 'ManagedServer2'
+            default         : 'AdminServer',
+            update          : 'TestSpecServer',
+            single          : 'AdminServer',
+            twoServers      : 'AdminServer, ManagedServer1',
+            cluster         : 'Cluster1',
+            nothing         : '',
+            serverAndCluster: 'ManagedServer2, Cluster1',
+            managedServer   : 'ManagedServer2'
     ]
 
     @Shared
@@ -157,7 +155,7 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
      */
 
     @Unroll
-    def "Create and Update JMS Module. Positive - procedure with params (module_name: #jmsModuleName, target: #target, update action: #updateAction)"() {
+    def "Create and Update JMS Module. Positive - procedure with params (Module: #jmsModuleName, target: #target, update action: #updateAction)"() {
         setup: 'Define the parameters for Procedure running'
 
         def runParams = [
@@ -168,7 +166,7 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
         ]
 
         deleteJMSModule(jmsModuleName)
-        ensureManagedServer(target)
+        ensureManagedServer(target, '7999')
 
         if (updateAction) {
             createJMSModule(jmsModuleName, targets.default)
@@ -199,7 +197,7 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
         }
 
         if (expectedSummaryMessage) {
-            assert upperStepSummary == expectedSummaryMessage
+            assert upperStepSummary.contains(expectedSummaryMessage)
         }
 
         cleanup:
@@ -246,10 +244,10 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
         def outcome = result.outcome
         def debugLog = result.logs
 
-        println "Procedure log:\n$debugLog\n"
+        logger.debug("Procedure log:\n$debugLog\n")
 
         def upperStepSummary = getJobUpperStepSummary(result.jobId)
-        logger.info(upperStepSummary)
+        logger.debug("Summary: " + upperStepSummary)
 
         expect: 'Outcome and Upper Summary verification'
         assert result.outcome == expectedOutcome
@@ -260,8 +258,9 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
         if (expectedSummaryMessage) {
             assert upperStepSummary.contains(expectedSummaryMessage)
         }
+
         def expectedLogs = buildExpectedLogs(oldTargets, newTargets)
-        println expectedLogs
+        logger.debug("Expected log :" + expectedLogs)
         expectedLogs.each {
             assert debugLog.contains(it)
         }
@@ -270,9 +269,9 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
         deleteJMSModule(jmsModuleName)
 
         where: 'The following params will be: '
-        oldTargets         | newTargets
-        targets.default    | targets.twoServers
-        targets.default    | targets.cluster
+        oldTargets      | newTargets
+        targets.default | targets.twoServers
+        targets.default | targets.cluster
         // 'selective_update'              | targets.cluster    | targets.twoServers
         // 'remove_and_create'             | targets.cluster    | targets.serverAndCluster
         // 'selective_update'              | targets.nothing    | targets.managedServer
@@ -280,8 +279,6 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
     }
 
     def jmsModuleExists(def moduleName) {
-        // TODO implement
-        return true
         def code = """
 def getJMSSystemResourcePath(jms_module_name):
     return "/JMSSystemResources/%s"%(jms_module_name)
@@ -289,51 +286,25 @@ def getJMSSystemResourcePath(jms_module_name):
 def getJMSModulePath(jms_module_name):
     return "%s/JMSResource/%s"%(getJMSSystemResourcePath(jms_module_name),jms_module_name)
 
-def getConnectionFactoryPath(jms_module_name,cf_name):
-    return "/JMSSystemResources/%s/JMSResource/%s/ConnectionFactories/%s" % (jms_module_name, jms_module_name, cf_name)
-
-def connectionFactoryExists(jmsModuleName, cfName):
-    bean = getMBean('%s/ConnectionFactories/' % getJMSModulePath(jmsModuleName))
-    cfBean = getMBean(getConnectionFactoryPath(jmsModuleName, cfName))
-    if cfBean != None:
-        print("Connection Factory %s exists in module %s" % (cfName, jmsModuleName))
+def jmsModuleExists(jmsModuleName):
+    bean = getMBean(getJMSModulePath(jmsModuleName))
+    if bean != None:
+        print("JMS Module %s exists " % jmsModuleName)
     else:
-        print("Connection Factory %s does not exist in the module %s" % (cfName, jmsModuleName))
-
+        print("JMS Module %s does not exist" % jmsModuleName)
 
 moduleName = '$moduleName'
-cfName = '$name'
 
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 try:
-    connectionFactoryExists(moduleName, cfName)
+    jmsModuleExists(moduleName)
 except Exception, e:
    print("Exception", e)
 """
         def result = runWLST(code)
         assert result.outcome == 'success'
 
-        return (result.logs =~ /Connection Factory $name exists in module $moduleName/)
-    }
-
-    def createJMSModule(name) {
-        def code = """
-resource_name = '$name'
-target = 'AdminServer'
-connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
-cd('/')
-edit()
-if cmo.lookupJMSSystemResource(resource_name):
-    print "Resource %s alreay exists" % resource_name
-else:
-    startEdit()
-    cmo.createJMSSystemResource(resource_name)
-    cd("/JMSSystemResources/%s" % resource_name)
-    cmo.addTarget(getMBean("/Servers/%s" % target))
-    activate()
-"""
-        def result = runWLST(code)
-        assert result.outcome == 'success'
+        return (result.logs =~ /JMS Module $moduleName exists/)
     }
 
     def deleteConnectionFactory(moduleName, name) {
@@ -393,37 +364,11 @@ print "PROPERTY: %s" % get(propName)
         result
     }
 
-    def createJMSServer(name) {
-        def code = """
-connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
-
-jmsServerName = '$name'
-targetName = '${getAdminServerName()}'
-
-bean = getMBean('/JMSServers/%s' % jmsServerName)
-if bean == None:
-    edit()
-    startEdit()
-    cd('/')
-    print "Creating JMS Server %s" % jmsServerName
-    cmo.createJMSServer(jmsServerName)
-    cd("/JMSServers/%s" % jmsServerName)
-    cmo.addTarget(getMBean("/Servers/%s" % targetName))
-    activate()
-else:
-    print "JMS Server already exists"
-"""
-        def result = runWLST(code)
-        assert result.outcome == 'success'
-        result
-    }
-
     def prepareTargets(listString) {
         listString.split(/\s*,\s*/).each {
             if (it =~ /Cluster/) {
                 ensureCluster(it)
-            }
-            else {
+            } else {
                 ensureManagedServer(it)
             }
         }
@@ -460,8 +405,7 @@ else:
     def getTargetName(tg) {
         if (tg =~ /Cluster/) {
             return "Cluster \"${tg}\""
-        }
-        else {
+        } else {
             return "Server \"${tg}\""
         }
     }

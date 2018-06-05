@@ -68,7 +68,7 @@ class CreateOrUpdateJMSServer extends WebLogicHelper {
         given:
         def serverName = 'TestSpecServer'
         def jmsServer = randomize('SpecJMSServer')
-        ensureManagedServer(serverName)
+        ensureManagedServer(serverName, '7999')
         deleteJMSServer(jmsServer)
         def result = runProcedure("""
         runProcedure(

@@ -1,5 +1,4 @@
-import spock.lang.Shared
-import spock.lang.Unroll
+import spock.lang.*
 
 class StartAppSuite extends WebLogicHelper {
     /**
@@ -98,6 +97,7 @@ class StartAppSuite extends WebLogicHelper {
         def artifactName = 'test:sample'
         def version = '1.0'
 
+        setupResource()
         createConfig(pluginConfigurationNames.correct)
 
         publishArtifact(artifactName, version, FILENAME)

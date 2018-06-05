@@ -75,7 +75,7 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
         )
         """, WebLogicHelper.getResourceName())
         then:
-        SpockTestSupport.logger.debug(result.logs)
+        logger.debug(result.logs)
         assert result.outcome == 'success'
         assert result.logs =~ /Connection Factory $cfName does not exist/
         assert result.logs =~ /Created Connection Factory $cfName/
@@ -104,7 +104,7 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
         )
         """, WebLogicHelper.getResourceName())
         then:
-        SpockTestSupport.logger.debug(result.logs)
+        logger.debug(result.logs)
         assert result.outcome == 'success'
         assert result.logs =~ /Connection Factory $cfName does not exist/
         assert result.logs =~ /Created Connection Factory $cfName/
@@ -154,7 +154,7 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
         )
         """, WebLogicHelper.getResourceName()
         then:
-        SpockTestSupport.logger.debug(result.logs)
+        logger.debug(result.logs)
         assert result.outcome == 'success'
         cleanup:
         deleteConnectionFactory(jmsModuleName, cfName)
@@ -201,7 +201,7 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
         )
         """, WebLogicHelper.getResourceName()
         then:
-        SpockTestSupport.logger.info(result.logs)
+        logger.info(result.logs)
         assert result.outcome == 'success'
         assert result.logs =~ /Found Connection Factory $cfName in the module $jmsModuleName/
         assert result.logs =~ /Set JNDI Name to $newJNDI/

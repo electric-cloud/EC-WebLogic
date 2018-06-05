@@ -1,5 +1,4 @@
-import spock.lang.Shared
-import spock.lang.Unroll
+import spock.lang.*
 
 class DeleteConnectionFactorySuite extends WebLogicHelper {
     /**
