@@ -1,8 +1,6 @@
 import com.electriccloud.spec.PluginSpockTestSupport
 import groovy.json.*
 
-import javax.management.RuntimeErrorException
-
 class WebLogicHelper extends PluginSpockTestSupport {
     static final def HELPER_PROJECT = 'EC-WebLogic Specs Helper'
     static final def SUCCESS_RESPONSE = '200'
@@ -213,11 +211,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
     }
 
     def artifactExists(def artifactName) {
-//
-//        def versions = getArtifact('test:sample')
-//        logger.debug(versions.toString())
-//
-//        throw new RuntimeException("Hello")
 
         dslFile 'dsl/artifactExists.dsl', [
                 projectName: HELPER_PROJECT,
