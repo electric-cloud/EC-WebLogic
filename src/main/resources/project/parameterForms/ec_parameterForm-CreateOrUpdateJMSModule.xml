@@ -34,9 +34,9 @@
   </formElement>
   <formElement>
     <type>textarea</type>
-    <label>Default Target:</label>
-    <property>ecp_weblogic_target</property>
-    <documentation>The Server or cluster to which the JMS system module would be deployed.</documentation>
+    <label>Target WLS Instance List:</label>
+    <property>ecp_weblogic_target_list</property>
+    <documentation>Comma delimited set of Weblogic Server instances (Standalone or cluster) to which the JMS system module would be deployed.</documentation>
     <required>1</required>
   </formElement>
   <formElement>

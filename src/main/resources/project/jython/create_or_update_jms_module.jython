@@ -35,8 +35,8 @@ jmsModuleName = r'''
 [% ecp_weblogic_jms_module_name %]
 '''.strip()
 
-targetName = r'''
-[% ecp_weblogic_target %]
+targetListString = r'''
+[% ecp_weblogic_target_list %]
 '''.strip()
 
 updateAction = r'''
@@ -47,7 +47,6 @@ updateAction = readString(updateAction, 'do_nothing')
 successMessage = ''
 
 connect(username, password, adminUrl)
-
 
 try:
     startChanges()
@@ -73,11 +72,19 @@ try:
             update = True
             successMessage = 'Updated JMS System Module %s' % jmsModuleName
 
-    target = getTargetBean(targetName)
-    targets = [target.objectName]
-    cd(getJMSSystemResourcePath(jmsModuleName))
-    print_info("Setting target to %s" % target.objectName)
-    set('Targets', jarray.array(targets, ObjectName))
+    newTargetList = map(lambda x: getTargetBean(x),re.split('\\s*,\\s*', targetListString))
+    currentTargetList = jmsSystemResource.getTargets()
+    added, removed = rebuildTargetList(newTargetList, currentTargetList, jmsSystemResource)
+
+    if added:
+        successMessage += ', Added %s target(s)' % len(added)
+    else:
+        successMessage += ', No new targets were added'
+
+    if removed:
+        successMessage += ', Removed %s target(s)' % len(removed)
+    else:
+        successMessage += ', No targets were removed'
 
 except Exception, e:
     discardAndExit(e, "Failed to create JMS Module")
