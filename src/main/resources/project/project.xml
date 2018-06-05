@@ -8061,6 +8061,7 @@ Selective Update - The procedure would update existing JMS Topic for only parame
   </step>
 </procedure>
 
+
 <procedure>
   <description>Creates or updates JMS Module</description>
   <jobNameTemplate>weblogic-createOrUpdateJMSModule-$[jobId]</jobNameTemplate>
@@ -8068,26 +8069,11 @@ Selective Update - The procedure would update existing JMS Topic for only parame
   <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
   <propertySheet>
     <property>
-      <propertyName>ec_parameterForm</propertyName>
-      <value />
-      <expandable>1</expandable>
-    </property>
-    <property>
       <propertyName>ec_customEditorData</propertyName>
       <propertySheet>
         <property>
           <propertyName>parameters</propertyName>
           <propertySheet>
-            <property>
-              <propertyName>ecp_weblogic_target</propertyName>
-              <propertySheet>
-                <property>
-                  <propertyName>formType</propertyName>
-                  <value>standard</value>
-                  <expandable>1</expandable>
-                </property>
-              </propertySheet>
-            </property>
             <property>
               <propertyName>configname</propertyName>
               <propertySheet>
@@ -8100,6 +8086,16 @@ Selective Update - The procedure would update existing JMS Topic for only parame
             </property>
             <property>
               <propertyName>ecp_weblogic_update_action</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_target_list</propertyName>
               <propertySheet>
                 <property>
                   <propertyName>formType</propertyName>
@@ -8122,6 +8118,11 @@ Selective Update - The procedure would update existing JMS Topic for only parame
         </property>
       </propertySheet>
     </property>
+    <property>
+      <propertyName>ec_parameterForm</propertyName>
+      <value />
+      <expandable>1</expandable>
+    </property>
   </propertySheet>
   <formalParameter>
     <defaultValue />
@@ -8139,8 +8140,8 @@ Selective Update - The procedure would update existing JMS Topic for only parame
   </formalParameter>
   <formalParameter>
     <defaultValue />
-    <description>The Server or cluster to which the JMS system module would be deployed.</description>
-    <formalParameterName>ecp_weblogic_target</formalParameterName>
+    <description>Comma delimited set of Weblogic Server instances (Standalone or cluster) to which the JMS system module would be deployed.</description>
+    <formalParameterName>ecp_weblogic_target_list</formalParameterName>
     <required>1</required>
     <type>textarea</type>
   </formalParameter>

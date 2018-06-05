@@ -649,3 +649,34 @@ def targetName(targetBean, failIfNone = False):
         else:
             return "None"
     return str(targetBean.type) + ' "' + str(targetBean.name) + '"'
+
+
+def rebuildTargetList(newTargetList, currentTargetList, bean = None):
+    targetsToAdd = []
+    targetsToRemove = []
+
+    for target in newTargetList:
+        if not filter(lambda x: x.objectName == target.objectName, currentTargetList):
+            targetsToAdd.append(target)
+
+    for target in currentTargetList:
+        if not filter(lambda x: x.objectName == target.objectName, newTargetList):
+            targetsToRemove.append(target)
+
+    if bean == None:
+        return targetsToAdd, targetsToRemove
+
+    if targetsToAdd:
+        for target in targetsToAdd:
+            bean.addTarget(target)
+            print_info("Adding target %s to the list of targets" % targetName(target))
+    else:
+        print_info("No new targets to add")
+
+    if targetsToRemove:
+        for target in targetsToRemove:
+            bean.removeTarget(target)
+            print_info("Removing target %s from the list of targets" % targetName(target))
+    else:
+        print_info("No targets to remove")
+    return targetsToAdd, targetsToRemove
