@@ -86,14 +86,14 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
 
     @Shared
     def targets = [
-        default: 'AdminServer',
-        update : 'TestSpecServer',
-        single: 'AdminServer',
-        twoServers: 'AdminServer, ManagedServer1',
-        cluster: 'Cluster1',
-        nothing: '',
-        serverAndCluster: 'ManagedServer2, Cluster1',
-        managedServer: 'ManagedServer2'
+            default         : 'AdminServer',
+            update          : 'TestSpecServer',
+            single          : 'AdminServer',
+            twoServers      : 'AdminServer, ManagedServer1',
+            cluster         : 'Cluster1',
+            nothing         : '',
+            serverAndCluster: 'ManagedServer2, Cluster1',
+            managedServer   : 'ManagedServer2'
     ]
 
     @Shared
@@ -269,9 +269,9 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
         deleteJMSModule(jmsModuleName)
 
         where: 'The following params will be: '
-        oldTargets         | newTargets
-        targets.default    | targets.twoServers
-        targets.default    | targets.cluster
+        oldTargets      | newTargets
+        targets.default | targets.twoServers
+        targets.default | targets.cluster
         // 'selective_update'              | targets.cluster    | targets.twoServers
         // 'remove_and_create'             | targets.cluster    | targets.serverAndCluster
         // 'selective_update'              | targets.nothing    | targets.managedServer
@@ -368,8 +368,7 @@ print "PROPERTY: %s" % get(propName)
         listString.split(/\s*,\s*/).each {
             if (it =~ /Cluster/) {
                 ensureCluster(it)
-            }
-            else {
+            } else {
                 ensureManagedServer(it)
             }
         }
@@ -406,8 +405,7 @@ print "PROPERTY: %s" % get(propName)
     def getTargetName(tg) {
         if (tg =~ /Cluster/) {
             return "Cluster \"${tg}\""
-        }
-        else {
+        } else {
             return "Server \"${tg}\""
         }
     }
