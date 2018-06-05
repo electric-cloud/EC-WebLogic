@@ -11,7 +11,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
     static def FILENAME = 'sample.war'
     static def REMOTE_DIRECTORY = '/tmp'
     static def APPLICATION_NAME = 'sample'
-    static def APPLICATION_PATH = "$REMOTE_DIRECTORY/$FILENAME"
+    static def APPLICATION_PATH = new File(REMOTE_DIRECTORY, FILENAME)
     static def APPLICATION_PAGE_URL = "http://localhost:7001/sample/hello.jsp"
 
     static final def CONFIG_NAME = 'EC-Specs WebLogic Config'
@@ -197,16 +197,15 @@ class WebLogicHelper extends PluginSpockTestSupport {
                         'retrieveToDirectory'            : destinationDirectory,
                 ]
         ]
-//
 
         runProcedure("""
             runProcedure(
                 projectName : '$HELPER_PROJECT',
                 procedureName: 'Retrieve',
                 actualParameter: [
-                   'artifactName' : 'test:sample',
+                   'artifactName'        : '$artifactName',
                    'artifactVersionLocationProperty': '/myJob/retrievedArtifactVersions/retrieved',
-                   'overwrite' : 'update',
+                   'overwrite'           : 'update',
                    'retrieveToDirectory' : '${destinationDirectory}'
                 ]
             )
@@ -260,19 +259,15 @@ class WebLogicHelper extends PluginSpockTestSupport {
    )
 """, getResourceName())
 
-        logger.debug(result.toString())
+        logger.debug("CheckURL result: " + result.toString())
 
         def text = null
-
         def code = getJobProperty("/myJob/code", result.jobId)
         if (code == SUCCESS_RESPONSE) {
             text = getJobProperty("/myJob/text", result.jobId)
         }
 
-        [
-                code: code,
-                text: text
-        ]
+        [ code: code, text: text ]
     }
 
     def runTestedProcedure(def projectName, procedureName, def params, def resourceName) {
