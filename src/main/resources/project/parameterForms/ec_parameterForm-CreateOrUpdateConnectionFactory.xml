@@ -96,9 +96,17 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>JMS Server Name:</label>
-        <property>jms_server_name</property>
-        <documentation>JMS Server Name. Required only if you do not  want default targeting and instead want to use advanced targeting.</documentation>
+        <label>Target WLS Instance List:</label>
+        <property>wls_instance_list</property>
+        <documentation>Comma delimited set of Weblogic Server instances (Standalone or cluster) to which the Connection Factory would be targeted to. Required only if Subdeployment Name is specified.</documentation>
+        <required>0</required>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Target JMS Server List:</label>
+        <property>jms_server_list</property>
+        <documentation>Comma delimited set of JMS Servers to which the Connection Factory would be targeted to.
+Required only if Subdeployment Name is specified. </documentation>
         <required>0</required>
     </formElement>
     <formElement>

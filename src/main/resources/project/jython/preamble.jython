@@ -59,6 +59,10 @@ def print_debug(message):
     if debug_level >= 1:
         print "[WLST DEBUG] " + message
 
+def splitSeparatedString(string, delimeter = '\\s*,\\s*'):
+    retval = re.split(delimeter, string)
+    return retval
+
 def getJMSSystemResourcePath(jms_module_name):
     return "/JMSSystemResources/%s"%(jms_module_name)
 
@@ -501,7 +505,7 @@ def readString(value, default_value = ''):
     else:
         return default_value
 
-def createOrUpdateSubdeployment(jmsModuleName, subName, jmsTargetList = [], targetList = []):
+def createOrUpdateSubdeployment(jmsModuleName, subName, jmsTargetList = [], targetList = [], updateTargets = False):
     # Subdeployment bean
     subdeployment = getMBean(getSubDeploymentPath(jmsModuleName, subName))
     if subdeployment == None:
@@ -511,6 +515,9 @@ def createOrUpdateSubdeployment(jmsModuleName, subName, jmsTargetList = [], targ
             raise Exception('JMS Resource %s does not exist' % jmsModuleName)
         subdeployment = jmsModuleBean.createSubDeployment(subName)
         print_info("Created Subdeployment %s" % subName)
+    elif not updateTargets:
+        print_info("Subdeployment %s already exist, targets are NOT going to be updated" % subName)
+        return subdeployment
 
     # Targeting
     oldTargets = subdeployment.getTargets() # beans
@@ -527,6 +534,7 @@ def createOrUpdateSubdeployment(jmsModuleName, subName, jmsTargetList = [], targ
         if t.objectName in map(lambda x: x.objectName, oldJMSTargets):
             print_debug('JMS Target %s is both in old and new lists' % t.objectName)
         else:
+            print_info("Adding %s to the list of targets" % targetName(t))
             subdeployment.addTarget(t)
 
     for t in oldJMSTargets:
@@ -534,6 +542,7 @@ def createOrUpdateSubdeployment(jmsModuleName, subName, jmsTargetList = [], targ
             print_debug('JMS Target %s is both in old and new lists' % t.objectName)
         else:
             subdeployment.removeTarget(t)
+            print_info("Removing %s from the list of targets" % targetName(t))
 
     # Targets
     for t in targetList:
@@ -541,12 +550,14 @@ def createOrUpdateSubdeployment(jmsModuleName, subName, jmsTargetList = [], targ
             print_debug('Target %s is both in old and new lists' % t.objectName)
         else:
             subdeployment.addTarget(t)
+            print_info("Adding %s to the list of targets" % targetName(t))
 
     for t in oldTargets:
         if t.objectName in map(lambda x: x.objectName, targetList):
             print_debug('Target %s is both in old and new lists' % t.objectName)
         else:
             subdeployment.removeTarget(t)
+            print_info("Removing %s from the list of targets" % targetName(t))
 
     return subdeployment
 
@@ -628,6 +639,8 @@ def deleteJMSServer(jmsServerName):
         print_info("JMS Server %s does not exist" % jmsServerName)
 
 def getTargetBean(targetName):
+    if isEmpty(targetName):
+        raise Exception('Target name is not provided')
     bean = getMBean('/Servers/' + targetName)
     if bean == None:
         bean = getMBean('/Clusters/' + targetName)
@@ -637,6 +650,8 @@ def getTargetBean(targetName):
     return bean
 
 def getJMSTargetBean(targetName):
+    if isEmpty(targetName):
+        raise Exception('No JMS Server name is provided')
     bean = getMBean('/JMSServers/%s' % targetName)
     if bean == None:
         raise Exception('JMS Server %s does not exist' % targetName)
