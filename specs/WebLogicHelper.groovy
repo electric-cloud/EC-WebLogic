@@ -42,6 +42,12 @@ class WebLogicHelper extends PluginSpockTestSupport {
         resHost
     }
 
+    static def getResourcePort() {
+        def resPort = System.getenv('WEBLOGIC_RES_PORT')
+        assert resPort
+        resPort
+    }
+
     static def getUsername() {
         def username = System.getenv('WEBLOGIC_USERNAME')
         assert username
@@ -91,11 +97,12 @@ class WebLogicHelper extends PluginSpockTestSupport {
     def setupResource() {
         def host = getResourceHost()
         def name = getResourceName() ?: host
+        def port = getResourcePort()
 
         dsl """
           resource '$name', {
             hostName = '$host'
-            port = 7808
+            port     = '$port'
           }
         """
     }
