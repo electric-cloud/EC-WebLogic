@@ -447,7 +447,7 @@ else:
         stopChanges('y')
 
 """
-        def result = runWLST(code, 'CreateJMSModule')
+        def result = runWLST(code, "CreateJMSModule_$name")
         assert result.outcome == 'success'
     }
 
@@ -562,7 +562,7 @@ startEdit()
 deleteSubDeployment('$moduleName', '$subName')
 activate()
 """
-        def result = runWLST(code)
+        def result = runWLST(code, "DeleteSubDeployment_$moduleName_$subName")
         assert result.outcome == 'success'
     }
 
