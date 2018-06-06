@@ -39,7 +39,7 @@ sub main {
         'ecp_weblogic_jndi_name',
         'ecp_weblogic_jms_module_name',
         'ecp_weblogic_subdeployment_name',
-        'ecp_weblogic_jms_server_name',
+        'ecp_weblogic_target_jms_server',
         'ecp_weblogic_update_action',
         'ecp_weblogic_additional_options'
     );

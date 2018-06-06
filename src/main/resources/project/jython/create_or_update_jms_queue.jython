@@ -55,7 +55,29 @@ updateAction = r'''
 '''.strip()
 updateAction = readString(updateAction, 'do_nothing')
 
+jmsServerName = r'''
+[% ecp_weblogic_target_jms_server %]
+'''.strip()
+
 connect(username, password, adminUrl)
+
+
+# Subdeployment
+subdeployment = None
+if not isEmpty(subdeploymentName):
+    try:
+        startChanges()
+        jmsTargets = []
+        if jmsServerName:
+            target = getJMSTargetBean(jmsServerName)
+            jmsTargets.append(target)
+
+        if updateAction == REMOVE_AND_CREATE:
+            deleteSubDeployment(jmsModuleName, subdeploymentName)
+        subdeployment = createOrUpdateSubdeployment(jmsModuleName, subdeploymentName, jmsTargetList = jmsTargets, updateTargets = False)
+    except Exception, e:
+        discardAndExit(e, "Failed to create Subdeployment")
+    commitChanges()
 
 try:
     startChanges()
@@ -71,11 +93,11 @@ try:
         print_info("Created Queue %s" % queueName)
     else:
         print_info("Found JMS Queue %s in the module %s" % (queueName, jmsModuleName))
-        if updateAction == 'do_nothing':
+        if updateAction == DO_NOTHING:
             discardChanges()
             print_info("No action is required")
             sys.exit(0)
-        elif updateAction == 'remove_and_create':
+        elif updateAction == REMOVE_AND_CREATE:
             deleteJMSQueue(jmsModuleName, queueName)
             jmsQueue = jmsResource.createQueue(queueName)
             print_info("Created Queue %s" % queueName)
