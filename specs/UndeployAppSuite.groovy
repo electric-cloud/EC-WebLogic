@@ -143,7 +143,7 @@ class UndeployAppSuite extends WebLogicHelper {
         // Check that application is not installed and running already
         def pageBeforeUndeploy = checkUrl(APPLICATION_PAGE_URL)
         if (pageBeforeUndeploy.code == NOT_FOUND_RESPONSE) {
-            def deploy = DeployApplication(projectName, [
+            def deploy = deployApplication(projectName, [
                     configname : pluginConfigurationNames.correct,
                     wlstabspath: getWlstPath(),
                     appname    : appname,
