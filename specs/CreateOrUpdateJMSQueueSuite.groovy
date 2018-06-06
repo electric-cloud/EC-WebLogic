@@ -304,23 +304,4 @@ except Exception, e:
         def result = runWLST(code)
         assert result.outcome == 'success'
     }
-
-    def getConnectionFactoryProperty(module, cfName, group, propName) {
-        def code = """
-def getConnectionFactoryPath(jms_module_name,cf_name):
-    return "/JMSSystemResources/%s/JMSResource/%s/ConnectionFactories/%s" % (jms_module_name, jms_module_name, cf_name)
-
-module = '$module'
-cfName = '$cfName'
-group = '$group'
-propName = '$propName'
-connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
-cd(getConnectionFactoryPath(module, cfName) + '/' + group + '/' + cfName)
-print "PROPERTY: %s" % get(propName)
-"""
-        def result = runWLST(code)
-        assert result.outcome == 'success'
-        // TODO retrieve property
-        result
-    }
 }
