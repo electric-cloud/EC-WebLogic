@@ -207,6 +207,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
     }
 
     def publishArtifact(String artifactName, String version, String resName) {
+        if (artifactExists(artifactName)) {
+            return
+        }
+
         File resource = new File(this.getClass().getResource("/resources/${resName}").toURI())
 
         String commanderServer = System.getProperty("COMMANDER_SERVER") ?: 'localhost'
@@ -258,6 +262,33 @@ class WebLogicHelper extends PluginSpockTestSupport {
                 ]
             )
         """, getResourceName())
+    }
+
+    def artifactExists(def artifactName) {
+
+        dslFile 'dsl/artifactExists.dsl', [
+                projectName: HELPER_PROJECT,
+                resourceName: getResourceName(),
+                params     : [
+                        'artifactName': artifactName
+                ]
+        ]
+
+        def result = runProcedure("""
+           runProcedure(
+                projectName : '$HELPER_PROJECT',
+                procedureName: 'ArtifactExists',
+                actualParameter: [
+                        'artifactName': '$artifactName'
+                ]
+           )
+           """, getResourceName())
+
+        if (result.outcome && result.outcome == 'success') {
+            return true
+        }
+
+        return false
     }
 
     def checkUrl(String url) {
