@@ -34,8 +34,14 @@ if debug_level:
 else :
     debug_level = 0
 
+# Constants
 MINIMAL_VERSION_FOR_NAMED_SESSIONS = '12.2.1.1'
 MINIMAL_VERSION_FOR_REDEPLOYMENT = '12.0.0.0'
+
+DO_NOTHING = 'do_nothing'
+REMOVE_AND_CREATE = 'remove_and_create'
+SELECTIVE_UPDATE = 'selective_update'
+
 
 print "WebLogic version is: %s" % (version)
 
