@@ -65,7 +65,7 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
         )
         """, getResourceName())
         then:
-        SpockTestSupport.logger.debug(result.logs)
+        logger.debug(result.logs)
         assert result.outcome == 'success'
         assert result.logs =~ /Queue $queueName does not exist/
         assert result.logs =~ /Created Queue $queueName/
@@ -80,7 +80,7 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
 
     def 'create jms queue with additional options'() {
         given:
-        def queueName = SpockTestSupport.randomize('SpecQueue')
+        def queueName = randomize('SpecQueue')
         def jndiName = 'TestJNDIName'
         deleteJMSQueue(jmsModuleName, queueName)
         when:
@@ -97,7 +97,7 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
         )
         """, getResourceName())
         then:
-        SpockTestSupport.logger.debug(result.logs)
+        logger.debug(result.logs)
         assert result.outcome == 'success'
         assert result.logs =~ /Queue $queueName does not exist/
         assert result.logs =~ /Created Queue $queueName/
@@ -136,7 +136,7 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
         )
         """, getResourceName()
         then:
-        SpockTestSupport.logger.info(result.logs)
+        logger.info(result.logs)
         assert result.outcome == 'success'
         assert result.logs =~ /Set JNDI Name $newJNDIName/
         cleanup:
@@ -162,7 +162,7 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
         """, getResourceName())
         def jmsServerName = 'TestJMSServer'
         createJMSServer(jmsServerName)
-        def subdeploymentName = SpockTestSupport.randomize('TestSubdeployment')
+        def subdeploymentName = randomize('TestSubdeployment')
         createSubDeployment(jmsModuleName, subdeploymentName, jmsServerName)
         when:
         result = runProcedure """
@@ -179,7 +179,7 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
         )
         """, getResourceName()
         then:
-        SpockTestSupport.logger.info(result.logs)
+        logger.info(result.logs)
         assert result.outcome == 'success'
         cleanup:
         deleteJMSQueue(jmsModuleName, queueName)
@@ -188,7 +188,7 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
 
     def 'delete jms queue'() {
         given:
-        def queueName = SpockTestSupport.randomize('SpecQueue')
+        def queueName = randomize('SpecQueue')
         def result = runProcedure("""
         runProcedure(
             projectName: '$projectName',
@@ -212,13 +212,13 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
         """, getResourceName()
         then:
         assert result.outcome == 'success'
-        SpockTestSupport.logger.info(result.logs)
+        logger.info(result.logs)
         assert result.logs =~ /Removed JMS Queue $queueName from the module $jmsModuleName/
     }
 
     def "delete non-existing queue"() {
         given:
-        def queueName = SpockTestSupport.randomize('SpecQueue')
+        def queueName = randomize('SpecQueue')
         deleteJMSQueue(jmsModuleName, queueName)
         when:
         def result = runProcedure """
