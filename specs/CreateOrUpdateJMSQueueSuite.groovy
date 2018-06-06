@@ -2,11 +2,6 @@ import spock.lang.*
 
 class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
     /**
-     * Environments Variables
-     */
-    static String wlstPath = System.getenv('WEBLOGIC_WLST_PATH')
-
-    /**
      * Dsl Parameters
      */
 
@@ -164,9 +159,11 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
      */
 
     @Unroll
-    @Ignore
-    def "Create or Update JMS Queue (module_name: #jmsModuleName, target: #target, update action: #updateAction)"() {
+    def "Create or Update JMS Queue ( target: #target, update action: #updateAction)"() {
         setup: 'Define the parameters for Procedure running'
+
+        configname = configNames.correct
+        jmsModuleName = jmsModules.default
 
         jndiName = 'TestJNDIName'
 
@@ -177,7 +174,7 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
                 ecp_weblogic_jndi_name         : jndiName,
 
                 ecp_weblogic_subdeployment_name: subdeploymentName,
-                ecp_weblogic_jms_server_name   : target,
+//                ecp_weblogic_jms_server_name   : target,
                 ecp_weblogic_additional_options: additionalOptions,
                 ecp_weblogic_update_action     : updateAction,
         ]
@@ -206,7 +203,7 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
         expect: 'Outcome and Upper Summary verification'
         assert outcome == expectedOutcome
         if (expectedOutcome == expectedOutcomes.success && outcome == expectedOutcomes.success) {
-            assert jmsQueueExists(jmsQueueName)
+            assert jmsQueueExists(jmsModuleName, jmsQueueName)
         }
 
         if (expectedJobDetailedResult) {
@@ -219,25 +216,25 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
 
         cleanup:
         if (expectedOutcome == expectedOutcomes.success && outcome == expectedOutcomes.success) {
-            deleteJMSModule(jmsQueueName)
+            deleteJMSQueue(jmsModuleName, jmsQueueName)
         }
 
         where: 'The following params will be: '
-        configname          | jmsQueueName      | jmsModuleName      | updateAction        | target          | additionalOptions         | expectedOutcome          | expectedSummaryMessage | expectedJobDetailedResult
+        jmsQueueName      | updateAction                    | target          | additionalOptions             | expectedOutcome          | expectedSummaryMessage             | expectedJobDetailedResult
         // Create
-        configNames.correct | jmsQueues.default | jmsModules.default | updateActions.empty | targets.default | additionalOptionsIs.empty | expectedOutcomes.success | ''            | "Created Queue $jmsQueueName"
-//        configNames.correct | jmsQueues.default | jmsModules.default | updateActions.empty             | targets.default | additionalOptionsIs.correct   | expectedOutcomes.success | "Created JMS Queue $jmsModuleName" | ''
-//        configNames.correct | jmsQueues.default | jmsModules.default | updateActions.empty             | targets.default | additionalOptionsIs.incorrect | expectedOutcomes.error   | "Change me"                        | ''
+        jmsQueues.default | updateActions.empty             | targets.default | additionalOptionsIs.empty     | expectedOutcomes.success | ''                                 | "Created Queue $jmsQueueName"
+        // With additional options
+//        jmsQueues.default | updateActions.empty             | targets.default | additionalOptionsIs.correct   | expectedOutcomes.success | "Created JMS Queue $jmsQueueName"  | ''
+        // With incorrect additional options
+//        jmsQueues.default | updateActions.empty             | targets.default | additionalOptionsIs.incorrect | expectedOutcomes.error   | "Change me"                        | ''
 
         // Update
-//        configNames.correct | jmsQueues.update  | jmsModules.default | updateActions.do_nothing        | targets.update  | additionalOptionsIs.empty     | expectedOutcomes.success | ''                                 | "JMS Queue $jmsModuleName exists, no further action is required"
-//        configNames.correct | jmsQueues.update  | jmsModules.default | updateActions.selective_update  | targets.update  | additionalOptionsIs.empty     | expectedOutcomes.success | ''                                 | "Updated JMS Queue"
-//        configNames.correct | jmsQueues.update  | jmsModules.default | updateActions.remove_and_create | targets.update  | additionalOptionsIs.empty     | expectedOutcomes.success | ''                                 | "Recreated JMS Queue"
+//        jmsQueues.update  | updateActions.do_nothing        | targets.update  | additionalOptionsIs.empty     | expectedOutcomes.success | ''                                 | "JMS Queue $jmsQueueName exists, no further action is required"
+//        jmsQueues.update  | updateActions.selective_update  | targets.update  | additionalOptionsIs.empty     | expectedOutcomes.success | ''                                 | "Updated JMS Queue"
+//        jmsQueues.update  | updateActions.remove_and_create | targets.update  | additionalOptionsIs.empty     | expectedOutcomes.success | ''                                 | "Recreated JMS Queue"
     }
 
-    def jmsQueueExists(def queueName) {
-        // TODO implement
-        return true
+    def jmsQueueExists(def moduleName, def name) {
         def code = """
 def getJMSSystemResourcePath(jms_module_name):
     return "/JMSSystemResources/%s"%(jms_module_name)
@@ -245,31 +242,29 @@ def getJMSSystemResourcePath(jms_module_name):
 def getJMSModulePath(jms_module_name):
     return "%s/JMSResource/%s"%(getJMSSystemResourcePath(jms_module_name),jms_module_name)
 
-def getConnectionFactoryPath(jms_module_name,cf_name):
-    return "/JMSSystemResources/%s/JMSResource/%s/ConnectionFactories/%s" % (jms_module_name, jms_module_name, cf_name)
+def getJMSQueuePath(jms_module_name, queue):
+    return "/JMSSystemResources/%s/JMSResource/%s/Queues/%s" % (jms_module_name, jms_module_name, queue)
 
-def connectionFactoryExists(jmsModuleName, cfName):
-    bean = getMBean('%s/ConnectionFactories/' % getJMSModulePath(jmsModuleName))
-    cfBean = getMBean(getConnectionFactoryPath(jmsModuleName, cfName))
-    if cfBean != None:
-        print("Connection Factory %s exists in module %s" % (cfName, jmsModuleName))
+def jmsQueueExists(jmsModuleName, queueName):
+    queueBean = getMBean(getJMSQueuePath(jmsModuleName, queueName))
+    if queueBean != None:
+        print("JMS Queue %s exists in module %s" % (queueName, jmsModuleName))
     else:
-        print("Connection Factory %s does not exist in the module %s" % (cfName, jmsModuleName))
-
+        print("JMS Queue %s does not exist in the module %s" % (queueName, jmsModuleName))
 
 moduleName = '$moduleName'
-cfName = '$name'
+queueName = '$name'
 
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 try:
-    connectionFactoryExists(moduleName, cfName)
+    jmsQueueExists(moduleName, queueName)
 except Exception, e:
-   print("Exception", e)
+    print("Exception", e)
 """
         def result = runWLST(code)
         assert result.outcome == 'success'
 
-        return (result.logs =~ /Connection Factory $name exists in module $moduleName/)
+        return (result.logs =~ /JMS Queue $name exists in module $moduleName/)
     }
 
     def deleteJMSQueue(moduleName, name) {
