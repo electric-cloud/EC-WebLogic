@@ -7827,6 +7827,7 @@ Selective Update - The procedure would update existing Connection Factory for on
 
 
 
+
 <procedure>
   <description>Creates or updates JMS Topic</description>
   <jobNameTemplate>weblogic-createOrUpdateJMSTopic-$[jobId]</jobNameTemplate>
@@ -7834,13 +7835,18 @@ Selective Update - The procedure would update existing Connection Factory for on
   <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
   <propertySheet>
     <property>
+      <propertyName>ec_parameterForm</propertyName>
+      <value />
+      <expandable>1</expandable>
+    </property>
+    <property>
       <propertyName>ec_customEditorData</propertyName>
       <propertySheet>
         <property>
           <propertyName>parameters</propertyName>
           <propertySheet>
             <property>
-              <propertyName>ecp_weblogic_additional_options</propertyName>
+              <propertyName>ecp_weblogic_jndi_name</propertyName>
               <propertySheet>
                 <property>
                   <propertyName>formType</propertyName>
@@ -7880,27 +7886,37 @@ Selective Update - The procedure would update existing Connection Factory for on
               </propertySheet>
             </property>
             <property>
-              <propertyName>ecp_weblogic_jms_module_name</propertyName>
-              <propertySheet>
-                <property>
-                  <propertyName>formType</propertyName>
-                  <value>standard</value>
-                  <expandable>1</expandable>
-                </property>
-              </propertySheet>
-            </property>
-            <property>
-              <propertyName>ecp_weblogic_jndi_name</propertyName>
-              <propertySheet>
-                <property>
-                  <propertyName>formType</propertyName>
-                  <value>standard</value>
-                  <expandable>1</expandable>
-                </property>
-              </propertySheet>
-            </property>
-            <property>
               <propertyName>configname</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_target_jms_server</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_additional_options</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_jms_module_name</propertyName>
               <propertySheet>
                 <property>
                   <propertyName>formType</propertyName>
@@ -7912,11 +7928,6 @@ Selective Update - The procedure would update existing Connection Factory for on
           </propertySheet>
         </property>
       </propertySheet>
-    </property>
-    <property>
-      <propertyName>ec_parameterForm</propertyName>
-      <value />
-      <expandable>1</expandable>
     </property>
   </propertySheet>
   <formalParameter>
@@ -7955,6 +7966,14 @@ Selective Update - The procedure would update existing Connection Factory for on
     <description>Name of Subdeployment. Required in order to deploy the Topic. If this is not specified the Topic will not be usable.
 </description>
     <formalParameterName>ecp_weblogic_subdeployment_name</formalParameterName>
+    <required>0</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>JMS Server  to which the Topic  would be targeted to. Required only if Subdeployment Name is specified.
+</description>
+    <formalParameterName>ecp_weblogic_target_jms_server</formalParameterName>
     <required>0</required>
     <type>entry</type>
   </formalParameter>
