@@ -70,7 +70,7 @@ sub after_init_hook {
         $self->dbg("Dryrun enabled");
         $self->dryrun(1);
     }
-    print "Using plugin \@PLUGIN_NAME@\n";
+    print 'Using plugin @PLUGIN_NAME@' . "\n";
 }
 
 

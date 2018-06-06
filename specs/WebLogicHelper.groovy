@@ -43,7 +43,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
     }
 
     static def getResourcePort() {
-        def resPort = System.getenv('WEBLOGIC_RES_PORT')
+        def resPort = System.getenv('WEBLOGIC_RES_PORT') ?: '7800'
         assert resPort
         resPort
     }
@@ -107,7 +107,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         """
     }
 
-    def runWLST(code) {
+    def __runWLST(code) {
         code = code.trim()
         def resourceName = getResourceName()
         def procedureName = 'RunWLST'
@@ -132,6 +132,53 @@ class WebLogicHelper extends PluginSpockTestSupport {
                 procedureName: '${procedureName}',
                 actualParameter: [
                     code: '''$code'''
+                ]
+            )
+        """, resourceName)
+        result
+    }
+
+    def runWLST(code, jobNameTmpl = 'helperJob') {
+        code = code.trim()
+        def resourceName = getResourceName()
+        def shell = getWlstPath()
+        def procedureName = "RunWLST-${getResourceName()}"
+        def projectName = HELPER_PROJECT
+        dsl """
+            project '$projectName', {
+                procedure '${procedureName}', {
+
+                    jobNameTemplate = '\$[jobNameTmpl]-\$[jobId]'
+                    step 'runCommand', {
+                        subproject = '/plugins/EC-WebLogic/project'
+                        subprocedure = 'RunWLST'
+                        resourceName = '${getResourceName()}'
+                        actualParameter 'wlstabspath', '\$[shellToUse]'
+                        actualParameter 'scriptfilesource', 'newscriptfile'
+                        actualParameter 'scriptfile', '''\$[code]'''
+                    }
+
+                    formalParameter 'jobNameTmpl', {
+                        type = 'entry'
+                    }
+                    formalParameter 'code', {
+                        type = 'textarea'
+                    }
+
+                    formalParameter 'shellToUse', {
+                        type = 'entry'
+                    }
+                }
+            }
+        """
+        def result = runProcedure("""
+            runProcedure(
+                projectName: '${projectName}',
+                procedureName: '${procedureName}',
+                actualParameter: [
+                    code: '''$code''',
+                    shellToUse: '''$shell''',
+                    jobNameTmpl: '$jobNameTmpl'
                 ]
             )
         """, resourceName)
@@ -400,7 +447,7 @@ else:
         stopChanges('y')
 
 """
-        def result = runWLST(code)
+        def result = runWLST(code, 'CreateJMSModule')
         assert result.outcome == 'success'
     }
 
@@ -446,7 +493,7 @@ if bean == None:
 else:
     print "JMS Server already exists"
 """
-        def result = runWLST(code)
+        def result = runWLST(code, "CreateJMSServer_$name")
         assert result.outcome == 'success'
         result
     }
