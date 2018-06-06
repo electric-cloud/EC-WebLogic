@@ -35,7 +35,7 @@ sub main {
       my $params = $wl->get_params_as_hashref(
           'configname',
           'ecp_weblogic_jms_module_name',
-          'ecp_weblogic_target',
+          'ecp_weblogic_target_list',
           'ecp_weblogic_update_action'
       );
       my $cred = $wl->get_credentials( $params->{configname} );

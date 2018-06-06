@@ -9,7 +9,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
     static def FILENAME = 'sample.war'
     static def REMOTE_DIRECTORY = '/tmp'
     static def APPLICATION_NAME = 'sample'
-    static def APPLICATION_PATH = "$REMOTE_DIRECTORY/$FILENAME"
+    static def APPLICATION_PATH = new File(REMOTE_DIRECTORY, FILENAME)
     static def APPLICATION_PAGE_URL = "http://localhost:7001/sample/hello.jsp"
 
     static final def CONFIG_NAME = 'EC-Specs WebLogic Config'
@@ -68,10 +68,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
         def username = getUsername()
         def password = getPassword()
         def pluginConfig = [
-            weblogic_url  : endpoint,
-            enable_named_sessions: 'true',
-            debug_level: '10',
-            wlst_path: getWlstPath(),
+                weblogic_url         : endpoint,
+                enable_named_sessions: 'true',
+                debug_level          : '10',
+                wlst_path            : getWlstPath(),
         ]
         def props = [confPath: 'weblogic_cfgs']
         if (System.getenv('RECREATE_CONFIG')) {
@@ -191,16 +191,15 @@ class WebLogicHelper extends PluginSpockTestSupport {
                         'retrieveToDirectory'            : destinationDirectory,
                 ]
         ]
-//
 
         runProcedure("""
             runProcedure(
                 projectName : '$HELPER_PROJECT',
                 procedureName: 'Retrieve',
                 actualParameter: [
-                   'artifactName' : 'test:sample',
+                   'artifactName'        : '$artifactName',
                    'artifactVersionLocationProperty': '/myJob/retrievedArtifactVersions/retrieved',
-                   'overwrite' : 'update',
+                   'overwrite'           : 'update',
                    'retrieveToDirectory' : '${destinationDirectory}'
                 ]
             )
@@ -222,19 +221,15 @@ class WebLogicHelper extends PluginSpockTestSupport {
    )
 """, getResourceName())
 
-        logger.debug(result.toString())
+        logger.debug("CheckURL result: " + result.toString())
 
         def text = null
-
         def code = getJobProperty("/myJob/code", result.jobId)
         if (code == SUCCESS_RESPONSE) {
             text = getJobProperty("/myJob/text", result.jobId)
         }
 
-        [
-                code: code,
-                text: text
-        ]
+        [ code: code, text: text ]
     }
 
     def runTestedProcedure(def projectName, procedureName, def params, def resourceName) {
@@ -573,7 +568,6 @@ activate()
     }
 
 
-
     def ensureManagedServer(msName, port = '7999') {
         def code = """
 msName = '$msName'
@@ -596,7 +590,6 @@ else:
         def result = runWLST(code)
         assert result.outcome == 'success'
     }
-
 
 
     def ensureCluster(clName) {
@@ -636,7 +629,7 @@ except WLSTException, e:
         return notInEditTree
     }
 
-    def stringifyArray(def params){
+    def stringifyArray(def params) {
         def params_str_arr = []
         params.each() { k, v ->
             params_str_arr.push(k + " : '" + (v ?: '') + "'")
@@ -666,12 +659,12 @@ try {
         return workspaceResult
     }
 
-    def getJobUpperStepSummary(def jobId){
+    def getJobUpperStepSummary(def jobId) {
         assert jobId
         def summary = null
         def property = "/myJob/jobSteps/RunProcedure/summary"
         println "Trying to get the summary, property: $property, jobId: $jobId"
-        try{
+        try {
             summary = getJobProperty(property, jobId)
         } catch (Throwable e) {
             logger.error("Can't retrieve Upper Step Summary from the property: '$property'; check job: " + jobId)

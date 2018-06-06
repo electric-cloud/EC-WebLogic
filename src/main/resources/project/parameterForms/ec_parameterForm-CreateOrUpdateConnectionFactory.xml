@@ -20,6 +20,9 @@
     <formElement>
         <type>entry</type>
         <label>Configuration Name:</label>
+        <!-- Improvements for CEV-18687 -->
+        <configuration>1</configuration>
+        <!-- End of improvements for CEV-18687 -->
         <property>configname</property>
         <documentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</documentation>
         <htmlDocumentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="/commander/pages/@PLUGIN_NAME@/configurations">configuration page</a>.</htmlDocumentation>
@@ -93,9 +96,17 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>JMS Server Name:</label>
-        <property>jms_server_name</property>
-        <documentation>JMS Server Name. Required only if you do not  want default targeting and instead want to use advanced targeting.</documentation>
+        <label>Target WLS Instance List:</label>
+        <property>wls_instance_list</property>
+        <documentation>Comma delimited set of Weblogic Server instances (Standalone or cluster) to which the Connection Factory would be targeted to. Required only if Subdeployment Name is specified.</documentation>
+        <required>0</required>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Target JMS Server List:</label>
+        <property>jms_server_list</property>
+        <documentation>Comma delimited set of JMS Servers to which the Connection Factory would be targeted to.
+Required only if Subdeployment Name is specified. </documentation>
         <required>0</required>
     </formElement>
     <formElement>

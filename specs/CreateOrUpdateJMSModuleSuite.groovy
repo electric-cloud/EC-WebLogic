@@ -86,9 +86,16 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
 
     @Shared
     def targets = [
-            default: 'AdminServer',
-            update : 'TestSpecServer'
+            default         : 'AdminServer',
+            update          : 'TestSpecServer',
+            single          : 'AdminServer',
+            twoServers      : 'AdminServer, ManagedServer1',
+            cluster         : 'Cluster1',
+            nothing         : '',
+            serverAndCluster: 'ManagedServer2, Cluster1',
+            managedServer   : 'ManagedServer2'
     ]
+
     @Shared
     def updateActions = [
             empty            : '',
@@ -140,7 +147,7 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
      */
 
     def doCleanupSpec() {
-        deleteProject(projectName)
+        // deleteProject(projectName)
     }
 
     /**
@@ -155,7 +162,7 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
                 configname                  : configname,
                 ecp_weblogic_jms_module_name: jmsModuleName,
                 ecp_weblogic_update_action  : updateAction,
-                ecp_weblogic_target         : target
+                ecp_weblogic_target_list    : target
         ]
 
         deleteJMSModule(jmsModuleName)
@@ -190,7 +197,7 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
         }
 
         if (expectedSummaryMessage) {
-            assert upperStepSummary == expectedSummaryMessage
+            assert upperStepSummary.contains(expectedSummaryMessage)
         }
 
         cleanup:
@@ -209,10 +216,69 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
         configNames.correct | jmsModules.default + randomize(updateAction) | updateActions.remove_and_create | targets.update  | expectedOutcomes.success | ''                                         | "Recreated JMS System Module"
     }
 
+    @Unroll
+    def "Update JMS Module Targets. Positive - procedure with params (old targets: #oldTargets, new targets: #newTargets update action: #updateAction)"() {
+        setup: 'Define the parameters for Procedure running'
+        def configname = configNames.correct
+        def updateAction = 'selective_update'
+        def jmsModuleName = randomize('TargetList')
+        def expectedOutcome = expectedOutcomes.success
+        def runParams = [
+                configname                  : configname,
+                ecp_weblogic_jms_module_name: jmsModuleName,
+                ecp_weblogic_update_action  : updateAction,
+                ecp_weblogic_target_list    : newTargets
+        ]
+        // Create targets and create JMS module with them
+        deleteJMSModule(jmsModuleName)
+        prepareTargets(oldTargets)
+        prepareTargets(newTargets)
+        createJMSModule(jmsModuleName, oldTargets)
+        expectedSummaryMessage = buildExpectedSummary(oldTargets, newTargets)
+        when: 'Procedure runs: '
+
+        def result = runTestedProcedure(projectName, procedureName, runParams, getResourceName())
+
+        then: 'Wait until job run is completed: '
+
+        def outcome = result.outcome
+        def debugLog = result.logs
+
+        logger.debug("Procedure log:\n$debugLog\n")
+
+        def upperStepSummary = getJobUpperStepSummary(result.jobId)
+        logger.debug("Summary: " + upperStepSummary)
+
+        expect: 'Outcome and Upper Summary verification'
+        assert result.outcome == expectedOutcome
+        if (expectedOutcome == expectedOutcomes.success && outcome == expectedOutcomes.success) {
+            assert jmsModuleExists(jmsModuleName)
+        }
+
+        if (expectedSummaryMessage) {
+            assert upperStepSummary.contains(expectedSummaryMessage)
+        }
+
+        def expectedLogs = buildExpectedLogs(oldTargets, newTargets)
+        logger.debug("Expected log :" + expectedLogs)
+        expectedLogs.each {
+            assert debugLog.contains(it)
+        }
+
+        cleanup:
+        deleteJMSModule(jmsModuleName)
+
+        where: 'The following params will be: '
+        oldTargets      | newTargets
+        targets.default | targets.twoServers
+        targets.default | targets.cluster
+        // 'selective_update'              | targets.cluster    | targets.twoServers
+        // 'remove_and_create'             | targets.cluster    | targets.serverAndCluster
+        // 'selective_update'              | targets.nothing    | targets.managedServer
+        // 'remove_and_create'             | targets.nothing    | targets.cluster
+    }
 
     def jmsModuleExists(def moduleName) {
-        // TODO implement
-        return true
         def code = """
 def getJMSSystemResourcePath(jms_module_name):
     return "/JMSSystemResources/%s"%(jms_module_name)
@@ -220,51 +286,25 @@ def getJMSSystemResourcePath(jms_module_name):
 def getJMSModulePath(jms_module_name):
     return "%s/JMSResource/%s"%(getJMSSystemResourcePath(jms_module_name),jms_module_name)
 
-def getConnectionFactoryPath(jms_module_name,cf_name):
-    return "/JMSSystemResources/%s/JMSResource/%s/ConnectionFactories/%s" % (jms_module_name, jms_module_name, cf_name)
-
-def connectionFactoryExists(jmsModuleName, cfName):
-    bean = getMBean('%s/ConnectionFactories/' % getJMSModulePath(jmsModuleName))
-    cfBean = getMBean(getConnectionFactoryPath(jmsModuleName, cfName))
-    if cfBean != None:
-        print("Connection Factory %s exists in module %s" % (cfName, jmsModuleName))
+def jmsModuleExists(jmsModuleName):
+    bean = getMBean(getJMSModulePath(jmsModuleName))
+    if bean != None:
+        print("JMS Module %s exists " % jmsModuleName)
     else:
-        print("Connection Factory %s does not exist in the module %s" % (cfName, jmsModuleName))
-
+        print("JMS Module %s does not exist" % jmsModuleName)
 
 moduleName = '$moduleName'
-cfName = '$name'
 
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 try:
-    connectionFactoryExists(moduleName, cfName)
+    jmsModuleExists(moduleName)
 except Exception, e:
    print("Exception", e)
 """
         def result = runWLST(code)
         assert result.outcome == 'success'
 
-        return (result.logs =~ /Connection Factory $name exists in module $moduleName/)
-    }
-
-    def createJMSModule(name) {
-        def code = """
-resource_name = '$name'
-target = 'AdminServer'
-connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
-cd('/')
-edit()
-if cmo.lookupJMSSystemResource(resource_name):
-    print "Resource %s alreay exists" % resource_name
-else:
-    startEdit()
-    cmo.createJMSSystemResource(resource_name)
-    cd("/JMSSystemResources/%s" % resource_name)
-    cmo.addTarget(getMBean("/Servers/%s" % target))
-    activate()
-"""
-        def result = runWLST(code)
-        assert result.outcome == 'success'
+        return (result.logs =~ /JMS Module $moduleName exists/)
     }
 
     def deleteConnectionFactory(moduleName, name) {
@@ -324,29 +364,49 @@ print "PROPERTY: %s" % get(propName)
         result
     }
 
-    def createJMSServer(name) {
-        def code = """
-connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
-
-jmsServerName = '$name'
-targetName = '${getAdminServerName()}'
-
-bean = getMBean('/JMSServers/%s' % jmsServerName)
-if bean == None:
-    edit()
-    startEdit()
-    cd('/')
-    print "Creating JMS Server %s" % jmsServerName
-    cmo.createJMSServer(jmsServerName)
-    cd("/JMSServers/%s" % jmsServerName)
-    cmo.addTarget(getMBean("/Servers/%s" % targetName))
-    activate()
-else:
-    print "JMS Server already exists"
-"""
-        def result = runWLST(code)
-        assert result.outcome == 'success'
-        result
+    def prepareTargets(listString) {
+        listString.split(/\s*,\s*/).each {
+            if (it =~ /Cluster/) {
+                ensureCluster(it)
+            } else {
+                ensureManagedServer(it)
+            }
+        }
     }
 
+
+    def buildExpectedSummary(oldTargets, newTargets) {
+        def oldTargetsList = oldTargets.split(/\s*,\s*/)
+        def newTargetsList = newTargets.split(/\s*,\s*/)
+        def intersection = oldTargetsList.findAll { oldTg ->
+            newTargetsList.find { it == oldTg }
+        }.size()
+        def added = newTargetsList.size() - intersection
+        def removed = oldTargetsList.size() - intersection
+        def first = added ? "Added ${added} target(s)" : 'No new targets were added'
+        def second = removed ? "Removed ${removed} target(s)" : 'No targets were removed'
+        return "$first, $second"
+    }
+
+    def buildExpectedLogs(oldTargets, newTargets) {
+        def retval = []
+        newTargets.split(/\s*,\s*/).each { newTg ->
+            if (!oldTargets.split(/\s*,\s*/).find { it == newTg })
+                retval << "Adding target ${getTargetName(newTg)}"
+        }
+
+        oldTargets.split(/\s*,\s*/).each { oldTg ->
+            if (!newTargets.split(/\s*,\s*/).find { it == oldTg })
+                retval << "Removing target ${getTargetName(oldTg)}"
+        }
+        return retval
+    }
+
+    def getTargetName(tg) {
+        if (tg =~ /Cluster/) {
+            return "Cluster \"${tg}\""
+        } else {
+            return "Server \"${tg}\""
+        }
+    }
 }

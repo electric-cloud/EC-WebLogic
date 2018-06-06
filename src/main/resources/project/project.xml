@@ -7161,12 +7161,18 @@
 
 
 
+
 <procedure>
-  <description>Creates or updates a Connection Factory</description>
+  <description>Creates or updates Connection Factory</description>
   <jobNameTemplate>weblogic-createOrUpdateConnectionFactory-$[jobId]</jobNameTemplate>
   <procedureName>CreateOrUpdateConnectionFactory</procedureName>
   <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
   <propertySheet>
+    <property>
+      <propertyName>ec_parameterForm</propertyName>
+      <value />
+      <expandable>1</expandable>
+    </property>
     <property>
       <propertyName>ec_customEditorData</propertyName>
       <propertySheet>
@@ -7174,37 +7180,7 @@
           <propertyName>parameters</propertyName>
           <propertySheet>
             <property>
-              <propertyName>jms_module_name</propertyName>
-              <propertySheet>
-                <property>
-                  <propertyName>formType</propertyName>
-                  <value>standard</value>
-                  <expandable>1</expandable>
-                </property>
-              </propertySheet>
-            </property>
-            <property>
               <propertyName>subdeployment_name</propertyName>
-              <propertySheet>
-                <property>
-                  <propertyName>formType</propertyName>
-                  <value>standard</value>
-                  <expandable>1</expandable>
-                </property>
-              </propertySheet>
-            </property>
-            <property>
-              <propertyName>cf_sharing_policy</propertyName>
-              <propertySheet>
-                <property>
-                  <propertyName>formType</propertyName>
-                  <value>standard</value>
-                  <expandable>1</expandable>
-                </property>
-              </propertySheet>
-            </property>
-            <property>
-              <propertyName>additional_options</propertyName>
               <propertySheet>
                 <property>
                   <propertyName>formType</propertyName>
@@ -7224,7 +7200,17 @@
               </propertySheet>
             </property>
             <property>
-              <propertyName>cf_xa_enabled</propertyName>
+              <propertyName>jndi_name</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>additional_options</propertyName>
               <propertySheet>
                 <property>
                   <propertyName>formType</propertyName>
@@ -7244,16 +7230,6 @@
               </propertySheet>
             </property>
             <property>
-              <propertyName>cf_name</propertyName>
-              <propertySheet>
-                <property>
-                  <propertyName>formType</propertyName>
-                  <value>standard</value>
-                  <expandable>1</expandable>
-                </property>
-              </propertySheet>
-            </property>
-            <property>
               <propertyName>cf_client_id_policy</propertyName>
               <propertySheet>
                 <property>
@@ -7264,7 +7240,7 @@
               </propertySheet>
             </property>
             <property>
-              <propertyName>jms_server_name</propertyName>
+              <propertyName>wls_instance_list</propertyName>
               <propertySheet>
                 <property>
                   <propertyName>formType</propertyName>
@@ -7274,7 +7250,17 @@
               </propertySheet>
             </property>
             <property>
-              <propertyName>jndi_name</propertyName>
+              <propertyName>cf_sharing_policy</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>jms_module_name</propertyName>
               <propertySheet>
                 <property>
                   <propertyName>formType</propertyName>
@@ -7293,14 +7279,39 @@
                 </property>
               </propertySheet>
             </property>
+            <property>
+              <propertyName>cf_xa_enabled</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>jms_server_list</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>cf_name</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
           </propertySheet>
         </property>
       </propertySheet>
-    </property>
-    <property>
-      <propertyName>ec_parameterForm</propertyName>
-      <value />
-      <expandable>1</expandable>
     </property>
   </propertySheet>
   <formalParameter>
@@ -7370,8 +7381,16 @@
   </formalParameter>
   <formalParameter>
     <defaultValue />
-    <description>JMS Server Name. Required only if you do not  want default targeting and instead want to use advanced targeting.</description>
-    <formalParameterName>jms_server_name</formalParameterName>
+    <description>Comma delimited set of Weblogic Server instances (Standalone or cluster) to which the Connection Factory would be targeted to. Required only if Subdeployment Name is specified.</description>
+    <formalParameterName>wls_instance_list</formalParameterName>
+    <required>0</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>Comma delimited set of JMS Servers to which the Connection Factory would be targeted to.
+Required only if Subdeployment Name is specified. </description>
+    <formalParameterName>jms_server_list</formalParameterName>
     <required>0</required>
     <type>entry</type>
   </formalParameter>
@@ -8061,6 +8080,7 @@ Selective Update - The procedure would update existing JMS Topic for only parame
   </step>
 </procedure>
 
+
 <procedure>
   <description>Creates or updates JMS Module</description>
   <jobNameTemplate>weblogic-createOrUpdateJMSModule-$[jobId]</jobNameTemplate>
@@ -8068,26 +8088,11 @@ Selective Update - The procedure would update existing JMS Topic for only parame
   <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
   <propertySheet>
     <property>
-      <propertyName>ec_parameterForm</propertyName>
-      <value />
-      <expandable>1</expandable>
-    </property>
-    <property>
       <propertyName>ec_customEditorData</propertyName>
       <propertySheet>
         <property>
           <propertyName>parameters</propertyName>
           <propertySheet>
-            <property>
-              <propertyName>ecp_weblogic_target</propertyName>
-              <propertySheet>
-                <property>
-                  <propertyName>formType</propertyName>
-                  <value>standard</value>
-                  <expandable>1</expandable>
-                </property>
-              </propertySheet>
-            </property>
             <property>
               <propertyName>configname</propertyName>
               <propertySheet>
@@ -8100,6 +8105,16 @@ Selective Update - The procedure would update existing JMS Topic for only parame
             </property>
             <property>
               <propertyName>ecp_weblogic_update_action</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_target_list</propertyName>
               <propertySheet>
                 <property>
                   <propertyName>formType</propertyName>
@@ -8122,6 +8137,11 @@ Selective Update - The procedure would update existing JMS Topic for only parame
         </property>
       </propertySheet>
     </property>
+    <property>
+      <propertyName>ec_parameterForm</propertyName>
+      <value />
+      <expandable>1</expandable>
+    </property>
   </propertySheet>
   <formalParameter>
     <defaultValue />
@@ -8139,8 +8159,8 @@ Selective Update - The procedure would update existing JMS Topic for only parame
   </formalParameter>
   <formalParameter>
     <defaultValue />
-    <description>The Server or cluster to which the JMS system module would be deployed.</description>
-    <formalParameterName>ecp_weblogic_target</formalParameterName>
+    <description>Comma delimited set of Weblogic Server instances (Standalone or cluster) to which the JMS system module would be deployed.</description>
+    <formalParameterName>ecp_weblogic_target_list</formalParameterName>
     <required>1</required>
     <type>textarea</type>
   </formalParameter>
