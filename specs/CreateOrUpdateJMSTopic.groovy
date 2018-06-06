@@ -14,7 +14,8 @@ class CreateOrUpdateJMSTopic extends WebLogicHelper {
         ecp_weblogic_subdeployment_name: '',
         ecp_weblogic_update_action: 'do_nothing',
         ecp_weblogic_additional_options: '',
-        ecp_weblogic_jndi_name: ''
+        ecp_weblogic_jndi_name: '',
+        ecp_weblogic_target_jms_server: ''
     ]
 
     def doSetupSpec() {

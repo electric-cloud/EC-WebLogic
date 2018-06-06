@@ -45,6 +45,7 @@ jmsModuleName = r'''
 subdeploymentName = r'''
 [% ecp_weblogic_subdeployment_name %]
 '''.strip()
+
 additionalOptions = r'''
 [% ecp_weblogic_additional_options %]
 '''.strip()
@@ -53,7 +54,28 @@ updateAction = readString(r'''
 [% ecp_weblogic_update_action %]
 ''', 'do_nothing')
 
+jmsServerName = r'''
+[% ecp_weblogic_target_jms_server %]
+'''.strip()
+
 connect(username, password, adminUrl)
+
+# Subdeployment
+subdeployment = None
+if not isEmpty(subdeploymentName):
+    try:
+        startChanges()
+        jmsTargets = []
+        if jmsServerName:
+            target = getJMSTargetBean(jmsServerName)
+            jmsTargets.append(target)
+
+        if updateAction == REMOVE_AND_CREATE:
+            deleteSubDeployment(jmsModuleName, subdeploymentName)
+        subdeployment = createOrUpdateSubdeployment(jmsModuleName, subdeploymentName, jmsTargetList = jmsTargets, updateTargets = False)
+    except Exception, e:
+        discardAndExit(e, "Failed to create Subdeployment for JMS Topic")
+    commitChanges()
 
 try:
     startChanges()
@@ -69,11 +91,11 @@ try:
         print_info("Created Topic %s" % topicName)
     else:
         print_info("Found JMS Topic %s in the module %s" % (topicName, jmsModuleName))
-        if updateAction == 'do_nothing':
+        if updateAction == DO_NOTHING:
             discardChanges()
             print_info("No action is required")
             sys.exit(0)
-        elif updateAction == 'remove_and_create':
+        elif updateAction == REMOVE_AND_CREATE:
             deleteJMSTopic(jmsModuleName, topicName)
             jmsTopic = jmsResource.createTopic(topicName)
             print_info("Created Topic %s" % topicName)
