@@ -97,7 +97,7 @@ class StopAppSuite extends WebLogicHelper {
         setupResource()
         createConfig(pluginConfigurationNames.correct)
 
-        def deployed = DeployApplication(projectName,
+        def deployed = deployApplication(projectName,
                 [
                         configname : CONFIG_NAME,
                         wlstabspath: wlstPath,
@@ -116,7 +116,7 @@ class StopAppSuite extends WebLogicHelper {
      */
 
     def doCleanupSpec() {
-        UndeployApplication(projectName,
+        undeployApplication(projectName,
                 [
                         configname : CONFIG_NAME,
                         wlstabspath: wlstPath,
@@ -143,7 +143,7 @@ class StopAppSuite extends WebLogicHelper {
                 version_identifier: version_identifier
         ]
 
-        StartApplication(projectName, [
+        startApplication(projectName, [
                 configname : configname,
                 appname    : appname,
                 wlstabspath: wlstabspath,

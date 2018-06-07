@@ -15,15 +15,21 @@ use warnings;
 
 use ElectricCommander;
 my $ec = ElectricCommander->new();
+use Data::Dumper;
+
+my $name = '$[artifactName]';
 
 $ec->abortOnError(0);
+my $path = $ec->getArtifact($name);
 
-eval {
-  $ec->getArtifact(\'$[artifactName]\');
-  print "Artifact exists";
-} or do {
-  print "Not exists";
-};
+# Message will appear only on error
+if (my $message = $path->findvalue('//error/message')){
+  print "ERROR: $message\n";
+}
+else {
+  print "Artifact '$name' exists in repository\n";
+}
+
 
 exit 0;
 

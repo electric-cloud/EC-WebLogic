@@ -287,11 +287,8 @@ class WebLogicHelper extends PluginSpockTestSupport {
            )
            """, getResourceName())
 
-        if (result.outcome && result.outcome == 'success') {
-            return true
-        }
-
-        return false
+        logger.debug("ArtifactExists logs:" + result.logs)
+        return result.logs.contains("Artifact '$artifactName' exists in repository")
     }
 
     def checkUrl(String url) {
@@ -352,7 +349,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         return result
     }
 
-    def UndeployApplication(String projectName, def params) {
+    def undeployApplication(String projectName, def params) {
         deleteProject(projectName)
         dslFile 'dsl/procedures.dsl', [
                 projectName  : projectName,
@@ -375,7 +372,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         return result
     }
 
-    def DeployApplication(def projectName, def params) {
+    def deployApplication(def projectName, def params) {
         def artifactName = 'test:sample'
         def version = '1.0'
 
@@ -406,7 +403,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         return result
     }
 
-    def StartApplication(def projectName, def params) {
+    def startApplication(def projectName, def params) {
         dslFile 'dsl/procedures.dsl', [
                 projectName  : projectName,
                 procedureName: 'StartApp',
@@ -431,7 +428,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         return result
     }
 
-    def StopApplication(def projectName, def params) {
+    def stopApplication(def projectName, def params) {
         dslFile 'dsl/procedures.dsl', [
                 projectName  : projectName,
                 procedureName: 'StopApp',

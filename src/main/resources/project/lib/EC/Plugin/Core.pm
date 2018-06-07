@@ -388,7 +388,6 @@ it will return credentials {user => 'username', password=>'coolpassword'}
 sub get_credentials {
     my ($self, $config_name, $config_rows, $cfgs_path) = @_;
 
-    print "Running it\n";
     if ($self->{_credentials} && ref $self->{_credentials} eq 'HASH' && %{$self->{_credentials}}) {
         return $self->{_credentials};
     }
@@ -676,6 +675,7 @@ Prints result if core debug level >= specified debug level
 sub out {
     my ($self, $debug_level, @msg) = @_;
 
+    $debug_level = 1 unless $debug_level;
     # protection from dumb typos
     $debug_level =~ m/^\d+$/s or do {
         $debug_level = 1;
@@ -765,7 +765,7 @@ sub get_params_as_hashref {
         $retval->{$param_name} = trim_input($param);
     }
     for my $name (sort keys %$retval) {
-        $self->out(0, qq{Got parameter "$name" with value "$retval->{$name}"\n});
+        $self->out(1, qq{Got parameter "$name" with value "$retval->{$name}"\n});
     }
     return $retval;
 }
