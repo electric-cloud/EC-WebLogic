@@ -247,6 +247,8 @@ class WebLogicHelper extends PluginSpockTestSupport {
                         'artifactVersionLocationProperty': '/myJob/retrievedArtifactVersions/retrieved',
                         'overwrite'                      : 'update',
 //                        'retrieveToDirectory'            : destinationDirectory,
+                        'versionRange'                   : '1.0'
+
                 ]
         ]
 
@@ -255,12 +257,17 @@ class WebLogicHelper extends PluginSpockTestSupport {
                 projectName : '$HELPER_PROJECT',
                 procedureName: 'Retrieve',
                 actualParameter: [
-                   'artifactName'                   : '$artifactName',
+                   'artifactName'                   : '$artifactName:',
                    'artifactVersionLocationProperty': '/myJob/retrievedArtifactVersions/retrieved',
-                   'overwrite'                      : 'update'
+                   'overwrite'                      : 'update',
+                   'versionRange'                   : '1.0'
                 ]
             )
         """, getResourceName())
+
+        if (result.outcome != 'success'){
+            throw new RuntimeException("Can't download artifact: ${result.logs}")
+        }
 
         def cacheDirMatch = (result.logs =~ /cacheDirectory: (.*)/)
 
@@ -268,13 +275,13 @@ class WebLogicHelper extends PluginSpockTestSupport {
             throw new RuntimeException("Cache dir is not found")
         }
 
-        def cacheDirPath = cacheDirMatch[0][1]
+        String cacheDirPath = cacheDirMatch[0][1]
 
         if (!cacheDirPath){
             throw new RuntimeException("Cache dir is not found")
         }
 
-        return cacheDirPath
+        return cacheDirPath.replace('\\', '\\\\\\\\')
     }
 
     def artifactExists(def artifactName) {
