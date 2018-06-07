@@ -3,6 +3,7 @@ package ignored
 import com.electriccloud.spec.SpockTestSupport
 import spock.lang.*
 
+@Ignore
 class CreateOrUpdateConnectionFactory extends WebLogicHelper {
     static def projectName = 'EC-WebLogic Specs CreateOrUpdateConnectionFactory'
     static def jmsModuleName = 'TestJMSModule'

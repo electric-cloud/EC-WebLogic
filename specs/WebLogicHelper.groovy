@@ -1,5 +1,6 @@
 import com.electriccloud.spec.PluginSpockTestSupport
 import groovy.json.*
+import spock.util.concurrent.PollingConditions
 
 class WebLogicHelper extends PluginSpockTestSupport {
     static final def HELPER_PROJECT = 'EC-WebLogic Specs Helper'
@@ -74,10 +75,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
         def username = getUsername()
         def password = getPassword()
         def pluginConfig = [
-            weblogic_url         : endpoint,
-            enable_named_sessions: 'true',
-            debug_level          : '10',
-            wlst_path            : getWlstPath(),
+                weblogic_url         : endpoint,
+                enable_named_sessions: 'true',
+                debug_level          : '0',
+                wlst_path            : getWlstPath(),
         ]
         def props = [confPath: 'weblogic_cfgs']
         if (System.getenv('RECREATE_CONFIG')) {
@@ -105,6 +106,8 @@ class WebLogicHelper extends PluginSpockTestSupport {
             port     = '$port'
           }
         """
+        sleep(10 * 1000)
+        // Giving some rest to container
     }
 
     def __runWLST(code) {
@@ -181,7 +184,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
                     jobNameTmpl: '$jobNameTmpl'
                 ]
             )
-        """, resourceName)
+        """, resourceName, 120, 10)
         result
     }
 
@@ -357,9 +360,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
                 projectName: '$projectName',
                 procedureName: '$procedureName',
                 actualParameter: $params_str_arr
-
             )
-                """, resourceName
+                """, resourceName,
+                180, // timeout
+                30  // initialDelay
         )
         return result
     }
@@ -610,7 +614,7 @@ startEdit()
 deleteSubDeployment('$moduleName', '$subName')
 activate()
 """
-        def result = runWLST(code, "DeleteSubDeployment_$moduleName_$subName")
+        def result = runWLST(code, "DeleteSubDeployment_${moduleName}_${subName}")
         assert result.outcome == 'success'
     }
 
@@ -624,7 +628,7 @@ jndiName = get('JNDIName')
 subdeployment = get('SubDeploymentName')
 print 'JSON{"jndiName": "%s", "subdeploymentName": "%s"}/JSON' % (jndiName, subdeployment)
 """
-        def result = runWLST(code)
+        def result = runWLST(code, "getQueue_$queue")
         assert result.outcome == 'success'
         def group = (result.logs =~ /JSON(\{.+?\})\/JSON/)
         def json = group[0][1]
@@ -639,9 +643,9 @@ topic = '$topic'
 cd('/JMSSystemResources/%s/JMSResource/%s/Topics/%s' % (module, module, topic))
 jndiName = get('JNDIName')
 subdeployment = get('SubDeploymentName')
-print 'JSON{"jndiName": "%s", "subdeploymentName": "%s"}/JSON' % (jndiName, subdeployment)
+print 'JSON' + '{"jndiName": "%s", "subdeploymentName": "%s"}/JSON' % (jndiName, subdeployment)
 """
-        def result = runWLST(code)
+        def result = runWLST(code, "GetJMSTopic_$topic")
         assert result.outcome == 'success'
         def group = (result.logs =~ /JSON(\{.+?\})\/JSON/)
         def json = group[0][1]
@@ -773,6 +777,21 @@ try {
         }
         return summary
     }
+
+    def runProcedure(dslString, resourceName = null, timeout = 120, initialDelay = 0) {
+        assert dslString
+        def result = dsl(dslString)
+
+        PollingConditions poll = new PollingConditions(timeout: timeout, initialDelay: initialDelay, factor: 2)
+        poll.eventually {
+            jobStatus(result.jobId).status == 'completed'
+        }
+
+        def logs = readJobLogs(result.jobId, resourceName)
+        def outcome = jobStatus(result.jobId).outcome
+        [logs: logs, outcome: outcome, jobId: result.jobId]
+    }
+
 
     def deployJMSTestApplication(targetServer) {
         String artifactName = 'test:jms'

@@ -3,6 +3,7 @@ package ignored
 import com.electriccloud.spec.SpockTestSupport
 import spock.lang.*
 
+@Ignore
 class CreateOrUpdateJMSModule extends WebLogicHelper {
     static def projectName = 'EC-WebLogic Specs CreateOrUpdateJMSModule'
     static def configName = 'EC-Specs WebLogic Config'

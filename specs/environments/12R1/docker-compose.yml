@@ -23,7 +23,7 @@ services:
     restart: always
 
   weblogic:
-    image: electricflow/weblogic:12.2.1.3-generic
+    image: electricflow/weblogic:10.3.6-generic
     ports:
       - "7001:7001"
       - "7808:7808"

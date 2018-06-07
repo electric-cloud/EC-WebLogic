@@ -44,9 +44,10 @@ class CreateOrUpdateJMSTopic extends WebLogicHelper {
     }
 
     def doCleanupSpec() {
-        deleteProject(projectName)
+        // deleteProject(projectName)
     }
 
+    @Unroll
     def 'create jms topic'() {
         given:
         def topicName = 'SpecTopic'
@@ -61,6 +62,7 @@ class CreateOrUpdateJMSTopic extends WebLogicHelper {
                 ecp_weblogic_jms_module_name: '$jmsModuleName',
                 ecp_weblogic_jndi_name: '$jndiName',
                 ecp_weblogic_jms_topic_name: '$topicName',
+                ecp_weblogic_additional_options: '$additionalOptions'
             ]
         )
         """, getResourceName())
@@ -74,6 +76,8 @@ class CreateOrUpdateJMSTopic extends WebLogicHelper {
         assert topic.subdeploymentName == topicName
         cleanup:
         deleteJMSTopic(jmsModuleName, topicName)
+        where:
+        additionalOptions << ['MaximumMessageSize=100', 'Thresholds.MessagesLow=10000']
     }
 
     def 'update jms topic'() {
@@ -120,6 +124,9 @@ class CreateOrUpdateJMSTopic extends WebLogicHelper {
         def oldJNDIName = 'TestJNDIName'
         def newJNDIName = 'NewJNDIName'
         deleteJMSTopic(jmsModuleName, topicName)
+        def subdeploymentName = 'Sub1'
+        createJMSServer(oldTarget)
+        createJMSServer(newTarget)
         def result = runProcedure("""
         runProcedure(
             projectName: '$projectName',
@@ -128,13 +135,12 @@ class CreateOrUpdateJMSTopic extends WebLogicHelper {
                 ecp_weblogic_jms_module_name: '$jmsModuleName',
                 ecp_weblogic_jndi_name: '$oldJNDIName',
                 ecp_weblogic_jms_topic_name: '$topicName',
+                ecp_weblogic_subdeployment_name: '$subdeploymentName',
+                ecp_weblogic_jms_server_name: '$oldTarget'
             ]
         )
         """, getResourceName())
-        def jmsServerName = 'TestJMSServer'
-        createJMSServer(jmsServerName)
-        def subdeploymentName = randomize('TestSubdeployment')
-        createSubDeployment(jmsModuleName, subdeploymentName, jmsServerName)
+
         when:
         result = runProcedure("""
         runProcedure(
@@ -146,6 +152,7 @@ class CreateOrUpdateJMSTopic extends WebLogicHelper {
                 ecp_weblogic_jms_topic_name: '$topicName',
                 ecp_weblogic_update_action: 'remove_and_create',
                 ecp_weblogic_subdeployment_name: '$subdeploymentName',
+                ecp_weblogic_jms_server_name: '$newTarget'
             ]
         )
         """, getResourceName())
@@ -155,6 +162,9 @@ class CreateOrUpdateJMSTopic extends WebLogicHelper {
         cleanup:
         deleteJMSTopic(jmsModuleName, topicName)
         deleteSubDeployment(jmsModuleName, subdeploymentName)
+        where:
+        oldTarget   | newTarget
+        'jmsServer1'| 'jmsServer2'
     }
 
     def 'delete jms topic'() {
@@ -240,7 +250,7 @@ except Exception, e:
     stopEdit('y')
 
 """
-        def result = runWLST(code)
+        def result = runWLST(code, "DeleteJMSTopic_$name")
         assert result.outcome == 'success'
     }
 
