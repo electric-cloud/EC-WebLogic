@@ -285,8 +285,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
            """, getResourceName())
 
         logger.debug("ArtifactExists logs:" + result.logs)
-
-        return !result.logs.contains("Artifact '$artifactName' does not exist")
+        return result.logs.contains("Artifact '$artifactName' exists in repository")
     }
 
     def checkUrl(String url) {
