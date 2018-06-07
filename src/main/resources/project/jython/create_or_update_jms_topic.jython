@@ -60,6 +60,7 @@ jmsServerName = r'''
 
 connect(username, password, adminUrl)
 
+successMessage = ''
 # Subdeployment
 subdeployment = None
 if not isEmpty(subdeploymentName):
@@ -89,24 +90,29 @@ try:
         print_info("JMS Topic %s does not exist" % topicName)
         jmsTopic = jmsResource.createTopic(topicName)
         print_info("Created Topic %s" % topicName)
+        successMessage = 'Created JMS Topic %s' % topicName
     else:
         print_info("Found JMS Topic %s in the module %s" % (topicName, jmsModuleName))
         if updateAction == DO_NOTHING:
             discardChanges()
+            print_summary('JMS Topic %s already exists, no further action is required' % topicName)
             print_info("No action is required")
             sys.exit(0)
         elif updateAction == REMOVE_AND_CREATE:
             deleteJMSTopic(jmsModuleName, topicName)
             jmsTopic = jmsResource.createTopic(topicName)
             print_info("Created Topic %s" % topicName)
+            successMessage = 'Recreated JMS Topic %s' % topicName
         else:
             update = True
             print_info("Doing selective update")
+            successMessage = 'Updated JMS Topic %s' % topicName
 
     cd(getJMSTopicPath(jmsModuleName, topicName))
     if get('JNDIName') != jndiName:
         set('JNDIName', jndiName)
         print_info('Set JNDI Name %s' % jndiName)
+        successMessage += ', Set JNDI Name'
     else:
         print_info("JNDI Name is not changed")
 
@@ -114,6 +120,7 @@ try:
         if get('SubDeploymentName') != subdeploymentName:
             set('SubDeploymentName', subdeploymentName)
             print_info("Set subdeployment name to %s" % subdeploymentName)
+            successMessage += ', Set SubDeployment Name'
         else:
             print_info("Subdeployment has not changed")
 
@@ -135,3 +142,5 @@ except Exception, e:
 
 # eveything is fine, commiting
 commitChanges()
+if successMessage != '':
+    print_summary(successMessage)
