@@ -178,7 +178,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
             cf_sharing_policy          : cf_sharing_policy,
             cf_client_id_policy        : cf_client_id_policy,
             jms_module_name            : jms_module_name,
-//                ecp_weblogic_target_list   : 'AdminServer',
+            ecp_weblogic_target_list   : 'AdminServer',
             cf_max_messages_per_session: cf_max_messages_per_session,
             cf_xa_enabled              : cf_xa_enabled,
             subdeployment_name         : subdeployment_name,
