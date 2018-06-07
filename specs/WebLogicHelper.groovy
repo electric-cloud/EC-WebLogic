@@ -1,5 +1,6 @@
 import com.electriccloud.spec.PluginSpockTestSupport
 import groovy.json.*
+import spock.util.concurrent.PollingConditions
 
 class WebLogicHelper extends PluginSpockTestSupport {
     static final def HELPER_PROJECT = 'EC-WebLogic Specs Helper'
@@ -770,7 +771,7 @@ try {
             sleep(initialDelay * 1000)
         }
 
-        PollingConditions poll = createPoll(timeout)
+        PollingConditions poll = new PollingConditions(timeout: timeout, initialDelay: initialDelay, factor: 1.5)
         poll.eventually {
             jobStatus(result.jobId).status == 'completed'
         }
