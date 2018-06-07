@@ -16,7 +16,7 @@
 
 -->
 <editor>
-    <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateOrUpdateConnectionFactory.xml</help>
+    <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateOrUpdateJMSQueue</help>
     <formElement>
         <type>entry</type>
         <label>Configuration Name:</label>
@@ -40,7 +40,7 @@
         <type>entry</type>
         <label>JMS Module Name:</label>
         <property>ecp_weblogic_jms_module_name</property>
-        <documentation>Name of the JMS module in which the JMS Queue is created. If there is already a JMS Queue with the specified name, it will be updated.
+        <documentation>Name of the JMS module in which the JMS Queue is created. If there is already a JMS Queue with the specified name, it will be updated. The specified JMS Module should exist, if the module does not exist, the procedure will fail.
 </documentation>
         <required>1</required>
     </formElement>
@@ -74,9 +74,15 @@
         <property>ecp_weblogic_update_action</property>
         <documentation>This parameter controls as to what the Update Action should be when a Connection Factory with the same name exists:
 Do Nothing  (Default) -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
-Remove and Create - The procedure would remove existing Connection Factory and recreate it based on new parameters passed.
-Selective Update - The procedure would update existing Connection Factory for only parameters that we have designed to be updatable out of the box, based on what we think makes sense.
+Remove and Create - The procedure would remove existing JMS Queue and recreate it based on new parameters passed.
+Selective Update - The procedure would update existing JMS Queue for only parameters that we have designed to be updatable out of the box, based on what we think makes sense.
 </documentation>
+        <htmlDocumentation>
+This parameter controls as to what the Update Action should be when a JMS Queue with the same name exists:<br/>
+<b>Do Nothing  (Default)</b> -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.<br/>
+<b>Remove and Create</b> - The procedure would remove existing JMS Queue and recreate it based on new parameters passed.<br/>
+<b>Selective Update</b> - The procedure would update existing JMS Queue. The parameters for selective update are <b>JNDI Name</b> and <b>Subdeployment Name</b>.
+        </htmlDocumentation>
         <required>0</required>
         <option>
             <name>Do Nothing</name>
@@ -96,7 +102,7 @@ Selective Update - The procedure would update existing Connection Factory for on
         <type>textarea</type>
         <label>Additional Options:</label>
         <required>0</required>
-        <documentation>Use this option to pass related parameters that pertain to Delivery, Client, Transaction or Flow Control.</documentation>
+        <documentation>Use this option to specify general or advanced parameters, message thresholds and quota, message delivery overrides, message logging and message delivery failure options, e.g., MaximumMessageSize=1024. Parameters should be in the form of key=value pairs.</documentation>
         <property>ecp_weblogic_additional_options</property>
     </formElement>
 </editor>

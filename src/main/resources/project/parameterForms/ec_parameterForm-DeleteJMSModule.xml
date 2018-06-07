@@ -32,7 +32,7 @@
     <type>entry</type>
     <label>JMS Module Name:</label>
     <property>ecp_weblogic_jms_module_name</property>
-    <documentation>Unique name of the JMS Module that needs to deleted.</documentation>
+    <documentation>Unique name of the JMS Module that needs to be deleted.</documentation>
     <required>1</required>
   </formElement>
 </editor>

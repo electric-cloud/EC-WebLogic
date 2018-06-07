@@ -48,7 +48,7 @@ sub out {
         map {s/$password/********/gms;$_} @message;
     }
     $level ||= 1;
-    return $self->SUPER::out(1, @message);
+    return $self->SUPER::out($level, @message);
 }
 
 
@@ -112,7 +112,8 @@ sub get_credentials {
         'weblogic_cfgs');
 
     if (defined $cred->{debug_level}) {
-        $self->debug_level($cred->{debug_level});
+        my $level = $cred->{debug_level} ? int($cred->{debug_level}) : 0;
+        $self->debug_level($level + 1);
         $self->out(3, "Debug level set to ", $self->debug_level())
     }
 

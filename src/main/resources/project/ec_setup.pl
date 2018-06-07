@@ -496,7 +496,7 @@ $batch->deleteProperty(
     \%createOrUpdateJMSTopic,      \%deleteJMSTopic,
     \%createOrUpdateJMSModule,     \%deleteJMSModule,
     \%createOrUpdateJMSModuleSubdeployment, \%deleteJMSModuleSubdeployment,
-    \%createOrUpdateJMSServer, \%deleteJMSServer
+    \%createOrUpdateJMSServer, \%deleteJMSServer, \%deleteJMSQueue
 );
 
 if ( $upgradeAction eq "upgrade" ) {
