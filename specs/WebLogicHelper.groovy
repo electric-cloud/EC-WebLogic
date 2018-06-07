@@ -183,7 +183,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
                     jobNameTmpl: '$jobNameTmpl'
                 ]
             )
-        """, resourceName)
+        """, resourceName, 120, 10)
         result
     }
 
@@ -344,7 +344,9 @@ class WebLogicHelper extends PluginSpockTestSupport {
                 actualParameter: $params_str_arr
 
             )
-                """, resourceName
+                """, resourceName,
+                120, // timeout
+                30  // initialDelay
         )
         return result
     }
@@ -758,4 +760,24 @@ try {
         }
         return summary
     }
+
+    def runProcedure(dslString, resourceName = null, timeout = 120, initialDelay = 0) {
+        assert dslString
+        def result = dsl(dslString)
+
+        if (initialDelay) {
+            logger.debug("Waiting for $initialDelay...")
+            sleep(initialDelay * 1000)
+        }
+
+        PollingConditions poll = createPoll(timeout)
+        poll.eventually {
+            jobStatus(result.jobId).status == 'completed'
+        }
+
+        def logs = readJobLogs(result.jobId, resourceName)
+        def outcome = jobStatus(result.jobId).outcome
+        [logs: logs, outcome: outcome, jobId: result.jobId]
+    }
+
 }
