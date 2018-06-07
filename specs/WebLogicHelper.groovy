@@ -257,7 +257,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
                 projectName : '$HELPER_PROJECT',
                 procedureName: 'Retrieve',
                 actualParameter: [
-                   'artifactName'                   : '$artifactName:',
+                   'artifactName'                   : '$artifactName',
                    'artifactVersionLocationProperty': '/myJob/retrievedArtifactVersions/retrieved',
                    'overwrite'                      : 'update',
                    'versionRange'                   : '1.0'
