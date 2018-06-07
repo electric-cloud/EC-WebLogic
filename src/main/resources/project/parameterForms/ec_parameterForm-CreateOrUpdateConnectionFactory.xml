@@ -16,7 +16,7 @@
 
 -->
 <editor>
-    <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateOrUpdateConnectionFactory.xml</help>
+    <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateOrUpdateConnectionFactory</help>
     <formElement>
         <type>entry</type>
         <label>Configuration Name:</label>
@@ -98,7 +98,12 @@
         <type>entry</type>
         <label>Target WLS Instance List:</label>
         <property>wls_instance_list</property>
-        <documentation>Comma delimited set of Weblogic Server instances (Standalone or cluster) to which the Connection Factory would be targeted to. Required only if Subdeployment Name is specified.</documentation>
+        <documentation>Comma delimited set of Weblogic Server instances (Standalone or cluster) to which the Connection Factory would be targeted to.
+        Required only if Subdeployment Name is specified.</documentation>
+        <htmlDocumentation>
+        Comma delimited set of Weblogic Server instances (Standalone or cluster) to which the Connection Factory would be targeted to.<br/>
+        Required only if Subdeployment Name is specified.
+        </htmlDocumentation>
         <required>0</required>
     </formElement>
     <formElement>
@@ -118,6 +123,12 @@ Do Nothing  (Default) -  The procedure will take no action upon an update (i.e.,
 Remove and Create - The procedure would remove existing Connection Factory and recreate it based on new parameters passed.
 Selective Update - The procedure would update existing Connection Factory for only parameters that we have designed to be updatable out of the box, based on what we think makes sense.
 </documentation>
+        <htmlDocumentation>
+This parameter controls as to what the Update Action should be when a Connection Factory with the same name exists:<br/>
+<b>Do Nothing  (Default)</b> -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.<br/>
+<b>Remove and Create</b> - The procedure would remove existing Connection Factory and recreate it based on new parameters passed.<br/>
+<b>Selective Update</b> - The procedure would update existing Connection Factory. The parameters for selective update are <b>JNDI Name</b> and <b>Subdeployment Name</b>.
+        </htmlDocumentation>
         <required>0</required>
         <option>
             <name>Do Nothing</name>
@@ -137,7 +148,12 @@ Selective Update - The procedure would update existing Connection Factory for on
         <type>textarea</type>
         <label>Additional Options:</label>
         <required>0</required>
-        <documentation>Use this option to pass related parameters that pertain to Delivery, Client, Transaction or Flow Control.</documentation>
+        <documentation>Use this option to pass related parameters that pertain to Delivery, Client, Transaction or Flow Control. E.g., DefaultDeliveryParams.DefaultPriority=5</documentation>
+        <htmlDocumentation>
+Use this option to pass related parameters that pertain to Delivery, Client, Transaction or Flow Control. E.g.,
+<pre>DefaultDeliveryParams.DefaultPriority=5</pre>
+<!-- TODO other samples and where to get them-->
+        </htmlDocumentation>
         <property>additional_options</property>
     </formElement>
 </editor>
