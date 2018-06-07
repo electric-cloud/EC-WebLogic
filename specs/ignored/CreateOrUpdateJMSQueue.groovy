@@ -1,6 +1,7 @@
 import com.electriccloud.spec.SpockTestSupport
 import spock.lang.*
 
+@Ignore
 class CreateOrUpdateJMSQueue extends WebLogicHelper {
     static def projectName = 'EC-WebLogic Specs CreateOrUpdateJMSQueue'
     static def jmsModuleName = 'TestJMSModule'

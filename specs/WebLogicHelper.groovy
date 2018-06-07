@@ -77,7 +77,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         def pluginConfig = [
                 weblogic_url         : endpoint,
                 enable_named_sessions: 'true',
-                debug_level          : '10',
+                debug_level          : '0',
                 wlst_path            : getWlstPath(),
         ]
         def props = [confPath: 'weblogic_cfgs']
@@ -340,10 +340,9 @@ class WebLogicHelper extends PluginSpockTestSupport {
                 projectName: '$projectName',
                 procedureName: '$procedureName',
                 actualParameter: $params_str_arr
-
             )
                 """, resourceName,
-                120, // timeout
+                180, // timeout
                 30  // initialDelay
         )
         return result
@@ -609,7 +608,7 @@ jndiName = get('JNDIName')
 subdeployment = get('SubDeploymentName')
 print 'JSON{"jndiName": "%s", "subdeploymentName": "%s"}/JSON' % (jndiName, subdeployment)
 """
-        def result = runWLST(code)
+        def result = runWLST(code, "getQueue_$queue")
         assert result.outcome == 'success'
         def group = (result.logs =~ /JSON(\{.+?\})\/JSON/)
         def json = group[0][1]
@@ -624,9 +623,9 @@ topic = '$topic'
 cd('/JMSSystemResources/%s/JMSResource/%s/Topics/%s' % (module, module, topic))
 jndiName = get('JNDIName')
 subdeployment = get('SubDeploymentName')
-print 'JSON{"jndiName": "%s", "subdeploymentName": "%s"}/JSON' % (jndiName, subdeployment)
+print 'JSON' + '{"jndiName": "%s", "subdeploymentName": "%s"}/JSON' % (jndiName, subdeployment)
 """
-        def result = runWLST(code)
+        def result = runWLST(code, "GetJMSTopic_$topic")
         assert result.outcome == 'success'
         def group = (result.logs =~ /JSON(\{.+?\})\/JSON/)
         def json = group[0][1]
@@ -763,12 +762,7 @@ try {
         assert dslString
         def result = dsl(dslString)
 
-        if (initialDelay) {
-            logger.debug("Waiting for $initialDelay...")
-            sleep(initialDelay * 1000)
-        }
-
-        PollingConditions poll = new PollingConditions(timeout: timeout, initialDelay: initialDelay, factor: 1.5)
+        PollingConditions poll = new PollingConditions(timeout: timeout, initialDelay: initialDelay, factor: 2)
         poll.eventually {
             jobStatus(result.jobId).status == 'completed'
         }
