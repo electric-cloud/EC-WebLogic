@@ -15,15 +15,12 @@ use warnings;
 
 use ElectricCommander;
 my $ec = ElectricCommander->new();
+use Data::Dumper;
 
 $ec->abortOnError(0);
+my $path = $ec->getArtifact(\'$[artifactName]\');
 
-eval {
-  $ec->getArtifact(\'$[artifactName]\');
-  print "Artifact exists";
-} or do {
-  print "Not exists";
-};
+print $path->findvalue('//message');
 
 exit 0;
 

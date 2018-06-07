@@ -103,7 +103,7 @@ class StartAppSuite extends WebLogicHelper {
         publishArtifact(artifactName, version, FILENAME)
         downloadArtifact(artifactName, REMOTE_DIRECTORY, getResourceName())
 
-        DeployApplication(projectName,
+        deployApplication(projectName,
                 [
                         configname : CONFIG_NAME,
                         wlstabspath: getWlstPath(),
@@ -114,7 +114,7 @@ class StartAppSuite extends WebLogicHelper {
                 ]
         )
 
-        StopApplication(projectName,
+        stopApplication(projectName,
                 [
                         configname : CONFIG_NAME,
                         wlstabspath: getWlstPath(),
@@ -177,7 +177,7 @@ class StartAppSuite extends WebLogicHelper {
 
         cleanup: 'Stop application if start was successful'
         if (expectedOutcome == expectedOutcomes.success && outcome == expectedOutcomes.success) {
-            StopApplication(projectName, [
+            stopApplication(projectName, [
                     configname        : configname,
                     appname           : appname,
                     wlstabspath       : wlstabspath,
