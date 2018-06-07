@@ -264,7 +264,17 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
         def cacheDirMatch = (result.logs =~ /cacheDirectory: (.*)/)
 
-        return cacheDirMatch[0][1]
+        if (!cacheDirMatch.hasGroup()){
+            throw new RuntimeException("Cache dir is not found")
+        }
+
+        def cacheDirPath = cacheDirMatch[0][1]
+
+        if (!cacheDirPath){
+            throw new RuntimeException("Cache dir is not found")
+        }
+
+        return cacheDirPath
     }
 
     def artifactExists(def artifactName) {
@@ -755,5 +765,22 @@ try {
             logger.error("Can't retrieve Upper Step Summary from the property: '$property'; check job: " + jobId)
         }
         return summary
+    }
+
+    def deployJMSTestApplication(targetServer) {
+        String artifactName = 'test:jms'
+        String appName = 'SampleJMSApplication'
+
+        publishArtifact(artifactName, '1.0', getResourceName())
+        def path = downloadArtifact(artifactName, getResourceName())
+
+        deployApplication(HELPER_PROJECT, [
+                configname : CONFIG_NAME,
+                wlstabspath: getWlstPath(),
+                appname    : appName,
+                apppath    : path,
+                targets    : targetServer,
+                is_library : ""
+        ])
     }
 }
