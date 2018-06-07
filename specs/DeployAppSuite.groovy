@@ -79,7 +79,7 @@ class DeployAppSuite extends WebLogicHelper {
     def configname
     def wlstabspath
     def appname
-    def apppath
+    def static apppath
     def targets
 
     //optional parameters
@@ -115,7 +115,8 @@ class DeployAppSuite extends WebLogicHelper {
         createConfig(pluginConfigurationNames.correct)
 
         publishArtifact(artifactName, version, FILENAME)
-        downloadArtifact(artifactName, REMOTE_DIRECTORY, getResourceName())
+        String path = downloadArtifact(artifactName, getResourceName())
+        apppath = new File(path, FILENAME)
     }
 
     /**
@@ -195,15 +196,15 @@ class DeployAppSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        configname                       | wlstabspath | appname          | apppath          | targets       | is_library               | stage_mode | plan_path | deployment_plan | overwrite_deployment_plan | additional_options | archive_version | retire_gracefully | retire_timeout | version_identifier | upload | remote | expectedOutcome          | expectedSummaryMessage
+        configname                       | wlstabspath | appname          | targets       | is_library               | expectedOutcome          | expectedSummaryMessage
         // Simple positive
-        pluginConfigurationNames.correct | wlstPath    | APPLICATION_NAME | APPLICATION_PATH | ''            | ''                       | ''         | ''        | ''              | ''                        | ''                 | ''              | ''                | ''             | ''                 | ''     | ''     | expectedOutcomes.success | ''
+        pluginConfigurationNames.correct | wlstPath    | APPLICATION_NAME | ''            | ''                       | expectedOutcomes.success | ''
 
         // with TargetServerSpecified
-        pluginConfigurationNames.correct | wlstPath    | APPLICATION_NAME | APPLICATION_PATH | 'AdminServer' | checkBoxValues.unchecked | ''         | ''        | ''              | ''                        | ''                 | ''              | ''                | ''             | ''                 | ''     | ''     | expectedOutcomes.success | ''
+        pluginConfigurationNames.correct | wlstPath    | APPLICATION_NAME | 'AdminServer' | checkBoxValues.unchecked | expectedOutcomes.success | ''
 
         // Empty wlst path should return "File  doesn't exist"
-        pluginConfigurationNames.correct | ''          | APPLICATION_NAME | APPLICATION_PATH | ''            | checkBoxValues.unchecked | ''         | ''        | ''              | ''                        | ''                 | ''              | ''                | ''             | ''                 | ''     | ''     | expectedOutcomes.error   | expectedSummaryMessages.file_not_exists
+        pluginConfigurationNames.correct | ''          | APPLICATION_NAME | ''            | checkBoxValues.unchecked | expectedOutcomes.error   | expectedSummaryMessages.file_not_exists
 
     }
 

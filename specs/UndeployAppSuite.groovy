@@ -93,6 +93,9 @@ class UndeployAppSuite extends WebLogicHelper {
     def give_up
     def additional_options
 
+    // This should be saved for deployApplication procedure
+    def static apppath
+
     // expected results
     def expectedOutcome
     def expectedSummaryMessage
@@ -112,7 +115,7 @@ class UndeployAppSuite extends WebLogicHelper {
         createConfig(pluginConfigurationNames.correct)
 
         publishArtifact(artifactName, version, FILENAME)
-        downloadArtifact(artifactName, REMOTE_DIRECTORY, getResourceName())
+        apppath = downloadArtifact(artifactName, getResourceName())
     }
 
     /**
@@ -147,7 +150,7 @@ class UndeployAppSuite extends WebLogicHelper {
                     configname : pluginConfigurationNames.correct,
                     wlstabspath: getWlstPath(),
                     appname    : appname,
-                    apppath    : APPLICATION_PATH,
+                    apppath    : apppath,
                     targets    : 'AdminServer',
                     is_library : ""
             ])

@@ -101,14 +101,14 @@ class StartAppSuite extends WebLogicHelper {
         createConfig(pluginConfigurationNames.correct)
 
         publishArtifact(artifactName, version, FILENAME)
-        downloadArtifact(artifactName, REMOTE_DIRECTORY, getResourceName())
+        def path = downloadArtifact(artifactName, getResourceName())
 
         deployApplication(projectName,
                 [
                         configname : CONFIG_NAME,
                         wlstabspath: getWlstPath(),
                         appname    : APPLICATION_NAME,
-                        apppath    : APPLICATION_PATH,
+                        apppath    : path,
                         targets    : 'AdminServer',
                         is_library : ""
                 ]

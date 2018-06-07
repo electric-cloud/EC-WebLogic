@@ -237,7 +237,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         runCommand(publishCommand)
     }
 
-    def downloadArtifact(String artifactName, String destinationDirectory, String resource) {
+    def downloadArtifact(String artifactName, String resource) {
 
         dslFile 'dsl/retrieveArtifact.dsl', [
                 projectName : HELPER_PROJECT,
@@ -246,22 +246,25 @@ class WebLogicHelper extends PluginSpockTestSupport {
                         'artifactName'                   : artifactName,
                         'artifactVersionLocationProperty': '/myJob/retrievedArtifactVersions/retrieved',
                         'overwrite'                      : 'update',
-                        'retrieveToDirectory'            : destinationDirectory,
+//                        'retrieveToDirectory'            : destinationDirectory,
                 ]
         ]
 
-        runProcedure("""
+        def result = runProcedure("""
             runProcedure(
                 projectName : '$HELPER_PROJECT',
                 procedureName: 'Retrieve',
                 actualParameter: [
-                   'artifactName'        : '$artifactName',
+                   'artifactName'                   : '$artifactName',
                    'artifactVersionLocationProperty': '/myJob/retrievedArtifactVersions/retrieved',
-                   'overwrite'           : 'update',
-                   'retrieveToDirectory' : '${destinationDirectory}'
+                   'overwrite'                      : 'update'
                 ]
             )
         """, getResourceName())
+
+        def cacheDirMatch = (result.logs =~ /cacheDirectory: (.*)/)
+
+        return cacheDirMatch[0][1]
     }
 
     def artifactExists(def artifactName) {
@@ -372,7 +375,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         def version = '1.0'
 
         publishArtifact(artifactName, version, FILENAME)
-        downloadArtifact(artifactName, REMOTE_DIRECTORY, getResourceName())
+        def path = downloadArtifact(artifactName, getResourceName())
 
         dslFile 'dsl/procedures.dsl', [
                 projectName  : projectName,
@@ -388,7 +391,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
             actualParameter: [
                  wlstabspath: '${params.wlstabspath}',
                  appname    : '${params.appname}',
-                 apppath    : "${params.apppath}",
+                 apppath    : "$path",
                  targets    : 'AdminServer',
                  is_library : ""
             ]

@@ -59,8 +59,8 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
 
     @Shared
     def jmsServers = [
-        first: 'firstJMSServer',
-        second: 'secondJMSServer'
+            first : 'firstJMSServer',
+            second: 'secondJMSServer'
     ]
     /**
      * Verification Values: Assert values
@@ -177,7 +177,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
                 cf_sharing_policy          : cf_sharing_policy,
                 cf_client_id_policy        : cf_client_id_policy,
                 jms_module_name            : jms_module_name,
-
+//                ecp_weblogic_target_list   : 'AdminServer',
                 cf_max_messages_per_session: cf_max_messages_per_session,
                 cf_xa_enabled              : cf_xa_enabled,
                 subdeployment_name         : subdeployment_name,
@@ -310,13 +310,13 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         deleteSubDeployment(jmsModuleName, subdeploymentName)
 
         where:
-        jmsServerList                              | wlstInstanceList
-        "${jmsServers.first}"                      | ""
-        "${jmsServers.second}"                     | 'AdminServer'
-        "${jmsServers.first}"                      | 'AdminServer'
-        ''                                         | 'AdminServer'
-        "${jmsServers.first}, ${jmsServers.second}"| 'AdminServer'
-     }
+        jmsServerList                               | wlstInstanceList
+        "${jmsServers.first}"                       | ""
+        "${jmsServers.second}"                      | 'AdminServer'
+        "${jmsServers.first}"                       | 'AdminServer'
+        ''                                          | 'AdminServer'
+        "${jmsServers.first}, ${jmsServers.second}" | 'AdminServer'
+    }
 
     def connectionFactoryExists(def moduleName, def name) {
         def code = """
@@ -410,32 +410,6 @@ print "PROPERTY: %s" % get(propName)
         // TODO retrieve property
         result
     }
-
-    def createJMSServer(name) {
-        def code = """
-connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
-
-jmsServerName = '$name'
-targetName = '${getAdminServerName()}'
-
-bean = getMBean('/JMSServers/%s' % jmsServerName)
-if bean == None:
-    edit()
-    startEdit()
-    cd('/')
-    print "Creating JMS Server %s" % jmsServerName
-    cmo.createJMSServer(jmsServerName)
-    cd("/JMSServers/%s" % jmsServerName)
-    cmo.addTarget(getMBean("/Servers/%s" % targetName))
-    activate()
-else:
-    print "JMS Server already exists"
-"""
-        def result = runWLST(code)
-        assert result.outcome == 'success'
-        result
-    }
-
 
     def getSubdeploymentTargets(module, subdeployment) {
         def code = """
