@@ -8,14 +8,14 @@ class CreateOrUpdateJMSTopic extends WebLogicHelper {
     static def deleteProcedureName = 'DeleteJMSTopic'
 
     static def params = [
-        configname: configName,
-        ecp_weblogic_jms_module_name: '',
-        ecp_weblogic_jms_topic_name: '',
+        configname                     : configName,
+        ecp_weblogic_jms_module_name   : '',
+        ecp_weblogic_jms_topic_name    : '',
         ecp_weblogic_subdeployment_name: '',
-        ecp_weblogic_update_action: 'do_nothing',
+        ecp_weblogic_update_action     : 'do_nothing',
         ecp_weblogic_additional_options: '',
-        ecp_weblogic_jndi_name: '',
-        ecp_weblogic_target_jms_server: ''
+        ecp_weblogic_jndi_name         : '',
+        ecp_weblogic_target_jms_server : ''
     ]
 
     def doSetupSpec() {
@@ -25,20 +25,20 @@ class CreateOrUpdateJMSTopic extends WebLogicHelper {
         createConfig(configName)
 
         dslFile "dsl/procedures.dsl", [
-            projectName: projectName,
+            projectName  : projectName,
             procedureName: procedureName,
-            resourceName: getResourceName(),
-            params: params,
+            resourceName : getResourceName(),
+            params       : params,
         ]
 
         dslFile 'dsl/procedures.dsl', [
-            projectName: projectName,
+            projectName  : projectName,
             procedureName: deleteProcedureName,
-            resourceName: getResourceName(),
-            params: [
-                configname: configName,
+            resourceName : getResourceName(),
+            params       : [
+                configname                  : configName,
                 ecp_weblogic_jms_module_name: '',
-                ecp_weblogic_jms_topic_name: ''
+                ecp_weblogic_jms_topic_name : ''
             ]
         ]
     }

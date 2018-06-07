@@ -21,8 +21,8 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
 
     @Shared
     def checkBoxValues = [
-            unchecked: '0',
-            checked  : '1',
+        unchecked: '0',
+        checked  : '1',
     ]
 
     /**
@@ -36,24 +36,24 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
     @Shared
     //* Required Parameter (need incorrect and empty value)
     def configNames = [
-            empty    : '',
-            correct  : CONFIG_NAME,
-            incorrect: 'incorrect config Name',
+        empty    : '',
+        correct  : CONFIG_NAME,
+        incorrect: 'incorrect config Name',
     ]
 
     @Shared
     def connectionFactories = [
-            correct    : 'SpecConnectionFactory',
-            updated    : 'SpecUpdatedCF',
-            nonexisting: 'NoSuchCF'
+        correct    : 'SpecConnectionFactory',
+        updated    : 'SpecUpdatedCF',
+        nonexisting: 'NoSuchCF'
     ]
 
     @Shared
     def jndiNames = [
-            empty      : '',
-            correct    : 'TestJNDIName',
-            recreateOld: 'OldJNDIName',
-            recreateNew: 'NewJNDIName',
+        empty      : '',
+        correct    : 'TestJNDIName',
+        recreateOld: 'OldJNDIName',
+        recreateNew: 'NewJNDIName',
     ]
 
     /**
@@ -62,21 +62,21 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
 
     @Shared
     def expectedOutcomes = [
-            success: 'success',
-            error  : 'error',
-            warning: 'warning',
-            running: 'running',
+        success: 'success',
+        error  : 'error',
+        warning: 'warning',
+        running: 'running',
     ]
 
     @Shared
     def expectedSummaryMessages = [
-            empty: "",
+        empty: "",
 
     ]
 
     @Shared
     def expectedJobDetailedResults = [
-            empty: '',
+        empty: '',
     ]
 
     @Shared
@@ -86,27 +86,27 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
 
     @Shared
     def targets = [
-            default         : 'AdminServer',
-            update          : 'TestSpecServer',
-            single          : 'AdminServer',
-            twoServers      : 'AdminServer, ManagedServer1',
-            cluster         : 'Cluster1',
-            nothing         : '',
-            serverAndCluster: 'ManagedServer2, Cluster1',
-            managedServer   : 'ManagedServer2'
+        default         : 'AdminServer',
+        update          : 'TestSpecServer',
+        single          : 'AdminServer',
+        twoServers      : 'AdminServer, ManagedServer1',
+        cluster         : 'Cluster1',
+        nothing         : '',
+        serverAndCluster: 'ManagedServer2, Cluster1',
+        managedServer   : 'ManagedServer2'
     ]
 
     @Shared
     def updateActions = [
-            empty            : '',
-            do_nothing       : 'do_nothing',
-            selective_update : 'selective_update',
-            remove_and_create: 'remove_and_create'
+        empty            : '',
+        do_nothing       : 'do_nothing',
+        selective_update : 'selective_update',
+        remove_and_create: 'remove_and_create'
     ]
     @Shared
     def jmsModules = [
-            default   : 'TestJMSModule',
-            unexistent: 'NoSuchModule'
+        default   : 'TestJMSModule',
+        unexistent: 'NoSuchModule'
     ]
 
     /**
@@ -159,10 +159,10 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
         setup: 'Define the parameters for Procedure running'
 
         def runParams = [
-                configname                  : configname,
-                ecp_weblogic_jms_module_name: jmsModuleName,
-                ecp_weblogic_update_action  : updateAction,
-                ecp_weblogic_target_list    : target
+            configname                  : configname,
+            ecp_weblogic_jms_module_name: jmsModuleName,
+            ecp_weblogic_update_action  : updateAction,
+            ecp_weblogic_target_list    : target
         ]
 
         deleteJMSModule(jmsModuleName)
@@ -224,10 +224,10 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
         def jmsModuleName = randomize('TargetList')
         def expectedOutcome = expectedOutcomes.success
         def runParams = [
-                configname                  : configname,
-                ecp_weblogic_jms_module_name: jmsModuleName,
-                ecp_weblogic_update_action  : updateAction,
-                ecp_weblogic_target_list    : newTargets
+            configname                  : configname,
+            ecp_weblogic_jms_module_name: jmsModuleName,
+            ecp_weblogic_update_action  : updateAction,
+            ecp_weblogic_target_list    : newTargets
         ]
         // Create targets and create JMS module with them
         deleteJMSModule(jmsModuleName)

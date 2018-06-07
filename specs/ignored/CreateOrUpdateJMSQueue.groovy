@@ -9,13 +9,13 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
     static def deleteProcedureName = 'DeleteJMSQueue'
 
     static def params = [
-            configname                     : configName,
-            ecp_weblogic_jms_module_name   : '',
-            ecp_weblogic_jms_queue_name    : '',
-            ecp_weblogic_subdeployment_name: '',
-            ecp_weblogic_update_action     : 'do_nothing',
-            ecp_weblogic_additional_options: '',
-            ecp_weblogic_jndi_name         : ''
+        configname                     : configName,
+        ecp_weblogic_jms_module_name   : '',
+        ecp_weblogic_jms_queue_name    : '',
+        ecp_weblogic_subdeployment_name: '',
+        ecp_weblogic_update_action     : 'do_nothing',
+        ecp_weblogic_additional_options: '',
+        ecp_weblogic_jndi_name         : ''
     ]
 
     def doSetupSpec() {
@@ -25,21 +25,21 @@ class CreateOrUpdateJMSQueue extends WebLogicHelper {
         createConfig(CONFIG_NAME)
 
         dslFile "dsl/procedures.dsl", [
-                projectName  : projectName,
-                procedureName: procedureName,
-                resourceName : getResourceName(),
-                params       : params,
+            projectName  : projectName,
+            procedureName: procedureName,
+            resourceName : getResourceName(),
+            params       : params,
         ]
 
         dslFile 'dsl/procedures.dsl', [
-                projectName  : projectName,
-                procedureName: deleteProcedureName,
-                resourceName : getResourceName(),
-                params       : [
-                        configname                  : configName,
-                        ecp_weblogic_jms_module_name: '',
-                        ecp_weblogic_jms_queue_name : ''
-                ]
+            projectName  : projectName,
+            procedureName: deleteProcedureName,
+            resourceName : getResourceName(),
+            params       : [
+                configname                  : configName,
+                ecp_weblogic_jms_module_name: '',
+                ecp_weblogic_jms_queue_name : ''
+            ]
         ]
     }
 

@@ -21,8 +21,8 @@ class StopAppSuite extends WebLogicHelper {
 
     @Shared
     def checkBoxValues = [
-            unchecked: '0',
-            checked  : '1',
+        unchecked: '0',
+        checked  : '1',
     ]
 
     /**
@@ -36,9 +36,9 @@ class StopAppSuite extends WebLogicHelper {
     @Shared
     //* Required Parameter (need incorrect and empty value)
     def pluginConfigurationNames = [
-            empty    : '',
-            correct  : CONFIG_NAME,
-            incorrect: 'incorrect config Name',
+        empty    : '',
+        correct  : CONFIG_NAME,
+        incorrect: 'incorrect config Name',
     ]
 
     /**
@@ -47,27 +47,27 @@ class StopAppSuite extends WebLogicHelper {
 
     @Shared
     def expectedOutcomes = [
-            success: 'success',
-            error  : 'error',
-            warning: 'warning',
-            running: 'running',
+        success: 'success',
+        error  : 'error',
+        warning: 'warning',
+        running: 'running',
     ]
 
     @Shared
     def expectedSummaryMessages = [
-            empty          : '',
-            file_not_exists: 'File  doesn\'t exist'
+        empty          : '',
+        file_not_exists: 'File  doesn\'t exist'
 
     ]
 
     @Shared
     def expectedJobDetailedResults = [
-            empty: '',
+        empty: '',
     ]
 
     @Shared
     def expectedLogParts = [
-            empty: '',
+        empty: '',
     ]
 
     /**
@@ -98,14 +98,14 @@ class StopAppSuite extends WebLogicHelper {
         createConfig(pluginConfigurationNames.correct)
 
         def deployed = deployApplication(projectName,
-                [
-                        configname : CONFIG_NAME,
-                        wlstabspath: wlstPath,
-                        appname    : APPLICATION_NAME,
-                        apppath    : APPLICATION_PATH,
-                        targets    : 'AdminServer',
-                        is_library : ""
-                ]
+            [
+                configname : CONFIG_NAME,
+                wlstabspath: wlstPath,
+                appname    : APPLICATION_NAME,
+                apppath    : APPLICATION_PATH,
+                targets    : 'AdminServer',
+                is_library : ""
+            ]
         )
 
         assert deployed.outcome == 'success'
@@ -117,11 +117,11 @@ class StopAppSuite extends WebLogicHelper {
 
     def doCleanupSpec() {
         undeployApplication(projectName,
-                [
-                        configname : CONFIG_NAME,
-                        wlstabspath: wlstPath,
-                        appname    : APPLICATION_NAME
-                ]
+            [
+                configname : CONFIG_NAME,
+                wlstabspath: wlstPath,
+                appname    : APPLICATION_NAME
+            ]
         )
         deleteProject(projectName)
     }
@@ -135,21 +135,21 @@ class StopAppSuite extends WebLogicHelper {
     def "Stop Application. application '#appname' - #expectedOutcome : #expectedSummaryMessage"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
-                configname        : configname,
-                wlstabspath       : wlstabspath,
-                appname           : appname,
+            configname        : configname,
+            wlstabspath       : wlstabspath,
+            appname           : appname,
 
-                additional_options: additional_options,
-                version_identifier: version_identifier
+            additional_options: additional_options,
+            version_identifier: version_identifier
         ]
 
         startApplication(projectName, [
-                configname : configname,
-                appname    : appname,
-                wlstabspath: wlstabspath,
+            configname        : configname,
+            appname           : appname,
+            wlstabspath       : wlstabspath,
 
-                additional_options : "",
-                version_identifier : ""
+            additional_options: "",
+            version_identifier: ""
         ])
 
         when: 'Procedure runs: '

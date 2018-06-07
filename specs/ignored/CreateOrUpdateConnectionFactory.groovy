@@ -11,18 +11,18 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
     static def deleteProcedureName = 'DeleteConnectionFactory'
 
     static def params = [
-            configname                 : configName,
-            cf_name                    : '',
-            jndi_name                  : '',
-            cf_sharing_policy          : '',
-            cf_client_id_policy        : '',
-            cf_max_messages_per_session: '',
-            cf_xa_enabled              : '',
-            jms_module_name            : '',
-            subdeployment_name         : '',
-            jms_server_name            : '',
-            update_action              : 'do_nothing',
-            additional_options         : ''
+        configname                 : configName,
+        cf_name                    : '',
+        jndi_name                  : '',
+        cf_sharing_policy          : '',
+        cf_client_id_policy        : '',
+        cf_max_messages_per_session: '',
+        cf_xa_enabled              : '',
+        jms_module_name            : '',
+        subdeployment_name         : '',
+        jms_server_name            : '',
+        update_action              : 'do_nothing',
+        additional_options         : ''
     ]
 
     def doSetupSpec() {
@@ -33,21 +33,21 @@ class CreateOrUpdateConnectionFactory extends WebLogicHelper {
         createConfig(configName)
 
         dslFile "dsl/procedures.dsl", [
-                projectName  : projectName,
-                procedureName: procedureName,
-                resourceName : WebLogicHelper.getResourceName(),
-                params       : params,
+            projectName  : projectName,
+            procedureName: procedureName,
+            resourceName : WebLogicHelper.getResourceName(),
+            params       : params,
         ]
 
         dslFile 'dsl/procedures.dsl', [
-                projectName  : projectName,
-                procedureName: deleteProcedureName,
-                resourceName : WebLogicHelper.getResourceName(),
-                params       : [
-                        configname     : configName,
-                        cf_name        : '',
-                        jms_module_name: ''
-                ]
+            projectName  : projectName,
+            procedureName: deleteProcedureName,
+            resourceName : WebLogicHelper.getResourceName(),
+            params       : [
+                configname     : configName,
+                cf_name        : '',
+                jms_module_name: ''
+            ]
         ]
     }
 

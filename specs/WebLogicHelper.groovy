@@ -74,10 +74,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
         def username = getUsername()
         def password = getPassword()
         def pluginConfig = [
-                weblogic_url         : endpoint,
-                enable_named_sessions: 'true',
-                debug_level          : '10',
-                wlst_path            : getWlstPath(),
+            weblogic_url         : endpoint,
+            enable_named_sessions: 'true',
+            debug_level          : '10',
+            wlst_path            : getWlstPath(),
         ]
         def props = [confPath: 'weblogic_cfgs']
         if (System.getenv('RECREATE_CONFIG')) {
@@ -85,12 +85,12 @@ class WebLogicHelper extends PluginSpockTestSupport {
         }
 
         createPluginConfiguration(
-                'EC-WebLogic',
-                configName,
-                pluginConfig,
-                username,
-                password,
-                props
+            'EC-WebLogic',
+            configName,
+            pluginConfig,
+            username,
+            password,
+            props
         )
     }
 
@@ -240,16 +240,16 @@ class WebLogicHelper extends PluginSpockTestSupport {
     def downloadArtifact(String artifactName, String resource) {
 
         dslFile 'dsl/retrieveArtifact.dsl', [
-                projectName : HELPER_PROJECT,
-                resourceName: resource,
-                params      : [
-                        'artifactName'                   : artifactName,
-                        'artifactVersionLocationProperty': '/myJob/retrievedArtifactVersions/retrieved',
-                        'overwrite'                      : 'update',
+            projectName : HELPER_PROJECT,
+            resourceName: resource,
+            params      : [
+                'artifactName'                   : artifactName,
+                'artifactVersionLocationProperty': '/myJob/retrievedArtifactVersions/retrieved',
+                'overwrite'                      : 'update',
 //                        'retrieveToDirectory'            : destinationDirectory,
-                        'versionRange'                   : '1.0'
+                'versionRange'                   : '1.0'
 
-                ]
+            ]
         ]
 
         def result = runProcedure("""
@@ -265,19 +265,19 @@ class WebLogicHelper extends PluginSpockTestSupport {
             )
         """, getResourceName())
 
-        if (result.outcome != 'success'){
+        if (result.outcome != 'success') {
             throw new RuntimeException("Can't download artifact: ${result.logs}")
         }
 
         def cacheDirMatch = (result.logs =~ /cacheDirectory: (.*)/)
 
-        if (!cacheDirMatch.hasGroup()){
+        if (!cacheDirMatch.hasGroup()) {
             throw new RuntimeException("Cache dir is not found")
         }
 
         String cacheDirPath = cacheDirMatch[0][1]
 
-        if (!cacheDirPath){
+        if (!cacheDirPath) {
             throw new RuntimeException("Cache dir is not found")
         }
 
@@ -287,11 +287,11 @@ class WebLogicHelper extends PluginSpockTestSupport {
     def artifactExists(def artifactName) {
 
         dslFile 'dsl/artifactExists.dsl', [
-                projectName: HELPER_PROJECT,
-                resourceName: getResourceName(),
-                params     : [
-                        'artifactName': artifactName
-                ]
+            projectName : HELPER_PROJECT,
+            resourceName: getResourceName(),
+            params      : [
+                'artifactName': artifactName
+            ]
         ]
 
         def result = runProcedure("""
@@ -311,9 +311,9 @@ class WebLogicHelper extends PluginSpockTestSupport {
     def checkUrl(String url) {
 
         dslFile 'dsl/checkURL.dsl', [
-                projectName : HELPER_PROJECT,
-                resourceName: getResourceName(),
-                URL         : url
+            projectName : HELPER_PROJECT,
+            resourceName: getResourceName(),
+            URL         : url
         ]
 
         def result = runProcedure("""
@@ -331,7 +331,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
             text = getJobProperty("/myJob/text", result.jobId)
         }
 
-        [ code: code, text: text ]
+        [code: code, text: text]
     }
 
     def runTestedProcedure(def projectName, procedureName, def params, def resourceName) {
@@ -339,10 +339,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
         deleteProject(projectName)
 
         dslFile('dsl/procedures.dsl', [
-                projectName  : projectName,
-                procedureName: procedureName,
-                resourceName : resourceName,
-                params       : params
+            projectName  : projectName,
+            procedureName: procedureName,
+            resourceName : resourceName,
+            params       : params
         ])
 
         // Stringify map
@@ -367,10 +367,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
     def undeployApplication(String projectName, def params) {
         deleteProject(projectName)
         dslFile 'dsl/procedures.dsl', [
-                projectName  : projectName,
-                procedureName: 'UndeployApp',
-                resourceName : getResourceName(),
-                params       : params
+            projectName  : projectName,
+            procedureName: 'UndeployApp',
+            resourceName : getResourceName(),
+            params       : params
         ]
 
         def result = runProcedure("""
@@ -395,10 +395,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
         def path = downloadArtifact(artifactName, getResourceName())
 
         dslFile 'dsl/procedures.dsl', [
-                projectName  : projectName,
-                procedureName: 'DeployApp',
-                resourceName : getResourceName(),
-                params       : params
+            projectName  : projectName,
+            procedureName: 'DeployApp',
+            resourceName : getResourceName(),
+            params       : params
         ]
 
         def result = runProcedure("""
@@ -420,10 +420,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
     def startApplication(def projectName, def params) {
         dslFile 'dsl/procedures.dsl', [
-                projectName  : projectName,
-                procedureName: 'StartApp',
-                resourceName : getResourceName(),
-                params       : params
+            projectName  : projectName,
+            procedureName: 'StartApp',
+            resourceName : getResourceName(),
+            params       : params
         ]
 
         def result = runProcedure("""
@@ -445,10 +445,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
     def stopApplication(def projectName, def params) {
         dslFile 'dsl/procedures.dsl', [
-                projectName  : projectName,
-                procedureName: 'StopApp',
-                resourceName : getResourceName(),
-                params       : params
+            projectName  : projectName,
+            procedureName: 'StopApp',
+            resourceName : getResourceName(),
+            params       : params
         ]
 
         def result = runProcedure("""
@@ -782,12 +782,12 @@ try {
         def path = downloadArtifact(artifactName, getResourceName())
 
         deployApplication(HELPER_PROJECT, [
-                configname : CONFIG_NAME,
-                wlstabspath: getWlstPath(),
-                appname    : appName,
-                apppath    : path,
-                targets    : targetServer,
-                is_library : ""
+            configname : CONFIG_NAME,
+            wlstabspath: getWlstPath(),
+            appname    : appName,
+            apppath    : path,
+            targets    : targetServer,
+            is_library : ""
         ])
     }
 }

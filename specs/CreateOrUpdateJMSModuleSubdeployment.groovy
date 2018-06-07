@@ -7,11 +7,11 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
     static def deleteProcedureName = 'DeleteJMSModuleSubdeployment'
 
     static def params = [
-        configname: configName,
-        ecp_weblogic_jms_module_name: '',
-        ecp_weblogic_update_action: 'do_nothing',
+        configname                            : configName,
+        ecp_weblogic_jms_module_name          : '',
+        ecp_weblogic_update_action            : 'do_nothing',
         ecp_weblogic_subdeployment_target_list: '',
-        ecp_weblogic_subdeployment_name: ''
+        ecp_weblogic_subdeployment_name       : ''
     ]
 
     def doSetupSpec() {
@@ -21,19 +21,19 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
         discardChanges()
 
         dslFile "dsl/procedures.dsl", [
-            projectName: projectName,
+            projectName  : projectName,
             procedureName: procedureName,
-            resourceName: getResourceName(),
-            params: params,
+            resourceName : getResourceName(),
+            params       : params,
         ]
 
         dslFile 'dsl/procedures.dsl', [
-            projectName: projectName,
+            projectName  : projectName,
             procedureName: deleteProcedureName,
-            resourceName: getResourceName(),
-            params: [
-                configname: configName,
-                ecp_weblogic_jms_module_name: '',
+            resourceName : getResourceName(),
+            params       : [
+                configname                     : configName,
+                ecp_weblogic_jms_module_name   : '',
                 ecp_weblogic_subdeployment_name: ''
             ]
         ]
@@ -54,8 +54,7 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
             if (it =~ /Cluster/) {
                 println "Creating cluster $it"
                 ensureCluster(it)
-            }
-            else {
+            } else {
                 ensureManagedServer(it, '7999')
             }
         }
@@ -82,8 +81,7 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
             def targetName = ''
             if (it =~ /Cluster/) {
                 targetName = "Cluster \"${it}\""
-            }
-            else {
+            } else {
                 targetName = "Server \"${it}\""
             }
             assert result.logs =~ /Adding target $targetName to the list of targets/
@@ -135,11 +133,9 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
 
         if (action == 'do_nothing') {
             assert result.logs =~ /SubDeployment $subdeploymentName exists in the module $jmsModuleName, no further action is required/
-        }
-        else if (action == 'selective_update') {
+        } else if (action == 'selective_update') {
             assert result.logs =~ /Added 1 target\(s\), Removed 1 target\(s\)/
-        }
-        else {
+        } else {
             assert result.logs =~ /Added 1 target\(s\)/
         }
         cleanup:
@@ -157,8 +153,7 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
             if (it =~ /Cluster/) {
                 println 'Creating cluster'
                 ensureCluster(it)
-            }
-            else {
+            } else {
                 ensureManagedServer(it, '7999')
             }
         }
@@ -198,11 +193,11 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
         cleanup:
         deleteJMSModule(jmsModuleName)
         where:
-        oldTargets               | newTargets
-        'AdminServer'            | 'Cluster1'
-        'AdminServer'            | 'ManagedServer1'
-        'Cluster1'               | 'ManagedServer1, AdminServer'
-        'Cluster1'               | 'ManagedServer1, Cluster1'
+        oldTargets    | newTargets
+        'AdminServer' | 'Cluster1'
+        'AdminServer' | 'ManagedServer1'
+        'Cluster1'    | 'ManagedServer1, AdminServer'
+        'Cluster1'    | 'ManagedServer1, Cluster1'
     }
 
 
@@ -293,9 +288,8 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
 
     def targetName(target) {
         if (target =~ /Cluster/) {
-            return 'Cluster "' + target +'"'
-        }
-        else {
+            return 'Cluster "' + target + '"'
+        } else {
             return 'Server "' + target + '"'
         }
     }
