@@ -23,8 +23,8 @@ class UndeployAppSuite extends WebLogicHelper {
 
     @Shared
     def checkBoxValues = [
-            unchecked: '0',
-            checked  : '1',
+        unchecked: '0',
+        checked  : '1',
     ]
 
     /**
@@ -38,18 +38,18 @@ class UndeployAppSuite extends WebLogicHelper {
     @Shared
     //* Required Parameter (need incorrect and empty value)
     def pluginConfigurationNames = [
-            empty    : '',
-            correct  : CONFIG_NAME,
-            incorrect: 'incorrect config Name',
+        empty    : '',
+        correct  : CONFIG_NAME,
+        incorrect: 'incorrect config Name',
     ]
 
 
     @Shared
     //* Optional Parameter
     def additionalOptions = [
-            empty    : '',
-            correct  : '-subscriptionDurability Durable',
-            incorrect: 'incorrect Additional Options',
+        empty    : '',
+        correct  : '-subscriptionDurability Durable',
+        incorrect: 'incorrect Additional Options',
     ]
     /**
      * Verification Values: Assert values
@@ -57,26 +57,26 @@ class UndeployAppSuite extends WebLogicHelper {
 
     @Shared
     def expectedOutcomes = [
-            success: 'success',
-            error  : 'error',
-            warning: 'warning',
-            running: 'running',
+        success: 'success',
+        error  : 'error',
+        warning: 'warning',
+        running: 'running',
     ]
 
     @Shared
     def expectedSummaryMessages = [
-            empty: "",
+        empty: "",
 
     ]
 
     @Shared
     def expectedJobDetailedResults = [
-            empty: '',
+        empty: '',
     ]
 
     @Shared
     def expectedLogParts = [
-            empty: '',
+        empty: '',
     ]
 
     /**
@@ -92,6 +92,9 @@ class UndeployAppSuite extends WebLogicHelper {
     def version_identifier
     def give_up
     def additional_options
+
+    // This should be saved for deployApplication procedure
+    def static apppath
 
     // expected results
     def expectedOutcome
@@ -112,7 +115,7 @@ class UndeployAppSuite extends WebLogicHelper {
         createConfig(pluginConfigurationNames.correct)
 
         publishArtifact(artifactName, version, FILENAME)
-        downloadArtifact(artifactName, REMOTE_DIRECTORY, getResourceName())
+        apppath = downloadArtifact(artifactName, getResourceName())
     }
 
     /**
@@ -131,25 +134,25 @@ class UndeployAppSuite extends WebLogicHelper {
     def "Undeploy Application. with server '#targets'. Expected : #expectedOutcome : #expectedSummaryMessage"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
-                configname        : configname,
-                wlstabspath       : wlstabspath,
-                appname           : appname,
-                additional_options: additional_options,
-                retire_gracefully : retire_gracefully,
-                version_identifier: version_identifier,
-                give_up           : give_up
+            configname        : configname,
+            wlstabspath       : wlstabspath,
+            appname           : appname,
+            additional_options: additional_options,
+            retire_gracefully : retire_gracefully,
+            version_identifier: version_identifier,
+            give_up           : give_up
         ]
 
         // Check that application is not installed and running already
         def pageBeforeUndeploy = checkUrl(APPLICATION_PAGE_URL)
         if (pageBeforeUndeploy.code == NOT_FOUND_RESPONSE) {
             def deploy = deployApplication(projectName, [
-                    configname : pluginConfigurationNames.correct,
-                    wlstabspath: getWlstPath(),
-                    appname    : appname,
-                    apppath    : APPLICATION_PATH,
-                    targets    : 'AdminServer',
-                    is_library : ""
+                configname : pluginConfigurationNames.correct,
+                wlstabspath: getWlstPath(),
+                appname    : appname,
+                apppath    : apppath,
+                targets    : 'AdminServer',
+                is_library : ""
             ])
 
             assert (deploy.outcome == 'success')

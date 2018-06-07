@@ -21,8 +21,8 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
 
     @Shared
     def checkBoxValues = [
-            unchecked: '0',
-            checked  : '1',
+        unchecked: '0',
+        checked  : '1',
     ]
 
     /**
@@ -36,15 +36,15 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
     @Shared
     //* Required Parameter (need incorrect and empty value)
     def pluginConfigurationNames = [
-            empty    : '',
-            correct  : CONFIG_NAME,
-            incorrect: 'incorrect config Name',
+        empty    : '',
+        correct  : CONFIG_NAME,
+        incorrect: 'incorrect config Name',
     ]
 
     @Shared
     def connectionFactories = [
-            correct    : 'SpecConnectionFactory',
-            nonexisting: 'NoSuchCF'
+        correct    : 'SpecConnectionFactory',
+        nonexisting: 'NoSuchCF'
     ]
 
     /**
@@ -53,32 +53,32 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
 
     @Shared
     def expectedOutcomes = [
-            success: 'success',
-            error  : 'error',
-            warning: 'warning',
-            running: 'running',
+        success: 'success',
+        error  : 'error',
+        warning: 'warning',
+        running: 'running',
     ]
 
     @Shared
     def expectedSummaryMessages = [
-            empty: "",
+        empty: "",
 
     ]
 
     @Shared
     def expectedJobDetailedResults = [
-            empty: '',
+        empty: '',
     ]
 
     @Shared
     def expectedLogParts = [
-            empty: '',
+        empty: '',
     ]
 
     @Shared
     def jmsModuleNames = [
-            default    : 'TestJMSModule',
-            nonexisting: 'NoSuchJMSModule'
+        default    : 'TestJMSModule',
+        nonexisting: 'NoSuchJMSModule'
     ]
 
     /**
@@ -128,13 +128,13 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
     def "Delete Connection Factory. Positive and negative - procedure"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
-                configname     : configname,
-                cf_name        : cf_name,
-                jms_module_name: jms_module_name,
+            configname     : configname,
+            cf_name        : cf_name,
+            jms_module_name: jms_module_name,
         ]
 
         // Create connection factory to delete unless it should not exist
-        if (cf_name != connectionFactories.nonexisting){
+        if (cf_name != connectionFactories.nonexisting) {
             createConnectionFactory(cf_name)
         }
 
@@ -182,16 +182,16 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
     def createConnectionFactory(def name, def module_name = jmsModuleNames.default) {
 
         dslFile 'dsl/procedures.dsl', [
-                projectName  : projectName,
-                procedureName: 'CreateOrUpdateConnectionFactory',
-                resourceName : getResourceName(),
-                params       : [
-                        configname         : "${pluginConfigurationNames.correct}",
-                        cf_name            : "$name",
-                        jms_module_name    : "$module_name",
-                        cf_sharing_policy  : "Exclusive",
-                        cf_client_id_policy: "Restricted"
-                ]
+            projectName  : projectName,
+            procedureName: 'CreateOrUpdateConnectionFactory',
+            resourceName : getResourceName(),
+            params       : [
+                configname         : "${pluginConfigurationNames.correct}",
+                cf_name            : "$name",
+                jms_module_name    : "$module_name",
+                cf_sharing_policy  : "Exclusive",
+                cf_client_id_policy: "Restricted"
+            ]
         ]
 
         def result = runProcedure """

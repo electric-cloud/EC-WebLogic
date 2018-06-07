@@ -21,8 +21,8 @@ class StartAppSuite extends WebLogicHelper {
 
     @Shared
     def checkBoxValues = [
-            unchecked: '0',
-            checked  : '1',
+        unchecked: '0',
+        checked  : '1',
     ]
 
     /**
@@ -36,9 +36,9 @@ class StartAppSuite extends WebLogicHelper {
     @Shared
     //* Required Parameter (need incorrect and empty value)
     def pluginConfigurationNames = [
-            empty    : '',
-            correct  : CONFIG_NAME,
-            incorrect: 'incorrect config Name',
+        empty    : '',
+        correct  : CONFIG_NAME,
+        incorrect: 'incorrect config Name',
     ]
 
     /**
@@ -47,27 +47,27 @@ class StartAppSuite extends WebLogicHelper {
 
     @Shared
     def expectedOutcomes = [
-            success: 'success',
-            error  : 'error',
-            warning: 'warning',
-            running: 'running',
+        success: 'success',
+        error  : 'error',
+        warning: 'warning',
+        running: 'running',
     ]
 
     @Shared
     def expectedSummaryMessages = [
-            empty          : '',
-            file_not_exists: 'File  doesn\'t exist'
+        empty          : '',
+        file_not_exists: 'File  doesn\'t exist'
 
     ]
 
     @Shared
     def expectedJobDetailedResults = [
-            empty: '',
+        empty: '',
     ]
 
     @Shared
     def expectedLogParts = [
-            empty: '',
+        empty: '',
     ]
 
     /**
@@ -101,28 +101,28 @@ class StartAppSuite extends WebLogicHelper {
         createConfig(pluginConfigurationNames.correct)
 
         publishArtifact(artifactName, version, FILENAME)
-        downloadArtifact(artifactName, REMOTE_DIRECTORY, getResourceName())
+        def path = downloadArtifact(artifactName, getResourceName())
 
         deployApplication(projectName,
-                [
-                        configname : CONFIG_NAME,
-                        wlstabspath: getWlstPath(),
-                        appname    : APPLICATION_NAME,
-                        apppath    : APPLICATION_PATH,
-                        targets    : 'AdminServer',
-                        is_library : ""
-                ]
+            [
+                configname : CONFIG_NAME,
+                wlstabspath: getWlstPath(),
+                appname    : APPLICATION_NAME,
+                apppath    : path,
+                targets    : 'AdminServer',
+                is_library : ""
+            ]
         )
 
         stopApplication(projectName,
-                [
-                        configname : CONFIG_NAME,
-                        wlstabspath: getWlstPath(),
-                        appname    : APPLICATION_NAME,
+            [
+                configname        : CONFIG_NAME,
+                wlstabspath       : getWlstPath(),
+                appname           : APPLICATION_NAME,
 
-                        additional_options : "",
-                        version_identifier : ""
-                ]
+                additional_options: "",
+                version_identifier: ""
+            ]
         )
     }
 
@@ -143,12 +143,12 @@ class StartAppSuite extends WebLogicHelper {
     def "Start Application. appname '#appname' - #expectedOutcome : #expectedSummaryMessage"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
-                configname        : configname,
-                wlstabspath       : wlstabspath,
-                appname           : appname,
+            configname        : configname,
+            wlstabspath       : wlstabspath,
+            appname           : appname,
 
-                additional_options: additional_options,
-                version_identifier: version_identifier
+            additional_options: additional_options,
+            version_identifier: version_identifier
         ]
 
         when: 'Procedure runs: '
@@ -178,12 +178,12 @@ class StartAppSuite extends WebLogicHelper {
         cleanup: 'Stop application if start was successful'
         if (expectedOutcome == expectedOutcomes.success && outcome == expectedOutcomes.success) {
             stopApplication(projectName, [
-                    configname        : configname,
-                    appname           : appname,
-                    wlstabspath       : wlstabspath,
+                configname        : configname,
+                appname           : appname,
+                wlstabspath       : wlstabspath,
 
-                    additional_options: "",
-                    version_identifier: ""
+                additional_options: "",
+                version_identifier: ""
             ])
         }
 

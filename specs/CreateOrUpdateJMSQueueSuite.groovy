@@ -16,8 +16,8 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
 
     @Shared
     def checkBoxValues = [
-            unchecked: '0',
-            checked  : '1',
+        unchecked: '0',
+        checked  : '1',
     ]
 
     /**
@@ -30,50 +30,50 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
 
     @Shared
     def configNames = [
-            empty    : '',
-            correct  : CONFIG_NAME,
-            incorrect: 'incorrect config Name',
+        empty    : '',
+        correct  : CONFIG_NAME,
+        incorrect: 'incorrect config Name',
     ]
 
     @Shared
     def jmsQueues = [
-            default    : 'SpecQueue',
-            updated    : 'SpecUpdatedQueue',
-            nonexisting: 'NoSuchQueue'
+        default    : 'SpecQueue',
+        updated    : 'SpecUpdatedQueue',
+        nonexisting: 'NoSuchQueue'
     ]
 
     @Shared
     def jndiNames = [
-            empty      : '',
-            correct    : 'TestJNDIName',
-            recreateOld: 'OldJNDIName',
-            recreateNew: 'NewJNDIName',
+        empty      : '',
+        correct    : 'TestJNDIName',
+        recreateOld: 'OldJNDIName',
+        recreateNew: 'NewJNDIName',
     ]
 
     @Shared
     def targets = [
-            default: 'AdminServer',
-            update : 'TestSpecServer'
+        default: 'AdminServer',
+        update : 'TestSpecServer'
     ]
     @Shared
     def updateActions = [
-            empty            : '',
-            do_nothing       : 'do_nothing',
-            selective_update : 'selective_update',
-            remove_and_create: 'remove_and_create'
+        empty            : '',
+        do_nothing       : 'do_nothing',
+        selective_update : 'selective_update',
+        remove_and_create: 'remove_and_create'
     ]
     @Shared
     def jmsModules = [
-            default   : 'TestJMSModule',
-            unexistent: 'NoSuchModule'
+        default   : 'TestJMSModule',
+        unexistent: 'NoSuchModule'
     ]
 
     @Shared
     //* Optional Parameter
     def additionalOptionsIs = [
-            empty    : '',
-            correct  : '-subscriptionDurability Durable',
-            incorrect: 'incorrect Additional Options',
+        empty    : '',
+        correct  : '-subscriptionDurability Durable',
+        incorrect: 'incorrect Additional Options',
     ]
     /**
      * Verification Values: Assert values
@@ -81,21 +81,21 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
 
     @Shared
     def expectedOutcomes = [
-            success: 'success',
-            error  : 'error',
-            warning: 'warning',
-            running: 'running',
+        success: 'success',
+        error  : 'error',
+        warning: 'warning',
+        running: 'running',
     ]
 
     @Shared
     def expectedSummaryMessages = [
-            empty: "",
+        empty: "",
 
     ]
 
     @Shared
     def expectedJobDetailedResults = [
-            empty: '',
+        empty: '',
     ]
 
     @Shared
@@ -168,15 +168,15 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
         jndiName = 'TestJNDIName'
 
         def runParams = [
-                configname                     : configname,
-                ecp_weblogic_jms_queue_name    : jmsQueueName,
-                ecp_weblogic_jms_module_name   : jmsModuleName,
-                ecp_weblogic_jndi_name         : jndiName,
+            configname                     : configname,
+            ecp_weblogic_jms_queue_name    : jmsQueueName,
+            ecp_weblogic_jms_module_name   : jmsModuleName,
+            ecp_weblogic_jndi_name         : jndiName,
 
-                ecp_weblogic_subdeployment_name: subdeploymentName,
+            ecp_weblogic_subdeployment_name: subdeploymentName,
 //                ecp_weblogic_jms_server_name   : target,
-                ecp_weblogic_additional_options: additionalOptions,
-                ecp_weblogic_update_action     : updateAction,
+            ecp_weblogic_additional_options: additionalOptions,
+            ecp_weblogic_update_action     : updateAction,
         ]
 
         deleteJMSQueue(jmsModuleName, jmsQueueName)
@@ -220,9 +220,9 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        jmsQueueName      | updateAction                    | target          | additionalOptions             | expectedOutcome          | expectedSummaryMessage             | expectedJobDetailedResult
+        jmsQueueName      | updateAction        | target          | additionalOptions         | expectedOutcome          | expectedSummaryMessage | expectedJobDetailedResult
         // Create
-        jmsQueues.default | updateActions.empty             | targets.default | additionalOptionsIs.empty     | expectedOutcomes.success | ''                                 | "Created Queue $jmsQueueName"
+        jmsQueues.default | updateActions.empty | targets.default | additionalOptionsIs.empty | expectedOutcomes.success | ''                     | "Created Queue $jmsQueueName"
         // With additional options
 //        jmsQueues.default | updateActions.empty             | targets.default | additionalOptionsIs.correct   | expectedOutcomes.success | "Created JMS Queue $jmsQueueName"  | ''
         // With incorrect additional options

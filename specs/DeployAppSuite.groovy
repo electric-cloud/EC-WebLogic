@@ -23,8 +23,8 @@ class DeployAppSuite extends WebLogicHelper {
 
     @Shared
     def checkBoxValues = [
-            unchecked: '0',
-            checked  : '1',
+        unchecked: '0',
+        checked  : '1',
     ]
 
     /**
@@ -38,9 +38,9 @@ class DeployAppSuite extends WebLogicHelper {
     @Shared
     //* Required Parameter (need incorrect and empty value)
     def pluginConfigurationNames = [
-            empty    : '',
-            correct  : CONFIG_NAME,
-            incorrect: 'incorrect config Name',
+        empty    : '',
+        correct  : CONFIG_NAME,
+        incorrect: 'incorrect config Name',
     ]
 
     /**
@@ -49,27 +49,27 @@ class DeployAppSuite extends WebLogicHelper {
 
     @Shared
     def expectedOutcomes = [
-            success: 'success',
-            error  : 'error',
-            warning: 'warning',
-            running: 'running',
+        success: 'success',
+        error  : 'error',
+        warning: 'warning',
+        running: 'running',
     ]
 
     @Shared
     def expectedSummaryMessages = [
-            empty          : '',
-            file_not_exists: 'File  doesn\'t exist'
+        empty          : '',
+        file_not_exists: 'File  doesn\'t exist'
 
     ]
 
     @Shared
     def expectedJobDetailedResults = [
-            empty: '',
+        empty: '',
     ]
 
     @Shared
     def expectedLogParts = [
-            empty: '',
+        empty: '',
     ]
 
     /**
@@ -79,7 +79,7 @@ class DeployAppSuite extends WebLogicHelper {
     def configname
     def wlstabspath
     def appname
-    def apppath
+    def static apppath
     def targets
 
     //optional parameters
@@ -115,7 +115,8 @@ class DeployAppSuite extends WebLogicHelper {
         createConfig(pluginConfigurationNames.correct)
 
         publishArtifact(artifactName, version, FILENAME)
-        downloadArtifact(artifactName, REMOTE_DIRECTORY, getResourceName())
+        String path = downloadArtifact(artifactName, getResourceName())
+        apppath = new File(path, FILENAME)
     }
 
     /**
@@ -134,35 +135,35 @@ class DeployAppSuite extends WebLogicHelper {
     def "Deploy Application. with server '#targets'. Expected : #expectedOutcome : #expectedSummaryMessage"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
-                // Required
-                configname               : configname,
-                wlstabspath              : wlstabspath,
-                appname                  : appname,
-                apppath                  : apppath,
-                targets                  : targets,
+            // Required
+            configname               : configname,
+            wlstabspath              : wlstabspath,
+            appname                  : appname,
+            apppath                  : apppath,
+            targets                  : targets,
 
-                // Optional
-                is_library               : is_library,
-                stage_mode               : stage_mode,
-                plan_path                : plan_path,
-                deployment_plan          : deployment_plan,
-                overwrite_deployment_plan: overwrite_deployment_plan,
-                additional_options       : additional_options,
-                archive_version          : archive_version,
-                retire_gracefully        : retire_gracefully,
-                retire_timeout           : retire_timeout,
-                version_identifier       : version_identifier,
-                upload                   : upload,
-                remote                   : remote,
+            // Optional
+            is_library               : is_library,
+            stage_mode               : stage_mode,
+            plan_path                : plan_path,
+            deployment_plan          : deployment_plan,
+            overwrite_deployment_plan: overwrite_deployment_plan,
+            additional_options       : additional_options,
+            archive_version          : archive_version,
+            retire_gracefully        : retire_gracefully,
+            retire_timeout           : retire_timeout,
+            version_identifier       : version_identifier,
+            upload                   : upload,
+            remote                   : remote,
         ]
 
         // Check that application is not installed already
         def pageBeforeDeploy = checkUrl(APPLICATION_PAGE_URL)
         if (pageBeforeDeploy.code == SUCCESS_RESPONSE) {
             def undeploy = undeployApplication(projectName, [
-                    configname : configname,
-                    wlstabspath: wlstPath,
-                    appname    : appname,
+                configname : configname,
+                wlstabspath: wlstPath,
+                appname    : appname,
             ])
             assert (undeploy.outcome == 'success')
 
@@ -195,15 +196,15 @@ class DeployAppSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        configname                       | wlstabspath | appname          | apppath          | targets       | is_library               | stage_mode | plan_path | deployment_plan | overwrite_deployment_plan | additional_options | archive_version | retire_gracefully | retire_timeout | version_identifier | upload | remote | expectedOutcome          | expectedSummaryMessage
+        configname                       | wlstabspath | appname          | targets       | is_library               | expectedOutcome          | expectedSummaryMessage
         // Simple positive
-        pluginConfigurationNames.correct | wlstPath    | APPLICATION_NAME | APPLICATION_PATH | ''            | ''                       | ''         | ''        | ''              | ''                        | ''                 | ''              | ''                | ''             | ''                 | ''     | ''     | expectedOutcomes.success | ''
+        pluginConfigurationNames.correct | wlstPath    | APPLICATION_NAME | ''            | ''                       | expectedOutcomes.success | ''
 
         // with TargetServerSpecified
-        pluginConfigurationNames.correct | wlstPath    | APPLICATION_NAME | APPLICATION_PATH | 'AdminServer' | checkBoxValues.unchecked | ''         | ''        | ''              | ''                        | ''                 | ''              | ''                | ''             | ''                 | ''     | ''     | expectedOutcomes.success | ''
+        pluginConfigurationNames.correct | wlstPath    | APPLICATION_NAME | 'AdminServer' | checkBoxValues.unchecked | expectedOutcomes.success | ''
 
         // Empty wlst path should return "File  doesn't exist"
-        pluginConfigurationNames.correct | ''          | APPLICATION_NAME | APPLICATION_PATH | ''            | checkBoxValues.unchecked | ''         | ''        | ''              | ''                        | ''                 | ''              | ''                | ''             | ''                 | ''     | ''     | expectedOutcomes.error   | expectedSummaryMessages.file_not_exists
+        pluginConfigurationNames.correct | ''          | APPLICATION_NAME | ''            | checkBoxValues.unchecked | expectedOutcomes.error   | expectedSummaryMessages.file_not_exists
 
     }
 

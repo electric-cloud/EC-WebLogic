@@ -21,8 +21,8 @@ class DeleteJMSModuleSuite extends WebLogicHelper {
 
     @Shared
     def checkBoxValues = [
-            unchecked: '0',
-            checked  : '1',
+        unchecked: '0',
+        checked  : '1',
     ]
 
     /**
@@ -36,15 +36,15 @@ class DeleteJMSModuleSuite extends WebLogicHelper {
     @Shared
     //* Required Parameter (need incorrect and empty value)
     def pluginConfigurationNames = [
-            empty    : '',
-            correct  : CONFIG_NAME,
-            incorrect: 'incorrect config Name',
+        empty    : '',
+        correct  : CONFIG_NAME,
+        incorrect: 'incorrect config Name',
     ]
 
     @Shared
     def connectionFactories = [
-            correct    : 'SpecConnectionFactory',
-            nonexisting: 'NoSuchCF'
+        correct    : 'SpecConnectionFactory',
+        nonexisting: 'NoSuchCF'
     ]
 
     /**
@@ -53,32 +53,32 @@ class DeleteJMSModuleSuite extends WebLogicHelper {
 
     @Shared
     def expectedOutcomes = [
-            success: 'success',
-            error  : 'error',
-            warning: 'warning',
-            running: 'running',
+        success: 'success',
+        error  : 'error',
+        warning: 'warning',
+        running: 'running',
     ]
 
     @Shared
     def expectedSummaryMessages = [
-            empty: "",
+        empty: "",
 
     ]
 
     @Shared
     def expectedJobDetailedResults = [
-            empty: '',
+        empty: '',
     ]
 
     @Shared
     def expectedLogParts = [
-            empty: '',
+        empty: '',
     ]
 
     @Shared
     def jmsModuleNames = [
-            default    : 'TestJMSModule',
-            nonexisting: 'NoSuchJMSModule'
+        default    : 'TestJMSModule',
+        nonexisting: 'NoSuchJMSModule'
     ]
 
     /**
@@ -125,8 +125,8 @@ class DeleteJMSModuleSuite extends WebLogicHelper {
     def "Delete JMS Module. (Module : #jmsModuleName, configuration name : #configName) - procedure"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
-                configname                  : configName,
-                ecp_weblogic_jms_module_name: jmsModuleName,
+            configname                  : configName,
+            ecp_weblogic_jms_module_name: jmsModuleName,
         ]
 
         // Create JMS Module to delete unless it should not exist

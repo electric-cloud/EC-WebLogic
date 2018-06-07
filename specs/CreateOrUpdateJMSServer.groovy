@@ -7,10 +7,10 @@ class CreateOrUpdateJMSServer extends WebLogicHelper {
     static def deleteProcedureName = 'DeleteJMSServer'
 
     static def params = [
-        configname: configName,
+        configname                  : configName,
         ecp_weblogic_jms_server_name: '',
-        ecp_weblogic_update_action: 'do_nothing',
-        ecp_weblogic_target: ''
+        ecp_weblogic_update_action  : 'do_nothing',
+        ecp_weblogic_target         : ''
     ]
 
     def doSetupSpec() {
@@ -20,18 +20,18 @@ class CreateOrUpdateJMSServer extends WebLogicHelper {
         discardChanges()
 
         dslFile "dsl/procedures.dsl", [
-            projectName: projectName,
+            projectName  : projectName,
             procedureName: procedureName,
-            resourceName: getResourceName(),
-            params: params,
+            resourceName : getResourceName(),
+            params       : params,
         ]
 
         dslFile 'dsl/procedures.dsl', [
-            projectName: projectName,
+            projectName  : projectName,
             procedureName: deleteProcedureName,
-            resourceName: getResourceName(),
-            params: [
-                configname: configName,
+            resourceName : getResourceName(),
+            params       : [
+                configname                  : configName,
                 ecp_weblogic_jms_server_name: '',
             ]
         ]
@@ -99,11 +99,9 @@ class CreateOrUpdateJMSServer extends WebLogicHelper {
 
         if (action == 'do_nothing') {
             assert result.logs =~ /JMS Server $jmsServer exists, no further action is required/
-        }
-        else if (action == 'selective_update') {
+        } else if (action == 'selective_update') {
             assert result.logs =~ /Updated JMS Server/
-        }
-        else {
+        } else {
             assert result.logs =~ /Recreated JMS Server/
         }
         cleanup:

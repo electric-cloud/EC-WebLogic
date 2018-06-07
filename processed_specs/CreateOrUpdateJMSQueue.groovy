@@ -5,42 +5,42 @@ import spock.lang.*
 class CreateOrUpdateJMSQueue extends WebLogicHelper {
     static def projectName = 'EC-WebLogic Specs CreateOrUpdateJMSQueue'
     static def jmsModuleName = 'TestJMSModule'
-    static def configName = CONFIG_NAME
+    static def configName = WebLogicHelper.CONFIG_NAME
     static def procedureName = 'CreateOrUpdateJMSQueue'
     static def deleteProcedureName = 'DeleteJMSQueue'
 
     static def params = [
-            configname                     : configName,
-            ecp_weblogic_jms_module_name   : '',
-            ecp_weblogic_jms_queue_name    : '',
-            ecp_weblogic_subdeployment_name: '',
-            ecp_weblogic_update_action     : 'do_nothing',
-            ecp_weblogic_additional_options: '',
-            ecp_weblogic_jndi_name         : ''
+        configname                     : configName,
+        ecp_weblogic_jms_module_name   : '',
+        ecp_weblogic_jms_queue_name    : '',
+        ecp_weblogic_subdeployment_name: '',
+        ecp_weblogic_update_action     : 'do_nothing',
+        ecp_weblogic_additional_options: '',
+        ecp_weblogic_jndi_name         : ''
     ]
 
     def doSetupSpec() {
         setupResource()
         deleteProject(projectName)
         createJMSModule(jmsModuleName)
-        createConfig(CONFIG_NAME)
+        createConfig(WebLogicHelper.CONFIG_NAME)
 
         dslFile "dsl/procedures.dsl", [
-                projectName  : projectName,
-                procedureName: procedureName,
-                resourceName : getResourceName(),
-                params       : params,
+            projectName  : projectName,
+            procedureName: procedureName,
+            resourceName : getResourceName(),
+            params       : params,
         ]
 
         dslFile 'dsl/procedures.dsl', [
-                projectName  : projectName,
-                procedureName: deleteProcedureName,
-                resourceName : getResourceName(),
-                params       : [
-                        configname                  : configName,
-                        ecp_weblogic_jms_module_name: '',
-                        ecp_weblogic_jms_queue_name : ''
-                ]
+            projectName  : projectName,
+            procedureName: deleteProcedureName,
+            resourceName : getResourceName(),
+            params       : [
+                configname                  : configName,
+                ecp_weblogic_jms_module_name: '',
+                ecp_weblogic_jms_queue_name : ''
+            ]
         ]
     }
 

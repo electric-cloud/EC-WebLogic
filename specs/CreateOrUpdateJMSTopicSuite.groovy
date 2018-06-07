@@ -21,8 +21,8 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
 
     @Shared
     def checkBoxValues = [
-            unchecked: '0',
-            checked  : '1',
+        unchecked: '0',
+        checked  : '1',
     ]
 
     /**
@@ -36,17 +36,17 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
     @Shared
     //* Required Parameter (need incorrect and empty value)
     def configNames = [
-            empty    : '',
-            correct  : CONFIG_NAME,
-            incorrect: 'incorrect config Name',
+        empty    : '',
+        correct  : CONFIG_NAME,
+        incorrect: 'incorrect config Name',
     ]
 
     @Shared
     def jndiNames = [
-            empty      : '',
-            correct    : 'TestJNDIName',
-            recreateOld: 'OldJNDIName',
-            recreateNew: 'NewJNDIName',
+        empty      : '',
+        correct    : 'TestJNDIName',
+        recreateOld: 'OldJNDIName',
+        recreateNew: 'NewJNDIName',
     ]
 
     /**
@@ -55,21 +55,21 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
 
     @Shared
     def expectedOutcomes = [
-            success: 'success',
-            error  : 'error',
-            warning: 'warning',
-            running: 'running',
+        success: 'success',
+        error  : 'error',
+        warning: 'warning',
+        running: 'running',
     ]
 
     @Shared
     def expectedSummaryMessages = [
-            empty: "",
+        empty: "",
 
     ]
 
     @Shared
     def expectedJobDetailedResults = [
-            empty: '',
+        empty: '',
     ]
 
     @Shared
@@ -79,34 +79,34 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
 
     @Shared
     def targets = [
-            default         : 'AdminServer',
-            update          : 'TestSpecServer',
-            single          : 'AdminServer',
-            twoServers      : 'AdminServer, ManagedServer1',
-            cluster         : 'Cluster1',
-            nothing         : '',
-            serverAndCluster: 'ManagedServer2, Cluster1',
-            managedServer   : 'ManagedServer2'
+        default         : 'AdminServer',
+        update          : 'TestSpecServer',
+        single          : 'AdminServer',
+        twoServers      : 'AdminServer, ManagedServer1',
+        cluster         : 'Cluster1',
+        nothing         : '',
+        serverAndCluster: 'ManagedServer2, Cluster1',
+        managedServer   : 'ManagedServer2'
     ]
 
     @Shared
     def updateActions = [
-            empty            : '',
-            do_nothing       : 'do_nothing',
-            selective_update : 'selective_update',
-            remove_and_create: 'remove_and_create'
+        empty            : '',
+        do_nothing       : 'do_nothing',
+        selective_update : 'selective_update',
+        remove_and_create: 'remove_and_create'
     ]
     @Shared
     def jmsModules = [
-            default   : 'TestJMSModule',
-            unexistent: 'NoSuchModule'
+        default   : 'TestJMSModule',
+        unexistent: 'NoSuchModule'
     ]
 
     @Shared
     def jmsTopicNames = [
-            empty      : '',
-            default    : 'JMSTopic',
-            with_spaces: 'JMS Topic Name with spaces',
+        empty      : '',
+        default    : 'JMSTopic',
+        with_spaces: 'JMS Topic Name with spaces',
     ]
 
     /**
@@ -129,7 +129,8 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
     def updateAction
     @Shared
     def subdeploymentName
-    @Shared def target
+    @Shared
+    def target
 
     // expected results
     def expectedOutcome
@@ -169,14 +170,14 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
         targets = 'SpecServer'
 
         def runParams = [
-                configname                     : configname,
-                ecp_weblogic_additional_options: additionalOptions,
-                ecp_weblogic_update_action     : updateAction,
-                ecp_weblogic_subdeployment_name: subdeploymentName,
-                ecp_weblogic_jms_topic_name    : jmsTopicName,
-                ecp_weblogic_jms_module_name   : jmsModuleName,
+            configname                     : configname,
+            ecp_weblogic_additional_options: additionalOptions,
+            ecp_weblogic_update_action     : updateAction,
+            ecp_weblogic_subdeployment_name: subdeploymentName,
+            ecp_weblogic_jms_topic_name    : jmsTopicName,
+            ecp_weblogic_jms_module_name   : jmsModuleName,
 //                ecp_weblogic_jms_server_name   : targets,
-                ecp_weblogic_jndi_name         : jndiName,
+            ecp_weblogic_jndi_name         : jndiName,
         ]
 
         ensureManagedServer(targets, '7999')
@@ -219,9 +220,9 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        configname          | updateAction                    | jmsTopicName                                    | expectedOutcome          | expectedSummaryMessage            | expectedJobDetailedResult
+        configname          | updateAction        | jmsTopicName          | expectedOutcome          | expectedSummaryMessage            | expectedJobDetailedResult
         // Create
-        configNames.correct | updateActions.empty             | jmsTopicNames.default                           | expectedOutcomes.success | "Created JMS Topic $jmsTopicName" | ''
+        configNames.correct | updateActions.empty | jmsTopicNames.default | expectedOutcomes.success | "Created JMS Topic $jmsTopicName" | ''
 
         // Empty Name
 //        configNames.correct | updateActions.empty             | jmsTopicNames.empty                             | expectedOutcomes.error   | ""                                | ''
