@@ -1,0 +1,119 @@
+3.3.0:
+  - |
+    Created Messaging procedures:
+    <ul>
+      <li>Create Or Update JMS Server</li>
+      <li>Delete JMS Server</li>
+      <li>Create Or Update JMS Module</li>
+      <li>Delete JMS Module</li>
+      <li>Create Or Update Connection Factory</li>
+      <li>Delete Connection Factory</li>
+      <li>Create Or Update JMS Queue</li>
+      <li>Delete JMS Queue</li>
+      <li>Create Or Update JMS Topic</li>
+      <li>Delete JMS Topic</li>
+      <li>Create Or Update JMS Module Subdeployment</li>
+      <li>Delete JMS Module Subdeployment</li>
+    </ul>
+3.2.4:
+  - Configured the plugin to allow the ElectricFlow UI to render the plugin procedure parameters entirely using the configured form XMLs.
+  - Enabled the plugin for managing the plugin configurations in-line when defining an application process step or a pipeline stage task.
+
+3.2.3:
+  - UpdateApp procedure has been marked as deprecated.
+  - |
+    Following procedures have been added:
+      <ul>
+          <li>UpdateAppConfig</li>
+          <li>StartCluster</li>
+          <li>StopCluster</li>
+          <li>CheckClusterStatus</li>
+      </ul>
+  - |
+      Additional parameters have been added to the following procedures:
+        <ul>
+            <li>StartApp</li>
+            <li>StopApp</li>
+            <li>UndeployApp</li>
+            <li>DeployApp</li>
+        </ul>
+
+  - Checkbox "Retire Gracefully?" from UndeployApp procedure has been marked as deprecated and will be removed in the next release.
+  - DeployApp does redeployment if application already exists.
+  - StartApp and StopApp have been improved and warning is being thrown if application is already in the desired state.
+  - StartCluster and StopCluster have been improved and warning is being thrown if cluster is already in the desired state.
+  - Support of named edit sessions (concurrent edit sessions) has been added. If WebLogic server doesn't have support of the named edit sessions, warning will be thrown.
+  - MW_HOME environment variable has been added to the plugin configuration.
+
+3.2.2:
+  - Added missing documentation.
+  - Fixed multiline inputs for textareas in CreateUser and CreateGroup procedures.
+  - Fixed issue with CreateUser and DeleteUser procedure when credentials was not found.
+  - Cleanup was performed.
+3.2.1:
+  - A lot of minor improvements and bugfixes.
+  - |
+    <ul>
+        <p>Added the following new procedures:</p>
+        <li>Add Server to Cluster</li>
+        <li>Add User to Group</li>
+        <li>Change User Password</li>
+        <li>Configure User Lockout Manager</li>
+        <li>Create Cluster</li>
+        <li>Create Domain</li>
+        <li>Create Group</li>
+        <li>Create Template</li>
+        <li>Create User</li>
+        <li>Delete Cluster</li>
+        <li>Delete Group</li>
+        <li>Delete User</li>
+        <li>Remove User from Group</li>
+        <li>Unlock User Account</li>
+        <li>Update App</li>
+    </ul>
+3.0.1:
+  - Fixed issue with configurations being cached for IE.
+3.0.0:
+  - Refactored the CheckPageStatus, CheckServerStatus, CreateDataSource, DeleteDataSource, DeployApp, RunWLST, StartApp, StopApp, and UndeployApp procedures.
+  - Added link to plugin Configuration Page in plugin step panels.
+2.0.7:
+  - Fixed the manifest file.
+2.0.6:
+  - Fixed typos in references to the createDataSource and deleteDataSource files in the manifest.pl so that the files are included correctly in the plugin jar.
+  - Fixed errors in the createDataSource procedure.
+2.0.5:
+  - Added four procedures to create datasources, delete datasources, suspend a server,  and resume a server.
+  - Fixed minor bugs.
+
+2.0.4:
+  - Procedure names were changed in the step picker section.
+2.0.3:
+  - Added a parameter in the start and stop server procedures to determine the maximum time in seconds to test the status of the server.
+  - Created two procedures to start and stop the Node Manager.
+2.0.2:
+  - Changes to Help files.
+2.0.1:
+  - Upgrade to use the new Parameter Form XML.
+  - Added a link directly to the new Help file.
+2.0.0:
+  - New Help Page Format.
+  - Add new Parameter Panels for each procedure.
+  - Add the <b>weblogic jar Absolute Path</b> parameter to the DeployApp, UndeployApp, StartApp, StopApp, RunDeployer and RunWLST procedures. It is required to a Linux environment to load WebLogic libreries.
+1.1.3:
+  - Add the <b>Administration Server URL</b> parameter to the StartManagedServer procedure.
+  - Fixed minor issues.
+1.1.1:
+  - Fix issue affecting workspace setting.
+1.1.0:
+  - Add the CheckPageStatus procedure.
+  - Modify the CheckServerProcedure procedure. CURL is not needed and parameters were changed.
+  - Fix minor bugs.
+  - Remove the CURL dependency.
+  - Add new postp matchers.
+1.0.2:
+  - Fixed minor bug on Configuration List page.
+1.0.1:
+  - Procedures that have only one step are executed using Perl directly.
+  - Credentials in the StartManagedServer procedure must be stored in a boot.properties file.
+1.0.0:
+  - First release.

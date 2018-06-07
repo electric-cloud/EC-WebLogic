@@ -16,7 +16,7 @@
 
 -->
 <editor>
-    <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateOrUpdateConnectionFactory.xml</help>
+    <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateOrUpdateJMSTopic.xml</help>
     <formElement>
         <type>entry</type>
         <label>Configuration Name:</label>
@@ -32,7 +32,7 @@
         <type>entry</type>
         <label>JMS Topic Name:</label>
         <property>ecp_weblogic_jms_topic_name</property>
-        <documentation>Unique name of the JMS Queue Name that is going to be created or updated.
+        <documentation>Unique name of the JMS Topic that is going to be created or updated.
 </documentation>
         <required>1</required>
     </formElement>
@@ -67,8 +67,15 @@
         <documentation>This parameter controls as to what the Update Action should be when a Connection Factory with the same name exists:
 Do Nothing  (Default) -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
 Remove and Create - The procedure would remove existing JMS Topic and recreate it based on new parameters passed.
-Selective Update - The procedure would update existing JMS Topic for only parameters that we have designed to be updatable out of the box, based on what we think makes sense.
+Selective Update - The procedure would update existing JMS Topic. The parameters for selective update are JNDI Name and Subdeployment Name.
 </documentation>
+<htmlDocumentation>
+This parameter controls as to what the Update Action should be when a JMS Topic with the same name exists:<br/>
+<b>Do Nothing  (Default)</b> -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.<br/>
+<b>Remove and Create</b> - The procedure would remove existing JMS Topic and recreate it based on new parameters passed.<br/>
+<b>Selective Update</b> - The procedure would update existing JMS Topic. The parameters for selective update are <b>JNDI Name</b> and <b>Subdeployment Name</b>.
+        </htmlDocumentation>
+
         <required>0</required>
         <option>
             <name>Do Nothing</name>
@@ -88,7 +95,7 @@ Selective Update - The procedure would update existing JMS Topic for only parame
         <type>textarea</type>
         <label>Additional Options:</label>
         <required>0</required>
-        <documentation>Use this option to specify general or advanced parameters, message thresholds and quota, message delivery over-rides, message logging and message delivery failure options, topic multicast parameters.</documentation>
+        <documentation>Use this option to specify general or advanced parameters ,message thresholds and quota, message delivery overrides, message logging and message delivery failure options, topic multicast parameters.</documentation>
         <property>ecp_weblogic_additional_options</property>
     </formElement>
 </editor>
