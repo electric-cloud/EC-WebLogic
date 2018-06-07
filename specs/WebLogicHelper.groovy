@@ -105,6 +105,8 @@ class WebLogicHelper extends PluginSpockTestSupport {
             port     = '$port'
           }
         """
+        sleep(10 * 1000)
+        // Giving some rest to container
     }
 
     def __runWLST(code) {
@@ -593,7 +595,7 @@ startEdit()
 deleteSubDeployment('$moduleName', '$subName')
 activate()
 """
-        def result = runWLST(code, "DeleteSubDeployment_$moduleName_$subName")
+        def result = runWLST(code, "DeleteSubDeployment_${moduleName}_${subName}")
         assert result.outcome == 'success'
     }
 
