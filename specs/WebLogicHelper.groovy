@@ -74,9 +74,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
         def endpoint = getEndpoint()
         def username = getUsername()
         def password = getPassword()
+        def enableNamedSessions = System.getenv('WL_ENABLE_NAMED_SESSIONS') ? '1' : '0'
         def pluginConfig = [
                 weblogic_url         : endpoint,
-                enable_named_sessions: 'true',
+                enable_named_sessions: enableNamedSessions,
                 debug_level          : '0',
                 wlst_path            : getWlstPath(),
         ]
@@ -808,5 +809,9 @@ try {
             targets    : targetServer,
             is_library : ""
         ])
+    }
+
+    def cleanup() {
+        logger.info(">>>>>>>FINISHED WITH FEATURE: ${getClass().simpleName} Spec: ${specificationContext.currentIteration.name}")
     }
 }

@@ -1,5 +1,6 @@
 import spock.lang.Shared
 import spock.lang.Unroll
+import spock.lang.IgnoreRest
 
 class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
 
@@ -178,7 +179,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
             cf_sharing_policy          : cf_sharing_policy,
             cf_client_id_policy        : cf_client_id_policy,
             jms_module_name            : jms_module_name,
-            ecp_weblogic_target_list   : 'AdminServer',
+            wls_instance_list          : 'AdminServer',
             cf_max_messages_per_session: cf_max_messages_per_session,
             cf_xa_enabled              : cf_xa_enabled,
             subdeployment_name         : subdeployment_name,
@@ -204,7 +205,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         logger.info(upperStepSummary)
 
         expect: 'Outcome and Upper Summary verification'
-        assert outcome == expectedOutcome
+        assert result.outcome == expectedOutcome
         if (expectedOutcome == expectedOutcomes.success && outcome == expectedOutcomes.success) {
             assert connectionFactoryExists(jms_module_name, cf_name)
         }
@@ -217,7 +218,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         pluginConfigurationNames.correct | connectionFactories.correct | jndiNames.correct | sharingPolicies.exclusive | clientPolicies.restricted | jmsModuleName   | ''                          | ''            | ''                 | ''              | ''            | ''                                | expectedOutcomes.success | "Created Connection Factory $cf_name"
 
         // with additional options
-        pluginConfigurationNames.correct | connectionFactories.correct | jndiNames.correct | sharingPolicies.exclusive | clientPolicies.restricted | jmsModuleName   | ''                          | ''            | ''                 | ''              | ''            | additionalOptions.defaultPriority | expectedOutcomes.success | "Created Connection Factory $cf_name"
+        pluginConfigurationNames.correct | connectionFactories.correct | jndiNames.correct | sharingPolicies.exclusive | clientPolicies.restricted | jmsModuleName   | ''                          | '1'           | ''                 | ''              | ''            | additionalOptions.defaultPriority | expectedOutcomes.success | "Created Connection Factory $cf_name"
     }
 
     @Unroll

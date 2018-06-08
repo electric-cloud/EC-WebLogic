@@ -38,6 +38,10 @@ else :
 MINIMAL_VERSION_FOR_NAMED_SESSIONS = '12.2.1.1'
 MINIMAL_VERSION_FOR_REDEPLOYMENT = '12.0.0.0'
 
+VERSION_12_R1 = '12.1.0.0'
+VERSION_11 = '10.3.6.0'
+VERSION_12_R2 = '12.2.1.1'
+
 DO_NOTHING = 'do_nothing'
 REMOVE_AND_CREATE = 'remove_and_create'
 SELECTIVE_UPDATE = 'selective_update'
@@ -187,6 +191,10 @@ def determineWebLogicVersion():
     result = re.match('^\s*?WebLogic\sServer\s([\d.]+)\s', version)
     versionNumber = result.group(1)
     return versionNumber
+
+def printWebLogicVersion():
+    version = determineWebLogicVersion()
+    print_info("WebLogic Server version is %s" % version)
 
 # compares 2 versions.
 # returns 1 if version1 > version2

@@ -33,6 +33,7 @@ services:
     tty: true
     environment:
       - COMMANDER_SERVER=electricflow
+      - PRODUCTION_MODE=prod
 networks:
   internal:
     driver: bridge
