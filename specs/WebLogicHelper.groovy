@@ -339,20 +339,20 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
     def runTestedProcedure(def projectName, procedureName, def params, def resourceName) {
 
-        deleteProject(projectName)
-
-        dslFile('dsl/procedures.dsl', [
-            projectName  : projectName,
-            procedureName: procedureName,
-            resourceName : resourceName,
-            params       : params
-        ])
+//        dslFile('dsl/procedures.dsl', [
+//            projectName  : projectName,
+//            procedureName: procedureName,
+//            resourceName : resourceName,
+//            params       : params
+//        ])
 
         // Stringify map
         def params_str_arr = []
         params.each() { k, v ->
+
             params_str_arr.push(k + " : '" + (v ?: '') + "'")
         }
+
         logger.debug("Parameters string: " + params_str_arr.toString())
 
         def result = runProcedure("""
