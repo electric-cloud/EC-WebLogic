@@ -106,10 +106,21 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
 
     def doSetupSpec() {
         setupResource()
-        createConfig(pluginConfigurationNames.correct)
+        createConfig(CONFIG_NAME)
 
         deleteProject(projectName)
         createJMSModule(jmsModuleNames.default)
+
+        dslFile "dsl/procedures.dsl", [
+            projectName  : projectName,
+            resourceName : getResourceName(),
+            procedureName: procedureName,
+            params       : [
+                configname     : CONFIG_NAME,
+                cf_name        : cf_name,
+                jms_module_name: jms_module_name,
+            ]
+        ]
     }
 
     /**
@@ -128,7 +139,6 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
     def "Delete Connection Factory. Positive and negative - procedure"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
-            configname     : configname,
             cf_name        : cf_name,
             jms_module_name: jms_module_name,
         ]
@@ -144,7 +154,6 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
 
         then: 'Wait until job run is completed: '
 
-        def outcome = result.outcome
         def debugLog = result.logs
 
         println "Procedure log:\n$debugLog\n"
@@ -153,30 +162,28 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
         logger.info(upperStepSummary)
 
         expect: 'Outcome and Upper Summary verification'
-        assert outcome == expectedOutcome
-        if (expectedOutcome == expectedOutcomes.success && outcome == expectedOutcomes.success) {
+        assert result.outcome == expectedOutcome
+        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
             assert !connectionFactoryExists(jms_module_name, cf_name)
         }
         assert debugLog.contains(expectedJobDetailedResult)
 //        assert upperStepSummary.contains(expectedSummaryMessage)
 
         cleanup:
-        if (expectedOutcome == expectedOutcomes.success && outcome != expectedOutcomes.success) {
+        if (expectedOutcome == expectedOutcomes.success && result.outcome != expectedOutcomes.success) {
             deleteConnectionFactory(jms_module_name, cf_name)
         }
         where: 'The following params will be: '
-        configname                       | cf_name                         | jms_module_name            | expectedOutcome          | expectedJobDetailedResult
+        cf_name                         | jms_module_name            | expectedOutcome          | expectedJobDetailedResult
 
         // delete connection factory
-        pluginConfigurationNames.correct | connectionFactories.correct     | jmsModuleNames.default     | expectedOutcomes.success | "Removed Connection Factory $cf_name from the module $jms_module_name"
+        connectionFactories.correct     | jmsModuleNames.default     | expectedOutcomes.success | "Removed Connection Factory $cf_name from the module $jms_module_name"
 
         // delete non-existing connection factory
-        pluginConfigurationNames.correct | connectionFactories.nonexisting | jmsModuleNames.default     | expectedOutcomes.error   | "Connection Factory $cf_name does not exist in the module $jms_module_name"
+        connectionFactories.nonexisting | jmsModuleNames.default     | expectedOutcomes.error   | "Connection Factory $cf_name does not exist in the module $jms_module_name"
 
         // delete non-existing connection factory from non-existing jms module
-        pluginConfigurationNames.correct | connectionFactories.nonexisting | jmsModuleNames.nonexisting | expectedOutcomes.error   | "Connection Factory $cf_name does not exist in the module $jms_module_name"
-
-
+        connectionFactories.nonexisting | jmsModuleNames.nonexisting | expectedOutcomes.error   | "Connection Factory $cf_name does not exist in the module $jms_module_name"
     }
 
     def createConnectionFactory(def name, def module_name = jmsModuleNames.default) {
@@ -186,7 +193,7 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
             procedureName: 'CreateOrUpdateConnectionFactory',
             resourceName : getResourceName(),
             params       : [
-                configname         : "${pluginConfigurationNames.correct}",
+                configname         : CONFIG_NAME,
                 cf_name            : "$name",
                 jms_module_name    : "$module_name",
                 cf_sharing_policy  : "Exclusive",
@@ -199,7 +206,7 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
             projectName: '$projectName',
             procedureName: 'CreateOrUpdateConnectionFactory',
             actualParameter: [
-                configname         : '${pluginConfigurationNames.correct}',
+                configname         : '${CONFIG_NAME}',
                 cf_name            : '$name',
                 jms_module_name    : '$module_name',
                 cf_sharing_policy  : 'Exclusive',
@@ -303,30 +310,4 @@ except Exception, e:
         def result = runWLST(code)
         assert result.outcome == 'success'
     }
-
-    def createJMSServer(name) {
-        def code = """
-connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
-
-jmsServerName = '$name'
-targetName = '${getAdminServerName()}'
-
-bean = getMBean('/JMSServers/%s' % jmsServerName)
-if bean == None:
-    edit()
-    startEdit()
-    cd('/')
-    print "Creating JMS Server %s" % jmsServerName
-    cmo.createJMSServer(jmsServerName)
-    cd("/JMSServers/%s" % jmsServerName)
-    cmo.addTarget(getMBean("/Servers/%s" % targetName))
-    activate()
-else:
-    print "JMS Server already exists"
-"""
-        def result = runWLST(code)
-        assert result.outcome == 'success'
-        result
-    }
-
 }
