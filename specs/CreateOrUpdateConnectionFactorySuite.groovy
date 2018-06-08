@@ -165,6 +165,10 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         deleteJMSModule(jmsModuleName)
     }
 
+    def setup() {
+        discardChanges()
+    }
+
     /**
      * Positive Scenarios
      */

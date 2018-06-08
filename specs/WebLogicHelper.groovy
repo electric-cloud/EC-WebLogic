@@ -725,7 +725,7 @@ else:
     def discardChanges() {
         def code = """connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 try:
-    stopEdit('y')
+    cancelEdit('y')
 except WLSTException, e:
     print 'Cannot stop edit'
     print str(e)
