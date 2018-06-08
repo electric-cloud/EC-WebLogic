@@ -192,10 +192,6 @@ def determineWebLogicVersion():
     versionNumber = result.group(1)
     return versionNumber
 
-def printWebLogicVersion():
-    version = determineWebLogicVersion()
-    print_info("WebLogic Server version is %s" % version)
-
 # compares 2 versions.
 # returns 1 if version1 > version2
 # returns -1 if version1 < version2

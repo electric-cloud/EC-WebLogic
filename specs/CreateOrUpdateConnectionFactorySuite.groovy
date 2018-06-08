@@ -419,12 +419,13 @@ module = '$module'
 subdeployment = '$subdeployment'
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 bean = getMBean('/JMSSystemResources/' + module + '/SubDeployments/' + subdeployment)
-print bean
+if bean == None:
+    raise Exception("Subdeployment %s does not exist" % subdeployment)
 targets = bean.getTargets()
 for t in targets:
     print 'Target: ' + str(t.objectName)
 """
-        def result = runWLST(code)
+        def result = runWLST(code, "GetSubdeploymentTargets_${module}_${subdeployment}")
         assert result.outcome == 'success'
         result
     }
