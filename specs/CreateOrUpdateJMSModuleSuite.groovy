@@ -113,9 +113,6 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
      * Test Parameters: for Where section
      */
 
-    // Procedure params
-    def configname
-
     // Required
     @Shared
     def jmsModuleName
@@ -139,7 +136,19 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
         setupResource()
         deleteProject(projectName)
 
-        createConfig(configNames.correct)
+        createConfig(CONFIG_NAME)
+
+        dslFile "dsl/procedures.dsl", [
+            projectName  : projectName,
+            resourceName : getResourceName(),
+            procedureName: procedureName,
+            params       : [
+                configname                  : CONFIG_NAME,
+                ecp_weblogic_jms_module_name: '',
+                ecp_weblogic_update_action  : '',
+                ecp_weblogic_target_list    : '',
+            ]
+        ]
     }
 
     /**
@@ -155,11 +164,10 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
      */
 
     @Unroll
-    def "Create and Update JMS Module. Positive - procedure with params (Module: #jmsModuleName, target: #target, update action: #updateAction)"() {
+    def "Create and Update JMS Module. Positive - procedure with params (Module: #jmsModuleName, target: #target, update action: #updateAction )"() {
         setup: 'Define the parameters for Procedure running'
 
         def runParams = [
-            configname                  : configname,
             ecp_weblogic_jms_module_name: jmsModuleName,
             ecp_weblogic_update_action  : updateAction,
             ecp_weblogic_target_list    : target
@@ -178,7 +186,6 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
 
         then: 'Wait until job run is completed: '
 
-        def outcome = result.outcome
         def debugLog = result.logs
 
         println "Procedure log:\n$debugLog\n"
@@ -187,8 +194,9 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
         logger.info(upperStepSummary)
 
         expect: 'Outcome and Upper Summary verification'
-        assert outcome == expectedOutcome
-        if (expectedOutcome == expectedOutcomes.success && outcome == expectedOutcomes.success) {
+        assert result.outcome == expectedOutcome
+
+        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
             assert jmsModuleExists(jmsModuleName)
         }
 
@@ -201,7 +209,7 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
         }
 
         cleanup:
-        if (expectedOutcome == expectedOutcomes.success && outcome == expectedOutcomes.success) {
+        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
             deleteJMSModule(jmsModuleName)
         }
 
@@ -217,14 +225,12 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
     }
 
     @Unroll
-    def "Update JMS Module Targets. Positive - procedure with params (old targets: #oldTargets, new targets: #newTargets update action: #updateAction)"() {
+    def "Update JMS Module Targets. Positive - procedure with params (old targets: #oldTargets, new targets: #newTargets, update action: #updateAction)"() {
         setup: 'Define the parameters for Procedure running'
-        def configname = configNames.correct
         def updateAction = 'selective_update'
         def jmsModuleName = randomize('TargetList')
         def expectedOutcome = expectedOutcomes.success
         def runParams = [
-            configname                  : configname,
             ecp_weblogic_jms_module_name: jmsModuleName,
             ecp_weblogic_update_action  : updateAction,
             ecp_weblogic_target_list    : newTargets
@@ -241,7 +247,6 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
 
         then: 'Wait until job run is completed: '
 
-        def outcome = result.outcome
         def debugLog = result.logs
 
         logger.debug("Procedure log:\n$debugLog\n")
@@ -251,7 +256,7 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
 
         expect: 'Outcome and Upper Summary verification'
         assert result.outcome == expectedOutcome
-        if (expectedOutcome == expectedOutcomes.success && outcome == expectedOutcomes.success) {
+        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
             assert jmsModuleExists(jmsModuleName)
         }
 
@@ -269,13 +274,13 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
         deleteJMSModule(jmsModuleName)
 
         where: 'The following params will be: '
-        oldTargets      | newTargets
-        targets.default | targets.twoServers
-        targets.default | targets.cluster
-        // 'selective_update'              | targets.cluster    | targets.twoServers
-        // 'remove_and_create'             | targets.cluster    | targets.serverAndCluster
-        // 'selective_update'              | targets.nothing    | targets.managedServer
-        // 'remove_and_create'             | targets.nothing    | targets.cluster
+        updateAction        | oldTargets      | newTargets
+        'selective_update'  | targets.default | targets.twoServers
+        'selective_update'  | targets.default | targets.cluster
+        'selective_update'  | targets.cluster | targets.twoServers
+        'remove_and_create' | targets.cluster | targets.serverAndCluster
+        'selective_update'  | targets.nothing | targets.managedServer
+        'remove_and_create' | targets.nothing | targets.cluster
     }
 
     def jmsModuleExists(def moduleName) {
