@@ -340,8 +340,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
     def runTestedProcedure(def projectName, procedureName, def params, def resourceName) {
 
-        deleteProject(projectName)
-
         dslFile('dsl/procedures.dsl', [
             projectName  : projectName,
             procedureName: procedureName,
@@ -364,7 +362,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
             )
                 """, resourceName,
                 180, // timeout
-                30  // initialDelay
+                15  // initialDelay
         )
         return result
     }

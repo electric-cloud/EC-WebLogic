@@ -156,10 +156,10 @@ try:
         print_info("JNDI name is not changed")
 
     if not isEmpty(subdeploymentName):
+        # Removing Default Targeting
+        # It's important to use set() and not setDefaultTargetingEnabled because of 10.3.6
+        set('DefaultTargetingEnabled', boolValue(False))
         if cf.getSubDeploymentName() != subdeploymentName:
-            # Removing Default Targeting
-            cf.setDefaultTargetingEnabled(0)
-            # cf.unset('DefaultTargetingEnabled')
             cf.setSubDeploymentName(subdeploymentName)
             successMessage += ', Set Targeting to Subdeployment %s' % subdeploymentName
             print_info("Set subdeployment name to %s" % subdeploymentName)
@@ -169,7 +169,7 @@ try:
     else:
         if not update:
             successMessage += ', Set Default Targeting'
-            cf.setDefaultTargetingEnabled(1)
+            set('DefaultTargetingEnabled', boolValue(True))
             print_info("Set default targeting")
         else:
             print_info("Will not change targeting for Connection Factory")
@@ -188,11 +188,8 @@ try:
 
         # TransactionParams
         cd('%s/TransactionParams/%s' % (getConnectionFactoryPath(jmsModuleName, cfName), cfName))
-        if xaEnabled:
-            set('XAConnectionFactoryEnabled', 1)
-        else:
-            set('XAConnectionFactoryEnabled', 0)
-        print_debug('Set XAConnectionFactoryEnabled to %s' % xaEnabled)
+        set('XAConnectionFactoryEnabled', boolValue(xaEnabled))
+        print_info('Set XAConnectionFactoryEnabled to %s' % boolValue(xaEnabled))
         options = parseOptions(additionalOptions, delimeter = '\n+')
         print_info("Additional Options: %s" % options)
         for key, value in options.items():

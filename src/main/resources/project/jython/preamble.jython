@@ -501,6 +501,12 @@ def readBool(value):
     else:
         return False
 
+def boolValue(value):
+    if value:
+        return 'true'
+    else:
+        return 'false'
+
 def readInt(value, default_value = 0):
     value = value.strip()
     if value:
