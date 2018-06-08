@@ -15,11 +15,11 @@ services:
     tty: true
     environment:
       - COMMANDER_SERVER=electricflow
-    # healthcheck:
-    #   test: ["CMD", "curl", "-f", "http://localhost:8000"]
-    #   interval: 30s
-    #   timeout: 10s
-    #   retries: 3
+    healthcheck:
+      test: ["CMD", "curl", "-f", "curl http://localhost:8000/rest/v1.0/server/info"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     restart: always
 
   weblogic:
