@@ -227,7 +227,7 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
     @Unroll
     def "Update JMS Module Targets. Positive - procedure with params (old targets: #oldTargets, new targets: #newTargets, update action: #updateAction)"() {
         setup: 'Define the parameters for Procedure running'
-        def updateAction = 'selective_update'
+//        def updateAction = 'selective_update'
         def jmsModuleName = randomize('TargetList')
         def expectedOutcome = expectedOutcomes.success
         def runParams = [
@@ -278,9 +278,9 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
         'selective_update'  | targets.default | targets.twoServers
         'selective_update'  | targets.default | targets.cluster
         'selective_update'  | targets.cluster | targets.twoServers
-        'remove_and_create' | targets.cluster | targets.serverAndCluster
-        'selective_update'  | targets.nothing | targets.managedServer
-        'remove_and_create' | targets.nothing | targets.cluster
+//        'remove_and_create' | targets.cluster | targets.serverAndCluster
+//        'selective_update'  | targets.nothing | targets.managedServer
+//        'remove_and_create' | targets.nothing | targets.cluster
     }
 
     def jmsModuleExists(def moduleName) {
