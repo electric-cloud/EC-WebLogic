@@ -94,8 +94,9 @@ class StartAppSuite extends WebLogicHelper {
 
         publishArtifact(artifactName, version, FILENAME)
         def path = downloadArtifact(artifactName, getResourceName())
+        assert path
 
-        deployApplication(projectName,
+        def deploy = deployApplication(projectName,
             [
                 configname : CONFIG_NAME,
                 wlstabspath: getWlstPath(),
@@ -106,7 +107,9 @@ class StartAppSuite extends WebLogicHelper {
             ]
         )
 
-        stopApplication(projectName,
+        assert deploy.outcome == 'success'
+
+        def stop = stopApplication(projectName,
             [
                 configname        : CONFIG_NAME,
                 wlstabspath       : getWlstPath(),
@@ -116,6 +119,7 @@ class StartAppSuite extends WebLogicHelper {
                 version_identifier: ""
             ]
         )
+        assert stop.outcome == 'success'
 
         dslFile "dsl/procedures.dsl", [
             projectName  : projectName,
@@ -161,27 +165,22 @@ class StartAppSuite extends WebLogicHelper {
         def result = runTestedProcedure(projectName, procedureName, runParams, getResourceName())
 
         then: 'Wait until job run is completed: '
-
-        def outcome = result.outcome
         def debugLog = result.logs
-
         println "Procedure log:\n$debugLog\n"
 
-        def upperStepSummary = getJobUpperStepSummary(result.jobId)
-        logger.info("[SUMMARY]" + upperStepSummary)
-
         expect: 'Outcome and Upper Summary verification'
-        assert outcome == expectedOutcome
-        if (expectedOutcome == expectedOutcomes.success && outcome == expectedOutcomes.success) {
-            def pageAfterDeploy = checkUrl(APPLICATION_PAGE_URL)
-            assert pageAfterDeploy.code == SUCCESS_RESPONSE
+        assert result.outcome == expectedOutcome
+        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
+            def pageAfterStart = checkUrl(APPLICATION_PAGE_URL)
+            assert pageAfterStart.code == SUCCESS_RESPONSE
         }
         if (expectedSummaryMessage) {
+            def upperStepSummary = getJobUpperStepSummary(result.jobId)
             assert upperStepSummary.contains(expectedSummaryMessage)
         }
 
         cleanup: 'Stop application if start was successful'
-        if (expectedOutcome == expectedOutcomes.success && outcome == expectedOutcomes.success) {
+        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
             stopApplication(projectName, [
                 configname        : CONFIG_NAME,
                 appname           : appname,

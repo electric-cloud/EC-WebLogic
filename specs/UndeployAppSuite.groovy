@@ -107,7 +107,7 @@ class UndeployAppSuite extends WebLogicHelper {
 
         publishArtifact(artifactName, version, FILENAME)
         apppath = downloadArtifact(artifactName, getResourceName())
-
+//TODO: move getSummary to if(expectedSummary)
         dslFile "dsl/procedures.dsl", [
             projectName  : projectName,
             resourceName : getResourceName(),
@@ -185,7 +185,5 @@ class UndeployAppSuite extends WebLogicHelper {
         where: 'The following params will be: '
         wlstabspath | appname          | retire_gracefully        | version_identifier | give_up | additional_options | expectedOutcome
         wlstPath    | APPLICATION_NAME | checkBoxValues.unchecked | ''                 | ''      | ''                 | expectedOutcomes.success
-        wlstPath    | APPLICATION_NAME | checkBoxValues.checked   | ''                 | ''      | ''                 | expectedOutcomes.success
-
     }
 }
