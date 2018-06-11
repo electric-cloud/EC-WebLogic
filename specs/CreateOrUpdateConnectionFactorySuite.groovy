@@ -175,6 +175,10 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         deleteJMSModule(jmsModuleName)
     }
 
+    def setup() {
+        discardChanges()
+    }
+
     /**
      * Positive Scenarios
      */
@@ -188,7 +192,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
             cf_sharing_policy          : cf_sharing_policy,
             cf_client_id_policy        : cf_client_id_policy,
             jms_module_name            : jms_module_name,
-//            ecp_weblogic_target_list   : 'AdminServer',
+            wls_instance_list          : 'AdminServer',
             cf_max_messages_per_session: cf_max_messages_per_session,
             cf_xa_enabled              : cf_xa_enabled,
             subdeployment_name         : subdeployment_name,
@@ -214,19 +218,28 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         logger.info(upperStepSummary)
 
         expect: 'Outcome and Upper Summary verification'
-        assert outcome == expectedOutcome
+        assert result.outcome == expectedOutcome
         if (expectedOutcome == expectedOutcomes.success && outcome == expectedOutcomes.success) {
             assert connectionFactoryExists(jms_module_name, cf_name)
         }
         assert debugLog.contains(expectedJobDetailedResult)
 
+        // Important! The value must be actually checked!!
+        def xaEnabled = getConnectionFactoryProperty(jms_module_name, cf_name, 'TransactionParams', 'XAConnectionFactoryEnabled')
+        if (cf_xa_enabled == '1') {
+            assert xaEnabled == '1'
+        }
+        else {
+            assert xaEnabled == '0'
+        }
         cleanup:
         deleteConnectionFactory(jms_module_name, cf_name)
         where: 'The following params will be: '
         cf_name                     | jndi_name         | cf_sharing_policy         | cf_client_id_policy       | jms_module_name | cf_max_messages_per_session | cf_xa_enabled | subdeployment_name | jms_server_name | update_action | additional_options                | expectedOutcome          | expectedJobDetailedResult
         connectionFactories.correct | jndiNames.correct | sharingPolicies.exclusive | clientPolicies.restricted | jmsModuleName   | ''                          | ''            | ''                 | ''              | ''            | ''                                | expectedOutcomes.success | "Created Connection Factory $cf_name"
 
-        connectionFactories.correct | jndiNames.correct | sharingPolicies.exclusive | clientPolicies.restricted | jmsModuleName   | ''                          | ''            | ''                 | ''              | ''            | additionalOptions.defaultPriority | expectedOutcomes.success | "Created Connection Factory $cf_name"
+        // with additional options
+        connectionFactories.correct | jndiNames.correct | sharingPolicies.exclusive | clientPolicies.restricted | jmsModuleName   | ''                          | '1'           | ''                 | ''              | ''            | additionalOptions.defaultPriority | expectedOutcomes.success | "Created Connection Factory $cf_name"
     }
 
     @Unroll
@@ -267,9 +280,11 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         logger.debug(resultSecond.logs)
         assert resultSecond.outcome == expectedOutcome
 
-        def resultTargets = getSubdeploymentTargets(jmsModuleName, subdeploymentName)
-        logger.debug(resultTargets.logs)
-        assert resultTargets.logs.contains(jmsServerName)
+        if (update_action != 'do_nothing') {
+            def resultTargets = getSubdeploymentTargets(jmsModuleName, subdeploymentName)
+            logger.debug(resultTargets.logs)
+            assert resultTargets.logs.contains(jmsServerName)
+        }
 
         cleanup:
         deleteConnectionFactory(jmsModuleName, connectionFactories.updated)
@@ -356,7 +371,7 @@ try:
 except Exception, e:
    print("Exception", e)
 """
-        def result = runWLST(code)
+        def result = runWLST(code, "ConnectionFactoryExists_${name}")
         assert result.outcome == 'success'
 
         return (result.logs =~ /Connection Factory $name exists in module $moduleName/)
@@ -397,27 +412,28 @@ else:
     activate()
 
 """
-        def result = runWLST(code)
+        def result = runWLST(code, "DeleleteCF_${name}")
         assert result.outcome == 'success'
     }
 
-    def getConnectionFactoryProperty(module, cfName, group, propName) {
+    def getConnectionFactoryProperty(module, cfName, propGroup, propName) {
         def code = """
 def getConnectionFactoryPath(jms_module_name,cf_name):
     return "/JMSSystemResources/%s/JMSResource/%s/ConnectionFactories/%s" % (jms_module_name, jms_module_name, cf_name)
 
 module = '$module'
 cfName = '$cfName'
-group = '$group'
+group = '$propGroup'
 propName = '$propName'
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 cd(getConnectionFactoryPath(module, cfName) + '/' + group + '/' + cfName)
-print "PROPERTY: %s" % get(propName)
+print "VALUE:" + " %s" % get(propName)
 """
-        def result = runWLST(code)
+        def result = runWLST(code, "GetCFProperty_${propGroup}_${propName}")
         assert result.outcome == 'success'
-        // TODO retrieve property
-        result
+        def group = (result.logs =~ /VALUE:\s(.+?)/)
+        def value = group[0][1]
+        return value
     }
 
     def getSubdeploymentTargets(module, subdeployment) {
@@ -426,13 +442,15 @@ module = '$module'
 subdeployment = '$subdeployment'
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 bean = getMBean('/JMSSystemResources/' + module + '/SubDeployments/' + subdeployment)
-print bean
+if bean == None:
+    raise Exception("Subdeployment %s does not exist" % subdeployment)
 targets = bean.getTargets()
 for t in targets:
     print 'Target: ' + str(t.objectName)
 """
-        def result = runWLST(code)
+        def result = runWLST(code, "GetSubdeploymentTargets_${module}_${subdeployment}")
         assert result.outcome == 'success'
         result
     }
+
 }
