@@ -38,6 +38,10 @@ else :
 MINIMAL_VERSION_FOR_NAMED_SESSIONS = '12.2.1.1'
 MINIMAL_VERSION_FOR_REDEPLOYMENT = '12.0.0.0'
 
+VERSION_12_R1 = '12.1.0.0'
+VERSION_11 = '10.3.6.0'
+VERSION_12_R2 = '12.2.1.1'
+
 DO_NOTHING = 'do_nothing'
 REMOVE_AND_CREATE = 'remove_and_create'
 SELECTIVE_UPDATE = 'selective_update'
@@ -496,6 +500,12 @@ def readBool(value):
         return True
     else:
         return False
+
+def boolValue(value):
+    if value:
+        return 'true'
+    else:
+        return 'false'
 
 def readInt(value, default_value = 0):
     value = value.strip()

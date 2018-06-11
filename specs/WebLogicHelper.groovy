@@ -74,9 +74,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
         def endpoint = getEndpoint()
         def username = getUsername()
         def password = getPassword()
+        def enableNamedSessions = System.getenv('WL_ENABLE_NAMED_SESSIONS') ? '1' : '0'
         def pluginConfig = [
                 weblogic_url         : endpoint,
-                enable_named_sessions: 'true',
+                enable_named_sessions: enableNamedSessions,
                 debug_level          : '0',
                 wlst_path            : getWlstPath(),
         ]
@@ -339,8 +340,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
     def runTestedProcedure(def projectName, procedureName, def params, def resourceName) {
 
-        deleteProject(projectName)
-
         dslFile('dsl/procedures.dsl', [
             projectName  : projectName,
             procedureName: procedureName,
@@ -363,7 +362,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
             )
                 """, resourceName,
                 180, // timeout
-                30  // initialDelay
+                15  // initialDelay
         )
         return result
     }
@@ -724,7 +723,7 @@ else:
     def discardChanges() {
         def code = """connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 try:
-    stopEdit('y')
+    cancelEdit('y')
 except WLSTException, e:
     print 'Cannot stop edit'
     print str(e)
@@ -808,5 +807,9 @@ try {
             targets    : targetServer,
             is_library : ""
         ])
+    }
+
+    def cleanup() {
+        logger.info(">>>>>>>FINISHED WITH FEATURE: ${getClass().simpleName} Spec: ${specificationContext.currentIteration.name}")
     }
 }
