@@ -368,7 +368,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
     }
 
     def undeployApplication(String projectName, def params) {
-        deleteProject(projectName)
+
         dslFile 'dsl/procedures.dsl', [
             projectName  : projectName,
             procedureName: 'UndeployApp',

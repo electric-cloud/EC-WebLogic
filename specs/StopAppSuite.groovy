@@ -33,14 +33,6 @@ class StopAppSuite extends WebLogicHelper {
      * Procedure Values: test parameters Procedure values
      */
 
-    @Shared
-    //* Required Parameter (need incorrect and empty value)
-    def pluginConfigurationNames = [
-        empty    : '',
-        correct  : CONFIG_NAME,
-        incorrect: 'incorrect config Name',
-    ]
-
     /**
      * Verification Values: Assert values
      */
@@ -95,7 +87,7 @@ class StopAppSuite extends WebLogicHelper {
         assert wlstPath
 
         setupResource()
-        createConfig(pluginConfigurationNames.correct)
+        createConfig(CONFIG_NAME)
 
         def deployed = deployApplication(projectName,
             [
@@ -109,6 +101,20 @@ class StopAppSuite extends WebLogicHelper {
         )
 
         assert deployed.outcome == 'success'
+
+        dslFile "dsl/procedures.dsl", [
+            projectName  : projectName,
+            resourceName : getResourceName(),
+            procedureName: procedureName,
+            params       : [
+                configname        : CONFIG_NAME,
+                wlstabspath       : '',
+                appname           : '',
+
+                additional_options: '',
+                version_identifier: ''
+            ]
+        ]
     }
 
     /**
@@ -123,7 +129,7 @@ class StopAppSuite extends WebLogicHelper {
                 appname    : APPLICATION_NAME
             ]
         )
-        deleteProject(projectName)
+//        deleteProject(projectName)
     }
 
     /**
@@ -135,7 +141,6 @@ class StopAppSuite extends WebLogicHelper {
     def "Stop Application. application '#appname' - #expectedOutcome : #expectedSummaryMessage"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
-            configname        : configname,
             wlstabspath       : wlstabspath,
             appname           : appname,
 
@@ -144,7 +149,7 @@ class StopAppSuite extends WebLogicHelper {
         ]
 
         startApplication(projectName, [
-            configname        : configname,
+            configname        : CONFIG_NAME,
             appname           : appname,
             wlstabspath       : wlstabspath,
 
@@ -158,7 +163,6 @@ class StopAppSuite extends WebLogicHelper {
 
         then: 'Wait until job run is completed: '
 
-        def outcome = result.outcome
         def debugLog = result.logs
 
         println "Procedure log:\n$debugLog\n"
@@ -167,8 +171,8 @@ class StopAppSuite extends WebLogicHelper {
         logger.info("[SUMMARY]" + upperStepSummary)
 
         expect: 'Outcome and Upper Summary verification'
-        assert outcome == expectedOutcome
-        if (expectedOutcome == expectedOutcomes.success && outcome == expectedOutcomes.success) {
+        assert result.outcome == expectedOutcome
+        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
             def pageAfterDeploy = checkUrl(APPLICATION_PAGE_URL)
             assert pageAfterDeploy.code == NOT_FOUND_RESPONSE
         }
@@ -177,13 +181,13 @@ class StopAppSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        configname                       | wlstabspath | appname          | additional_options | version_identifier | expectedOutcome          | expectedSummaryMessage
-        pluginConfigurationNames.correct | wlstPath    | APPLICATION_NAME | ''                 | ''                 | expectedOutcomes.success | ''
+        wlstabspath | appname          | additional_options | version_identifier | expectedOutcome          | expectedSummaryMessage
+        wlstPath    | APPLICATION_NAME | ''                 | ''                 | expectedOutcomes.success | ''
 
         //with TargetServerSpecified
-        pluginConfigurationNames.correct | wlstPath    | APPLICATION_NAME | ''                 | ''                 | expectedOutcomes.success | ''
+        wlstPath    | APPLICATION_NAME | ''                 | ''                 | expectedOutcomes.success | ''
 
         // Empty wlst path should return "File  doesn't exist"
-        pluginConfigurationNames.correct | ''          | APPLICATION_NAME | ''                 | ''                 | expectedOutcomes.error   | expectedSummaryMessages.file_not_exists
+        ''          | APPLICATION_NAME | ''                 | ''                 | expectedOutcomes.error   | expectedSummaryMessages.file_not_exists
     }
 }

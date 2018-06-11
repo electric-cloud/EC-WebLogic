@@ -35,14 +35,6 @@ class UndeployAppSuite extends WebLogicHelper {
      * Procedure Values: test parameters Procedure values
      */
 
-    @Shared
-    //* Required Parameter (need incorrect and empty value)
-    def pluginConfigurationNames = [
-        empty    : '',
-        correct  : CONFIG_NAME,
-        incorrect: 'incorrect config Name',
-    ]
-
 
     @Shared
     //* Optional Parameter
@@ -83,7 +75,6 @@ class UndeployAppSuite extends WebLogicHelper {
      * Test Parameters: for Where section
      */
     // Procedure params
-    def configname
     def wlstabspath
     def appname
 
@@ -112,10 +103,25 @@ class UndeployAppSuite extends WebLogicHelper {
         def version = '1.0'
 
         setupResource()
-        createConfig(pluginConfigurationNames.correct)
+        createConfig(CONFIG_NAME)
 
         publishArtifact(artifactName, version, FILENAME)
         apppath = downloadArtifact(artifactName, getResourceName())
+//TODO: move getSummary to if(expectedSummary)
+        dslFile "dsl/procedures.dsl", [
+            projectName  : projectName,
+            resourceName : getResourceName(),
+            procedureName: procedureName,
+            params       : [
+                configname        : CONFIG_NAME,
+                wlstabspath       : wlstabspath,
+                appname           : appname,
+                additional_options: additional_options,
+                retire_gracefully : retire_gracefully,
+                version_identifier: version_identifier,
+                give_up           : give_up
+            ]
+        ]
     }
 
     /**
@@ -123,7 +129,7 @@ class UndeployAppSuite extends WebLogicHelper {
      */
 
     def doCleanupSpec() {
-        deleteProject(projectName)
+//        deleteProject(projectName)
     }
 
     /**
@@ -134,7 +140,6 @@ class UndeployAppSuite extends WebLogicHelper {
     def "Undeploy Application. with server '#targets'. Expected : #expectedOutcome : #expectedSummaryMessage"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
-            configname        : configname,
             wlstabspath       : wlstabspath,
             appname           : appname,
             additional_options: additional_options,
@@ -147,7 +152,7 @@ class UndeployAppSuite extends WebLogicHelper {
         def pageBeforeUndeploy = checkUrl(APPLICATION_PAGE_URL)
         if (pageBeforeUndeploy.code == NOT_FOUND_RESPONSE) {
             def deploy = deployApplication(projectName, [
-                configname : pluginConfigurationNames.correct,
+                configname : CONFIG_NAME,
                 wlstabspath: getWlstPath(),
                 appname    : appname,
                 apppath    : apppath,
@@ -156,9 +161,6 @@ class UndeployAppSuite extends WebLogicHelper {
             ])
 
             assert (deploy.outcome == 'success')
-
-            // Delete to prevent [weird] caching in DSL params
-            deleteProject(projectName)
         }
 
         when: 'Procedure runs: '
@@ -167,25 +169,21 @@ class UndeployAppSuite extends WebLogicHelper {
 
         then: 'Wait until job run is completed: '
 
-        def outcome = result.outcome
         def debugLog = result.logs
 
         println "Procedure log:\n$debugLog\n"
 //        def upperStepSummary = getJobUpperStepSummary(result.jobId)
 
         expect: 'Outcome and Upper Summary verification'
-        assert outcome == expectedOutcome
-        if (expectedOutcome == expectedOutcomes.success && outcome == expectedOutcomes.success) {
+        assert result.outcome == expectedOutcome
+
+        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
             def pageAfterUndeploy = checkUrl(APPLICATION_PAGE_URL)
             assert pageAfterUndeploy.code == NOT_FOUND_RESPONSE
         }
 
         where: 'The following params will be: '
-        configname                       | wlstabspath | appname          | retire_gracefully | version_identifier | give_up | additional_options | expectedOutcome
-        pluginConfigurationNames.correct | wlstPath    | APPLICATION_NAME | ''                | ''                 | ''      | ''                 | expectedOutcomes.success
-
-        // Empty wlst path should return "File  doesn't exist'"
-        pluginConfigurationNames.correct | ''          | APPLICATION_NAME | ''                | ''                 | ''      | ''                 | expectedOutcomes.error
-
+        wlstabspath | appname          | retire_gracefully        | version_identifier | give_up | additional_options | expectedOutcome
+        wlstPath    | APPLICATION_NAME | checkBoxValues.unchecked | ''                 | ''      | ''                 | expectedOutcomes.success
     }
 }

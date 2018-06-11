@@ -48,6 +48,7 @@ class CreateOrUpdateJMSTopic extends WebLogicHelper {
     }
 
     @Unroll
+    @Ignore
     def 'create jms topic'() {
         given:
         def topicName = 'SpecTopic'
@@ -80,6 +81,7 @@ class CreateOrUpdateJMSTopic extends WebLogicHelper {
         additionalOptions << ['MaximumMessageSize=100', 'Thresholds.MessagesLow=10000']
     }
 
+    @Ignore
     def 'update jms topic'() {
         given:
         def topicName = 'SpecTopic'
@@ -118,6 +120,7 @@ class CreateOrUpdateJMSTopic extends WebLogicHelper {
         deleteJMSTopic(jmsModuleName, topicName)
     }
 
+    @Ignore
     def 'recreate jms topic'() {
         given:
         def topicName = 'SpecTopic'
