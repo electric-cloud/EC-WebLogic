@@ -84,6 +84,9 @@ class UndeployAppSuite extends WebLogicHelper {
     def give_up
     def additional_options
 
+    def artifactName = 'test:sample'
+    def version = '1.0'
+
     // This should be saved for deployApplication procedure
     def static apppath
 
@@ -99,15 +102,12 @@ class UndeployAppSuite extends WebLogicHelper {
     def doSetupSpec() {
         assert wlstPath
 
-        def artifactName = 'test:sample'
-        def version = '1.0'
-
         setupResource()
         createConfig(CONFIG_NAME)
 
         publishArtifact(artifactName, version, FILENAME)
         apppath = downloadArtifact(artifactName, getResourceName())
-//TODO: move getSummary to if(expectedSummary)
+
         dslFile "dsl/procedures.dsl", [
             projectName  : projectName,
             resourceName : getResourceName(),
@@ -158,7 +158,7 @@ class UndeployAppSuite extends WebLogicHelper {
                 apppath    : apppath,
                 targets    : 'AdminServer',
                 is_library : ""
-            ])
+            ], artifactName, FILENAME)
 
             assert (deploy.outcome == 'success')
         }
