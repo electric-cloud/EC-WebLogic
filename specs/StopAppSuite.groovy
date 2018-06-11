@@ -97,7 +97,9 @@ class StopAppSuite extends WebLogicHelper {
                 apppath    : APPLICATION_PATH,
                 targets    : 'AdminServer',
                 is_library : ""
-            ]
+            ],
+            APPLICATION_NAME,
+            FILENAME
         )
 
         assert deployed.outcome == 'success'
