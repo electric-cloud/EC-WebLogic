@@ -1,4 +1,4 @@
-version: '3'
+version: '3.4'
 services:
   electricflow:
     image: "electricflow/efserver"
@@ -17,9 +17,10 @@ services:
       - COMMANDER_SERVER=electricflow
     healthcheck:
       test: ["CMD", "curl", "-f", "curl http://localhost:8000/rest/v1.0/server/info"]
-      interval: 30s
+      interval: 120s
       timeout: 10s
       retries: 3
+      start_period: 120s
     restart: always
 
   # Needed to restart failed EF
@@ -43,6 +44,7 @@ services:
     environment:
       - COMMANDER_SERVER=electricflow
       - PRODUCTION_MODE=prod
+
 networks:
   internal:
     driver: bridge
