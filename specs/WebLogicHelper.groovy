@@ -251,8 +251,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
                 'artifactVersionLocationProperty': '/myJob/retrievedArtifactVersions/retrieved',
                 'overwrite'                      : 'update',
 //                        'retrieveToDirectory'            : destinationDirectory,
-                'versionRange'                   : '1.0'
-
             ]
         ]
 
@@ -263,8 +261,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
                 actualParameter: [
                    'artifactName'                   : '$artifactName',
                    'artifactVersionLocationProperty': '/myJob/retrievedArtifactVersions/retrieved',
-                   'overwrite'                      : 'update',
-                   'versionRange'                   : '1.0'
+                   'overwrite'                      : 'update'
                 ]
             )
         """, getResourceName())
@@ -390,11 +387,9 @@ class WebLogicHelper extends PluginSpockTestSupport {
         return result
     }
 
-    def deployApplication(def projectName, def params) {
-        def artifactName = 'test:sample'
-        def version = '1.0'
+    def deployApplication(def projectName, def params, String artifactName, String filename) {
 
-        publishArtifact(artifactName, version, FILENAME)
+        publishArtifact(artifactName, '1.0', FILENAME)
         def path = downloadArtifact(artifactName, getResourceName())
 
         dslFile 'dsl/procedures.dsl', [
@@ -411,7 +406,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
             actualParameter: [
                  wlstabspath: '${params.wlstabspath}',
                  appname    : '${params.appname}',
-                 apppath    : "$path",
+                 apppath    : "$path/$filename",
                  targets    : 'AdminServer',
                  is_library : ""
             ]
@@ -436,9 +431,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
             actualParameter: [
                  wlstabspath: '${params.wlstabspath}',
                  appname    : '${params.appname}',
-
-                 additional_options : "",
-                 version_identifier : ""
             ]
         )
         """, getResourceName())
@@ -461,9 +453,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
             actualParameter: [
                  wlstabspath: '${params.wlstabspath}',
                  appname    : '${params.appname}',
-
-                 additional_options : "",
-                 version_identifier : ""
             ]
         )
         """, getResourceName())

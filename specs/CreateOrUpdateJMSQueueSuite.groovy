@@ -119,9 +119,9 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
     def additionalOptions
 
     // expected results
-    def expectedOutcome
-    def expectedSummaryMessage
-    def expectedJobDetailedResult
+    String expectedOutcome
+    String expectedSummaryMessage
+    String expectedJobDetailedResult
 
     /**
      * Preparation actions
@@ -184,11 +184,10 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
             ecp_weblogic_target_jms_server : target,
         ]
 
-        deleteJMSQueue(jmsModuleName, jmsQueueName)
         ensureManagedServer(target, '7999')
 
         if (updateAction) {
-//            createJMSModule(jmsModuleName, targets.default)
+            createJMSQueue(jmsModuleName, jmsQueueName)
         }
 
         when: 'Procedure runs: '
@@ -197,7 +196,7 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
 
         then: 'Wait until job run is completed: '
 
-        def debugLog = result.logs
+        String debugLog = result.logs
         println "Procedure log:\n$debugLog\n"
 
         expect: 'Outcome and Upper Summary verification'
@@ -217,26 +216,71 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
         }
 
         cleanup:
-        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
-            deleteJMSQueue(jmsModuleName, jmsQueueName)
-        }
+        deleteJMSQueue(jmsModuleName, jmsQueueName)
 
         where: 'The following params will be: '
-        jmsQueueName      | updateAction        | target          | additionalOptions             | expectedOutcome          | expectedSummaryMessage | expectedJobDetailedResult
+        jmsQueueName      | updateAction                    | target          | additionalOptions             | expectedOutcome          | expectedJobDetailedResult
 
         // Create
-        jmsQueues.default | updateActions.empty | targets.default | additionalOptionsIs.empty     | expectedOutcomes.success | ''                     | "Created Queue $jmsQueueName"
+        jmsQueues.default | updateActions.empty             | targets.default | additionalOptionsIs.empty     | expectedOutcomes.success | "Created Queue $jmsQueueName"
 
         // With additional options
-        jmsQueues.default | updateActions.empty | targets.default | additionalOptionsIs.correct   | expectedOutcomes.success | ''                     | "Created Queue $jmsQueueName"
+        jmsQueues.default | updateActions.empty             | targets.default | additionalOptionsIs.correct   | expectedOutcomes.success | "Created Queue $jmsQueueName"
 
         // With incorrect additional options
-        jmsQueues.default | updateActions.empty | targets.default | additionalOptionsIs.incorrect | expectedOutcomes.error   | ""                     | 'Options: incorrect Additional Options'
+        jmsQueues.default | updateActions.empty             | targets.default | additionalOptionsIs.incorrect | expectedOutcomes.error   | 'Options: incorrect Additional Options'
 
-        // Update TODO: create
-//        jmsQueues.updated  | updateActions.do_nothing        | targets.update  | additionalOptionsIs.empty     | expectedOutcomes.success | ''                            | "JMS Queue $jmsQueueName exists, no further action is required"
-//        jmsQueues.updated  | updateActions.selective_update  | targets.update  | additionalOptionsIs.empty     | expectedOutcomes.success | ''                            | "Updated JMS Queue"
-//        jmsQueues.updated  | updateActions.remove_and_create | targets.update  | additionalOptionsIs.empty     | expectedOutcomes.success | ''                            | "Recreated JMS Queue"
+        // Update options
+        jmsQueues.updated | updateActions.do_nothing        | targets.update  | additionalOptionsIs.empty     | expectedOutcomes.success | "No action is required"
+        jmsQueues.updated | updateActions.selective_update  | targets.update  | additionalOptionsIs.empty     | expectedOutcomes.success | "Doing selective update"
+        jmsQueues.updated | updateActions.remove_and_create | targets.update  | additionalOptionsIs.empty     | expectedOutcomes.success | "Removed JMS Queue $jmsQueueName from the module " // $jmsModuleName"
+    }
+
+    def createJMSQueue(def moduleName, def name) {
+        def code = """
+def getJMSResource(name):
+    if (name == None or name == ''):
+        raise Exception("No JMS Module Name is provided")
+    mbean = getMBean('/JMSSystemResources/%s' % name)
+    if mbean == None:
+        return None
+    else:
+        print("Got JMS Bean %s" % mbean)
+        return mbean.getJMSResource()
+
+def getJMSQueuePath(jmsModule, queue):
+    return "/JMSSystemResources/%s/JMSResource/%s/Queues/%s" % (jmsModule, jmsModule, queue)
+
+
+jmsModuleName = '$moduleName'
+queueName = '$name'
+
+connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+
+try:
+  edit()
+  startEdit()
+  jmsResource = getJMSResource(jmsModuleName)
+  print("Found JMS Resource %s" % jmsModuleName)
+  if jmsResource == None:
+      raise Exception("JMS Resource %s does not exist" % jmsModuleName)
+  jmsQueue = getMBean(getJMSQueuePath(jmsModuleName, queueName))
+  update = False
+  if jmsQueue == None:
+      print("JMS Queue %s does not exist" % queueName)
+      jmsQueue = jmsResource.createQueue(queueName)
+      print("Created Queue %s" % queueName)
+      
+      # everything is fine, commiting
+      activate()
+  else:
+      print("Found JMS Queue %s in the module %s" % (queueName, jmsModuleName))
+except Exception, e:
+    print("Failed to create JMS Queue", e)
+    stopEdit('y')
+"""
+        def result = runWLST(code)
+        assert result.outcome == 'success'
     }
 
     def jmsQueueExists(def moduleName, def name) {
@@ -309,4 +353,6 @@ except Exception, e:
         def result = runWLST(code)
         assert result.outcome == 'success'
     }
+
+
 }
