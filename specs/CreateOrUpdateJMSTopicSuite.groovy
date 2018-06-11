@@ -187,7 +187,9 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
 
         ensureManagedServer(target, '7999')
 
-        deleteJMSTopic(jmsModuleName, jmsTopicName)
+        if (jmsTopicName && jmsModuleName) {
+            deleteJMSTopic(jmsModuleName, jmsTopicName)
+        }
 
         if (updateAction != '') {
             createJMSTopic(jmsModuleName, jmsTopicName)
