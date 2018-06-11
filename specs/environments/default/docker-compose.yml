@@ -16,7 +16,7 @@ services:
     environment:
       - COMMANDER_SERVER=electricflow
     healthcheck:
-      test: ["CMD", "curl", "-f", "curl http://localhost:8000/rest/v1.0/server/info"]
+      test: ["CMD", "curl", "-f", "http://localhost:8000/rest/v1.0/server/info"]
       interval: 120s
       timeout: 10s
       retries: 3
