@@ -387,7 +387,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         return result
     }
 
-    def deployApplication(def projectName, def params, String artifactName, String filename) {
+    def deployApplication(def projectName, def params, String artifactName = 'test:sample', String filename = FILENAME) {
 
         publishArtifact(artifactName, '1.0', FILENAME)
         def path = downloadArtifact(artifactName, getResourceName())
