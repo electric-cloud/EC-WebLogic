@@ -53,10 +53,10 @@
     <type>select</type>
     <label>Update Action:</label>
     <property>ecp_weblogic_update_action</property>
-    <documentation>This parameter controls as to what the Update Action should be when a JMS Module with the same name exists :
+    <documentation>This parameter controls as to what the Update Action should be when a JMS Subdeployment with the same name exists :
 Do Nothing  (Default) -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
-Remove and Create - The procedure would remove existing JMS Module and recreate it based on new parameters passed.
-Selective Update - The procedure would update existing JMS Module for only parameters that we have designed to be updatable out of the box, based on what we think makes sense.The logic for this scenario is in the logic section below.
+Remove and Create - The procedure would remove existing JMS Subdeployment and recreate it based on new parameters passed.
+Selective Update - The procedure would update target servers for the existing JMS Subdeployment.
 </documentation>
     <required>0</required>
     <option>
