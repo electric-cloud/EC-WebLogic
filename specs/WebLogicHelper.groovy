@@ -491,6 +491,52 @@ else:
         assert result.outcome == 'success'
     }
 
+    def createJMSTopic(moduleName, name) {
+        def code = """
+def getJMSResource(name):
+    if (name == None or name == ''):
+        raise Exception("No JMS Module Name is provided")
+    mbean = getMBean('/JMSSystemResources/%s' % name)
+    if mbean == None:
+        return None
+    else:
+        print("Got JMS Bean %s" % mbean)
+        return mbean.getJMSResource()
+
+def getJMSTopicPath(jmsModule, topic):
+    return "/JMSSystemResources/%s/JMSResource/%s/Topics/%s" % (jmsModule, jmsModule, topic)
+
+jmsModuleName = '${moduleName}'
+topicName = '${name}'
+
+connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+edit()
+startEdit()
+
+try:
+    jmsResource = getJMSResource(jmsModuleName)
+    print("Found JMS Resource %s" % jmsModuleName)
+    if jmsResource == None:
+        raise Exception("JMS Resource %s does not exist" % jmsModuleName)
+    jmsTopic = getMBean(getJMSTopicPath(jmsModuleName, topicName))
+    update = False
+    if jmsTopic == None:
+        print("JMS Topic %s does not exist" % topicName)
+        jmsTopic = jmsResource.createTopic(topicName)
+        print("Created Topic %s" % topicName)
+        successMessage = 'Created JMS Topic %s' % topicName
+    else:
+        print("Found JMS Topic %s in the module %s" % (topicName, jmsModuleName))
+    activate()
+except Exception, e:
+    stopEdit('y')
+"""
+
+        def result = runWLST(code)
+        assert result.outcome == 'success'
+    }
+
+
     def deleteJMSServer(name) {
         def code = """
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
