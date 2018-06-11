@@ -87,7 +87,6 @@ class StartAppSuite extends WebLogicHelper {
         assert wlstPath
 
         def artifactName = 'test:sample'
-        def version = '1.0'
 
         setupResource()
         createConfig(CONFIG_NAME)

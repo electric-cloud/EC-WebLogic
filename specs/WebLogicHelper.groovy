@@ -665,7 +665,7 @@ print 'JSON{"jndiName": "%s", "subdeploymentName": "%s"}/JSON' % (jndiName, subd
         def result = runWLST(code, "getQueue_$queue")
         assert result.outcome == 'success'
         def group = (result.logs =~ /JSON(\{.+?\})\/JSON/)
-        def json = group[0][1]
+        String json = group[0][1]
         return new JsonSlurper().parseText(json)
     }
 
@@ -682,7 +682,7 @@ print 'JSON' + '{"jndiName": "%s", "subdeploymentName": "%s"}/JSON' % (jndiName,
         def result = runWLST(code, "GetJMSTopic_$topic")
         assert result.outcome == 'success'
         def group = (result.logs =~ /JSON(\{.+?\})\/JSON/)
-        def json = group[0][1]
+        String json = group[0][1]
         return new JsonSlurper().parseText(json)
     }
 
@@ -780,10 +780,10 @@ except WLSTException, e:
     }
 
     def createWorkspace(def workspaceName) {
-        def isWindows = System.getenv("IS_WINDOWS");
-        def workspacePath = "/tmp";
+        def isWindows = System.getenv("IS_WINDOWS")
+        def workspacePath = "/tmp"
         if (isWindows) {
-            workspacePath = "C:/workspace";
+            workspacePath = "C:/workspace"
         }
         def workspaceResult = dsl """
 try {
@@ -841,7 +841,7 @@ try {
             apppath    : path,
             targets    : targetServer,
             is_library : ""
-        ])
+        ], artifactName, 'SampleJMSApplication.war')
     }
 
     def cleanup() {
