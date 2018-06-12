@@ -24,6 +24,8 @@
     <property>wlstabspath</property>
     <required>1</required>
     <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
+    <propertyReference type="property">/plugins/@PLUGIN_NAME@/project/weblogic_cfgs/$configname/wlst_path</propertyReference>
+    <dependsOn>configname</dependsOn>
   </formElement>
   <formElement>
     <type>entry</type>
@@ -35,8 +37,9 @@
     <documentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</documentation>
     <htmlDocumentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="/commander/pages/@PLUGIN_NAME@/configurations">configuration page</a>.</htmlDocumentation>
     <required>1</required>
+    <propertyReference>/plugins/@PLUGIN_NAME@/project/weblogic_cfgs</propertyReference>
   </formElement>
-  
+
   <formElement>
     <type>entry</type>
     <label>Cluster Name:</label>
@@ -46,7 +49,7 @@
     </documentation>
     <required>1</required>
   </formElement>
-  
+
   <formElement>
       <type>entry</type>
       <label>Timeout:</label>
