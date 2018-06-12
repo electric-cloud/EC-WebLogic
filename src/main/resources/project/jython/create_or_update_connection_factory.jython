@@ -86,6 +86,9 @@ updateAction = r'''
 '''.strip()
 updateAction = readString(updateAction, 'do_nothing')
 
+required(jmsModuleName, 'JMS Module name is not provided')
+required(cfName, 'Connection Factory name is not provided')
+
 connect(username, password, adminUrl)
 successMessage = ''
 

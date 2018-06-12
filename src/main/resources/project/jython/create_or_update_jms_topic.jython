@@ -58,6 +58,9 @@ jmsServerName = r'''
 [% ecp_weblogic_target_jms_server %]
 '''.strip()
 
+required(jmsModuleName, 'No JMS Module Name is provided')
+required(topicName, 'No JMS Topic name is provided')
+
 connect(username, password, adminUrl)
 
 successMessage = ''
