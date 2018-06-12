@@ -44,6 +44,7 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
     }
 
     @Unroll
+    @Ignore
     def 'create subdeployment target #targets'() {
         given:
         def jmsModuleName = randomize('TestJMSModule')
@@ -94,6 +95,7 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
     }
 
     @Unroll
+    @Ignore
     def 'update #action jms subdeployment'() {
         given:
         def serverName = 'TestSpecServer'
@@ -145,6 +147,7 @@ class CreateOrUpdateJMSModuleSubdeployment extends WebLogicHelper {
     }
 
     @Unroll
+    @Ignore
     def 'change the list of targets #oldTargets -> #newTargets'() {
         given:
         def jmsModuleName = randomize('SpecJMSModule')
