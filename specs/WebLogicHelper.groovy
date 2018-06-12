@@ -848,6 +848,55 @@ try {
         ], artifactName, 'SampleJMSApplication.war')
     }
 
+    def getResourceProperty(module, cfName, resType, propGroup, propName) {
+        assert module
+        assert cfName
+        assert resType
+        def code = """
+def getResourcePath(jms_module_name,resource_name, resource_type):
+    resource_type += 's'
+    return "/JMSSystemResources/%s/JMSResource/%s/%s/%s" % (jms_module_name, jms_module_name, resource_type, resource_name)
+
+module = '$module'
+cfName = '$cfName'
+type = '$resType'
+group = '$propGroup'
+propName = '$propName'
+connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+if group:
+    cd(getResourcePath(module, cfName, type) + '/' + group + '/' + cfName)
+else:
+    cd(getResourcePath(module, cfName, type))
+
+print "VALUE:" + " %s" % get(propName)
+"""
+        def result = runWLST(code, "GetResourceProperty_${propGroup}_${propName}")
+        assert result.outcome == 'success'
+        def group = (result.logs =~ /VALUE:\s(.+?)/)
+        def value = group[0][1]
+        return value
+    }
+
+    def checkResourceProperties(moduleName, resName, resType, additionalOptions) {
+        assert additionalOptions
+        additionalOptions.split(/\n+/).each {
+            def (key, value) = it.split('=')
+            def groupOption = key.split(/\./)
+            def group = ''
+            def option = ''
+            if (groupOption.size() > 1) {
+                group = groupOption.getAt(0)
+                option = groupOption.getAt(1)
+            }
+            else {
+                option = key
+            }
+            def actualValue = getResourceProperty(moduleName, resName, resType, group, option)
+            logger.debug("${group}.${option} = $actualValue")
+            assert actualValue == value : "Actual option value for $group.$option is $actualValue, expected is $value"
+        }
+    }
+
     def cleanup() {
         logger.info(">>>>>>>FINISHED WITH FEATURE: ${getClass().simpleName} Spec: ${specificationContext.currentIteration.name}")
     }

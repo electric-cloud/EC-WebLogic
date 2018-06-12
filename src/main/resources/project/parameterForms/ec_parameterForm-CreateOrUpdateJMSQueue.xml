@@ -81,8 +81,8 @@ Selective Update - The procedure would update existing JMS Queue for only parame
         <htmlDocumentation>
 This parameter controls as to what the Update Action should be when a JMS Queue with the same name exists:<br/>
 <b>Do Nothing  (Default)</b> -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.<br/>
-<b>Remove and Create</b> - The procedure would remove existing JMS Queue and recreate it based on new parameters passed.<br/>
-<b>Selective Update</b> - The procedure would update existing JMS Queue. The parameters for selective update are <b>JNDI Name</b> and <b>Subdeployment Name</b>.
+<b>Remove and Create</b> - The procedure would remove existing JMS Queue and recreate it based on new parameters passed. If Subdeployment name is provided, the subdeployment will be removed and created too.<br/>
+<b>Selective Update</b> - The procedure would update existing JMS Queue. The parameters for selective update are <b>JNDI Name</b> and <b>Subdeployment Name</b>. The targeting for Subdeployment will not be changed.
         </htmlDocumentation>
         <required>0</required>
         <option>
@@ -103,7 +103,7 @@ This parameter controls as to what the Update Action should be when a JMS Queue 
         <type>textarea</type>
         <label>Additional Options:</label>
         <required>0</required>
-        <documentation>Use this option to specify general or advanced parameters, message thresholds and quota, message delivery overrides, message logging and message delivery failure options, e.g., MaximumMessageSize=1024. Parameters should be in the form of key=value pairs.</documentation>
+        <documentation>Use this option to specify general or advanced parameters, message thresholds and quota, message delivery overrides, message logging and message delivery failure options, e.g., MaximumMessageSize=1024. Parameters should be in the form of key=value pairs. Group and property name are separated by '.'.</documentation>
         <property>ecp_weblogic_additional_options</property>
     </formElement>
 </editor>

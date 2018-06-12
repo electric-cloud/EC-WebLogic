@@ -62,11 +62,27 @@ required(jmsModuleName, 'No JMS Module Name is provided')
 required(topicName, 'No JMS Topic name is provided')
 
 connect(username, password, adminUrl)
+successMessage = ''
+
+# JMS Module and Bean
+jmsResource = getJMSResource(jmsModuleName)
+print_debug("Found JMS Resource %s" % jmsModuleName)
+if jmsResource == None:
+    print_error('JMS Resource %s does not exist' % jmsModuleName)
+    sys.exit(1)
+
+jmsTopic = getMBean(getJMSQueuePath(jmsModuleName, topicName))
+if jmsTopic != None and updateAction == DO_NOTHING:
+    print_summary('JMS Topic %s exists, no further action is required' % topicName)
+    print_info("No action is required")
+    sys.exit(0)
+
 
 successMessage = ''
 # Subdeployment
 subdeployment = None
 if not isEmpty(subdeploymentName):
+    require(jmsServerName, "JMS Server name is required for Targeting")
     try:
         startChanges()
         jmsTargets = []
@@ -115,7 +131,6 @@ try:
     if get('JNDIName') != jndiName:
         set('JNDIName', jndiName)
         print_info('Set JNDI Name %s' % jndiName)
-        successMessage += ', Set JNDI Name'
     else:
         print_info("JNDI Name is not changed")
 
@@ -123,7 +138,6 @@ try:
         if get('SubDeploymentName') != subdeploymentName:
             set('SubDeploymentName', subdeploymentName)
             print_info("Set subdeployment name to %s" % subdeploymentName)
-            successMessage += ', Set SubDeployment Name'
         else:
             print_info("Subdeployment has not changed")
 
