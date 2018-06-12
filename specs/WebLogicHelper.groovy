@@ -9,6 +9,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
     static def FILENAME = 'sample.war'
     static def REMOTE_DIRECTORY = '/tmp'
+    static def ARTIFACT_NAME = 'test:sample'
     static def APPLICATION_NAME = 'sample'
     static def APPLICATION_PATH = new File(REMOTE_DIRECTORY, FILENAME)
     static def APPLICATION_PAGE_URL = "http://localhost:7001/sample/hello.jsp"
@@ -391,6 +392,9 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
         publishArtifact(artifactName, '1.0', FILENAME)
         def path = downloadArtifact(artifactName, getResourceName())
+
+        // Should be present (to initialize) but empty
+        params.apppath = ''
 
         dslFile 'dsl/procedures.dsl', [
             projectName  : projectName,
