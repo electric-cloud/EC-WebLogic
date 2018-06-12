@@ -242,8 +242,9 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
         updateActions.remove_and_create | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | ''                                                              | "Recreated JMS Topic"
     }
 
-    @IgnoreRest
+
     @Unroll
+    @Ignore
     def "create with additional options #additionalOptions"() {
         setup: 'removing old topic'
         def jmsTopicName = jmsTopicNames.default
