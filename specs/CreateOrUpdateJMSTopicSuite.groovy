@@ -227,7 +227,7 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
         updateActions.empty             | jmsTopicNames.default                           | expectedOutcomes.success | "Created JMS Topic $jmsTopicName"                               | ''
 
         // Empty Name
-        updateActions.empty             | jmsTopicNames.empty                             | expectedOutcomes.error   | "No JMS Module Name is provided"                                | ''
+        updateActions.empty             | jmsTopicNames.empty                             | expectedOutcomes.error   | "No JMS Topic name is provided"                                | ''
 
         // Update
         updateActions.do_nothing        | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | "JMS Topic $jmsTopicName already exists, no further action is required" | ''

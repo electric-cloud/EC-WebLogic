@@ -50,6 +50,9 @@ updateAction = readString(updateAction, 'do_nothing')
 
 successMessage = ''
 
+required(jmsModuleName, 'No JMS Module name is provided')
+required(subdeploymentName, 'No Subdeployment name is provided')
+
 connect(username, password, adminUrl)
 
 try:
