@@ -46,6 +46,8 @@ updateAction = readString(updateAction, 'do_nothing')
 
 successMessage = ''
 
+required(jmsServerName, 'No JMS Server Name is provided')
+
 connect(username, password, adminUrl)
 try:
     startChanges()

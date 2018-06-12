@@ -52,6 +52,11 @@ print "WebLogic version is: %s" % (version)
 def isEmpty(value):
     return value == None or value == ''
 
+def required(value, message = 'The required value is missing'):
+    if isEmpty(value):
+        print_error(message)
+        sys.exit(1)
+
 def warn(message):
     warnings.warn("WARNING: " + message)
 
