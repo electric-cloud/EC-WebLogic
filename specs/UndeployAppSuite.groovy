@@ -84,8 +84,8 @@ class UndeployAppSuite extends WebLogicHelper {
     def give_up
     def additional_options
 
-    def artifactName = 'test:sample'
-    def version = '1.0'
+    @Shared def artifactName = 'test:sample'
+    @Shared def version = '1.0'
 
     // This should be saved for deployApplication procedure
     def static apppath
@@ -105,21 +105,18 @@ class UndeployAppSuite extends WebLogicHelper {
         setupResource()
         createConfig(CONFIG_NAME)
 
-        publishArtifact(artifactName, version, FILENAME)
-        apppath = downloadArtifact(artifactName, getResourceName())
-
         dslFile "dsl/procedures.dsl", [
             projectName  : projectName,
             resourceName : getResourceName(),
             procedureName: procedureName,
             params       : [
                 configname        : CONFIG_NAME,
-                wlstabspath       : wlstabspath,
-                appname           : appname,
-                additional_options: additional_options,
-                retire_gracefully : retire_gracefully,
-                version_identifier: version_identifier,
-                give_up           : give_up
+                wlstabspath       : '',
+                appname           : '',
+                additional_options: '',
+                retire_gracefully : '',
+                version_identifier: '',
+                give_up           : ''
             ]
         ]
     }
@@ -155,7 +152,7 @@ class UndeployAppSuite extends WebLogicHelper {
                 configname : CONFIG_NAME,
                 wlstabspath: getWlstPath(),
                 appname    : appname,
-                apppath    : apppath,
+                apppath    : '', // Will be filled inside
                 targets    : 'AdminServer',
                 is_library : ""
             ], artifactName, FILENAME)

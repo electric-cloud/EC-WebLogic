@@ -94,11 +94,11 @@ class StopAppSuite extends WebLogicHelper {
                 configname : CONFIG_NAME,
                 wlstabspath: wlstPath,
                 appname    : APPLICATION_NAME,
-                apppath    : APPLICATION_PATH,
+                apppath    : '', // Will be filled inside
                 targets    : 'AdminServer',
                 is_library : ""
             ],
-            APPLICATION_NAME,
+            ARTIFACT_NAME,
             FILENAME
         )
 
