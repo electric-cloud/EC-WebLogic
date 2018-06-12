@@ -17,7 +17,7 @@
 -->
 <editor>
 	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#SuspendServer</help>
-				
+
 	<formElement>
 		<type>entry</type>
 		<label>Configuration:</label>
@@ -28,6 +28,7 @@
         <documentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</documentation>
         <htmlDocumentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="/commander/pages/@PLUGIN_NAME@/configurations">configuration page</a>.</htmlDocumentation>
 		<required>1</required>
+        <propertyReference>/plugins/@PLUGIN_NAME@/project/weblogic_cfgs</propertyReference>
 	</formElement>
 
 	<formElement>
@@ -36,16 +37,18 @@
 		<property>wlstabspath</property>
 		<required>1</required>
 		<documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)</documentation>
+        <propertyReference type="property">/plugins/@PLUGIN_NAME@/project/weblogic_cfgs/$configname/wlst_path</propertyReference>
+        <dependsOn>configname</dependsOn>
 	</formElement>
-	
+
 	<formElement>
 		<type>entry</type>
 		<label>Server Name:</label>
 		<property>servername</property>
 		<documentation>Name of the server to suspend. (Required)</documentation>
 		<required>1</required>
-	</formElement>	
-	
+	</formElement>
+
 	<formElement>
 		<type>checkbox</type>
 		<label>Ignore Sessions:</label>
@@ -55,16 +58,16 @@
         <required>0</required>
         <value>0</value>
 		<documentation>Boolean value specifying whether WLST should drop all HTTP sessions immediately or wait for HTTP sessions to complete or time out while suspending. This argument defaults to false, indicating that HTTP sessions must complete or time out.</documentation>
-	</formElement>	
-	
+	</formElement>
+
 	<formElement>
 		<type>entry</type>
 		<label>Timeout:</label>
 		<property>timeoutserver</property>
         <required>0</required>
 		<documentation>Time (in seconds) the WLST waits for the server to complete in-process work before suspending the server. This argument defaults to 0 seconds, indicating that there is no timeout.</documentation>
-	</formElement>	
-	
+	</formElement>
+
 	<formElement>
 		<type>checkbox</type>
 		<label>Force:</label>
@@ -73,9 +76,9 @@
         <uncheckedValue>0</uncheckedValue>
         <required>0</required>
         <value>0</value>
-		<documentation>Boolean value specifying whether WLST should suspend the server without waiting for active sessions to complete. This argument defaults to false, indicating that all active sessions must complete before suspending the server.</documentation>		
-	</formElement>	
-	
+		<documentation>Boolean value specifying whether WLST should suspend the server without waiting for active sessions to complete. This argument defaults to false, indicating that all active sessions must complete before suspending the server.</documentation>
+	</formElement>
+
 	<formElement>
 		<type>checkbox</type>
 		<label>Block:</label>
@@ -85,5 +88,5 @@
         <required>0</required>
         <value>0</value>
 		<documentation>Boolean value specifying whether WLST blocks user interaction until the server is started. This argument defaults to false, indicating that user interaction is not blocked. In this case, WLST returns control to the user after issuing the command and assigns the task MBean associated with the current task to a variable that you can use to check its status. If you are importing WLST as a Jython module, as described in Importing WLST as a Jython Module, block is always set to true.</documentation>
-	</formElement>		
+	</formElement>
 </editor>
