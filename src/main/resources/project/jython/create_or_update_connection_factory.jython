@@ -129,6 +129,11 @@ if not isEmpty(subdeploymentName) and (cf == None or updateAction != DO_NOTHING)
 
 try:
     startChanges()
+    jmsResource = getJMSResource(jmsModuleName)
+    if jmsResource == None:
+        raise Exception("JMS Resource %s does not exist" % jmsModuleName)
+
+    cf = getMBean(getConnectionFactoryPath(jmsModuleName, cfName))
     update = False
     if cf == None:
         print_info("Connection Factory %s does not exist" % cfName)
