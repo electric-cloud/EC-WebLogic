@@ -101,6 +101,13 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
         with_spaces: 'JMS Topic Name with spaces',
     ]
 
+    @Shared
+    def options = [
+        oneOption   : 'Multicast.MulticastTimeToLive=5',
+        twoOptions: "DeliveryFailureParams.RedeliveryLimit=5\nMessageLoggingParams.MessageLoggingEnabled=true",
+        topLevelOption: 'MessagingPerformancePreference=30'
+    ]
+
     /**
      * Test Parameters: for Where section
      */
@@ -233,6 +240,31 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
         updateActions.do_nothing        | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | "JMS Topic $jmsTopicName already exists, no further action is required" | ''
         updateActions.selective_update  | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | ''                                                              | "Updated JMS Topic"
         updateActions.remove_and_create | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | ''                                                              | "Recreated JMS Topic"
+    }
+
+
+    @Unroll
+    def "create with additional options #additionalOptions"() {
+        setup: 'removing old topic'
+        def jmsTopicName = jmsTopicNames.default
+        def jmsModuleName = jmsModules.default
+        deleteJMSTopic(jmsModuleName, jmsTopicName)
+        def runParams = [
+            ecp_weblogic_additional_options: additionalOptions,
+            ecp_weblogic_jms_topic_name    : jmsTopicName,
+            ecp_weblogic_jms_module_name   : jmsModuleName,
+        ]
+
+        when: 'procedure runs'
+        def result = runTestedProcedure(projectName, procedureName, runParams, getResourceName())
+        then:
+        assert result.outcome == expectedOutcomes.success
+        logger.debug(result.logs)
+        checkResourceProperties(jmsModuleName, jmsTopicName, 'Topic', additionalOptions)
+        cleanup:
+        deleteJMSTopic(jmsModuleName, jmsTopicName)
+        where:
+        additionalOptions << [options.oneOption, options.twoOptions, options.topLevelOption]
     }
 
     def deleteJMSTopic(moduleName, name) {

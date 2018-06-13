@@ -62,19 +62,33 @@ jmsServerName = r'''
 required(jmsModuleName, 'JMS Module name is not provided')
 required(queueName, 'JMS Queue name is not provided')
 
+successMessage = ''
+
 connect(username, password, adminUrl)
 
+# JMS Module and Bean
+jmsResource = getJMSResource(jmsModuleName)
+print_debug("Found JMS Resource %s" % jmsModuleName)
+if jmsResource == None:
+    print_error('JMS Resource %s does not exist' % jmsModuleName)
+    sys.exit(1)
 
-# Subdeployment
+jmsQueue = getMBean(getJMSQueuePath(jmsModuleName, queueName))
+if jmsQueue != None and updateAction == DO_NOTHING:
+    print_summary('JMS Queue %s exists, no further action is required' % queueName)
+    print_info("No action is required")
+    sys.exit(0)
+
+# Subdeloyment
 subdeployment = None
-if not isEmpty(subdeploymentName):
+if not isEmpty(subdeploymentName) and (jmsQueue != None or updateAction != DO_NOTHING):
+    require(jmsServerName, "JMS Server name is required for Targeting")
     try:
         startChanges()
         jmsTargets = []
         if jmsServerName:
             target = getJMSTargetBean(jmsServerName)
             jmsTargets.append(target)
-
         if updateAction == REMOVE_AND_CREATE:
             deleteSubDeployment(jmsModuleName, subdeploymentName)
         subdeployment = createOrUpdateSubdeployment(jmsModuleName, subdeploymentName, jmsTargetList = jmsTargets, updateTargets = False)
@@ -84,28 +98,29 @@ if not isEmpty(subdeploymentName):
 
 try:
     startChanges()
-    jmsResource = getJMSResource(jmsModuleName)
-    print_debug("Found JMS Resource %s" % jmsModuleName)
-    if jmsResource == None:
-        raise Exception("JMS Resource %s does not exist" % jmsModuleName)
-    jmsQueue = getMBean(getJMSQueuePath(jmsModuleName, queueName))
     update = False
+    jmsResource = getJMSResource(jmsModuleName)
+    jmsQueue = getMBean(getJMSQueuePath(jmsModuleName, queueName))
     if jmsQueue == None:
         print_info("JMS Queue %s does not exist" % queueName)
         jmsQueue = jmsResource.createQueue(queueName)
         print_info("Created Queue %s" % queueName)
+        successMessage = 'Created JMS Queue %s' % queueName
     else:
         print_info("Found JMS Queue %s in the module %s" % (queueName, jmsModuleName))
         if updateAction == DO_NOTHING:
             discardChanges()
             print_info("No action is required")
+            successMessage = 'JMS Queue %s exists, no action is required' % queueName
             sys.exit(0)
         elif updateAction == REMOVE_AND_CREATE:
             deleteJMSQueue(jmsModuleName, queueName)
             jmsQueue = jmsResource.createQueue(queueName)
             print_info("Created Queue %s" % queueName)
+            successMessage = 'JMS Queue %s has been recreated' % queueName
         else:
             update = True
+            successMessage = 'JMS Queue %s has been updated'
             print_info("Doing selective update")
 
     cd(getJMSQueuePath(jmsModuleName, queueName))
@@ -140,3 +155,6 @@ except Exception, e:
 
 # eveything is fine, commiting
 commitChanges()
+if successMessage != '':
+    print_summary(successMessage)
+
