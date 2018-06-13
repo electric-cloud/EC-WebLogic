@@ -14,7 +14,7 @@
     <h1>@PLUGIN_KEY@</h1>
     <p>Plugin version @PLUGIN_VERSION@</p>
     
-    <p>Revised on June 11, 2018</p>
+    <p>Revised on June 13, 2018</p>
     
     <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade"/>
     <h3>Overview</h3>
@@ -1194,8 +1194,12 @@ This parameter controls as to what the Update Action should be when a Connection
             <tr>
                 <td >Additional Options</td>
                 <td>
-Use this option to pass related parameters that pertain to Delivery, Client, Transaction or Flow Control. E.g.,
-<pre>DefaultDeliveryParams.DefaultPriority=5</pre></td>
+Use this option to pass related parameters that pertain to Delivery, Client, Transaction or Flow Control. E.g., <b>DefaultDeliveryParams.DefaultPriority=5</b>.
+Several options are separated by a newline:<br/><pre>
+DefaultDeliveryParams.DefaultPriority=5
+FlowControlParams.FlowMaximum=500
+FlowControlParams.FlowControlEnabled=true
+</pre></td>
             </tr>
             
             </tbody>
@@ -1537,13 +1541,17 @@ DONE
             <tr>
                 <td >Update Action</td>
                 <td>
-This parameter controls as to what the Update Action should be when a JMS Queue with the same name exists:<br/><b>Do Nothing  (Default)</b> -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.<br/><b>Remove and Create</b> - The procedure would remove existing JMS Queue and recreate it based on new parameters passed.<br/><b>Selective Update</b> - The procedure would update existing JMS Queue. The parameters for selective update are <b>JNDI Name</b> and <b>Subdeployment Name</b>.
+This parameter controls as to what the Update Action should be when a JMS Queue with the same name exists:<br/><b>Do Nothing  (Default)</b> -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.<br/><b>Remove and Create</b> - The procedure would remove existing JMS Queue and recreate it based on new parameters passed. If Subdeployment name is provided, the subdeployment will be removed and created too.<br/><b>Selective Update</b> - The procedure would update existing JMS Queue. The parameters for selective update are <b>JNDI Name</b> and <b>Subdeployment Name</b>. The targeting for Subdeployment will not be changed.
         </td>
             </tr>
             
             <tr>
                 <td >Additional Options</td>
-                <td>Use this option to specify general or advanced parameters, message thresholds and quota, message delivery overrides, message logging and message delivery failure options, e.g., MaximumMessageSize=1024. Parameters should be in the form of key=value pairs.</td>
+                <td>
+Use this option to specify general or advanced parameters, message thresholds and quota, message delivery overrides, message logging and message delivery failure options, e.g., <b>MaximumMessageSize=1024</b>. Parameters should be in the form of key=value pairs. Group and property name are separated by '.'. Several options are separated by a newline, e.g.<br/><pre>
+MessageLoggingParams.MessageLoggingEnabled=false
+DeliveryFailureParams.RedeliveryLimit=3
+</pre></td>
             </tr>
             
             </tbody>
@@ -1772,13 +1780,16 @@ DONE
             <tr>
                 <td >Update Action</td>
                 <td>
-This parameter controls as to what the Update Action should be when a JMS Topic with the same name exists:<br/><b>Do Nothing  (Default)</b> -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.<br/><b>Remove and Create</b> - The procedure would remove existing JMS Topic and recreate it based on new parameters passed.<br/><b>Selective Update</b> - The procedure would update existing JMS Topic. The parameters for selective update are <b>JNDI Name</b> and <b>Subdeployment Name</b>.
+This parameter controls as to what the Update Action should be when a JMS Topic with the same name exists:<br/><b>Do Nothing  (Default)</b> -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.<br/><b>Remove and Create</b> - The procedure would remove existing JMS Topic and recreate it based on new parameters passed. If subdeployment name is specified, it will be recreated too.<br/><b>Selective Update</b> - The procedure would update existing JMS Topic. The parameters for selective update are <b>JNDI Name</b> and <b>Subdeployment Name</b>.
         </td>
             </tr>
             
             <tr>
                 <td >Additional Options</td>
-                <td>Use this option to specify general or advanced parameters ,message thresholds and quota, message delivery overrides, message logging and message delivery failure options, topic multicast parameters.</td>
+                <td>Use this option to specify general or advanced parameters, message thresholds and quota, message delivery overrides, message logging and message delivery failure options, topic multicast parameters. Parameters should be in the form of key=value pairs. Group and property name are separated by '.'. E.g., <b>Multicast.MulticastTimeToLive=5</b>. Several options are separated by a newline:<br/><pre>
+MessagingPerformancePreference=30
+DeliveryFailureParams.RedeliveryLimit=5
+</pre></td>
             </tr>
             
             </tbody>
