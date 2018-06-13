@@ -151,9 +151,13 @@ This parameter controls as to what the Update Action should be when a Connection
         <required>0</required>
         <documentation>Use this option to pass related parameters that pertain to Delivery, Client, Transaction or Flow Control. E.g., DefaultDeliveryParams.DefaultPriority=5</documentation>
         <htmlDocumentation>
-Use this option to pass related parameters that pertain to Delivery, Client, Transaction or Flow Control. E.g.,
-<pre>DefaultDeliveryParams.DefaultPriority=5</pre>
-<!-- TODO other samples and where to get them-->
+Use this option to pass related parameters that pertain to Delivery, Client, Transaction or Flow Control. E.g., <b>DefaultDeliveryParams.DefaultPriority=5</b>.
+Several options are separated by a newline:<br/>
+<pre>
+DefaultDeliveryParams.DefaultPriority=5
+FlowControlParams.FlowMaximum=500
+FlowControlParams.FlowControlEnabled=true
+</pre>
         </htmlDocumentation>
         <property>additional_options</property>
     </formElement>
