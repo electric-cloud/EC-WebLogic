@@ -23,7 +23,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
     def doCleanupSpec() {
         deleteProject(HELPER_PROJECT)
-//        deleteProject('EC-Spec Helper')
+        deleteProject('EC-Spec Helper')
     }
 
     static def getWlstPath() {
@@ -625,9 +625,13 @@ def createOrUpdateSubdeployment(jmsModuleName, subName, jmsServerName):
 
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 edit()
-startEdit()
-createOrUpdateSubdeployment('$moduleName', '$subName', '$serverName')
-activate()
+try: 
+  startEdit()
+  createOrUpdateSubdeployment('$moduleName', '$subName', '$serverName')
+  activate()
+except WLSTException, e:
+    print str(e)
+    stopEdit()
 """
         def result = runWLST(code)
         assert result.outcome == 'success'
@@ -829,6 +833,53 @@ try {
         def logs = readJobLogs(result.jobId, resourceName)
         def outcome = jobStatus(result.jobId).outcome
         [logs: logs, outcome: outcome, jobId: result.jobId]
+    }
+
+    def createJMSQueue(def moduleName, def name) {
+        def code = """
+def getJMSResource(name):
+    if (name == None or name == ''):
+        raise Exception("No JMS Module Name is provided")
+    mbean = getMBean('/JMSSystemResources/%s' % name)
+    if mbean == None:
+        return None
+    else:
+        print("Got JMS Bean %s" % mbean)
+        return mbean.getJMSResource()
+
+def getJMSQueuePath(jmsModule, queue):
+    return "/JMSSystemResources/%s/JMSResource/%s/Queues/%s" % (jmsModule, jmsModule, queue)
+
+
+jmsModuleName = '$moduleName'
+queueName = '$name'
+
+connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+
+try:
+  edit()
+  startEdit()
+  jmsResource = getJMSResource(jmsModuleName)
+  print("Found JMS Resource %s" % jmsModuleName)
+  if jmsResource == None:
+      raise Exception("JMS Resource %s does not exist" % jmsModuleName)
+  jmsQueue = getMBean(getJMSQueuePath(jmsModuleName, queueName))
+  update = False
+  if jmsQueue == None:
+      print("JMS Queue %s does not exist" % queueName)
+      jmsQueue = jmsResource.createQueue(queueName)
+      print("Created Queue %s" % queueName)
+      
+      # everything is fine, commiting
+      activate()
+  else:
+      print("Found JMS Queue %s in the module %s" % (queueName, jmsModuleName))
+except Exception, e:
+    print("Failed to create JMS Queue", e)
+    stopEdit('y')
+"""
+        def result = runWLST(code)
+        assert result.outcome == 'success'
     }
 
 

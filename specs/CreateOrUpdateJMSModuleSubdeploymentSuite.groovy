@@ -155,7 +155,7 @@ class CreateOrUpdateJMSModuleSubdeploymentSuite extends WebLogicHelper {
      */
 
     @Unroll
-    def "Create JMS Topic. procedure with params (SubDeploymentName: #jmsSubdeploymentName, target: #target, update action: #updateAction)"() {
+    def "Create JMS Subdeployment. procedure with params (SubDeploymentName: #jmsSubdeploymentName, target: #target, update action: #updateAction)"() {
         setup: 'Define the parameters for Procedure running'
 
         jmsModuleName = randomize(jmsModules.default)
