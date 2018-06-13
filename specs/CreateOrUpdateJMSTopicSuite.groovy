@@ -244,7 +244,6 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
 
 
     @Unroll
-    @Ignore
     def "create with additional options #additionalOptions"() {
         setup: 'removing old topic'
         def jmsTopicName = jmsTopicNames.default

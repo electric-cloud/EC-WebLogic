@@ -348,7 +348,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         // Stringify map
         def params_str_arr = []
         params.each() { k, v ->
-            params_str_arr.push(k + " : '" + (v ?: '') + "'")
+            params_str_arr.push(k + " : '''" + (v ?: '') + "'''")
         }
         logger.debug("Parameters string: " + params_str_arr.toString())
 
@@ -869,11 +869,12 @@ if group:
 else:
     cd(getResourcePath(module, cfName, type))
 
-print "VALUE:" + " %s" % get(propName)
+print "VALUE:" + '+' + str(get(propName)) + '+'
+# just an ending comment to distinguish the last quote
 """
         def result = runWLST(code, "GetResourceProperty_${propGroup}_${propName}")
         assert result.outcome == 'success'
-        def group = (result.logs =~ /VALUE:\s(.+?)/)
+        def group = (result.logs =~ /VALUE:\+(.+?)\+/)
         def value = group[0][1]
         return value
     }
@@ -891,6 +892,12 @@ print "VALUE:" + " %s" % get(propName)
             }
             else {
                 option = key
+            }
+            if (value == 'true') {
+                value = '1'
+            }
+            if (value == 'false') {
+                value = '0'
             }
             def actualValue = getResourceProperty(moduleName, resName, resType, group, option)
             logger.debug("${group}.${option} = $actualValue")

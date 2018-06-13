@@ -103,7 +103,16 @@ This parameter controls as to what the Update Action should be when a JMS Queue 
         <type>textarea</type>
         <label>Additional Options:</label>
         <required>0</required>
-        <documentation>Use this option to specify general or advanced parameters, message thresholds and quota, message delivery overrides, message logging and message delivery failure options, e.g., MaximumMessageSize=1024. Parameters should be in the form of key=value pairs. Group and property name are separated by '.'.</documentation>
+        <documentation>Use this option to specify general or advanced parameters, message thresholds and quota, message delivery overrides, message logging and message delivery failure options, e.g., MaximumMessageSize=1024. Parameters should be in the form of key=value pairs. Group and property name are separated by '.'. Several options are separated by a newline, e.g. MessageLoggingParams.MessageLoggingEnabled=false
+        DeliveryFailureParams.RedeliveryLimit=3
+        </documentation>
+        <htmlDocumentation>
+Use this option to specify general or advanced parameters, message thresholds and quota, message delivery overrides, message logging and message delivery failure options, e.g., <b>MaximumMessageSize=1024</b>. Parameters should be in the form of key=value pairs. Group and property name are separated by '.'. Several options are separated by a newline, e.g.<br/>
+<pre>
+MessageLoggingParams.MessageLoggingEnabled=false
+DeliveryFailureParams.RedeliveryLimit=3
+</pre>
+        </htmlDocumentation>
         <property>ecp_weblogic_additional_options</property>
     </formElement>
 </editor>
