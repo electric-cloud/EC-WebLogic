@@ -488,7 +488,8 @@ else:
                 print "Adding target %s" % targetBean.objectName
         activate()
     except Exception, e:
-        stopChanges('y')
+        print ("Exception : ", e)
+        stopEdit('y')
 
 """
         def result = runWLST(code, "CreateJMSModule_$name")
