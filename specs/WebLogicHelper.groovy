@@ -23,7 +23,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
     def doCleanupSpec() {
         deleteProject(HELPER_PROJECT)
-//        deleteProject('EC-Spec Helper')
+        deleteProject('EC-Spec Helper')
     }
 
     static def getWlstPath() {
@@ -625,9 +625,13 @@ def createOrUpdateSubdeployment(jmsModuleName, subName, jmsServerName):
 
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 edit()
-startEdit()
-createOrUpdateSubdeployment('$moduleName', '$subName', '$serverName')
-activate()
+try: 
+  startEdit()
+  createOrUpdateSubdeployment('$moduleName', '$subName', '$serverName')
+  activate()
+except WLSTException, e:
+    print str(e)
+    stopEdit()
 """
         def result = runWLST(code)
         assert result.outcome == 'success'
