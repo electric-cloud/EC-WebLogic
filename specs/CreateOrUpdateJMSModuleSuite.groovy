@@ -278,9 +278,9 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
         'selective_update'  | targets.default | targets.twoServers
         'selective_update'  | targets.default | targets.cluster
         'selective_update'  | targets.cluster | targets.twoServers
-//        'remove_and_create' | targets.cluster | targets.serverAndCluster
-//        'selective_update'  | targets.nothing | targets.managedServer
-//        'remove_and_create' | targets.nothing | targets.cluster
+        'selective_update'  | targets.nothing | targets.managedServer
+        'remove_and_create' | targets.cluster | targets.serverAndCluster
+        'remove_and_create' | targets.nothing | targets.cluster
     }
 
     def jmsModuleExists(def moduleName) {
