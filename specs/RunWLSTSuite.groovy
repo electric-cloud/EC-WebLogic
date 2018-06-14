@@ -44,22 +44,6 @@ class RunWLSTSuite extends WebLogicHelper {
         warning: 'warning',
         running: 'running',
     ]
-//
-//    @Shared
-//    def expectedSummaryMessages = [
-//        empty: "",
-//
-//    ]
-//
-//    @Shared
-//    def expectedJobDetailedResults = [
-//        empty: '',
-//    ]
-//
-//    @Shared
-//    def expectedLogParts = [
-//        empty: '',
-//    ]
 
     /**
      * Test Parameters: for Where section
@@ -163,7 +147,6 @@ class RunWLSTSuite extends WebLogicHelper {
 
     }
 
-    @IgnoreRest
     def 'RunWLST - fail with exception - negative'() {
         setup: 'Define the parameters for Procedure running'
         scriptFileSource = 'newscriptfile'
