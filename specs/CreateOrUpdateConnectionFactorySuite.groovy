@@ -54,6 +54,13 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         first : 'firstJMSServer',
         second: 'secondJMSServer'
     ]
+
+    @Shared
+    def targets = [
+        empty  : '',
+        default: 'AdminServer'
+    ]
+
     /**
      * Verification Values: Assert values
      */
@@ -64,24 +71,6 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         error  : 'error',
         warning: 'warning',
         running: 'running',
-    ]
-
-    @Shared
-    def expectedSummaryMessages = [
-        empty: "",
-
-    ]
-
-    @Shared
-    def expectedJobDetailedResults = [
-        empty: '',
-    ]
-
-    @Shared
-    def expectedLogParts = [
-////            Uses variables inside, so moved to datatable
-//            connectionFactory_created   : 'Created Connection Factory $cfName',
-//            connectionFactory_not_exists: 'Connection Factory $cfName does not exist',
     ]
 
     @Shared
@@ -97,13 +86,10 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
     ]
 
     @Shared
-    def additionalOptions = [
+    def additionalOptionsIs = [
         empty          : '',
         defaultPriority: 'DefaultDeliveryParams.DefaultPriority=5'
     ]
-
-    @Shared
-    def jmsModuleName = 'TestJMSModule'
 
     /**
      * Test Parameters: for Where section
@@ -114,19 +100,20 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
 
     // This is shared to allow interpolation in 'where' section
     @Shared
-    def cf_name
-    def jndi_name
-    def cf_sharing_policy
-    def cf_client_id_policy
-    def jms_module_name
+    def connectionFactoryName
+    def jndiName
+    def cfSharingPolicy
+    def cfClientIdPolicy
+    @Shared
+    def jmsModuleName = 'TestJMSModule'
 
     //optional parameters
-    def cf_max_messages_per_session
-    def cf_xa_enabled
-    def subdeployment_name
-    def jms_server_name
-    def update_action
-    def additional_options
+    def cfMaxMessagesPerSession
+    def cfXaEnabled
+    def subdeploymentName
+    def jmsServerName
+    def updateAction
+    def additionalOptions
 
     // expected results
     def expectedOutcome
@@ -156,7 +143,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
                 cf_sharing_policy          : '',
                 cf_client_id_policy        : '',
                 jms_module_name            : '',
-//                ecp_weblogic_target_list   : '',
+                wls_instance_list          : '',
                 cf_max_messages_per_session: '',
                 cf_xa_enabled              : '',
                 subdeployment_name         : '',
@@ -184,24 +171,29 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
      */
 
     @Unroll
-    def "Create or Update Connection Factory. additional options : '#additional_options'"() {
+    def "Create or Update Connection Factory. additional options : '#additionalOptions'"() {
         setup: 'Define the parameters for Procedure running'
+
+        cfSharingPolicy = sharingPolicies.exclusive
+        cfClientIdPolicy = clientPolicies.restricted
+        jndiName = jndiNames.correct
+
         def runParams = [
-            cf_name                    : cf_name,
-            jndi_name                  : jndi_name,
-            cf_sharing_policy          : cf_sharing_policy,
-            cf_client_id_policy        : cf_client_id_policy,
-            jms_module_name            : jms_module_name,
-            wls_instance_list          : 'AdminServer',
-            cf_max_messages_per_session: cf_max_messages_per_session,
-            cf_xa_enabled              : cf_xa_enabled,
-            subdeployment_name         : subdeployment_name,
-            jms_server_list            : jms_server_name,
-            update_action              : update_action,
-            additional_options         : additional_options,
+            cf_name                    : connectionFactoryName,
+            jndi_name                  : jndiName,
+            cf_sharing_policy          : cfSharingPolicy,
+            cf_client_id_policy        : cfClientIdPolicy,
+            jms_module_name            : jmsModuleName,
+            wls_instance_list          : targets.default,
+            cf_max_messages_per_session: cfMaxMessagesPerSession,
+            cf_xa_enabled              : cfXaEnabled,
+            subdeployment_name         : subdeploymentName,
+            jms_server_list            : jmsServerName,
+            update_action              : updateAction,
+            additional_options         : additionalOptions,
         ]
 
-        deleteConnectionFactory(jms_module_name, cf_name)
+        deleteConnectionFactory(jmsModuleName, connectionFactoryName)
 
         when: 'Procedure runs: '
 
@@ -218,37 +210,37 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         logger.info(upperStepSummary)
 
         expect: 'Outcome and Upper Summary verification'
+
         assert result.outcome == expectedOutcome
         if (expectedOutcome == expectedOutcomes.success && outcome == expectedOutcomes.success) {
-            assert connectionFactoryExists(jms_module_name, cf_name)
+            assert connectionFactoryExists(jmsModuleName, connectionFactoryName)
         }
         assert debugLog.contains(expectedJobDetailedResult)
 
         // Important! The value must be actually checked!!
-        def xaEnabled = getConnectionFactoryProperty(jms_module_name, cf_name, 'TransactionParams', 'XAConnectionFactoryEnabled')
-        if (cf_xa_enabled == '1') {
+        def xaEnabled = getConnectionFactoryProperty(jmsModuleName, connectionFactoryName, 'TransactionParams', 'XAConnectionFactoryEnabled')
+        if (cfXaEnabled == '1') {
             assert xaEnabled == '1'
-        }
-        else {
+        } else {
             assert xaEnabled == '0'
         }
         cleanup:
-        deleteConnectionFactory(jms_module_name, cf_name)
+        deleteConnectionFactory(jmsModuleName, connectionFactoryName)
         where: 'The following params will be: '
-        cf_name                     | jndi_name         | cf_sharing_policy         | cf_client_id_policy       | jms_module_name | cf_max_messages_per_session | cf_xa_enabled | subdeployment_name | jms_server_name | update_action | additional_options                | expectedOutcome          | expectedJobDetailedResult
-        connectionFactories.correct | jndiNames.correct | sharingPolicies.exclusive | clientPolicies.restricted | jmsModuleName   | ''                          | ''            | ''                 | ''              | ''            | ''                                | expectedOutcomes.success | "Created Connection Factory $cf_name"
+        connectionFactoryName       | cfXaEnabled | additionalOptions                   | expectedOutcome          | expectedJobDetailedResult
+        connectionFactories.correct | ''          | ''                                  | expectedOutcomes.success | "Created Connection Factory $connectionFactoryName"
 
         // with additional options
-        connectionFactories.correct | jndiNames.correct | sharingPolicies.exclusive | clientPolicies.restricted | jmsModuleName   | ''                          | '1'           | ''                 | ''              | ''            | additionalOptions.defaultPriority | expectedOutcomes.success | "Created Connection Factory $cf_name"
+        connectionFactories.correct | '1'         | additionalOptionsIs.defaultPriority | expectedOutcomes.success | "Created Connection Factory $connectionFactoryName"
     }
 
     @Unroll
-    @Ignore
     def "CreateOrUpdateConnectionFactory - update_action : '#update_action', jms_server_list: #jmsServerList, wls_instance_list: #wlstInstanceList"() {
         setup:
         createJMSModule(jmsModuleName)
         def subdeploymentName = 'sub1'
-        when:
+        def jmsServerName = 'jmsServer1'
+
         def runParamsFirst = [
             cf_name            : connectionFactories.updated,
             jndi_name          : jndiNames.recreateOld,
@@ -258,18 +250,18 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         ]
 
         def resultFirst = runTestedProcedure(projectName, procedureName, runParamsFirst, getResourceName())
-        assert resultFirst.outcome == 'success'
 
-        def jmsServerName = 'jmsServer1'
+        assert resultFirst.outcome == 'success'
         createJMSServer(jmsServerName)
-        and:
+
+        when:
         def runParamsSecond = [
             cf_name            : connectionFactories.updated,
             jndi_name          : jndiNames.recreateNew,
             jms_module_name    : jmsModuleName,
             cf_sharing_policy  : sharingPolicies.exclusive,
             cf_client_id_policy: clientPolicies.restricted,
-            update_action      : update_action,
+            update_action      : updateAction,
             subdeployment_name : subdeploymentName,
             jms_server_list    : jmsServerName
         ]
@@ -280,7 +272,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         logger.debug(resultSecond.logs)
         assert resultSecond.outcome == expectedOutcome
 
-        if (update_action != 'do_nothing') {
+        if (updateAction != 'do_nothing') {
             def resultTargets = getSubdeploymentTargets(jmsModuleName, subdeploymentName)
             logger.debug(resultTargets.logs)
             assert resultTargets.logs.contains(jmsServerName)
@@ -291,14 +283,13 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         deleteSubDeployment(jmsModuleName, subdeploymentName)
 
         where:
-        update_action       | expectedOutcome
+        updateAction        | expectedOutcome
         'remove_and_create' | expectedOutcomes.success
         'selective_update'  | expectedOutcomes.success
         'do_nothing'        | expectedOutcomes.success
     }
 
     @Unroll
-    @Ignore
     def 'create with WLS target #wlstInstanceList, JMS target #jmsServerList'() {
         setup:
         def cfName = 'ConnectionFactoryWith Targets'

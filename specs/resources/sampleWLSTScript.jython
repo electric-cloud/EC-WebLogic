@@ -10,11 +10,11 @@ from java.lang import System
 
 
 print "Starting the script ..."
-connect('weblogic','welcome1','t3://localhost:7001')
+connect('weblogic','weblogic2','t3://localhost:7001')
 edit()
 startEdit()
 
-servermb=getMBean("Servers/examplesServer")
+servermb=getMBean("Servers/AdminServer")
 if servermb is None:
     print 'Value is Null'
 
