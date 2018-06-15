@@ -45,7 +45,7 @@
   </formElement>
   <formElement>
     <type>textarea</type>
-    <label>Subdeployment Target List:</label>
+    <label>Target WLS Instance List:</label>
     <required>1</required>
     <property>ecp_weblogic_subdeployment_target_list</property>
     <documentation>1 or more comma separated list of Servers or Clusters that constitute the Sub-Deployment. In essence a Sub-Deployment provides a way to group multiple targets to which JMS Resources can be created on.</documentation>
