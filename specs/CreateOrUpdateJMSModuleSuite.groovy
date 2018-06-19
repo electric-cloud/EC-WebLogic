@@ -240,7 +240,7 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
         prepareTargets(oldTargets)
         prepareTargets(newTargets)
         createJMSModule(jmsModuleName, oldTargets)
-        expectedSummaryMessage = buildExpectedSummary(oldTargets, newTargets)
+        expectedSummaryMessage = buildExpectedSummary(oldTargets, newTargets, updateAction)
         when: 'Procedure runs: '
 
         def result = runTestedProcedure(projectName, procedureName, runParams, getResourceName())
@@ -278,9 +278,9 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
         'selective_update'  | targets.default | targets.twoServers
         'selective_update'  | targets.default | targets.cluster
         'selective_update'  | targets.cluster | targets.twoServers
-//        'remove_and_create' | targets.cluster | targets.serverAndCluster
-//        'selective_update'  | targets.nothing | targets.managedServer
-//        'remove_and_create' | targets.nothing | targets.cluster
+        'selective_update'  | targets.nothing | targets.managedServer
+        'remove_and_create' | targets.cluster | targets.serverAndCluster
+        'remove_and_create' | targets.nothing | targets.cluster
     }
 
     def jmsModuleExists(def moduleName) {
@@ -380,28 +380,32 @@ print "PROPERTY: %s" % get(propName)
     }
 
 
-    def buildExpectedSummary(oldTargets, newTargets) {
-        def oldTargetsList = oldTargets.split(/\s*,\s*/)
-        def newTargetsList = newTargets.split(/\s*,\s*/)
+    def buildExpectedSummary(oldTargets, newTargets, updateAction = 'selective_update') {
+        def oldTargetsList = oldTargets ? oldTargets.split(/\s*,\s*/) : []
+        if (updateAction == 'remove_and_create') {
+            oldTargetsList = []
+        }
+        def newTargetsList = newTargets ? newTargets.split(/\s*,\s*/) : []
         def intersection = oldTargetsList.findAll { oldTg ->
             newTargetsList.find { it == oldTg }
         }.size()
+
         def added = newTargetsList.size() - intersection
         def removed = oldTargetsList.size() - intersection
-        def first = added ? "Added ${added} target(s)" : 'No new targets were added'
-        def second = removed ? "Removed ${removed} target(s)" : 'No targets were removed'
+        def first = added > 0 ? "Added ${added} target(s)" : 'No new targets were added'
+        def second = removed > 0 ? "Removed ${removed} target(s)" : 'No targets were removed'
         return "$first, $second"
     }
 
     def buildExpectedLogs(oldTargets, newTargets) {
         def retval = []
         newTargets.split(/\s*,\s*/).each { newTg ->
-            if (!oldTargets.split(/\s*,\s*/).find { it == newTg })
+            if (newTg && !oldTargets.split(/\s*,\s*/).find { it == newTg })
                 retval << "Adding target ${getTargetName(newTg)}"
         }
 
         oldTargets.split(/\s*,\s*/).each { oldTg ->
-            if (!newTargets.split(/\s*,\s*/).find { it == oldTg })
+            if (oldTg && !newTargets.split(/\s*,\s*/).find { it == oldTg })
                 retval << "Removing target ${getTargetName(oldTg)}"
         }
         return retval
