@@ -3944,10 +3944,10 @@ successfully.</p>
         <h2>UndeployApp</h2>
         <p>Stops the deployment unit and removes staged files from target servers.</p>
         
-            <pre><code>&lt;p&gt;This procedure stops the deployment unit and removes staged files
-from target servers.&lt;/p&gt;
-&lt;p&gt;Contrary to the weblogic documentation in section 'Undeploying a Retiring Application' at &lt;a href=&quot;https://docs.oracle.com/cd/E13222_01/wls/docs103/deployment/redeploy.html&quot; target=&quot;_blank&quot;&gt;docs.oracle.com&lt;/a&gt;, we found that in Weblogic 11, only retired version of application is undeployed if no application version is specified.&lt;/p&gt;
-</code></pre>
+            <p>This procedure stops the deployment unit and removes staged files
+from target servers.
+<br/>
+Contrary to the weblogic documentation in section 'Undeploying a Retiring Application' at <a href="https://docs.oracle.com/cd/E13222_01/wls/docs103/deployment/redeploy.html" target="_blank">docs.oracle.com</a>, we found that in Weblogic 11, only retired version of application is undeployed if no application version is specified.</p>
 
         
         <h3>UndeployApp Parameters</h3>
@@ -4007,18 +4007,16 @@ from target servers.&lt;/p&gt;
         </table>
         
         <p>
-            <pre><code>    &lt;br /&gt;
-    &lt;img src=&quot;../../plugins/EC-WebLogic/images/UndeployApp/EC-WLSUndeployApp2.png&quot; /&gt;
-    &lt;br /&gt;
-&lt;/ol&gt;
-&lt;h3&gt;Output&lt;/h3&gt;
-&lt;p&gt;After the job runs, you can view the results on the Job Details page in ElectricFlow. The application was undeployed
-successfully.&lt;/p&gt;
-&lt;img src=&quot;../../plugins/EC-WebLogic/images/UndeployApp/EC-WLSUndeployApp3.png&quot; /&gt;
-&lt;p&gt;In the &lt;b&gt;UndeployApp&lt;/b&gt; step, click the Log button to see the diagnostic information:&lt;/p&gt;
-&lt;br /&gt;
-&lt;img src=&quot;../../plugins/EC-WebLogic/images/UndeployApp/EC-WLSUndeployApp4.png&quot; /&gt;.
-</code></pre>
+            <img src="../../plugins/EC-WebLogic/images/UndeployApp/EC-WLSUndeployApp2.png" />
+<br />
+</ol>
+<h3>Output</h3>
+<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The application was undeployed
+successfully.</p>
+<img src="../../plugins/EC-WebLogic/images/UndeployApp/EC-WLSUndeployApp3.png" />
+<p>In the <b>UndeployApp</b> step, click the Log button to see the diagnostic information:</p>
+<br />
+<img src="../../plugins/EC-WebLogic/images/UndeployApp/EC-WLSUndeployApp4.png" />.
 
         </p>
         
@@ -4029,8 +4027,7 @@ successfully.&lt;/p&gt;
         <h2>UnlockUserAccount</h2>
         <p>Unlock an user account.</p>
         
-            <pre><code>&lt;p&gt;This procedure can be used to unlock a locked user account.&lt;/p&gt;
-</code></pre>
+            <p>This procedure can be used to unlock a locked user account.</p>
 
         
         <h3>UnlockUserAccount Parameters</h3>
@@ -4072,18 +4069,16 @@ successfully.&lt;/p&gt;
         </table>
         
         <p>
-            <pre><code>    &lt;br /&gt;
-    &lt;img src=&quot;../../plugins/EC-WebLogic/images/UnlockUserAccount/EC-WLSUnlockUserAccountStatus2.png&quot; /&gt;
-    &lt;br /&gt;
-&lt;/ol&gt;
-&lt;h3&gt;Output&lt;/h3&gt;
-&lt;p&gt;After the job runs, you can view the results on the Job Details page in ElectricFlow. The application was undeployed
-successfully.&lt;/p&gt;
-&lt;img src=&quot;../../plugins/EC-WebLogic/images/UnlockUserAccount/EC-WLSUnlockUserAccountStatus3.png&quot; /&gt;
-&lt;p&gt;In the &lt;b&gt;UnlockUserAccount&lt;/b&gt; step, click the Log button to see the diagnostic information:&lt;/p&gt;
-&lt;br /&gt;
-&lt;img src=&quot;../../plugins/EC-WebLogic/images/UnlockUserAccount/EC-WLSUnlockUserAccountStatus4.png&quot; /&gt;.
-</code></pre>
+            <img src="../../plugins/EC-WebLogic/images/UnlockUserAccount/EC-WLSUnlockUserAccountStatus2.png" />
+<br />
+</ol>
+<h3>Output</h3>
+<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The application was undeployed
+successfully.</p>
+<img src="../../plugins/EC-WebLogic/images/UnlockUserAccount/EC-WLSUnlockUserAccountStatus3.png" />
+<p>In the <b>UnlockUserAccount</b> step, click the Log button to see the diagnostic information:</p>
+<br />
+<img src="../../plugins/EC-WebLogic/images/UnlockUserAccount/EC-WLSUnlockUserAccountStatus4.png" />.
 
         </p>
         
