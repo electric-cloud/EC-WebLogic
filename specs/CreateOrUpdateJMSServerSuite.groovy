@@ -127,7 +127,10 @@ class CreateOrUpdateJMSServerSuite extends WebLogicHelper {
             ecp_weblogic_target         : target,
         ]
 
-        deleteJMSServer(jmsServerName)
+        if (jmsServerName){
+            deleteJMSServer(jmsServerName)
+        }
+
         ensureManagedServer(target, '7999')
 
         if (updateAction != '') {
