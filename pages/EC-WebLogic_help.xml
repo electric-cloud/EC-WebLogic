@@ -14,7 +14,7 @@
     <h1>@PLUGIN_KEY@</h1>
     <p>Plugin version @PLUGIN_VERSION@</p>
     
-    <p>Revised on June 13, 2018</p>
+    <p>Revised on June 20, 2018</p>
     
     <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade"/>
     <h3>Overview</h3>
@@ -906,8 +906,7 @@ in most of the procedures of the WebLogic Plugin.</p>
         <h2>CreateDomain</h2>
         <p>Create a domain</p>
         
-            <pre><code>            &lt;p&gt;This procedure creates a new domain on the WebLogic server.&lt;/p&gt;
-</code></pre>
+            <p>This procedure creates a new domain on the WebLogic server.</p>
 
         
         <h3>CreateDomain Parameters</h3>
@@ -959,18 +958,16 @@ in most of the procedures of the WebLogic Plugin.</p>
         </table>
         
         <p>
-            <pre><code>                &lt;br /&gt;
-                &lt;img src=&quot;../../plugins/EC-WebLogic/images/CreateDomain/EC-WLSCreateDomainStatus2.png&quot; /&gt;
-                &lt;br /&gt;
-            &lt;/ol&gt;
-            &lt;h3&gt;Output&lt;/h3&gt;
-            &lt;p&gt;After the job runs, you can view the results on the Job Details page in ElectricFlow. The database was created successfully.&lt;/p&gt;
-            &lt;img src=&quot;../../plugins/EC-WebLogic/images/CreateDomain/EC-WLSCreateDomainStatus3.png&quot; /&gt;
-            &lt;p&gt;In the &lt;b&gt;CreateDomain&lt;/b&gt; step, click the Log button to see the diagnostic information:
-            &lt;br /&gt;
-            &lt;img src=&quot;../../plugins/EC-WebLogic/images/CreateDomain/EC-WLSCreateDomainStatus4.png&quot; /&gt;
-            &lt;/p&gt;
-</code></pre>
+            <img src="../../plugins/EC-WebLogic/images/CreateDomain/EC-WLSCreateDomainStatus2.png" />
+<br/>
+</ol>
+<h3>Output</h3>
+<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The database was created successfully.</p>
+<img src="../../plugins/EC-WebLogic/images/CreateDomain/EC-WLSCreateDomainStatus3.png" />
+<p>In the <b>CreateDomain</b> step, click the Log button to see the diagnostic information:
+<br />
+<img src="../../plugins/EC-WebLogic/images/CreateDomain/EC-WLSCreateDomainStatus4.png" />
+</p>
 
         </p>
         
@@ -1412,7 +1409,7 @@ DONE
             </tr>
             
             <tr>
-                <td class="required">Subdeployment Target List</td>
+                <td class="required">Target WLS Instance List</td>
                 <td>1 or more comma separated list of Servers or Clusters that constitute the Sub-Deployment. In essence a Sub-Deployment provides a way to group multiple targets to which JMS Resources can be created on.</td>
             </tr>
             
