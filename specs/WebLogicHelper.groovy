@@ -959,4 +959,15 @@ print "VALUE:" + '+' + str(get(propName)) + '+'
     def cleanup() {
         logger.info(">>>>>>>FINISHED WITH FEATURE: ${getClass().simpleName} Spec: ${specificationContext.currentIteration.name}")
     }
+
+    def getJobLogs(def jobId) {
+        assert jobId
+        def logs
+        try {
+            logs = getJobProperty("/myJob/debug_logs", jobId)
+        } catch (Throwable e) {
+            logs = "Possible exception in logs; check job"
+        }
+        logs
+    }
 }

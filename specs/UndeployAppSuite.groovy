@@ -119,6 +119,11 @@ class UndeployAppSuite extends WebLogicHelper {
                 give_up           : ''
             ]
         ]
+
+        dslFile("dsl/Application/UndeployApp.dsl", [
+            projectName    : projectName,
+            resourceName   : getResourceName()
+        ])
     }
 
     /**
@@ -134,7 +139,7 @@ class UndeployAppSuite extends WebLogicHelper {
      */
 
     @Unroll
-    def "Undeploy Application. with server '#targets'. Expected : #expectedOutcome : #expectedSummaryMessage"() {
+    def "Undeploy Application. with server '#targets' - procedure"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
             wlstabspath       : wlstabspath,
@@ -169,7 +174,6 @@ class UndeployAppSuite extends WebLogicHelper {
         def debugLog = result.logs
 
         println "Procedure log:\n$debugLog\n"
-//        def upperStepSummary = getJobUpperStepSummary(result.jobId)
 
         expect: 'Outcome and Upper Summary verification'
         assert result.outcome == expectedOutcome
@@ -180,7 +184,65 @@ class UndeployAppSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        wlstabspath | appname          | retire_gracefully        | version_identifier | give_up | additional_options | expectedOutcome
-        wlstPath    | APPLICATION_NAME | checkBoxValues.unchecked | ''                 | ''      | ''                 | expectedOutcomes.success
+        wlstabspath | appname          | retire_gracefully        | expectedOutcome
+        wlstPath    | APPLICATION_NAME | checkBoxValues.unchecked | expectedOutcomes.success
+    }
+
+    @Unroll
+    def "Undeploy Application. with server '#targets' - application"() {
+        setup: 'Define the parameters for Procedure running'
+        def paramsStr = stringifyArray([
+            wlstabspath       : wlstabspath,
+            appname           : appname,
+            additional_options: additional_options,
+            retire_gracefully : retire_gracefully,
+            version_identifier: version_identifier,
+            give_up           : give_up
+        ])
+
+        // Check that application is not installed and running already
+        def pageBeforeUndeploy = checkUrl(APPLICATION_PAGE_URL)
+        if (pageBeforeUndeploy.code == NOT_FOUND_RESPONSE) {
+            def deploy = deployApplication(projectName, [
+                configname : CONFIG_NAME,
+                wlstabspath: getWlstPath(),
+                appname    : appname,
+                apppath    : '', // Will be filled inside
+                targets    : 'AdminServer',
+                is_library : ""
+            ], artifactName, FILENAME)
+
+            assert (deploy.outcome == 'success')
+        }
+
+        when: 'process runs'
+        def result = dsl("""
+                runProcess(
+                    projectName    : "$projectName",
+                    applicationName: "$projectName",
+                    environmentName: '$projectName',
+                    processName    : 'MainProcess',
+                    actualParameter: $paramsStr
+                )
+            """, [resourceName : getResourceName()])
+
+        then: 'wait until process finishes'
+        waitUntil {
+            jobCompleted result
+        }
+
+        def logs = getJobLogs(result.jobId)
+        logger.debug("Process logs: " + logs)
+
+        assert jobStatus(result.jobId).outcome == 'success'
+
+        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
+            def pageAfterUndeploy = checkUrl(APPLICATION_PAGE_URL)
+            assert pageAfterUndeploy.code == NOT_FOUND_RESPONSE
+        }
+
+        where: 'The following params will be: '
+        wlstabspath | appname          | retire_gracefully        | expectedOutcome
+        wlstPath    | APPLICATION_NAME | checkBoxValues.unchecked | expectedOutcomes.success
     }
 }
