@@ -96,7 +96,7 @@ class DeleteJMSModuleSuite extends WebLogicHelper {
             procedureName: procedureName,
             params       : [
                 configname                  : CONFIG_NAME,
-                ecp_weblogic_jms_module_name: jmsModuleName
+                ecp_weblogic_jms_module_name: ''
             ]
         ]
     }

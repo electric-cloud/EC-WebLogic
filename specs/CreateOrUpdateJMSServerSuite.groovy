@@ -127,6 +127,10 @@ class CreateOrUpdateJMSServerSuite extends WebLogicHelper {
             ecp_weblogic_target         : target,
         ]
 
+        if (jmsServerName){
+            deleteJMSServer(jmsServerName)
+        }
+
         ensureManagedServer(target, '7999')
 
         if (updateAction != '') {
@@ -149,7 +153,7 @@ class CreateOrUpdateJMSServerSuite extends WebLogicHelper {
         assert result.outcome == expectedOutcome
 
         if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
-//            assert jmsServerExists(jmsModuleName)
+            assert jmsServerExists(jmsServerName)
         }
 
         if (expectedSummaryMessage) {
@@ -183,12 +187,6 @@ class CreateOrUpdateJMSServerSuite extends WebLogicHelper {
         updateActions.remove_and_create | jmsServerNames.default + randomize(updateAction) | targets.default | expectedOutcomes.success | "Recreated JMS Server $jmsServerName, Added target Server \"$target\""
     }
 
-    def deleteJMSServer(name) {
-        def code = """
-
-"""
-    }
-
     def createJMSServer(name, target) {
         def code = """
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
@@ -212,5 +210,24 @@ else:
         def result = runWLST(code, "CreateJMSServer_$name")
         assert result.outcome == 'success'
         result
+    }
+
+    def jmsServerExists(name) {
+        def code = """
+connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+
+jmsServerName = '$name'
+targetName = '$target'
+
+bean = getMBean('/JMSServers/%s' % jmsServerName)
+if bean == None:
+    print "JMS Server %s doesn't exist" % jmsServerName
+else:
+    print "JMS Server %s already exists" % jmsServerName
+"""
+        def result = runWLST(code, "JMSServerExists_$name")
+        assert result.outcome == 'success'
+        assert result.logs.contains("JMS Server $name already exists")
+        return true
     }
 }
