@@ -162,7 +162,7 @@ class DeployAppSuite extends WebLogicHelper {
      */
 
     @Unroll
-    @Ignore
+
     def "Deploy Application. with server '#targets'. Expected : #expectedOutcome : #expectedSummaryMessage"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
@@ -285,7 +285,7 @@ class DeployAppSuite extends WebLogicHelper {
         def logs = getJobLogs(result.jobId)
         logger.debug("Process logs: " + logs)
 
-        assert jobStatus(result.jobId).outcome == 'success'
+        assert jobStatus(result.jobId).outcome == expectedOutcome
 
         if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
             def pageAfterDeploy = checkUrl(APPLICATION_PAGE_URL)

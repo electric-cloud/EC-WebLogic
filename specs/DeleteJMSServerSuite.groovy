@@ -197,11 +197,6 @@ class DeleteJMSServerSuite extends WebLogicHelper {
             assert !checkJMSServerExists(jmsServerName)
         }
 
-        if (expectedJobDetailedResult) {
-            assert logs.contains(expectedJobDetailedResult)
-        }
-
-
         where: 'The following params will be: '
         jmsServerName              | expectedOutcome          | expectedJobDetailedResult
 

@@ -230,7 +230,7 @@ class UndeployAppSuite extends WebLogicHelper {
             jobCompleted result
         }
 
-        assert jobStatus(result.jobId).outcome == 'success'
+        assert jobStatus(result.jobId).outcome == expectedOutcome
 
         def logs = getJobLogs(result.jobId)
         logger.debug("Process logs: " + logs)

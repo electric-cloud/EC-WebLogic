@@ -5,9 +5,9 @@ def envName = 'EC-Weblogic Specs Env'
 def procName = 'DeleteConnectionFactory'
 
 def params = [
-    'configname'               : 'EC-Specs WebLogic Config',
-                cf_name        : '',
-                jms_module_name: '',
+    'configname'   : 'EC-Specs WebLogic Config',
+    cf_name        : '',
+    jms_module_name: '',
 ]
 
 def actualParam = [:]

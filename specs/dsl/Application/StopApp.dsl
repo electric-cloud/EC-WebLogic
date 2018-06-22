@@ -5,12 +5,12 @@ def envName = 'EC-Weblogic Specs Env'
 def procName = 'StopApp'
 
 def params = [
-    'configname'               : 'EC-Specs WebLogic Config',
-                wlstabspath       : '',
-                appname           : '',
+    'configname'      : 'EC-Specs WebLogic Config',
+    wlstabspath       : '',
+    appname           : '',
 
-                additional_options: '',
-                version_identifier: ''
+    additional_options: '',
+    version_identifier: ''
 ]
 
 def actualParam = [:]

@@ -344,7 +344,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         def logs = getJobLogs(result.jobId)
         logger.debug("Process logs: " + logs)
 
-        assert jobStatus(result.jobId).outcome == 'success'
+        assert jobStatus(result.jobId).outcome == expectedOutcome
 
         if (updateAction != 'do_nothing') {
             def resultTargets = getSubdeploymentTargets(jmsModuleName, subdeploymentName)
