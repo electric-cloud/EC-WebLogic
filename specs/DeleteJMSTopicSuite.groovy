@@ -96,6 +96,10 @@ class DeleteJMSTopicSuite extends WebLogicHelper {
                 ecp_weblogic_jms_topic_name : '',
             ]
         ]
+
+        dslFile("dsl/Application/DeleteJMSTopic.dsl", [
+            resourceName: getResourceName()
+        ])
     }
 
     /**
@@ -149,6 +153,54 @@ class DeleteJMSTopicSuite extends WebLogicHelper {
         if (expectedSummaryMessage) {
             assert upperStepSummary.contains(expectedSummaryMessage)
         }
+        where: 'The following params will be: '
+        jmsTopicName              | expectedOutcome          | expectedJobDetailedResult
+
+        // delete JMS Module
+        jmsTopicNames.default     | expectedOutcomes.success | "Removed JMS Topic $jmsTopicName"
+
+        // delete non-existing jms module from non-existing connection factory
+        jmsTopicNames.nonexisting | expectedOutcomes.error   | "JMS Topic $jmsTopicName does not exist"
+    }
+
+    @Unroll
+    def "Delete JMS Topic. (Topic : #jmsTopicName) - application"() {
+        setup: 'Define the parameters for Procedure running'
+        def paramsStr = stringifyArray([
+            ecp_weblogic_jms_module_name: jmsModuleName,
+            ecp_weblogic_jms_topic_name : jmsTopicName,
+        ])
+
+        // Create JMS Module to delete unless it should not exist
+        if (jmsTopicName != jmsTopicNames.nonexisting) {
+            createJMSTopic(jmsModuleName, jmsTopicName)
+        }
+        when: 'process runs'
+        def result = dsl("""
+                runProcess(
+                    projectName    : "$HELPER_PROJECT",
+                    applicationName: "$TEST_APPLICATION",
+                    environmentName: '$ENVIRONMENT_NAME',
+                    processName    : '$procedureName',
+                    actualParameter:  $paramsStr
+                )
+            """, [resourceName: getResourceName()])
+
+        then: 'wait until process finishes'
+        waitUntil {
+            jobCompleted result
+        }
+
+        def logs = getJobLogs(result.jobId)
+        logger.debug("Process logs: " + logs)
+
+        assert jobStatus(result.jobId).outcome == expectedOutcome
+
+
+        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
+            assert !checkJMSTopicExists(jmsTopicName)
+        }
+
         where: 'The following params will be: '
         jmsTopicName              | expectedOutcome          | expectedJobDetailedResult
 
