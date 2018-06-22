@@ -155,7 +155,6 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         ]
 
         dslFile("dsl/Application/CreateOrUpdateConnectionFactory.dsl", [
-            projectName    : projectName,
             resourceName   : getResourceName()
         ])
     }
@@ -166,10 +165,10 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
 
     def doCleanupSpec() {
         deleteJMSModule(jmsModuleName)
-    }
-
-    def setup() {
-        discardChanges()
+        dsl("""
+          deleteApplication(projectName : "$projectName", applicationName : "$projectName")
+          deleteEnvironment(projectName : "$projectName", environmentName : "$projectName")
+        """)
     }
 
     /**
@@ -329,10 +328,10 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
 
         def result = dsl("""
                 runProcess(
-                    projectName    : "$projectName",
-                    applicationName: "$projectName",
-                    environmentName: '$projectName',
-                    processName    : 'MainProcess',
+                    projectName    : "$HELPER_PROJECT",
+                    applicationName    : "$TEST_APPLICATION",
+                    environmentName: '$ENVIRONMENT_NAME',
+                    processName    : '$procedureName',
                     actualParameter: $paramsStr
                 )
             """, [resourceName : getResourceName()])

@@ -1,29 +1,20 @@
-def resName = args.resourceName
 def projName = 'EC-WebLogic Specs Helper'
+def resName = args.resourceName
 def appName = 'EC-WebLogic Specs Application'
 def envName = 'EC-Weblogic Specs Env'
-def procName = 'CreateOrUpdateConnectionFactory'
+def procName = 'DeleteConnectionFactory'
 
 def params = [
     'configname'               : 'EC-Specs WebLogic Config',
-    cf_name                    : '',
-    jndi_name                  : '',
-    cf_sharing_policy          : '',
-    cf_client_id_policy        : '',
-    jms_module_name            : '',
-    wls_instance_list          : '',
-    cf_max_messages_per_session: '',
-    cf_xa_enabled              : '',
-    subdeployment_name         : '',
-    jms_server_list            : '',
-    update_action              : '',
-    additional_options         : '',
+                cf_name        : '',
+                jms_module_name: '',
 ]
 
 def actualParam = [:]
 params.each { key, value ->
     actualParam[key] = '$[' + key + ']'
 }
+
 
 project projName, {
 
@@ -39,7 +30,6 @@ project projName, {
         }
     }
 
-
     application appName, {
         description = ''
 
@@ -53,7 +43,7 @@ project projName, {
                 actualParameter = actualParam
                 applicationTierName = 'Tier 1'
                 processStepType = 'plugin'
-                subprocedure = 'CreateOrUpdateConnectionFactory'
+                subprocedure = 'DeleteConnectionFactory'
                 subproject = '/plugins/EC-WebLogic/project'
             }
 

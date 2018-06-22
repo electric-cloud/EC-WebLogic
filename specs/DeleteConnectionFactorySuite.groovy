@@ -87,13 +87,13 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
 
     // Procedure params
     @Shared
-    def configname
+    def configName
 
     @Shared
-    def cf_name
+    def connectionFactoryName
 
     @Shared
-    def jms_module_name
+    def jmsModuleName
 
     // expected results
     def expectedOutcome
@@ -121,6 +121,10 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
                 jms_module_name: '',
             ]
         ]
+
+        dslFile("dsl/Application/DeleteConnectionFactory.dsl", [
+            resourceName: getResourceName()
+        ])
     }
 
     /**
@@ -136,16 +140,16 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
      */
 
     @Unroll
-    def "Delete Connection Factory. Positive and negative - procedure"() {
+    def "Delete Connection Factory. connectionFactoryName : '#connectionFactoryName', jmsModuleName : '#jmsModuleName' - procedure"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
-            cf_name        : cf_name,
-            jms_module_name: jms_module_name,
+            cf_name        : connectionFactoryName,
+            jms_module_name: jmsModuleName,
         ]
 
         // Create connection factory to delete unless it should not exist
-        if (cf_name != connectionFactories.nonexisting) {
-            createConnectionFactory(cf_name)
+        if (connectionFactoryName != connectionFactories.nonexisting) {
+            createConnectionFactory(connectionFactoryName)
         }
 
         when: 'Procedure runs: '
@@ -164,26 +168,83 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
         expect: 'Outcome and Upper Summary verification'
         assert result.outcome == expectedOutcome
         if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
-            assert !connectionFactoryExists(jms_module_name, cf_name)
+            assert !connectionFactoryExists(jmsModuleName, connectionFactoryName)
         }
         assert debugLog.contains(expectedJobDetailedResult)
-//        assert upperStepSummary.contains(expectedSummaryMessage)
 
         cleanup:
         if (expectedOutcome == expectedOutcomes.success && result.outcome != expectedOutcomes.success) {
-            deleteConnectionFactory(jms_module_name, cf_name)
+            deleteConnectionFactory(jmsModuleName, connectionFactoryName)
         }
         where: 'The following params will be: '
-        cf_name                         | jms_module_name            | expectedOutcome          | expectedJobDetailedResult
+        connectionFactoryName           | jmsModuleName              | expectedOutcome          | expectedJobDetailedResult
 
         // delete connection factory
-        connectionFactories.correct     | jmsModuleNames.default     | expectedOutcomes.success | "Removed Connection Factory $cf_name from the module $jms_module_name"
+        connectionFactories.correct     | jmsModuleNames.default     | expectedOutcomes.success | "Removed Connection Factory $connectionFactoryName from the module $jmsModuleName"
 
         // delete non-existing connection factory
-        connectionFactories.nonexisting | jmsModuleNames.default     | expectedOutcomes.error   | "Connection Factory $cf_name does not exist in the module $jms_module_name"
+        connectionFactories.nonexisting | jmsModuleNames.default     | expectedOutcomes.error   | "Connection Factory $connectionFactoryName does not exist in the module $jmsModuleName"
 
         // delete non-existing connection factory from non-existing jms module
-        connectionFactories.nonexisting | jmsModuleNames.nonexisting | expectedOutcomes.error   | "Connection Factory $cf_name does not exist in the module $jms_module_name"
+        connectionFactories.nonexisting | jmsModuleNames.nonexisting | expectedOutcomes.error   | "Connection Factory $connectionFactoryName does not exist in the module $jmsModuleName"
+    }
+
+
+    @Unroll
+    def "Delete Connection Factory. connectionFactoryName : '#connectionFactoryName', jmsModuleName : '#jmsModuleName' - application"() {
+        setup: 'Define the parameters for Procedure running'
+        def paramsStr = stringifyArray([
+            cf_name        : connectionFactoryName,
+            jms_module_name: jmsModuleName,
+        ])
+
+        // Create connection factory to delete unless it should not exist
+        if (connectionFactoryName != connectionFactories.nonexisting) {
+            createConnectionFactory(connectionFactoryName)
+        }
+
+        when: 'process runs'
+        def result = dsl("""
+                runProcess(
+                    projectName    : "$HELPER_PROJECT",
+                    applicationName: "$TEST_APPLICATION",
+                    environmentName: '$ENVIRONMENT_NAME',
+                    processName    : '$procedureName',
+                    actualParameter:  $paramsStr
+                )
+            """, [resourceName: getResourceName()])
+
+        then: 'wait until process finishes'
+        waitUntil {
+            jobCompleted result
+        }
+
+        def logs = getJobLogs(result.jobId)
+        logger.debug("Process logs: " + logs)
+
+        assert jobStatus(result.jobId).outcome == expectedOutcome
+
+        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
+            def pageAfterDeploy = checkUrl(APPLICATION_PAGE_URL)
+            assert pageAfterDeploy.code == NOT_FOUND_RESPONSE
+        }
+
+        cleanup:
+        if (expectedOutcome == expectedOutcomes.success && result.outcome != expectedOutcomes.success) {
+            deleteConnectionFactory(jmsModuleName, connectionFactoryName)
+        }
+
+        where: 'The following params will be: '
+        connectionFactoryName           | jmsModuleName              | expectedOutcome          | expectedJobDetailedResult
+
+        // delete connection factory
+        connectionFactories.correct     | jmsModuleNames.default     | expectedOutcomes.success | "Removed Connection Factory $connectionFactoryName from the module $jmsModuleName"
+
+        // delete non-existing connection factory
+        connectionFactories.nonexisting | jmsModuleNames.default     | expectedOutcomes.error   | "Connection Factory $connectionFactoryName does not exist in the module $jmsModuleName"
+
+        // delete non-existing connection factory from non-existing jms module
+        connectionFactories.nonexisting | jmsModuleNames.nonexisting | expectedOutcomes.error   | "Connection Factory $connectionFactoryName does not exist in the module $jmsModuleName"
     }
 
     def createConnectionFactory(def name, def module_name = jmsModuleNames.default) {
