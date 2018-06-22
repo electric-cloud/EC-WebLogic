@@ -165,10 +165,6 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
 
     def doCleanupSpec() {
         deleteJMSModule(jmsModuleName)
-        dsl("""
-          deleteApplication(projectName : "$projectName", applicationName : "$projectName")
-          deleteEnvironment(projectName : "$projectName", environmentName : "$projectName")
-        """)
     }
 
     /**
