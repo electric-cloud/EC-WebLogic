@@ -117,6 +117,10 @@ class StopAppSuite extends WebLogicHelper {
                 version_identifier: ''
             ]
         ]
+
+        dslFile("dsl/Application/StopApp.dsl", [
+            resourceName   : getResourceName()
+        ])
     }
 
     /**
@@ -131,10 +135,6 @@ class StopAppSuite extends WebLogicHelper {
                 appname    : APPLICATION_NAME
             ]
         )
-
-        dslFile("dsl/Application/StopApp.dsl", [
-            resourceName   : getResourceName()
-        ])
     }
 
     /**
