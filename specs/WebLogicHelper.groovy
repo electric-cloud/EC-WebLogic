@@ -15,6 +15,8 @@ class WebLogicHelper extends PluginSpockTestSupport {
     static def APPLICATION_PAGE_URL = "http://localhost:7001/sample/hello.jsp"
 
     static final def CONFIG_NAME = 'EC-Specs WebLogic Config'
+    static final def ENVIRONMENT_NAME = 'EC-Weblogic Specs Env'
+    static final def TEST_APPLICATION = 'EC-WebLogic Specs Application'
 
     def doSetupSpec() {
         setupResource()
@@ -22,8 +24,8 @@ class WebLogicHelper extends PluginSpockTestSupport {
     }
 
     def doCleanupSpec() {
-        deleteProject(HELPER_PROJECT)
-        deleteProject('EC-Spec Helper')
+//        deleteProject(HELPER_PROJECT)
+//        deleteProject('EC-Spec Helper')
     }
 
     static def getWlstPath() {
@@ -367,12 +369,16 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
     def undeployApplication(String projectName, def params) {
 
-        dslFile 'dsl/procedures.dsl', [
+        def prepareRes = dslFile 'dsl/procedures.dsl', [
             projectName  : projectName,
             procedureName: 'UndeployApp',
             resourceName : getResourceName(),
             params       : params
         ]
+
+        waitUntil {
+            prepareRes
+        }
 
         def result = runProcedure("""
         runProcedure(
@@ -415,7 +421,9 @@ class WebLogicHelper extends PluginSpockTestSupport {
                  is_library : ""
             ]
         )
-        """)
+        """, getResourceName())
+
+        logger.debug("Hello, my dear friend " + result)
 
         return result
     }
