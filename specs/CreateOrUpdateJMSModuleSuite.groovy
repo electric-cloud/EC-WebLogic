@@ -168,7 +168,7 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
      */
 
     @Unroll
-    @Ignore
+
     def "Create and Update JMS Module. ( JMS Module Name: #jmsModuleName, target: #target, update action: #updateAction ) - procedure"() {
         setup: 'Define the parameters for Procedure running'
 
@@ -230,7 +230,7 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
     }
 
     @Unroll
-    @Ignore
+
     def "Update JMS Module Targets. ( Old targets: #oldTargets, new targets: #newTargets, update action: #updateAction) - procedure"() {
         setup: 'Define the parameters for Procedure running'
 //        def updateAction = 'selective_update'

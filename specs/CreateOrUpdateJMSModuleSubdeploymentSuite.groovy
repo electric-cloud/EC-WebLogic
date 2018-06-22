@@ -159,7 +159,7 @@ class CreateOrUpdateJMSModuleSubdeploymentSuite extends WebLogicHelper {
      */
 
     @Unroll
-    @Ignore
+
     def "Create JMS Subdeployment. procedure with params (SubDeploymentName: #jmsSubdeploymentName, target: #target, update action: #updateAction) - procedure"() {
         setup: 'Define the parameters for Procedure running'
 
@@ -308,7 +308,7 @@ class CreateOrUpdateJMSModuleSubdeploymentSuite extends WebLogicHelper {
     }
 
     @Unroll
-    @Ignore
+
     def 'update #action jms subdeployment - procedure'() {
         given:
         def serverName = 'TestSpecServer'
@@ -360,7 +360,7 @@ class CreateOrUpdateJMSModuleSubdeploymentSuite extends WebLogicHelper {
     }
 
     @Unroll
-    @Ignore
+
     def 'change the list of targets #oldTargets -> #newTargets'() {
         given:
         def jmsModuleName = randomize('SpecJMSModule')

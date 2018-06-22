@@ -180,7 +180,7 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
      */
 
     @Unroll
-    @Ignore
+
     def "Create and Update JMS Topic. Positive - procedure with params (Topic: #jmsTopicName, module: #jmsModuleName, update action: #updateAction) - procedure"() {
         setup: 'Define the parameters for Procedure running'
 
@@ -314,7 +314,7 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
     }
 
     @Unroll
-    @Ignore
+
     def "create with additional options #additionalOptions - procedure"() {
         setup: 'removing old topic'
         def jmsTopicName = jmsTopicNames.default

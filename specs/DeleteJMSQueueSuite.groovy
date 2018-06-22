@@ -122,7 +122,7 @@ class DeleteJMSQueueSuite extends WebLogicHelper {
      */
 
     @Unroll
-    @Ignore
+
     def "Delete JMS Topic. (Topic : #jmsQueueName, Module : #jmsModuleName) - procedure"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
