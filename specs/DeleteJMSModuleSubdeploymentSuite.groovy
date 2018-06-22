@@ -116,6 +116,10 @@ class DeleteJMSModuleSubdeploymentSuite extends WebLogicHelper {
                 ecp_weblogic_subdeployment_name: '',
             ]
         ]
+
+        dslFile("dsl/Application/CreateOrUpdateJMSModuleSubdeployment.dsl", [
+            resourceName: getResourceName()
+        ])
     }
 
     /**
@@ -183,10 +187,75 @@ class DeleteJMSModuleSubdeploymentSuite extends WebLogicHelper {
             assert upperStepSummary.contains(expectedSummaryMessage)
         }
         where: 'The following params will be: '
-        jmsSubdeploymentName          | jmsModuleName          | expectedOutcome          | expectedJobDetailedResult
+        jmsSubdeploymentName              | jmsModuleName              | expectedOutcome          | expectedJobDetailedResult
 
         // delete JMS Module
-        jmsSubdeploymentNames.default | jmsModuleNames.default | expectedOutcomes.success | "Subdeployment $jmsSubdeploymentName has been deleted from JMS Module $jmsModuleName"
+        jmsSubdeploymentNames.default     | jmsModuleNames.default     | expectedOutcomes.success | "Subdeployment $jmsSubdeploymentName has been deleted from JMS Module $jmsModuleName"
+
+        // delete unexisting JMS queue
+        jmsSubdeploymentNames.nonexisting | jmsModuleNames.default     | expectedOutcomes.error   | "Subdeployment $jmsSubdeploymentName does not exist in the JMS Module $jmsModuleName"
+
+        // delete non-existing jms queue from non-existing jms module
+        jmsSubdeploymentNames.nonexisting | jmsModuleNames.nonexisting | expectedOutcomes.error   | "Subdeployment $jmsSubdeploymentName does not exist in the JMS Module $jmsModuleName"
+    }
+
+    @Unroll
+    def "Delete JMS Subdeployment. (Subdeployment : #jmsSubdeploymentName, Module : #jmsModuleName) - application"() {
+        setup: 'Define the parameters for Procedure running'
+        def paramsStr = stringifyArray([
+            ecp_weblogic_jms_module_name   : jmsModuleName,
+            ecp_weblogic_subdeployment_name: jmsSubdeploymentName,
+        ])
+
+        // Create JMS Module to delete unless it should not exist
+        if (jmsSubdeploymentName != jmsSubdeploymentNames.nonexisting) {
+            createJMSModule(jmsModuleName)
+            def createResult = runProcedure """
+        runProcedure(
+            projectName: '$projectName',
+            procedureName: 'CreateOrUpdateJMSModuleSubdeployment',
+            actualParameter: [
+                ecp_weblogic_jms_module_name: '$jmsModuleName',
+                ecp_weblogic_subdeployment_target_list: 'AdminServer',
+                ecp_weblogic_update_action: 'selective_update',
+                ecp_weblogic_subdeployment_name: '$jmsSubdeploymentName'
+            ]
+        )
+        """, getResourceName()
+            assert createResult.outcome == 'success'
+        }
+
+        when: 'process runs'
+        def result = dsl("""
+                runProcess(
+                    projectName    : "$HELPER_PROJECT",
+                    applicationName: "$TEST_APPLICATION",
+                    environmentName: '$ENVIRONMENT_NAME',
+                    processName    : '$procedureName',
+                    actualParameter:  $paramsStr
+                )
+            """, [resourceName: getResourceName()])
+
+        then: 'wait until process finishes'
+        waitUntil {
+            jobCompleted result
+        }
+
+        def logs = getJobLogs(result.jobId)
+        logger.debug("Process logs: " + logs)
+
+        def outcome = jobStatus(result.jobId).outcome
+        assert outcome == expectedOutcome
+
+        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
+            assert !checkJMSSubdeploymentExists(jmsModuleName, jmsSubdeploymentName)
+        }
+
+        where: 'The following params will be: '
+        jmsSubdeploymentName              | jmsModuleName              | expectedOutcome          | expectedJobDetailedResult
+
+        // delete JMS Module
+        jmsSubdeploymentNames.default     | jmsModuleNames.default     | expectedOutcomes.success | "Subdeployment $jmsSubdeploymentName has been deleted from JMS Module $jmsModuleName"
 
         // delete unexisting JMS queue
         jmsSubdeploymentNames.nonexisting | jmsModuleNames.default     | expectedOutcomes.error   | "Subdeployment $jmsSubdeploymentName does not exist in the JMS Module $jmsModuleName"
