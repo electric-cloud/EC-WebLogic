@@ -1,7 +1,9 @@
-def projName = args.projectName
 def resName = args.resourceName
-def appName = projName
-def envName = projName
+
+def projName = 'EC-WebLogic Specs Helper'
+def appName = 'EC-WebLogic Specs Application'
+def envName = 'EC-Weblogic Specs Env'
+def procName = 'UndeployApp'
 
 def params = [
     'configname'      : 'EC-Specs WebLogic Config',
@@ -39,7 +41,7 @@ project projName, {
         applicationTier 'Tier 1', {
         }
 
-        process 'MainProcess', {
+        process procName, {
             processType = 'OTHER'
 
             processStep 'Procedure', {
@@ -60,7 +62,7 @@ project projName, {
         tierMap '542c35d9-7471-11e8-9738-0242ac120003', {
             applicationName = appName
             environmentName = envName
-            environmentProjectName = projName
+            environmentProjectName = 'EC-WebLogic Specs Helper'
 
             tierMapping '5452f82e-7471-11e8-a01a-0242ac120003', {
                 applicationTierName = 'Tier 1'

@@ -66,13 +66,13 @@ class StopAppSuite extends WebLogicHelper {
      * Test Parameters: for Where section
      */
     // Procedure params
-    def configname
-    def wlstabspath
-    def appname
+    def configName
+    def wlstAbsPath
+    def appName
 
     // Optional parameters
-    def additional_options
-    def version_identifier
+    def additionalOptions
+    def versionIdentifier
 
     // expected results
     def expectedOutcome
@@ -131,7 +131,10 @@ class StopAppSuite extends WebLogicHelper {
                 appname    : APPLICATION_NAME
             ]
         )
-//        deleteProject(projectName)
+
+        dslFile("dsl/Application/StopApp.dsl", [
+            resourceName   : getResourceName()
+        ])
     }
 
     /**
@@ -140,20 +143,20 @@ class StopAppSuite extends WebLogicHelper {
 
     @Unroll
     //Positive Scenarios for delete should be first
-    def "Stop Application. application '#appname' - #expectedOutcome : #expectedSummaryMessage"() {
+    def "Stop Application. application '#appName', wlstPath : '#wlstAbsPath' - procedure "() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
-            wlstabspath       : wlstabspath,
-            appname           : appname,
+            wlstabspath       : wlstAbsPath,
+            appname           : appName,
 
-            additional_options: additional_options,
-            version_identifier: version_identifier
+            additional_options: additionalOptions,
+            version_identifier: versionIdentifier
         ]
 
         startApplication(projectName, [
             configname        : CONFIG_NAME,
-            appname           : appname,
-            wlstabspath       : wlstabspath,
+            appname           : appName,
+            wlstabspath       : wlstAbsPath,
 
             additional_options: "",
             version_identifier: ""
@@ -183,13 +186,62 @@ class StopAppSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        wlstabspath | appname          | additional_options | version_identifier | expectedOutcome          | expectedSummaryMessage
-        wlstPath    | APPLICATION_NAME | ''                 | ''                 | expectedOutcomes.success | ''
-
-        //with TargetServerSpecified
-        wlstPath    | APPLICATION_NAME | ''                 | ''                 | expectedOutcomes.success | ''
+        wlstAbsPath | appName          | additionalOptions | versionIdentifier | expectedOutcome          | expectedSummaryMessage
+        wlstPath    | APPLICATION_NAME | ''                | ''                | expectedOutcomes.success | ''
 
         // Empty wlst path should return "File  doesn't exist"
-        ''          | APPLICATION_NAME | ''                 | ''                 | expectedOutcomes.error   | expectedSummaryMessages.file_not_exists
+        ''          | APPLICATION_NAME | ''                | ''                | expectedOutcomes.error   | expectedSummaryMessages.file_not_exists
+    }
+
+    @Unroll
+    //Positive Scenarios for delete should be first
+    def "Stop Application. application '#appName' - application "() {
+        setup: 'Define the parameters for Procedure running'
+        def paramsStr = stringifyArray([
+            wlstabspath       : wlstAbsPath,
+            appname           : appName,
+
+            additional_options: additionalOptions,
+            version_identifier: versionIdentifier
+        ])
+
+        startApplication(projectName, [
+            configname        : CONFIG_NAME,
+            appname           : appName,
+            wlstabspath       : wlstAbsPath,
+
+            additional_options: "",
+            version_identifier: ""
+        ])
+
+        when: 'process runs'
+        def result = dsl("""
+                runProcess(
+                    projectName    : "$HELPER_PROJECT",
+                    applicationName: "$TEST_APPLICATION",
+                    environmentName: '$ENVIRONMENT_NAME',
+                    processName    : '$procedureName',
+                    actualParameter:  $paramsStr
+                )
+            """, [resourceName: getResourceName()])
+
+        then: 'wait until process finishes'
+        waitUntil {
+            jobCompleted result
+        }
+
+        def logs = getJobLogs(result.jobId)
+        logger.debug("Process logs: " + logs)
+
+        assert jobStatus(result.jobId).outcome == 'success'
+
+        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
+            def pageAfterDeploy = checkUrl(APPLICATION_PAGE_URL)
+            assert pageAfterDeploy.code == NOT_FOUND_RESPONSE
+        }
+
+        where: 'The following params will be: '
+        wlstAbsPath | appName          | additionalOptions | versionIdentifier | expectedOutcome          | expectedSummaryMessage
+        wlstPath    | APPLICATION_NAME | ''                | ''                | expectedOutcomes.success | ''
     }
 }

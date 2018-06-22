@@ -1,34 +1,23 @@
+def projName = 'EC-WebLogic Specs Helper'
 def resName = args.resourceName
 def appName = 'EC-WebLogic Specs Application'
-def projName = 'EC-WebLogic Specs Helper'
 def envName = 'EC-Weblogic Specs Env'
-def procName = 'DeployApp'
+def procName = 'StartApp'
 
 def params = [
     'configname'               : 'EC-Specs WebLogic Config',
-    'additional_options'       : '',
-    'appname'                  : '',
-    'apppath'                  : '',
-    'archive_version'          : '',
-    'deployment_plan'          : '',
-    'is_library'               : '',
-    'overwrite_deployment_plan': '',
-    'plan_path'                : '',
-    'plan_version'             : '',
-    'remote'                   : '',
-    'retire_gracefully'        : '',
-    'retire_timeout'           : '',
-    'stage_mode'               : '',
-    'targets'                  : '',
-    'upload'                   : '',
-    'version_identifier'       : '',
-    'wlstabspath'              : '',
+                wlstabspath       : '',
+                appname           : '',
+
+                additional_options: '',
+                version_identifier: '',
 ]
 
 def actualParam = [:]
 params.each { key, value ->
     actualParam[key] = '$[' + key + ']'
 }
+
 
 project projName, {
 
@@ -42,7 +31,6 @@ project projName, {
                 resName,
             ]
         }
-
     }
 
     application appName, {
@@ -58,7 +46,7 @@ project projName, {
                 actualParameter = actualParam
                 applicationTierName = 'Tier 1'
                 processStepType = 'plugin'
-                subprocedure = 'DeployApp'
+                subprocedure = 'StartApp'
                 subproject = '/plugins/EC-WebLogic/project'
             }
 
@@ -83,3 +71,4 @@ project projName, {
 
     }
 }
+

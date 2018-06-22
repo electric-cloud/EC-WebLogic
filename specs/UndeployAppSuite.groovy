@@ -75,14 +75,14 @@ class UndeployAppSuite extends WebLogicHelper {
      * Test Parameters: for Where section
      */
     // Procedure params
-    def wlstabspath
-    def appname
+    def wlstAbsPath
+    def appName
 
     //optional parameters
-    def retire_gracefully
-    def version_identifier
-    def give_up
-    def additional_options
+    def retireGracefully
+    def versionIdentifier
+    def giveUp
+    def additionalOptionsIs
 
     @Shared def artifactName = 'test:sample'
     @Shared def version = '1.0'
@@ -121,7 +121,6 @@ class UndeployAppSuite extends WebLogicHelper {
         ]
 
         dslFile("dsl/Application/UndeployApp.dsl", [
-            projectName    : projectName,
             resourceName   : getResourceName()
         ])
     }
@@ -139,15 +138,15 @@ class UndeployAppSuite extends WebLogicHelper {
      */
 
     @Unroll
-    def "Undeploy Application. with server '#targets' - procedure"() {
+    def "Undeploy Application. application - '#appName' - procedure"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
-            wlstabspath       : wlstabspath,
-            appname           : appname,
-            additional_options: additional_options,
-            retire_gracefully : retire_gracefully,
-            version_identifier: version_identifier,
-            give_up           : give_up
+            wlstabspath       : wlstAbsPath,
+            appname           : appName,
+            additional_options: additionalOptionsIs,
+            retire_gracefully : retireGracefully,
+            version_identifier: versionIdentifier,
+            give_up           : giveUp
         ]
 
         // Check that application is not installed and running already
@@ -156,7 +155,7 @@ class UndeployAppSuite extends WebLogicHelper {
             def deploy = deployApplication(projectName, [
                 configname : CONFIG_NAME,
                 wlstabspath: getWlstPath(),
-                appname    : appname,
+                appname    : appName,
                 apppath    : '', // Will be filled inside
                 targets    : 'AdminServer',
                 is_library : ""
@@ -184,20 +183,20 @@ class UndeployAppSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        wlstabspath | appname          | retire_gracefully        | expectedOutcome
+        wlstAbsPath | appName          | retireGracefully         | expectedOutcome
         wlstPath    | APPLICATION_NAME | checkBoxValues.unchecked | expectedOutcomes.success
     }
 
     @Unroll
-    def "Undeploy Application. with server '#targets' - application"() {
+    def "Undeploy Application. application - '#appName' - application"() {
         setup: 'Define the parameters for Procedure running'
         def paramsStr = stringifyArray([
-            wlstabspath       : wlstabspath,
-            appname           : appname,
-            additional_options: additional_options,
-            retire_gracefully : retire_gracefully,
-            version_identifier: version_identifier,
-            give_up           : give_up
+            wlstabspath       : wlstAbsPath,
+            appname           : appName,
+            additional_options: additionalOptionsIs,
+            retire_gracefully : retireGracefully,
+            version_identifier: versionIdentifier,
+            give_up           : giveUp
         ])
 
         // Check that application is not installed and running already
@@ -206,7 +205,7 @@ class UndeployAppSuite extends WebLogicHelper {
             def deploy = deployApplication(projectName, [
                 configname : CONFIG_NAME,
                 wlstabspath: getWlstPath(),
-                appname    : appname,
+                appname    : appName,
                 apppath    : '', // Will be filled inside
                 targets    : 'AdminServer',
                 is_library : ""
@@ -218,10 +217,10 @@ class UndeployAppSuite extends WebLogicHelper {
         when: 'process runs'
         def result = dsl("""
                 runProcess(
-                    projectName    : "$projectName",
-                    applicationName: "$projectName",
-                    environmentName: '$projectName',
-                    processName    : 'MainProcess',
+                    projectName    : "$HELPER_PROJECT",
+                    applicationName: "$TEST_APPLICATION",
+                    environmentName: '$ENVIRONMENT_NAME',
+                    processName    : '$procedureName',
                     actualParameter: $paramsStr
                 )
             """, [resourceName : getResourceName()])
@@ -231,10 +230,10 @@ class UndeployAppSuite extends WebLogicHelper {
             jobCompleted result
         }
 
+        assert jobStatus(result.jobId).outcome == 'success'
+
         def logs = getJobLogs(result.jobId)
         logger.debug("Process logs: " + logs)
-
-        assert jobStatus(result.jobId).outcome == 'success'
 
         if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
             def pageAfterUndeploy = checkUrl(APPLICATION_PAGE_URL)
@@ -242,7 +241,7 @@ class UndeployAppSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        wlstabspath | appname          | retire_gracefully        | expectedOutcome
+        wlstAbsPath | appName          | retireGracefully         | expectedOutcome
         wlstPath    | APPLICATION_NAME | checkBoxValues.unchecked | expectedOutcomes.success
     }
 }

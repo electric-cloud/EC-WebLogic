@@ -138,9 +138,7 @@ class DeployAppSuite extends WebLogicHelper {
         ]
 
         dslFile('dsl/Application/DeployApp.dsl', [
-            projectName    : projectName,
             resourceName   : getResourceName(),
-            applicationName: APPLICATION_NAME
         ])
     }
 
@@ -150,6 +148,13 @@ class DeployAppSuite extends WebLogicHelper {
 
     def doCleanupSpec() {
 //        deleteProject(projectName)
+//        dsl("""
+//          deleteApplication(projectName : "$projectName", applicationName : "$projectName")
+//          deleteEnvironment(projectName : "$projectName", environmentName : "$projectName")
+//        """)
+        dsl("""
+         deleteResource(resourceName : "$resourceName")
+        """)
     }
 
     /**
@@ -157,6 +162,7 @@ class DeployAppSuite extends WebLogicHelper {
      */
 
     @Unroll
+    @Ignore
     def "Deploy Application. with server '#targets'. Expected : #expectedOutcome : #expectedSummaryMessage"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
@@ -263,10 +269,10 @@ class DeployAppSuite extends WebLogicHelper {
         when: 'process runs'
         def result = dsl("""
                 runProcess(
-                    projectName    : "$projectName",
-                    applicationName: "$projectName",
-                    environmentName: '$projectName',
-                    processName    : 'MainProcess',
+                    projectName    : "$HELPER_PROJECT",
+                    applicationName: "$TEST_APPLICATION",
+                    environmentName: '$ENVIRONMENT_NAME',
+                    processName    : '$procedureName',
                     actualParameter: $paramsStr
                 )
             """, [resourceName : getResourceName()])
