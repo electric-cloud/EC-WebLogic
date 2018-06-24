@@ -117,7 +117,7 @@ class DeleteJMSModuleSubdeploymentSuite extends WebLogicHelper {
             ]
         ]
 
-        dslFile("dsl/Application/CreateOrUpdateJMSModuleSubdeployment.dsl", [
+        dslFile("dsl/Application/DeleteJMSModuleSubdeployment.dsl", [
             resourceName: getResourceName()
         ])
     }
