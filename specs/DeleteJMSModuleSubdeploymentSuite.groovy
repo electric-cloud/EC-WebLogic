@@ -244,10 +244,10 @@ class DeleteJMSModuleSubdeploymentSuite extends WebLogicHelper {
         def logs = getJobLogs(result.jobId)
         logger.debug("Process logs: " + logs)
 
-        def outcome = jobStatus(result.jobId).outcome
-        assert outcome == expectedOutcome
+        def status = jobStatus(result.jobId)
+        assert status.outcome == expectedOutcome
 
-        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
+        if (expectedOutcome == expectedOutcomes.success && status.outcome == expectedOutcomes.success) {
             assert !checkJMSSubdeploymentExists(jmsModuleName, jmsSubdeploymentName)
         }
 
