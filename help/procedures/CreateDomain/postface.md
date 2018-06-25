@@ -1,7 +1,6 @@
 
 <img src="../../plugins/EC-WebLogic/images/CreateDomain/EC-WLSCreateDomainStatus2.png" />
-<br/>
-</ol>
+
 <h3>Output</h3>
 <p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The database was created successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/CreateDomain/EC-WLSCreateDomainStatus3.png" />

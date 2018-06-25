@@ -14,7 +14,7 @@
     <h1>@PLUGIN_KEY@</h1>
     <p>Plugin version @PLUGIN_VERSION@</p>
     
-    <p>Revised on June 20, 2018</p>
+    <p>Revised on June 25, 2018</p>
     
     <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade"/>
     <h3>Overview</h3>
@@ -51,6 +51,7 @@ or to enter a new embedded file.</p>
     <h1>Contents</h1>
     <ul>
     <li><a href="#overview">Overview</a></li>
+    
     
     <li><a href="#CreateConfiguration">Plugin Configuration</a></li>
     
@@ -222,6 +223,8 @@ or to enter a new embedded file.</p>
     
     <li><a href="#releaseNotes">Release Notes</a></li>
 </ul>
+    
+
     
     <div id="CreateConfiguration">
         <a name='CreateConfiguration' id="CreateConfiguration"> </a>
@@ -959,8 +962,6 @@ in most of the procedures of the WebLogic Plugin.</p>
         
         <p>
             <img src="../../plugins/EC-WebLogic/images/CreateDomain/EC-WLSCreateDomainStatus2.png" />
-<br/>
-</ol>
 <h3>Output</h3>
 <p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The database was created successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/CreateDomain/EC-WLSCreateDomainStatus3.png" />
@@ -4009,7 +4010,6 @@ Contrary to the weblogic documentation in section 'Undeploying a Retiring Applic
         <p>
             <img src="../../plugins/EC-WebLogic/images/UndeployApp/EC-WLSUndeployApp2.png" />
 <br />
-</ol>
 <h3>Output</h3>
 <p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The application was undeployed
 successfully.</p>
@@ -4071,7 +4071,6 @@ successfully.</p>
         <p>
             <img src="../../plugins/EC-WebLogic/images/UnlockUserAccount/EC-WLSUnlockUserAccountStatus2.png" />
 <br />
-</ol>
 <h3>Output</h3>
 <p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The application was undeployed
 successfully.</p>
