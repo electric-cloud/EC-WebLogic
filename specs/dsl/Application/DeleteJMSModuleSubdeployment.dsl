@@ -5,11 +5,9 @@ def envName = 'EC-Weblogic Specs Env'
 def procName = 'DeleteJMSModuleSubdeployment'
 
 def params = [
-    'configname'                          : 'EC-Specs WebLogic Config',
-    ecp_weblogic_jms_module_name          : '',
-    ecp_weblogic_update_action            : 'do_nothing',
-    ecp_weblogic_subdeployment_target_list: '',
-    ecp_weblogic_subdeployment_name       : ''
+    'configname'                   : 'EC-Specs WebLogic Config',
+    ecp_weblogic_jms_module_name   : '',
+    ecp_weblogic_subdeployment_name: ''
 ]
 
 def actualParam = [:]

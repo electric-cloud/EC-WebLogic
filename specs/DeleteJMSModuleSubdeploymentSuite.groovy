@@ -268,8 +268,8 @@ class DeleteJMSModuleSubdeploymentSuite extends WebLogicHelper {
         def code = """
 jmsSubdeploymentName = '${jmsSubdeploymentName}'
 
-def getJMSSubdeploymentPath(jmsModule, queue):
-    return "/JMSSystemResources/%s/JMSResource/%s/Queues/%s" % (jmsModule, jmsModule, queue)
+def getSubDeploymentPath(jms_module_name, subdeployment_name):
+    return "/JMSSystemResources/%s/SubDeployments/%s" % (jms_module_name, subdeployment_name)
 
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 cd('/')
@@ -277,15 +277,15 @@ cd('/')
 jmsModuleName = '$jmsModuleName'
 jmsSubdeploymentName = '$jmsSubdeploymentName'
 
-jmsSubdeployment = getMBean(getJMSSubdeploymentPath(jmsModuleName, jmsSubdeploymentName))
+jmsSubdeployment = getMBean(getSubDeploymentPath(jmsModuleName, jmsSubdeploymentName))
 if jmsSubdeployment == None:
-    print("JMS Queue %s does not exist" % jmsSubdeploymentName)
+    print("JMS Subdeployment %s does not exist" % jmsSubdeploymentName)
 else:
-    print("JMS Queue %s exists" % jmsSubdeploymentName)
+    print("JMS Subdeployment %s exists" % jmsSubdeploymentName)
 """
         def result = runWLST(code)
         assert result.outcome == 'success'
-        return result.logs?.contains("JMS Queue $jmsSubdeploymentName exists")
+        return result.logs?.contains("JMS Subdeployment $jmsSubdeploymentName exists")
     }
 
 }
