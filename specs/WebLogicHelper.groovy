@@ -974,7 +974,7 @@ print "VALUE:" + '+' + str(get(propName)) + '+'
         try {
             logs = getJobProperty("/myJob/debug_logs", jobId)
         } catch (Throwable e) {
-            logs = "Possible exception in logs; check job"
+            logs = "Possible exception in logs; check job $jobId. $e"
         }
         logs
     }
