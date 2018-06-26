@@ -501,7 +501,7 @@ def getJMSResource(name):
 
 def readBool(value):
     value = value.strip()
-    if value:
+    if value and (value == '1' or value == 'true'):
         return True
     else:
         return False
