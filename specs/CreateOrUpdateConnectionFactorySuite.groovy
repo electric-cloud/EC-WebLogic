@@ -171,12 +171,12 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
      */
 
     @Unroll
-    def "Create or Update Connection Factory. additional options : '#additionalOptions'"() {
+    def "Create or Update Connection Factory. additional options : '#additionalOptions', cfXaEnabled : '#cfXaEnabled'"() {
         setup: 'Define the parameters for Procedure running'
 
         cfSharingPolicy = sharingPolicies.exclusive
         cfClientIdPolicy = clientPolicies.restricted
-        jndiName = jndiNames.correct
+//        jndiName = jndiNames.correct
 
         def runParams = [
             cf_name                    : connectionFactoryName,
@@ -184,7 +184,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
             cf_sharing_policy          : cfSharingPolicy,
             cf_client_id_policy        : cfClientIdPolicy,
             jms_module_name            : jmsModuleName,
-            wls_instance_list          : targets.default,
+            wls_instance_list          : '',
             cf_max_messages_per_session: cfMaxMessagesPerSession,
             cf_xa_enabled              : cfXaEnabled,
             subdeployment_name         : subdeploymentName,
