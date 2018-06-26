@@ -117,8 +117,8 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
             procedureName: procedureName,
             params       : [
                 configname     : CONFIG_NAME,
-                cf_name        : cf_name,
-                jms_module_name: jms_module_name,
+                cf_name        : '',
+                jms_module_name: '',
             ]
         ]
     }
