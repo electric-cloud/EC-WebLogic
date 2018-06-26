@@ -132,7 +132,12 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
 
         discardChanges()
         deleteProject(projectName)
+
         createJMSModule(jmsModuleName)
+        createJMSServer(jmsServers.first)
+        createJMSServer(jmsServers.second)
+        deleteConnectionFactory(jmsModuleName, connectionFactories.updated)
+
 
         dslFile "dsl/procedures.dsl", [
             projectName  : projectName,
@@ -241,6 +246,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
     def "#caseId. CreateOrUpdateConnectionFactory - update_action : '#update_action', jms_server_list: #jmsServerList, wls_instance_list: #wlstInstanceList"() {
         setup:
         createJMSModule(jmsModuleName)
+
         def subdeploymentName = 'sub1'
         def jmsServerName = 'jmsServer1'
 
@@ -295,13 +301,8 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
     @Unroll
     def '#caseId. Create with WLS target #wlstInstanceList, JMS target #jmsServerList'() {
         setup:
-        def cfName = 'ConnectionFactoryWith Targets'
-        deleteConnectionFactory(jmsModuleName, cfName)
-        createJMSServer(jmsServers.first)
-        createJMSServer(jmsServers.second)
-        def subdeploymentName = cfName
-        when:
-        def runParamsSecond = [
+        def subdeploymentName = 'Subdeployment for CF'
+        def runParams = [
             cf_name            : connectionFactories.updated,
             jndi_name          : jndiNames.recreateNew,
             jms_module_name    : jmsModuleName,
@@ -309,15 +310,17 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
             cf_client_id_policy: clientPolicies.restricted,
             update_action      : 'do_nothing',
             subdeployment_name : subdeploymentName,
+
             jms_server_list    : jmsServerList,
             wls_instance_list  : wlstInstanceList
         ]
 
-        def resultSecond = runTestedProcedure(projectName, procedureName, runParamsSecond, getResourceName())
+        when:
+        def result = runTestedProcedure(projectName, procedureName, runParams, getResourceName())
 
         then:
-        logger.debug(resultSecond.logs)
-        assert resultSecond.outcome == 'success'
+        logger.debug(result.logs)
+        assert result.outcome == 'success'
 
         // def resultTargets = getSubdeploymentTargets(jmsModuleName, subdeploymentName)
         // logger.debug(resultTargets.logs)
