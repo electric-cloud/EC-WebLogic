@@ -104,19 +104,7 @@ class StartAppSuite extends WebLogicHelper {
             FILENAME
         )
 
-        assert deploy.outcome == 'success'
-
-        def stop = stopApplication(projectName,
-            [
-                configname        : CONFIG_NAME,
-                wlstabspath       : getWlstPath(),
-                appname           : APPLICATION_NAME,
-
-                additional_options: "",
-                version_identifier: ""
-            ]
-        )
-        assert stop.outcome == 'success'
+        assert (deploy.outcome == 'success' || deploy.outcome == 'warning')
 
         dslFile "dsl/procedures.dsl", [
             projectName  : projectName,
@@ -131,6 +119,10 @@ class StartAppSuite extends WebLogicHelper {
                 version_identifier: '',
             ]
         ]
+
+        dslFile("dsl/Application/StartApp.dsl", [
+            resourceName: getResourceName()
+        ])
     }
 
     /**
@@ -146,8 +138,7 @@ class StartAppSuite extends WebLogicHelper {
      */
 
     @Unroll
-    //Positive Scenarios for delete should be first
-    def "Start Application. appname '#appName' - Expected: #expectedOutcome : #expectedSummaryMessage"() {
+    def "Start Application. appname '#appName', additionalOptions : '#additionalOptions', versionIdentifier : '#versionIdentifier' - procedure"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
             wlstabspath       : wlstabspath,
@@ -156,6 +147,18 @@ class StartAppSuite extends WebLogicHelper {
             additional_options: additionalOptions,
             version_identifier: versionIdentifier
         ]
+
+        def stop = stopApplication(projectName,
+            [
+                configname        : CONFIG_NAME,
+                wlstabspath       : getWlstPath(),
+                appname           : appName,
+
+                additional_options: "",
+                version_identifier: ""
+            ]
+        )
+        assert (stop.outcome == 'success' || stop.outcome == 'warning')
 
         when: 'Procedure runs: '
 
@@ -187,6 +190,60 @@ class StartAppSuite extends WebLogicHelper {
                 additional_options: "",
                 version_identifier: ""
             ])
+        }
+
+        where: 'The following params will be: '
+        wlstabspath | appName          | additionalOptions | versionIdentifier | expectedOutcome          | expectedSummaryMessage
+        wlstPath    | APPLICATION_NAME | ''                | ''                | expectedOutcomes.success | ''
+    }
+
+    @Unroll
+    def "Start Application. appname '#appName', additionalOptions : '#additionalOptions', versionIdentifier : '#versionIdentifier' - application"() {
+        setup: 'Define the parameters for Procedure running'
+        def paramsStr = stringifyArray([
+            wlstabspath       : wlstabspath,
+            appname           : appName,
+
+            additional_options: additionalOptions,
+            version_identifier: versionIdentifier
+        ])
+
+        def stop = stopApplication(projectName,
+            [
+                configname        : CONFIG_NAME,
+                wlstabspath       : getWlstPath(),
+                appname           : appName,
+
+                additional_options: "",
+                version_identifier: ""
+            ]
+        )
+        assert (stop.outcome == 'success' || stop.outcome == 'warning')
+
+        when: 'process runs'
+        def result = dsl("""
+                runProcess(
+                    projectName    : "$HELPER_PROJECT",
+                    applicationName: "$TEST_APPLICATION",
+                    environmentName: '$ENVIRONMENT_NAME',
+                    processName    : '$procedureName',
+                    actualParameter:  $paramsStr
+                )
+            """, [resourceName: getResourceName()])
+
+        then: 'wait until process finishes'
+        waitUntil {
+            jobCompleted result
+        }
+
+        def logs = getJobLogs(result.jobId)
+        logger.debug("Process logs: " + logs)
+
+        assert jobStatus(result.jobId).outcome == expectedOutcome
+
+        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
+            def pageAfterDeploy = checkUrl(APPLICATION_PAGE_URL)
+            assert pageAfterDeploy.code == SUCCESS_RESPONSE
         }
 
         where: 'The following params will be: '

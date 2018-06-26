@@ -94,6 +94,10 @@ class DeleteJMSServerSuite extends WebLogicHelper {
                 ecp_weblogic_jms_server_name: ''
             ]
         ]
+
+        dslFile("dsl/Application/DeleteJMSServer.dsl", [
+            resourceName: getResourceName()
+        ])
     }
 
     /**
@@ -146,6 +150,53 @@ class DeleteJMSServerSuite extends WebLogicHelper {
         if (expectedSummaryMessage) {
             assert upperStepSummary.contains(expectedSummaryMessage)
         }
+        where: 'The following params will be: '
+        jmsServerName              | expectedOutcome          | expectedJobDetailedResult
+
+        // delete JMS Module
+        jmsServerNames.default     | expectedOutcomes.success | "Removed JMS Server $jmsServerName"
+
+        // delete non-existing jms module from non-existing connection factory
+        jmsServerNames.nonexisting | expectedOutcomes.error   | "JMS Server $jmsServerName does not exist"
+    }
+    @Unroll
+    def "Delete JMS Module. (Server : #jmsServerName) - application"() {
+
+        setup: 'Define the parameters for Procedure running'
+        def paramsStr = stringifyArray([
+            ecp_weblogic_jms_server_name: jmsServerName,
+        ])
+
+        // Create JMS Module to delete unless it should not exist
+        if (jmsServerName != jmsServerNames.nonexisting) {
+            createJMSServer(jmsServerName)
+        }
+
+        when: 'process runs'
+        def result = dsl("""
+                runProcess(
+                    projectName    : "$HELPER_PROJECT",
+                    applicationName: "$TEST_APPLICATION",
+                    environmentName: '$ENVIRONMENT_NAME',
+                    processName    : '$procedureName',
+                    actualParameter:  $paramsStr
+                )
+            """, [resourceName: getResourceName()])
+
+        then: 'wait until process finishes'
+        waitUntil {
+            jobCompleted result
+        }
+
+        def logs = getJobLogs(result.jobId)
+        logger.debug("Process logs: " + logs)
+
+        expect:
+        assert jobStatus(result.jobId).outcome == expectedOutcome
+        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
+            assert !checkJMSServerExists(jmsServerName)
+        }
+
         where: 'The following params will be: '
         jmsServerName              | expectedOutcome          | expectedJobDetailedResult
 

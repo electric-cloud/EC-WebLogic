@@ -97,6 +97,9 @@ class RunWLSTSuite extends WebLogicHelper {
             ]
         ]
 
+        dslFile("dsl/Application/RunWLST.dsl", [
+            resourceName: getResourceName()
+        ])
     }
 
     /**
@@ -111,8 +114,7 @@ class RunWLSTSuite extends WebLogicHelper {
      * Positive Scenarios
      */
 
-    @Unroll
-    def "RunWLST - complex code"() {
+    def "RunWLST - complex code - procedure"() {
         setup: 'Define the parameters for Procedure running'
         scriptFileSource = 'newscriptfile'
 
@@ -147,7 +149,7 @@ class RunWLSTSuite extends WebLogicHelper {
 
     }
 
-    def 'RunWLST - fail with exception - negative'() {
+    def 'RunWLST - fail with exception - procedure - negative'() {
         setup: 'Define the parameters for Procedure running'
         scriptFileSource = 'newscriptfile'
         scriptFile = """
@@ -180,9 +182,98 @@ raise Exception("Expected exception")
 
         expect: 'Outcome and Upper Summary verification: '
         assert result.outcome == 'error'
+
         assert debugLog.contains("java.lang.Exception: java.lang.Exception: Expected exception")
+    }
 
+    @Ignore
+    def "RunWLST - complex code - application"() {
+        setup: 'Define the parameters for Procedure running'
+        scriptFileSource = 'newscriptfile'
 
+        File sampleComplexCodeFile = new File(this.getClass().getResource("/resources/sampleWLSTScript.jython").toURI())
+        assert sampleComplexCodeFile
+        scriptFile = sampleComplexCodeFile.text
+        assert scriptFile
+
+        def paramsStr = """
+            wlstabspath       : '${getWlstPath()}',
+            additional_envs   : '${additionalEnvs ?: ''}',
+            additionalcommands: '${additionalCommands ?: ''}',
+            scriptfilesource  : '${scriptFileSource ?: ''}',
+            scriptfilepath    : '${scriptFilePath ?: ''}',
+            webjarpath        : '${webJarPath ?: ''}',
+            scriptfile        : '''$scriptFile'''
+        """
+
+        when: 'process runs'
+        def result = dsl("""
+                runProcess(
+                    projectName    : "$HELPER_PROJECT",
+                    applicationName: "$TEST_APPLICATION",
+                    environmentName: '$ENVIRONMENT_NAME',
+                    processName    : '$procedureName',
+                    actualParameter:  [$paramsStr]
+                )
+            """, [resourceName: getResourceName()])
+
+        then: 'wait until process finishes'
+        waitUntil {
+            jobCompleted result
+        }
+
+        def logs = getJobLogs(result.jobId)
+        logger.debug("Process logs: " + logs)
+
+        def status = jobStatus(result.jobId)
+        assert status.outcome == 'success'
+
+        //TODO: check why logs cannot be retrieved
+        //assert logs.contains("script returns SUCCESS")
+    }
+
+    @Ignore
+    def 'RunWLST - fail with exception - application - negative'() {
+        setup: 'Define the parameters for Procedure running'
+        scriptFileSource = 'newscriptfile'
+        scriptFile = """
+connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+raise Exception("Expected exception")
+"""
+
+        def paramsStr = """
+            wlstabspath       : '${getWlstPath()}',
+            additional_envs   : '${additionalEnvs ?: ''}',
+            additionalcommands: '${additionalCommands ?: ''}',
+            scriptfilesource  : '${scriptFileSource ?: ''}',
+            scriptfilepath    : '${scriptFilePath ?: ''}',
+            webjarpath        : '${webJarPath ?: ''}',
+            scriptfile        : '''$scriptFile'''
+        """
+
+        when: 'process runs'
+        def result = dsl("""
+                runProcess(
+                    projectName    : "$HELPER_PROJECT",
+                    applicationName: "$TEST_APPLICATION",
+                    environmentName: '$ENVIRONMENT_NAME',
+                    processName    : '$procedureName',
+                    actualParameter:  [$paramsStr]
+                )
+            """, [resourceName: getResourceName()])
+
+        then: 'wait until process finishes'
+        waitUntil {
+            jobCompleted result
+        }
+
+        def logs = getJobLogs(result.jobId)
+        logger.debug("Process logs: " + logs)
+
+        def status = jobStatus(result.jobId)
+        assert status.outcome == 'error'
+        //TODO: check why logs cannot be retrieved
+//        assert logs.contains("java.lang.Exception: java.lang.Exception: Expected exception")
     }
 
 

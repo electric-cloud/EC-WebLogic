@@ -88,7 +88,6 @@ class DeleteJMSModuleSuite extends WebLogicHelper {
         createConfig(CONFIG_NAME)
 
         createJMSModule(jmsModuleNames.default)
-//        createConnectionFactory(jmsModuleNames.default, connectionFactories.correct)
 
         dslFile "dsl/procedures.dsl", [
             projectName  : projectName,
@@ -99,6 +98,10 @@ class DeleteJMSModuleSuite extends WebLogicHelper {
                 ecp_weblogic_jms_module_name: ''
             ]
         ]
+
+        dslFile("dsl/Application/DeleteJMSModule.dsl", [
+            resourceName: getResourceName()
+        ])
     }
 
     /**
@@ -114,7 +117,7 @@ class DeleteJMSModuleSuite extends WebLogicHelper {
      */
 
     @Unroll
-    def "Delete JMS Module. (Module : #jmsModuleName, configuration name : #configName) - procedure"() {
+    def "Delete JMS Module. (Module name : #jmsModuleName) - procedure"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
             ecp_weblogic_jms_module_name: jmsModuleName,
@@ -150,6 +153,54 @@ class DeleteJMSModuleSuite extends WebLogicHelper {
 
         if (expectedSummaryMessage) {
             assert upperStepSummary.contains(expectedSummaryMessage)
+        }
+        where: 'The following params will be: '
+        jmsModuleName              | expectedOutcome          | expectedJobDetailedResult                         | expectedSummaryMessage
+
+        // delete JMS Module
+        jmsModuleNames.default     | expectedOutcomes.success | "JMS Module $jmsModuleName has been deleted"      | "Deleted JMS System Module $jmsModuleName"
+
+        // delete non-existing jms module from non-existing connection factory
+        jmsModuleNames.nonexisting | expectedOutcomes.error   | "JMS System Module $jmsModuleName does not exist" | ''
+    }
+
+    @Unroll
+    def "Delete JMS Module. (Module name : #jmsModuleName) - application"() {
+        setup: 'Define the parameters for Procedure running'
+        def paramsStr = stringifyArray([
+            ecp_weblogic_jms_module_name: jmsModuleName,
+        ])
+
+        // Create JMS Module to delete unless it should not exist
+        if (jmsModuleName != jmsModuleNames.nonexisting) {
+            createJMSModule(jmsModuleName)
+        }
+
+        when: 'process runs'
+        def result = dsl("""
+                runProcess(
+                    projectName    : "$HELPER_PROJECT",
+                    applicationName: "$TEST_APPLICATION",
+                    environmentName: '$ENVIRONMENT_NAME',
+                    processName    : '$procedureName',
+                    actualParameter:  $paramsStr
+                )
+            """, [resourceName: getResourceName()])
+
+        then: 'wait until process finishes'
+        waitUntil {
+            jobCompleted result
+        }
+
+        def logs = getJobLogs(result.jobId)
+        logger.debug("Process logs: " + logs)
+
+        def outcome = jobStatus(result.jobId).outcome
+        assert outcome == expectedOutcome
+
+        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
+            assert logs.contains(expectedJobDetailedResult)
+            assert !checkJMSModuleExists(jmsModuleName)
         }
         where: 'The following params will be: '
         jmsModuleName              | expectedOutcome          | expectedJobDetailedResult                         | expectedSummaryMessage
