@@ -94,6 +94,8 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
     /**
      * Test Parameters: for Where section
      */
+    @Shared
+    def caseId
 
     // Procedure params
     def configname
@@ -171,7 +173,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
      */
 
     @Unroll
-    def "Create or Update Connection Factory. additional options : '#additionalOptions', cfXaEnabled : '#cfXaEnabled'"() {
+    def "#caseId. Create or Update Connection Factory. additional options : '#additionalOptions', cfXaEnabled : '#cfXaEnabled'"() {
         setup: 'Define the parameters for Procedure running'
 
         cfSharingPolicy = sharingPolicies.exclusive
@@ -227,15 +229,16 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         cleanup:
         deleteConnectionFactory(jmsModuleName, connectionFactoryName)
         where: 'The following params will be: '
-        connectionFactoryName       | cfXaEnabled | additionalOptions                   | expectedOutcome          | expectedJobDetailedResult
-        connectionFactories.correct | ''          | ''                                  | expectedOutcomes.success | "Created Connection Factory $connectionFactoryName"
+        caseId  | connectionFactoryName       | cfXaEnabled | additionalOptions                   | expectedOutcome          | expectedJobDetailedResult
+        'C324901' | connectionFactories.correct | ''          | ''                                  | expectedOutcomes.success | "Created Connection Factory $connectionFactoryName"
+        'C325027' | connectionFactories.correct | '0'         | ''                                  | expectedOutcomes.success | "Created Connection Factory $connectionFactoryName"
 
         // with additional options
-        connectionFactories.correct | '1'         | additionalOptionsIs.defaultPriority | expectedOutcomes.success | "Created Connection Factory $connectionFactoryName"
+        'C325026' | connectionFactories.correct | '1'         | additionalOptionsIs.defaultPriority | expectedOutcomes.success | "Created Connection Factory $connectionFactoryName"
     }
 
     @Unroll
-    def "CreateOrUpdateConnectionFactory - update_action : '#update_action', jms_server_list: #jmsServerList, wls_instance_list: #wlstInstanceList"() {
+    def "#caseId. CreateOrUpdateConnectionFactory - update_action : '#update_action', jms_server_list: #jmsServerList, wls_instance_list: #wlstInstanceList"() {
         setup:
         createJMSModule(jmsModuleName)
         def subdeploymentName = 'sub1'
@@ -283,14 +286,14 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         deleteSubDeployment(jmsModuleName, subdeploymentName)
 
         where:
-        updateAction        | expectedOutcome
-        'remove_and_create' | expectedOutcomes.success
-        'selective_update'  | expectedOutcomes.success
-        'do_nothing'        | expectedOutcomes.success
+        caseId    | updateAction        | expectedOutcome
+        'C325033' | 'remove_and_create' | expectedOutcomes.success
+        'C325034' | 'selective_update'  | expectedOutcomes.success
+        'C325035' | 'do_nothing'        | expectedOutcomes.success
     }
 
     @Unroll
-    def 'create with WLS target #wlstInstanceList, JMS target #jmsServerList'() {
+    def '#caseId. Create with WLS target #wlstInstanceList, JMS target #jmsServerList'() {
         setup:
         def cfName = 'ConnectionFactoryWith Targets'
         deleteConnectionFactory(jmsModuleName, cfName)
@@ -325,12 +328,12 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         deleteSubDeployment(jmsModuleName, subdeploymentName)
 
         where:
-        jmsServerList                               | wlstInstanceList
-        "${jmsServers.first}"                       | ""
-        "${jmsServers.second}"                      | 'AdminServer'
-        "${jmsServers.first}"                       | 'AdminServer'
-        ''                                          | 'AdminServer'
-        "${jmsServers.first}, ${jmsServers.second}" | 'AdminServer'
+        caseId    | jmsServerList                               | wlstInstanceList
+        'C325028' | "${jmsServers.first}"                       | ""
+        'C325029' | "${jmsServers.second}"                      | 'AdminServer'
+        'C325030' | "${jmsServers.first}"                       | 'AdminServer'
+        'C325031' | ''                                          | 'AdminServer'
+        'C325032' | "${jmsServers.first}, ${jmsServers.second}" | 'AdminServer'
     }
 
     def connectionFactoryExists(def moduleName, def name) {
