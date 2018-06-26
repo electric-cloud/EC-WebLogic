@@ -136,6 +136,10 @@ class DeployAppSuite extends WebLogicHelper {
                 remote                   : '',
             ]
         ]
+
+        dslFile('dsl/Application/DeployApp.dsl', [
+            resourceName   : getResourceName(),
+        ])
     }
 
     /**
@@ -144,6 +148,13 @@ class DeployAppSuite extends WebLogicHelper {
 
     def doCleanupSpec() {
 //        deleteProject(projectName)
+//        dsl("""
+//          deleteApplication(projectName : "$projectName", applicationName : "$projectName")
+//          deleteEnvironment(projectName : "$projectName", environmentName : "$projectName")
+//        """)
+        dsl("""
+         deleteResource(resourceName : "$resourceName")
+        """)
     }
 
     /**
@@ -151,6 +162,7 @@ class DeployAppSuite extends WebLogicHelper {
      */
 
     @Unroll
+
     def "Deploy Application. with server '#targets'. Expected : #expectedOutcome : #expectedSummaryMessage"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
@@ -192,21 +204,19 @@ class DeployAppSuite extends WebLogicHelper {
 
         then: 'Wait until job run is completed: '
 
-        def outcome = result.outcome
         def debugLog = result.logs
-
         println "Procedure log:\n$debugLog\n"
 
-        def upperStepSummary = getJobUpperStepSummary(result.jobId)
-        logger.info("[SUMMARY]" + upperStepSummary)
-
         expect: 'Outcome and Upper Summary verification'
-        assert outcome == expectedOutcome
-        if (expectedOutcome == expectedOutcomes.success && outcome == expectedOutcomes.success) {
+        assert result.outcome == expectedOutcome
+
+        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
             def pageAfterDeploy = checkUrl(APPLICATION_PAGE_URL)
             assert pageAfterDeploy.code == SUCCESS_RESPONSE
         }
+
         if (expectedSummaryMessage) {
+            def upperStepSummary = getJobUpperStepSummary(result.jobId)
             assert upperStepSummary.contains(expectedSummaryMessage)
         }
 
@@ -221,6 +231,74 @@ class DeployAppSuite extends WebLogicHelper {
         // Empty wlst path should return "File  doesn't exist"
         ''          | APPLICATION_NAME | ''            | checkBoxValues.unchecked | expectedOutcomes.error   | expectedSummaryMessages.file_not_exists
 
+    }
+
+
+    @Unroll
+    def 'DeployApplication - application context'() {
+        setup: 'parameters and server state'
+
+        def paramsStr = stringifyArray([
+            // Required
+            wlstabspath              : wlstabspath,
+            appname                  : appname,
+            apppath                  : apppath,
+            targets                  : targets,
+
+            // Optional
+            is_library               : is_library,
+            stage_mode               : stage_mode,
+            plan_path                : plan_path,
+            deployment_plan          : deployment_plan,
+            overwrite_deployment_plan: overwrite_deployment_plan,
+            additional_options       : additional_options,
+            archive_version          : archive_version,
+            retire_gracefully        : retire_gracefully,
+            retire_timeout           : retire_timeout,
+            version_identifier       : version_identifier,
+            upload                   : upload,
+            remote                   : remote
+        ])
+
+        undeployApplication(projectName, [
+            configname : CONFIG_NAME,
+            wlstabspath: getWlstPath(),
+            appname    : appname
+        ])
+
+        when: 'process runs'
+        def result = dsl("""
+                runProcess(
+                    projectName    : "$HELPER_PROJECT",
+                    applicationName: "$TEST_APPLICATION",
+                    environmentName: '$ENVIRONMENT_NAME',
+                    processName    : '$procedureName',
+                    actualParameter: $paramsStr
+                )
+            """, [resourceName : getResourceName()])
+
+        then: 'wait until process finishes'
+        waitUntil {
+            jobCompleted result
+        }
+
+        def logs = getJobLogs(result.jobId)
+        logger.debug("Process logs: " + logs)
+
+        assert jobStatus(result.jobId).outcome == expectedOutcome
+
+        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
+            def pageAfterDeploy = checkUrl(APPLICATION_PAGE_URL)
+            assert pageAfterDeploy.code == SUCCESS_RESPONSE
+        }
+
+        where:
+        wlstabspath | appname          | targets       | is_library               | expectedOutcome          | expectedSummaryMessage
+        // Simple positive
+        wlstPath    | APPLICATION_NAME | ''            | ''                       | expectedOutcomes.success | ''
+
+        // with TargetServerSpecified
+        wlstPath    | APPLICATION_NAME | 'AdminServer' | checkBoxValues.unchecked | expectedOutcomes.success | ''
     }
 
 }

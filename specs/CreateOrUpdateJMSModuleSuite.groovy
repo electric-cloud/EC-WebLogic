@@ -149,6 +149,10 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
                 ecp_weblogic_target_list    : '',
             ]
         ]
+
+        dslFile("dsl/Application/CreateOrUpdateJMSModule.dsl", [
+            resourceName   : getResourceName()
+        ])
     }
 
     /**
@@ -164,7 +168,8 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
      */
 
     @Unroll
-    def "Create and Update JMS Module. Positive - procedure with params (Module: #jmsModuleName, target: #target, update action: #updateAction )"() {
+
+    def "Create and Update JMS Module. ( JMS Module Name: #jmsModuleName, target: #target, update action: #updateAction ) - procedure"() {
         setup: 'Define the parameters for Procedure running'
 
         def runParams = [
@@ -225,7 +230,8 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
     }
 
     @Unroll
-    def "Update JMS Module Targets. Positive - procedure with params (old targets: #oldTargets, new targets: #newTargets, update action: #updateAction)"() {
+
+    def "Update JMS Module Targets. ( Old targets: #oldTargets, new targets: #newTargets, update action: #updateAction) - procedure"() {
         setup: 'Define the parameters for Procedure running'
 //        def updateAction = 'selective_update'
         def jmsModuleName = randomize('TargetList')
@@ -281,6 +287,64 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
         'selective_update'  | targets.nothing | targets.managedServer
         'remove_and_create' | targets.cluster | targets.serverAndCluster
         'remove_and_create' | targets.nothing | targets.cluster
+    }
+
+    @Unroll
+    def "Create and Update JMS Module. ( JMS Module Name: #jmsModuleName, target: #target, update action: #updateAction ) - application"() {
+        setup: 'Define the parameters for Procedure running'
+
+        def paramsStr = stringifyArray([
+            ecp_weblogic_jms_module_name: jmsModuleName,
+            ecp_weblogic_update_action  : updateAction,
+            ecp_weblogic_target_list    : target
+        ])
+
+        deleteJMSModule(jmsModuleName)
+        ensureManagedServer(target, '7999')
+
+        if (updateAction) {
+            createJMSModule(jmsModuleName, targets.default)
+        }
+
+        when: 'process runs'
+        def result = dsl("""
+                runProcess(
+                    projectName    : "$HELPER_PROJECT",
+                    applicationName    : "$TEST_APPLICATION",
+                    environmentName: '$ENVIRONMENT_NAME',
+                    processName    : '$procedureName',
+                    actualParameter: $paramsStr
+                )
+            """, [resourceName : getResourceName()])
+
+        then: 'wait until process finishes'
+        waitUntil {
+            jobCompleted result
+        }
+
+        def logs = getJobLogs(result.jobId)
+        logger.debug("Process logs: " + logs)
+
+        def outcome = jobStatus(result.jobId).outcome
+        assert outcome == expectedOutcome
+
+        if (expectedJobDetailedResult) {
+            assert logs.contains(expectedJobDetailedResult)
+        }
+
+        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
+            assert jmsModuleExists(jmsModuleName)
+        }
+
+        cleanup:
+        if (expectedOutcome == expectedOutcomes.success && outcome == expectedOutcomes.success) {
+            deleteJMSModule(jmsModuleName)
+        }
+
+        where: 'The following params will be: '
+        configname          | jmsModuleName                                | updateAction                    | target          | expectedOutcome          | expectedSummaryMessage                     | expectedJobDetailedResult
+        // Create
+        configNames.correct | jmsModules.default                           | updateActions.empty             | targets.default | expectedOutcomes.success | "Created JMS System Module $jmsModuleName" | ''
     }
 
     def jmsModuleExists(def moduleName) {

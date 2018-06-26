@@ -152,6 +152,10 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
         ]
         createJMSModule(jmsModules.default)
 
+        dslFile("dsl/Application/CreateOrUpdateJMSQueue.dsl", [
+            projectName    : projectName,
+            resourceName   : getResourceName()
+        ])
     }
 
     /**
@@ -167,7 +171,7 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
      */
 
     @Unroll
-    def "Create or Update JMS Queue ( Queue name: #jmsQueueName target: #target, additional options: #additionalOptions, update action: #updateAction)"() {
+    def "Create or Update JMS Queue ( Queue name: #jmsQueueName target: #target, additional options: #additionalOptions, update action: #updateAction) - procedure"() {
         setup: 'Define the parameters for Procedure running'
 
         jmsModuleName = jmsModules.default
@@ -235,6 +239,78 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
         jmsQueues.updated | updateActions.selective_update  | targets.update  | additionalOptionsIs.empty     | expectedOutcomes.success | "Doing selective update"
         jmsQueues.updated | updateActions.remove_and_create | targets.update  | additionalOptionsIs.empty     | expectedOutcomes.success | "Removed JMS Queue $jmsQueueName from the module " // $jmsModuleName"
     }
+
+    @Unroll
+    def "Create or Update JMS Queue ( Queue name: #jmsQueueName target: #target, additional options: #additionalOptions, update action: #updateAction) - application"() {
+        setup: 'Define the parameters for Procedure running'
+
+        jmsModuleName = jmsModules.default
+        jndiName = 'TestJNDIName'
+
+        def paramsStr = stringifyArray([
+            ecp_weblogic_jms_queue_name    : jmsQueueName,
+            ecp_weblogic_jms_module_name   : jmsModuleName,
+            ecp_weblogic_jndi_name         : jndiName,
+
+            ecp_weblogic_subdeployment_name: subdeploymentName,
+            ecp_weblogic_additional_options: additionalOptions,
+            ecp_weblogic_update_action     : updateAction,
+            ecp_weblogic_target_jms_server : target,
+        ])
+
+        ensureManagedServer(target, '7999')
+
+        if (updateAction) {
+            createJMSQueue(jmsModuleName, jmsQueueName)
+        }
+
+        when: 'process runs'
+        def result = dsl("""
+                runProcess(
+                    projectName    : "$HELPER_PROJECT",
+                    applicationName: "$TEST_APPLICATION",
+                    environmentName: '$ENVIRONMENT_NAME',
+                    processName    : '$procedureName',
+                    actualParameter:  $paramsStr
+                )
+            """, [resourceName: getResourceName()])
+
+        then: 'wait until process finishes'
+        waitUntil {
+            jobCompleted result
+        }
+
+        def logs = getJobLogs(result.jobId)
+        logger.debug("Process logs: " + logs)
+
+        assert jobStatus(result.jobId).outcome == expectedOutcome
+
+        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
+            assert jmsQueueExists(jmsModuleName, jmsQueueName)
+        }
+
+        cleanup:
+        deleteJMSQueue(jmsModuleName, jmsQueueName)
+
+        where: 'The following params will be: '
+        jmsQueueName      | updateAction                    | target          | additionalOptions             | expectedOutcome          | expectedJobDetailedResult
+
+        // Create
+        jmsQueues.default | updateActions.empty             | targets.default | additionalOptionsIs.empty     | expectedOutcomes.success | "Created Queue $jmsQueueName"
+
+        // With additional options
+        jmsQueues.default | updateActions.empty             | targets.default | additionalOptionsIs.correct   | expectedOutcomes.success | "Created Queue $jmsQueueName"
+
+        // With incorrect additional options
+        jmsQueues.default | updateActions.empty             | targets.default | additionalOptionsIs.incorrect | expectedOutcomes.error   | 'Options: incorrect Additional Options'
+
+        // Update options
+        jmsQueues.updated | updateActions.do_nothing        | targets.update  | additionalOptionsIs.empty     | expectedOutcomes.success | "No action is required"
+        jmsQueues.updated | updateActions.selective_update  | targets.update  | additionalOptionsIs.empty     | expectedOutcomes.success | "Doing selective update"
+        jmsQueues.updated | updateActions.remove_and_create | targets.update  | additionalOptionsIs.empty     | expectedOutcomes.success | "Removed JMS Queue $jmsQueueName from the module " // $jmsModuleName"
+    }
+
+
 
     def jmsQueueExists(def moduleName, def name) {
         def code = """

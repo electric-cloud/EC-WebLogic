@@ -102,6 +102,11 @@ class DeleteJMSQueueSuite extends WebLogicHelper {
                 ecp_weblogic_jms_queue_name : '',
             ]
         ]
+
+        dslFile("dsl/Application/DeleteJMSQueue.dsl", [
+            projectName    : projectName,
+            resourceName   : getResourceName()
+        ])
     }
 
     /**
@@ -117,6 +122,7 @@ class DeleteJMSQueueSuite extends WebLogicHelper {
      */
 
     @Unroll
+
     def "Delete JMS Topic. (Topic : #jmsQueueName, Module : #jmsModuleName) - procedure"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
@@ -155,6 +161,57 @@ class DeleteJMSQueueSuite extends WebLogicHelper {
         if (expectedSummaryMessage) {
             assert upperStepSummary.contains(expectedSummaryMessage)
         }
+        where: 'The following params will be: '
+        jmsQueueName              | jmsModuleName              | expectedOutcome          | expectedJobDetailedResult
+
+        // delete JMS Module
+        jmsQueueNames.default     | jmsModuleNames.default     | expectedOutcomes.success | "Removed JMS Queue $jmsQueueName from the module $jmsModuleName"
+
+        // delete unexisting JMS queue
+        jmsQueueNames.nonexisting | jmsModuleNames.default     | expectedOutcomes.error   | "JMS Queue $jmsQueueName does not exist"
+
+        // delete non-existing jms queue from non-existing jms module
+        jmsQueueNames.nonexisting | jmsModuleNames.nonexisting | expectedOutcomes.error   | "JMS Queue $jmsQueueName does not exist"
+    }
+
+    @Unroll
+    def "Delete JMS Topic. (Topic : #jmsQueueName, Module : #jmsModuleName) - application"() {
+        setup: 'Define the parameters for Procedure running'
+        def paramsStr = stringifyArray([
+            ecp_weblogic_jms_module_name: jmsModuleName,
+            ecp_weblogic_jms_queue_name : jmsQueueName,
+        ])
+
+        // Create JMS Module to delete unless it should not exist
+        if (jmsQueueName != jmsQueueNames.nonexisting) {
+            createJMSQueue(jmsModuleName, jmsQueueName)
+        }
+        when: 'process runs'
+        def result = dsl("""
+                runProcess(
+                    projectName    : "$HELPER_PROJECT",
+                    applicationName: "$TEST_APPLICATION",
+                    environmentName: '$ENVIRONMENT_NAME',
+                    processName    : '$procedureName',
+                    actualParameter:  $paramsStr
+                )
+            """, [resourceName: getResourceName()])
+
+        then: 'wait until process finishes'
+        waitUntil {
+            jobCompleted result
+        }
+
+        def logs = getJobLogs(result.jobId)
+        logger.debug("Process logs: " + logs)
+
+        assert jobStatus(result.jobId).outcome == expectedOutcome
+
+
+        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
+            assert !checkJMSQueueExists(jmsModuleName, jmsQueueName)
+        }
+
         where: 'The following params will be: '
         jmsQueueName              | jmsModuleName              | expectedOutcome          | expectedJobDetailedResult
 
