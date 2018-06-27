@@ -285,7 +285,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
     }
 
     @Unroll
-    def "#caseId. CreateOrUpdateConnectionFactory - update_action : '#updateAction', jms_server_list: #jmsServerList, wls_instance_list: #wlstInstanceList - procedure"() {
+    def "#caseId. CreateOrUpdateConnectionFactory - update_action : '#updateAction' - procedure"() {
         setup:
         createJMSModule(jmsModuleName)
 
@@ -513,10 +513,11 @@ subdeployment = '$subdeployment'
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 bean = getMBean('/JMSSystemResources/' + module + '/SubDeployments/' + subdeployment)
 if bean == None:
-    raise Exception("Subdeployment %s does not exist" % subdeployment)
-targets = bean.getTargets()
-for t in targets:
-    print 'Target: ' + str(t.objectName)
+    print("Subdeployment %s does not exist" % subdeployment)
+else:
+    targets = bean.getTargets()
+    for t in targets:
+        print 'Target: ' + str(t.objectName)
 """
         def result = runWLST(code, "GetSubdeploymentTargets_${module}_${subdeployment}")
         assert result.outcome == 'success'
