@@ -244,6 +244,48 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
     }
 
     @Unroll
+    def '#caseId. Create with WLS target #wlstInstanceList, JMS target #jmsServerList - procedure'() {
+        setup:
+        def subdeploymentName = 'Subdeployment for CF'
+        def runParams = [
+            cf_name            : connectionFactories.updated,
+            jndi_name          : jndiNames.recreateNew,
+            jms_module_name    : jmsModuleName,
+            cf_sharing_policy  : sharingPolicies.exclusive,
+            cf_client_id_policy: clientPolicies.restricted,
+            update_action      : 'do_nothing',
+            subdeployment_name : subdeploymentName,
+
+            jms_server_list    : jmsServerList,
+            wls_instance_list  : wlstInstanceList
+        ]
+
+        when:
+        def result = runTestedProcedure(projectName, procedureName, runParams, getResourceName())
+
+        then:
+        logger.debug(result.logs)
+        assert result.outcome == 'success'
+
+        // def resultTargets = getSubdeploymentTargets(jmsModuleName, subdeploymentName)
+        // logger.debug(resultTargets.logs)
+        // assert resultTargets.logs.contains(newTarget)
+
+        cleanup:
+        deleteConnectionFactory(jmsModuleName, connectionFactories.updated)
+        deleteSubDeployment(jmsModuleName, subdeploymentName)
+
+        where:
+        caseId    | jmsServerList                               | wlstInstanceList
+        'C325028' | "${jmsServers.first}"                       | ""
+        'C325029' | "${jmsServers.second}"                      | 'AdminServer'
+        'C325030' | "${jmsServers.first}"                       | 'AdminServer'
+        'C325031' | ''                                          | 'AdminServer'
+        'C325032' | "${jmsServers.first}, ${jmsServers.second}" | 'AdminServer'
+    }
+
+
+    @Unroll
     def "#caseId. CreateOrUpdateConnectionFactory - update_action : '#updateAction', jms_server_list: #jmsServerList, wls_instance_list: #wlstInstanceList - procedure"() {
         setup:
         createJMSModule(jmsModuleName)
@@ -297,47 +339,6 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         'C325033' | 'remove_and_create' | expectedOutcomes.success
         'C325034' | 'selective_update'  | expectedOutcomes.success
         'C325035' | 'do_nothing'        | expectedOutcomes.success
-    }
-
-    @Unroll
-    def '#caseId. Create with WLS target #wlstInstanceList, JMS target #jmsServerList - application'() {
-        setup:
-        def subdeploymentName = 'Subdeployment for CF'
-        def runParams = [
-            cf_name            : connectionFactories.updated,
-            jndi_name          : jndiNames.recreateNew,
-            jms_module_name    : jmsModuleName,
-            cf_sharing_policy  : sharingPolicies.exclusive,
-            cf_client_id_policy: clientPolicies.restricted,
-            update_action      : 'do_nothing',
-            subdeployment_name : subdeploymentName,
-
-            jms_server_list    : jmsServerList,
-            wls_instance_list  : wlstInstanceList
-        ]
-
-        when:
-        def result = runTestedProcedure(projectName, procedureName, runParams, getResourceName())
-
-        then:
-        logger.debug(result.logs)
-        assert result.outcome == 'success'
-
-        // def resultTargets = getSubdeploymentTargets(jmsModuleName, subdeploymentName)
-        // logger.debug(resultTargets.logs)
-        // assert resultTargets.logs.contains(newTarget)
-
-        cleanup:
-        deleteConnectionFactory(jmsModuleName, connectionFactories.updated)
-        deleteSubDeployment(jmsModuleName, subdeploymentName)
-
-        where:
-        caseId    | jmsServerList                               | wlstInstanceList
-        'C325028' | "${jmsServers.first}"                       | ""
-        'C325029' | "${jmsServers.second}"                      | 'AdminServer'
-        'C325030' | "${jmsServers.first}"                       | 'AdminServer'
-        'C325031' | ''                                          | 'AdminServer'
-        'C325032' | "${jmsServers.first}, ${jmsServers.second}" | 'AdminServer'
     }
 
     @Unroll
@@ -405,10 +406,9 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         where:
         updateAction        | expectedOutcome
         'remove_and_create' | expectedOutcomes.success
-//        'selective_update'  | expectedOutcomes.success
-//        'do_nothing'        | expectedOutcomes.success
+        'selective_update'  | expectedOutcomes.success
+        'do_nothing'        | expectedOutcomes.success
     }
-
 
     def connectionFactoryExists(def moduleName, def name) {
         def code = """
