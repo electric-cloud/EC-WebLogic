@@ -54,12 +54,6 @@ maxMessagesPerSession = readInt(maxMessagesPerSession, 0)
 xaEnabled = r'''
 [% cf_xa_enabled %]
 '''.strip()
-xaEnabled = readBool(xaEnabled)
-
-attachJMSXUserId = r'''
-[% cf_attach_jmsx_userid %]
-'''.strip()
-attachJMSXUserId = readBool(attachJMSXUserId)
 
 jmsModuleName = r'''
 [% jms_module_name %]
