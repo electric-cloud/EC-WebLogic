@@ -94,6 +94,8 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
     /**
      * Test Parameters: for Where section
      */
+    @Shared
+    def caseId
 
     // Procedure params
     def configname
@@ -131,7 +133,12 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
 
         discardChanges()
         deleteProject(projectName)
+
         createJMSModule(jmsModuleName)
+        createJMSServer(jmsServers.first)
+        createJMSServer(jmsServers.second)
+        deleteConnectionFactory(jmsModuleName, connectionFactories.updated)
+
 
         dslFile "dsl/procedures.dsl", [
             projectName  : projectName,
@@ -172,12 +179,12 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
      */
 
     @Unroll
-    def "Create or Update Connection Factory. additional options : '#additionalOptions' - procedure"() {
+    def "#caseId. CreateOrUpdateConnectionFactory - create with additional options : '#additionalOptions', cfXaEnabled : '#cfXaEnabled' - procedure"() {
         setup: 'Define the parameters for Procedure running'
 
         cfSharingPolicy = sharingPolicies.exclusive
         cfClientIdPolicy = clientPolicies.restricted
-        jndiName = jndiNames.correct
+//        jndiName = jndiNames.correct
 
         def runParams = [
             cf_name                    : connectionFactoryName,
@@ -185,7 +192,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
             cf_sharing_policy          : cfSharingPolicy,
             cf_client_id_policy        : cfClientIdPolicy,
             jms_module_name            : jmsModuleName,
-            wls_instance_list          : targets.default,
+            wls_instance_list          : '',
             cf_max_messages_per_session: cfMaxMessagesPerSession,
             cf_xa_enabled              : cfXaEnabled,
             subdeployment_name         : subdeploymentName,
@@ -228,17 +235,60 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         cleanup:
         deleteConnectionFactory(jmsModuleName, connectionFactoryName)
         where: 'The following params will be: '
-        connectionFactoryName       | cfXaEnabled | additionalOptions                   | expectedOutcome          | expectedJobDetailedResult
-        connectionFactories.correct | ''          | ''                                  | expectedOutcomes.success | "Created Connection Factory $connectionFactoryName"
+        caseId  | connectionFactoryName       | cfXaEnabled | additionalOptions                   | expectedOutcome          | expectedJobDetailedResult
+        'C324901' | connectionFactories.correct | ''          | ''                                  | expectedOutcomes.success | "Created Connection Factory $connectionFactoryName"
+        'C325027' | connectionFactories.correct | '0'         | ''                                  | expectedOutcomes.success | "Created Connection Factory $connectionFactoryName"
 
         // with additional options
-        connectionFactories.correct | '1'         | additionalOptionsIs.defaultPriority | expectedOutcomes.success | "Created Connection Factory $connectionFactoryName"
+        'C325026' | connectionFactories.correct | '1'         | additionalOptionsIs.defaultPriority | expectedOutcomes.success | "Created Connection Factory $connectionFactoryName"
     }
 
     @Unroll
-    def "CreateOrUpdateConnectionFactory - update_action : '#updateAction' - procedure"() {
+    def '#caseId. CreateOrUpdateConnectionFactory - create with WLS target #wlstInstanceList, JMS target #jmsServerList - procedure'() {
+        setup:
+        def subdeploymentName = 'Subdeployment for CF'
+        def runParams = [
+            cf_name            : connectionFactories.updated,
+            jndi_name          : jndiNames.recreateNew,
+            jms_module_name    : jmsModuleName,
+            cf_sharing_policy  : sharingPolicies.exclusive,
+            cf_client_id_policy: clientPolicies.restricted,
+            update_action      : 'do_nothing',
+            subdeployment_name : subdeploymentName,
+
+            jms_server_list    : jmsServerList,
+            wls_instance_list  : wlstInstanceList
+        ]
+
+        when:
+        def result = runTestedProcedure(projectName, procedureName, runParams, getResourceName())
+
+        then:
+        logger.debug(result.logs)
+        assert result.outcome == 'success'
+
+        // def resultTargets = getSubdeploymentTargets(jmsModuleName, subdeploymentName)
+        // logger.debug(resultTargets.logs)
+        // assert resultTargets.logs.contains(newTarget)
+
+        cleanup:
+        deleteConnectionFactory(jmsModuleName, connectionFactories.updated)
+        deleteSubDeployment(jmsModuleName, subdeploymentName)
+
+        where:
+        caseId    | jmsServerList                               | wlstInstanceList
+        'C325028' | "${jmsServers.first}"                       | ""
+        'C325029' | "${jmsServers.second}"                      | 'AdminServer'
+        'C325030' | "${jmsServers.first}"                       | 'AdminServer'
+        'C325031' | ''                                          | 'AdminServer'
+        'C325032' | "${jmsServers.first}, ${jmsServers.second}" | 'AdminServer'
+    }
+
+    @Unroll
+    def "#caseId. CreateOrUpdateConnectionFactory - update_action : '#updateAction' - procedure"() {
         setup:
         createJMSModule(jmsModuleName)
+
         def subdeploymentName = 'sub1'
         def jmsServerName = 'jmsServer1'
 
@@ -273,9 +323,12 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         logger.debug(resultSecond.logs)
         assert resultSecond.outcome == expectedOutcome
 
-        if (updateAction != 'do_nothing') {
-            def resultTargets = getSubdeploymentTargets(jmsModuleName, subdeploymentName)
-            logger.debug(resultTargets.logs)
+        def resultTargets = getSubdeploymentTargets(jmsModuleName, subdeploymentName)
+        logger.debug(resultTargets.logs)
+        if (updateAction == 'do_nothing') {
+            assert !resultTargets.logs.contains(jmsServerName)
+        }
+        else {
             assert resultTargets.logs.contains(jmsServerName)
         }
 
@@ -284,14 +337,14 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         deleteSubDeployment(jmsModuleName, subdeploymentName)
 
         where:
-        updateAction        | expectedOutcome
-        'remove_and_create' | expectedOutcomes.success
-        'selective_update'  | expectedOutcomes.success
-        'do_nothing'        | expectedOutcomes.success
+        caseId    | updateAction        | expectedOutcome
+        'C325033' | 'remove_and_create' | expectedOutcomes.success
+        'C325034' | 'selective_update'  | expectedOutcomes.success
+        'C325035' | 'do_nothing'        | expectedOutcomes.success
     }
 
     @Unroll
-    def "CreateOrUpdateConnectionFactory - update_action : '#updateAction' - application"() {
+    def "#caseId. CreateOrUpdateConnectionFactory - update_action : '#updateAction' - application"() {
         setup:
         createJMSModule(jmsModuleName)
         def subdeploymentName = 'sub1'
@@ -353,54 +406,10 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         deleteSubDeployment(jmsModuleName, subdeploymentName)
 
         where:
-        updateAction        | expectedOutcome
-        'remove_and_create' | expectedOutcomes.success
-//        'selective_update'  | expectedOutcomes.success
-//        'do_nothing'        | expectedOutcomes.success
-    }
-
-    @Unroll
-    def 'create with WLS target #wlstInstanceList, JMS target #jmsServerList - procedure'() {
-        setup:
-        def cfName = 'ConnectionFactoryWith Targets'
-        deleteConnectionFactory(jmsModuleName, cfName)
-        createJMSServer(jmsServers.first)
-        createJMSServer(jmsServers.second)
-        def subdeploymentName = cfName
-        when:
-        def runParamsSecond = [
-            cf_name            : connectionFactories.updated,
-            jndi_name          : jndiNames.recreateNew,
-            jms_module_name    : jmsModuleName,
-            cf_sharing_policy  : sharingPolicies.exclusive,
-            cf_client_id_policy: clientPolicies.restricted,
-            update_action      : 'do_nothing',
-            subdeployment_name : subdeploymentName,
-            jms_server_list    : jmsServerList,
-            wls_instance_list  : wlstInstanceList
-        ]
-
-        def resultSecond = runTestedProcedure(projectName, procedureName, runParamsSecond, getResourceName())
-
-        then:
-        logger.debug(resultSecond.logs)
-        assert resultSecond.outcome == 'success'
-
-        // def resultTargets = getSubdeploymentTargets(jmsModuleName, subdeploymentName)
-        // logger.debug(resultTargets.logs)
-        // assert resultTargets.logs.contains(newTarget)
-
-        cleanup:
-        deleteConnectionFactory(jmsModuleName, connectionFactories.updated)
-        deleteSubDeployment(jmsModuleName, subdeploymentName)
-
-        where:
-        jmsServerList                               | wlstInstanceList
-        "${jmsServers.first}"                       | ""
-        "${jmsServers.second}"                      | 'AdminServer'
-        "${jmsServers.first}"                       | 'AdminServer'
-        ''                                          | 'AdminServer'
-        "${jmsServers.first}, ${jmsServers.second}" | 'AdminServer'
+        caseId    | updateAction        | expectedOutcome
+        'C325036' | 'remove_and_create' | expectedOutcomes.success
+        'C325037' | 'selective_update'  | expectedOutcomes.success
+        'C325038' | 'do_nothing'        | expectedOutcomes.success
     }
 
     def connectionFactoryExists(def moduleName, def name) {
@@ -504,10 +513,11 @@ subdeployment = '$subdeployment'
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 bean = getMBean('/JMSSystemResources/' + module + '/SubDeployments/' + subdeployment)
 if bean == None:
-    raise Exception("Subdeployment %s does not exist" % subdeployment)
-targets = bean.getTargets()
-for t in targets:
-    print 'Target: ' + str(t.objectName)
+    print("Subdeployment %s does not exist" % subdeployment)
+else:
+    targets = bean.getTargets()
+    for t in targets:
+        print 'Target: ' + str(t.objectName)
 """
         def result = runWLST(code, "GetSubdeploymentTargets_${module}_${subdeployment}")
         assert result.outcome == 'success'

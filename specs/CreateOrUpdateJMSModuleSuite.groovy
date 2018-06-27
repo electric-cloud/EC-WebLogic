@@ -41,21 +41,6 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
         incorrect: 'incorrect config Name',
     ]
 
-    @Shared
-    def connectionFactories = [
-        correct    : 'SpecConnectionFactory',
-        updated    : 'SpecUpdatedCF',
-        nonexisting: 'NoSuchCF'
-    ]
-
-    @Shared
-    def jndiNames = [
-        empty      : '',
-        correct    : 'TestJNDIName',
-        recreateOld: 'OldJNDIName',
-        recreateNew: 'NewJNDIName',
-    ]
-
     /**
      * Verification Values: Assert values
      */
@@ -112,6 +97,8 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
     /**
      * Test Parameters: for Where section
      */
+    @Shared
+    def caseId
 
     // Required
     @Shared
@@ -168,8 +155,7 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
      */
 
     @Unroll
-
-    def "Create and Update JMS Module. ( JMS Module Name: #jmsModuleName, target: #target, update action: #updateAction ) - procedure"() {
+    def "#caseId. Create and Update JMS Module. ( JMS Module Name: #jmsModuleName, target: #target, update action: #updateAction ) - procedure"() {
         setup: 'Define the parameters for Procedure running'
 
         def runParams = [
@@ -219,21 +205,19 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        configname          | jmsModuleName                                | updateAction                    | target          | expectedOutcome          | expectedSummaryMessage                     | expectedJobDetailedResult
+        caseId    | jmsModuleName                                | updateAction                    | target          | expectedOutcome          | expectedSummaryMessage                     | expectedJobDetailedResult
         // Create
-        configNames.correct | jmsModules.default                           | updateActions.empty             | targets.default | expectedOutcomes.success | "Created JMS System Module $jmsModuleName" | ''
+        'C325042' | jmsModules.default                           | updateActions.empty             | targets.default | expectedOutcomes.success | "Created JMS System Module $jmsModuleName" | ''
 
         // Update
-        configNames.correct | jmsModules.default + randomize(updateAction) | updateActions.do_nothing        | targets.update  | expectedOutcomes.success | ''                                         | "JMS System Module $jmsModuleName exists, no further action is required"
-        configNames.correct | jmsModules.default + randomize(updateAction) | updateActions.selective_update  | targets.update  | expectedOutcomes.success | ''                                         | "Updated JMS System Module"
-        configNames.correct | jmsModules.default + randomize(updateAction) | updateActions.remove_and_create | targets.update  | expectedOutcomes.success | ''                                         | "Recreated JMS System Module"
+        'C325043' | jmsModules.default + randomize(updateAction) | updateActions.do_nothing        | targets.update  | expectedOutcomes.success | ''                                         | "JMS System Module $jmsModuleName exists, no further action is required"
+        'C325045' | jmsModules.default + randomize(updateAction) | updateActions.selective_update  | targets.update  | expectedOutcomes.success | ''                                         | "Updated JMS System Module"
+        'C325044' | jmsModules.default + randomize(updateAction) | updateActions.remove_and_create | targets.update  | expectedOutcomes.success | ''                                         | "Recreated JMS System Module"
     }
 
     @Unroll
-
-    def "Update JMS Module Targets. ( Old targets: #oldTargets, new targets: #newTargets, update action: #updateAction) - procedure"() {
+    def "#caseId. Update JMS Module Targets. ( Old targets: #oldTargets, new targets: #newTargets, update action: #updateAction) - procedure"() {
         setup: 'Define the parameters for Procedure running'
-//        def updateAction = 'selective_update'
         def jmsModuleName = randomize('TargetList')
         def expectedOutcome = expectedOutcomes.success
         def runParams = [
@@ -242,7 +226,7 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
             ecp_weblogic_target_list    : newTargets
         ]
         // Create targets and create JMS module with them
-        deleteJMSModule(jmsModuleName)
+//        deleteJMSModule(jmsModuleName)
         prepareTargets(oldTargets)
         prepareTargets(newTargets)
         createJMSModule(jmsModuleName, oldTargets)
@@ -280,17 +264,17 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
         deleteJMSModule(jmsModuleName)
 
         where: 'The following params will be: '
-        updateAction        | oldTargets      | newTargets
-        'selective_update'  | targets.default | targets.twoServers
-        'selective_update'  | targets.default | targets.cluster
-        'selective_update'  | targets.cluster | targets.twoServers
-        'selective_update'  | targets.nothing | targets.managedServer
-        'remove_and_create' | targets.cluster | targets.serverAndCluster
-        'remove_and_create' | targets.nothing | targets.cluster
+        caseId    | updateAction        | oldTargets      | newTargets
+        'C325046' | 'selective_update'  | targets.default | targets.twoServers
+        'C325047' | 'selective_update'  | targets.default | targets.cluster
+        'C325048' | 'selective_update'  | targets.cluster | targets.twoServers
+        'C325049' | 'selective_update'  | targets.nothing | targets.managedServer
+        'C325050' | 'remove_and_create' | targets.cluster | targets.serverAndCluster
+        'C325051' | 'remove_and_create' | targets.nothing | targets.cluster
     }
 
     @Unroll
-    def "Create and Update JMS Module. ( JMS Module Name: #jmsModuleName, target: #target, update action: #updateAction ) - application"() {
+    def "#caseId. Create JMS Module. ( JMS Module Name: #jmsModuleName, target: #target, update action: #updateAction ) - application"() {
         setup: 'Define the parameters for Procedure running'
 
         def paramsStr = stringifyArray([
@@ -342,9 +326,8 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        configname          | jmsModuleName                                | updateAction                    | target          | expectedOutcome          | expectedSummaryMessage                     | expectedJobDetailedResult
-        // Create
-        configNames.correct | jmsModules.default                           | updateActions.empty             | targets.default | expectedOutcomes.success | "Created JMS System Module $jmsModuleName" | ''
+        caseId    | jmsModuleName      | updateAction        | target          | expectedOutcome          | expectedSummaryMessage                     | expectedJobDetailedResult
+        'C325052' | jmsModules.default | updateActions.empty | targets.default | expectedOutcomes.success | "Created JMS System Module $jmsModuleName" | ''
     }
 
     def jmsModuleExists(def moduleName) {
