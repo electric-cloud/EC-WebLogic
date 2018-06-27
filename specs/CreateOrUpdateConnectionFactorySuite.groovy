@@ -289,8 +289,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         setup:
         createJMSModule(jmsModuleName)
 
-        def subdeploymentName = 'sub1'
-        def jmsServerName = 'jmsServer1'
+        def subdeploymentName = randomize('sub1')
 
         def runParamsFirst = [
             cf_name            : connectionFactories.updated,
@@ -298,11 +297,14 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
             jms_module_name    : jmsModuleName,
             cf_sharing_policy  : sharingPolicies.exclusive,
             cf_client_id_policy: clientPolicies.restricted,
+            subdeployment_name : '',
+            jms_server_list    : ''
         ]
 
         def resultFirst = runTestedProcedure(projectName, procedureName, runParamsFirst, getResourceName())
-
         assert resultFirst.outcome == 'success'
+
+        def jmsServerName = randomize('jmsServer1')
         createJMSServer(jmsServerName)
 
         when:
