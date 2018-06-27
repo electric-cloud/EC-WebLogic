@@ -499,15 +499,8 @@ def getJMSResource(name):
         print_debug("Got JMS Bean %s" % mbean)
         return mbean.getJMSResource()
 
-def readBool(value):
-    value = value.strip()
-    if value:
-        return True
-    else:
-        return False
-
 def boolValue(value):
-    if value:
+    if value and (value == '1' or value == 'true'):
         return 'true'
     else:
         return 'false'
