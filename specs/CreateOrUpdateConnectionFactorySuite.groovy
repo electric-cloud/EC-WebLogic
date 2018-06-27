@@ -179,7 +179,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
      */
 
     @Unroll
-    def "#caseId. Create or Update Connection Factory. additional options : '#additionalOptions', cfXaEnabled : '#cfXaEnabled' - procedure"() {
+    def "#caseId. CreateOrUpdateConnectionFactory - create with additional options : '#additionalOptions', cfXaEnabled : '#cfXaEnabled' - procedure"() {
         setup: 'Define the parameters for Procedure running'
 
         cfSharingPolicy = sharingPolicies.exclusive
@@ -244,7 +244,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
     }
 
     @Unroll
-    def '#caseId. Create with WLS target #wlstInstanceList, JMS target #jmsServerList - procedure'() {
+    def '#caseId. CreateOrUpdateConnectionFactory - create with WLS target #wlstInstanceList, JMS target #jmsServerList - procedure'() {
         setup:
         def subdeploymentName = 'Subdeployment for CF'
         def runParams = [
@@ -283,7 +283,6 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         'C325031' | ''                                          | 'AdminServer'
         'C325032' | "${jmsServers.first}, ${jmsServers.second}" | 'AdminServer'
     }
-
 
     @Unroll
     def "#caseId. CreateOrUpdateConnectionFactory - update_action : '#updateAction', jms_server_list: #jmsServerList, wls_instance_list: #wlstInstanceList - procedure"() {
@@ -324,9 +323,12 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         logger.debug(resultSecond.logs)
         assert resultSecond.outcome == expectedOutcome
 
-        if (updateAction != 'do_nothing') {
-            def resultTargets = getSubdeploymentTargets(jmsModuleName, subdeploymentName)
-            logger.debug(resultTargets.logs)
+        def resultTargets = getSubdeploymentTargets(jmsModuleName, subdeploymentName)
+        logger.debug(resultTargets.logs)
+        if (updateAction == 'do_nothing') {
+            assert !resultTargets.logs.contains(jmsServerName)
+        }
+        else {
             assert resultTargets.logs.contains(jmsServerName)
         }
 
@@ -342,7 +344,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
     }
 
     @Unroll
-    def "CreateOrUpdateConnectionFactory - update_action : '#updateAction' - application"() {
+    def "#caseId. CreateOrUpdateConnectionFactory - update_action : '#updateAction' - application"() {
         setup:
         createJMSModule(jmsModuleName)
         def subdeploymentName = 'sub1'
@@ -404,10 +406,10 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         deleteSubDeployment(jmsModuleName, subdeploymentName)
 
         where:
-        updateAction        | expectedOutcome
-        'remove_and_create' | expectedOutcomes.success
-        'selective_update'  | expectedOutcomes.success
-        'do_nothing'        | expectedOutcomes.success
+        caseId    | updateAction        | expectedOutcome
+        'C325036' | 'remove_and_create' | expectedOutcomes.success
+        'C325037' | 'selective_update'  | expectedOutcomes.success
+        'C325038' | 'do_nothing'        | expectedOutcomes.success
     }
 
     def connectionFactoryExists(def moduleName, def name) {
