@@ -82,7 +82,7 @@ successMessage = ''
 # Subdeployment
 subdeployment = None
 if not isEmpty(subdeploymentName):
-    require(jmsServerName, "JMS Server name is required for Targeting")
+    required(jmsServerName, "JMS Server name is required for Targeting")
     try:
         startChanges()
         jmsTargets = []

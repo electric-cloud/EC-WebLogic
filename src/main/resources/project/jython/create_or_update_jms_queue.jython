@@ -82,7 +82,7 @@ if jmsQueue != None and updateAction == DO_NOTHING:
 # Subdeloyment
 subdeployment = None
 if not isEmpty(subdeploymentName) and (jmsQueue != None or updateAction != DO_NOTHING):
-    require(jmsServerName, "JMS Server name is required for Targeting")
+    required(jmsServerName, "JMS Server name is required for Targeting")
     try:
         startChanges()
         jmsTargets = []
