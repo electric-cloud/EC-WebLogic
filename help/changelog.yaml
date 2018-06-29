@@ -1,19 +1,19 @@
 3.3.0:
   - |
-    Created Messaging procedures:
+    Added support for JMS Resource Management by adding the following procedures:
     <ul>
-      <li>Create Or Update JMS Server</li>
-      <li>Delete JMS Server</li>
-      <li>Create Or Update JMS Module</li>
-      <li>Delete JMS Module</li>
-      <li>Create Or Update Connection Factory</li>
-      <li>Delete Connection Factory</li>
-      <li>Create Or Update JMS Queue</li>
-      <li>Delete JMS Queue</li>
-      <li>Create Or Update JMS Topic</li>
-      <li>Delete JMS Topic</li>
-      <li>Create Or Update JMS Module Subdeployment</li>
-      <li>Delete JMS Module Subdeployment</li>
+      <li>CreateOrUpdateJMSServer</li>
+      <li>DeleteJMSServer</li>
+      <li>CreateOrUpdateJMSModule</li>
+      <li>DeleteJMS Module</li>
+      <li>CreateOrUpdateConnectionFactory</li>
+      <li>DeleteConnectionFactory</li>
+      <li>CreateOrUpdateJMSQueue</li>
+      <li>DeleteJMSQueue</li>
+      <li>CreateOrUpdateJMSTopic</li>
+      <li>DeleteJMSTopic</li>
+      <li>CreateOrUpdateJMSModuleSubdeployment</li>
+      <li>DeleteJMSModuleSubdeployment</li>
     </ul>
 3.2.4:
   - Configured the plugin to allow the ElectricFlow UI to render the plugin procedure parameters entirely using the configured form XMLs.
