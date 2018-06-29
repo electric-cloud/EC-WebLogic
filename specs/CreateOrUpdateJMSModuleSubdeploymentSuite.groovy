@@ -55,7 +55,7 @@ class CreateOrUpdateJMSModuleSubdeploymentSuite extends WebLogicHelper {
     def jmsSubDeploymentNames = [
         empty      : '',
         default    : 'JMSModuleSubdeployment',
-        with_spaces: 'JMS Topic Name with spaces',
+        with_spaces: 'Name with spaces',
     ]
 
     // Optional
@@ -98,6 +98,12 @@ class CreateOrUpdateJMSModuleSubdeploymentSuite extends WebLogicHelper {
     /**
      * Test Parameters: for Where section
      */
+    @Shared
+    def caseId
+    @Shared
+    def oldTargets
+    @Shared
+    def newTargets
 
     // Required
     @Shared
@@ -135,14 +141,14 @@ class CreateOrUpdateJMSModuleSubdeploymentSuite extends WebLogicHelper {
             params       : [
                 configname                            : CONFIG_NAME,
                 ecp_weblogic_jms_module_name          : '',
-                ecp_weblogic_update_action            : 'do_nothing',
+                ecp_weblogic_update_action            : '',
                 ecp_weblogic_subdeployment_target_list: '',
                 ecp_weblogic_subdeployment_name       : ''
             ]
         ]
 
         dslFile("dsl/Application/CreateOrUpdateJMSModuleSubdeployment.dsl", [
-            resourceName   : getResourceName()
+            resourceName: getResourceName()
         ])
     }
 
@@ -159,8 +165,7 @@ class CreateOrUpdateJMSModuleSubdeploymentSuite extends WebLogicHelper {
      */
 
     @Unroll
-
-    def "Create JMS Subdeployment. procedure with params (SubDeploymentName: #jmsSubdeploymentName, target: #target, update action: #updateAction) - procedure"() {
+    def "#caseId. Create JMS Subdeployment. (SubDeploymentName: #jmsSubdeploymentName, target: #target) - procedure"() {
         setup: 'Define the parameters for Procedure running'
 
         jmsModuleName = randomize(jmsModules.default)
@@ -188,11 +193,6 @@ class CreateOrUpdateJMSModuleSubdeploymentSuite extends WebLogicHelper {
             deleteSubDeployment(jmsModuleName, jmsSubdeploymentName)
         }
 
-        if (updateAction) {
-            createJMSServer(targets.default)
-            createSubDeployment(jmsModuleName, jmsSubdeploymentName, targets.default)
-        }
-
         when: 'Procedure runs: '
 
         def result = runTestedProcedure(projectName, procedureName, runParams, getResourceName())
@@ -206,10 +206,6 @@ class CreateOrUpdateJMSModuleSubdeploymentSuite extends WebLogicHelper {
         expect: 'Outcome and Upper Summary verification'
         assert result.outcome == expectedOutcome
 
-        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
-//            assert jmsModuleSubdeploymentExists(jmsModuleName)
-        }
-
         if (expectedJobDetailedResult) {
             assert debugLog.contains(expectedJobDetailedResult)
         }
@@ -220,21 +216,21 @@ class CreateOrUpdateJMSModuleSubdeploymentSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        updateAction        | jmsSubdeploymentName                     | target                   | expectedOutcome          | expectedSummaryMessage                    | expectedJobDetailedResult
+        caseId    | jmsSubdeploymentName                     | target                   | expectedOutcome          | expectedSummaryMessage                    | expectedJobDetailedResult
         // Create
-        updateActions.empty | jmsSubDeploymentNames.default            | targets.default          | expectedOutcomes.success | "Added 1 target(s), No targets to remove" | ''
-        updateActions.empty | randomize(jmsSubDeploymentNames.default) | targets.single           | expectedOutcomes.success | "Added 1 target(s), No targets to remove" | ''
-        updateActions.empty | randomize(jmsSubDeploymentNames.default) | targets.cluster          | expectedOutcomes.success | "Added 1 target(s), No targets to remove" | ''
-        updateActions.empty | randomize(jmsSubDeploymentNames.default) | targets.twoServers       | expectedOutcomes.success | "Added 2 target(s), No targets to remove" | ''
-        updateActions.empty | randomize(jmsSubDeploymentNames.default) | targets.serverAndCluster | expectedOutcomes.success | "Added 2 target(s), No targets to remove" | ''
-
-        // Empty name
-        updateActions.empty | randomize(jmsSubDeploymentNames.default) | targets.nothing          | expectedOutcomes.error   | "Target name is not provided"             | 'Failed to create or update JMS Module Subdeployment'
-        updateActions.empty | jmsSubDeploymentNames.empty              | targets.default          | expectedOutcomes.error   | 'No Subdeployment name is provided'       | ''
+        'C325053' | jmsSubDeploymentNames.default            | targets.default          | expectedOutcomes.success | "Added 1 target(s), No targets to remove" | ''
+        'C325054' | jmsSubDeploymentNames.with_spaces        | targets.default          | expectedOutcomes.success | "Added 1 target(s), No targets to remove" | ''
+        'C325055' | randomize(jmsSubDeploymentNames.default) | targets.single           | expectedOutcomes.success | "Added 1 target(s), No targets to remove" | ''
+        'C325056' | randomize(jmsSubDeploymentNames.default) | targets.cluster          | expectedOutcomes.success | "Added 1 target(s), No targets to remove" | ''
+        'C325057' | randomize(jmsSubDeploymentNames.default) | targets.twoServers       | expectedOutcomes.success | "Added 2 target(s), No targets to remove" | ''
+        'C325058' | randomize(jmsSubDeploymentNames.default) | targets.serverAndCluster | expectedOutcomes.success | "Added 2 target(s), No targets to remove" | ''
+        /// Negative create
+        'C325065' | randomize(jmsSubDeploymentNames.default) | targets.nothing          | expectedOutcomes.error   | "Target name is not provided"             | 'Failed to create or update JMS Module Subdeployment'
+        'C325066' | jmsSubDeploymentNames.empty              | targets.default          | expectedOutcomes.error   | 'No Subdeployment name is provided'       | ''
     }
 
     @Unroll
-    def "Create JMS Subdeployment. procedure with params (SubDeploymentName: #jmsSubdeploymentName, target: #target, update action: #updateAction) - application"() {
+    def "#caseId. Create JMS Subdeployment. (SubDeploymentName: #jmsSubdeploymentName, target: #target, update action: #updateAction) - application"() {
         setup: 'Define the parameters for Procedure running'
 
         jmsModuleName = randomize(jmsModules.default)
@@ -260,11 +256,6 @@ class CreateOrUpdateJMSModuleSubdeploymentSuite extends WebLogicHelper {
 
         if (jmsSubdeploymentName && jmsModuleName) {
             deleteSubDeployment(jmsModuleName, jmsSubdeploymentName)
-        }
-
-        if (updateAction) {
-            createJMSServer(targets.default)
-            createSubDeployment(jmsModuleName, jmsSubdeploymentName, targets.default)
         }
 
         when: 'process runs'
@@ -293,75 +284,81 @@ class CreateOrUpdateJMSModuleSubdeploymentSuite extends WebLogicHelper {
             assert logs.contains(expectedJobDetailedResult)
         }
 
-        where: 'The following params will be: '
-        updateAction        | jmsSubdeploymentName                     | target                   | expectedOutcome          | expectedSummaryMessage                    | expectedJobDetailedResult
+        where: '#caseId. The following params will be: '
+        caseId    | jmsSubdeploymentName                     | target                   | expectedOutcome          | expectedSummaryMessage                    | expectedJobDetailedResult
         // Create
-        updateActions.empty | jmsSubDeploymentNames.default            | targets.default          | expectedOutcomes.success | "Added 1 target(s), No targets to remove" | ''
-//        updateActions.empty | randomize(jmsSubDeploymentNames.default) | targets.single           | expectedOutcomes.success | "Added 1 target(s), No targets to remove" | ''
-//        updateActions.empty | randomize(jmsSubDeploymentNames.default) | targets.cluster          | expectedOutcomes.success | "Added 1 target(s), No targets to remove" | ''
-//        updateActions.empty | randomize(jmsSubDeploymentNames.default) | targets.twoServers       | expectedOutcomes.success | "Added 2 target(s), No targets to remove" | ''
-//        updateActions.empty | randomize(jmsSubDeploymentNames.default) | targets.serverAndCluster | expectedOutcomes.success | "Added 2 target(s), No targets to remove" | ''
+        'C325067' | jmsSubDeploymentNames.default            | targets.default          | expectedOutcomes.success | "Added 1 target(s), No targets to remove" | ''
+        'C325068' | jmsSubDeploymentNames.with_spaces        | targets.default          | expectedOutcomes.success | "Added 1 target(s), No targets to remove" | ''
+        'C325069' | randomize(jmsSubDeploymentNames.default) | targets.single           | expectedOutcomes.success | "Added 1 target(s), No targets to remove" | ''
+        'C325070' | randomize(jmsSubDeploymentNames.default) | targets.cluster          | expectedOutcomes.success | "Added 1 target(s), No targets to remove" | ''
+        'C325071' | randomize(jmsSubDeploymentNames.default) | targets.twoServers       | expectedOutcomes.success | "Added 2 target(s), No targets to remove" | ''
+        'C325072' | randomize(jmsSubDeploymentNames.default) | targets.serverAndCluster | expectedOutcomes.success | "Added 2 target(s), No targets to remove" | ''
 
-        // Empty name
-//        updateActions.empty | randomize(jmsSubDeploymentNames.default) | targets.nothing          | expectedOutcomes.error   | "Target name is not provided"             | 'Failed to create or update JMS Module Subdeployment'
-//        updateActions.empty | jmsSubDeploymentNames.empty              | targets.default          | expectedOutcomes.error   | 'No Subdeployment name is provided'       | ''
+        // Negative
+        'C325073'        | randomize(jmsSubDeploymentNames.default) | targets.nothing          | expectedOutcomes.error   | "Target name is not provided"             | 'Failed to create or update JMS Module Subdeployment'
+        'C325074'        | jmsSubDeploymentNames.empty              | targets.default          | expectedOutcomes.error   | 'No Subdeployment name is provided'       | ''
     }
 
     @Unroll
-
-    def 'update #action jms subdeployment - procedure'() {
+    def '#caseId. Update #updateAction jms subdeployment - procedure'() {
         given:
+
         def serverName = 'TestSpecServer'
         def jmsModuleName = randomize('SpecModule')
         ensureManagedServer(serverName, '7999')
-        deleteJMSModule(jmsModuleName)
         createJMSModule(jmsModuleName, 'AdminServer, ' + serverName)
+
         def subdeploymentName = 'sub1'
+        def createResult = runProcedure("""
+        runProcedure(
+            projectName:   '$projectName',
+            procedureName: '$procedureName',
+            actualParameter: [
+                ecp_weblogic_jms_module_name:           '$jmsModuleName',
+                ecp_weblogic_subdeployment_target_list: 'AdminServer',
+                ecp_weblogic_subdeployment_name:        '$subdeploymentName'
+            ]
+        )
+        """, getResourceName())
+        assert createResult.outcome == 'success'
+
+        when:
         def result = runProcedure("""
         runProcedure(
             projectName: '$projectName',
             procedureName: '$procedureName',
             actualParameter: [
-                ecp_weblogic_jms_module_name: '$jmsModuleName',
-                ecp_weblogic_subdeployment_target_list: 'AdminServer',
-                ecp_weblogic_subdeployment_name: '$subdeploymentName'
-            ]
-        )
-        """, getResourceName())
-        assert result.outcome == 'success'
-        when:
-        result = runProcedure("""
-        runProcedure(
-            projectName: '$projectName',
-            procedureName: '$procedureName',
-            actualParameter: [
-                ecp_weblogic_jms_module_name: '$jmsModuleName',
+                ecp_weblogic_jms_module_name:           '$jmsModuleName',
                 ecp_weblogic_subdeployment_target_list: '$serverName',
-                ecp_weblogic_update_action: '$action',
-                ecp_weblogic_subdeployment_name: '$subdeploymentName'
+                ecp_weblogic_update_action:             '$updateAction',
+                ecp_weblogic_subdeployment_name:        '$subdeploymentName'
             ]
         )
         """, getResourceName())
+
         then:
         logger.debug(result.logs)
         assert result.outcome == 'success'
 
-        if (action == 'do_nothing') {
+        if (updateAction == 'do_nothing') {
             assert result.logs =~ /SubDeployment $subdeploymentName exists in the module $jmsModuleName, no further action is required/
-        } else if (action == 'selective_update') {
+        } else if (updateAction == 'selective_update') {
             assert result.logs =~ /Added 1 target\(s\), Removed 1 target\(s\)/
-        } else {
+        } else if (updateAction == 'remove_and_create') {
             assert result.logs =~ /Added 1 target\(s\)/
         }
         cleanup:
         deleteJMSModule(jmsModuleName)
+
         where:
-        action << ['do_nothing', 'selective_update', 'remove_and_create']
+        caseId    | updateAction
+        'C325075' | 'do_nothing'
+        'C325076' | 'selective_update'
+        'C325077' | 'remove_and_create'
     }
 
     @Unroll
-
-    def 'change the list of targets #oldTargets -> #newTargets'() {
+    def '#caseId. Change the list of targets #oldTargets -> #newTargets - procedure'() {
         given:
         def jmsModuleName = randomize('SpecJMSModule')
         def jmsModuleTargets = oldTargets + ',' + newTargets
@@ -373,18 +370,20 @@ class CreateOrUpdateJMSModuleSubdeploymentSuite extends WebLogicHelper {
                 ensureManagedServer(it, '7999')
             }
         }
-        deleteJMSModule(jmsModuleName)
+
         createJMSModule(jmsModuleName, jmsModuleTargets)
+
         def subdeploymentName = 'sub1'
+
         def result = runProcedure """
         runProcedure(
             projectName: '$projectName',
             procedureName: '$procedureName',
             actualParameter: [
-                ecp_weblogic_jms_module_name: '$jmsModuleName',
+                ecp_weblogic_jms_module_name:           '$jmsModuleName',
                 ecp_weblogic_subdeployment_target_list: '$oldTargets',
-                ecp_weblogic_update_action: 'selective_update',
-                ecp_weblogic_subdeployment_name: '$subdeploymentName'
+                ecp_weblogic_update_action:             'selective_update',
+                ecp_weblogic_subdeployment_name:        '$subdeploymentName'
             ]
         )
         """, getResourceName()
@@ -395,10 +394,10 @@ class CreateOrUpdateJMSModuleSubdeploymentSuite extends WebLogicHelper {
             projectName: '$projectName',
             procedureName: '$procedureName',
             actualParameter: [
-                ecp_weblogic_jms_module_name: '$jmsModuleName',
+                ecp_weblogic_jms_module_name:           '$jmsModuleName',
                 ecp_weblogic_subdeployment_target_list: '$newTargets',
-                ecp_weblogic_update_action: 'selective_update',
-                ecp_weblogic_subdeployment_name: '$subdeploymentName'
+                ecp_weblogic_update_action:             'selective_update',
+                ecp_weblogic_subdeployment_name:        '$subdeploymentName'
             ]
         )
         """, getResourceName()
@@ -406,14 +405,16 @@ class CreateOrUpdateJMSModuleSubdeploymentSuite extends WebLogicHelper {
         logger.debug(result.logs)
         assert result.outcome == 'success'
         // TODO check actual targets
+
         cleanup:
         deleteJMSModule(jmsModuleName)
+
         where:
-        oldTargets    | newTargets
-        'AdminServer' | 'Cluster1'
-        'AdminServer' | 'ManagedServer1'
-        'Cluster1'    | 'ManagedServer1, AdminServer'
-        'Cluster1'    | 'ManagedServer1, Cluster1'
+        caseId | oldTargets    | newTargets
+        'C325079'     | 'AdminServer' | 'Cluster1'
+        'C325081'     | 'AdminServer' | 'ManagedServer1'
+        'C325082'     | 'Cluster1'    | 'ManagedServer1, AdminServer'
+        'C325083'     | 'Cluster1'    | 'ManagedServer1, Cluster1'
     }
 
 
