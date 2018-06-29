@@ -80,17 +80,19 @@ if jmsTopic != None and updateAction == DO_NOTHING:
 
 successMessage = ''
 # Subdeployment
+removedTopic = False
 subdeployment = None
 if not isEmpty(subdeploymentName):
-    require(jmsServerName, "JMS Server name is required for Targeting")
+    required(jmsServerName, "JMS Server name is required for Targeting")
     try:
         startChanges()
         jmsTargets = []
         if jmsServerName:
             target = getJMSTargetBean(jmsServerName)
             jmsTargets.append(target)
-
         if updateAction == REMOVE_AND_CREATE:
+            removedTopic = True
+            deleteJMSTopic(jmsModuleName, topicName)
             deleteSubDeployment(jmsModuleName, subdeploymentName)
         subdeployment = createOrUpdateSubdeployment(jmsModuleName, subdeploymentName, jmsTargetList = jmsTargets, updateTargets = False)
     except Exception, e:
@@ -109,7 +111,10 @@ try:
         print_info("JMS Topic %s does not exist" % topicName)
         jmsTopic = jmsResource.createTopic(topicName)
         print_info("Created Topic %s" % topicName)
-        successMessage = 'Created JMS Topic %s' % topicName
+        if removedTopic:
+            successMessage = 'Recreated JMS Topic %s' % topicName
+        else:
+            successMessage = 'Created JMS Topic %s' % topicName
     else:
         print_info("Found JMS Topic %s in the module %s" % (topicName, jmsModuleName))
         if updateAction == DO_NOTHING:

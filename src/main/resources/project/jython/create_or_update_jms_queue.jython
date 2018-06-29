@@ -80,9 +80,10 @@ if jmsQueue != None and updateAction == DO_NOTHING:
     sys.exit(0)
 
 # Subdeloyment
+removedQueue = False
 subdeployment = None
-if not isEmpty(subdeploymentName) and (jmsQueue != None or updateAction != DO_NOTHING):
-    require(jmsServerName, "JMS Server name is required for Targeting")
+if not isEmpty(subdeploymentName):
+    required(jmsServerName, "JMS Server name is required for Targeting")
     try:
         startChanges()
         jmsTargets = []
@@ -90,6 +91,10 @@ if not isEmpty(subdeploymentName) and (jmsQueue != None or updateAction != DO_NO
             target = getJMSTargetBean(jmsServerName)
             jmsTargets.append(target)
         if updateAction == REMOVE_AND_CREATE:
+            if jmsQueue != None:
+                # Queue should be removed in order to remove subdeployment
+                deleteJMSQueue(jmsModuleName, queueName)
+                removedQueue = True
             deleteSubDeployment(jmsModuleName, subdeploymentName)
         subdeployment = createOrUpdateSubdeployment(jmsModuleName, subdeploymentName, jmsTargetList = jmsTargets, updateTargets = False)
     except Exception, e:
@@ -105,7 +110,10 @@ try:
         print_info("JMS Queue %s does not exist" % queueName)
         jmsQueue = jmsResource.createQueue(queueName)
         print_info("Created Queue %s" % queueName)
-        successMessage = 'Created JMS Queue %s' % queueName
+        if removedQueue:
+            successMessage = 'JMS Queue %s has been recreated' % queueName
+        else:
+            successMessage = 'Created JMS Queue %s' % queueName
     else:
         print_info("Found JMS Queue %s in the module %s" % (queueName, jmsModuleName))
         if updateAction == DO_NOTHING:
@@ -120,7 +128,7 @@ try:
             successMessage = 'JMS Queue %s has been recreated' % queueName
         else:
             update = True
-            successMessage = 'JMS Queue %s has been updated'
+            successMessage = 'JMS Queue %s has been updated' % queueName
             print_info("Doing selective update")
 
     cd(getJMSQueuePath(jmsModuleName, queueName))

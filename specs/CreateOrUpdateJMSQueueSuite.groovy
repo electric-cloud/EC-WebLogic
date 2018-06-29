@@ -44,8 +44,8 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
 
     @Shared
     def targets = [
-        default: 'AdminServer',
-        update : 'TestSpecServer'
+        default: 'JMSServer1',
+        update : 'JMSServer2'
     ]
     @Shared
     def updateActions = [
@@ -188,7 +188,6 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
             ecp_weblogic_target_jms_server : target,
         ]
 
-        ensureManagedServer(target, '7999')
 
         if (updateAction) {
             createJMSQueue(jmsModuleName, jmsQueueName)
@@ -258,8 +257,6 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
             ecp_weblogic_target_jms_server : target,
         ])
 
-        ensureManagedServer(target, '7999')
-
         if (updateAction) {
             createJMSQueue(jmsModuleName, jmsQueueName)
         }
@@ -311,6 +308,153 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
     }
 
 
+    @Unroll
+    def "Create JMS Queue With Subdeployment ( Queue name: #jmsQueueName target: #target, additional options: #additionalOptions, update action: #updateAction) - procedure"() {
+        setup: 'Define the parameters for Procedure running'
+
+        jmsModuleName = jmsModules.default
+        jndiName = 'TestJNDIName'
+        def subdeploymentName = randomize('JMSQueue')
+
+        def runParams = [
+            ecp_weblogic_jms_queue_name    : jmsQueueName,
+            ecp_weblogic_jms_module_name   : jmsModuleName,
+            ecp_weblogic_jndi_name         : jndiName,
+
+            ecp_weblogic_subdeployment_name: subdeploymentName,
+            ecp_weblogic_additional_options: additionalOptions,
+            ecp_weblogic_update_action     : updateAction,
+            ecp_weblogic_target_jms_server : target,
+        ]
+
+        createJMSServer(target)
+
+        if (updateAction) {
+            createJMSQueue(jmsModuleName, jmsQueueName)
+        }
+
+        when: 'Procedure runs: '
+
+        def result = runTestedProcedure(projectName, procedureName, runParams, getResourceName())
+
+        then: 'Wait until job run is completed: '
+
+        String debugLog = result.logs
+        println "Procedure log:\n$debugLog\n"
+
+        expect: 'Outcome and Upper Summary verification'
+        assert result.outcome == expectedOutcome
+
+        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
+            assert jmsQueueExists(jmsModuleName, jmsQueueName)
+        }
+
+        if (expectedJobDetailedResult) {
+            assert debugLog.contains(expectedJobDetailedResult)
+        }
+
+        assert debugLog.contains("Created Subdeployment $subdeploymentName")
+
+        if (expectedSummaryMessage) {
+            def upperStepSummary = getJobUpperStepSummary(result.jobId)
+            assert upperStepSummary == expectedSummaryMessage
+        }
+
+        cleanup:
+        deleteJMSQueue(jmsModuleName, jmsQueueName)
+        deleteSubDeployment(jmsModuleName, subdeploymentName)
+
+        where: 'The following params will be: '
+        jmsQueueName      | updateAction                    | target          | additionalOptions             | expectedOutcome          | expectedJobDetailedResult
+
+        // Create
+        jmsQueues.default | updateActions.empty             | targets.default | additionalOptionsIs.empty     | expectedOutcomes.success | "Created Queue $jmsQueueName"
+
+        // With additional options
+        jmsQueues.default | updateActions.empty             | targets.default | additionalOptionsIs.correct   | expectedOutcomes.success | "Created Queue $jmsQueueName"
+
+    }
+
+    @Unroll
+    def "Update JMS Queue With Subdeployment ( Queue name: #jmsQueueName oldTarget: #oldTarget, newTarget: #newTarget, additional options: #additionalOptions, update action: #updateAction) - procedure"() {
+        setup: 'Define the parameters for Procedure running'
+
+        jmsModuleName = jmsModules.default
+        jndiName = 'TestJNDIName'
+        def subdeploymentName = randomize('JMSQueue')
+
+        def firstRunParams = [
+            ecp_weblogic_jms_queue_name    : jmsQueueName,
+            ecp_weblogic_jms_module_name   : jmsModuleName,
+            ecp_weblogic_jndi_name         : jndiName,
+
+            ecp_weblogic_subdeployment_name: subdeploymentName,
+            ecp_weblogic_additional_options: '',
+            ecp_weblogic_update_action     : updateAction,
+            ecp_weblogic_target_jms_server : oldTarget,
+        ]
+
+        def secondRunParams = [
+            ecp_weblogic_jms_queue_name    : jmsQueueName,
+            ecp_weblogic_jms_module_name   : jmsModuleName,
+            ecp_weblogic_jndi_name         : jndiName,
+
+            ecp_weblogic_subdeployment_name: subdeploymentName,
+            ecp_weblogic_additional_options: '',
+            ecp_weblogic_update_action     : updateAction,
+            ecp_weblogic_target_jms_server : newTarget,
+        ]
+
+        createJMSServer(oldTarget)
+        createJMSServer(newTarget)
+
+        def result = runTestedProcedure(projectName, procedureName, firstRunParams, getResourceName())
+        assert result.outcome == 'success'
+
+        when: 'Procedure runs: '
+
+        result = runTestedProcedure(projectName, procedureName, secondRunParams, getResourceName())
+
+        then: 'Wait until job run is completed: '
+
+        String debugLog = result.logs
+        println "Procedure log:\n$debugLog\n"
+
+        expect: 'Outcome and Upper Summary verification'
+        assert result.outcome == expectedOutcome
+
+        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
+            assert jmsQueueExists(jmsModuleName, jmsQueueName)
+        }
+
+        if (expectedJobDetailedResult) {
+            assert debugLog.contains(expectedJobDetailedResult)
+        }
+
+        if (expectedSummaryMessage) {
+            def upperStepSummary = getJobUpperStepSummary(result.jobId)
+            assert upperStepSummary == expectedSummaryMessage
+        }
+
+        if (updateAction == updateActions.remove_and_create) {
+            assert debugLog.contains("Removed subdeployment $subdeploymentName")
+        }
+        else {
+            assert debugLog.contains("Subdeployment $subdeploymentName already exist, targets are NOT going to be updated")
+        }
+
+        cleanup:
+        deleteJMSQueue(jmsModuleName, jmsQueueName)
+        deleteSubDeployment(jmsModuleName, subdeploymentName)
+
+        where: 'The following params will be: '
+        jmsQueueName      | updateAction                    | oldTarget         | newTarget      | expectedOutcome          | expectedJobDetailedResult
+
+        jmsQueues.default | updateActions.selective_update  | targets.default   | targets.update | expectedOutcomes.success | "JMS Queue $jmsQueueName has been updated"
+
+        jmsQueues.default | updateActions.remove_and_create | targets.default   | targets.update | expectedOutcomes.success | "JMS Queue $jmsQueueName has been recreated"
+
+    }
 
     def jmsQueueExists(def moduleName, def name) {
         def code = """
