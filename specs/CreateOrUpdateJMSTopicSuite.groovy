@@ -192,7 +192,6 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
             ecp_weblogic_target_jms_server : target,
         ]
 
-        ensureManagedServer(target, '7999')
 
         if (jmsTopicName && jmsModuleName) {
             deleteJMSTopic(jmsModuleName, jmsTopicName)
@@ -258,8 +257,6 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
             ecp_weblogic_jndi_name         : jndiName,
             ecp_weblogic_target_jms_server : target,
         ])
-
-        ensureManagedServer(target, '7999')
 
         if (jmsTopicName && jmsModuleName) {
             deleteJMSTopic(jmsModuleName, jmsTopicName)

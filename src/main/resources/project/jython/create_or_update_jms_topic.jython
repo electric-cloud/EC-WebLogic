@@ -91,8 +91,9 @@ if not isEmpty(subdeploymentName):
             target = getJMSTargetBean(jmsServerName)
             jmsTargets.append(target)
         if updateAction == REMOVE_AND_CREATE:
-            removedTopic = True
-            deleteJMSTopic(jmsModuleName, topicName)
+            if jmsTopic != None:
+                removedTopic = True
+                deleteJMSTopic(jmsModuleName, topicName)
             deleteSubDeployment(jmsModuleName, subdeploymentName)
         subdeployment = createOrUpdateSubdeployment(jmsModuleName, subdeploymentName, jmsTargetList = jmsTargets, updateTargets = False)
     except Exception, e:

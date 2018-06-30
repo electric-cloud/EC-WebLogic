@@ -481,6 +481,8 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
         then:
         logger.debug(result.logs)
         assert result.outcome == 'success'
+        cleanup:
+        deleteJMSModule(moduleName)
         where:
         dslFileName        | procName
         'retargetJMSQueue' | 'Retarget JMS Queue with recreation'
