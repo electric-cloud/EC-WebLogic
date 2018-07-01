@@ -236,7 +236,7 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
         updateActions.empty             | jmsTopicNames.empty                             | expectedOutcomes.error   | "No JMS Topic name is provided"                                | ''
 
         // Update
-        updateActions.do_nothing        | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | "JMS Topic $jmsTopicName already exists, no further action is required" | ''
+        updateActions.do_nothing        | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | "JMS Topic $jmsTopicName exists, no further action is required" | ''
         updateActions.selective_update  | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | ''                                                              | "Updated JMS Topic"
         updateActions.remove_and_create | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | ''                                                              | "Recreated JMS Topic"
     }
@@ -306,7 +306,6 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
     }
 
     @Unroll
-
     def "create with additional options #additionalOptions - procedure"() {
         setup: 'removing old topic'
         def jmsTopicName = jmsTopicNames.default
@@ -392,7 +391,7 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
     }
 
     @Unroll
-    def "Update JMS Topic With Subdeployment ( Topic name: #jmsTopicName target: #target, additional options: #additionalOptions, update action: #updateAction) - procedure"() {
+    def "Update JMS Topic With Subdeployment ( Topic name: #jmsTopicName target: #target, update action: #updateAction) - procedure"() {
         setup: 'Define the parameters for Procedure running'
 
         jmsModuleName = jmsModules.default
