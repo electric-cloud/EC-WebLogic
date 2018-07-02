@@ -265,7 +265,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
 
         then:
         logger.debug(result.logs)
-        assert result.outcome == 'success'
+        assert result.outcome == expectedOutcome
 
         // def resultTargets = getSubdeploymentTargets(jmsModuleName, subdeploymentName)
         // logger.debug(resultTargets.logs)
@@ -276,12 +276,13 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         deleteSubDeployment(jmsModuleName, subdeploymentName)
 
         where:
-        caseId    | jmsServerList                               | wlstInstanceList
-        'C325028' | "${jmsServers.first}"                       | ""
-        'C325029' | "${jmsServers.second}"                      | 'AdminServer'
-        'C325030' | "${jmsServers.first}"                       | 'AdminServer'
-        'C325031' | ''                                          | 'AdminServer'
-        'C325032' | "${jmsServers.first}, ${jmsServers.second}" | 'AdminServer'
+        caseId    | jmsServerList                               | wlstInstanceList  | expectedOutcome
+        'C325028' | "${jmsServers.first}"                       | ""                | expectedOutcomes.success
+        'C325029' | "${jmsServers.second}"                      | 'AdminServer'     | expectedOutcomes.success
+        'C325030' | "${jmsServers.first}"                       | 'AdminServer'     | expectedOutcomes.success
+        'C325031' | ''                                          | 'AdminServer'     | expectedOutcomes.success
+        'C325032' | "${jmsServers.first}, ${jmsServers.second}" | 'AdminServer'     | expectedOutcomes.success
+        ''        | ''                                          | ''                | expectedOutcomes.error
     }
 
     @Unroll
