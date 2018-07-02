@@ -1,5 +1,6 @@
 import spock.lang.*
 
+@Stepwise
 class CreateOrUpdateJMSServerSuite extends WebLogicHelper {
 
     /**
@@ -24,6 +25,8 @@ class CreateOrUpdateJMSServerSuite extends WebLogicHelper {
     /**
      * Parameters for Test Setup
      */
+    @Shared
+    def caseId
 
     /**
      * Procedure Values: test parameters Procedure values
@@ -91,6 +94,9 @@ class CreateOrUpdateJMSServerSuite extends WebLogicHelper {
         createConfig(CONFIG_NAME)
         discardChanges()
 
+        ensureManagedServer(targets.default, '7999')
+        ensureManagedServer(targets.update, '7999')
+
         dslFile "dsl/procedures.dsl", [
             projectName  : projectName,
             procedureName: procedureName,
@@ -107,7 +113,6 @@ class CreateOrUpdateJMSServerSuite extends WebLogicHelper {
         dslFile("dsl/Application/CreateOrUpdateJMSServer.dsl", [
             resourceName: getResourceName()
         ])
-
     }
 
     @Shared
@@ -121,7 +126,7 @@ class CreateOrUpdateJMSServerSuite extends WebLogicHelper {
     def expectedSummaryMessage
 
     @Unroll
-    def 'CreateOrUpdateJMSServer. JMS Server name: #jmsServerName, Update Action: #updateAction, Target: #target - procedure'() {
+    def '#caseId. CreateOrUpdate. JMS Server name: #jmsServerName, Update Action: #updateAction, Target: #target - procedure'() {
         setup: 'Define the parameters for Procedure running'
 
         def runParams = [
@@ -171,28 +176,28 @@ class CreateOrUpdateJMSServerSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        updateAction                    | jmsServerName                                    | target          | expectedOutcome          | expectedSummaryMessage
+        caseId    | updateAction                    | jmsServerName                                    | target          | expectedOutcome          | expectedSummaryMessage
         // Create
-        updateActions.empty             | jmsServerNames.default                           | targets.default | expectedOutcomes.success | "Created JMS Server $jmsServerName"
+        'C325084' | updateActions.empty             | jmsServerNames.default                           | targets.default | expectedOutcomes.success | "Created JMS Server $jmsServerName"
 
         // Empty Name
-        updateActions.empty             | jmsServerNames.empty                             | targets.default | expectedOutcomes.error   | "No JMS Server Name is provided"
+        'C325085' | updateActions.empty             | jmsServerNames.empty                             | targets.default | expectedOutcomes.error   | "No JMS Server Name is provided"
 
         // Update
-        updateActions.do_nothing        | jmsServerNames.default + randomize(updateAction) | targets.default | expectedOutcomes.success | "JMS Server $jmsServerName exists, no further action is required"
+        'C325086' | updateActions.do_nothing        | jmsServerNames.default + randomize(updateAction) | targets.update  | expectedOutcomes.success | "JMS Server $jmsServerName exists, no further action is required"
 
         // Selective without change of target
-        updateActions.selective_update  | jmsServerNames.default + randomize(updateAction) | targets.default | expectedOutcomes.success | "Targets are not changed, update is not needed"
+        'C325087' | updateActions.selective_update  | jmsServerNames.default + randomize(updateAction) | targets.default | expectedOutcomes.success | "Targets are not changed, update is not needed"
 
         // Selective with changed target
-        updateActions.selective_update  | jmsServerNames.default + randomize(updateAction) | targets.update  | expectedOutcomes.success | "Updated JMS Server $jmsServerName, Removed target Server \"${targets.default}\", Added target Server \"${targets.update}\""
+        'C325088' | updateActions.selective_update  | jmsServerNames.default + randomize(updateAction) | targets.update  | expectedOutcomes.success | "Updated JMS Server $jmsServerName, Removed target Server \"${targets.default}\", Added target Server \"${targets.update}\""
 
         // Recreate
-        updateActions.remove_and_create | jmsServerNames.default + randomize(updateAction) | targets.default | expectedOutcomes.success | "Recreated JMS Server $jmsServerName, Added target Server \"$target\""
+        'C325089' | updateActions.remove_and_create | jmsServerNames.default + randomize(updateAction) | targets.update  | expectedOutcomes.success | "Recreated JMS Server $jmsServerName, Added target Server \"$target\""
     }
 
     @Unroll
-    def 'CreateOrUpdateJMSServer. JMS Server name: #jmsServerName, Update Action: #updateAction, Target: #target - application'() {
+    def '#caseId. CreateOrUpdateJMSServer. JMS Server name: #jmsServerName, Update Action: #updateAction, Target: #target - application'() {
         setup: 'Define the parameters for Procedure running'
 
         def paramsStr = stringifyArray([
@@ -205,8 +210,6 @@ class CreateOrUpdateJMSServerSuite extends WebLogicHelper {
         if (jmsServerName){
             deleteJMSServer(jmsServerName)
         }
-
-        ensureManagedServer(target, '7999')
 
         if (updateAction != '') {
             createJMSServer(jmsServerName, targets.default)
@@ -233,6 +236,8 @@ class CreateOrUpdateJMSServerSuite extends WebLogicHelper {
 
         assert jobStatus(result.jobId).outcome == expectedOutcome
 
+        // TODO: find a way to check summary message
+
         if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
             assert jmsServerExists(jmsServerName)
         }
@@ -243,24 +248,24 @@ class CreateOrUpdateJMSServerSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        updateAction                    | jmsServerName                                    | target          | expectedOutcome          | expectedSummaryMessage
+        caseId | updateAction                    | jmsServerName                                    | target          | expectedOutcome          | expectedSummaryMessage
         // Create
-        updateActions.empty             | jmsServerNames.default                           | targets.default | expectedOutcomes.success | "Created JMS Server $jmsServerName"
+        'C325090' | updateActions.empty             | jmsServerNames.default                           | targets.default | expectedOutcomes.success | "Created JMS Server $jmsServerName"
 
         // Empty Name
-        updateActions.empty             | jmsServerNames.empty                             | targets.default | expectedOutcomes.error   | "No JMS Server Name is provided"
+        'C325091' | updateActions.empty             | jmsServerNames.empty                             | targets.default | expectedOutcomes.error   | "No JMS Server Name is provided"
 
         // Update
-        updateActions.do_nothing        | jmsServerNames.default + randomize(updateAction) | targets.default | expectedOutcomes.success | "JMS Server $jmsServerName exists, no further action is required"
+        'C325092' | updateActions.do_nothing        | jmsServerNames.default + randomize(updateAction) | targets.default | expectedOutcomes.success | "JMS Server $jmsServerName exists, no further action is required"
 
         // Selective without change of target
-        updateActions.selective_update  | jmsServerNames.default + randomize(updateAction) | targets.default | expectedOutcomes.success | "Targets are not changed, update is not needed"
+        'C325093' | updateActions.selective_update  | jmsServerNames.default + randomize(updateAction) | targets.default | expectedOutcomes.success | "Targets are not changed, update is not needed"
 
         // Selective with changed target
-        updateActions.selective_update  | jmsServerNames.default + randomize(updateAction) | targets.update  | expectedOutcomes.success | "Updated JMS Server $jmsServerName, Removed target Server \"${targets.default}\", Added target Server \"${targets.update}\""
+        'C325094' | updateActions.selective_update  | jmsServerNames.default + randomize(updateAction) | targets.update  | expectedOutcomes.success | "Updated JMS Server $jmsServerName, Removed target Server \"${targets.default}\", Added target Server \"${targets.update}\""
 
         // Recreate
-        updateActions.remove_and_create | jmsServerNames.default + randomize(updateAction) | targets.default | expectedOutcomes.success | "Recreated JMS Server $jmsServerName, Added target Server \"$target\""
+        'C325095' | updateActions.remove_and_create | jmsServerNames.default + randomize(updateAction) | targets.default | expectedOutcomes.success | "Recreated JMS Server $jmsServerName, Added target Server \"$target\""
     }
 
     def createJMSServer(name, target) {
