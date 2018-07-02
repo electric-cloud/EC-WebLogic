@@ -273,7 +273,9 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         // def resultTargets = getSubdeploymentTargets(jmsModuleName, subdeploymentName)
         // logger.debug(resultTargets.logs)
         // assert resultTargets.logs.contains(newTarget)
-        assert getDefaultTargeting(jmsModuleName, connectionFactories.updated) == '0'
+        if (expectedOutcome == expectedOutcomes.success) {
+            assert getDefaultTargeting(jmsModuleName, connectionFactories.updated) == '0'
+        }
 
         cleanup:
         deleteConnectionFactory(jmsModuleName, connectionFactories.updated)
