@@ -414,6 +414,41 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         'C325038' | 'do_nothing'        | expectedOutcomes.success
     }
 
+    @Unroll
+    def 'multi-step procedures #dslFileName #procName'() {
+        given:
+        def queueName = 'test queue'
+        def moduleName = dslFileName
+        deleteJMSModule(moduleName)
+        def cfName = 'TestCFRetarget'
+        def wlst = getWlstPath()
+        def args = [
+            projectName: projectName,
+            procedureName: procName,
+            configname: CONFIG_NAME,
+            cfName: cfName,
+            moduleName: moduleName,
+            resourceName: getResourceName(),
+            wlst: wlst
+        ]
+        dslFile "dsl/multisteps/${dslFileName}.dsl", args
+        when:
+        def result = runProcedure ("""
+            runProcedure(
+                projectName: '$projectName',
+                procedureName: '$procName'
+            )
+        """, getResourceName())
+        then:
+        logger.debug(result.logs)
+        assert result.logs =~ /Recreated Connection Factory TestCFRetarget, Subdeployment name does not require update/
+        where:
+        dslFileName                | procName
+        'retargetCf'               | 'Retarget ConnectionFactory with recreation'
+        // 'updateCFSubdeploymentName'| 'Update SD Name for ConnectionFactory (Selective Update)'
+    }
+
+
     def connectionFactoryExists(def moduleName, def name) {
         def code = """
 def getJMSSystemResourcePath(jms_module_name):

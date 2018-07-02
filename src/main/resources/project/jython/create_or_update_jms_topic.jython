@@ -71,7 +71,7 @@ if jmsResource == None:
     print_error('JMS Resource %s does not exist' % jmsModuleName)
     sys.exit(1)
 
-jmsTopic = getMBean(getJMSQueuePath(jmsModuleName, topicName))
+jmsTopic = getMBean(getJMSTopicPath(jmsModuleName, topicName))
 if jmsTopic != None and updateAction == DO_NOTHING:
     print_summary('JMS Topic %s exists, no further action is required' % topicName)
     print_info("No action is required")
@@ -80,6 +80,7 @@ if jmsTopic != None and updateAction == DO_NOTHING:
 
 successMessage = ''
 # Subdeployment
+removedTopic = False
 subdeployment = None
 if not isEmpty(subdeploymentName):
     required(jmsServerName, "JMS Server name is required for Targeting")
@@ -89,8 +90,10 @@ if not isEmpty(subdeploymentName):
         if jmsServerName:
             target = getJMSTargetBean(jmsServerName)
             jmsTargets.append(target)
-
         if updateAction == REMOVE_AND_CREATE:
+            if jmsTopic != None:
+                deleteJMSTopic(jmsModuleName, topicName)
+                removedTopic = True
             deleteSubDeployment(jmsModuleName, subdeploymentName)
         subdeployment = createOrUpdateSubdeployment(jmsModuleName, subdeploymentName, jmsTargetList = jmsTargets, updateTargets = False)
     except Exception, e:
@@ -109,7 +112,10 @@ try:
         print_info("JMS Topic %s does not exist" % topicName)
         jmsTopic = jmsResource.createTopic(topicName)
         print_info("Created Topic %s" % topicName)
-        successMessage = 'Created JMS Topic %s' % topicName
+        if removedTopic:
+            successMessage = 'Recreated JMS Topic %s' % topicName
+        else:
+            successMessage = 'Created JMS Topic %s' % topicName
     else:
         print_info("Found JMS Topic %s in the module %s" % (topicName, jmsModuleName))
         if updateAction == DO_NOTHING:

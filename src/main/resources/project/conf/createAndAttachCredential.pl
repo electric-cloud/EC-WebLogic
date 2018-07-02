@@ -68,6 +68,11 @@ $xpath = $ec->attachCredential($projName, $credName,
 $errors .= $ec->checkAllErrors($xpath);
 
 $xpath = $ec->attachCredential($projName, $credName,
+    {procedureName => 'CreateManagedServer',
+     stepName => 'CreateManagedServer'});
+$errors .= $ec->checkAllErrors($xpath);
+
+$xpath = $ec->attachCredential($projName, $credName,
     {procedureName => 'StopManagedServer',
      stepName => 'StopInstance'});
 $errors .= $ec->checkAllErrors($xpath);
@@ -76,7 +81,6 @@ $xpath = $ec->attachCredential($projName, $credName,
     {procedureName => 'StopAdminServer',
      stepName => 'StopAdminServer'});
 $errors .= $ec->checkAllErrors($xpath);
-
 
 $xpath = $ec->attachCredential($projName, $credName,
     {procedureName => 'CheckServerStatus',
