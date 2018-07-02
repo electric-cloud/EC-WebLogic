@@ -410,11 +410,11 @@ class CreateOrUpdateJMSModuleSubdeploymentSuite extends WebLogicHelper {
         deleteJMSModule(jmsModuleName)
 
         where:
-        caseId | oldTargets    | newTargets
-        'C325079'     | 'AdminServer' | 'Cluster1'
-        'C325081'     | 'AdminServer' | 'ManagedServer1'
-        'C325082'     | 'Cluster1'    | 'ManagedServer1, AdminServer'
-        'C325083'     | 'Cluster1'    | 'ManagedServer1, Cluster1'
+        caseId    | oldTargets    | newTargets
+        'C325079' | 'AdminServer' | 'Cluster1'
+        'C325081' | 'AdminServer' | 'ManagedServer1'
+        'C325082' | 'Cluster1'    | 'ManagedServer1, AdminServer'
+        'C325083' | 'Cluster1'    | 'ManagedServer1, Cluster1'
     }
 
 
