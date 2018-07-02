@@ -44,6 +44,7 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
 
     @Shared
     def targets = [
+        empty  : '',
         default: 'JMSServer1',
         update : 'JMSServer2'
     ]
@@ -100,7 +101,12 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
      */
     @Shared
     def newTarget
+    @Shared
     def oldTarget
+    @Shared
+    def caseId
+    @Shared
+    def dslFileName
 
     // Procedure params
     // Required
@@ -154,10 +160,12 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
             ]
         ]
         createJMSModule(jmsModules.default)
+        createJMSServer(targets.default)
+        createJMSServer(targets.update)
 
         dslFile("dsl/Application/CreateOrUpdateJMSQueue.dsl", [
-            projectName    : projectName,
-            resourceName   : getResourceName()
+            projectName : projectName,
+            resourceName: getResourceName()
         ])
     }
 
@@ -174,11 +182,12 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
      */
 
     @Unroll
-    def "Create or Update JMS Queue ( Queue name: #jmsQueueName target: #target, additional options: #additionalOptions, update action: #updateAction) - procedure"() {
+    def "#caseId. Create or Update JMS Queue ( Queue name: #jmsQueueName target: #target, additional options: #additionalOptions, update action: #updateAction, subdeployment : '#subdeploymentName') - procedure"() {
         setup: 'Define the parameters for Procedure running'
 
         jmsModuleName = jmsModules.default
-        jndiName = 'TestJNDIName'
+        target = targets.default
+//        jndiName = 'TestJNDIName'
 
         def runParams = [
             ecp_weblogic_jms_queue_name    : jmsQueueName,
@@ -194,6 +203,7 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
 
         if (updateAction) {
             createJMSQueue(jmsModuleName, jmsQueueName)
+            target = targets.update
         }
 
         when: 'Procedure runs: '
@@ -225,25 +235,31 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
         deleteJMSQueue(jmsModuleName, jmsQueueName)
 
         where: 'The following params will be: '
-        jmsQueueName      | updateAction                    | target          | additionalOptions             | expectedOutcome          | expectedJobDetailedResult
+        caseId    | jmsQueueName      | updateAction                    | subdeploymentName | additionalOptions             | expectedOutcome          | expectedJobDetailedResult
 
         // Create
-        jmsQueues.default | updateActions.empty             | targets.default | additionalOptionsIs.empty     | expectedOutcomes.success | "Created Queue $jmsQueueName"
+        'C325097' | jmsQueues.default | updateActions.empty             | ''                | additionalOptionsIs.empty     | expectedOutcomes.success | "Created Queue $jmsQueueName"
 
         // With additional options
-        jmsQueues.default | updateActions.empty             | targets.default | additionalOptionsIs.correct   | expectedOutcomes.success | "Created Queue $jmsQueueName"
+        'C325098' | jmsQueues.default | updateActions.empty             | ''                | additionalOptionsIs.correct   | expectedOutcomes.success | "Created Queue $jmsQueueName"
 
         // With incorrect additional options
-        jmsQueues.default | updateActions.empty             | targets.default | additionalOptionsIs.incorrect | expectedOutcomes.error   | 'Options: incorrect Additional Options'
+        'C325099' | jmsQueues.default | updateActions.empty             | ''                | additionalOptionsIs.incorrect | expectedOutcomes.error   | 'Options: incorrect Additional Options'
+
+        // Create with subdeployment
+        'C325112' | jmsQueues.default | updateActions.empty             | 'sub1'            | additionalOptionsIs.empty     | expectedOutcomes.success | "Created Queue $jmsQueueName"
+
+        // Create with subdeployment and additional options
+        'C325113' | jmsQueues.default | updateActions.empty             | 'sub1'            | additionalOptionsIs.correct   | expectedOutcomes.success | "Created Queue $jmsQueueName"
 
         // Update options
-        jmsQueues.updated | updateActions.do_nothing        | targets.update  | additionalOptionsIs.empty     | expectedOutcomes.success | "No action is required"
-        jmsQueues.updated | updateActions.selective_update  | targets.update  | additionalOptionsIs.empty     | expectedOutcomes.success | "Doing selective update"
-        jmsQueues.updated | updateActions.remove_and_create | targets.update  | additionalOptionsIs.empty     | expectedOutcomes.success | "Removed JMS Queue $jmsQueueName from the module " // $jmsModuleName"
+        'C325100' | jmsQueues.updated | updateActions.do_nothing        | ''                | additionalOptionsIs.empty     | expectedOutcomes.success | "No action is required"
+        'C325101' | jmsQueues.updated | updateActions.selective_update  | ''                | additionalOptionsIs.empty     | expectedOutcomes.success | "Doing selective update"
+        'C325102' | jmsQueues.updated | updateActions.remove_and_create | ''                | additionalOptionsIs.empty     | expectedOutcomes.success | "Removed JMS Queue $jmsQueueName from the module " // $jmsModuleName"
     }
 
     @Unroll
-    def "Create or Update JMS Queue ( Queue name: #jmsQueueName target: #target, additional options: #additionalOptions, update action: #updateAction) - application"() {
+    def "#caseId. Create or Update JMS Queue ( Queue name: #jmsQueueName target: #target, additional options: #additionalOptions, update action: #updateAction, subdeployment : '#subdeploymentName') - application"() {
         setup: 'Define the parameters for Procedure running'
 
         jmsModuleName = jmsModules.default
@@ -293,95 +309,37 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
         deleteJMSQueue(jmsModuleName, jmsQueueName)
 
         where: 'The following params will be: '
-        jmsQueueName      | updateAction                    | target          | additionalOptions             | expectedOutcome          | expectedJobDetailedResult
+        caseId    | jmsQueueName      | updateAction                    | target          | subdeploymentName | additionalOptions             | expectedOutcome          | expectedJobDetailedResult
 
         // Create
-        jmsQueues.default | updateActions.empty             | targets.default | additionalOptionsIs.empty     | expectedOutcomes.success | "Created Queue $jmsQueueName"
+        'C325103' | jmsQueues.default | updateActions.empty             | targets.default | ''                | additionalOptionsIs.empty     | expectedOutcomes.success | "Created Queue $jmsQueueName"
 
         // With additional options
-        jmsQueues.default | updateActions.empty             | targets.default | additionalOptionsIs.correct   | expectedOutcomes.success | "Created Queue $jmsQueueName"
+        'C325104' | jmsQueues.default | updateActions.empty             | targets.default | ''                | additionalOptionsIs.correct   | expectedOutcomes.success | "Created Queue $jmsQueueName"
 
         // With incorrect additional options
-        jmsQueues.default | updateActions.empty             | targets.default | additionalOptionsIs.incorrect | expectedOutcomes.error   | 'Options: incorrect Additional Options'
+        'C325105' | jmsQueues.default | updateActions.empty             | targets.default | ''                | additionalOptionsIs.incorrect | expectedOutcomes.error   | 'Options: incorrect Additional Options'
+
+        // Create with subdeployment
+        'C325114' | jmsQueues.default | updateActions.empty             | targets.default | 'sub1'            | additionalOptionsIs.empty     | expectedOutcomes.success | "Created Queue $jmsQueueName"
+
+        // Create with subdeployment and additional options
+        'C325115' | jmsQueues.default | updateActions.empty             | targets.default | 'sub1'            | additionalOptionsIs.correct   | expectedOutcomes.success | "Created Queue $jmsQueueName"
+
+        //Create with subdeployment without target server specified
+        'C325117' | jmsQueues.default | updateActions.empty             | targets.empty   | 'sub1'            | additionalOptionsIs.empty     | expectedOutcomes.error   | ""
 
         // Update options
-        jmsQueues.updated | updateActions.do_nothing        | targets.update  | additionalOptionsIs.empty     | expectedOutcomes.success | "No action is required"
-        jmsQueues.updated | updateActions.selective_update  | targets.update  | additionalOptionsIs.empty     | expectedOutcomes.success | "Doing selective update"
-        jmsQueues.updated | updateActions.remove_and_create | targets.update  | additionalOptionsIs.empty     | expectedOutcomes.success | "Removed JMS Queue $jmsQueueName from the module " // $jmsModuleName"
-    }
-
-
-    @Unroll
-    def "Create JMS Queue With Subdeployment ( Queue name: #jmsQueueName target: #target, additional options: #additionalOptions, update action: #updateAction) - procedure"() {
-        setup: 'Define the parameters for Procedure running'
-
-        jmsModuleName = jmsModules.default
-        jndiName = 'TestJNDIName'
-        def subdeploymentName = randomize('JMSQueue')
-
-        def runParams = [
-            ecp_weblogic_jms_queue_name    : jmsQueueName,
-            ecp_weblogic_jms_module_name   : jmsModuleName,
-            ecp_weblogic_jndi_name         : jndiName,
-
-            ecp_weblogic_subdeployment_name: subdeploymentName,
-            ecp_weblogic_additional_options: additionalOptions,
-            ecp_weblogic_update_action     : updateAction,
-            ecp_weblogic_target_jms_server : target,
-        ]
-
-        createJMSServer(target)
-
-        if (updateAction) {
-            createJMSQueue(jmsModuleName, jmsQueueName)
-        }
-
-        when: 'Procedure runs: '
-
-        def result = runTestedProcedure(projectName, procedureName, runParams, getResourceName())
-
-        then: 'Wait until job run is completed: '
-
-        String debugLog = result.logs
-        println "Procedure log:\n$debugLog\n"
-
-        expect: 'Outcome and Upper Summary verification'
-        assert result.outcome == expectedOutcome
-
-        if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
-            assert jmsQueueExists(jmsModuleName, jmsQueueName)
-        }
-
-        if (expectedJobDetailedResult) {
-            assert debugLog.contains(expectedJobDetailedResult)
-        }
-
-        assert debugLog.contains("Created Subdeployment $subdeploymentName")
-
-        if (expectedSummaryMessage) {
-            def upperStepSummary = getJobUpperStepSummary(result.jobId)
-            assert upperStepSummary == expectedSummaryMessage
-        }
-
-        cleanup:
-        deleteJMSQueue(jmsModuleName, jmsQueueName)
-        deleteSubDeployment(jmsModuleName, subdeploymentName)
-
-        where: 'The following params will be: '
-        jmsQueueName      | updateAction                    | target          | additionalOptions             | expectedOutcome          | expectedJobDetailedResult
-
-        // Create
-        jmsQueues.default | updateActions.empty             | targets.default | additionalOptionsIs.empty     | expectedOutcomes.success | "Created Queue $jmsQueueName"
-
-        // With additional options
-        jmsQueues.default | updateActions.empty             | targets.default | additionalOptionsIs.correct   | expectedOutcomes.success | "Created Queue $jmsQueueName"
-
+        'C325106' | jmsQueues.updated | updateActions.do_nothing        | targets.update  | ''                | additionalOptionsIs.empty     | expectedOutcomes.success | "No action is required"
+        'C325107' | jmsQueues.updated | updateActions.selective_update  | targets.update  | ''                | additionalOptionsIs.empty     | expectedOutcomes.success | "Doing selective update"
+        'C325108' | jmsQueues.updated | updateActions.remove_and_create | targets.update  | ''                | additionalOptionsIs.empty     | expectedOutcomes.success | "Removed JMS Queue $jmsQueueName from the module " // $jmsModuleName"
     }
 
     @Unroll
     def "#caseId. Update JMS Queue With Subdeployment ( Queue name: #jmsQueueName oldTarget: #oldTarget, newTarget: #newTarget, additional options: #additionalOptions, update action: #updateAction) - procedure"() {
         setup: 'Define the parameters for Procedure running'
 
+        jmsQueueName = jmsQueues.default
         jmsModuleName = jmsModules.default
         jndiName = 'TestJNDIName'
         def subdeploymentName = randomize('JMSQueue')
@@ -441,8 +399,7 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
 
         if (updateAction == updateActions.remove_and_create) {
             assert debugLog.contains("Removed subdeployment $subdeploymentName")
-        }
-        else {
+        } else {
             assert debugLog.contains("Subdeployment $subdeploymentName already exist, targets are NOT going to be updated")
         }
 
@@ -451,45 +408,48 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
         deleteSubDeployment(jmsModuleName, subdeploymentName)
 
         where: 'The following params will be: '
-        jmsQueueName      | updateAction                    | oldTarget         | newTarget      | expectedOutcome          | expectedJobDetailedResult
-
-        jmsQueues.default | updateActions.selective_update  | targets.default   | targets.update | expectedOutcomes.success | "JMS Queue $jmsQueueName has been updated"
-
-        jmsQueues.default | updateActions.remove_and_create | targets.default   | targets.update | expectedOutcomes.success | "JMS Queue $jmsQueueName has been recreated"
-
+        caseId    | updateAction                    | oldTarget       | newTarget      | expectedOutcome          | expectedJobDetailedResult
+        'C325110' | updateActions.selective_update  | targets.default | targets.update | expectedOutcomes.success | "JMS Queue $jmsQueueName has been updated"
+        'C325111' | updateActions.remove_and_create | targets.default | targets.update | expectedOutcomes.success | "JMS Queue $jmsQueueName has been recreated"
     }
 
     @Unroll
-    def 'multi-step procedures #dslFileName #procName'() {
+    def '#caseId. multi-step procedures #dslFileName #procName'() {
         given:
         def queueName = 'test queue'
         def moduleName = dslFileName
         deleteJMSModule(moduleName)
+
         def args = [
-            projectName: projectName,
+            projectName  : projectName,
             procedureName: procName,
-            configname: CONFIG_NAME,
-            queueName: queueName,
-            moduleName: moduleName,
-            resourceName: getResourceName()
+            configname   : CONFIG_NAME,
+            queueName    : queueName,
+            moduleName   : moduleName,
+            resourceName : getResourceName()
         ]
+
         dslFile "dsl/multisteps/${dslFileName}.dsl", args
+
         when:
-        def result = runProcedure ("""
+        def result = runProcedure("""
             runProcedure(
-                projectName: '$projectName',
+                projectName  : '$projectName',
                 procedureName: '$procName'
             )
         """, getResourceName())
+
         then:
         logger.debug(result.logs)
         assert result.outcome == 'success'
+
         cleanup:
         deleteJMSModule(moduleName)
+
         where:
-        dslFileName        | procName
-        'retargetJMSQueue' | 'Retarget JMS Queue with recreation'
-        'updateQueueSDName'| 'Update SD Name for Queue (Selective Update)'
+        caseId | dslFileName         | procName
+        ''     | 'retargetJMSQueue'  | 'Retarget JMS Queue with recreation'
+        ''     | 'updateQueueSDName' | 'Update SD Name for Queue (Selective Update)'
     }
 
     def jmsQueueExists(def moduleName, def name) {
