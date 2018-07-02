@@ -140,8 +140,6 @@ class CreateOrUpdateJMSServerSuite extends WebLogicHelper {
             deleteJMSServer(jmsServerName)
         }
 
-        ensureManagedServer(target, '7999')
-
         if (updateAction != '') {
             createJMSServer(jmsServerName, targets.default)
         }
