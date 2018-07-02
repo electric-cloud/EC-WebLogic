@@ -98,6 +98,9 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
     /**
      * Test Parameters: for Where section
      */
+    @Shared
+    def newTarget
+    def oldTarget
 
     // Procedure params
     // Required
@@ -376,7 +379,7 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
     }
 
     @Unroll
-    def "Update JMS Queue With Subdeployment ( Queue name: #jmsQueueName oldTarget: #oldTarget, newTarget: #newTarget, additional options: #additionalOptions, update action: #updateAction) - procedure"() {
+    def "#caseId. Update JMS Queue With Subdeployment ( Queue name: #jmsQueueName oldTarget: #oldTarget, newTarget: #newTarget, additional options: #additionalOptions, update action: #updateAction) - procedure"() {
         setup: 'Define the parameters for Procedure running'
 
         jmsModuleName = jmsModules.default

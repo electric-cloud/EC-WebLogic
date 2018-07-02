@@ -318,7 +318,7 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
 
     @Unroll
     @Ignore
-    def "create with additional options #additionalOptions - procedure"() {
+    def "#caseId. create with additional options #additionalOptions - procedure"() {
         setup: 'removing old topic'
         def jmsTopicName = jmsTopicNames.default
         def jmsModuleName = jmsModules.default
@@ -338,7 +338,10 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
         cleanup:
         deleteJMSTopic(jmsModuleName, jmsTopicName)
         where:
-        additionalOptions << [options.oneOption, options.twoOptions, options.topLevelOption]
+        caseId | additionalOptions
+        '' | options.oneOption
+        '' | options.twoOptions
+        '' | options.topLevelOption
     }
 
     @Unroll
@@ -460,11 +463,11 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
         deleteSubDeployment(jmsModuleName, subdeploymentName)
 
         where: 'The following params will be: '
-        updateAction                    | oldTarget       | newTarget      | expectedOutcome          | expectedJobDetailedResult
+        caseId | updateAction                    | oldTarget       | newTarget      | expectedOutcome          | expectedJobDetailedResult
 
         // Create
-        updateActions.selective_update  | targets.default | targets.update | expectedOutcomes.success | "Updated JMS Topic ${jmsTopicNames.default}"
-        updateActions.remove_and_create | targets.default | targets.update | expectedOutcomes.success | "Recreated JMS Topic ${jmsTopicNames.default}"
+       '' | updateActions.selective_update  | targets.default | targets.update | expectedOutcomes.success | "Updated JMS Topic ${jmsTopicNames.default}"
+       '' | updateActions.remove_and_create | targets.default | targets.update | expectedOutcomes.success | "Recreated JMS Topic ${jmsTopicNames.default}"
     }
 
 
