@@ -71,7 +71,7 @@ if jmsResource == None:
     print_error('JMS Resource %s does not exist' % jmsModuleName)
     sys.exit(1)
 
-jmsTopic = getMBean(getJMSQueuePath(jmsModuleName, topicName))
+jmsTopic = getMBean(getJMSTopicPath(jmsModuleName, topicName))
 if jmsTopic != None and updateAction == DO_NOTHING:
     print_summary('JMS Topic %s exists, no further action is required' % topicName)
     print_info("No action is required")
@@ -91,8 +91,9 @@ if not isEmpty(subdeploymentName):
             target = getJMSTargetBean(jmsServerName)
             jmsTargets.append(target)
         if updateAction == REMOVE_AND_CREATE:
-            removedTopic = True
-            deleteJMSTopic(jmsModuleName, topicName)
+            if jmsTopic != None:
+                deleteJMSTopic(jmsModuleName, topicName)
+                removedTopic = True
             deleteSubDeployment(jmsModuleName, subdeploymentName)
         subdeployment = createOrUpdateSubdeployment(jmsModuleName, subdeploymentName, jmsTargetList = jmsTargets, updateTargets = False)
     except Exception, e:

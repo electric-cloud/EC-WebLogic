@@ -101,7 +101,7 @@ if cf != None and updateAction == DO_NOTHING:
 # Subdeployment must be created and the changes must be activated
 # Otherwise, the procedure will fail with "exception in prepare"
 subdeployment = None
-if not isEmpty(subdeploymentName) and (cf == None or updateAction != DO_NOTHING):
+if not isEmpty(subdeploymentName):
     try:
         startChanges()
         jmsTargets = []
@@ -114,6 +114,10 @@ if not isEmpty(subdeploymentName) and (cf == None or updateAction != DO_NOTHING)
         for instanceName in splitSeparatedString(wlsInstanceList):
             if instanceName:
                 wlsTargets.append(getTargetBean(instanceName))
+
+        if not jmsTargets and not wlsTargets:
+            raise Exception('Either JMS Servers or WLS Instances should be provided for non-default targeting')
+
         if updateAction == REMOVE_AND_CREATE:
             deleteSubDeployment(jmsModuleName, subdeploymentName)
         subdeployment = createOrUpdateSubdeployment(jmsModuleName, subdeploymentName, jmsTargetList = jmsTargets, targetList = wlsTargets, updateTargets = False)

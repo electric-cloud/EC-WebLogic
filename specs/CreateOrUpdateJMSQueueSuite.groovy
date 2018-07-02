@@ -459,6 +459,39 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
 
     }
 
+    @Unroll
+    def 'multi-step procedures #dslFileName #procName'() {
+        given:
+        def queueName = 'test queue'
+        def moduleName = dslFileName
+        deleteJMSModule(moduleName)
+        def args = [
+            projectName: projectName,
+            procedureName: procName,
+            configname: CONFIG_NAME,
+            queueName: queueName,
+            moduleName: moduleName,
+            resourceName: getResourceName()
+        ]
+        dslFile "dsl/multisteps/${dslFileName}.dsl", args
+        when:
+        def result = runProcedure ("""
+            runProcedure(
+                projectName: '$projectName',
+                procedureName: '$procName'
+            )
+        """, getResourceName())
+        then:
+        logger.debug(result.logs)
+        assert result.outcome == 'success'
+        cleanup:
+        deleteJMSModule(moduleName)
+        where:
+        dslFileName        | procName
+        'retargetJMSQueue' | 'Retarget JMS Queue with recreation'
+        'updateQueueSDName'| 'Update SD Name for Queue (Selective Update)'
+    }
+
     def jmsQueueExists(def moduleName, def name) {
         def code = """
 def getJMSSystemResourcePath(jms_module_name):

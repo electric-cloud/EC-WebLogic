@@ -1,3 +1,86 @@
 deprecatedProcedures:
   - UpdateApp
 
+proceduresGrouping:
+  groups:
+    - name: WLS Domain Management
+      description: These procedures help in managing a WLS Domain.
+      procedures:
+        - CreateCluster
+        - CreateDomain
+        - CreateManagedServer
+        - AddServerToCluster
+        - DeleteCluster
+        - DeleteManagedServer
+    - name: WLS Domain Server Administration
+      description: These procedures help in administering (i.e., Starting or Stopping Servers) of a WLS Domain.
+      procedures:
+        - StartAdminServer
+        - StartCluster
+        - StartManagedServer
+        - StartNodeManager
+        - StopAdminServer
+        - StopCluster
+        - StopManagedServer
+        - StopNodeManager
+        - SuspendServer
+        - ResumeServer
+    - name: Application Deployment
+      description: These procedures help in managing the Deployment of an Application to a WLS Domain.
+      procedures:
+        - DeployApp
+        - UpdateAppConfig
+        - UndeployApp
+        - UpdateApp
+        - RunDeployer
+    - name: Application Management
+      description: These procedures help in managing an already deployed Application in a WLS Domain.
+      procedures:
+        - StartApp
+        - StopApp
+    - name: Datasource Management
+      description: These procedures help in creating datasources in a WLS Domain.
+      procedures:
+        - CreateDatasource
+        - DeleteDatasource
+    - name: JMS Resource Management
+      description: These procedures help in creating JMS resources in a WLS Domain.
+      procedures:
+        - CreateOrUpdateConnectionFactory
+        - CreateOrUpdateJMSModule
+        - CreateOrUpdateJMSModuleSubdeployment
+        - CreateOrUpdateJMSQueue
+        - CreateOrUpdateJMSServer
+        - CreateOrUpdateJMSTopic
+        - DeleteConnectionFactory
+        - DeleteJMSModule
+        - DeleteJMSModuleSubdeployment
+        - DeleteJMSQueue
+        - DeleteJMSServer
+        - DeleteJMSTopic
+    - name: User Management
+      description: These procedures help in managing users in a WLS Domain.
+      procedures:
+        - CreateUser
+        - CreateGroup
+        - AddUserToGroup
+        - ChangeUserPassword
+        - RemoveUserFromGroup
+        - ConfigureUserLockoutManager
+        - UnlockUserAccount
+        - DeleteGroup
+        - DeleteUser
+    - name: Check Procedures
+      description: These procedures help in checking the status of Servers in a WLS Domain
+      procedures:
+        - CheckClusterStatus
+        - CheckServerStatus
+    - name: Generic Procedures
+      description: These procedures which are generic in nature are based on different WLS use cases.
+      procedures:
+        - RunWLST
+        - CreateTemplate
+        - CheckPageStatus
+
+
+

@@ -71,8 +71,8 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
 
     @Shared
     def targets = [
-        default: 'jmsServer1',
-        update : 'jmsServer2'
+        default         : 'jmsServer1',
+        update          : 'jmsServer2'
     ]
 
     @Shared
@@ -161,7 +161,7 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
         ]
 
         dslFile("dsl/Application/CreateOrUpdateJMSTopic.dsl", [
-            resourceName: getResourceName()
+            resourceName   : getResourceName()
         ])
     }
 
@@ -182,7 +182,7 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
      */
 
     @Unroll
-    @Ignore
+
     def "Create and Update JMS Topic. Positive - procedure with params (Topic: #jmsTopicName, module: #jmsModuleName, update action: #updateAction) - procedure"() {
         setup: 'Define the parameters for Procedure running'
 
@@ -199,7 +199,6 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
             ecp_weblogic_target_jms_server : target,
         ]
 
-        ensureManagedServer(target, '7999')
 
         if (jmsTopicName && jmsModuleName) {
             deleteJMSTopic(jmsModuleName, jmsTopicName)
@@ -244,13 +243,12 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
         updateActions.empty             | jmsTopicNames.empty                             | expectedOutcomes.error   | "No JMS Topic name is provided"                                         | ''
 
         // Update
-        updateActions.do_nothing        | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | "JMS Topic $jmsTopicName already exists, no further action is required" | ''
-        updateActions.selective_update  | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | ''                                                                      | "Updated JMS Topic"
-        updateActions.remove_and_create | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | ''                                                                      | "Recreated JMS Topic"
+        updateActions.do_nothing        | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | "JMS Topic $jmsTopicName exists, no further action is required" | ''
+        updateActions.selective_update  | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | ''                                                              | "Updated JMS Topic"
+        updateActions.remove_and_create | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | ''                                                              | "Recreated JMS Topic"
     }
 
     @Unroll
-    @Ignore
     def "Create and Update JMS Topic. Positive - procedure with params (Topic: #jmsTopicName, module: #jmsModuleName, update action: #updateAction) - application"() {
         setup: 'Define the parameters for Procedure running'
 
@@ -266,8 +264,6 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
             ecp_weblogic_jndi_name         : jndiName,
             ecp_weblogic_target_jms_server : target,
         ])
-
-        ensureManagedServer(target, '7999')
 
         if (jmsTopicName && jmsModuleName) {
             deleteJMSTopic(jmsModuleName, jmsTopicName)
@@ -317,7 +313,6 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
     }
 
     @Unroll
-    @Ignore
     def "#caseId. create with additional options #additionalOptions - procedure"() {
         setup: 'removing old topic'
         def jmsTopicName = jmsTopicNames.default
