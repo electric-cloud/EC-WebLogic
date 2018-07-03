@@ -34,14 +34,6 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
      */
 
     @Shared
-    //* Required Parameter (need incorrect and empty value)
-    def pluginConfigurationNames = [
-        empty    : '',
-        correct  : CONFIG_NAME,
-        incorrect: 'incorrect config Name',
-    ]
-
-    @Shared
     def connectionFactories = [
         correct    : 'SpecConnectionFactory',
         nonexisting: 'NoSuchCF'
@@ -84,11 +76,10 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
     /**
      * Test Parameters: for Where section
      */
+    @Shared
+    def caseId
 
     // Procedure params
-    @Shared
-    def configName
-
     @Shared
     def connectionFactoryName
 
@@ -177,16 +168,16 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
             deleteConnectionFactory(jmsModuleName, connectionFactoryName)
         }
         where: 'The following params will be: '
-        connectionFactoryName           | jmsModuleName              | expectedOutcome          | expectedJobDetailedResult
+        caseId    | connectionFactoryName           | jmsModuleName              | expectedOutcome          | expectedJobDetailedResult
 
         // delete connection factory
-        connectionFactories.correct     | jmsModuleNames.default     | expectedOutcomes.success | "Removed Connection Factory $connectionFactoryName from the module $jmsModuleName"
+        'C325176' | connectionFactories.correct     | jmsModuleNames.default     | expectedOutcomes.success | "Removed Connection Factory $connectionFactoryName from the module $jmsModuleName"
 
         // delete non-existing connection factory
-        connectionFactories.nonexisting | jmsModuleNames.default     | expectedOutcomes.error   | "Connection Factory $connectionFactoryName does not exist in the module $jmsModuleName"
+        'C325177' | connectionFactories.nonexisting | jmsModuleNames.default     | expectedOutcomes.error   | "Connection Factory $connectionFactoryName does not exist in the module $jmsModuleName"
 
         // delete non-existing connection factory from non-existing jms module
-        connectionFactories.nonexisting | jmsModuleNames.nonexisting | expectedOutcomes.error   | "Connection Factory $connectionFactoryName does not exist in the module $jmsModuleName"
+        'C325178' | connectionFactories.nonexisting | jmsModuleNames.nonexisting | expectedOutcomes.error   | "Connection Factory $connectionFactoryName does not exist in the module $jmsModuleName"
     }
 
 
@@ -235,16 +226,16 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        connectionFactoryName           | jmsModuleName              | expectedOutcome          | expectedJobDetailedResult
+        caseId    | connectionFactoryName           | jmsModuleName              | expectedOutcome          | expectedJobDetailedResult
 
         // delete connection factory
-        connectionFactories.correct     | jmsModuleNames.default     | expectedOutcomes.success | "Removed Connection Factory $connectionFactoryName from the module $jmsModuleName"
+        'C325179' | connectionFactories.correct     | jmsModuleNames.default     | expectedOutcomes.success | "Removed Connection Factory $connectionFactoryName from the module $jmsModuleName"
 
         // delete non-existing connection factory
-        connectionFactories.nonexisting | jmsModuleNames.default     | expectedOutcomes.error   | "Connection Factory $connectionFactoryName does not exist in the module $jmsModuleName"
+        'C325180' | connectionFactories.nonexisting | jmsModuleNames.default     | expectedOutcomes.error   | "Connection Factory $connectionFactoryName does not exist in the module $jmsModuleName"
 
         // delete non-existing connection factory from non-existing jms module
-        connectionFactories.nonexisting | jmsModuleNames.nonexisting | expectedOutcomes.error   | "Connection Factory $connectionFactoryName does not exist in the module $jmsModuleName"
+        'C325181' | connectionFactories.nonexisting | jmsModuleNames.nonexisting | expectedOutcomes.error   | "Connection Factory $connectionFactoryName does not exist in the module $jmsModuleName"
     }
 
     def createConnectionFactory(def name, def module_name = jmsModuleNames.default) {
