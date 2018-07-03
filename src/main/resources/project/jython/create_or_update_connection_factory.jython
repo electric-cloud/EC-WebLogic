@@ -165,7 +165,7 @@ try:
     if not isEmpty(subdeploymentName):
         # Removing Default Targeting
         # It's important to use set() and not setDefaultTargetingEnabled because of 10.3.6
-        set('DefaultTargetingEnabled', boolValue(False))
+        set('DefaultTargetingEnabled', boolValue('false'))
         if cf.getSubDeploymentName() != subdeploymentName:
             cf.setSubDeploymentName(subdeploymentName)
             successMessage += ', Set Targeting to Subdeployment %s' % subdeploymentName
@@ -176,7 +176,7 @@ try:
     else:
         if not update:
             successMessage += ', Set Default Targeting'
-            set('DefaultTargetingEnabled', boolValue(True))
+            set('DefaultTargetingEnabled', boolValue('true'))
             print_info("Set default targeting")
         else:
             print_info("Will not change targeting for Connection Factory")

@@ -232,6 +232,9 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         } else {
             assert xaEnabled == '0'
         }
+
+        def defaultTargeting = getDefaultTargeting(jmsModuleName, connectionFactoryName)
+        assert defaultTargeting == '1'
         cleanup:
         deleteConnectionFactory(jmsModuleName, connectionFactoryName)
         where: 'The following params will be: '
@@ -270,6 +273,9 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         // def resultTargets = getSubdeploymentTargets(jmsModuleName, subdeploymentName)
         // logger.debug(resultTargets.logs)
         // assert resultTargets.logs.contains(newTarget)
+        if (expectedOutcome == expectedOutcomes.success) {
+            assert getDefaultTargeting(jmsModuleName, connectionFactories.updated) == '0'
+        }
 
         cleanup:
         deleteConnectionFactory(jmsModuleName, connectionFactories.updated)
@@ -538,6 +544,26 @@ cd(getConnectionFactoryPath(module, cfName) + '/' + group + '/' + cfName)
 print "VALUE:" + " %s" % get(propName)
 """
         def result = runWLST(code, "GetCFProperty_${propGroup}_${propName}")
+        assert result.outcome == 'success'
+        def group = (result.logs =~ /VALUE:\s(.+?)/)
+        def value = group[0][1]
+        return value
+    }
+
+
+    def getDefaultTargeting(module, cfName) {
+        def code = """
+def getConnectionFactoryPath(jms_module_name,cf_name):
+    return "/JMSSystemResources/%s/JMSResource/%s/ConnectionFactories/%s" % (jms_module_name, jms_module_name, cf_name)
+
+module = '$module'
+cfName = '$cfName'
+connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+cd(getConnectionFactoryPath(module, cfName))
+value = get('DefaultTargetingEnabled')
+print "VALUE:" + " " + str(value)
+"""
+        def result = runWLST(code, "getDefaultTargeting_${module}_${cfName}")
         assert result.outcome == 'success'
         def group = (result.logs =~ /VALUE:\s(.+?)/)
         def value = group[0][1]
