@@ -15,6 +15,7 @@ def topicJNDI = args.jndi.topic
 def jmsServerName = args.jmsServerName ?: "JMSDemoServer"
 def wlst = args.wlst
 def envName = 'WL JMS Environment'
+def updateAction = args.updateAction ?: 'selective_update'
 assert wlst
 
 project projName, {
@@ -61,7 +62,7 @@ project projName, {
                         'configname': configname,
                         'ecp_weblogic_jms_module_name': jmsModuleName,
                         'ecp_weblogic_target_list': 'AdminServer',
-                        'ecp_weblogic_update_action': 'do_nothing',
+                        'ecp_weblogic_update_action': updateAction,
                       ]
                       processStepType = 'plugin'
                       subprocedure = 'CreateOrUpdateJMSModule'
@@ -78,7 +79,7 @@ project projName, {
                         'configname': configname,
                         'ecp_weblogic_jms_server_name': jmsServerName,
                         'ecp_weblogic_target': 'AdminServer',
-                        'ecp_weblogic_update_action': 'do_nothing',
+                        'ecp_weblogic_update_action': updateAction,
                       ]
                       dependencyJoinType = 'and'
                       processStepType = 'plugin'
@@ -93,6 +94,10 @@ project projName, {
                     }
 
                     processStep 'Create ConnectionFactory', {
+                      def subName = ''
+                      if (args.cfJmsServer || args.cfWLSInstance) {
+                        subName = 'JMSDemoConnectionFactorySub'
+                      }
                       actualParameter = [
                         'additional_options': '',
                         'cf_client_id_policy': 'restricted',
@@ -102,11 +107,11 @@ project projName, {
                         'cf_xa_enabled': '1',
                         'configname': configname,
                         'jms_module_name': jmsModuleName,
-                        'jms_server_list': '',
+                        'jms_server_list': args.cfJmsServer ?: '',
                         'jndi_name': cfJNDI,
-                        'subdeployment_name': '',
-                        'update_action': 'selective_update',
-                        'wls_instance_list': '',
+                        'subdeployment_name': subName,
+                        'update_action': updateAction,
+                        'wls_instance_list': args.cfWLSInstance ?: '',
                       ]
                       dependencyJoinType = 'and'
                       processStepType = 'plugin'
@@ -128,7 +133,7 @@ project projName, {
                         'ecp_weblogic_jndi_name': queueJNDI,
                         'ecp_weblogic_subdeployment_name': 'JMSDemoQueueSub',
                         'ecp_weblogic_target_jms_server': jmsServerName,
-                        'ecp_weblogic_update_action': 'selective_update',
+                        'ecp_weblogic_update_action': updateAction,
                       ]
                       dependencyJoinType = 'and'
                       errorHandling = 'abortJob'
@@ -151,7 +156,7 @@ project projName, {
                         'ecp_weblogic_jndi_name': topicJNDI,
                         'ecp_weblogic_subdeployment_name': 'JMSDemoTopicSub',
                         'ecp_weblogic_target_jms_server': jmsServerName,
-                        'ecp_weblogic_update_action': 'selective_update',
+                        'ecp_weblogic_update_action': updateAction,
                       ]
                       dependencyJoinType = 'and'
                       errorHandling = 'abortJob'

@@ -28,6 +28,10 @@ class JMSDemo extends WebLogicHelper {
     @Shared
     def appName = 'jms-sample'
 
+    @Shared def applicationName = 'JMS Demo App'
+    @Shared def processName = 'Deploy'
+    @Shared def tierMapName = 'WebLogic'
+
     def doSetupSpec() {
         createConfig(CONFIG_NAME)
         deleteProject(projectName)
@@ -66,7 +70,7 @@ class JMSDemo extends WebLogicHelper {
 
     def 'redeploy'() {
         when:
-        def result = runProcess(projectName, 'JMS Demo App', 'Deploy', 'WebLogic')
+        def result = runProcess(projectName, applicationName, processName, tierMapName)
         then:
         assert result.outcome == 'success'
         checkPage()
@@ -91,7 +95,7 @@ class JMSDemo extends WebLogicHelper {
             appPath: 'jms-sample.war'
         ]
         when:
-        def result = runProcess(projectName, 'JMS Demo App', 'Deploy', 'WebLogic')
+        def result = runProcess(projectName, applicationName, processName, tierMapName)
         then:
         assert result.outcome == 'success'
         checkPage(names.connectionFactory, names.queue, names.topic)
@@ -146,17 +150,17 @@ class JMSDemo extends WebLogicHelper {
         queue = queue ?: jndiNames.queue
 
         def host = getResourceHost()
-
-
+        def resName = getResourceName()
         dsl """
         project '$projectName', {
             procedure 'Check Page', {
                 step 'Check Queue & Topic', {
                     shell = 'ec-groovy'
                     command = '''
-                        println "http://$host:7001/\$[queueUrl]".toURL().text
-                        println "http://$host:7001/\$[topicUrl]".toURL().text
+                        println "http://localhost:7001/\$[queueUrl]".toURL().text
+                        println "http://localhost:7001/\$[topicUrl]".toURL().text
                     '''
+                    resourceName = '${resName}'
                 }
 
                 formalParameter 'queueUrl', {
@@ -174,12 +178,14 @@ class JMSDemo extends WebLogicHelper {
         def topicUrl = "${appName}/JMSTopic?connectionFactory=${cf}&topic=${topic}"
 
         def response = runProcedure("""
-            runProcedure projectName: '$projectName', procedureName: 'Check Page',
+            runProcedure projectName: '$projectName',
+            procedureName: 'Check Page',
             actualParameter: [
                 queueUrl: '$queueUrl',
                 topicUrl: '$topicUrl'
             ]
-            """)
+            """, resName
+        )
 
         assert response.outcome == 'success'
 
