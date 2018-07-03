@@ -178,6 +178,7 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
 
     @Shared
     def newTarget
+    @Shared
     def oldTarget
 
     /**
