@@ -288,7 +288,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
         'C325030' | "${jmsServers.first}"                       | 'AdminServer'     | expectedOutcomes.success
         'C325031' | ''                                          | 'AdminServer'     | expectedOutcomes.success
         'C325032' | "${jmsServers.first}, ${jmsServers.second}" | 'AdminServer'     | expectedOutcomes.success
-        ''        | ''                                          | ''                | expectedOutcomes.error
+        'C325096' | ''                                          | ''                | expectedOutcomes.error
     }
 
     @Unroll
