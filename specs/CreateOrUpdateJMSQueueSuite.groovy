@@ -187,7 +187,7 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
 
         jmsModuleName = jmsModules.default
         target = targets.default
-//        jndiName = 'TestJNDIName'
+        jndiName = 'TestJNDIName'
 
         def runParams = [
             ecp_weblogic_jms_queue_name    : jmsQueueName,
@@ -336,12 +336,13 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
     }
 
     @Unroll
-    def "#caseId. Update JMS Queue With Subdeployment ( Queue name: #jmsQueueName oldTarget: #oldTarget, newTarget: #newTarget, additional options: #additionalOptions, update action: #updateAction) - procedure"() {
+    @IgnoreRest
+    def "#caseId. Update JMS Queue With Subdeployment ( Queue name: #jmsQueueName oldTarget: #oldTarget, newTarget: #newTarget, update action: #updateAction) - procedure"() {
         setup: 'Define the parameters for Procedure running'
 
         jmsQueueName = jmsQueues.default
-        jmsModuleName = jmsModules.default
-        jndiName = 'TestJNDIName'
+        def jmsModuleName = jmsModules.default
+        def jndiName = 'TestJNDIName'
         def subdeploymentName = randomize('JMSQueue')
 
         def firstRunParams = [
@@ -408,9 +409,9 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
         deleteSubDeployment(jmsModuleName, subdeploymentName)
 
         where: 'The following params will be: '
-        caseId    | updateAction                    | oldTarget       | newTarget      | expectedOutcome          | expectedJobDetailedResult
-        'C325110' | updateActions.selective_update  | targets.default | targets.update | expectedOutcomes.success | "JMS Queue $jmsQueueName has been updated"
-        'C325111' | updateActions.remove_and_create | targets.default | targets.update | expectedOutcomes.success | "JMS Queue $jmsQueueName has been recreated"
+        caseId    | jmsQueueName      | updateAction                    | oldTarget       | newTarget      | expectedOutcome          | expectedJobDetailedResult
+        'C325110' | jmsQueues.updated | updateActions.selective_update  | targets.default | targets.update | expectedOutcomes.success | "JMS Queue ${jmsQueues.default} has been updated"
+        'C325111' | jmsQueues.updated | updateActions.remove_and_create | targets.default | targets.update | expectedOutcomes.success | "JMS Queue ${jmsQueues.default} has been recreated"
     }
 
     @Unroll
