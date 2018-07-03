@@ -336,7 +336,6 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
     }
 
     @Unroll
-    @IgnoreRest
     def "#caseId. Update JMS Queue With Subdeployment ( Queue name: #jmsQueueName oldTarget: #oldTarget, newTarget: #newTarget, update action: #updateAction) - procedure"() {
         setup: 'Define the parameters for Procedure running'
 
