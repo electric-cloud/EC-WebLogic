@@ -114,6 +114,8 @@ class WebLogicHelper extends PluginSpockTestSupport {
         // Giving some rest to container
     }
 
+
+
     def __runWLST(code) {
         code = code.trim()
         def resourceName = getResourceName()
@@ -633,7 +635,7 @@ def createOrUpdateSubdeployment(jmsModuleName, subName, jmsServerName):
 
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 edit()
-try: 
+try:
   startEdit()
   createOrUpdateSubdeployment('$moduleName', '$subName', '$serverName')
   activate()
@@ -720,7 +722,7 @@ else:
 activate()
 
 """
-        def result = runWLST(code)
+        def result = runWLST(code, "DeleteJMSModule_${jmsModule}")
         assert result.outcome == 'success'
     }
 
@@ -877,7 +879,7 @@ try:
       print("JMS Queue %s does not exist" % queueName)
       jmsQueue = jmsResource.createQueue(queueName)
       print("Created Queue %s" % queueName)
-      
+
       # everything is fine, commiting
       activate()
   else:

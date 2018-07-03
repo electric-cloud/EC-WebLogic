@@ -105,7 +105,7 @@ project projName, {
                         'jms_server_list': '',
                         'jndi_name': cfJNDI,
                         'subdeployment_name': '',
-                        'update_action': 'do_nothing',
+                        'update_action': 'selective_update',
                         'wls_instance_list': '',
                       ]
                       dependencyJoinType = 'and'
@@ -128,7 +128,7 @@ project projName, {
                         'ecp_weblogic_jndi_name': queueJNDI,
                         'ecp_weblogic_subdeployment_name': 'JMSDemoQueueSub',
                         'ecp_weblogic_target_jms_server': jmsServerName,
-                        'ecp_weblogic_update_action': 'do_nothing',
+                        'ecp_weblogic_update_action': 'selective_update',
                       ]
                       dependencyJoinType = 'and'
                       errorHandling = 'abortJob'
@@ -147,11 +147,11 @@ project projName, {
                         'configname': configname,
                         'ecp_weblogic_additional_options': '',
                         'ecp_weblogic_jms_module_name': jmsModuleName,
-                        'ecp_weblogic_jms_queue_name': 'JMSTopicDemo',
+                        'ecp_weblogic_jms_topic_name': 'JMSTopicDemo',
                         'ecp_weblogic_jndi_name': topicJNDI,
                         'ecp_weblogic_subdeployment_name': 'JMSDemoTopicSub',
                         'ecp_weblogic_target_jms_server': jmsServerName,
-                        'ecp_weblogic_update_action': 'do_nothing',
+                        'ecp_weblogic_update_action': 'selective_update',
                       ]
                       dependencyJoinType = 'and'
                       errorHandling = 'abortJob'
