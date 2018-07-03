@@ -56,7 +56,6 @@ class JMSDemo extends WebLogicHelper {
         ]
     }
 
-    @Narrative("First deployment: all the resources will be created for the first time")
     def 'first deploy'() {
         when:
         def result = runProcess(projectName, 'JMS Demo App', 'Deploy', 'WebLogic')
@@ -65,7 +64,6 @@ class JMSDemo extends WebLogicHelper {
         checkPage()
     }
 
-    @Narrative("Second deploy run without changes")
     def 'redeploy'() {
         when:
         def result = runProcess(projectName, 'JMS Demo App', 'Deploy', 'WebLogic')
@@ -74,7 +72,6 @@ class JMSDemo extends WebLogicHelper {
         checkPage()
     }
 
-    @Narrative("Run with JNDI names changed. After the app is redeployed, the resources should be available by their new JNDI names.")
     def 'change JNDI names'() {
         setup:
         def names = [
