@@ -1,6 +1,10 @@
 import spock.lang.*
 
 @Stepwise
+@Narrative("""
+JMS Use-case with URL checks. First create all the required resources and deploy app,
+then change JNDI names and redeploy the app.
+""")
 class JMSDemo extends WebLogicHelper {
     @Shared
     def projectName = "EC-WebLogic JMS Demo"
@@ -52,24 +56,25 @@ class JMSDemo extends WebLogicHelper {
         ]
     }
 
+    @Narrative("First deployment: all the resources will be created for the first time")
     def 'first deploy'() {
         when:
         def result = runProcess(projectName, 'JMS Demo App', 'Deploy', 'WebLogic')
         then:
         assert result.outcome == 'success'
-        checkQueue()
-        checkTopic()
+        checkPage()
     }
 
+    @Narrative("Second deploy run without changes")
     def 'redeploy'() {
         when:
         def result = runProcess(projectName, 'JMS Demo App', 'Deploy', 'WebLogic')
         then:
         assert result.outcome == 'success'
-        checkQueue()
-        checkTopic()
+        checkPage()
     }
 
+    @Narrative("Run with JNDI names changed. After the app is redeployed, the resources should be available by their new JNDI names.")
     def 'change JNDI names'() {
         setup:
         def names = [
@@ -92,8 +97,7 @@ class JMSDemo extends WebLogicHelper {
         def result = runProcess(projectName, 'JMS Demo App', 'Deploy', 'WebLogic')
         then:
         assert result.outcome == 'success'
-        checkQueue(names.connectionFactory, names.queue)
-        checkTopic(names.connectionFactory, names.queue)
+        checkPage(names.connectionFactory, names.queue, names.topic)
     }
 
     def checkQueue(cf = null, queue = null) {
@@ -137,5 +141,59 @@ class JMSDemo extends WebLogicHelper {
             )
         """, getResourceName(), 180, 15
         return result
+    }
+
+    def checkPage(cf = null, queue = null, topic = null) {
+        cf = cf ?: jndiNames.connectionFactory
+        topic = topic ?: jndiNames.topic
+        queue = queue ?: jndiNames.queue
+
+        def host = getResourceHost()
+
+
+        dsl """
+        project '$projectName', {
+            procedure 'Check Page', {
+                step 'Check Queue & Topic', {
+                    shell = 'ec-groovy'
+                    command = '''
+                        println "http://$host:7001/\$[queueUrl]".toURL().text
+                        println "http://$host:7001/\$[topicUrl]".toURL().text
+                    '''
+                }
+
+                formalParameter 'queueUrl', {
+                    type = 'entry'
+                }
+
+                formalParameter 'topicUrl', {
+                    type = 'entry'
+                }
+            }
+        }
+        """
+
+        def queueUrl = "${appName}/JMSServlet?connectionFactory=${cf}&queue=${queue}"
+        def topicUrl = "${appName}/JMSTopic?connectionFactory=${cf}&topic=${topic}"
+
+        def response = runProcedure("""
+            runProcedure projectName: '$projectName', procedureName: 'Check Page',
+            actualParameter: [
+                queueUrl: '$queueUrl',
+                topicUrl: '$topicUrl'
+            ]
+            """)
+
+        assert response.outcome == 'success'
+
+        assert response.logs =~ /Found Connection Factory/
+        assert response.logs =~ /Subscriber is ready/
+        assert response.logs =~ /Found topic/
+        assert response.logs =~ /Sent message/
+
+        assert response.logs =~ /Found connection factory/
+        assert response.logs =~ /Found queue/
+        assert response.logs =~ /Sent message/
+        return true
     }
 }
