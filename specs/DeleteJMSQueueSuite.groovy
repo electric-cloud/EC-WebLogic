@@ -70,6 +70,8 @@ class DeleteJMSQueueSuite extends WebLogicHelper {
     /**
      * Test Parameters: for Where section
      */
+    @Shared
+    def caseId
 
     // Procedure params
     @Shared
@@ -162,16 +164,16 @@ class DeleteJMSQueueSuite extends WebLogicHelper {
             assert upperStepSummary.contains(expectedSummaryMessage)
         }
         where: 'The following params will be: '
-        jmsQueueName              | jmsModuleName              | expectedOutcome          | expectedJobDetailedResult
+        caseId    | jmsQueueName              | jmsModuleName              | expectedOutcome          | expectedJobDetailedResult
 
         // delete JMS Module
-        jmsQueueNames.default     | jmsModuleNames.default     | expectedOutcomes.success | "Removed JMS Queue $jmsQueueName from the module $jmsModuleName"
+        'C325194' | jmsQueueNames.default     | jmsModuleNames.default     | expectedOutcomes.success | "Removed JMS Queue $jmsQueueName from the module $jmsModuleName"
 
         // delete unexisting JMS queue
-        jmsQueueNames.nonexisting | jmsModuleNames.default     | expectedOutcomes.error   | "JMS Queue $jmsQueueName does not exist"
+        'C325195' | jmsQueueNames.nonexisting | jmsModuleNames.default     | expectedOutcomes.error   | "JMS Queue $jmsQueueName does not exist"
 
         // delete non-existing jms queue from non-existing jms module
-        jmsQueueNames.nonexisting | jmsModuleNames.nonexisting | expectedOutcomes.error   | "JMS Queue $jmsQueueName does not exist"
+        'C325196' | jmsQueueNames.nonexisting | jmsModuleNames.nonexisting | expectedOutcomes.error   | "JMS Queue $jmsQueueName does not exist"
     }
 
     @Unroll
@@ -213,16 +215,16 @@ class DeleteJMSQueueSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        jmsQueueName              | jmsModuleName              | expectedOutcome          | expectedJobDetailedResult
+        caseId    | jmsQueueName              | jmsModuleName              | expectedOutcome          | expectedJobDetailedResult
 
         // delete JMS Module
-        jmsQueueNames.default     | jmsModuleNames.default     | expectedOutcomes.success | "Removed JMS Queue $jmsQueueName from the module $jmsModuleName"
+        'C325197' | jmsQueueNames.default     | jmsModuleNames.default     | expectedOutcomes.success | "Removed JMS Queue $jmsQueueName from the module $jmsModuleName"
 
         // delete unexisting JMS queue
-        jmsQueueNames.nonexisting | jmsModuleNames.default     | expectedOutcomes.error   | "JMS Queue $jmsQueueName does not exist"
+        'C325198' | jmsQueueNames.nonexisting | jmsModuleNames.default     | expectedOutcomes.error   | "JMS Queue $jmsQueueName does not exist"
 
         // delete non-existing jms queue from non-existing jms module
-        jmsQueueNames.nonexisting | jmsModuleNames.nonexisting | expectedOutcomes.error   | "JMS Queue $jmsQueueName does not exist"
+        'C325199' | jmsQueueNames.nonexisting | jmsModuleNames.nonexisting | expectedOutcomes.error   | "JMS Queue $jmsQueueName does not exist"
     }
 
     def checkJMSQueueExists(jmsModuleName, jmsQueueName) {
