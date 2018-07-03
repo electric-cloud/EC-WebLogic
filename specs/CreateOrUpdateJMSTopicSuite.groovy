@@ -109,6 +109,9 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
 
     // Required
     @Shared
+    def caseId
+
+    @Shared
     def jmsTopicName
     @Shared
     def jmsModuleName = jmsModules.default
@@ -182,12 +185,20 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
      */
 
     @Unroll
-
-    def "Create and Update JMS Topic. Positive - procedure with params (Topic: #jmsTopicName, module: #jmsModuleName, update action: #updateAction) - procedure"() {
+    def "#caseId. Create and Update JMS Topic. Positive - procedure with params (Topic: #jmsTopicName, module: #jmsModuleName, update action: #updateAction) - procedure"() {
         setup: 'Define the parameters for Procedure running'
 
         jmsModuleName = jmsModules.default
         target = targets.default
+
+        if (jmsTopicName && jmsModuleName) {
+            deleteJMSTopic(jmsModuleName, jmsTopicName)
+        }
+
+        if (updateAction != '') {
+            createJMSTopic(jmsModuleName, jmsTopicName)
+            target = targets.update
+        }
 
         def runParams = [
             ecp_weblogic_additional_options: additionalOptions,
@@ -198,15 +209,6 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
             ecp_weblogic_jndi_name         : jndiName,
             ecp_weblogic_target_jms_server : target,
         ]
-
-
-        if (jmsTopicName && jmsModuleName) {
-            deleteJMSTopic(jmsModuleName, jmsTopicName)
-        }
-
-        if (updateAction != '') {
-            createJMSTopic(jmsModuleName, jmsTopicName)
-        }
 
         when: 'Procedure runs: '
 
@@ -225,31 +227,27 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
 //            assert jmsTopicExists(jmsModuleName)
         }
 
-        if (expectedJobDetailedResult) {
-            assert debugLog.contains(expectedJobDetailedResult)
-        }
-
         if (expectedSummaryMessage) {
             def upperStepSummary = getJobUpperStepSummary(result.jobId)
             assert upperStepSummary.contains(expectedSummaryMessage)
         }
 
         where: 'The following params will be: '
-        updateAction                    | jmsTopicName                                    | expectedOutcome          | expectedSummaryMessage                                                  | expectedJobDetailedResult
+        caseId    | updateAction                    | jmsTopicName                                    | expectedOutcome          | expectedSummaryMessage                                          | expectedJobDetailedResult
         // Create
-        updateActions.empty             | jmsTopicNames.default                           | expectedOutcomes.success | "Created JMS Topic $jmsTopicName"                                       | ''
+        'C325118' | updateActions.empty             | jmsTopicNames.default                           | expectedOutcomes.success | "Created JMS Topic $jmsTopicName"                               | ''
 
         // Empty Name
-        updateActions.empty             | jmsTopicNames.empty                             | expectedOutcomes.error   | "No JMS Topic name is provided"                                         | ''
+        'C325125' | updateActions.empty             | jmsTopicNames.empty                             | expectedOutcomes.error   | "No JMS Topic name is provided"                                 | ''
 
         // Update
-        updateActions.do_nothing        | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | "JMS Topic $jmsTopicName exists, no further action is required" | ''
-        updateActions.selective_update  | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | ''                                                              | "Updated JMS Topic"
-        updateActions.remove_and_create | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | ''                                                              | "Recreated JMS Topic"
+        'C325126' | updateActions.do_nothing        | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | "JMS Topic $jmsTopicName exists, no further action is required" | ''
+        'C325127' | updateActions.selective_update  | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | ''                                                              | "Updated JMS Topic"
+        'C325158' | updateActions.remove_and_create | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | ''                                                              | "Recreated JMS Topic"
     }
 
     @Unroll
-    def "Create and Update JMS Topic. Positive - procedure with params (Topic: #jmsTopicName, module: #jmsModuleName, update action: #updateAction) - application"() {
+    def "#caseId. Create and Update JMS Topic. Positive - procedure with params (Topic: #jmsTopicName, module: #jmsModuleName, update action: #updateAction) - application"() {
         setup: 'Define the parameters for Procedure running'
 
         jmsModuleName = jmsModules.default
@@ -299,21 +297,21 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        updateAction                    | jmsTopicName                                    | expectedOutcome          | expectedSummaryMessage                                                  | expectedJobDetailedResult
+        caseId    | updateAction                    | jmsTopicName                                    | expectedOutcome          | expectedSummaryMessage                                                  | expectedJobDetailedResult
         // Create
-        updateActions.empty             | jmsTopicNames.default                           | expectedOutcomes.success | "Created JMS Topic $jmsTopicName"                                       | ''
+        'C325170' | updateActions.empty             | jmsTopicNames.default                           | expectedOutcomes.success | "Created JMS Topic $jmsTopicName"                                       | ''
 
         // Empty Name
-        updateActions.empty             | jmsTopicNames.empty                             | expectedOutcomes.error   | "No JMS Topic name is provided"                                         | ''
+        'C325171' | updateActions.empty             | jmsTopicNames.empty                             | expectedOutcomes.error   | "No JMS Topic name is provided"                                         | ''
 
         // Update
-        updateActions.do_nothing        | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | "JMS Topic $jmsTopicName already exists, no further action is required" | ''
-        updateActions.selective_update  | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | ''                                                                      | "Updated JMS Topic"
-        updateActions.remove_and_create | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | ''                                                                      | "Recreated JMS Topic"
+        'C325172' | updateActions.do_nothing        | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | "JMS Topic $jmsTopicName already exists, no further action is required" | ''
+        'C325173' | updateActions.selective_update  | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | ''                                                                      | "Updated JMS Topic"
+        'C325174' | updateActions.remove_and_create | jmsTopicNames.default + randomize(updateAction) | expectedOutcomes.success | ''                                                                      | "Recreated JMS Topic"
     }
 
     @Unroll
-    def "#caseId. create with additional options #additionalOptions - procedure"() {
+    def "#caseId. Create with additional options #additionalOptions - procedure"() {
         setup: 'removing old topic'
         def jmsTopicName = jmsTopicNames.default
         def jmsModuleName = jmsModules.default
@@ -326,21 +324,24 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
 
         when: 'procedure runs'
         def result = runTestedProcedure(projectName, procedureName, runParams, getResourceName())
+
         then:
         assert result.outcome == expectedOutcomes.success
         logger.debug(result.logs)
         checkResourceProperties(jmsModuleName, jmsTopicName, 'Topic', additionalOptions)
+
         cleanup:
         deleteJMSTopic(jmsModuleName, jmsTopicName)
+
         where:
-        caseId | additionalOptions
-        '' | options.oneOption
-        '' | options.twoOptions
-        '' | options.topLevelOption
+        caseId    | additionalOptions
+        'C325159' | options.oneOption
+        'C325160' | options.twoOptions
+        'C325161' | options.topLevelOption
     }
 
     @Unroll
-    def "Create JMS Topic With Subdeployment ( target: #target, subdeployment: #subdeploymentName ) - procedure"() {
+    def "#caseId. Create JMS Topic With Subdeployment ( target: #target, subdeployment: #subdeploymentName ) - procedure"() {
         setup: 'Define the parameters for Procedure running'
 
         jmsModuleName = jmsModules.default
@@ -361,11 +362,9 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
         createJMSServer(target)
 
         when: 'Procedure runs: '
-
         def result = runTestedProcedure(projectName, procedureName, runParams, getResourceName())
 
         then: 'Wait until job run is completed: '
-
         String debugLog = result.logs
         println "Procedure log:\n$debugLog\n"
 
@@ -383,16 +382,15 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
         deleteSubDeployment(jmsModuleName, subdeploymentName)
 
         where: 'The following params will be: '
-        jmsTopicName          | target          | expectedOutcome          | expectedJobDetailedResult
+        caseId    | jmsTopicName          | target          | expectedOutcome          | expectedJobDetailedResult
 
         // Create
-        jmsTopicNames.default | targets.default | expectedOutcomes.success | "Created JMS Topic $jmsTopicName"
-
-        jmsTopicNames.default | targets.update  | expectedOutcomes.success | "Created JMS Topic $jmsTopicName"
+        'C325162' | jmsTopicNames.default | targets.default | expectedOutcomes.success | "Created JMS Topic $jmsTopicName"
+        'C325163' | jmsTopicNames.default | targets.update  | expectedOutcomes.success | "Created JMS Topic $jmsTopicName"
     }
 
     @Unroll
-    def "Update JMS Topic With Subdeployment ( target: #oldTarget -> #newTarget,update action: #updateAction) - procedure"() {
+    def "#caseId. Update JMS Topic With Subdeployment ( target: #oldTarget -> #newTarget,update action: #updateAction) - procedure"() {
         setup: 'Define the parameters for Procedure running'
 
         jmsTopicName = jmsTopicNames.default
@@ -427,11 +425,9 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
         assert result.outcome == 'success'
 
         when: 'Procedure runs: '
-
         result = runTestedProcedure(projectName, procedureName, secondRunParams, getResourceName())
 
         then: 'Wait until job run is completed: '
-
         String debugLog = result.logs
         println "Procedure log:\n$debugLog\n"
 
@@ -458,11 +454,11 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
         deleteSubDeployment(jmsModuleName, subdeploymentName)
 
         where: 'The following params will be: '
-        caseId | updateAction                    | oldTarget       | newTarget      | expectedOutcome          | expectedJobDetailedResult
+        caseId    | updateAction                    | oldTarget       | newTarget      | expectedOutcome          | expectedJobDetailedResult
 
         // Create
-       '' | updateActions.selective_update  | targets.default | targets.update | expectedOutcomes.success | "Updated JMS Topic ${jmsTopicNames.default}"
-       '' | updateActions.remove_and_create | targets.default | targets.update | expectedOutcomes.success | "Recreated JMS Topic ${jmsTopicNames.default}"
+        'C325168' | updateActions.selective_update  | targets.default | targets.update | expectedOutcomes.success | "Updated JMS Topic ${jmsTopicNames.default}"
+        'C325169' | updateActions.remove_and_create | targets.default | targets.update | expectedOutcomes.success | "Recreated JMS Topic ${jmsTopicNames.default}"
     }
 
 
