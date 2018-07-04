@@ -69,6 +69,8 @@ class DeleteJMSModuleSuite extends WebLogicHelper {
     /**
      * Test Parameters: for Where section
      */
+    @Shared
+    def caseId
 
     // Procedure params
     @Shared
@@ -155,13 +157,13 @@ class DeleteJMSModuleSuite extends WebLogicHelper {
             assert upperStepSummary.contains(expectedSummaryMessage)
         }
         where: 'The following params will be: '
-        jmsModuleName              | expectedOutcome          | expectedJobDetailedResult                         | expectedSummaryMessage
+        caseId | jmsModuleName              | expectedOutcome          | expectedJobDetailedResult                         | expectedSummaryMessage
 
         // delete JMS Module
-        jmsModuleNames.default     | expectedOutcomes.success | "JMS Module $jmsModuleName has been deleted"      | "Deleted JMS System Module $jmsModuleName"
+        'C325182' | jmsModuleNames.default     | expectedOutcomes.success | "JMS Module $jmsModuleName has been deleted"      | "Deleted JMS System Module $jmsModuleName"
 
         // delete non-existing jms module from non-existing connection factory
-        jmsModuleNames.nonexisting | expectedOutcomes.error   | "JMS System Module $jmsModuleName does not exist" | ''
+        'C325183' | jmsModuleNames.nonexisting | expectedOutcomes.error   | "JMS System Module $jmsModuleName does not exist" | ''
     }
 
     @Unroll
@@ -203,13 +205,13 @@ class DeleteJMSModuleSuite extends WebLogicHelper {
             assert !checkJMSModuleExists(jmsModuleName)
         }
         where: 'The following params will be: '
-        jmsModuleName              | expectedOutcome          | expectedJobDetailedResult                         | expectedSummaryMessage
+        caseId    | jmsModuleName              | expectedOutcome          | expectedJobDetailedResult                         | expectedSummaryMessage
 
         // delete JMS Module
-        jmsModuleNames.default     | expectedOutcomes.success | "JMS Module $jmsModuleName has been deleted"      | "Deleted JMS System Module $jmsModuleName"
+        'C325186' | jmsModuleNames.default     | expectedOutcomes.success | "JMS Module $jmsModuleName has been deleted"      | "Deleted JMS System Module $jmsModuleName"
 
         // delete non-existing jms module from non-existing connection factory
-        jmsModuleNames.nonexisting | expectedOutcomes.error   | "JMS System Module $jmsModuleName does not exist" | ''
+        'C325187' | jmsModuleNames.nonexisting | expectedOutcomes.error   | "JMS System Module $jmsModuleName does not exist" | ''
     }
 
     def checkJMSModuleExists(jmsModuleName) {

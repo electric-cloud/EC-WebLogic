@@ -64,6 +64,8 @@ class DeleteJMSServerSuite extends WebLogicHelper {
     /**
      * Test Parameters: for Where section
      */
+    @Shared
+    def caseId
 
     // Procedure params
     @Shared
@@ -81,9 +83,6 @@ class DeleteJMSServerSuite extends WebLogicHelper {
     def doSetupSpec() {
         setupResource()
         createConfig(CONFIG_NAME)
-
-        createJMSServer(jmsServerNames.default)
-//        createConnectionFactory(jmsServerNames.default, connectionFactories.correct)
 
         dslFile "dsl/procedures.dsl", [
             projectName  : projectName,
@@ -151,13 +150,13 @@ class DeleteJMSServerSuite extends WebLogicHelper {
             assert upperStepSummary.contains(expectedSummaryMessage)
         }
         where: 'The following params will be: '
-        jmsServerName              | expectedOutcome          | expectedJobDetailedResult
+        caseId    | jmsServerName              | expectedOutcome          | expectedJobDetailedResult
 
         // delete JMS Module
-        jmsServerNames.default     | expectedOutcomes.success | "Removed JMS Server $jmsServerName"
+        'C325200' | jmsServerNames.default     | expectedOutcomes.success | "Removed JMS Server $jmsServerName"
 
         // delete non-existing jms module from non-existing connection factory
-        jmsServerNames.nonexisting | expectedOutcomes.error   | "JMS Server $jmsServerName does not exist"
+        'C325201' | jmsServerNames.nonexisting | expectedOutcomes.error   | "JMS Server $jmsServerName does not exist"
     }
     @Unroll
     def "Delete JMS Module. (Server : #jmsServerName) - application"() {
@@ -198,13 +197,13 @@ class DeleteJMSServerSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        jmsServerName              | expectedOutcome          | expectedJobDetailedResult
+        caseId    | jmsServerName              | expectedOutcome          | expectedJobDetailedResult
 
         // delete JMS Module
-        jmsServerNames.default     | expectedOutcomes.success | "Removed JMS Server $jmsServerName"
+        'C325202' | jmsServerNames.default     | expectedOutcomes.success | "Removed JMS Server $jmsServerName"
 
         // delete non-existing jms module from non-existing connection factory
-        jmsServerNames.nonexisting | expectedOutcomes.error   | "JMS Server $jmsServerName does not exist"
+        'C325203' | jmsServerNames.nonexisting | expectedOutcomes.error   | "JMS Server $jmsServerName does not exist"
     }
 
     def checkJMSServerExists(jmsServerName) {

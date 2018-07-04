@@ -64,6 +64,8 @@ class DeleteJMSTopicSuite extends WebLogicHelper {
     /**
      * Test Parameters: for Where section
      */
+    @Shared
+    def caseId
 
     // Procedure params
     @Shared
@@ -154,13 +156,13 @@ class DeleteJMSTopicSuite extends WebLogicHelper {
             assert upperStepSummary.contains(expectedSummaryMessage)
         }
         where: 'The following params will be: '
-        jmsTopicName              | expectedOutcome          | expectedJobDetailedResult
+        caseId    | jmsTopicName              | expectedOutcome          | expectedJobDetailedResult
 
         // delete JMS Module
-        jmsTopicNames.default     | expectedOutcomes.success | "Removed JMS Topic $jmsTopicName"
+        'C325204' | jmsTopicNames.default     | expectedOutcomes.success | "Removed JMS Topic $jmsTopicName"
 
         // delete non-existing jms module from non-existing connection factory
-        jmsTopicNames.nonexisting | expectedOutcomes.error   | "JMS Topic $jmsTopicName does not exist"
+        'C325205' | jmsTopicNames.nonexisting | expectedOutcomes.error   | "JMS Topic $jmsTopicName does not exist"
     }
 
     @Unroll
@@ -202,13 +204,13 @@ class DeleteJMSTopicSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        jmsTopicName              | expectedOutcome          | expectedJobDetailedResult
+        caseId    | jmsTopicName              | expectedOutcome          | expectedJobDetailedResult
 
         // delete JMS Module
-        jmsTopicNames.default     | expectedOutcomes.success | "Removed JMS Topic $jmsTopicName"
+        'C325206' | jmsTopicNames.default     | expectedOutcomes.success | "Removed JMS Topic $jmsTopicName"
 
         // delete non-existing jms module from non-existing connection factory
-        jmsTopicNames.nonexisting | expectedOutcomes.error   | "JMS Topic $jmsTopicName does not exist"
+        'C325207' | jmsTopicNames.nonexisting | expectedOutcomes.error   | "JMS Topic $jmsTopicName does not exist"
     }
 
     def checkJMSTopicExists(jmsTopicName) {
