@@ -107,6 +107,8 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
     def caseId
     @Shared
     def dslFileName
+    @Shared
+    def procName
 
     // Procedure params
     // Required
@@ -414,7 +416,7 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
     }
 
     @Unroll
-    def '#caseId. multi-step procedures #dslFileName #procName'() {
+    def '#caseId. multi-step procedures #dslFileName #procName - procedure'() {
         given:
         def queueName = 'test queue'
         def moduleName = dslFileName
@@ -447,9 +449,9 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
         deleteJMSModule(moduleName)
 
         where:
-        caseId | dslFileName         | procName
-        ''     | 'retargetJMSQueue'  | 'Retarget JMS Queue with recreation'
-        ''     | 'updateQueueSDName' | 'Update SD Name for Queue (Selective Update)'
+        caseId    | dslFileName         | procName
+        'C325221' | 'retargetJMSQueue'  | 'Retarget JMS Queue with recreation'
+        'C325222' | 'updateQueueSDName' | 'Update SD Name for Queue (Selective Update)'
     }
 
     def jmsQueueExists(def moduleName, def name) {

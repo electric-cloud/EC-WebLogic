@@ -189,11 +189,11 @@ class StopAppSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        caseId    | wlstAbsPath      | appName          | additionalOptions | versionIdentifier        | expectedOutcome        | expectedSummaryMessage
-        wlstPath  | APPLICATION_NAME | ''               | ''                | expectedOutcomes.success | ''
+        caseId    | wlstAbsPath | appName          | additionalOptions | versionIdentifier | expectedOutcome          | expectedSummaryMessage
+        'C325210' | wlstPath    | APPLICATION_NAME | ''                | ''                | expectedOutcomes.success | ''
 
         // Empty wlst path should return "File  doesn't exist"
-        'C325210' | ''               | APPLICATION_NAME | ''                | ''                       | expectedOutcomes.error | expectedSummaryMessages.file_not_exists
+        'C325223' | ''          | APPLICATION_NAME | ''                | ''                | expectedOutcomes.error   | expectedSummaryMessages.file_not_exists
     }
 
     @Unroll
