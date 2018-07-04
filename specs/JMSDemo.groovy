@@ -33,6 +33,7 @@ class JMSDemo extends WebLogicHelper {
     @Shared def tierMapName = 'WebLogic'
 
     def doSetupSpec() {
+        setupResource()
         createConfig(CONFIG_NAME)
         deleteProject(projectName)
         publishArtifact(artifactName, '1.0.0', 'jms-sample.war')
