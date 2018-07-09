@@ -133,6 +133,9 @@ class StartAppSuite extends WebLogicHelper {
 //        deleteProject(projectName)
     }
 
+    @Shared
+    def caseId
+
     /**
      * Positive Scenarios
      */
@@ -193,8 +196,8 @@ class StartAppSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        wlstabspath | appName          | additionalOptions | versionIdentifier | expectedOutcome          | expectedSummaryMessage
-        wlstPath    | APPLICATION_NAME | ''                | ''                | expectedOutcomes.success | ''
+        caseId    | wlstabspath | appName          | additionalOptions | versionIdentifier | expectedOutcome          | expectedSummaryMessage
+        'C325208' | wlstPath    | APPLICATION_NAME | ''                | ''                | expectedOutcomes.success | ''
     }
 
     @Unroll
@@ -247,7 +250,7 @@ class StartAppSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        wlstabspath | appName          | additionalOptions | versionIdentifier | expectedOutcome          | expectedSummaryMessage
-        wlstPath    | APPLICATION_NAME | ''                | ''                | expectedOutcomes.success | ''
+        caseId    | wlstabspath | appName          | additionalOptions | versionIdentifier | expectedOutcome          | expectedSummaryMessage
+        'C325209' | wlstPath    | APPLICATION_NAME | ''                | ''                | expectedOutcomes.success | ''
     }
 }

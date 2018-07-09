@@ -74,6 +74,10 @@ class UndeployAppSuite extends WebLogicHelper {
     /**
      * Test Parameters: for Where section
      */
+
+    @Shared
+    def caseId
+
     // Procedure params
     def wlstAbsPath
     def appName
@@ -183,8 +187,8 @@ class UndeployAppSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        wlstAbsPath | appName          | retireGracefully         | expectedOutcome
-        wlstPath    | APPLICATION_NAME | checkBoxValues.unchecked | expectedOutcomes.success
+        caseId    | wlstAbsPath | appName          | retireGracefully         | expectedOutcome
+        'C325214' | wlstPath    | APPLICATION_NAME | checkBoxValues.unchecked | expectedOutcomes.success
     }
 
     @Unroll
@@ -241,7 +245,7 @@ class UndeployAppSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        wlstAbsPath | appName          | retireGracefully         | expectedOutcome
-        wlstPath    | APPLICATION_NAME | checkBoxValues.unchecked | expectedOutcomes.success
+        caseId    | wlstAbsPath | appName          | retireGracefully         | expectedOutcome
+        'C325215' | wlstPath    | APPLICATION_NAME | checkBoxValues.unchecked | expectedOutcomes.success
     }
 }

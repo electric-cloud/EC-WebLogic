@@ -67,6 +67,9 @@ class DeployAppSuite extends WebLogicHelper {
     /**
      * Test Parameters: for Where section
      */
+    @Shared
+    def caseId
+
     // Procedure params
     def wlstabspath
     def appname
@@ -138,7 +141,7 @@ class DeployAppSuite extends WebLogicHelper {
         ]
 
         dslFile('dsl/Application/DeployApp.dsl', [
-            resourceName   : getResourceName(),
+            resourceName: getResourceName(),
         ])
     }
 
@@ -148,13 +151,6 @@ class DeployAppSuite extends WebLogicHelper {
 
     def doCleanupSpec() {
 //        deleteProject(projectName)
-//        dsl("""
-//          deleteApplication(projectName : "$projectName", applicationName : "$projectName")
-//          deleteEnvironment(projectName : "$projectName", environmentName : "$projectName")
-//        """)
-        dsl("""
-         deleteResource(resourceName : "$resourceName")
-        """)
     }
 
     /**
@@ -162,7 +158,6 @@ class DeployAppSuite extends WebLogicHelper {
      */
 
     @Unroll
-
     def "Deploy Application. with server '#targets'. Expected : #expectedOutcome : #expectedSummaryMessage"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
@@ -221,16 +216,15 @@ class DeployAppSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        wlstabspath | appname          | targets       | is_library               | expectedOutcome          | expectedSummaryMessage
+        caseId    | wlstabspath | appname          | targets       | is_library               | expectedOutcome          | expectedSummaryMessage
         // Simple positive
-        wlstPath    | APPLICATION_NAME | ''            | ''                       | expectedOutcomes.success | ''
+        'C325212' | wlstPath    | APPLICATION_NAME | ''            | ''                       | expectedOutcomes.success | ''
 
         // with TargetServerSpecified
-        wlstPath    | APPLICATION_NAME | 'AdminServer' | checkBoxValues.unchecked | expectedOutcomes.success | ''
+        'C325217' | wlstPath    | APPLICATION_NAME | 'AdminServer' | checkBoxValues.unchecked | expectedOutcomes.success | ''
 
         // Empty wlst path should return "File  doesn't exist"
-        ''          | APPLICATION_NAME | ''            | checkBoxValues.unchecked | expectedOutcomes.error   | expectedSummaryMessages.file_not_exists
-
+        'C325219' | ''          | APPLICATION_NAME | ''            | checkBoxValues.unchecked | expectedOutcomes.error   | expectedSummaryMessages.file_not_exists
     }
 
 
@@ -275,7 +269,7 @@ class DeployAppSuite extends WebLogicHelper {
                     processName    : '$procedureName',
                     actualParameter: $paramsStr
                 )
-            """, [resourceName : getResourceName()])
+            """, [resourceName: getResourceName()])
 
         then: 'wait until process finishes'
         waitUntil {
@@ -293,12 +287,12 @@ class DeployAppSuite extends WebLogicHelper {
         }
 
         where:
-        wlstabspath | appname          | targets       | is_library               | expectedOutcome          | expectedSummaryMessage
+        caseId    | wlstabspath | appname          | targets       | is_library               | expectedOutcome          | expectedSummaryMessage
         // Simple positive
-        wlstPath    | APPLICATION_NAME | ''            | ''                       | expectedOutcomes.success | ''
+        'C325213' | wlstPath    | APPLICATION_NAME | ''            | ''                       | expectedOutcomes.success | ''
 
         // with TargetServerSpecified
-        wlstPath    | APPLICATION_NAME | 'AdminServer' | checkBoxValues.unchecked | expectedOutcomes.success | ''
+        'C325220' | wlstPath    | APPLICATION_NAME | 'AdminServer' | checkBoxValues.unchecked | expectedOutcomes.success | ''
     }
 
 }

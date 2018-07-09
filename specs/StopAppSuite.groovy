@@ -65,6 +65,9 @@ class StopAppSuite extends WebLogicHelper {
     /**
      * Test Parameters: for Where section
      */
+    @Shared
+    def caseId
+
     // Procedure params
     def configName
     def wlstAbsPath
@@ -186,11 +189,11 @@ class StopAppSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        wlstAbsPath | appName          | additionalOptions | versionIdentifier | expectedOutcome          | expectedSummaryMessage
-        wlstPath    | APPLICATION_NAME | ''                | ''                | expectedOutcomes.success | ''
+        caseId    | wlstAbsPath | appName          | additionalOptions | versionIdentifier | expectedOutcome          | expectedSummaryMessage
+        'C325210' | wlstPath    | APPLICATION_NAME | ''                | ''                | expectedOutcomes.success | ''
 
         // Empty wlst path should return "File  doesn't exist"
-        ''          | APPLICATION_NAME | ''                | ''                | expectedOutcomes.error   | expectedSummaryMessages.file_not_exists
+        'C325223' | ''          | APPLICATION_NAME | ''                | ''                | expectedOutcomes.error   | expectedSummaryMessages.file_not_exists
     }
 
     @Unroll
@@ -241,7 +244,7 @@ class StopAppSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        wlstAbsPath | appName          | additionalOptions | versionIdentifier | expectedOutcome          | expectedSummaryMessage
-        wlstPath    | APPLICATION_NAME | ''                | ''                | expectedOutcomes.success | ''
+        caseId    | wlstAbsPath | appName          | additionalOptions | versionIdentifier | expectedOutcome          | expectedSummaryMessage
+        'C325211' | wlstPath    | APPLICATION_NAME | ''                | ''                | expectedOutcomes.success | ''
     }
 }
