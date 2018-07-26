@@ -25,140 +25,149 @@ password = r'''
 [% password %]
 '''.strip()
 
-admin_url = r'''
+adminUrl = r'''
 [% admin_url %]
 '''.strip()
 
-ds_name = r'''
-[% ds_name %]
+dsName = r'''
+[% dataSourceName %]
 '''.strip()
 
-server_name = r'''
-[% server_name %]
+databaseName = r'''
+[% databaseName %]
 '''.strip()
 
-ds_jndi_name = r'''
-[% ds_jndi_name %]
+dsDriverClass = r'''
+[% dataSourceDriverClass  %]
 '''.strip()
 
-ds_driver_class = r'''
-[% ds_driver_class %]
+dsUrl = r'''
+[% databaseUrl %]
 '''.strip()
 
-ds_driver_url = r'''
-[% ds_driver_url %]
+dsJndi = r'''
+[% jndiName %]
 '''.strip()
 
-ds_user_name = r'''
-[% ds_user_name %]
+targets = r'''
+[% targets %]
 '''.strip()
 
-ds_password = r'''
-[% ds_password %]
+updateAction = r'''
+[% updateAction %]
+'''.strip()
+updateAction = readString(updateAction, 'do_nothing')
+
+additionalOptions = r'''
+[% additionalOptions %]
 '''.strip()
 
-ds_initial_poolsize = r'''
-[% ds_initial_poolsize %]
-'''.strip()
-ds_intial_poolsize = int(ds_initial_poolsize)
-
-ds_min_poolsize = r'''
-[% ds_min_poolsize %]
-'''.strip()
-ds_min_poolsize = int(ds_min_poolsize)
-
-ds_max_poolsize = r'''
-[% ds_max_poolsize %]
-'''.strip()
-ds_max_poolsize = int(ds_max_poolsize)
-
-ds_test_table = r'''
-[% ds_test_table %]
+dsUsername = r'''
+[% dataSourceCredentialsUsername %]
 '''.strip()
 
-## end of parameters
-mode = 'create'
-connect(username, password, admin_url)
-startChanges()
-print "Creating datasource"
+dsPassword = r'''
+[% dataSourceCredentialsPassword %]
+'''.strip()
 
-allServers=domainRuntimeService.getServerRuntimes();
-allJDBCResources = cmo.getJDBCSystemResources()
-print allJDBCResources
 
-globalJdbcResource = None
-for jdbcResource in allJDBCResources:
-    if jdbcResource.getName() == ds_name:
-        mode = 'edit'
-        globalJdbcResource = jdbcResource
+required(dsName, 'Datasource name is not provided')
+required(dsDriverClass, 'Datasource Driver class is not provided')
+required(dsJndi, 'JNDI is not provided')
+required(dsUrl, 'Datasource URL is not provided')
+required(dsUsername, 'Username is not provided')
+required(dsPassword, 'Password is not provided')
+
+connect(username, password, adminUrl)
+
+successMessage = ''
+update = False
+datasource = getMBean(getDatasourcePath(dsName))
+# Initial processing
+if datasource != None:
+    if updateAction == REMOVE_AND_CREATE:
+        successMessage = 'Recreated datasource %s' % dsName
+        try:
+            startChanges()
+            deleteDatasource(dsName)
+            safeCommitChanges()
+            print_info("Removed datasource %s" % dsName)
+        except Exception, e:
+            discardAndExit("Failed to delete datasource: " + str(e))
+
+    elif updateAction == DO_NOTHING:
+        print_summary("Datasource %s exists, no further action is required" % (dsName))
+        sys.exit(0)
+    else:
+        successMessage = 'Updated Datasource %s' % dsName
+        update = True
+        print_info("Updating datasource %s" % dsName)
+else:
+    print_info("Datasource %s does not exist" % dsName)
 
 try:
-    if mode == 'edit':
-        print "Datasource %s already exists, editing." % (ds_name)
-    else:
-        cd('/')
-        globalJdbcResource = create(ds_name, 'JDBCSystemResource')
-        globalJdbcResource.getJDBCResource().setName(ds_name)
+    startChanges()
+    datasource = getMBean(getDatasourcePath(dsName))
+    systemResources = getMBean('/JDBCSystemResources')
+    if datasource == None:
+        datasource = systemResources.createJDBCSystemResource(dsName)
+        datasource.getJDBCResource().setName(dsName)
 
-    # starting from here we have globalJdbcResource variable which is referencing new/old ds.
-    targetCmo = cmo
-    # Configure JNDI
-    theresource = globalJdbcResource.getJDBCResource()
-    jdbcresourceparams = theresource.getJDBCDataSourceParams()
-
-    # setting jndi name only if it is present
-    if ds_jndi_name:
-        jdbcresourceparams.setJNDINames([ds_jndi_name])
-    # jdbcresourceparams.setGlobalTransactionsProtocol(‚TwoPhaseCommit‘)
-
-    # Configure the connection pool
-    pool = theresource.getJDBCConnectionPoolParams()
-    # print "Initial poolsize '%s'" % (ds_initial_poolsize)
-    if ds_initial_poolsize:
-        pool.setInitialCapacity(int(ds_initial_poolsize))
-    if ds_max_poolsize:
-        pool.setMaxCapacity(int(ds_max_poolsize))
-    if ds_min_poolsize:
-        pool.setMinCapacity(int(ds_min_poolsize))
-    if ds_test_table:
-        pool.setTestTableName(ds_test_table)
-
-    ### Following parameters are possible to add, they will be added later.
-    # pool.setStatementCacheType(cachetype)
-    # pool.setStatementCacheSize(cachesize)
-    # pool.setTestConnectionsOnReserve(testreserve)
-    # pool.setTestFrequencySeconds(testfreq)
-    # pool.setSecondsToTrustAnIdlePoolConnection(trustidle)
-    # pool.setShrinkFrequencySeconds(shrink)
-    ### End of parameters.
-    
-    # Configure JDBC Driver:
-    driver = theresource.getJDBCDriverParams()
-    driver.setDriverName(ds_driver_class)
-    driver.setUrl(ds_driver_url)
-    driver.setPassword(ds_password)
+    resource = datasource.getJDBCResource()
+    driver = resource.getJDBCDriverParams()
     driverprops = driver.getProperties()
-    if mode == 'edit':
-        driverprops.destroyProperty(driverprops.lookupProperty('user'))
+    params = resource.getJDBCDataSourceParams()
 
-    userprop = driverprops.createProperty('user')
-    userprop.setValue(ds_user_name)
+    props = {'user': dsUsername}
+    if databaseName:
+        props['databaseName'] = databaseName
 
-    # Set data source target
-    # globalJdbcResource.addTarget(targetCmo)
-    cd ('/')
-    cd('/SystemResources/' + ds_name )
-    set('Targets',jarray.array([ObjectName('com.bea:Name=' + server_name + ',Type=Server')],ObjectName))
-    # set('Targets',jarray.array([ObjectName('com.bea:Name=AdminServer,Type=Server')],ObjectName))
-    # arr = jarray.array([ObjectName('com.bea:Name=AdminServer,Type=Server')], ObjectName)
-    # print arr
-    # set('Targets', arr)
+    # Updating credentials
+    # TODO update if changed
+    driver.setPassword(dsPassword)
+    # TODO encryption
+    print_debug("Set password")
+
+    for propName, propValue in props.items():
+        if driverprops.lookupProperty(propName):
+            driverprops.destroyProperty(driverprops.lookupProperty(propName))
+        prop = driverprops.createProperty(propName)
+        prop.setValue(propValue)
+        print_debug('Set ' + propName + ' to ' + propValue)
+
+    if not update:
+        driver.setUrl(dsUrl)
+        print_debug("Set url to %s" % dsUrl)
+        driver.setDriverName(dsDriverClass)
+        print_debug("Set driver class to %s" % dsDriverClass)
+        params.setJNDINames([dsJndi])
+        print_debug("Set JNDI to %s" % dsJndi)
+
+
+    if targets:
+        newTargets = stringToTargetList(targets)
+        rebuildTargetList(newTargets, datasource.getTargets(), datasource)
+    else:
+        warn("No targets are provided, the datasource will not be deployed")
+
+    # wls:/base_domain/serverConfig/JDBCSystemResources/my_datasource/Resource/my_datasource/JDBCConnectionPoolParams/my_datasource> ls()
+    # Additional Options come in form Category.Subcategory.Option=value
+    if additionalOptions:
+        options = splitSeparatedString(additionalOptions, '\\n+')
+        for optionLine in options:
+            (categories, value) = re.split('=', optionLine)
+            parts = re.split('\\.', categories)
+            optionName = parts.pop()
+            propertyPath = '/JDBCSystemResources/' + dsName + '/' + '/'.join(map(lambda x: x + '/' + dsName, parts))
+            cd(propertyPath)
+            set(optionName, value)
+            print_info("Setting %s/%s to %s" % (propertyPath, optionName, value))
+
 
 except WLSTException, e:
-    print "Failed to create/edit datasource"
-    print str(e)
-    discardChanges()
-    sys.exit(1)
+    discardAndExit("Failed to create Datasource %s" % dsName)
 
-# everyghing is fine, commiting
-commitChanges()
+safeCommitChanges()
+if successMessage != '':
+    print_summary(successMessage)
+

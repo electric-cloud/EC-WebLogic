@@ -16,6 +16,7 @@
 
 no warnings qw/redefine/;
 use XML::Simple;
+
 use Data::Dumper;
 my %startApp = (
     label       => "WebLogic - Start Application",
@@ -347,6 +348,7 @@ my %deleteJMSServer = (
     category    => "Application Server"
 );
 
+
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/EC-WebLogic - Start App");
 $batch->deleteProperty(
@@ -469,6 +471,8 @@ $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update JMS Server");
 $batch->deleteProperty(
     "/server/ec_customEditors/pickerStep/WebLogic - Delete JMS Server");
+$batch->deleteProperty(
+    "/server/ec_customEditors/pickerStep/WebLogic - Create or Update Datasource");
 
 
 @::createStepPickerSteps = (
@@ -496,7 +500,8 @@ $batch->deleteProperty(
     \%createOrUpdateJMSTopic,      \%deleteJMSTopic,
     \%createOrUpdateJMSModule,     \%deleteJMSModule,
     \%createOrUpdateJMSModuleSubdeployment, \%deleteJMSModuleSubdeployment,
-    \%createOrUpdateJMSServer, \%deleteJMSServer, \%deleteJMSQueue
+    \%createOrUpdateJMSServer, \%deleteJMSServer, \%deleteJMSQueue,
+    \%createOrUpdateDatasource
 );
 
 if ( $upgradeAction eq "upgrade" ) {
@@ -1019,6 +1024,14 @@ if ( $upgradeAction eq "upgrade" ) {
                 {
                     procedureName => 'DeleteJMSServer',
                     stepName      => 'DeleteJMSServer'
+                }
+            );
+            $batch->attachCredential(
+                "\$[/plugins/$pluginName/project]",
+                $cred,
+                {
+                    procedureName => 'CreateOrUpdateDatasource',
+                    stepName      => 'CreateOrUpdateDatasource'
                 }
             );
         }

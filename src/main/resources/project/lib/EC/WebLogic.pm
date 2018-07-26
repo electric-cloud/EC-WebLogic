@@ -379,5 +379,80 @@ sub get_wlst_path {
     $self->bail_out("WLST Path was not provided");
 }
 
+
+sub run_jython_step {
+    my ($self) = @_;
+
+    my $params = $self->get_step_parameters;
+    my $config = $self->get_credentials($params->{configname});
+    if ($config->{java_home}) {
+        $self->out(1, 'JAVA_HOME was provided');
+    }
+    my $render_params = {
+        username     => $config->{user},
+        password     => $config->{password},
+        weblogic_url => $config->{weblogic_url},
+        admin_url    => $config->{weblogic_url},
+    };
+    $render_params = { %$params, %$render_params };
+    my $wlst_path = $self->get_wlst_path();
+
+    my $step_name = $self->ec->getProperty('/myStep/name')->findvalue('//value')->string_value;
+    my $replace = sub {
+        my ($letter) = @_;
+        return '_' . lc($letter)
+    };
+    $step_name = lcfirst($step_name);
+    $step_name =~ s/([A-Z])/$replace->($1)/ge;
+    my $template_path = "/myProject/jython/$step_name.jython";
+    my $template = $self->render_template_from_property($template_path, $render_params);
+    $self->out(2, "Generated script:\n", numbered_lines($template));
+
+    my $res = $self->execute_jython_script(
+        shell          => $wlst_path,
+        script_path    => File::Spec->catfile($ENV{COMMANDER_WORKSPACE}, 'exec.jython'),
+        script_content => $template,
+    );
+    $self->process_response($res);
+}
+
+sub numbered_lines {
+    my ($text) = @_;
+
+    my @lines = split(/\n/, $text);
+    my $counter = 1;
+    @lines = map { $counter ++ . ') ' . $_ } @lines;
+    return join("\n", @lines);
+}
+
+
+sub get_step_parameters {
+    my ($self) = @_;
+
+    my $params = {};
+    my $procedure_name = $self->ec->getProperty('/myProcedure/name')->findvalue('//value')->string_value;
+    my $xpath = $self->ec->getFormalParameters({projectName => '@PLUGIN_NAME@', procedureName => $procedure_name});
+    for my $param ($xpath->findnodes('//formalParameter')) {
+        my $name = $param->findvalue('formalParameterName')->string_value;
+        my $value = $self->get_param($name);
+
+        my $name_in_list = $name;
+        $name_in_list =~ s/ecp_weblogic_//;
+        if ($param->findvalue('type')->string_value eq 'credential') {
+            my $cred = $self->ec->getFullCredential($value);
+            my $username = $cred->findvalue('//userName')->string_value;
+            my $password = $cred->findvalue('//password')->string_value;
+
+            $params->{$name_in_list . 'Username'} = $username;
+            $params->{$name_in_list . 'Password'} = $password;
+        }
+        else {
+            $params->{$name_in_list} = EC::Plugin::Core::trim_input($value);
+            $self->out(1, qq{Got parameter "$name" with value "$value"\n});
+        }
+    }
+    return $params;
+}
+
 1;
 

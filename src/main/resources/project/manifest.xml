@@ -724,6 +724,10 @@
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_connection_factory.jython"]/value</xpath>
   </file>
   <file>
+    <path>jython/create_or_update_datasource.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_datasource.jython"]/value</xpath>
+  </file>
+  <file>
     <path>jython/delete_connection_factory.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_connection_factory.jython"]/value</xpath>
   </file>
