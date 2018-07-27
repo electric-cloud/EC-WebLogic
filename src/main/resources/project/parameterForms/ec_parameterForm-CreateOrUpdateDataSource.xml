@@ -16,7 +16,7 @@ limitations under the License.
 
 -->
 <editor>
-    <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateDatasource</help>
+    <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateOrUpdateDatasource</help>
 <formElement>
     <type>entry</type>
     <label>Configuration:</label>
@@ -31,95 +31,85 @@ limitations under the License.
 </formElement>
 <formElement>
     <type>entry</type>
-    <label>WLST Absolute Path:</label>
-    <property>wlstabspath</property>
-    <required>1</required>
-    <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
-</formElement>
-<formElement>
-    <type>entry</type>
     <label>Datasource Name:</label>
-    <property>dsname</property>
-    <documentation>A unique name that identifies this Datasource in the WebLogic domain.</documentation>
+    <property>ecp_weblogic_dataSourceName</property>
+    <documentation>Unique name of the JDBC generic Data Source to be created.</documentation>
     <required>1</required>
 </formElement>
 <formElement>
     <type>entry</type>
-    <label>Server Instance:</label>
-    <property>target</property>
-    <documentation>Instance name of the Server to include the Datasource. i.e: 'AdminServer'.</documentation>
+    <label>DataSource Driver Class:</label>
+    <property>ecp_weblogic_dataSourceDriverClass</property>
+    <documentation>The full package name of JDBC driver class used to create the physical database connections in the connection pool. (Note that this driver class must be in the classpath of every server to which it is targeted/deployed).</documentation>
     <required>1</required>
 </formElement>
 <formElement>
     <type>entry</type>
-    <label>Datasource JNDI:</label>
-    <property>jndiname</property>
-    <documentation>
-        The JNDI path to where this Datasource is bound. By default, the JNDI name is the name of the Datasource. Applications that look up the JNDI path will get a "javax.sql.Datasource" instance that corresponds to this Datasource.
-    </documentation>
-    <required>0</required>
-</formElement>
-<formElement>
-    <type>entry</type>
-    <label>Datasource Driver Class:</label>
-    <property>driverclass</property>
-    <documentation>
-        The full package name of JDBC driver class used to create the physical database connections in the connection pool. (Note that this driver class must be in the classpath of any server to which it is deployed).
-    </documentation>
+    <label>Database URL:</label>
+    <property>ecp_weblogic_databaseUrl</property>
+    <htmlDocumentation>The JDBC URL of the database to connect to. The format of the URL varies by JDBC driver. The URL is passed to the JDBC driver to create the physical database connections. These are some examples.
+jdbc:spssoem:mysql://&lt;host&gt;:&lt;port&gt;;DatabaseName=&lt;database&gt;
+jdbc:spssoem:oracle://&lt;host&gt;:&lt;port&gt;;SID=&lt;database&gt;[;AuthenticationMethod=kerberos].</htmlDocumentation>
     <required>1</required>
 </formElement>
 <formElement>
     <type>entry</type>
-    <label>Datasource URL:</label>
-    <property>driverurl</property>
-    <documentation>
-    The URL of the database to connect to. The format of the URL varies by JDBC driver. The URL is passed to the JDBC driver to create the physical database connections.
-    </documentation>
+    <label>JNDI Name:</label>
+    <property>ecp_weblogic_jndiName</property>
+    <documentation>The JNDI path to where this Datasource is bound. For example jdbc/MYDS
+By default, the JNDI name is the name of the Datasource. Applications that look up the JNDI path will get a "javax.sql.Datasource" instance that corresponds to this Datasource.</documentation>
     <required>1</required>
 </formElement>
 <formElement>
     <type>credential</type>
     <label>Datasource Credentials:</label>
-    <property>ds_credential</property>
-    <documentation>
-        Credentials for database to esablish connection.
-    </documentation>
-    <required>0</required>
+    <property>ecp_weblogic_dataSourceCredentials</property>
+    <documentation>Username and password for the Database.</documentation>
+    <required>1</required>
 </formElement>
 <formElement>
     <type>entry</type>
-    <label>Initial Pool Size:</label>
-    <property>ds_initial_poolsize</property>
-    <documentation>
-        Initial size of connection pool.
-    </documentation>
+    <label>Database Name:</label>
+    <property>ecp_weblogic_databaseName</property>
+    <documentation>Name of the Database/Default Schema to which the Database connection is to. Note that this may be relevant to MySQL (for example) and in general may not be necessary for all Databases. Further this name can be mentioned as part of the JDBC URL above. There is as such no need to use this parameter if it is already defined in the JDBC URL like above.</documentation>
     <required>0</required>
 </formElement>
 <formElement>
-    <type>entry</type>
-    <label>Minimal Pool Size:</label>
-    <property>ds_min_poolsize</property>
-    <documentation>
-        Minimal size of connection pool.
-    </documentation>
+    <type>textarea</type>
+    <label>Target Server List:</label>
+    <property>ecp_weblogic_targets</property>
+    <documentation>A list of comma separated list of Servers on which the Data Source should be targeted. If targets are not specified, Data Source will be created but not deployed.</documentation>
     <required>0</required>
 </formElement>
 <formElement>
-    <type>entry</type>
-    <label>Maximal Pool Size:</label>
-    <property>ds_max_poolsize</property>
-    <documentation>
-        Maximal size of connection pool.
-    </documentation>
+    <type>select</type>
+    <label>Update Action:</label>
+    <property>ecp_weblogic_updateAction</property>
+    <htmlDocumentation>This parameter controls as to what the Update Action should be when a JMS Queue with the same name exists:<br/>
+<b>Do Nothing (Default)</b> - The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.<br/>
+<b>Remove and Create</b> - The procedure would remove existing JMS Queue and recreate it based on new parameters passed.<br/>
+Selective Update - The procedure would update existing DataSource credentials and Server Target List.
+</htmlDocumentation>
     <required>0</required>
+    <value>do_nothing</value>
+    <option>
+        <name>Do Nothing</name>
+        <value>do_nothing</value>
+    </option>
+    <option>
+        <name>Remove and Create</name>
+        <value>remove_and_create</value>
+    </option>
+    <option>
+        <name>Selective Update</name>
+        <value>selective_update</value>
+    </option>
 </formElement>
 <formElement>
-    <type>entry</type>
-    <label>Test SQL Statement:</label>
-    <property>ds_test_table</property>
-    <documentation>
-        SQL Statement to test connection to database.
-    </documentation>
+    <type>textarea</type>
+    <label>Additional Options:</label>
+    <property>ecp_weblogic_additionalOptions</property>
+    <documentation>Use this option to specify optional parameters for example initial pool size, min pool size, max pool size, validation SQL etc., At a minimum we should show case and test the validation SQL and pool size, going against MariaDB or MySQL.</documentation>
     <required>0</required>
 </formElement>
 </editor>

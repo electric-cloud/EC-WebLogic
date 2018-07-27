@@ -87,6 +87,9 @@ def getJMSModulePath(jms_module_name):
 def getConnectionFactoryPath(jms_module_name,cf_name):
     return "/JMSSystemResources/%s/JMSResource/%s/ConnectionFactories/%s" % (jms_module_name, jms_module_name, cf_name)
 
+def getDatasourcePath(dsName):
+    return "/JDBCSystemResources/%s" % dsName
+
 def getSubDeploymentPath(jms_module_name, subdeployment_name):
     return "/JMSSystemResources/%s/SubDeployments/%s" % (jms_module_name, subdeployment_name)
 
@@ -279,10 +282,26 @@ def commitChanges(lockTimeout = None):
     params = {'block': 'true'}
     if lockTimeout:
         params['timeout'] = lockTimeout
+
     activate(**params)
     if isNamedSessionEnabled():
         print "Terminating edit session %s" % (randSessionName)
         terminateEditSession(randSessionName)
+
+# A new method for wrapping around an error
+def safeCommitChanges(lockTimeout = None):
+    try:
+        validate()
+        save()
+        params = {'block': 'true'}
+        if lockTimeout:
+            params['timeout'] = lockTimeout
+        activate(**params)
+        if isNamedSessionEnabled():
+            print "Terminating edit session %s" % (randSessionName)
+            terminateEditSession(randSessionName)
+    except Exception, e:
+        discardAndExit('Failed to activate changes: ' + str(e))
 
 
 def discardChanges():
@@ -652,6 +671,17 @@ def deleteJMSServer(jmsServerName):
     else:
         print_info("JMS Server %s does not exist" % jmsServerName)
 
+def deleteDatasource(dsName):
+    if isEmpty(dsName):
+        raise Exception('Datasource name is not provided')
+    bean = getMBean(getDatasourcePath(dsName))
+    if bean != None:
+        parentBean = getMBean('/JDBCSystemResources')
+        parentBean.destroyJDBCSystemResource(bean)
+        print_info("Removed Datasource %s" % dsName)
+    else:
+        print_info("Datasource %s does not exist" % dsName)
+
 def getTargetBean(targetName):
     if isEmpty(targetName):
         raise Exception('Target name is not provided')
@@ -679,6 +709,11 @@ def targetName(targetBean, failIfNone = False):
             return "None"
     return str(targetBean.type) + ' "' + str(targetBean.name) + '"'
 
+
+def stringToTargetList(targetsNamesString):
+    targetsNames = splitSeparatedString(targetsNamesString)
+    targetList = map(lambda x: getTargetBean(x), targetsNames)
+    return targetList
 
 def rebuildTargetList(newTargetList, currentTargetList, bean = None):
     targetsToAdd = []
@@ -709,3 +744,16 @@ def rebuildTargetList(newTargetList, currentTargetList, bean = None):
     else:
         print_info("No targets to remove")
     return targetsToAdd, targetsToRemove
+
+
+def upsertProperty(bean, propName, propValue):
+    oldProp = bean.lookupProperty(propName)
+    if oldProp.getValue() == propValue:
+        print_debug("Property " + propName + " does not require update")
+        return
+
+    if oldProp:
+        bean.destroyProperty(oldProp)
+    prop = bean.createProperty(propName)
+    prop.setValue(propValue)
+    print_debug('Set ' + propName + ' to ' + propValue)

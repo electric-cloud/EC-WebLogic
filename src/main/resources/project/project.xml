@@ -448,6 +448,11 @@
             <expandable>1</expandable>
             <value/>
           </property>
+          <property>
+            <propertyName>create_or_update_datasource.jython</propertyName>
+            <expandable>1</expandable>
+            <value/>
+          </property>
         </propertySheet>
       </property>
       <property>
@@ -8744,6 +8749,228 @@ Selective Update - The procedure would update existing JMS Module for only param
     <timeLimitUnits>minutes</timeLimitUnits>
     <workingDirectory />
     <workspaceName />
+  </step>
+</procedure>
+
+
+<procedure>
+  <description>Creates or updates a Datasource</description>
+  <jobNameTemplate>weblogic-createOrUpdateDatasource-$[jobId]</jobNameTemplate>
+  <procedureName>CreateOrUpdateDatasource</procedureName>
+  <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+  <propertySheet>
+    <property>
+      <propertyName>ec_customEditorData</propertyName>
+      <propertySheet>
+        <property>
+          <propertyName>parameters</propertyName>
+          <propertySheet>
+            <property>
+              <propertyName>ecp_weblogic_dataSourceName</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_jndiName</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_dataSourceDriverClass</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_databaseUrl</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_updateAction</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_dataSourceCredentials</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>configname</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_databaseName</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_targets</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_additionalOptions</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+      </propertySheet>
+    </property>
+    <property>
+      <propertyName>ec_parameterForm</propertyName>
+      <value />
+      <expandable>1</expandable>
+    </property>
+  </propertySheet>
+  <formalParameter>
+    <defaultValue />
+    <description>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</description>
+    <formalParameterName>configname</formalParameterName>
+    <required>1</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>Unique name of the JDBC generic Data Source to be created.</description>
+    <formalParameterName>ecp_weblogic_dataSourceName</formalParameterName>
+    <required>1</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>The full package name of JDBC driver class used to create the physical database connections in the connection pool. (Note that this driver class must be in the classpath of every server to which it is targeted/deployed).</description>
+    <formalParameterName>ecp_weblogic_dataSourceDriverClass</formalParameterName>
+    <required>1</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description />
+    <formalParameterName>ecp_weblogic_databaseUrl</formalParameterName>
+    <required>1</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>The JNDI path to where this Datasource is bound. For example jdbc/MYDS
+By default, the JNDI name is the name of the Datasource. Applications that look up the JNDI path will get a "javax.sql.Datasource" instance that corresponds to this Datasource.</description>
+    <formalParameterName>ecp_weblogic_jndiName</formalParameterName>
+    <required>1</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>Username and password for the Database.</description>
+    <formalParameterName>ecp_weblogic_dataSourceCredentials</formalParameterName>
+    <required>1</required>
+    <type>credential</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>Name of the Database/Default Schema to which the Database connection is to. Note that this may be relevant to MySQL (for example) and in general may not be necessary for all Databases. Further this name can be mentioned as part of the JDBC URL above. There is as such no need to use this parameter if it is already defined in the JDBC URL like above.</description>
+    <formalParameterName>ecp_weblogic_databaseName</formalParameterName>
+    <required>0</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>A list of comma separated list of Servers on which the Data Source should be targeted. If targets are not specified, Data Source will be created but not deployed.</description>
+    <formalParameterName>ecp_weblogic_targets</formalParameterName>
+    <required>0</required>
+    <type>textarea</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue>do_nothing</defaultValue>
+    <description />
+    <formalParameterName>ecp_weblogic_updateAction</formalParameterName>
+    <required>0</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>Use this option to specify optional parameters for example initial pool size, min pool size, max pool size, validation SQL etc., At a minimum we should show case and test the validation SQL and pool size, going against MariaDB or MySQL.</description>
+    <formalParameterName>ecp_weblogic_additionalOptions</formalParameterName>
+    <required>0</required>
+    <type>textarea</type>
+  </formalParameter>
+  <step>
+    <alwaysRun>0</alwaysRun>
+    <broadcast>0</broadcast>
+    <command>
+    </command>
+    <condition />
+    <description />
+    <errorHandling>failProcedure</errorHandling>
+    <exclusive>0</exclusive>
+    <logFileName />
+    <parallel>0</parallel>
+    <procedureName>CreateOrUpdateDatasource</procedureName>
+    <projectName>EC-WebLogic</projectName>
+    <releaseExclusive>0</releaseExclusive>
+    <resourceName />
+    <retries>0</retries>
+    <shell>ec-perl</shell>
+    <stepName>CreateOrUpdateDatasource</stepName>
+    <timeLimit />
+    <timeLimitUnits>minutes</timeLimitUnits>
+    <workingDirectory />
+    <workspaceName />
+    <attachedParameters>
+      <formalParameterName>ecp_weblogic_dataSourceCredentials</formalParameterName>
+    </attachedParameters>
   </step>
 </procedure>
 </project>
