@@ -118,24 +118,14 @@ try:
     driverprops = driver.getProperties()
     params = resource.getJDBCDataSourceParams()
 
-    props = {'user': dsUsername}
-    if databaseName:
-        props['databaseName'] = databaseName
-
     # Updating credentials
-    # TODO update if changed
+    upsertProperty(driverprops, 'user', dsUsername)
     driver.setPassword(dsPassword)
     # TODO encryption
     print_debug("Set password")
 
-    for propName, propValue in props.items():
-        if driverprops.lookupProperty(propName):
-            driverprops.destroyProperty(driverprops.lookupProperty(propName))
-        prop = driverprops.createProperty(propName)
-        prop.setValue(propValue)
-        print_debug('Set ' + propName + ' to ' + propValue)
-
     if not update:
+        upsertProperty(driverprops, 'databaseName', databaseName)
         driver.setUrl(dsUrl)
         print_debug("Set url to %s" % dsUrl)
         driver.setDriverName(dsDriverClass)
@@ -143,7 +133,7 @@ try:
         params.setJNDINames([dsJndi])
         print_debug("Set JNDI to %s" % dsJndi)
 
-
+    # Targets
     if targets:
         newTargets = stringToTargetList(targets)
         rebuildTargetList(newTargets, datasource.getTargets(), datasource)
@@ -152,7 +142,7 @@ try:
 
     # wls:/base_domain/serverConfig/JDBCSystemResources/my_datasource/Resource/my_datasource/JDBCConnectionPoolParams/my_datasource> ls()
     # Additional Options come in form Category.Subcategory.Option=value
-    if additionalOptions:
+    if additionalOptions and not update:
         options = splitSeparatedString(additionalOptions, '\\n+')
         for optionLine in options:
             (categories, value) = re.split('=', optionLine)

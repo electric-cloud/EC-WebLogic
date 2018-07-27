@@ -744,3 +744,16 @@ def rebuildTargetList(newTargetList, currentTargetList, bean = None):
     else:
         print_info("No targets to remove")
     return targetsToAdd, targetsToRemove
+
+
+def upsertProperty(bean, propName, propValue):
+    oldProp = bean.lookupProperty(propName)
+    if oldProp.getValue() == propValue:
+        print_debug("Property " + propName + " does not require update")
+        return
+
+    if oldProp:
+        bean.destroyProperty(oldProp)
+    prop = bean.createProperty(propName)
+    prop.setValue(propValue)
+    print_debug('Set ' + propName + ' to ' + propValue)
