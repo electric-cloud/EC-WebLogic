@@ -748,7 +748,7 @@ def rebuildTargetList(newTargetList, currentTargetList, bean = None):
 
 def upsertProperty(bean, propName, propValue):
     oldProp = bean.lookupProperty(propName)
-    if oldProp.getValue() == propValue:
+    if oldProp and oldProp.getValue() == propValue:
         print_debug("Property " + propName + " does not require update")
         return
 

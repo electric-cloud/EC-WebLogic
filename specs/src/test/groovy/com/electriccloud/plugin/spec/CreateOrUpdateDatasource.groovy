@@ -10,9 +10,9 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
      */
 
     @Shared
-    def procedureName = 'CreateOrUpdateDatasource'
+    String procedureName = 'CreateOrUpdateDatasource'
     @Shared
-    def projectName = "EC-WebLogic ${procedureName}"
+    String projectName = "EC-WebLogic ${procedureName}"
 
     /**
      * Common Maps: General Maps for different fields
@@ -41,8 +41,8 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
 
     @Shared
     def jndiNames = [
-        empty      : '',
-        correct    : 'datasources.TestJNDIName',
+        empty  : '',
+        correct: 'datasources.TestJNDIName',
     ]
 
     @Shared
@@ -74,21 +74,16 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
     ]
 
     @Shared
-    def sharingPolicies = [
-        exclusive: 'Exclusive',
-        sharable : 'Sharable'
+    def additionalOptions = [
+        empty      : '',
+        maxCapacity: 'Resource.JDBCConnectionPoolParams.MaxCapacity=20',
+        double     : "JDBCResource.JDBCConnectionPoolParams.InitialCapacity=2\nResource.JDBCConnectionPoolParams.MaxCapacity=20"
     ]
 
     @Shared
-    def clientPolicies = [
-        restricted: 'Restricted',
-
-    ]
-
-    @Shared
-    def additionalOptionsIs = [
-        empty          : '',
-        defaultPriority: 'DefaultDeliveryParams.DefaultPriority=5'
+    def dbNames = [
+        empty : '',
+        medrec: 'medrec'
     ]
 
     /**
@@ -96,27 +91,6 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
      */
     @Shared
     def caseId
-
-    // Procedure params
-    def configname
-
-    // This is shared to allow interpolation in 'where' section
-    @Shared
-    def connectionFactoryName
-    def jndiName
-    def cfSharingPolicy
-    def cfClientIdPolicy
-    @Shared
-    def jmsModuleName = 'TestJMSModule'
-
-    //optional parameters
-    def cfMaxMessagesPerSession
-    def cfXaEnabled
-    def subdeploymentName
-    def jmsServerName
-    @Shared
-    def updateAction
-    def additionalOptions
 
     // expected results
     def expectedOutcome
@@ -175,20 +149,22 @@ attachCredential projectName: '$projectName',
      */
 
     @Unroll
-    def "CreateOrUpdateDatasource - create - procedure"() {
+    def "CreateOrUpdateDatasource - create - procedure, options: #options, targets: #tg"() {
         setup: 'Define the parameters for Procedure running'
         def dsName = datasources.correct
-        def runParams = [
-            ecp_weblogic_dataSourceName: dsName,
+        Map runParams = [
+            ecp_weblogic_dataSourceName       : dsName,
             ecp_weblogic_dataSourceDriverClass: drivers.derby,
-            ecp_weblogic_databaseUrl: urls.medrec,
-            ecp_weblogic_jndiName: jndiNames.correct
+            ecp_weblogic_databaseUrl          : urls.medrec,
+            ecp_weblogic_jndiName             : jndiNames.correct,
+            ecp_weblogic_targets              : tg,
+            ecp_weblogic_additionalOptions    : options,
         ]
 
         deleteDatasource(dsName)
         when: 'Procedure runs: '
 
-        def result = runTestedProcedure(projectName, procedureName, runParams, getResourceName())
+        def result = runProcedure(projectName, procedureName, runParams, [], getResourceName())
 
         then: 'Wait until job run is completed: '
 
@@ -196,32 +172,63 @@ attachCredential projectName: '$projectName',
         def debugLog = result.logs
 
         println "Procedure log:\n$debugLog\n"
-        assert outcome == 'success'
 
         def upperStepSummary = getJobUpperStepSummary(result.jobId)
         logger.info(upperStepSummary)
-
         expect: 'Outcome and Upper Summary verification'
-//
-//        assert result.outcome == expectedOutcome
-//        if (expectedOutcome == expectedOutcomes.success && outcome == expectedOutcomes.success) {
-//            assert connectionFactoryExists(jmsModuleName, connectionFactoryName)
-//        }
-//        assert debugLog.contains(expectedJobDetailedResult)
-//
-//        // Important! The value must be actually checked!!
-//        def xaEnabled = getConnectionFactoryProperty(jmsModuleName, connectionFactoryName, 'TransactionParams', 'XAConnectionFactoryEnabled')
-//        if (cfXaEnabled == '1') {
-//            assert xaEnabled == '1'
-//        } else {
-//            assert xaEnabled == '0'
-//        }
-//
-//        def defaultTargeting = getDefaultTargeting(jmsModuleName, connectionFactoryName)
-//        assert defaultTargeting == '1'
+
+        assert outcome == 'success'
+        assert upperStepSummary =~ /Created datasource $dsName successfully/
         cleanup:
         deleteDatasource(dsName)
-//        deleteConnectionFactory(jmsModuleName, connectionFactoryName)
-//        where: 'The following params will be: '
+        where:
+        options                       | tg
+        additionalOptions.empty       | targets.empty
+        additionalOptions.maxCapacity | targets.default
     }
+
+    @Unroll
+    def 'Update datasource action #updateAction'() {
+        setup: 'Define the parameters for Procedure running'
+        def dsName = datasources.correct
+        def firstRunParams = [
+            ecp_weblogic_dataSourceName       : dsName,
+            ecp_weblogic_dataSourceDriverClass: drivers.derby,
+            ecp_weblogic_databaseUrl          : urls.medrec,
+            ecp_weblogic_jndiName             : jndiNames.correct,
+            ecp_weblogic_targets              : '',
+            ecp_weblogic_additionalOptions    : '',
+            ecp_weblogic_updateAction         : updateAction,
+            ecp_weblogic_databaseName         : 'test;create=true',
+        ]
+
+        def secondRunParams = firstRunParams << [ecp_weblogic_targets: targets.default]
+
+        deleteDatasource(dsName)
+        def firstRun = runProcedure(projectName, procedureName, firstRunParams, [], getResourceName())
+        assert firstRun.outcome == 'success'
+        when: 'Procedure runs: '
+
+        def result = runProcedure(projectName, procedureName, secondRunParams, [], getResourceName())
+        then:
+        assert result.outcome == 'success'
+        checkStepSummary(updateAction, dsName, getJobUpperStepSummary(result.jobId))
+        cleanup:
+        deleteDatasource(dsName)
+        where:
+        updateAction << ['do_nothing', 'selective_update', 'remove_and_create']
+    }
+
+
+    def checkStepSummary(action, name, summary) {
+        if (action == 'do_nothing') {
+            assert summary =~ /Datasource $name exists, no further action is required/
+        } else if (action == 'selective_update') {
+            assert summary =~ /Updated datasource $name/
+        } else {
+            assert summary =~ /Recreated datasource $name/
+        }
+        return true
+    }
+
 }

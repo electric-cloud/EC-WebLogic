@@ -222,7 +222,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
             return
         }
 
-        File resource = new File(this.getClass().getResource("/resources/${resName}").toURI())
+        File resource = new File(this.getClass().getResource("/${resName}").toURI())
 
         String commanderServer = System.getProperty("COMMANDER_SERVER") ?: 'localhost'
         String username = System.getProperty('COMMANDER_USER') ?: 'admin'
@@ -1006,5 +1006,18 @@ print "VALUE:" + '+' + str(get(propName)) + '+'
             logs = "Possible exception in logs; check job $jobId. $e"
         }
         logs
+    }
+
+
+    def runProcess(projectName, appName, processName, tierMapName) {
+        def result = runProcedure """
+            runProcess(
+                projectName: '$projectName',
+                applicationName: '$appName',
+                processName: '$processName',
+                tierMapName: '$tierMapName'
+            )
+        """, getResourceName(), 180, 15
+        return result
     }
 }
