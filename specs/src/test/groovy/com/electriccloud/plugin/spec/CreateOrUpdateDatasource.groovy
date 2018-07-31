@@ -159,6 +159,7 @@ attachCredential projectName: '$projectName',
             ecp_weblogic_jndiName             : jndiNames.correct,
             ecp_weblogic_targets              : tg,
             ecp_weblogic_additionalOptions    : options,
+            ecp_weblogic_databaseName         : 'medrec;create=true'
         ]
 
         deleteDatasource(dsName)
@@ -167,17 +168,11 @@ attachCredential projectName: '$projectName',
         def result = runProcedure(projectName, procedureName, runParams, [], getResourceName())
 
         then: 'Wait until job run is completed: '
-
-        def outcome = result.outcome
-        def debugLog = result.logs
-
-        println "Procedure log:\n$debugLog\n"
-
         def upperStepSummary = getJobUpperStepSummary(result.jobId)
         logger.info(upperStepSummary)
         expect: 'Outcome and Upper Summary verification'
 
-        assert outcome == 'success'
+        assert result.outcome == 'success'
         assert upperStepSummary =~ /Created datasource $dsName successfully/
         cleanup:
         deleteDatasource(dsName)

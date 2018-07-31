@@ -25,10 +25,15 @@ dependencies {
     compile 'org.spockframework:spock-core:1.1-groovy-2.4-SNAPSHOT'
     compile 'com.electriccloud:ec-specs-plugins-core:1.2'
     compile 'com.jayway.restassured:rest-assured:2.4.0'
-    compile 'de.gesellix:docker-client:2018-01-26T21-28-05'
+    testCompile( 'com.athaydes:spock-reports:1.6.0' ) {
+        transitive = false // this avoids affecting your version of Groovy/Spock
+    }
+
 }
 
 test {
+    systemProperty 'com.athaydes.spockframework.report.showCodeBlocks', true
+
     def server = findProperty('server') ?: 'localhost'
     systemProperties['COMMANDER_SERVER'] = server
     systemProperties["COMMANDER_SECURE"] = '1'
@@ -41,9 +46,7 @@ test {
 
     def destination = findProperty('reportDestination') ?: "spec-report"
     if (destination) {
-        reports {
-            html.destination = destination
-        }
+        systemProperty 'com.athaydes.spockframework.report.outputDir', destination
     }
 }
 

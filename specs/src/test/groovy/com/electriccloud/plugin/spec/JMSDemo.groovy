@@ -9,24 +9,28 @@ then change JNDI names and redeploy the app.
 """)
 class JMSDemo extends WebLogicHelper {
     @Shared
-    def projectName = "EC-WebLogic Datasource Demo"
+    def projectName = "EC-WebLogic JMS Demo"
 
     @Shared
     def artifactName = 'weblogic:jms-demo-app'
 
     @Shared
-    def jndiName = 'com.weblogic.sampleDB'
+    def jndiNames = [
+        connectionFactory: 'com.weblogic.jmsDemoCf',
+        queue: 'com.weblogic.jmsQueue',
+        topic: 'com.weblogic.jmsTopic'
+    ]
 
     @Shared
-    def resName = 'WL Datasource Demo Resource'
+    def resName = 'WL JMS Demo Resource'
 
     @Shared
-    def jmsModuleName = 'Datasource Demo'
+    def jmsModuleName = 'JMSDemoModule'
 
     @Shared
-    def appName = 'ds-sample'
+    def appName = 'jms-sample'
 
-    @Shared def applicationName = 'Datasource Demo App'
+    @Shared def applicationName = 'JMS Demo App'
     @Shared def processName = 'Deploy'
     @Shared def tierMapName = 'WebLogic'
 
@@ -131,6 +135,17 @@ class JMSDemo extends WebLogicHelper {
         return fullUrl.toURL().text
     }
 
+    def runProcess(projectName, appName, processName, tierMapName) {
+        def result = runProcedure """
+            runProcess(
+                projectName: '$projectName',
+                applicationName: '$appName',
+                processName: '$processName',
+                tierMapName: '$tierMapName'
+            )
+        """, getResourceName(), 180, 15
+        return result
+    }
 
     def checkPage(cf = null, queue = null, topic = null) {
         cf = cf ?: jndiNames.connectionFactory
