@@ -1,3 +1,5 @@
+package com.electriccloud.plugin.spec
+
 import spock.lang.*
 
 class StartAppSuite extends WebLogicHelper {

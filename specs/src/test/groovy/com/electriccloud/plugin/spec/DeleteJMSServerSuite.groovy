@@ -1,17 +1,14 @@
+package com.electriccloud.plugin.spec
+
 import spock.lang.*
 
-class DeleteJMSModuleSuite extends WebLogicHelper {
-    /**
-     * Environments Variables
-     */
-    static String wlstPath = System.getenv('WEBLOGIC_WLST_PATH')
-
+class DeleteJMSServerSuite extends WebLogicHelper {
     /**
      * Dsl Parameters
      */
 
     @Shared
-    def procedureName = 'DeleteJMSModule'
+    def procedureName = 'DeleteJMSServer'
     @Shared
     def projectName = "EC-WebLogic ${procedureName}"
 
@@ -33,9 +30,9 @@ class DeleteJMSModuleSuite extends WebLogicHelper {
      * Procedure Values: test parameters Procedure values
      */
     @Shared
-    def jmsModuleNames = [
-        default    : 'TestJMSModule',
-        nonexisting: 'NoSuchJMSModule'
+    def jmsServerNames = [
+        default    : 'TestJMSServer',
+        nonexisting: 'NoSuchJMSServer'
     ]
 
     /**
@@ -74,7 +71,7 @@ class DeleteJMSModuleSuite extends WebLogicHelper {
 
     // Procedure params
     @Shared
-    def jmsModuleName
+    def jmsServerName
 
     // expected results
     def expectedOutcome
@@ -89,19 +86,17 @@ class DeleteJMSModuleSuite extends WebLogicHelper {
         setupResource()
         createConfig(CONFIG_NAME)
 
-        createJMSModule(jmsModuleNames.default)
-
         dslFile "dsl/procedures.dsl", [
             projectName  : projectName,
             resourceName : getResourceName(),
             procedureName: procedureName,
             params       : [
                 configname                  : CONFIG_NAME,
-                ecp_weblogic_jms_module_name: ''
+                ecp_weblogic_jms_server_name: ''
             ]
         ]
 
-        dslFile("dsl/Application/DeleteJMSModule.dsl", [
+        dslFile("dsl/Application/DeleteJMSServer.dsl", [
             resourceName: getResourceName()
         ])
     }
@@ -119,15 +114,15 @@ class DeleteJMSModuleSuite extends WebLogicHelper {
      */
 
     @Unroll
-    def "Delete JMS Module. (Module name : #jmsModuleName) - procedure"() {
+    def "Delete JMS Module. (Server : #jmsServerName) - procedure"() {
         setup: 'Define the parameters for Procedure running'
         def runParams = [
-            ecp_weblogic_jms_module_name: jmsModuleName,
+            ecp_weblogic_jms_server_name: jmsServerName,
         ]
 
         // Create JMS Module to delete unless it should not exist
-        if (jmsModuleName != jmsModuleNames.nonexisting) {
-            createJMSModule(jmsModuleName)
+        if (jmsServerName != jmsServerNames.nonexisting) {
+            createJMSServer(jmsServerName)
         }
 
         when: 'Procedure runs: '
@@ -146,7 +141,7 @@ class DeleteJMSModuleSuite extends WebLogicHelper {
         expect: 'Outcome and Upper Summary verification'
         assert result.outcome == expectedOutcome
         if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
-            assert !checkJMSModuleExists(jmsModuleName)
+            assert !checkJMSServerExists(jmsServerName)
         }
 
         if (expectedJobDetailedResult) {
@@ -157,25 +152,25 @@ class DeleteJMSModuleSuite extends WebLogicHelper {
             assert upperStepSummary.contains(expectedSummaryMessage)
         }
         where: 'The following params will be: '
-        caseId | jmsModuleName              | expectedOutcome          | expectedJobDetailedResult                         | expectedSummaryMessage
+        caseId    | jmsServerName              | expectedOutcome          | expectedJobDetailedResult
 
         // delete JMS Module
-        'C325182' | jmsModuleNames.default     | expectedOutcomes.success | "JMS Module $jmsModuleName has been deleted"      | "Deleted JMS System Module $jmsModuleName"
+        'C325200' | jmsServerNames.default     | expectedOutcomes.success | "Removed JMS Server $jmsServerName"
 
         // delete non-existing jms module from non-existing connection factory
-        'C325183' | jmsModuleNames.nonexisting | expectedOutcomes.error   | "JMS System Module $jmsModuleName does not exist" | ''
+        'C325201' | jmsServerNames.nonexisting | expectedOutcomes.error   | "JMS Server $jmsServerName does not exist"
     }
-
     @Unroll
-    def "Delete JMS Module. (Module name : #jmsModuleName) - application"() {
+    def "Delete JMS Module. (Server : #jmsServerName) - application"() {
+
         setup: 'Define the parameters for Procedure running'
         def paramsStr = stringifyArray([
-            ecp_weblogic_jms_module_name: jmsModuleName,
+            ecp_weblogic_jms_server_name: jmsServerName,
         ])
 
         // Create JMS Module to delete unless it should not exist
-        if (jmsModuleName != jmsModuleNames.nonexisting) {
-            createJMSModule(jmsModuleName)
+        if (jmsServerName != jmsServerNames.nonexisting) {
+            createJMSServer(jmsServerName)
         }
 
         when: 'process runs'
@@ -197,51 +192,41 @@ class DeleteJMSModuleSuite extends WebLogicHelper {
         def logs = getJobLogs(result.jobId)
         logger.debug("Process logs: " + logs)
 
-        def outcome = jobStatus(result.jobId).outcome
-        assert outcome == expectedOutcome
-
+        expect:
+        assert jobStatus(result.jobId).outcome == expectedOutcome
         if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
-            assert logs.contains(expectedJobDetailedResult)
-            assert !checkJMSModuleExists(jmsModuleName)
+            assert !checkJMSServerExists(jmsServerName)
         }
+
         where: 'The following params will be: '
-        caseId    | jmsModuleName              | expectedOutcome          | expectedJobDetailedResult                         | expectedSummaryMessage
+        caseId    | jmsServerName              | expectedOutcome          | expectedJobDetailedResult
 
         // delete JMS Module
-        'C325186' | jmsModuleNames.default     | expectedOutcomes.success | "JMS Module $jmsModuleName has been deleted"      | "Deleted JMS System Module $jmsModuleName"
+        'C325202' | jmsServerNames.default     | expectedOutcomes.success | "Removed JMS Server $jmsServerName"
 
         // delete non-existing jms module from non-existing connection factory
-        'C325187' | jmsModuleNames.nonexisting | expectedOutcomes.error   | "JMS System Module $jmsModuleName does not exist" | ''
+        'C325203' | jmsServerNames.nonexisting | expectedOutcomes.error   | "JMS Server $jmsServerName does not exist"
     }
 
-    def checkJMSModuleExists(jmsModuleName) {
+    def checkJMSServerExists(jmsServerName) {
         def code = """
-jmsModuleName = '${jmsModuleName}'
-target = 'AdminServer'
+jmsServerName = '${jmsServerName}'
 
-def getJMSResource(name):
-    if (name == None or name == ''):
-        raise Exception("No JMS Module Name is provided")
-    mbean = getMBean('/JMSSystemResources/%s' % name)
-    if mbean == None:
-        return None
-    else:
-        print("Got JMS Bean %s" % mbean)
-        return mbean.getJMSResource()
-
+def getJMSServerPath(jms_server_name):
+    return "/JMSServers/%s" % (jms_server_name)
+    
 connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 cd('/')
 
-jmsResource = getJMSResource(jmsModuleName)
-print("Found JMS Resource %s" % jmsModuleName)
-if jmsResource == None:
-    print("JMS Resource %s does not exist" % jmsModuleName)
+jmsServer = getMBean(getJMSServerPath(jmsServerName))
+if jmsServer == None:
+    print("JMS Server %s does not exist" % jmsServerName)
 else:
-    print("JMS Resource %s exists" % jmsModuleName)
+    print("JMS Server %s exists" % jmsServerName)
 """
         def result = runWLST(code)
         assert result.outcome == 'success'
-        return result.logs?.contains("JMS Resource $jmsModuleName exists")
+        return result.logs?.contains("JMS Server $jmsServerName exists")
     }
 
 }

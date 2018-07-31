@@ -1,3 +1,5 @@
+package com.electriccloud.plugin.spec
+
 import spock.lang.*
 
 class RunWLSTSuite extends WebLogicHelper {
@@ -118,7 +120,7 @@ class RunWLSTSuite extends WebLogicHelper {
         setup: 'Define the parameters for Procedure running'
         scriptFileSource = 'newscriptfile'
 
-        File sampleComplexCodeFile = new File(this.getClass().getResource("/resources/sampleWLSTScript.jython").toURI())
+        File sampleComplexCodeFile = new File(this.getClass().getResource("/sampleWLSTScript.jython").toURI())
         assert sampleComplexCodeFile
         scriptFile = sampleComplexCodeFile.text
         assert scriptFile
@@ -191,7 +193,7 @@ raise Exception("Expected exception")
         setup: 'Define the parameters for Procedure running'
         scriptFileSource = 'newscriptfile'
 
-        File sampleComplexCodeFile = new File(this.getClass().getResource("/resources/sampleWLSTScript.jython").toURI())
+        File sampleComplexCodeFile = new File(this.getClass().getResource("/sampleWLSTScript.jython").toURI())
         assert sampleComplexCodeFile
         scriptFile = sampleComplexCodeFile.text
         assert scriptFile

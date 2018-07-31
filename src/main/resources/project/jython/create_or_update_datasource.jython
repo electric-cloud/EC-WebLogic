@@ -80,9 +80,13 @@ required(dsPassword, 'Password is not provided')
 
 connect(username, password, adminUrl)
 
-successMessage = ''
+successMessage = 'Created datasource %s successfully' % dsName
 update = False
 datasource = getMBean(getDatasourcePath(dsName))
+
+
+driverProperties = "serverName=localhost\ndatabaseName=medrec;create=true"
+
 # Initial processing
 if datasource != None:
     if updateAction == REMOVE_AND_CREATE:
@@ -99,7 +103,7 @@ if datasource != None:
         print_summary("Datasource %s exists, no further action is required" % (dsName))
         sys.exit(0)
     else:
-        successMessage = 'Updated Datasource %s' % dsName
+        successMessage = 'Updated datasource %s' % dsName
         update = True
         print_info("Updating datasource %s" % dsName)
 else:
@@ -133,6 +137,19 @@ try:
         params.setJNDINames([dsJndi])
         print_debug("Set JNDI to %s" % dsJndi)
 
+    # Driver Properties
+    if False:
+        driverProps = re.split('\\n', driverProperties)
+        for prop in driverProps:
+            (key, value) = re.split('=', prop, 1)
+            cd('/JDBCSystemResources/' + dsName + '/JDBCResource/' + dsName + '/JDBCDriverParams/' + dsName + '/Properties/' + dsName)
+            if getMBean('Properties/' + key) == None:
+                cmo.createProperty(key)
+            cd('Properties/' + key)
+            set('Value', value)
+            print_debug("Set Driver Property %s to %s" % (key, value))
+
+
     # Targets
     if targets:
         newTargets = stringToTargetList(targets)
@@ -157,7 +174,7 @@ try:
 except WLSTException, e:
     discardAndExit("Failed to create Datasource %s" % dsName)
 
-safeCommitChanges()
+commitChanges()
 if successMessage != '':
     print_summary(successMessage)
 

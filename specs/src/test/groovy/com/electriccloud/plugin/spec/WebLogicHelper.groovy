@@ -1,3 +1,5 @@
+package com.electriccloud.plugin.spec
+
 import com.electriccloud.spec.PluginSpockTestSupport
 import groovy.json.*
 import spock.util.concurrent.PollingConditions
@@ -220,7 +222,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
             return
         }
 
-        File resource = new File(this.getClass().getResource("/resources/${resName}").toURI())
+        File resource = new File(this.getClass().getResource("/${resName}").toURI())
 
         String commanderServer = System.getProperty("COMMANDER_SERVER") ?: 'localhost'
         String username = System.getProperty('COMMANDER_USER') ?: 'admin'
@@ -893,6 +895,31 @@ except Exception, e:
     }
 
 
+    def deleteDatasource(dsName) {
+        def code = """
+def deleteDatasource(dsName):
+    if not dsName:
+        raise Exception('Datasource name is not provided')
+    bean = getMBean('/JDBCSystemResources/' + dsName)
+    if bean != None:
+        parentBean = getMBean('/JDBCSystemResources')
+        parentBean.destroyJDBCSystemResource(bean)
+        print "Removed Datasource %s" % dsName
+    else:
+        print "Datasource %ss does not exist" % dsName
+
+connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
+edit()
+startEdit()
+deleteDatasource('$dsName')
+save()
+activate()
+"""
+        def result = runWLST(code, "DeleteDatasource_${dsName}")
+        assert result.outcome == 'success'
+    }
+
+
     def deployJMSTestApplication(targetServer) {
         String artifactName = 'test:jms'
         String appName = 'SampleJMSApplication'
@@ -979,5 +1006,18 @@ print "VALUE:" + '+' + str(get(propName)) + '+'
             logs = "Possible exception in logs; check job $jobId. $e"
         }
         logs
+    }
+
+
+    def runProcess(projectName, appName, processName, tierMapName) {
+        def result = runProcedure """
+            runProcess(
+                projectName: '$projectName',
+                applicationName: '$appName',
+                processName: '$processName',
+                tierMapName: '$tierMapName'
+            )
+        """, getResourceName(), 180, 15
+        return result
     }
 }
