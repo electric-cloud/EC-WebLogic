@@ -3558,7 +3558,7 @@
     </procedure>
     <procedure>
       <procedureName>CreateDatasource</procedureName>
-      <description>Creates a Datasource</description>
+      <description>Creates a Datasource (DEPRECATED)</description>
       <jobNameTemplate>weblogic-createDatasource-$[jobId]</jobNameTemplate>
       <resourceName/>
       <workspaceName/>

@@ -1,5 +1,6 @@
 deprecatedProcedures:
   - UpdateApp
+  - CreateDatasource
 
 proceduresGrouping:
   groups:

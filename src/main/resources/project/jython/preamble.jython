@@ -60,8 +60,11 @@ def required(value, message = 'The required value is missing'):
 def warn(message):
     warnings.warn("WARNING: " + message)
 
+def print_warning(message):
+    print 'WARNING' + ':' + message
+
 def print_summary(message):
-    print 'SUMMARY: ' + message
+    print 'SUMMARY' + ': ' + message
 
 def print_error(message):
     print "ERROR" + ":" + message

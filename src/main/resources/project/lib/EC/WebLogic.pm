@@ -395,7 +395,7 @@ sub run_jython_step {
         admin_url    => $config->{weblogic_url},
     };
     $render_params = { %$params, %$render_params };
-    my $wlst_path = $self->get_wlst_path();
+    my $wlst_path = $self->get_wlst_path($params, $config);
 
     my $step_name = $self->ec->getProperty('/myStep/name')->findvalue('//value')->string_value;
     my $replace = sub {
