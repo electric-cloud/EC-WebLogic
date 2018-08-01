@@ -1022,7 +1022,7 @@ print "VALUE:" + '+' + str(get(propName)) + '+'
     }
 
     def getDemoAppName() {
-        return 'demo-app'
+        return 'jms-sample'
     }
 
     def getDemoAppPath() {
