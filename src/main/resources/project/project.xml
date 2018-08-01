@@ -1076,7 +1076,7 @@
         <formalParameterName>configname</formalParameterName>
         <defaultValue/>
         <description>Name of the configuration to be used for retrieving Admin Server's URL and credentials.</description>
-        <required>0</required>
+        <required>1</required>
         <type>entry</type>
       </formalParameter>
       <step>
@@ -2238,7 +2238,7 @@
         <formalParameterName>configname</formalParameterName>
         <defaultValue/>
         <description>Name of the configuration to be used for retrieving Admin Server's URL and credentials.</description>
-        <required>0</required>
+        <required>1</required>
         <type>entry</type>
       </formalParameter>
       <formalParameter>
