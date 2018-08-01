@@ -1020,4 +1020,12 @@ print "VALUE:" + '+' + str(get(propName)) + '+'
         """, getResourceName(), 180, 15
         return result
     }
+
+    def getDemoAppName() {
+        return 'demo-app'
+    }
+
+    def getDemoAppPath() {
+        return 'jms-sample.war'
+    }
 }

@@ -27,8 +27,6 @@ class JMSDemo extends WebLogicHelper {
     @Shared
     def jmsModuleName = 'JMSDemoModule'
 
-    @Shared
-    def appName = 'jms-sample'
 
     @Shared def applicationName = 'JMS Demo App'
     @Shared def processName = 'Deploy'
@@ -38,7 +36,7 @@ class JMSDemo extends WebLogicHelper {
         setupResource()
         createConfig(CONFIG_NAME)
         deleteProject(projectName)
-        publishArtifact(artifactName, '1.0.0', 'jms-sample.war')
+        publishArtifact(artifactName, '1.0.0', demoAppPath)
         def host = getResourceHost()
         def port = getResourcePort()
 
@@ -58,8 +56,8 @@ class JMSDemo extends WebLogicHelper {
             jmsModuleName: jmsModuleName,
             wlst: getWlstPath(),
             jndi: jndiNames,
-            appName: appName,
-            appPath: 'jms-sample.war'
+            appName: demoAppName,
+            appPath: demoAppPath
         ]
     }
 
@@ -94,8 +92,8 @@ class JMSDemo extends WebLogicHelper {
             jmsModuleName: jmsModuleName,
             wlst: getWlstPath(),
             jndi: names,
-            appName: appName,
-            appPath: 'jms-sample.war'
+            appName: demoAppName,
+            appPath: demoAppPath
         ]
         when:
         def result = runProcess(projectName, applicationName, processName, tierMapName)
@@ -177,8 +175,8 @@ class JMSDemo extends WebLogicHelper {
         }
         """
 
-        def queueUrl = "${appName}/JMSServlet?connectionFactory=${cf}&queue=${queue}"
-        def topicUrl = "${appName}/JMSTopic?connectionFactory=${cf}&topic=${topic}"
+        def queueUrl = "${demoAppName}/JMSServlet?connectionFactory=${cf}&queue=${queue}"
+        def topicUrl = "${demoAppName}/JMSTopic?connectionFactory=${cf}&topic=${topic}"
 
         def response = runProcedure("""
             runProcedure projectName: '$projectName',

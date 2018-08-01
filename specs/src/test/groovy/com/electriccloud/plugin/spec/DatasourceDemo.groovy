@@ -26,8 +26,6 @@ class DatasourceDemo extends WebLogicHelper {
     @Shared
     def jmsModuleName = 'Datasource Demo'
 
-    @Shared
-    def appName = 'ds-sample'
 
     @Shared def applicationName = 'Datasource Demo App'
     @Shared def processName = 'Deploy'
@@ -44,8 +42,8 @@ class DatasourceDemo extends WebLogicHelper {
         jmsModuleName: jmsModuleName,
         wlst: getWlstPath(),
         jndi: jndiName,
-        appName: appName,
-        appPath: 'jms-sample.war',
+        appName: demoAppName,
+        appPath: demoAppPath,
         driverName: driverName,
         dbName: dbName,
         dbUrl: dbUrl,
@@ -59,7 +57,7 @@ class DatasourceDemo extends WebLogicHelper {
         setupResource()
         createConfig(CONFIG_NAME)
         deleteProject(projectName)
-        publishArtifact(artifactName, '1.0.0', 'jms-sample.war')
+        publishArtifact(artifactName, '1.0.0', demoAppPath)
         def host = getResourceHost()
         def port = getResourcePort()
 
@@ -77,7 +75,7 @@ class DatasourceDemo extends WebLogicHelper {
 
     def 'first deploy'() {
         when:
-        def result = runProcess(projectName, appName, 'Deploy', 'WebLogic')
+        def result = runProcess(projectName, demoAppName, 'Deploy', 'WebLogic')
         then:
         assert result.outcome == 'success'
         checkPage()
@@ -86,7 +84,7 @@ class DatasourceDemo extends WebLogicHelper {
 
     def 'second deploy'() {
         when:
-        def result = runProcess(projectName, appName, 'Deploy', 'WebLogic')
+        def result = runProcess(projectName, demoAppName, 'Deploy', 'WebLogic')
         then:
         assert result.outcome == 'success'
         checkPage()
