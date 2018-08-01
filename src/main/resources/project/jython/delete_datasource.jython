@@ -14,18 +14,45 @@
 #  limitations under the License.
 #
 
-state = ""
+[% preamble %]
+
+# parameters section
+username = r'''
+[% username %]
+'''.strip()
+
+password = r'''
+[% password %]
+'''.strip()
+
+weblogicUrl = r'''
+[% weblogic_url %]
+'''.strip()
+
+dsName = r'''
+[% dsname %]
+'''.strip()
+
+required(dsName)
+
+successMessage = 'Datasource %s has been deleted' % dsName
+
+connect(username, password, weblogicUrl)
+bean = getMBean(getDatasourcePath(dsName))
+if bean == None:
+    print "%s does not exist!" % dsName
+    print_warning("Datasource %s does not exist" % dsName)
+    print_summary('Datasource %s does not exist' % dsName)
+    sys.exit(0)
+
 try:
-    connect(r'[% username %]', r'[% password %]', r'[% weblogic_url %]')
-    edit()
-    startEdit()
-    dsName = r'[% ds_name %]'
-    cd('/')
+    startChanges()
     print 'Deleting Datasource: ' + dsName
-    delete(dsName,'JDBCSystemResource')
-    print dsName + ' deleted!'
-except ValueError:
-    print dsName + ' does not exist!'
-else:
-    save()
-    activate()
+    deleteDatasource(dsName)
+    commitChanges()
+
+except Exception, e:
+    discardAndExit("Failed to delete Datasource %s" % dsName)
+if successMessage:
+    print_summary(successMessage)
+

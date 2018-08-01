@@ -94,7 +94,7 @@ if datasource != None:
         try:
             startChanges()
             deleteDatasource(dsName)
-            safeCommitChanges()
+            commitChanges()
             print_info("Removed datasource %s" % dsName)
         except Exception, e:
             discardAndExit("Failed to delete datasource: " + str(e))
@@ -155,7 +155,7 @@ try:
         newTargets = stringToTargetList(targets)
         rebuildTargetList(newTargets, datasource.getTargets(), datasource)
     else:
-        warn("No targets are provided, the datasource will not be deployed")
+        print_warning("No targets are provided, the datasource will not be deployed")
 
     # wls:/base_domain/serverConfig/JDBCSystemResources/my_datasource/Resource/my_datasource/JDBCConnectionPoolParams/my_datasource> ls()
     # Additional Options come in form Category.Subcategory.Option=value
@@ -169,12 +169,11 @@ try:
             cd(propertyPath)
             set(optionName, value)
             print_info("Setting %s/%s to %s" % (propertyPath, optionName, value))
-
+    commitChanges()
 
 except WLSTException, e:
     discardAndExit("Failed to create Datasource %s" % dsName)
 
-commitChanges()
 if successMessage != '':
     print_summary(successMessage)
 

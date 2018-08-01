@@ -291,7 +291,7 @@
     <xpath>//procedure[procedureName="CreateDatasource"]/step[stepName="CreateDatasource"]/command</xpath>
   </file>
   <file>
-    <path>server/deleteDataSource.pl</path>
+    <path>server/jythonStep.pl</path>
     <xpath>//procedure[procedureName="DeleteDatasource"]/step[stepName="DeleteDatasource"]/command</xpath>
   </file>
   <file>
@@ -455,7 +455,7 @@
     <xpath>//procedure[procedureName="DeleteJMSTopic"]/step[stepName="DeleteJMSTopic"]/command</xpath>
   </file>
   <file>
-    <path>server/createOrUpdateDatasource.pl</path>
+    <path>server/jythonStep.pl</path>
     <xpath>//procedure[procedureName="CreateOrUpdateDatasource"]/step[stepName="CreateOrUpdateDatasource"]/command</xpath>
   </file>
   <file>
