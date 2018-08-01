@@ -71,6 +71,10 @@ sub after_init_hook {
         $self->dryrun(1);
     }
     print 'Using plugin @PLUGIN_NAME@' . "\n";
+    my $version = $self->ec->getVersions()->findvalue('//version')->string_value;
+    print "EF Server Version: $version\n";
+    my $perlLibraryVersion = $ElectricCommander::VERSION;
+    print "Perl Library Version: $perlLibraryVersion\n";
 }
 
 
@@ -114,6 +118,7 @@ sub get_credentials {
     if (defined $cred->{debug_level}) {
         my $level = $cred->{debug_level} ? int($cred->{debug_level}) : 0;
         $self->debug_level($level + 1);
+        $self->logger->level($level);
         $self->out(3, "Debug level set to ", $self->debug_level())
     }
 
@@ -235,13 +240,17 @@ sub process_response {
         $self->warning( join("\n", @matches));
         return;
     }
+
+    my $restartFlagName = "WebLogicServerRestartRequired";
     my $restart = $result->{stdout} =~ m/that require server re-start/;
-    $self->ec->setProperty('/myJob/WebLogicServerRestartRequired', ($restart ? 'true' : 'false'));
+    $self->ec->setProperty('/myJob/' . $restartFlagName, ($restart ? 'true' : 'false'));
     my $summary = '';
 
     if ($result->{stdout} =~ m/SUMMARY:\s*(.+)/) {
         $summary = $1;
     }
+
+    $self->set_output_parameter($restartFlagName, ($restart ? '1' : '0'));
 
     if ($restart) {
         $summary .= "\n" if $summary;
