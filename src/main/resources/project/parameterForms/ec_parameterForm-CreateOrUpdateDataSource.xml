@@ -76,6 +76,15 @@ By default, the JNDI name is the name of the Datasource. Applications that look 
 </formElement>
 <formElement>
     <type>textarea</type>
+    <label>JDBC Driver Properties:</label>
+    <property>ecp_weblogic_driverProperties</property>
+    <documentation>The list of properties passed to the JDBC driver that are used to create physical database connections. For example: server=dbserver1. List each property=value pair on a separate line.<br/>
+    <b>Note</b>:For security reasons, when WebLogic Server is running in production mode, you cannot specify database passwords in this properties list. Data source deployment will fail if a password is specified in the properties list. To override this security check, use the command line argument "weblogic.management.allowClearTextPasswords" when starting the server.
+    </documentation>
+    <required>0</required>
+</formElement>
+<formElement>
+    <type>textarea</type>
     <label>Target Server List:</label>
     <property>ecp_weblogic_targets</property>
     <documentation>A list of comma separated list of Servers on which the Data Source should be targeted. If targets are not specified, Data Source will be created but not deployed.</documentation>
@@ -88,7 +97,7 @@ By default, the JNDI name is the name of the Datasource. Applications that look 
     <htmlDocumentation>This parameter controls as to what the Update Action should be when a JMS Queue with the same name exists:<br/>
 <b>Do Nothing (Default)</b> - The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.<br/>
 <b>Remove and Create</b> - The procedure would remove existing JMS Queue and recreate it based on new parameters passed.<br/>
-Selective Update - The procedure would update existing DataSource credentials and Server Target List.
+<b>Selective Update</b> - The procedure would update existing DataSource credentials and Server Target List.
 </htmlDocumentation>
     <required>0</required>
     <value>do_nothing</value>
