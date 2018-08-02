@@ -42,8 +42,9 @@ proceduresGrouping:
     - name: Datasource Management
       description: These procedures help in creating datasources in a WLS Domain.
       procedures:
-        - CreateDatasource
+        - CreateOrUpdateDatasource
         - DeleteDatasource
+        - CreateDatasource
     - name: JMS Resource Management
       description: These procedures help in creating JMS resources in a WLS Domain.
       procedures:
