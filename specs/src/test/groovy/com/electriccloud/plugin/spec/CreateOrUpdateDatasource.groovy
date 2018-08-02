@@ -86,6 +86,12 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
         medrec: 'medrec'
     ]
 
+    @Shared
+    def driverProps = [
+        empty: '',
+        serverName: 'serverName=localhost'
+    ]
+
     /**
      * Test Parameters: for Where section
      */
@@ -123,6 +129,7 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
                 ecp_weblogic_targets              : '',
                 ecp_weblogic_updateAction         : '',
                 ecp_weblogic_additionalOptions    : '',
+                ecp_weblogic_driverProperties     : ''
             ]
         ]
 
@@ -149,7 +156,7 @@ attachCredential projectName: '$projectName',
      */
 
     @Unroll
-    def "CreateOrUpdateDatasource - create - procedure, options: #options, targets: #tg"() {
+    def "CreateOrUpdateDatasource - create - procedure, options: #options, targets: #tg, driver properties #driverProperties"() {
         setup: 'Define the parameters for Procedure running'
         def dsName = datasources.correct
         Map runParams = [
@@ -159,7 +166,8 @@ attachCredential projectName: '$projectName',
             ecp_weblogic_jndiName             : jndiNames.correct,
             ecp_weblogic_targets              : tg,
             ecp_weblogic_additionalOptions    : options,
-            ecp_weblogic_databaseName         : 'medrec;create=true'
+            ecp_weblogic_databaseName         : 'medrec;create=true',
+            ecp_weblogic_driverProperties     : driverProperties
         ]
 
         deleteDatasource(dsName)
@@ -177,9 +185,9 @@ attachCredential projectName: '$projectName',
         cleanup:
         deleteDatasource(dsName)
         where:
-        options                       | tg
-        additionalOptions.empty       | targets.empty
-        additionalOptions.maxCapacity | targets.default
+        options                       | tg                  | driverProperties
+        additionalOptions.empty       | targets.empty       | driverProps.empty
+        additionalOptions.maxCapacity | targets.default     | driverProps.serverName
     }
 
     @Unroll

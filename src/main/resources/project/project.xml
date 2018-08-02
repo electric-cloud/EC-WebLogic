@@ -8753,6 +8753,7 @@ Selective Update - The procedure would update existing JMS Module for only param
 </procedure>
 
 
+
 <procedure>
   <description>Creates or updates a Datasource</description>
   <jobNameTemplate>weblogic-createOrUpdateDatasource-$[jobId]</jobNameTemplate>
@@ -8760,11 +8761,56 @@ Selective Update - The procedure would update existing JMS Module for only param
   <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
   <propertySheet>
     <property>
+      <propertyName>ec_parameterForm</propertyName>
+      <value />
+      <expandable>1</expandable>
+    </property>
+    <property>
       <propertyName>ec_customEditorData</propertyName>
       <propertySheet>
         <property>
           <propertyName>parameters</propertyName>
           <propertySheet>
+            <property>
+              <propertyName>ecp_weblogic_databaseUrl</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_targets</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_dataSourceCredentials</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_updateAction</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
             <property>
               <propertyName>ecp_weblogic_dataSourceName</propertyName>
               <propertySheet>
@@ -8786,47 +8832,7 @@ Selective Update - The procedure would update existing JMS Module for only param
               </propertySheet>
             </property>
             <property>
-              <propertyName>ecp_weblogic_dataSourceDriverClass</propertyName>
-              <propertySheet>
-                <property>
-                  <propertyName>formType</propertyName>
-                  <value>standard</value>
-                  <expandable>1</expandable>
-                </property>
-              </propertySheet>
-            </property>
-            <property>
-              <propertyName>ecp_weblogic_databaseUrl</propertyName>
-              <propertySheet>
-                <property>
-                  <propertyName>formType</propertyName>
-                  <value>standard</value>
-                  <expandable>1</expandable>
-                </property>
-              </propertySheet>
-            </property>
-            <property>
-              <propertyName>ecp_weblogic_updateAction</propertyName>
-              <propertySheet>
-                <property>
-                  <propertyName>formType</propertyName>
-                  <value>standard</value>
-                  <expandable>1</expandable>
-                </property>
-              </propertySheet>
-            </property>
-            <property>
-              <propertyName>ecp_weblogic_dataSourceCredentials</propertyName>
-              <propertySheet>
-                <property>
-                  <propertyName>formType</propertyName>
-                  <value>standard</value>
-                  <expandable>1</expandable>
-                </property>
-              </propertySheet>
-            </property>
-            <property>
-              <propertyName>configname</propertyName>
+              <propertyName>ecp_weblogic_additionalOptions</propertyName>
               <propertySheet>
                 <property>
                   <propertyName>formType</propertyName>
@@ -8846,7 +8852,7 @@ Selective Update - The procedure would update existing JMS Module for only param
               </propertySheet>
             </property>
             <property>
-              <propertyName>ecp_weblogic_targets</propertyName>
+              <propertyName>ecp_weblogic_driverProperties</propertyName>
               <propertySheet>
                 <property>
                   <propertyName>formType</propertyName>
@@ -8856,7 +8862,17 @@ Selective Update - The procedure would update existing JMS Module for only param
               </propertySheet>
             </property>
             <property>
-              <propertyName>ecp_weblogic_additionalOptions</propertyName>
+              <propertyName>configname</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_dataSourceDriverClass</propertyName>
               <propertySheet>
                 <property>
                   <propertyName>formType</propertyName>
@@ -8868,11 +8884,6 @@ Selective Update - The procedure would update existing JMS Module for only param
           </propertySheet>
         </property>
       </propertySheet>
-    </property>
-    <property>
-      <propertyName>ec_parameterForm</propertyName>
-      <value />
-      <expandable>1</expandable>
     </property>
   </propertySheet>
   <formalParameter>
@@ -8927,6 +8938,15 @@ By default, the JNDI name is the name of the Datasource. Applications that look 
   </formalParameter>
   <formalParameter>
     <defaultValue />
+    <description>The list of properties passed to the JDBC driver that are used to create physical database connections. For example: server=dbserver1. List each property=value pair on a separate line.
+    Note:For security reasons, when WebLogic Server is running in production mode, you cannot specify database passwords in this properties list. Data source deployment will fail if a password is specified in the properties list. To override this security check, use the command line argument "weblogic.management.allowClearTextPasswords" when starting the server.
+    </description>
+    <formalParameterName>ecp_weblogic_driverProperties</formalParameterName>
+    <required>0</required>
+    <type>textarea</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
     <description>A list of comma separated list of Servers on which the Data Source should be targeted. If targets are not specified, Data Source will be created but not deployed.</description>
     <formalParameterName>ecp_weblogic_targets</formalParameterName>
     <required>0</required>
@@ -8949,8 +8969,7 @@ By default, the JNDI name is the name of the Datasource. Applications that look 
   <step>
     <alwaysRun>0</alwaysRun>
     <broadcast>0</broadcast>
-    <command>
-    </command>
+    <command />
     <condition />
     <description />
     <errorHandling>failProcedure</errorHandling>
