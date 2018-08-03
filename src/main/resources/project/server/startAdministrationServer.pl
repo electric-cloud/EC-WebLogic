@@ -14,7 +14,7 @@
 #  limitations under the License.
 #
 
-   
+
 # -------------------------------------------------------------------------
 # Includes
 # -------------------------------------------------------------------------
@@ -24,7 +24,7 @@ use warnings;
 use strict;
 use Data::Dumper;
 $|=1;
-   
+
 # -------------------------------------------------------------------------
 # Constants
 # -------------------------------------------------------------------------
@@ -46,7 +46,7 @@ use constant {
 };
 
 ########################################################################
-# trim - deletes blank spaces before and after the entered value in 
+# trim - deletes blank spaces before and after the entered value in
 # the argument
 #
 # Arguments:
@@ -55,7 +55,7 @@ use constant {
 # Returns:
 #   trimmed string
 #
-########################################################################  
+########################################################################
 sub trim($) {
     my ($untrimmedString) = @_;
 
@@ -85,7 +85,7 @@ $::gSuccessCriteria = SERVER_RUNNING_STATE;
 # -------------------------------------------------------------------------
 
 ########################################################################
-# main - contains the whole process to be done by the plugin, it builds 
+# main - contains the whole process to be done by the plugin, it builds
 #        the command line, sets the properties and the working directory
 #
 # Arguments:
@@ -147,8 +147,9 @@ sub main() {
         exit ERROR;
     }
 
+
     #start managed server using ecdaemon
-    startServer($::gScriptLocation);
+    startServer($::gScriptLocation, $serverName, $url, $user, $pass, $cmdLineParams);
 
     sleep 15;
     #checks if max elapsed time is default
@@ -232,14 +233,14 @@ sub main() {
 #   -continueFlag: determines if process must continued or terminated
 #                      (1 => continued. 0 => terminated)
 #
-#########################################################################  
+#########################################################################
 sub keepChecking($){
     my ($successCriteriaReached, $elapsedTime) = @_;
     my $continueFlag;
-    #If entered max elapsed time is default or criteria is reached, 
+    #If entered max elapsed time is default or criteria is reached,
     # evaluation is done.
-    #If current elapsed time is lower than the maximum established 
-    # by the user and criteria has not been reached, evaluation 
+    #If current elapsed time is lower than the maximum established
+    # by the user and criteria has not been reached, evaluation
     # shall continue.
     #If current elapsed is equal or greater, than the maximum permitted. The
     # evaluation must be terminated.
@@ -271,7 +272,7 @@ sub keepChecking($){
 # Returns:
 #   none
 #
-#########################################################################  
+#########################################################################
 sub getDataFromConfig($){
     my($configuration, $url, $user, $pass) = @_;
     if ($configuration->{'weblogic_url'} && $configuration->{'weblogic_url'} ne '') {
@@ -298,7 +299,7 @@ sub getDataFromConfig($){
 # of the program to be executed.
 #
 # Arguments:
-#   -arr: array containing the command name (must be the first element) 
+#   -arr: array containing the command name (must be the first element)
 #         and the arguments entered by the user in the UI
 #
 # Returns:
@@ -321,7 +322,7 @@ sub createCommandLine($) {
 # setProperties - set a group of properties into the Electric Commander
 #
 # Arguments:
-#   -propHash: hash containing the ID and the value of the properties 
+#   -propHash: hash containing the ID and the value of the properties
 #              to be written into the Electric Commander
 #
 # Returns:
@@ -396,7 +397,7 @@ sub getConfiguration($){
 #
 ########################################################################
 sub startServer($){
-    my ($SCRIPT, $serverName, $adminServerURL, $user, $pass) = @_;
+    my ($SCRIPT, $serverName, $adminServerURL, $user, $pass, $cmdLineParams) = @_;
 
     # $The quote and backslash constants are just a convenient way to represtent literal literal characters so it is obvious
     # in the concatentations. NOTE: BSLASH ends up being a single backslash, it needs to be doubled here so it does not
@@ -447,6 +448,7 @@ sub startServer($){
     }
     #print "Command Parameters:\n" . Dumper(@systemcall) . "--------------------\n";
     my %props;
+    $ENV{JAVA_OPTIONS} = "-Dweblogic.management.username=$user -Dweblogic.management.password=$pass";
     my $cmdLine = createCommandLine(\@systemcall);
     $props{'startAdminServerLine'} = $cmdLine;
     setProperties(\%props);
@@ -468,7 +470,7 @@ sub startServer($){
 # Returns:
 #   none
 #
-#########################################################################  
+#########################################################################
 sub verifyServerIsStarted($){
     my ($serverName, $urlName, $user, $password)= @_;
 

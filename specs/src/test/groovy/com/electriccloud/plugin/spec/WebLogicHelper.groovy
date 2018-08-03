@@ -112,8 +112,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
             port     = '$port'
           }
         """
-        sleep(10 * 1000)
-        // Giving some rest to container
     }
 
 
