@@ -1,0 +1,270 @@
+#
+#  Copyright 2016 Electric Cloud, Inc.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+
+from weblogic.management.security.authentication import UserReaderMBean
+
+username = r'''
+[% username %]
+'''.strip()
+password = r'''
+[% password %]
+'''.strip()
+url = r'''
+[% weblogic_url %]
+'''.strip()
+
+
+from xml.dom import minidom
+
+doc = minidom.Document()
+
+def dictToElement(doc, dict, elementName):
+    parent = doc.createElement(elementName)
+    for key, value in dict.items():
+        node = doc.createElement(key)
+        if value == None:
+            value = ''
+        text = doc.createTextNode(str(value))
+        node.appendChild(text)
+        parent.appendChild(node)
+    return parent
+
+def appendResource(d, name):
+    node = dictToElement(doc, d, name)
+    resources.appendChild(node)
+
+connect(username, password, url)
+resources = doc.createElement('resource')
+root = getMBean('/')
+
+def sendWarning(warning):
+    node = doc.createElement('warning')
+    text = doc.createTextNode(warning)
+    node.appendChild(text)
+    doc.appendChild(node)
+
+# Datasources
+def grabDatasources():
+    datasources = root.getJDBCSystemResources()
+    for datasource in datasources:
+        grabbedData = {}
+        grabbedData['name'] = datasource.getName()
+        driver = datasource.getJDBCResource().getJDBCDriverParams()
+        grabbedData['url'] = driver.getUrl()
+        driverprops = driver.getProperties()
+        grabbedData['driverName'] = driver.getDriverName()
+        jndi = datasource.getJDBCResource().getJDBCDataSourceParams().getJNDINames()
+        if len(jndi) >= 1:
+            grabbedData['jndiName'] = jndi[0]
+        if len(jndi) > 1:
+            sendWarning("Datasource " + datasource.getName() + " has more than one JNDI names, only the first will be taken: " + jndi[0] )
+
+        # Driver properties
+        driverProperties = []
+        for prop in driverprops.getProperties():
+            if prop.getName() == 'databaseName':
+                grabbedData['databaseName'] = prop.getValue()
+            else:
+                driverProperties.append(prop.getName() + '=' + prop.getValue())
+        grabbedData['driverProperties'] = "\n".join(driverProperties)
+
+        # Targets
+        targetList = []
+        for target in datasource.getTargets():
+            targetList.append(target.getName())
+        grabbedData['targets'] = ",".join(targetList)
+        print grabbedData
+
+        appendResource(grabbedData, 'Datasource')
+
+# TODO
+# Deployment plan
+# is library
+# stage mode
+# version
+def grabAppDeployments():
+    apps = root.getAppDeployments()
+    for app in apps:
+        grabDeployment(app, 'AppDeployment')
+
+    for library in root.getLibraries():
+        grabDeployment(library, 'Library')
+
+# TODO deployment plan
+def grabDeployment(bean, name):
+    grabbedData = {
+        'name': bean.getName(),
+        'sourcePath': bean.getSourcePath(),
+        'targets': getTargetList(bean),
+        'versionIdentifier': bean.getVersionIdentifier(),
+    }
+    appendResource(grabbedData, name)
+
+def grabJMS():
+    jmsResources = root.getJMSSystemResources()
+    for resource in jmsResources:
+        module = {'name': resource.getName(), 'targets': getTargetList(resource)}
+        appendResource(module, 'JMSResource')
+        grabConnectionFactories(resource)
+        grabJMSQueues(resource)
+        grabJMSTopics(resource)
+        grabJMSServers()
+
+def grabJMSQueues(resource):
+    # name
+    # subdeploymentName
+    # jms server name
+    # jndi
+    for queue in resource.getJMSResource().getQueues():
+        grabQueueOrTopic(resource, queue, 'Queue')
+
+def grabQueueOrTopic(resource, bean, resourceName):
+    grabbedData = {
+        'jmsModuleName': resource.getName(),
+        'name': bean.getName(),
+        'jndiName': bean.getJNDIName()
+    }
+    subdeploymentName = bean.getSubDeploymentName()
+    if subdeploymentName:
+        grabSubdeployment(resource, subdeploymentName)
+    grabbedData['subdeploymentName'] = subdeploymentName
+    appendResource(grabbedData, resourceName)
+
+def grabJMSTopics(resource):
+    # name
+    # subdeploymentName
+    # jms server name
+    # jndi
+    for topic in resource.getJMSResource().getTopics():
+        grabQueueOrTopic(resource, topic, 'Topic')
+
+def grabJMSServers():
+    for server in root.getJMSServers():
+        grabbedData = {
+            'name': server.getName(),
+        }
+        targets = server.getTargets()
+        if len(targets) >= 1:
+            grabbedData['targetName'] = targets[0].getName()
+
+        if len(targets) > 1:
+            sendWarning('JMS Server ' + server.getName + ' has more that one targets. Only the first one will be used: ' + targets[0].getName())
+        appendResource(grabbedData, 'JMSServer')
+
+def grabSubdeployment(resource, name):
+    for subd in resource.getSubDeployments():
+        grabbedData = {'jmsModuleName': resource.getName(), 'name': subd.getName(), 'targets': getTargetList(subd)}
+        appendResource(grabbedData, 'SubDeployment')
+
+def grabConnectionFactories(resource):
+    for cf in resource.getJMSResource().getConnectionFactories():
+        grabbed = {
+            'name': cf.name,
+            'jndiName': cf.JNDIName,
+            'jmsModuleName': resource.getName(),
+        }
+        cd('/')
+        cd(getPath(cf))
+        grabbed['defaultTargeting'] = get('DefaultTargetingEnabled')
+
+        subdeploymentName = get('SubDeploymentName')
+        grabbed['subdeploymentName'] = subdeploymentName
+        if subdeploymentName and not grabbed['defaultTargeting']:
+            grabSubdeployment(resource, subdeploymentName)
+
+        cd('/')
+        cd(getPath(cf.getTransactionParams()))
+        grabbed['XAConnectionFactoryEnabled'] = get('XAConnectionFactoryEnabled')
+        cd('/')
+        cd(getPath(cf.getClientParams()))
+        grabbed['ClientIdPolicy'] = get('ClientIdPolicy')
+        grabbed['SubscriptionSharingPolicy'] = get('SubscriptionSharingPolicy')
+        print grabbed
+        appendResource(grabbed, 'ConnectionFactory')
+
+def grabClusters():
+    for cluster in root.getClusters():
+        data = {
+            'name': cluster.getName(),
+            'multicastAddress': cluster.getMulticastAddress(),
+            'multicastPort': cluster.getMulticastPort()
+        }
+        appendResource(data, 'Cluster')
+
+def grabServers():
+    for server in root.getServers():
+        data = {
+            'name': server.getName(),
+            'listenAddress': server.getListenAddress(),
+            'listenPort': server.getListenPort()
+        }
+        appendResource(data, 'Server')
+
+def getDomainName():
+    domainRuntime()
+    name = cmo.getName()
+    serverRuntime()
+    return name
+
+def grabUsersAndGroups():
+    realm = root.getSecurityConfiguration().getDefaultRealm()
+    authProviders = realm.getAuthenticationProviders()
+    domainName = getDomainName()
+    realmName = realm.getName()
+    limit = 10
+    for provider in authProviders:
+        users = provider
+        groups = provider
+        if isinstance(provider, UserReaderMBean) and provider.getName() == 'DefaultAuthenticator':
+            cursor = provider.listUsers('*', limit)
+            count = 0
+            while users.haveCurrent(cursor):
+                name = users.getCurrentName(cursor)
+                data = {
+                    'name': name,
+                    'domainName': domainName,
+                    'realmName': realmName
+                }
+                appendResource(data, 'User')
+                users.advance(cursor)
+
+            cursor = provider.listGroups('*', limit)
+            while groups.haveCurrent(cursor):
+                name = groups.getCurrentName(cursor)
+                data = {
+                    'name': name,
+                    'domainName': domainName,
+                    'realmName': realmName
+                }
+                appendResource(data, 'Group')
+                groups.advance(cursor)
+
+def getTargetList(bean):
+    targetList = map(lambda x: x.getName(), bean.getTargets())
+    return ','.join(targetList)
+
+
+grabDatasources()
+grabAppDeployments()
+grabJMS()
+grabUsersAndGroups()
+grabServers()
+grabClusters()
+
+doc.appendChild(resources)
+print "DISCOVERED RESOURCES" + ":"
+print doc.toxml(encoding='utf-8')
+print "END DISCOVERED RESOURCES"

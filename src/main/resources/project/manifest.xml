@@ -27,6 +27,10 @@
     <xpath>//property[propertyName="EC::WebLogic"]/value</xpath>
   </file>
   <file>
+    <path>lib/EC/WebLogicDiscover.pm</path>
+    <xpath>//property[propertyName="EC::WebLogicDiscover"]/value</xpath>
+  </file>
+  <file>
     <path>preamble.pl</path>
     <xpath>//property[propertyName="preamble"]/value</xpath>
   </file>
@@ -158,6 +162,10 @@
   <file>
     <path>jython/check_cluster_status.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="check_cluster_status.jython"]/value</xpath>
+  </file>
+  <file>
+    <path>jython/discover.jython</path>
+    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="discover.jython"]/value</xpath>
   </file>
 <!--   <file>
     <path>jython/create_or_update_datasource.jython</path>
@@ -293,6 +301,14 @@
   <file>
     <path>server/jythonStep.pl</path>
     <xpath>//procedure[procedureName="DeleteDatasource"]/step[stepName="DeleteDatasource"]/command</xpath>
+  </file>
+  <file>
+    <path>server/discover.pl</path>
+    <xpath>//procedure[procedureName="Discover"]/step[stepName="Discover"]/command</xpath>
+  </file>
+  <file>
+    <path>server/discoverSetupResource.pl</path>
+    <xpath>//procedure[procedureName="Discover"]/step[stepName="SetupResource"]/command</xpath>
   </file>
   <file>
     <path>server/startManagedServer.pl</path>
@@ -522,6 +538,10 @@
   <file>
     <path>parameterForms/ec_parameterForm-CheckServerStatus.xml</path>
     <xpath>//procedure[procedureName="CheckServerStatus"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
+  </file>
+  <file>
+    <path>parameterForms/ec_parameterForm-Discover.xml</path>
+    <xpath>//procedure[procedureName="Discover"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
   </file>
   <file>
     <path>parameterForms/ec_parameterForm-CheckPageStatus.xml</path>

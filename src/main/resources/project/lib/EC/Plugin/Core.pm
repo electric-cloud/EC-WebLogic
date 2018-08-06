@@ -892,6 +892,15 @@ sub trim {
     $_[0] =~ s/\s+$//s;
 }
 
+sub logger {
+    my ($self) = @_;
+    unless($self->{logger}) {
+        $self->{logger} = EC::Plugin::Logger->new($self->debug_level);
+    }
+    return $self->{logger};
+}
+
+
 =back
 
 =cut
@@ -999,13 +1008,6 @@ sub _tfd {
     return @content;
 }
 
-sub logger {
-    my ($self) = @_;
-    unless($self->{logger}) {
-        $self->{logger} = EC::Plugin::Logger->new($self->debug_level);
-    }
-    return $self->{logger};
-}
 
 
 1;
