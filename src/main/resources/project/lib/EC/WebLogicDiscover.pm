@@ -8,6 +8,11 @@ use Data::Dumper;
 use File::Path qw(mkpath);
 use XML::Simple qw(XMLin);
 
+use constant {
+    TIER_NAME => 'WebLogic',
+    DEPLOY => 'Deploy',
+};
+
 sub new {
     my ($class, $params, $wl) = @_;
     my $self = {params => $params, wl => $wl};
@@ -75,7 +80,7 @@ sub discover_resources {
 
     my $template_path = "/myProject/jython/discover.jython";
     my $template = $self->wl->render_template_from_property($template_path, $render_params);
-    $self->wl->logger->debug($template);
+    # $self->wl->logger->debug($template);
 
     my $res = $self->wl->execute_jython_script(
         shell          => $wlst_path,
@@ -88,7 +93,7 @@ sub discover_resources {
     my ($xml) = $res->{stdout} =~ m/DISCOVERED\sRESOURCES:(.+)END\sDISCOVERED\sRESOURCES/s;
     $xml =~ s/^\s+//g;
     $xml =~ s/\s+$//g;
-    my $structure = XMLin($xml, ForceArray => ['AppDeployment',
+    my $structure = XMLin($xml, SuppressEmpty => 1, ForceArray => ['AppDeployment',
         'Datasource',
         'ConnectionFactory',
         'JMSResource',
@@ -104,7 +109,515 @@ sub discover_resources {
         'Cluster'
     ], KeyAttr => []);
     $self->wl->logger->info('Discovered resources: ', $structure);
+    $self->create_application($structure);
     $self->generate_reports($structure);
+}
+
+sub create_application {
+    my ($self, $data) = @_;
+
+    my $project_name = $self->{params}->{appProjName};
+    my $app_name = $self->{params}->{appName};
+
+    unless($self->{params}->{appProjName} && $self->{params}->{appName}) {
+        $self->wl->logger->warning("Application name and Application Project Name should be provided for the Application generation");
+        return;
+    }
+    unless($self->{params}->{objectNames}) {
+        $self->wl->logger->warning("Object Names should be provided for the Application generation, the Application will not be created");
+        return;
+    }
+
+    $self->_create_app();
+
+    $self->ec->createApplicationTier({
+        applicationTierName => TIER_NAME,
+        projectName => $project_name,
+        applicationName => $app_name,
+    });
+    my $step_name = $self->_create_deploy_process($data);
+    $self->_create_components($data, $step_name);
+    $self->_create_tier_map;
+}
+
+sub _create_tier_map {
+    my ($self) = @_;
+
+    my $project_name = $self->{params}->{appProjName};
+    my $app_name = $self->{params}->{appName};
+    my $env_name = $self->{params}->{envName};
+    my $env_project_name = $self->{params}->{envProjectName};
+
+    return unless ($env_name && $env_project_name);
+
+    my $tier_map_name = "$app_name " . TIER_NAME . " Tier Map";
+    $self->ec->createTierMap({
+        tierMapName => $tier_map_name,
+        applicationName => $app_name,
+        projectName => $project_name,
+        environmentName => $env_name,
+        environmentProjectName => $env_project_name
+    });
+
+    $self->ec->createTierMapping({
+        tierMappingName => "Tier Mapping $app_name $env_name",
+        tierMapName => $tier_map_name,
+        applicationName => $app_name,
+        projectName => $project_name,
+        environmentName => $env_name,
+        environmentProjectName => $env_project_name,
+        applicationTierName => TIER_NAME,
+        environmentTierName => TIER_NAME
+    });
+
+  # tierMap 'fbde699f-9a48-11e8-bd50-6265ff6e656c', {
+  #   applicationName = 'wlApp'
+  #   environmentName = 'wlEnv'
+  #   environmentProjectName = 'WebLogic Discovered'
+  #   projectName = 'WebLogic Discovered'
+
+  #   tierMapping 'fc71a89f-9a48-11e8-9ae9-6265ff6e656c', {
+  #     applicationTierName = 'WebLogic'
+  #     environmentTierName = 'WebLogic'
+  #     tierMapName = 'fbde699f-9a48-11e8-bd50-6265ff6e656c'
+  #   }
+  # }
+}
+
+
+sub _create_deploy_process {
+    my ($self, $data) = @_;
+
+    my $project_name = $self->{params}->{appProjName};
+    my $app_name = $self->{params}->{appName};
+    $self->ec->createProcess({
+        projectName => $project_name,
+        applicationName => $app_name,
+        processType => 'DEPLOY',
+        processName => DEPLOY
+    });
+
+    my $prev_step_name = '';
+    my $step_name;
+    for my $type (keys %$data) {
+        next if $type =~ /AppDeployment|Library/;
+        for my $object (@{$data->{$type}}) {
+            my $name = $object->{name};
+            next unless $self->_is_requested($type, $object);
+
+            $self->wl->logger->info("Creating process step for $type ", $object);
+
+            $step_name = $self->create_process_step($type, $object, $data, $prev_step_name);
+            $prev_step_name = $step_name;
+        }
+    }
+    return $step_name;
+}
+
+sub _create_credential {
+    my ($self, $type, $object) = @_;
+
+    my $cred_name;
+    my $username;
+    my $params = {};
+    if ($type eq 'Datasource') {
+        $cred_name = "Datasource $object->{name}";
+    }
+    elsif ($type eq 'User') {
+        $cred_name = "User $object->{name}";
+        $username = $object->{name};
+    }
+    return unless $cred_name;
+
+    $self->ec->createCredential({
+        projectName => $self->{params}->{appProjName},
+        credentialName => $cred_name,
+        userName => $username,
+    });
+    $self->send_warning("Credential $cred_name requires password");
+
+    return $cred_name;
+}
+
+sub send_warning {
+    my ($self, $warning) = @_;
+
+    $self->wl->logger->warning($warning);
+    push @{$self->{warnings}}, $warning;
+}
+
+sub create_jms_module_step {
+    my ($self, $object, $data, $prev_step_name) = @_;
+
+    my $jms_module_name = $object->{jmsModuleName};
+    my $step_name;
+    my ($jms_module) = grep { $_->{name} eq $jms_module_name } @{$data->{JMSResource}};
+    if ($jms_module) {
+        eval {
+            $step_name = $self->create_process_step('JMSResource', $jms_module, $data, $prev_step_name);
+        };
+    }
+    return $step_name;
+}
+
+sub is_jms_type {
+    my ($type) = @_;
+    return $type =~ /Queue|Topic|ConnectionFactory|SubDeployment/;
+}
+
+sub create_process_step {
+    my ($self, $type, $object, $data, $prev_step_name) = @_;
+
+    my $params = {};
+    my $cred_name = '';
+    my $procedure_name = '';
+    my $project_name = $self->{params}->{appProjName};
+    my $process_step_name = '';
+
+    if (is_jms_type($type)) {
+        my $jms_module_step = $self->create_jms_module_step($object, $data, $prev_step_name);
+        $prev_step_name = $jms_module_step if $jms_module_step;
+    }
+
+    if ($type eq 'Datasource') {
+#                                   {
+#                             'targets' => 'AdminServer',
+#                             'jndiName' => 'examples-dataSource-demoPool',
+#                             'name' => 'examples-demo',
+#                             'url' => 'jdbc:derby://localhost:1527/examples;create=true',
+#                             'driverName' => 'org.apache.derby.jdbc.ClientDriver',
+#                             'driverProperties' => 'user=examples
+                                # DatabaseName=examples;create=true'
+        $cred_name = $self->_create_credential($type, $object);
+        $procedure_name = 'CreateOrUpdateDatasource';
+        $process_step_name = "Create Datasouce $object->{name}";
+        $params = {
+            ecp_weblogic_dataSourceCredentials => "/projects/$project_name/$cred_name",
+            configname => $self->_get_config_name,
+            ecp_weblogic_dataSourceName => $object->{name},
+            ecp_weblogic_dataSourceDriverClass => $object->{driverName},
+            ecp_weblogic_databaseUrl => $object->{url},
+            ecp_weblogic_jndiName => $object->{jndiName},
+            ecp_weblogic_databaseName => $object->{databaseName},
+            ecp_weblogic_driverProperties => $object->{driverProperties},
+            ecp_weblogic_targets => $object->{targets},
+        }
+    }
+    elsif ($type eq 'JMSResource') {
+        $process_step_name = "Create JMS Module $object->{name}";
+        $params = {
+            configname => $self->_get_config_name,
+            ecp_weblogic_jms_module_name => $object->{name},
+            ecp_weblogic_target_list => $object->{targets},
+        };
+        $procedure_name = 'CreateOrUpdateJMSModule';
+    }
+    elsif ($type eq 'Queue') {
+        $process_step_name = "Create JMS Queue $object->{name}";
+        my ($targets, $jms_targets) = $self->_get_subdeployment_targets(
+            $object->{subdeploymentName},
+            $object->{jmsModuleName},
+            $data
+        );
+        $params = {
+            configname => $self->_get_config_name,
+            ecp_weblogic_jms_queue_name => $object->{name},
+            ecp_weblogic_jms_module_name => $object->{jmsModuleName},
+            ecp_weblogic_jndi_name => $object->{jndiName},
+            ecp_weblogic_target_jms_server => $jms_targets,
+            ecp_weblogic_subdeployment_name => $object->{subdeploymentName},
+        };
+        $procedure_name = 'CreateOrUpdateJMSQueue';
+    }
+    elsif ($type eq 'Topic') {
+        $process_step_name = "Create JMS Topic $object->{name}";
+        my ($targets, $jms_targets) = $self->_get_subdeployment_targets($object->{subdeploymentName}, $object->{jmsModuleName}, $data);
+        $params = {
+            configname => $self->_get_config_name,
+            ecp_weblogic_jms_topic_name => $object->{name},
+            ecp_weblogic_jms_module_name => $object->{jmsModuleName},
+            ecp_weblogic_jndi_name => $object->{jndiName},
+            ecp_weblogic_target_jms_server => $jms_targets,
+            ecp_weblogic_subdeployment_name => $object->{subdeploymentName},
+        };
+        $procedure_name = 'CreateOrUpdateJMSTopic';
+    }
+    elsif ($type eq 'JMSServer') {
+        $process_step_name = "Create JMS Server $object->{name}";
+        $params = {
+            configname => $self->_get_config_name,
+            ecp_weblogic_jms_server_name => $object->{name},
+            ecp_weblogic_target => $object->{targets},
+        };
+        $procedure_name = 'CreateOrUpdateJMSServer';
+    }
+    elsif ($type eq 'ConnectionFactory') {
+        $process_step_name = "Create Connection Factory $object->{name}";
+        my $default_targeting = $object->{defaultTargeting} && $object->{defaultTargeting} =~ /1/;
+        my $subdeployment_name = $default_targeting ? '' : $object->{subdeploymentName};
+        my $wl_targets = '';
+        my $jms_targets = '';
+        unless($default_targeting) {
+            $wl_targets = $object->{targets};
+            $jms_targets = $object->{jmsTargets};
+        }
+        $params = {
+            configname => $self->_get_config_name,
+            cf_name => $object->{name},
+            jms_module_name => $object->{jmsModuleName},
+            cf_sharing_policy => $object->{SubscriptionSharingPolicy},
+            cf_client_id_policy => $object->{ClientIdPolicy},
+            jndi_name => $object->{jndiName},
+            cf_xa_enabled => $object->{XAConnectionFactoryEnabled},
+            cf_max_messages_per_session => $object->{MessagesMaximum},
+            subdeployment_name => $subdeployment_name,
+            wls_instance_list => $wl_targets,
+            jms_server_list => $jms_targets,
+        };
+        $procedure_name = 'CreateOrUpdateConnectionFactory';
+    }
+    elsif ($type eq 'Server') {
+        $process_step_name = "Create Managed Server $object->{name}";
+        $params = {
+            configname => $self->_get_config_name,
+            server_name => $object->{name},
+            listen_address => $object->{listenAddress},
+            listen_port => $object->{listenPort},
+        };
+        $procedure_name = 'CreateManagedServer';
+    }
+    elsif ($type eq 'Cluster') {
+        $process_step_name = "Create Cluster $object->{name}";
+        $params = {
+            configname => $self->_get_config_name,
+            cluster_name => $object->{name},
+            multicast_address => $object->{multicastAddress},
+            multicast_port => $object->{multicastPort},
+        };
+        $procedure_name = 'CreateCluster';
+    }
+    elsif ($type eq 'User') {
+        $cred_name = $self->_create_credential($type, $object);
+        $process_step_name = "Create user $object->{name}";
+        $params = {
+            configname => $self->_get_config_name,
+            domain_name => $object->{domainName},
+            realm_name => $object->{realmName},
+            user_credentials => "/projects/$project_name/$cred_name",
+        };
+        $procedure_name = 'CreateUser';
+    }
+    elsif ($type eq 'Group') {
+        $process_step_name = "Create Group $object->{name}";
+        $params = {
+            configname => $self->_get_config_name,
+            domain_name => $object->{domainName},
+            realm_name => $object->{realmName},
+            group_name => $object->{name}
+        };
+        $procedure_name = 'CreateGroup';
+    }
+
+    return unless $process_step_name;
+    $self->wl->logger->info("Process step params", $params);
+
+    $self->ec->createProcessStep({
+        projectName => $self->{params}->{appProjName},
+        applicationName => $self->{params}->{appName},
+        processName => DEPLOY,
+        processStepName => $process_step_name,
+        actualParameter => actual_parameter($params),
+        subproject => '/plugins/EC-WebLogic/project',
+        subprocedure => $procedure_name,
+        processStepType => 'plugin',
+        applicationTierName => TIER_NAME
+    });
+    if ($cred_name) {
+        # Credentials need to be attached to the step
+        $self->ec->attachCredential({
+            projectName => $self->{params}->{appProjName},
+            applicationName => $self->{params}->{appName},
+            processName => DEPLOY,
+            credentialName => $cred_name,
+            processStepName => $process_step_name
+        });
+    }
+    if ($process_step_name && $prev_step_name) {
+        # Step order
+        $self->ec->createProcessDependency({
+            projectName => $self->{params}->{appProjName},
+            applicationName => $self->{params}->{appName},
+            processName => DEPLOY,
+            processStepName => $prev_step_name,
+            targetProcessStepName => $process_step_name,
+        });
+    }
+
+    return $process_step_name;
+}
+
+sub _get_subdeployment_targets {
+    my ($self, $sub_name, $jms_module_name, $data) = @_;
+
+    my ($sub) = grep { $_->{name} eq $sub_name && $_->{jmsModuleName} eq $jms_module_name } @{$data->{SubDeployment}};
+    unless($sub) {
+        die "Cannot find SubDeployment $sub_name";
+    }
+    return ($sub->{targets}, $sub->{jmsTargets});
+}
+
+
+sub _create_component {
+    my ($self, $dep, $data, $prev_step_name, $is_library) = @_;
+
+    my $name = $dep->{name};
+    # Names with version, like mysql-connector-java-8#4.2@8.0.12'
+    $name =~ s/\#.+//;
+    my $project_name = $self->{params}->{appProjName};
+    my $app_name = $self->{params}->{appName};
+
+    $self->ec->createComponent({
+        applicationName => $app_name,
+        projectName => $project_name,
+        pluginKey => 'EC-Artifact',
+        componentName => $name
+    });
+
+    my $artifact_data = {
+        artifactName => "weblogic:$name",
+        artifactVersionLocationProperty => '/myJob/retrievedArtifactVersions/' .$name,
+        overwrite => 'update',
+        pluginProcedure => 'Retrieve',
+        pluginProjectName => 'EC-Artifact',
+        retrieveToDirectory => 'deploy',
+        versionRange => ''
+    };
+    for my $property (keys %$artifact_data) {
+        $self->ec->setProperty("ec_content_details/$property", $artifact_data->{$property}, {
+            applicationName => $app_name,
+            projectName => $project_name,
+            componentName => $name
+        });
+    }
+
+    $self->ec->addComponentToApplicationTier({
+        projectName => $project_name,
+        applicationName => $app_name,
+        componentName => $name,
+        applicationTierName => TIER_NAME,
+    });
+    $self->ec->createProcess({
+        componentApplicationName => $app_name,
+        projectName => $project_name,
+        componentName => $name,
+        processType => 'DEPLOY',
+        processName => DEPLOY
+    });
+    $self->wl->logger->info("Creating Deploy step for application", $dep);
+    # TODO
+    # Version, stage, component
+    # TODO retrieve
+    $self->ec->createProcessStep({
+        componentApplicationName => $app_name,
+        projectName => $project_name,
+        processName => DEPLOY,
+        componentName => $name,
+        processStepName => 'Deploy App',
+        subproject => '/plugins/@PLUGIN_KEY@/project',
+        subprocedure => 'DeployApp',
+        actualParameter => actual_parameter({
+            configname => $self->_get_config_name,
+            wlstabspath => $self->_get_wlst_path,
+            appname => $name,
+            is_library => $is_library,
+            apppath => $dep->{sourcePath},
+            targets => $dep->{targets},
+            version_identifier => $dep->{versionIdentifier}
+        })
+    });
+
+    my $step_name = "Deploy App $name";
+
+    # Adding references to the main deploy process
+    $self->ec->createProcessStep({
+        projectName => $project_name,
+        processName => DEPLOY,
+        processStepName => $step_name,
+        subcomponent => $name,
+        subcomponentProcess => DEPLOY,
+        subcomponentApplicationName => $app_name,
+        applicationTierName => TIER_NAME,
+        applicationName => $app_name
+    });
+    $self->ec->createProcessDependency({
+        projectName => $project_name,
+        applicationName => $app_name,
+        processName => DEPLOY,
+        processStepName => $prev_step_name,
+        targetProcessStepName => $step_name,
+    });
+
+    return $step_name;
+}
+
+sub _create_components {
+    my ($self, $data, $prev_step_name) = @_;
+
+    my $project_name = $self->{params}->{appProjName};
+    my $app_name = $self->{params}->{appName};
+    for my $dep (@{$data->{AppDeployment}}) {
+        next unless $self->_is_requested('AppDeployment', $dep);
+        $prev_step_name = $self->_create_component($dep, $data, $prev_step_name, 0);
+    }
+
+    for my $dep (@{$data->{Library}}) {
+        next unless $self->_is_requested('Library', $dep);
+        $prev_step_name = $self->_create_component($dep, $data, $prev_step_name, 1);
+    }
+}
+
+sub actual_parameter {
+    my ($hashref) = @_;
+    my @list = map { { actualParameterName => $_, value => $hashref->{$_} }} keys %$hashref;
+    return \@list;
+}
+
+sub _is_requested {
+    my ($self, $req_type, $object) = @_;
+
+    my $names = $self->{params}->{objectNames};
+    unless($self->{filter}) {
+        my $objects = {};
+        for my $line (split /\n/ => $names) {
+            next unless $line;
+            my ($type, $name) = split(/\s*:\s*/, $line, 2);
+            $objects->{$type}->{$name} = 1;
+        }
+        $self->{filter} = $objects;
+    }
+
+    my $req_name = $object->{name};
+    if ($req_type =~ /Queue|Topic|ConnectionFactory|SubDeployment/) {
+        $req_name = $object->{jmsModuleName} . ':' . $req_name;
+    }
+    return $self->{filter}->{$req_type}->{$req_name};
+}
+
+
+sub _create_app {
+    my ($self) = @_;
+
+    unless($self->{params}->{appProjName} && $self->{params}->{appName}) {
+        $self->wl->logger->warning("Application name and Application Project Name should be provided for the Application generation");
+        return;
+    }
+    my $project_name = $self->{params}->{appProjName};
+    my $app_name = $self->{params}->{appName};
+
+    $self->ec->abortOnError(0);
+    $self->ec->createProject({projectName => $project_name});
+    $self->ec->abortOnError(1);
+    $self->ec->createApplication({applicationName => $app_name, projectName => $project_name})
 }
 
 
@@ -122,11 +635,11 @@ sub _generate_csv {
     for my $type (keys %$data) {
         for my $object (@{$data->{$type}}) {
             my $name = $object->{name};
-            if ($type =~ /ConnectionFactory|Queue|Topic|SubDeployment/i) {
+            if (is_jms_type($type)) {
                 $name = $object->{jmsModuleName} . ':' . $name;
             }
             my $summary = $self->_get_resource_summary($type, $object);
-            push @short, "$name=$type";
+            push @short, "$type: $name";
             push @long, "$name\t$type\t$summary";
         }
     }
@@ -285,6 +798,14 @@ sub _generate_url {
 }
 
 sub _get_wlst_path {
+    my ($self) = @_;
+    unless($self->{wlst_path}) {
+        $self->{wlst_path} = $self->_find_wlst;
+    }
+    return $self->{wlst_path};
+}
+
+sub _find_wlst {
     my ($self) = @_;
 
     my $path = $self->{params}->{wlstPath};

@@ -1049,6 +1049,12 @@ sub error {
     $self->_log(ERROR, '[ERROR]', @messages);
 }
 
+sub warning {
+    my ($self, @messages) =@_;
+
+    $self->_log(ERROR, '[WARNING]', @messages);
+}
+
 sub trace {
     my ($self, @messages) = @_;
     $self->_log(TRACE, '[TRACE]', @messages);
