@@ -165,10 +165,13 @@ def grabJMSServers():
             sendWarning('JMS Server ' + server.getName + ' has more that one targets. Only the first one will be used: ' + targets[0].getName())
         appendResource(grabbedData, 'JMSServer')
 
+seenSubdeployemnts = []
 def grabSubdeployment(resource, name):
     for subd in resource.getSubDeployments():
-        grabbedData = {'jmsModuleName': resource.getName(), 'name': subd.getName(), 'targets': getTargetList(subd), 'jmsTargets': getJMSTargetList(subd)}
-        appendResource(grabbedData, 'SubDeployment')
+        if not subd.getName() in seenSubdeployemnts:
+            grabbedData = {'jmsModuleName': resource.getName(), 'name': subd.getName(), 'targets': getTargetList(subd), 'jmsTargets': getJMSTargetList(subd)}
+            appendResource(grabbedData, 'SubDeployment')
+            seenSubdeployemnts.append(subd.getName())
 
 def grabConnectionFactories(resource):
     for cf in resource.getJMSResource().getConnectionFactories():
@@ -194,7 +197,6 @@ def grabConnectionFactories(resource):
         grabbed['ClientIdPolicy'] = get('ClientIdPolicy')
         grabbed['SubscriptionSharingPolicy'] = get('SubscriptionSharingPolicy')
         grabbed['MessagesMaximum'] = get('MessagesMaximum')
-        print grabbed
         appendResource(grabbed, 'ConnectionFactory')
 
 def grabClusters():
@@ -249,7 +251,7 @@ def grabUsersAndGroups():
                 data = {
                     'name': name,
                     'domainName': domainName,
-                    'realmName': realmName
+                    'realmName': realmName,
                 }
                 appendResource(data, 'Group')
                 groups.advance(cursor)

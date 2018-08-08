@@ -779,21 +779,46 @@ sub  trim_input {
 }
 
 sub render_template_from_property {
-    my ($self, $template_name, $params) = @_;
+    my ($self, $template_name, $params, %options) = @_;
 
     if (!$template_name) {
         croak "No template";
     }
     my $template;
-    $self->out(1, "Processing template $template_name");
+    $self->logger->debug("Processing template $template_name");
+    if ($template_name !~ /^\//) {
+        my $plugin_name = $self->{plugin_name};
+        $template_name = "/projects/$plugin_name/resources/templates/$template_name";
+    }
     $template = $self->get_param($template_name);
     unless ($template) {
         croak "Template $template_name wasn't found";
     }
 
-    return $self->render_template(text => $template, render_params => $params);
+    if ($options{mt}) {
+        return $self->_render_mt(text => $template, render_params => $params);
+    }
+    else {
+        return $self->render_template(text => $template, render_params => $params);
+    }
 }
 
+
+sub _render_mt {
+    my ($self, %params) = @_;
+
+    my $template = $params{text};
+    my $render_params = $params{render_params};
+    my $renderer = Text::MicroTemplate::build_mt($template);
+    # $self->logger->trace($render_params);
+    my $result = eval { $renderer->($render_params)->as_string };
+    if ($@) {
+        my $message = "Render failed: $@";
+        $message .= Dumper(\%params);
+        die $message;
+    }
+    return $result;
+}
 
 # TODO: add simple version of exec_timelimit
 sub exec_timelimit_simple {

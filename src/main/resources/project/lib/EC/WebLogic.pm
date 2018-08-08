@@ -337,7 +337,7 @@ sub gen_random_numbers {
 
 
 sub render_template_from_property {
-    my ($self, $template_name, $params) = @_;
+    my ($self, $template_name, $params, %options) = @_;
 
     $params ||= {};
 
@@ -356,7 +356,7 @@ sub render_template_from_property {
 
     $params->{preamble} = $self->SUPER::render_template_from_property('/myProject/jython/preamble.jython', $preamble_params);
     # $params->{preamble} = $self->get_param('/myProject/jython/preamble.jython');
-    return $self->SUPER::render_template_from_property($template_name, $params);
+    return $self->SUPER::render_template_from_property($template_name, $params, %options);
 }
 
 sub get_wlst_path {

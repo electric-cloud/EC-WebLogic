@@ -1,0 +1,48 @@
+---
+- file: \.(pl|pm|jython)
+  push:
+    command: setProperty
+    server: 'ubuntu-esxi'
+    args:
+      projectName: |
+        # perl
+
+        my $projectName = $EC->getProject('/plugins/EC-WebLogic/project')->findvalue('//projectName')->string_value;
+        $projectName;
+      propertyName: |
+        # perl
+        my $filename = $FILENAME;
+        my $retval;
+        if ($filename =~ /lib/) {
+            $filename =~ s/.*\/lib\///;
+            $filename =~ s/\//::/g;
+            $filename =~ s/\.\w+$//;
+            print "$filename\n";
+            $retval = $filename;
+        }
+        elsif($filename =~ /jython/) {
+            $filename =~ s/^.+?jython\///;
+            $retval = "jython/$filename";
+        }
+
+        $retval;
+      value: |
+        # perl
+        my $filename = $FILENAME;
+        open my $fh, $filename or die $!;
+        my $content = join('', <$fh>);
+        close $fh;
+
+        my $projectName = $EC->getProject('/plugins/EC-WebLogic/project')->findvalue('//projectName')->string_value;
+
+        print "$projectName\n";
+        $content =~ s/\@PLUGIN_NAME@/$projectName/g;
+        $content;
+
+# - file: postp.pl
+#   push:
+#     command: setProperty
+#     server: chronic3.electric-cloud.com
+#     args:
+#       propertyName: '/projects/Github Plugins/procedures/Run System Tests/steps/Run Spec Tests/postp'
+#       value: FILE_CONTENT

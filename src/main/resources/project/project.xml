@@ -208,6 +208,11 @@
         <expandable>0</expandable>
       </property>
       <property>
+        <propertyName>Text::MicroTemplate</propertyName>
+        <value/>
+        <expandable>0</expandable>
+      </property>
+      <property>
         <propertyName>EC::WebLogicDiscover</propertyName>
         <value/>
         <expandable>0</expandable>
@@ -230,9 +235,23 @@
         </propertySheet>
       </property>
       <property>
+        <propertyName>templates</propertyName>
+        <propertySheet>
+          <property>
+            <propertyName>discovered_resources.html</propertyName>
+            <value/>
+          </property>
+        </propertySheet>
+      </property>
+      <property>
         <propertyName>jython</propertyName>
         <description>Property sheet for jython scripts</description>
         <propertySheet>
+          <property>
+            <propertyName>discover.jython</propertyName>
+            <expandable>1</expandable>
+            <value/>
+          </property>
           <property>
             <propertyName>preamble.jython</propertyName>
             <expandable>1</expandable>

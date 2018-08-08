@@ -3,10 +3,12 @@ package EC::WebLogicDiscover;
 use strict;
 use warnings;
 use ElectricCommander;
+use ElectricCommander::ArtifactManagement;
 use File::Spec;
 use Data::Dumper;
 use File::Path qw(mkpath);
 use XML::Simple qw(XMLin);
+use JSON;
 
 use constant {
     TIER_NAME => 'WebLogic',
@@ -199,7 +201,21 @@ sub _create_deploy_process {
 
     my $prev_step_name = '';
     my $step_name;
-    for my $type (keys %$data) {
+
+    my @types = qw(Cluster
+        Server
+        JMSServer
+        JMSResource
+        SubDeployment
+        Queue
+        Topic
+        ConnectionFactory
+        Datasource
+        User
+        Group
+    );
+
+    for my $type (@types) {
         next if $type =~ /AppDeployment|Library/;
         for my $object (@{$data->{$type}}) {
             my $name = $object->{name};
@@ -342,6 +358,16 @@ sub create_process_step {
         };
         $procedure_name = 'CreateOrUpdateJMSTopic';
     }
+    elsif ($type eq 'SubDeployment') {
+        $process_step_name = "Create SubDeployment $object->{name}";
+        $params = {
+            configname => $self->_get_config_name,
+            ecp_weblogic_subdeployment_name => $object->{name},
+            ecp_weblogic_jms_module_name => $object->{jmsModuleName},
+            ecp_weblogic_subdeployment_target_list => $object->{targets},
+        };
+        $procedure_name = 'CreateOrUpdateJMSModuleSubdeployment';
+    }
     elsif ($type eq 'JMSServer') {
         $process_step_name = "Create JMS Server $object->{name}";
         $params = {
@@ -466,6 +492,32 @@ sub _get_subdeployment_targets {
     return ($sub->{targets}, $sub->{jmsTargets});
 }
 
+sub _publish_artifact {
+    my ($self, $dep) = @_;
+
+    my $am = ElectricCommander::ArtifactManagement->new($self->ec);
+    my $artifact;
+    eval {
+        my ($volume, $directories, $file) = File::Spec->splitpath($dep->{sourcePath});
+        my $artifact_version = $am->publish({
+            groupId => "weblogic.discovered",
+            artifactKey => $dep->{name},
+            version => '1.0.0',
+            includePatterns => $file,
+            fromDirectory => File::Spec->catpath($volume, $directories),
+            description => 'Automatically published during WebLogic Discovery',
+        });
+        $artifact = {
+            file => $file,
+            artifactName => "weblogic.discovered:$dep->{name}",
+            version => '1.0.0'
+        };
+    } or do {
+        $self->wl->logger->warning("Failed to publish artifact: $@");
+    };
+
+    return $artifact;
+}
 
 sub _create_component {
     my ($self, $dep, $data, $prev_step_name, $is_library) = @_;
@@ -483,8 +535,10 @@ sub _create_component {
         componentName => $name
     });
 
+    my $artifact = $self->_publish_artifact($dep);
+
     my $artifact_data = {
-        artifactName => "weblogic:$name",
+        artifactName => "weblogic.discovered:$name",
         artifactVersionLocationProperty => '/myJob/retrievedArtifactVersions/' .$name,
         overwrite => 'update',
         pluginProcedure => 'Retrieve',
@@ -492,6 +546,7 @@ sub _create_component {
         retrieveToDirectory => 'deploy',
         versionRange => ''
     };
+
     for my $property (keys %$artifact_data) {
         $self->ec->setProperty("ec_content_details/$property", $artifact_data->{$property}, {
             applicationName => $app_name,
@@ -517,6 +572,13 @@ sub _create_component {
     # TODO
     # Version, stage, component
     # TODO retrieve
+    my $path;
+    if ($artifact) {
+        $path = File::Spec->catfile('deploy', $artifact->{file});
+    }
+    else {
+        $path = $dep->{sourcePath};
+    }
     $self->ec->createProcessStep({
         componentApplicationName => $app_name,
         projectName => $project_name,
@@ -530,7 +592,7 @@ sub _create_component {
             wlstabspath => $self->_get_wlst_path,
             appname => $name,
             is_library => $is_library,
-            apppath => $dep->{sourcePath},
+            apppath => $path,
             targets => $dep->{targets},
             version_identifier => $dep->{versionIdentifier}
         })
@@ -625,6 +687,58 @@ sub generate_reports {
     my ($self, $discovered_data) = @_;
 
     $self->_generate_csv($discovered_data);
+    $self->_generate_html($discovered_data);
+    my $json = encode_json($discovered_data);
+    $self->ec->setProperty('/myJob/discoveredResources', $json);
+}
+
+sub _generate_html {
+    my ($self, $data) = @_;
+
+    my $render_params = $data;
+    my $jms_resources = $data->{JMSResource};
+
+    my $jms_structure = [];
+
+    for my $jms (@$jms_resources) {
+        my $name = $jms->{name};
+        my $find_targets = sub {
+            my ($object) = @_;
+            if ($object->{targets}) {
+                return $object->{targets};
+            }
+            if ($object->{defaultTargeting}) {
+                return $jms->{targets};
+            }
+            if ($object->{subdeploymentName}) {
+                my ($subdeployment) = grep { $_->{name} eq $object->{subdeploymentName}} @{$data->{SubDeployment}};
+                my $wl_targets = $subdeployment->{targets} ||= '';
+                my $jms_servers = $subdeployment->{jmsTargets} ||= '';
+                my @all_targets = split(/\s*,\s*/, $jms_servers . ',' . $wl_targets);
+                return join(', ', @all_targets);
+            }
+            return '';
+        };
+
+        for my $type (qw/ConnectionFactory Queue Topic SubDeployment/) {
+            my @objects = grep { $_->{jmsModuleName} eq $name } @{$data->{$type}};
+            for my $object (@objects) {
+                $object->{targets} = $find_targets->($object);
+            }
+            $jms->{$type} = \@objects;
+        }
+        push @$jms_structure, $jms;
+    }
+
+    $render_params->{jms} = $jms_structure;
+
+    my $template_path = "/myProject/templates/discovered_resources.html";
+    my $report = $self->wl->render_template_from_property(
+        $template_path,
+        $render_params,
+        mt => 1
+    );
+    $self->_attach_report("Discovered Resources.html", $report);
 }
 
 sub _generate_csv {
@@ -700,11 +814,13 @@ sub ensure_environment {
     $errors .= $self->ec->checkAllErrors($xpath);
     $self->ec->createEnvironmentTier({projectName => $proj_name, environmentName => $env_name, environmentTierName => 'WebLogic'});
     $errors .= $self->ec->checkAllErrors($xpath);
+
+    my $res_name = $self->ec->getProperty('/myJobStep/resourceName')->findvalue('//value')->string_value;
     $self->ec->addResourceToEnvironmentTier({
         projectName => $proj_name,
         environmentName => $env_name,
         environmentTierName => 'WebLogic',
-        resourceName => '$[resourceName]'
+        resourceName => $res_name
     });
     $errors .= $self->ec->checkAllErrors($xpath);
     if ($errors) {
@@ -730,7 +846,6 @@ sub ensure_configuration {
 
     my $url = $self->_generate_url;
     my $wlst_path = $self->_get_wlst_path;
-    my $res_name = '$[resourceName]';
     my $config_name = $self->_get_config_name;
     my $config_location = $self->ec->getProperty('/plugins/@PLUGIN_KEY@/project/ec_config/configLocation')->findvalue('//value')->string_value;
     my $exists = 0;
@@ -740,7 +855,10 @@ sub ensure_configuration {
     } or do {
         # Config does not exist
     };
-    return if $exists;
+    if ($exists) {
+        $self->wl->logger->info("Configuration $config_name exists");
+        return;
+    }
 
     $self->wl->logger->info("URL: $url");
     $self->wl->logger->info("WLST Path: $wlst_path");
@@ -783,7 +901,8 @@ sub ensure_configuration {
 sub _get_config_name {
     my ($self) = @_;
 
-    my $config_name = "WebLogic Config " . '$[resourceName]';
+    my $res_name = $self->ec->getProperty('/myJobStep/resourceName')->findvalue('//value')->string_value;
+    my $config_name = "WebLogic Config $res_name";
     return $config_name;
 }
 

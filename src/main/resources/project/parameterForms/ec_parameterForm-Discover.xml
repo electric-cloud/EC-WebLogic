@@ -65,7 +65,7 @@
         <label>Weblogic Connection Protocol:</label>
         <property>ecp_weblogic_connectionProtocol</property>
         <required>0</required>
-        <value>t3s</value>
+        <value>t3</value>
         <option>
             <value>t3s</value>
             <name>t3s</name>
@@ -74,7 +74,7 @@
             <value>t3</value>
             <name>t3</name>
         </option>
-        <documentation>Protocol to connect to WebLogic instance. T3S by default.</documentation>
+        <documentation>Protocol to connect to WebLogic instance. T3 by default.</documentation>
     </formElement>
     <formElement>
         <type>credential</type>
