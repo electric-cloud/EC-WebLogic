@@ -1,0 +1,144 @@
+<!--
+
+     Copyright 2015 Electric Cloud, Inc.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
+<editor>
+    <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#Discover</help>
+    <formElement>
+        <type>entry</type>
+        <label>Resource Name:</label>
+        <property>ecp_weblogic_resourceName</property>
+        <required>0</required>
+        <documentation>Name of the ElectricFlow resource with the WebLogic instance running.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Resource Hostname:</label>
+        <property>ecp_weblogic_hostname</property>
+        <required>0</required>
+        <documentation>Hostname of a machine with WebLogic and ElectricFlow Agent running on it. Either Resource hostname (and port) or Resource Name should be specified.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Resource Port:</label>
+        <property>ecp_weblogic_resPort</property>
+        <required>0</required>
+        <documentation>Port of ElectricFlow agent running on the machine. Default is 7800.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Oracle Home:</label>
+        <property>ecp_weblogic_oracleHome</property>
+        <required>0</required>
+        <documentation>Installation path of the WebLogic server, e.g. /home/oracle. Either this parameter or WLST Path parameter must be specified.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>WLST Path:</label>
+        <property>ecp_weblogic_wlstPath</property>
+        <required>0</required>
+        <documentation>Path to wlst.sh utility. If not provided, the procedure will look for it in known locations. Either this parameter or Oracle Home parameter must be specified.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Weblogic Connection Hostname:</label>
+        <property>ecp_weblogic_connectionHostname</property>
+        <required>0</required>
+        <value>localhost</value>
+        <documentation>Hostname to connect to WebLogic instance. Localhost by default.</documentation>
+    </formElement>
+    <formElement>
+        <type>select</type>
+        <label>Weblogic Connection Protocol:</label>
+        <property>ecp_weblogic_connectionProtocol</property>
+        <required>0</required>
+        <value>t3</value>
+        <option>
+            <value>t3s</value>
+            <name>t3s</name>
+        </option>
+        <option>
+            <value>t3</value>
+            <name>t3</name>
+        </option>
+        <documentation>Protocol to connect to WebLogic instance. T3 by default.</documentation>
+    </formElement>
+    <formElement>
+        <type>credential</type>
+        <label>WebLogic Credentials:</label>
+        <property>ecp_weblogic_credential</property>
+        <required>1</required>
+        <documentation>Username and password to connect to WebLogic server.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Environment Project Name:</label>
+        <property>ecp_weblogic_envProjectName</property>
+        <required>0</required>
+        <documentation>If specified, will be used to create ElectricFlow environment.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Environment Name:</label>
+        <property>ecp_weblogic_envName</property>
+        <required>0</required>
+        <documentation>If specified, will be used to create ElectricFlow environment.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Application Project Name:</label>
+        <property>ecp_weblogic_appProjName</property>
+        <required>0</required>
+        <documentation>Project name to create Application based on discovered entities.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Application Name:</label>
+        <property>ecp_weblogic_appName</property>
+        <required>0</required>
+        <documentation>Application for placing discovered entities.</documentation>
+    </formElement>
+    <formElement>
+        <type>textarea</type>
+        <label>Object Names:</label>
+        <property>ecp_weblogic_objectNames</property>
+        <required>0</required>
+        <documentation>Objects to be retrieved from the WL Server in type:name pairs, e.g. AppDeployment:HelloWorld.
+
+
+The list of supported object types:
+
+AppDeployment
+Library
+Server
+Cluster
+Datasource
+Queue
+Topic
+JMSResource
+JMSServer
+ConnectionFactory
+User
+Group
+
+
+For JMS Resource the name of the resource should be prefixed by JMS Module Name: helloJMSModule:helloQueue
+
+The list of Object Names can be taken from the .csv report generated by this procedure.
+
+</documentation>
+    </formElement>
+</editor>

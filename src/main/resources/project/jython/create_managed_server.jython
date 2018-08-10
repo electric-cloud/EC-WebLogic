@@ -18,7 +18,7 @@ try:
     # connect to the server
     print('Going for creating managed server')
     connect(r'[% wl_username %]', r'[% wl_password %]', r'[% admin_url %]')
-    
+
     listenAddress = r'[% listen_address %]'
     listenPort = r'[% listen_port %]'
     edit()
@@ -40,5 +40,5 @@ else:
     save()
     activate()
     disconnect()
-    exit() 
+    exit()
 

@@ -14,37 +14,29 @@
 #  limitations under the License.
 #
 
-=head1 NAME
+# preamble.pl
+$[/myProject/preamble]
 
-preamble.pl
+my $PROJECT_NAME = '$[/myProject/projectName]';
+my $PLUGIN_NAME = '@PLUGIN_NAME@';
+my $PLUGIN_KEY  = '@PLUGIN_KEY@';
+use Data::Dumper;
 
-=head1 DESCRIPTION
-
-Preamble for application server plugins. Imports necessary modules.
-
-=cut
-
-use strict;
-use warnings;
-use ElectricCommander::PropDB;
-use ElectricCommander::PropMod;
-use Carp;
+$load->('/myProject/EC::WebLogicDiscover');
 
 $| = 1;
 
-my $ec = ElectricCommander->new();
+main();
 
-my $load = sub {
-    my $property_path = shift;
+sub main {
+    my $wl = EC::WebLogic->new(
+        project_name => $PROJECT_NAME,
+        plugin_name  => $PLUGIN_NAME,
+        plugin_key   => $PLUGIN_KEY
+    );
 
-    ElectricCommander::PropMod::loadPerlCodeFromProperty(
-        $ec, $property_path
-    ) or do {
-        croak "Can't load property $property_path";
-    };
-};
-
-$load->('/myProject/EC::Plugin::Core');
-$load->('/myProject/EC::WebLogic');
-$load->('/myProject/Text::MicroTemplate');
+    my $params = $wl->get_step_parameters();
+    my $discover = EC::WebLogicDiscover->new($params, $wl);
+    $discover->ensure_resource();
+}
 

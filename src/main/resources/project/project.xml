@@ -208,6 +208,16 @@
         <expandable>0</expandable>
       </property>
       <property>
+        <propertyName>Text::MicroTemplate</propertyName>
+        <value/>
+        <expandable>0</expandable>
+      </property>
+      <property>
+        <propertyName>EC::WebLogicDiscover</propertyName>
+        <value/>
+        <expandable>0</expandable>
+      </property>
+      <property>
         <propertyName>ui_forms</propertyName>
         <description>Property sheet to hold XML specification for forms</description>
         <propertySheet>
@@ -225,9 +235,23 @@
         </propertySheet>
       </property>
       <property>
+        <propertyName>templates</propertyName>
+        <propertySheet>
+          <property>
+            <propertyName>discovered_resources.html</propertyName>
+            <value/>
+          </property>
+        </propertySheet>
+      </property>
+      <property>
         <propertyName>jython</propertyName>
         <description>Property sheet for jython scripts</description>
         <propertySheet>
+          <property>
+            <propertyName>discover.jython</propertyName>
+            <expandable>1</expandable>
+            <value/>
+          </property>
           <property>
             <propertyName>preamble.jython</propertyName>
             <expandable>1</expandable>
@@ -8989,6 +9013,338 @@ By default, the JNDI name is the name of the Datasource. Applications that look 
     <workspaceName />
     <attachedParameters>
       <formalParameterName>ecp_weblogic_dataSourceCredentials</formalParameterName>
+    </attachedParameters>
+  </step>
+</procedure>
+
+<procedure>
+  <description>Discovers WebLogic configuration and deployable objects</description>
+  <jobNameTemplate>weblogic-discover-$[jobId]</jobNameTemplate>
+  <procedureName>Discover</procedureName>
+  <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+  <propertySheet>
+    <property>
+      <propertyName>ec_parameterForm</propertyName>
+      <value />
+      <expandable>1</expandable>
+    </property>
+    <property>
+      <propertyName>ec_customEditorData</propertyName>
+      <propertySheet>
+        <property>
+          <propertyName>parameters</propertyName>
+          <propertySheet>
+            <property>
+              <propertyName>ecp_weblogic_hostname</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_envName</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_resPort</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_envProjectName</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_oracleHome</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_connectionProtocol</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_wlstPath</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_objectNames</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_appProjName</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_credential</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_appName</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_resourceName</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+            <property>
+              <propertyName>ecp_weblogic_connectionHostname</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>formType</propertyName>
+                  <value>standard</value>
+                  <expandable>1</expandable>
+                </property>
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+      </propertySheet>
+    </property>
+  </propertySheet>
+  <formalParameter>
+    <defaultValue />
+    <description>Name of the ElectricFlow resource with the WebLogic instance running.</description>
+    <formalParameterName>ecp_weblogic_resourceName</formalParameterName>
+    <required>0</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>Hostname of a machine with WebLogic and ElectricFlow Agent running on it. Either Resource hostname (and port) or Resource Name should be specified.</description>
+    <formalParameterName>ecp_weblogic_hostname</formalParameterName>
+    <required>0</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>Port of ElectricFlow agent running on the machine. Default is 7800.</description>
+    <formalParameterName>ecp_weblogic_resPort</formalParameterName>
+    <required>0</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>Installation path of the WebLogic server, e.g. /home/oracle. Either this parameter or WLST Path parameter must be specified.</description>
+    <formalParameterName>ecp_weblogic_oracleHome</formalParameterName>
+    <required>0</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>Installation path of the WebLogic server, e.g. /home/oracle. Either this parameter or WLST Path parameter must be specified.</description>
+    <formalParameterName>ecp_weblogic_oracleHome</formalParameterName>
+    <required>0</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>Path to wlst.sh utility. If not provided, the procedure will look for it in known locations. Either this parameter or Oracle Home parameter must be specified.</description>
+    <formalParameterName>ecp_weblogic_wlstPath</formalParameterName>
+    <required>0</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue>localhost</defaultValue>
+    <description>Hostname to connect to WebLogic instance. Localhost by default.</description>
+    <formalParameterName>ecp_weblogic_connectionHostname</formalParameterName>
+    <required>0</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue>t3</defaultValue>
+    <description>Protocol to connect to WebLogic instance. T3 by default.</description>
+    <formalParameterName>ecp_weblogic_connectionProtocol</formalParameterName>
+    <required>0</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>Username and password to connect to WebLogic server.</description>
+    <formalParameterName>ecp_weblogic_credential</formalParameterName>
+    <required>1</required>
+    <type>credential</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>If specified, will be used to create ElectricFlow environment.</description>
+    <formalParameterName>ecp_weblogic_envProjectName</formalParameterName>
+    <required>0</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>If specified, will be used to create ElectricFlow environment.</description>
+    <formalParameterName>ecp_weblogic_envName</formalParameterName>
+    <required>0</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>Project name to create Application based on discovered entities.</description>
+    <formalParameterName>ecp_weblogic_appProjName</formalParameterName>
+    <required>0</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>Application for placing discovered entities.</description>
+    <formalParameterName>ecp_weblogic_appName</formalParameterName>
+    <required>0</required>
+    <type>entry</type>
+  </formalParameter>
+  <formalParameter>
+    <defaultValue />
+    <description>Objects to be retrieved from the WL Server in name=type pairs, e.g. HelloWorld=Deployment
+
+helloDatasource = Datasource
+
+The list of supported object types:
+
+Deployment
+
+ManagedServer
+
+Cluster
+
+Datasource
+
+JMSQueue
+
+JMSTopic
+
+JMSServer
+
+ConnectionFactory
+
+User
+
+Group
+
+
+
+For JMS Resource the name of the resource should be prefixed by JMS Module Name: helloJMSModule/helloQueue
+
+</description>
+    <formalParameterName>ecp_weblogic_objectNames</formalParameterName>
+    <required>0</required>
+    <type>textarea</type>
+  </formalParameter>
+  <step>
+    <alwaysRun>0</alwaysRun>
+    <broadcast>0</broadcast>
+    <command />
+    <condition />
+    <description />
+    <errorHandling>failProcedure</errorHandling>
+    <exclusive>0</exclusive>
+    <logFileName />
+    <parallel>0</parallel>
+    <procedureName>Discover</procedureName>
+    <projectName>EC-WebLogic</projectName>
+    <releaseExclusive>0</releaseExclusive>
+    <resourceName />
+    <retries>0</retries>
+    <shell>ec-perl</shell>
+    <stepName>SetupResource</stepName>
+    <timeLimit />
+    <timeLimitUnits>minutes</timeLimitUnits>
+    <workingDirectory />
+    <workspaceName />
+    <attachedParameters>
+      <formalParameterName>ecp_weblogic_credential</formalParameterName>
+    </attachedParameters>
+  </step>
+  <step>
+    <alwaysRun>0</alwaysRun>
+    <broadcast>0</broadcast>
+    <command />
+    <condition />
+    <description />
+    <errorHandling>failProcedure</errorHandling>
+    <exclusive>0</exclusive>
+    <logFileName />
+    <parallel>0</parallel>
+    <procedureName>Discover</procedureName>
+    <projectName>EC-WebLogic</projectName>
+    <releaseExclusive>0</releaseExclusive>
+    <resourceName>$[WLResourceName]</resourceName>
+    <retries>0</retries>
+    <shell>ec-perl</shell>
+    <stepName>Discover</stepName>
+    <timeLimit />
+    <timeLimitUnits>minutes</timeLimitUnits>
+    <workingDirectory />
+    <workspaceName />
+    <attachedParameters>
+      <formalParameterName>ecp_weblogic_credential</formalParameterName>
     </attachedParameters>
   </step>
 </procedure>

@@ -1,21 +1,5 @@
 <?xml version="1.0" standalone="yes"?>
-<!--
 
-     Copyright 2015 Electric Cloud, Inc.
-
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
-
-         http://www.apache.org/licenses/LICENSE-2.0
-
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
-
--->
 <fileset>
     <!-- perl and jython modules starts from here -->
   <file>
@@ -25,14 +9,6 @@
   <file>
     <path>lib/EC/WebLogic.pm</path>
     <xpath>//property[propertyName="EC::WebLogic"]/value</xpath>
-  </file>
-  <file>
-    <path>lib/Text/MicroTemplate.pm</path>
-    <xpath>//property[propertyName="Text::MicroTemplate"]/value</xpath>
-  </file>
-  <file>
-    <path>lib/EC/WebLogicDiscover.pm</path>
-    <xpath>//property[propertyName="EC::WebLogicDiscover"]/value</xpath>
   </file>
   <file>
     <path>preamble.pl</path>
@@ -167,10 +143,6 @@
     <path>jython/check_cluster_status.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="check_cluster_status.jython"]/value</xpath>
   </file>
-  <file>
-    <path>jython/discover.jython</path>
-    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="discover.jython"]/value</xpath>
-  </file>
 <!--   <file>
     <path>jython/create_or_update_datasource.jython</path>
     <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_datasource.jython"]/value</xpath>
@@ -303,16 +275,8 @@
     <xpath>//procedure[procedureName="CreateDatasource"]/step[stepName="CreateDatasource"]/command</xpath>
   </file>
   <file>
-    <path>server/jythonStep.pl</path>
+    <path>server/deleteDataSource.pl</path>
     <xpath>//procedure[procedureName="DeleteDatasource"]/step[stepName="DeleteDatasource"]/command</xpath>
-  </file>
-  <file>
-    <path>server/discover.pl</path>
-    <xpath>//procedure[procedureName="Discover"]/step[stepName="Discover"]/command</xpath>
-  </file>
-  <file>
-    <path>server/discoverSetupResource.pl</path>
-    <xpath>//procedure[procedureName="Discover"]/step[stepName="SetupResource"]/command</xpath>
   </file>
   <file>
     <path>server/startManagedServer.pl</path>
@@ -475,7 +439,7 @@
     <xpath>//procedure[procedureName="DeleteJMSTopic"]/step[stepName="DeleteJMSTopic"]/command</xpath>
   </file>
   <file>
-    <path>server/jythonStep.pl</path>
+    <path>server/createOrUpdateDatasource.pl</path>
     <xpath>//procedure[procedureName="CreateOrUpdateDatasource"]/step[stepName="CreateOrUpdateDatasource"]/command</xpath>
   </file>
   <file>
@@ -542,10 +506,6 @@
   <file>
     <path>parameterForms/ec_parameterForm-CheckServerStatus.xml</path>
     <xpath>//procedure[procedureName="CheckServerStatus"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
-  </file>
-  <file>
-    <path>parameterForms/ec_parameterForm-Discover.xml</path>
-    <xpath>//procedure[procedureName="Discover"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
   </file>
   <file>
     <path>parameterForms/ec_parameterForm-CheckPageStatus.xml</path>
@@ -711,88 +671,5 @@
     <path>parameterForms/ec_parameterForm-DeleteJMSQueue.xml</path>
     <xpath>//procedure[procedureName="DeleteJMSQueue"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
   </file>
-  <file>
-    <path>parameterForms/ec_parameterForm-CreateOrUpdateJMSTopic.xml</path>
-    <xpath>//procedure[procedureName="CreateOrUpdateJMSTopic"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
-  </file>
-  <file>
-    <path>parameterForms/ec_parameterForm-DeleteJMSTopic.xml</path>
-    <xpath>//procedure[procedureName="DeleteJMSTopic"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
-  </file>
-  <file>
-    <path>parameterForms/ec_parameterForm-DeleteJMSModule.xml</path>
-    <xpath>//procedure[procedureName="DeleteJMSModule"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
-  </file>
-  <file>
-    <path>parameterForms/ec_parameterForm-CreateOrUpdateJMSModule.xml</path>
-    <xpath>//procedure[procedureName="CreateOrUpdateJMSModule"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
-  </file>
-  <file>
-    <path>parameterForms/ec_parameterForm-CreateOrUpdateJMSModuleSubdeployment.xml</path>
-    <xpath>//procedure[procedureName="CreateOrUpdateJMSModuleSubdeployment"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
-  </file>
-  <file>
-    <path>parameterForms/ec_parameterForm-DeleteJMSModuleSubdeployment.xml</path>
-    <xpath>//procedure[procedureName="DeleteJMSModuleSubdeployment"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
-  </file>
-  <file>
-    <path>parameterForms/ec_parameterForm-CreateOrUpdateJMSServer.xml</path>
-    <xpath>//procedure[procedureName="CreateOrUpdateJMSServer"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
-  </file>
-  <file>
-    <path>parameterForms/ec_parameterForm-DeleteJMSServer.xml</path>
-    <xpath>//procedure[procedureName="DeleteJMSServer"]/propertySheet/property[propertyName="ec_parameterForm"]/value</xpath>
-  </file>
-  <file>
-    <path>jython/create_or_update_connection_factory.jython</path>
-    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_connection_factory.jython"]/value</xpath>
-  </file>
-  <file>
-    <path>jython/create_or_update_datasource.jython</path>
-    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_datasource.jython"]/value</xpath>
-  </file>
-  <file>
-    <path>jython/delete_connection_factory.jython</path>
-    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_connection_factory.jython"]/value</xpath>
-  </file>
-  <file>
-    <path>jython/create_or_update_jms_queue.jython</path>
-    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_jms_queue.jython"]/value</xpath>
-  </file>
-  <file>
-    <path>jython/delete_jms_queue.jython</path>
-    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_jms_queue.jython"]/value</xpath>
-  </file>
-  <file>
-    <path>jython/create_or_update_jms_topic.jython</path>
-    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_jms_topic.jython"]/value</xpath>
-  </file>
-  <file>
-    <path>jython/delete_jms_topic.jython</path>
-    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_jms_topic.jython"]/value</xpath>
-  </file>
-  <file>
-    <path>jython/delete_jms_module.jython</path>
-    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_jms_module.jython"]/value</xpath>
-  </file>
-  <file>
-    <path>jython/create_or_update_jms_module_subdeployment.jython</path>
-    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_jms_module_subdeployment.jython"]/value</xpath>
-  </file>
-  <file>
-    <path>jython/delete_jms_module_subdeployment.jython</path>
-    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_jms_module_subdeployment.jython"]/value</xpath>
-  </file>
-  <file>
-    <path>jython/create_or_update_jms_server.jython</path>
-    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="create_or_update_jms_server.jython"]/value</xpath>
-  </file>
-  <file>
-    <path>jython/delete_jms_server.jython</path>
-    <xpath>//property[propertyName="jython"]/propertySheet/property[propertyName="delete_jms_server.jython"]/value</xpath>
-  </file>
-  <file>
-    <path>templates/discovered_resources.html</path>
-    <xpath>//property[propertyName="templates"]/propertySheet/property[propertyName="discovered_resources.html"]/value</xpath>
-  </file>
+
 </fileset>
