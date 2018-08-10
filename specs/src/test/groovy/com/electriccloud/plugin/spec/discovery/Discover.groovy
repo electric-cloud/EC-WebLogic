@@ -128,6 +128,9 @@ attachCredential credentialName: 'wl',
     def 'run with object names'() {
         given:
         deleteProject(discoveredProject)
+        dsl """
+deleteArtifact artifactName: 'weblogic.discovered:jms-demo-app-deployed'
+"""
         def discoveredResourceName = 'discovered wl'
         dsl "deleteResource resourceName: '$discoveredResourceName'"
         when:

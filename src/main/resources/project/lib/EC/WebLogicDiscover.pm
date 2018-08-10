@@ -542,7 +542,7 @@ sub _create_component {
         componentName => $name
     });
 
-    my $artifact = $self->_publish_artifact($dep);
+    # my $artifact = $self->_publish_artifact($dep);
 
     my $artifact_data = {
         artifactName => "weblogic.discovered:$name",
@@ -576,16 +576,7 @@ sub _create_component {
         processName => DEPLOY
     });
     $self->wl->logger->info("Creating Deploy step for application", $dep);
-    # TODO
-    # Version, stage, component
-    # TODO retrieve
-    my $path;
-    if ($artifact) {
-        $path = File::Spec->catfile('deploy', $artifact->{file});
-    }
-    else {
-        $path = $dep->{sourcePath};
-    }
+    my $path = $dep->{sourcePath};
     $self->ec->createProcessStep({
         componentApplicationName => $app_name,
         projectName => $project_name,
