@@ -140,6 +140,12 @@ sub create_application {
     my $step_name = $self->_create_deploy_process($data);
     $self->_create_components($data, $step_name);
     $self->_create_tier_map;
+
+    if ($self->{warnings}) {
+        my @warnings = @{$self->{warnings}};
+        my $message = join("\n", @warnings);
+        $self->wl->set_summary($message);
+    }
 }
 
 sub _create_tier_map {
@@ -259,6 +265,7 @@ sub send_warning {
     my ($self, $warning) = @_;
 
     $self->wl->logger->warning($warning);
+    $self->ec->setProperty('outcome', 'warning');
     push @{$self->{warnings}}, $warning;
 }
 
@@ -308,7 +315,7 @@ sub create_process_step {
         $procedure_name = 'CreateOrUpdateDatasource';
         $process_step_name = "Create Datasouce $object->{name}";
         $params = {
-            ecp_weblogic_dataSourceCredentials => "/projects/$project_name/$cred_name",
+            ecp_weblogic_dataSourceCredentials => "/projects/$project_name/credentials/$cred_name",
             configname => $self->_get_config_name,
             ecp_weblogic_dataSourceName => $object->{name},
             ecp_weblogic_dataSourceDriverClass => $object->{driverName},
@@ -429,7 +436,7 @@ sub create_process_step {
             configname => $self->_get_config_name,
             domain_name => $object->{domainName},
             realm_name => $object->{realmName},
-            user_credentials => "/projects/$project_name/$cred_name",
+            user_credentials => "/projects/$project_name/credentials/$cred_name",
         };
         $procedure_name = 'CreateUser';
     }
@@ -679,17 +686,21 @@ sub _create_app {
     $self->ec->abortOnError(0);
     $self->ec->createProject({projectName => $project_name});
     $self->ec->abortOnError(1);
-    $self->ec->createApplication({applicationName => $app_name, projectName => $project_name})
+    my $xpath = $self->ec->createApplication({applicationName => $app_name, projectName => $project_name});
+    my $app_id = $xpath->findvalue('//applicationId')->string_value;
+    $self->ec->setProperty("/myJob/report-urls/Application: $app_name", "/flow/#applications/$app_id");
+
+    $self->wl->logger->info("Application $app_name has been created in a project $project_name");
 }
 
 
 sub generate_reports {
     my ($self, $discovered_data) = @_;
 
+    my $json = JSON->new->utf8->pretty->encode($discovered_data);
+    $self->ec->setProperty('/myJob/discoveredResources', $json);
     $self->_generate_csv($discovered_data);
     $self->_generate_html($discovered_data);
-    my $json = encode_json($discovered_data);
-    $self->ec->setProperty('/myJob/discoveredResources', $json);
 }
 
 sub _generate_html {
@@ -933,13 +944,13 @@ sub _find_wlst {
     }
     my $oracle_home = $self->{params}->{oracleHome};
     unless($oracle_home) {
-        $self->bail_out("Either WLST path or Oracle Home must be provided");
+        $self->wl->bail_out("Either WLST path or Oracle Home must be provided");
     }
 
     my $system = $^O =~ /win32/i ? 'windows' : 'unix';
     my @possible_locations = qw(
-        wlserver/common/bin/wlst
         oracle_common/common/bin/wlst
+        wlserver/common/bin/wlst
     );
 
     for my $location (@possible_locations) {

@@ -158,12 +158,15 @@
 
 
 <?
-my $datasources = $_[0]->{Datasource};
-my $jms_modules = $_[0]->{jms};
-my $servers = $_[0]->{Server};
-my $clusters = $_[0]->{Cluster};
-my $users = $_[0]->{User};
-my $groups = $_[0]->{Group};
+my $datasources = $_[0]->{Datasource} || [];
+my $jms_modules = $_[0]->{jms} || [];
+my $jms_servers = $_[0]->{JMSServer} || [];
+my $servers = $_[0]->{Server} || [];
+my $clusters = $_[0]->{Cluster} || [];
+my $users = $_[0]->{User} || [];
+my $groups = $_[0]->{Group} || [];
+my $deployments = $_[0]->{AppDeployment} || [];
+my $libraries = $_[0]->{Library} || [];
 
 sub on_empty {
   my ($string, $empty) = @_;
@@ -278,6 +281,33 @@ sub on_empty {
 ?>
               <tr>
                 <td><?= on_empty($group->{name}) ?></td>
+              </tr>
+? }
+
+            </tbody>
+          </table>
+
+        </div>
+<? } ?>
+
+<? if (@$jms_servers) { ?>
+        <h2>JMS Servers</h2>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th class="text-center">Name</th>
+                <th class="text-center">Targets</th>
+              </tr>
+            </thead>
+            <tbody>
+? for my $server (@$jms_servers) {
+<?
+
+?>
+              <tr>
+                <td><?= on_empty($server->{name}) ?></td>
+                <td><?= on_empty($server->{targets}) ?></td>
               </tr>
 ? }
 
@@ -426,6 +456,65 @@ sub on_empty {
                 <td><?= on_empty($ds->{databaseName}) ?></td>
                 <td><?= on_empty($ds->{driverProperties}) ?></td>
                 <td><?= on_empty($ds->{targets}) ?></td>
+              </tr>
+? }
+            </tbody>
+          </table>
+
+        </div>
+<? } ?>
+
+
+<? if (@$deployments) { ?>
+        <h2>Deployments</h2>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th class="text-center">Name</th>
+                <th class="text-center">Source Path</th>
+                <th class="text-center">Targets</th>
+              </tr>
+            </thead>
+            <tbody>
+? for my $dep (@$deployments) {
+<?
+
+?>
+              <tr>
+                <td><?= on_empty($dep->{name}) ?></td>
+                <td><?= on_empty($dep->{sourcePath}) ?></td>
+                <td><?= on_empty($dep->{targets}) ?></td>
+              </tr>
+? }
+            </tbody>
+          </table>
+
+        </div>
+<? } ?>
+
+
+
+<? if (@$libraries) { ?>
+        <h2>Libraries</h2>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th class="text-center">Name</th>
+                <th class="text-center">Source Path</th>
+                <th class="text-center">Targets</th>
+              </tr>
+            </thead>
+            <tbody>
+? for my $lib (@$libraries) {
+<?
+
+?>
+              <tr>
+                <td><?= on_empty($lib->{name}) ?></td>
+                <td><?= on_empty($lib->{sourcePath}) ?></td>
+                <td><?= on_empty($lib->{targets}) ?></td>
               </tr>
 ? }
             </tbody>

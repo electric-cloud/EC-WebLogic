@@ -9219,8 +9219,8 @@ By default, the JNDI name is the name of the Datasource. Applications that look 
     <type>entry</type>
   </formalParameter>
   <formalParameter>
-    <defaultValue>t3s</defaultValue>
-    <description>Protocol to connect to WebLogic instance. T3S by default.</description>
+    <defaultValue>t3</defaultValue>
+    <description>Protocol to connect to WebLogic instance. T3 by default.</description>
     <formalParameterName>ecp_weblogic_connectionProtocol</formalParameterName>
     <required>0</required>
     <type>entry</type>
