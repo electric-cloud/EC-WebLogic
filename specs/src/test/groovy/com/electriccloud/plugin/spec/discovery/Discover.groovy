@@ -34,7 +34,8 @@ class Discover extends WebLogicHelper {
             artifactName: artifactName,
             projectName: projectName,
             wlst: wlstPath,
-            resourceName: resourceName
+            resourceName: resourceName,
+            appName: demoAppName,
         ]
         def result = runProcedure(
             projectName, 'PrepareDeploy', [:], [],

@@ -63,7 +63,7 @@ project args.projectName, {
             workingDirectory = null
             workspaceName = ''
             actualParameter 'additional_options', ''
-            actualParameter 'appname', 'jms-demo-app-deployed'
+            actualParameter 'appname', args.appName
             actualParameter 'apppath', 'deploy/jms-sample.war'
             actualParameter 'archive_version', ''
             actualParameter 'configname', args.config
