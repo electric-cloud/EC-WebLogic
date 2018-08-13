@@ -1445,7 +1445,7 @@
         <formalParameterName>wlstabspath</formalParameterName>
         <defaultValue/>
         <description>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</description>
-        <required>1</required>
+        <required>0</required>
         <type>entry</type>
       </formalParameter>
       <formalParameter>
@@ -4312,7 +4312,7 @@
         <formalParameterName>wlst_abs_path</formalParameterName>
         <defaultValue>java weblogic.WSLT</defaultValue>
         <description>WLST absolute path</description>
-        <required>1</required>
+        <required>0</required>
         <type>entry</type>
       </formalParameter>
       <formalParameter>
@@ -4473,7 +4473,7 @@
         <formalParameterName>wlst_abs_path</formalParameterName>
         <defaultValue>java weblogic.WSLT</defaultValue>
         <description>WLST absolute path</description>
-        <required>1</required>
+        <required>0</required>
         <type>entry</type>
       </formalParameter>
       <formalParameter>

@@ -38,15 +38,6 @@ sub main {
         'successcriteria',
         'maxelapsedtime'
     );
-
-    $wl->out(1, "Executable file: ", $params->{wlstabspath});
-    my $check = $wl->check_executable($params->{wlstabspath});
-
-    unless ($check->{ok}) {
-        $wl->bail_out($check->{msg});
-    }
-    $params->{wlstabspath} = $wl->esc_args($params->{wlstabspath});
-
     my $config_name = $params->{configname};
 
     if ($params->{maxelapsedtime} && $params->{maxelapsedtime} !~ m/^\d+$/s) {
@@ -77,9 +68,11 @@ sub main {
     print FH $template;
     close FH;
 
+    my $wlst_path = $wl->get_wlst_path($params, $cred);
+
     my $exec_result;
     $path = $wl->esc_args($path);
-    my $cmd = "$params->{wlstabspath} $path";
+    my $cmd = "$wlst_path $path";
     if ($params->{maxelapsedtime} && $params->{maxelapsedtime} > 0) {
         $exec_result = $wl->do_while(
             sub {

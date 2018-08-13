@@ -369,12 +369,12 @@ sub get_wlst_path {
     else {
         $retval = eval {$self->ec->getProperty('wlstabspath')->findvalue('//value')->string_value};
     }
-    return $retval if $retval;
+    return $self->esc_args($retval) if $retval;
     unless($cred) {
         $cred = $self->get_credentials;
     }
     $retval = $cred->{wlst_path};
-    return $retval if $retval;
+    return $self->esc_args($retval) if $retval;
 
     $self->bail_out("WLST Path was not provided");
 }

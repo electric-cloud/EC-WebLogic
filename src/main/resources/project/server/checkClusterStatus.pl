@@ -39,12 +39,6 @@ sub main {
         maxelapsedtime
     });
 
-    $wl->out(1, "Executable file: ", $params->{wlstabspath});
-    my $check = $wl->check_executable($params->{wlstabspath});
-
-    unless ($check->{ok}) {
-        $wl->bail_out($check->{msg});
-    }
     my $config_name = $params->{configname};
     my $cred = $wl->get_credentials($config_name);
 
@@ -67,9 +61,9 @@ sub main {
     my $template_path = '/myProject/jython/check_cluster_status.jython';
     my $template = $wl->render_template_from_property($template_path, $render_params);
     $wl->out(10, "Generated script:\n", $template);
-
+    my $wlst_path = $wl->get_wlst_path($params, $cred);
     my $res = $wl->execute_jython_script(
-        shell => $params->{wlstabspath},
+        shell => $wlst_path,
         script_path => $ENV{COMMANDER_WORKSPACE} . '/exec.jython',
         script_content => $template,
     );
