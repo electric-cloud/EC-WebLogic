@@ -45,11 +45,6 @@ sub main {
     my $cred = $wl->get_credentials($params->{configname});
     my $old_user_creds = $wl->get_common_credentials('old_user_credentials');
     my $new_user_creds = $wl->get_common_credentials('new_user_credentials');
-    my $check = $wl->check_executable($params->{wlst_abs_path});
-
-    if (!$check->{ok}) {
-        $wl->bail_out($check->{msg});
-    }
 
     my $render_params = {
         wl_username => $cred->{user},
@@ -64,10 +59,10 @@ sub main {
     };
     my $template_path = '/myProject/jython/change_user_password.jython';
     my $template = $wl->render_template_from_property($template_path, $render_params);
-
+    my $wlst_path = $wl->get_wlst_path($params, $cred);
     $wl->out(10, "Generated script:\n", $template);
     my $res = $wl->execute_jython_script(
-        shell => $params->{wlst_abs_path},
+        shell => $wlst_path,
         script_path => $ENV{COMMANDER_WORKSPACE} . '/exec.jython',
         script_content => $template,
     );
