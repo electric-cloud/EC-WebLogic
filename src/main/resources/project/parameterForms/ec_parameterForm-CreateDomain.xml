@@ -21,7 +21,7 @@
         <type>entry</type>
         <label>WLST Absolute Path:</label>
         <property>wlst_abs_path</property>
-        <required>1</required>
+        <required>0</required>
         <propertyReference type="property">/plugins/@PLUGIN_NAME@/project/weblogic_cfgs/$configname/wlst_path</propertyReference>
         <dependsOn>configname</dependsOn>
         <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
