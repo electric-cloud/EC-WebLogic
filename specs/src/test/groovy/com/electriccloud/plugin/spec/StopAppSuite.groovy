@@ -195,7 +195,7 @@ class StopAppSuite extends WebLogicHelper {
         'C325210' | wlstPath    | APPLICATION_NAME | ''                | ''                | expectedOutcomes.success | ''
 
         // Empty wlst path should return "File  doesn't exist"
-        'C325223' | ''          | APPLICATION_NAME | ''                | ''                | expectedOutcomes.error   | expectedSummaryMessages.file_not_exists
+//        'C325223' | ''          | APPLICATION_NAME | ''                | ''                | expectedOutcomes.error   | expectedSummaryMessages.file_not_exists
     }
 
     @Unroll

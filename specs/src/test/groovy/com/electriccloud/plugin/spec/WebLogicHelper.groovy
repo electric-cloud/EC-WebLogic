@@ -81,10 +81,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
         def password = getPassword()
         def enableNamedSessions = System.getenv('WL_ENABLE_NAMED_SESSIONS') ? '1' : '0'
         def pluginConfig = [
-                weblogic_url         : endpoint,
-                enable_named_sessions: enableNamedSessions,
-                debug_level          : '0',
-                wlst_path            : getWlstPath(),
+            weblogic_url         : endpoint,
+            enable_named_sessions: enableNamedSessions,
+            debug_level          : '0',
+            wlst_path            : getWlstPath(),
         ]
         def props = [confPath: 'weblogic_cfgs']
         if (System.getenv('RECREATE_CONFIG')) {
@@ -113,7 +113,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
           }
         """
     }
-
 
 
     def __runWLST(code) {
@@ -363,8 +362,8 @@ class WebLogicHelper extends PluginSpockTestSupport {
                 actualParameter: $params_str_arr
             )
                 """, resourceName,
-                180, // timeout
-                15  // initialDelay
+            180, // timeout
+            15  // initialDelay
         )
         return result
     }
@@ -396,7 +395,8 @@ class WebLogicHelper extends PluginSpockTestSupport {
         return result
     }
 
-    def deployApplication(def projectName, def params, String artifactName = 'test:sample', String filename = FILENAME) {
+    def deployApplication(
+        def projectName, def params, String artifactName = 'test:sample', String filename = FILENAME) {
 
         publishArtifact(artifactName, '1.0', FILENAME)
         def path = downloadArtifact(artifactName, getResourceName())
@@ -975,8 +975,7 @@ print "VALUE:" + '+' + str(get(propName)) + '+'
             if (groupOption.size() > 1) {
                 group = groupOption.getAt(0)
                 option = groupOption.getAt(1)
-            }
-            else {
+            } else {
                 option = key
             }
             if (value == 'true') {
@@ -987,7 +986,7 @@ print "VALUE:" + '+' + str(get(propName)) + '+'
             }
             def actualValue = getResourceProperty(moduleName, resName, resType, group, option)
             logger.debug("${group}.${option} = $actualValue")
-            assert actualValue == value : "Actual option value for $group.$option is $actualValue, expected is $value"
+            assert actualValue == value: "Actual option value for $group.$option is $actualValue, expected is $value"
         }
     }
 
@@ -1025,5 +1024,29 @@ print "VALUE:" + '+' + str(get(propName)) + '+'
 
     def getDemoAppPath() {
         return 'jms-sample.war'
+    }
+
+
+    def runPipeline(String projectName, String pipelineName, Map params, String resourceName = null, int timeout = 120) {
+        def actualParameters = []
+        params.each { k, v ->
+            actualParameters << k + ': """' + v + '"""'
+        }
+
+        def pipelineDsl = """
+runPipeline(projectName: '$projectName', pipelineName: '$pipelineName', actualParameter: [${actualParameters.join(',')}])
+"""
+        def result = dsl pipelineDsl
+        def runtimeId = result.flowRuntime?.flowRuntimeId
+        assert runtimeId
+        def poll = createPoll(timeout)
+        poll.eventually {
+            pipelineCompleted(result)
+        }
+
+        def task = dsl("getPipelineStageRuntimeTasks flowRuntimeId: '$runtimeId', stageName: 'Stage'")?.task[0]
+        def logs = readJobLogs(task.jobId, resourceName)
+        def status = task.status
+        return [logs: logs, flowRuntimeId: runtimeId, status: task.status]
     }
 }
