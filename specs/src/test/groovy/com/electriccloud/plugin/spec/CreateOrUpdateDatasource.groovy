@@ -88,7 +88,7 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
 
     @Shared
     def driverProps = [
-        empty: '',
+        empty     : '',
         serverName: 'serverName=localhost'
     ]
 
@@ -114,23 +114,32 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
         discardChanges()
         deleteProject(projectName)
 
+        def params = [
+            configname                        : CONFIG_NAME,
+            ecp_weblogic_dataSourceName       : '',
+            ecp_weblogic_dataSourceDriverClass: '',
+            ecp_weblogic_databaseUrl          : '',
+            ecp_weblogic_jndiName             : '',
+            ecp_weblogic_dataSourceCredentials: 'medrec',
+            ecp_weblogic_databaseName         : '',
+            ecp_weblogic_targets              : '',
+            ecp_weblogic_updateAction         : '',
+            ecp_weblogic_additionalOptions    : '',
+            ecp_weblogic_driverProperties     : ''
+        ]
+
         dslFile "dsl/procedures.dsl", [
             projectName  : projectName,
             resourceName : getResourceName(),
             procedureName: procedureName,
-            params       : [
-                configname                        : CONFIG_NAME,
-                ecp_weblogic_dataSourceName       : '',
-                ecp_weblogic_dataSourceDriverClass: '',
-                ecp_weblogic_databaseUrl          : '',
-                ecp_weblogic_jndiName             : '',
-                ecp_weblogic_dataSourceCredentials: 'medrec',
-                ecp_weblogic_databaseName         : '',
-                ecp_weblogic_targets              : '',
-                ecp_weblogic_updateAction         : '',
-                ecp_weblogic_additionalOptions    : '',
-                ecp_weblogic_driverProperties     : ''
-            ]
+            params       : params
+        ]
+
+        dslFile "dsl/pipeline.dsl", [
+            projectName  : projectName,
+            resourceName : resourceName,
+            procedureName: procedureName,
+            params       : params
         ]
 
         dsl """
@@ -139,9 +148,14 @@ attachCredential projectName: '$projectName',
     credentialName: 'medrec',
     procedureName: '$procedureName',
     stepName: 'RunProcedure'
+    
+attachCredential projectName: '$projectName',
+    credentialName: 'medrec',
+    taskName: 'RunProcedure',
+    pipelineName: "$procedureName",
+    stageName: "Stage"
+
 """
-
-
     }
 
     /**
@@ -185,9 +199,9 @@ attachCredential projectName: '$projectName',
         cleanup:
         deleteDatasource(dsName)
         where:
-        options                       | tg                  | driverProperties
-        additionalOptions.empty       | targets.empty       | driverProps.empty
-        additionalOptions.maxCapacity | targets.default     | driverProps.serverName
+        options                       | tg              | driverProperties
+        additionalOptions.empty       | targets.empty   | driverProps.empty
+        additionalOptions.maxCapacity | targets.default | driverProps.serverName
     }
 
     @Unroll
@@ -220,6 +234,36 @@ attachCredential projectName: '$projectName',
         deleteDatasource(dsName)
         where:
         updateAction << ['do_nothing', 'selective_update', 'remove_and_create']
+    }
+
+    def 'Create datasource pipeline '() {
+        setup: 'Define the parameters for Procedure running'
+        def dsName = datasources.correct
+        Map runParams = [
+            ecp_weblogic_dataSourceName       : dsName,
+            ecp_weblogic_dataSourceDriverClass: drivers.derby,
+            ecp_weblogic_databaseUrl          : urls.medrec,
+            ecp_weblogic_jndiName             : jndiNames.correct,
+            ecp_weblogic_targets              : tg,
+            ecp_weblogic_additionalOptions    : options,
+            ecp_weblogic_databaseName         : 'medrec;create=true',
+            ecp_weblogic_driverProperties     : driverProperties
+        ]
+
+        deleteDatasource(dsName)
+        when: 'Procedure runs: '
+
+        def result = runPipeline(projectName, procedureName, runParams, resourceName)
+        println result.logs
+
+        then: 'Wait until job run is completed: '
+        assert result.outcome != 'error'
+        cleanup:
+        deleteDatasource(dsName)
+        where:
+        options                       | tg              | driverProperties
+        additionalOptions.empty       | targets.empty   | driverProps.empty
+
     }
 
 

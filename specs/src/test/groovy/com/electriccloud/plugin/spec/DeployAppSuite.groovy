@@ -226,7 +226,8 @@ class DeployAppSuite extends WebLogicHelper {
         'C325217' | wlstPath    | APPLICATION_NAME | 'AdminServer' | checkBoxValues.unchecked | expectedOutcomes.success | ''
 
         // Empty wlst path should return "File  doesn't exist"
-        'C325219' | ''          | APPLICATION_NAME | ''            | checkBoxValues.unchecked | expectedOutcomes.error   | expectedSummaryMessages.file_not_exists
+//        Not applicable any more - will be taken from configuration
+//        'C325219' | ''          | APPLICATION_NAME | ''            | checkBoxValues.unchecked | expectedOutcomes.error   | expectedSummaryMessages.file_not_exists
     }
 
 
