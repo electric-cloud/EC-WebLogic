@@ -14,7 +14,7 @@
     <h1>@PLUGIN_KEY@</h1>
     <p>Plugin version @PLUGIN_VERSION@</p>
 
-    <p>Revised on August 02, 2018</p>
+    <p>Revised on August 15, 2018</p>
 
     <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade"/>
     <h3>Overview</h3>
@@ -57,7 +57,7 @@ or to enter a new embedded file.</p>
 
 
     <li><a href="#procedures">Plugin Procedures</a></li>
-    <li>WLS Domain Management<br/><i>These procedures help in managing a WLS Domain.</i></li><ul><li><a href="#CreateCluster">CreateCluster</a></li><li><a href="#CreateDomain">CreateDomain</a></li><li><a href="#CreateManagedServer">CreateManagedServer</a></li><li><a href="#AddServerToCluster">AddServerToCluster</a></li><li><a href="#DeleteCluster">DeleteCluster</a></li><li><a href="#DeleteManagedServer">DeleteManagedServer</a></li></ul><li>WLS Domain Server Administration<br/><i>These procedures help in administering (i.e., Starting or Stopping Servers) of a WLS Domain.</i></li><ul><li><a href="#StartAdminServer">StartAdminServer</a></li><li><a href="#StartCluster">StartCluster</a></li><li><a href="#StartManagedServer">StartManagedServer</a></li><li><a href="#StartNodeManager">StartNodeManager</a></li><li><a href="#StopAdminServer">StopAdminServer</a></li><li><a href="#StopCluster">StopCluster</a></li><li><a href="#StopManagedServer">StopManagedServer</a></li><li><a href="#StopNodeManager">StopNodeManager</a></li><li><a href="#SuspendServer">SuspendServer</a></li><li><a href="#ResumeServer">ResumeServer</a></li></ul><li>Application Deployment<br/><i>These procedures help in managing the Deployment of an Application to a WLS Domain.</i></li><ul><li><a href="#DeployApp">DeployApp</a></li><li><a href="#UpdateAppConfig">UpdateAppConfig</a></li><li><a href="#UndeployApp">UndeployApp</a></li><li><a href="#UpdateApp">UpdateApp (DEPRECATED)</a></li><li><a href="#RunDeployer">RunDeployer</a></li></ul><li>Application Management<br/><i>These procedures help in managing an already deployed Application in a WLS Domain.</i></li><ul><li><a href="#StartApp">StartApp</a></li><li><a href="#StopApp">StopApp</a></li></ul><li>Datasource Management<br/><i>These procedures help in creating datasources in a WLS Domain.</i></li><ul><li><a href="#CreateOrUpdateDatasource">CreateOrUpdateDatasource</a></li><li><a href="#DeleteDatasource">DeleteDatasource</a></li><li><a href="#CreateDatasource">CreateDatasource (DEPRECATED)</a></li></ul><li>JMS Resource Management<br/><i>These procedures help in creating JMS resources in a WLS Domain.</i></li><ul><li><a href="#CreateOrUpdateConnectionFactory">CreateOrUpdateConnectionFactory</a></li><li><a href="#CreateOrUpdateJMSModule">CreateOrUpdateJMSModule</a></li><li><a href="#CreateOrUpdateJMSModuleSubdeployment">CreateOrUpdateJMSModuleSubdeployment</a></li><li><a href="#CreateOrUpdateJMSQueue">CreateOrUpdateJMSQueue</a></li><li><a href="#CreateOrUpdateJMSServer">CreateOrUpdateJMSServer</a></li><li><a href="#CreateOrUpdateJMSTopic">CreateOrUpdateJMSTopic</a></li><li><a href="#DeleteConnectionFactory">DeleteConnectionFactory</a></li><li><a href="#DeleteJMSModule">DeleteJMSModule</a></li><li><a href="#DeleteJMSModuleSubdeployment">DeleteJMSModuleSubdeployment</a></li><li><a href="#DeleteJMSQueue">DeleteJMSQueue</a></li><li><a href="#DeleteJMSServer">DeleteJMSServer</a></li><li><a href="#DeleteJMSTopic">DeleteJMSTopic</a></li></ul><li>User Management<br/><i>These procedures help in managing users in a WLS Domain.</i></li><ul><li><a href="#CreateUser">CreateUser</a></li><li><a href="#CreateGroup">CreateGroup</a></li><li><a href="#AddUserToGroup">AddUserToGroup</a></li><li><a href="#ChangeUserPassword">ChangeUserPassword</a></li><li><a href="#RemoveUserFromGroup">RemoveUserFromGroup</a></li><li><a href="#ConfigureUserLockoutManager">ConfigureUserLockoutManager</a></li><li><a href="#UnlockUserAccount">UnlockUserAccount</a></li><li><a href="#DeleteGroup">DeleteGroup</a></li><li><a href="#DeleteUser">DeleteUser</a></li></ul><li>Check Procedures<br/><i>These procedures help in checking the status of Servers in a WLS Domain</i></li><ul><li><a href="#CheckClusterStatus">CheckClusterStatus</a></li><li><a href="#CheckServerStatus">CheckServerStatus</a></li></ul><li>Generic Procedures<br/><i>These procedures which are generic in nature are based on different WLS use cases.</i></li><ul><li><a href="#RunWLST">RunWLST</a></li><li><a href="#CreateTemplate">CreateTemplate</a></li><li><a href="#CheckPageStatus">CheckPageStatus</a></li></ul>
+    <li>WLS Domain Management<br/><i>These procedures help in managing a WLS Domain.</i></li><ul><li><a href="#CreateCluster">CreateCluster</a></li><li><a href="#CreateDomain">CreateDomain</a></li><li><a href="#CreateManagedServer">CreateManagedServer</a></li><li><a href="#AddServerToCluster">AddServerToCluster</a></li><li><a href="#DeleteCluster">DeleteCluster</a></li><li><a href="#DeleteManagedServer">DeleteManagedServer</a></li></ul><li>WLS Domain Server Administration<br/><i>These procedures help in administering (i.e., Starting or Stopping Servers) of a WLS Domain.</i></li><ul><li><a href="#StartAdminServer">StartAdminServer</a></li><li><a href="#StartCluster">StartCluster</a></li><li><a href="#StartManagedServer">StartManagedServer</a></li><li><a href="#StartNodeManager">StartNodeManager</a></li><li><a href="#StopAdminServer">StopAdminServer</a></li><li><a href="#StopCluster">StopCluster</a></li><li><a href="#StopManagedServer">StopManagedServer</a></li><li><a href="#StopNodeManager">StopNodeManager</a></li><li><a href="#SuspendServer">SuspendServer</a></li><li><a href="#ResumeServer">ResumeServer</a></li></ul><li>Application Deployment<br/><i>These procedures help in managing the Deployment of an Application to a WLS Domain.</i></li><ul><li><a href="#DeployApp">DeployApp</a></li><li><a href="#UpdateAppConfig">UpdateAppConfig</a></li><li><a href="#UndeployApp">UndeployApp</a></li><li><a href="#UpdateApp">UpdateApp (DEPRECATED)</a></li><li><a href="#RunDeployer">RunDeployer</a></li></ul><li>Application Management<br/><i>These procedures help in managing an already deployed Application in a WLS Domain.</i></li><ul><li><a href="#StartApp">StartApp</a></li><li><a href="#StopApp">StopApp</a></li></ul><li>Datasource Management<br/><i>These procedures help in creating datasources in a WLS Domain.</i></li><ul><li><a href="#CreateOrUpdateDatasource">CreateOrUpdateDatasource</a></li><li><a href="#DeleteDatasource">DeleteDatasource</a></li><li><a href="#CreateDatasource">CreateDatasource (DEPRECATED)</a></li></ul><li>JMS Resource Management<br/><i>These procedures help in creating JMS resources in a WLS Domain.</i></li><ul><li><a href="#CreateOrUpdateConnectionFactory">CreateOrUpdateConnectionFactory</a></li><li><a href="#CreateOrUpdateJMSModule">CreateOrUpdateJMSModule</a></li><li><a href="#CreateOrUpdateJMSModuleSubdeployment">CreateOrUpdateJMSModuleSubdeployment</a></li><li><a href="#CreateOrUpdateJMSQueue">CreateOrUpdateJMSQueue</a></li><li><a href="#CreateOrUpdateJMSServer">CreateOrUpdateJMSServer</a></li><li><a href="#CreateOrUpdateJMSTopic">CreateOrUpdateJMSTopic</a></li><li><a href="#DeleteConnectionFactory">DeleteConnectionFactory</a></li><li><a href="#DeleteJMSModule">DeleteJMSModule</a></li><li><a href="#DeleteJMSModuleSubdeployment">DeleteJMSModuleSubdeployment</a></li><li><a href="#DeleteJMSQueue">DeleteJMSQueue</a></li><li><a href="#DeleteJMSServer">DeleteJMSServer</a></li><li><a href="#DeleteJMSTopic">DeleteJMSTopic</a></li></ul><li>User Management<br/><i>These procedures help in managing users in a WLS Domain.</i></li><ul><li><a href="#CreateUser">CreateUser</a></li><li><a href="#CreateGroup">CreateGroup</a></li><li><a href="#AddUserToGroup">AddUserToGroup</a></li><li><a href="#ChangeUserPassword">ChangeUserPassword</a></li><li><a href="#RemoveUserFromGroup">RemoveUserFromGroup</a></li><li><a href="#ConfigureUserLockoutManager">ConfigureUserLockoutManager</a></li><li><a href="#UnlockUserAccount">UnlockUserAccount</a></li><li><a href="#DeleteGroup">DeleteGroup</a></li><li><a href="#DeleteUser">DeleteUser</a></li></ul><li>Check Procedures<br/><i>These procedures help in checking the status of Servers in a WLS Domain</i></li><ul><li><a href="#CheckClusterStatus">CheckClusterStatus</a></li><li><a href="#CheckServerStatus">CheckServerStatus</a></li></ul><li>Generic Procedures<br/><i>These procedures which are generic in nature are based on different WLS use cases.</i></li><ul><li><a href="#RunWLST">RunWLST</a></li><li><a href="#CreateTemplate">CreateTemplate</a></li><li><a href="#CheckPageStatus">CheckPageStatus</a></li><li><a href="#Discover">Discover</a></li></ul>
 
 
     <li><a href="#releaseNotes">Release Notes</a></li>
@@ -186,7 +186,7 @@ in most of the procedures of the WebLogic Plugin.</p>
             <tbody>
 
             <tr>
-                <td class="required">WLST Absolute Path</td>
+                <td >WLST Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
             </tr>
 
@@ -247,7 +247,7 @@ in most of the procedures of the WebLogic Plugin.</p>
             <tbody>
 
             <tr>
-                <td class="required">WLST Absolute Path</td>
+                <td >WLST Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
             </tr>
 
@@ -314,7 +314,7 @@ in most of the procedures of the WebLogic Plugin.</p>
             <tbody>
 
             <tr>
-                <td class="required">WLST Absolute Path</td>
+                <td >WLST Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
             </tr>
 
@@ -373,7 +373,7 @@ in most of the procedures of the WebLogic Plugin.</p>
             <tbody>
 
             <tr>
-                <td class="required">WLST Absolute Path</td>
+                <td >WLST Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
             </tr>
 
@@ -428,7 +428,7 @@ in most of the procedures of the WebLogic Plugin.</p>
             <tbody>
 
             <tr>
-                <td class="required">WLST Absolute Path</td>
+                <td >WLST Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
             </tr>
 
@@ -476,7 +476,7 @@ in most of the procedures of the WebLogic Plugin.</p>
             <tbody>
 
             <tr>
-                <td class="required">WLST Absolute Path</td>
+                <td >WLST Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
             </tr>
 
@@ -589,7 +589,7 @@ successfully.</p>
             <tbody>
 
             <tr>
-                <td class="required">WLST Absolute Path</td>
+                <td >WLST Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
             </tr>
 
@@ -687,7 +687,7 @@ For example:</p>
             </tr>
 
             <tr>
-                <td class="required">WLST Absolute Path</td>
+                <td >WLST Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)</td>
             </tr>
 
@@ -836,7 +836,7 @@ successfully.</p>
             <tbody>
 
             <tr>
-                <td class="required">WLST Absolute Path</td>
+                <td >WLST Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
             </tr>
 
@@ -1047,7 +1047,7 @@ successfully.</p>
             </tr>
 
             <tr>
-                <td class="required">WLST Absolute Path</td>
+                <td >WLST Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)</td>
             </tr>
 
@@ -1118,7 +1118,7 @@ successfully.</p>
             </tr>
 
             <tr>
-                <td class="required">WLST Absolute Path</td>
+                <td >WLST Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)</td>
             </tr>
 
@@ -1176,7 +1176,7 @@ moved from the STANDBY state to the RUNNING state.</p>
             </tr>
 
             <tr>
-                <td class="required">Wlst Script Absolute Path</td>
+                <td >Wlst Script Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
             </tr>
 
@@ -1333,7 +1333,7 @@ The application was deployed successfully.</p>
             <tbody>
 
             <tr>
-                <td class="required">WLST Absolute Path</td>
+                <td >WLST Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
             </tr>
 
@@ -1419,7 +1419,7 @@ Contrary to the weblogic documentation in section 'Undeploying a Retiring Applic
             </tr>
 
             <tr>
-                <td class="required">Wlst Script Absolute Path</td>
+                <td >Wlst Script Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
             </tr>
 
@@ -1644,7 +1644,7 @@ successfully.</p>
             <tbody>
 
             <tr>
-                <td class="required">WLST Absolute Path</td>
+                <td >WLST Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
             </tr>
 
@@ -1712,7 +1712,7 @@ was started successfully.</p>
             <tbody>
 
             <tr>
-                <td class="required">WLST Absolute Path</td>
+                <td >WLST Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
             </tr>
 
@@ -1829,8 +1829,7 @@ By default, the JNDI name is the name of the Datasource. Applications that look 
 
             <tr>
                 <td >Update Action</td>
-                <td>This parameter controls as to what the Update Action should be when a JMS Queue with the same name exists:<br/><b>Do Nothing (Default)</b> - The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.<br/><b>Remove and Create</b> - The procedure would remove existing JMS Queue and recreate it based on new parameters passed.<br/>
-Selective Update - The procedure would update existing DataSource credentials and Server Target List.
+                <td>This parameter controls as to what the Update Action should be when a JMS Queue with the same name exists:<br/><b>Do Nothing (Default)</b> - The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.<br/><b>Remove and Create</b> - The procedure would remove existing JMS Queue and recreate it based on new parameters passed.<br/><b>Selective Update</b> - The procedure would update existing DataSource credentials and Server Target List.
 </td>
             </tr>
 
@@ -3332,7 +3331,7 @@ DONE
             <tbody>
 
             <tr>
-                <td class="required">WLST Absolute Path</td>
+                <td >WLST Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
             </tr>
 
@@ -3403,7 +3402,7 @@ DONE
             <tbody>
 
             <tr>
-                <td class="required">WLST Absolute Path</td>
+                <td >WLST Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
             </tr>
 
@@ -3474,7 +3473,7 @@ DONE
             <tbody>
 
             <tr>
-                <td class="required">WLST Absolute Path</td>
+                <td >WLST Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
             </tr>
 
@@ -3540,7 +3539,7 @@ DONE
             <tbody>
 
             <tr>
-                <td class="required">WLST Absolute Path</td>
+                <td >WLST Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
             </tr>
 
@@ -3605,7 +3604,7 @@ DONE
             <tbody>
 
             <tr>
-                <td class="required">WLST Absolute Path</td>
+                <td >WLST Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
             </tr>
 
@@ -3671,7 +3670,7 @@ DONE
             <tbody>
 
             <tr>
-                <td class="required">WLST Absolute Path</td>
+                <td >WLST Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
             </tr>
 
@@ -3733,7 +3732,7 @@ DONE
             <tbody>
 
             <tr>
-                <td class="required">WLST Absolute Path</td>
+                <td >WLST Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
             </tr>
 
@@ -3794,7 +3793,7 @@ successfully.</p>
             <tbody>
 
             <tr>
-                <td class="required">WLST Absolute Path</td>
+                <td >WLST Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
             </tr>
 
@@ -3855,7 +3854,7 @@ successfully.</p>
             <tbody>
 
             <tr>
-                <td class="required">WLST Absolute Path</td>
+                <td >WLST Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
             </tr>
 
@@ -3921,7 +3920,7 @@ successfully.</p>
             </tr>
 
             <tr>
-                <td class="required">Wlst Script Absolute Path</td>
+                <td >Wlst Script Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
             </tr>
 
@@ -3981,7 +3980,7 @@ successfully.</p>
             </tr>
 
             <tr>
-                <td class="required">Wlst Script Absolute Path</td>
+                <td >Wlst Script Absolute Path</td>
                 <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</td>
             </tr>
 
@@ -4212,6 +4211,142 @@ control statements.</p>
     </div>
 
 
+    <div id="Discover">
+        <h2>Discover</h2>
+        <p>Discovers WebLogic configuration and deployable objects</p>
+
+            <p>This procedure will discover WebLogic resources and create a configuration, resource and EF model based on your current WebLogic resources.</p>
+<p>Upon run, the procedure will create:</p>
+<ul>
+<li>A configuration for EC-WebLogic plugin, based on provided and discovered data.</li>
+<li>An EF Resource and Environment, based on the provided resource/hostname data.</li>
+<li>An Application with the components and process steps based on WebLogic resources, if Object Names are provided.</li>
+</ul>
+<p>Every run will also create several reports in csv, JSON and HTML format, which will describe the current state of WebLogic resources.</p>
+<p>The following resources can be discovered:</p>
+<ul>
+<li>AppDeployment</li>
+<li>Library</li>
+<li>DataSource</li>
+<li>JMS Module</li>
+<li>JMS Queue</li>
+<li>JMS Topic</li>
+<li>JMS Connection Factory</li>
+<li>JMS Submodule</li>
+<li>JMS Server</li>
+<li>Server</li>
+<li>Cluster</li>
+</ul>
+<p>User
+Group</p>
+
+
+        <h3>Discover Parameters</h3>
+        <table class="grid">
+            <thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr>
+                <td >Resource Name</td>
+                <td>Name of the ElectricFlow resource with the WebLogic instance running.</td>
+            </tr>
+
+            <tr>
+                <td >Resource Hostname</td>
+                <td>Hostname of a machine with WebLogic and ElectricFlow Agent running on it. Either Resource hostname (and port) or Resource Name should be specified.</td>
+            </tr>
+
+            <tr>
+                <td >Resource Port</td>
+                <td>Port of ElectricFlow agent running on the machine. Default is 7800.</td>
+            </tr>
+
+            <tr>
+                <td >Oracle Home</td>
+                <td>Installation path of the WebLogic server, e.g. /home/oracle. Either this parameter or WLST Path parameter must be specified.</td>
+            </tr>
+
+            <tr>
+                <td >WLST Path</td>
+                <td>Path to wlst.sh utility. If not provided, the procedure will look for it in known locations. Either this parameter or Oracle Home parameter must be specified.</td>
+            </tr>
+
+            <tr>
+                <td >Weblogic Connection Hostname</td>
+                <td>Hostname to connect to WebLogic instance. Localhost by default.</td>
+            </tr>
+
+            <tr>
+                <td >Weblogic Connection Protocol</td>
+                <td>Protocol to connect to WebLogic instance. T3 by default.</td>
+            </tr>
+
+            <tr>
+                <td class="required">WebLogic Credentials</td>
+                <td>Username and password to connect to WebLogic server.</td>
+            </tr>
+
+            <tr>
+                <td >Environment Project Name</td>
+                <td>If specified, will be used to create ElectricFlow environment.</td>
+            </tr>
+
+            <tr>
+                <td >Environment Name</td>
+                <td>If specified, will be used to create ElectricFlow environment.</td>
+            </tr>
+
+            <tr>
+                <td >Application Project Name</td>
+                <td>Project name to create Application based on discovered entities.</td>
+            </tr>
+
+            <tr>
+                <td >Application Name</td>
+                <td>Application for placing discovered entities.</td>
+            </tr>
+
+            <tr>
+                <td >Object Names</td>
+                <td>Objects to be retrieved from the WL Server in type:name pairs, e.g. AppDeployment:HelloWorld.
+
+<br/>
+The list of supported object types:
+<br/><ul><li>AppDeployment</li><li>Library</li><li>Server</li><li>Cluster</li><li>Datasource</li><li>Queue</li><li>Topic</li><li>JMSResource</li><li>JMSServer</li><li>ConnectionFactory</li><li>User</li><li>Group</li></ul>
+
+For JMS Resource the name of the resource should be prefixed by JMS Module Name: <b>helloJMSModule:helloQueue</b><br/>
+The list of Object Names can be taken from the .csv report generated by this procedure.
+</td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <p>
+            <p>To run the procedure, provide inputs:</p>
+<p>
+<image src="../../plugins/@PLUGIN_KEY@/images/Discover/Form.png" title="" />
+</p>
+<p>After the procedure is finished, it will provide a summary like this:</p>
+<p>
+<image src="../../plugins/@PLUGIN_KEY@/images/Discover/Summary.png" title="" />
+</p>
+<p>Warnings usually indicate that some entities require additional configuration, like DataSources or Users.</p>
+<p>A report can look like below:</p>
+<p>
+<image src="../../plugins/@PLUGIN_KEY@/images/Discover/Report.png" title="" />
+</p>
+
+        </p>
+
+    </div>
+
+
 
 
 
@@ -4225,6 +4360,8 @@ control statements.</p>
         <li>Updated support for Datasources by adding the procedure CreateOrUpdateDatasource. The old procedure CreateDatasource is now deprecated.</li>
 
         <li>Updated procedure DeleteDatasource</li>
+
+        <li>Added "Discover" feature, now EF Model can be created from already existing WebLogic setup.</li>
 
     </ul>
 
