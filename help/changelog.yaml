@@ -1,6 +1,7 @@
 3.4.0:
   - Updated support for Datasources by adding the procedure CreateOrUpdateDatasource. The old procedure CreateDatasource is now deprecated.
   - Updated procedure DeleteDatasource
+  - Added "Discover" feature, now EF Model can be created from already existing WebLogic setup.
 3.3.0:
   - |
     Added support for JMS Resource Management by adding the following procedures:
