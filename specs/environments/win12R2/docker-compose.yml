@@ -25,6 +25,6 @@ services:
       - COMMANDER_SERVER=electricflow
       - PRODUCTION_MODE=prod
 networks:
-	default:
-		external:
+    default:
+        external:
             name: nat
