@@ -5,9 +5,9 @@ import groovy.json.JsonSlurper
 import spock.lang.*
 
 
-@Stepwise
 //Does not work on weblogic 11 due to test application
-@IgnoreIf({ isWebLogic11() })
+@Stepwise
+@IgnoreIf({ WebLogicHelper.isWebLogic11() })
 class Discover extends WebLogicHelper {
     @Shared
     def projectName = "EC-WebLogic Discovery"
