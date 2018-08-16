@@ -214,6 +214,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
         text
     }
 
+    def isWebLogic11() {
+        return System.getenv('WEBLOGIC_VERSION') == '11g'
+    }
+
     def publishArtifact(String artifactName, String version, String resName) {
         if (artifactExists(artifactName + ':' + version)) {
             return

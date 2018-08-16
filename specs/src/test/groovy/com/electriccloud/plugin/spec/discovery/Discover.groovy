@@ -6,6 +6,8 @@ import spock.lang.*
 
 
 @Stepwise
+//Does not work on weblogic 11 due to test application
+@IgnoreIf({ isWebLogic11() })
 class Discover extends WebLogicHelper {
     @Shared
     def projectName = "EC-WebLogic Discovery"
@@ -28,7 +30,7 @@ class Discover extends WebLogicHelper {
         createConfig(CONFIG_NAME)
         deleteProject(projectName)
         String artifactName = 'weblogic:for_discovery'
-        publishArtifact(artifactName, '1.0.0', demoAppPath)
+        publishArtifact(artifactName, '1.0.0', 'jms-sample.war')
         dslFile "dsl/complex/discovery.dsl", [
             config      : CONFIG_NAME,
             artifactName: artifactName,
