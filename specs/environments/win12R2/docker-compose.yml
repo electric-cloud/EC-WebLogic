@@ -26,7 +26,7 @@ services:
       - PRODUCTION_MODE=prod
       - EF_SERVER_HOST=electricflow
       - EF_SERVER_ADMIN_USER=admin
-      - EF_SERVER_PASS=changeme
+      - EF_SERVER_ADMIN_PASS=changeme
 networks:
     default:
         external:
