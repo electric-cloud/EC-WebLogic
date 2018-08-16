@@ -170,7 +170,8 @@ try:
     commitChanges()
 
 except WLSTException, e:
-    discardAndExit("Failed to create Datasource %s" % dsName)
+    discardAndExit(e, "Failed to create Datasource %s" % dsName)
+
 
 if successMessage != '':
     print_summary(successMessage)
