@@ -30,12 +30,13 @@ class Discover extends WebLogicHelper {
         String artifactName = 'weblogic:for_discovery'
         publishArtifact(artifactName, '1.0.0', demoAppPath)
         dslFile "dsl/complex/discovery.dsl", [
-            config: CONFIG_NAME,
+            config      : CONFIG_NAME,
             artifactName: artifactName,
-            projectName: projectName,
-            wlst: wlstPath,
+            projectName : projectName,
+            wlst        : wlstPath,
             resourceName: resourceName,
-            appName: demoAppName,
+            appName     : demoAppName,
+            derbyHost   : derbyHost
         ]
         def result = runProcedure(
             projectName, 'PrepareDeploy', [:], [],
@@ -50,23 +51,23 @@ project '$projectName', {
 }
 """
         dslFile 'dsl/procedures.dsl', [
-            projectName: projectName,
-            resourceName: resourceName,
+            projectName  : projectName,
+            resourceName : resourceName,
             procedureName: procedureName,
-            params: [
-                ecp_weblogic_resourceName: '',
-                ecp_weblogic_hostname: '',
-                ecp_weblogic_resPort: '',
-                ecp_weblogic_oracleHome: '',
-                ecp_weblogic_wlstPath: '',
+            params       : [
+                ecp_weblogic_resourceName      : '',
+                ecp_weblogic_hostname          : '',
+                ecp_weblogic_resPort           : '',
+                ecp_weblogic_oracleHome        : '',
+                ecp_weblogic_wlstPath          : '',
                 ecp_weblogic_connectionHostname: '',
                 ecp_weblogic_connectionProtocol: '',
-                ecp_weblogic_credential: 'wl',
-                ecp_weblogic_envProjectName: '',
-                ecp_weblogic_envName: '',
-                ecp_weblogic_appProjName: '',
-                ecp_weblogic_appName: '',
-                ecp_weblogic_objectNames: ''
+                ecp_weblogic_credential        : 'wl',
+                ecp_weblogic_envProjectName    : '',
+                ecp_weblogic_envName           : '',
+                ecp_weblogic_appProjName       : '',
+                ecp_weblogic_appName           : '',
+                ecp_weblogic_objectNames       : ''
             ]
         ]
 
@@ -87,13 +88,13 @@ attachCredential credentialName: 'wl',
             projectName,
             procedureName,
             [
-                ecp_weblogic_resourceName: discoveredResourceName,
-                ecp_weblogic_hostname: resourceHost,
-                ecp_weblogic_resPort: resourcePort,
-                ecp_weblogic_oracleHome: '/u01/oracle',
+                ecp_weblogic_resourceName      : discoveredResourceName,
+                ecp_weblogic_hostname          : resourceHost,
+                ecp_weblogic_resPort           : resourcePort,
+                ecp_weblogic_oracleHome        : '/u01/oracle',
                 ecp_weblogic_connectionProtocol: 't3'
             ]
-        , [], discoveredResourceName)
+            , [], discoveredResourceName)
         then:
         assert result.outcome == 'success'
         logger.info(result.logs)
@@ -110,20 +111,20 @@ attachCredential credentialName: 'wl',
             projectName,
             procedureName,
             [
-                ecp_weblogic_resourceName: discoveredResourceName,
-                ecp_weblogic_hostname: resourceHost,
-                ecp_weblogic_resPort: resourcePort,
-                ecp_weblogic_oracleHome: '/u01/oracle',
+                ecp_weblogic_resourceName      : discoveredResourceName,
+                ecp_weblogic_hostname          : resourceHost,
+                ecp_weblogic_resPort           : resourcePort,
+                ecp_weblogic_oracleHome        : '/u01/oracle',
                 ecp_weblogic_connectionProtocol: 't3',
-                ecp_weblogic_envProjectName: discoveredProject,
-                ecp_weblogic_envName: discoveredEnvironment
+                ecp_weblogic_envProjectName    : discoveredProject,
+                ecp_weblogic_envName           : discoveredEnvironment
             ]
             , [], discoveredResourceName)
         then:
         assert result.outcome == 'success'
         logger.info(result.logs)
         checkDiscoveredResources(result.jobId)
-        assert dsl ("getEnvironment projectName: '$discoveredProject', environmentName: '$discoveredEnvironment'")
+        assert dsl("getEnvironment projectName: '$discoveredProject', environmentName: '$discoveredEnvironment'")
     }
 
     def 'run with object names'() {
@@ -139,16 +140,16 @@ deleteArtifact artifactName: 'weblogic.discovered:jms-demo-app-deployed'
             projectName,
             procedureName,
             [
-                ecp_weblogic_resourceName: discoveredResourceName,
-                ecp_weblogic_hostname: resourceHost,
-                ecp_weblogic_resPort: resourcePort,
-                ecp_weblogic_oracleHome: '/u01/oracle',
+                ecp_weblogic_resourceName      : discoveredResourceName,
+                ecp_weblogic_hostname          : resourceHost,
+                ecp_weblogic_resPort           : resourcePort,
+                ecp_weblogic_oracleHome        : '/u01/oracle',
                 ecp_weblogic_connectionProtocol: 't3',
-                ecp_weblogic_envProjectName: discoveredProject,
-                ecp_weblogic_envName: discoveredEnvironment,
-                ecp_weblogic_appProjName: discoveredProject,
-                ecp_weblogic_appName: discoveredApp,
-                ecp_weblogic_objectNames: """Queue:sample-module:sample-queue
+                ecp_weblogic_envProjectName    : discoveredProject,
+                ecp_weblogic_envName           : discoveredEnvironment,
+                ecp_weblogic_appProjName       : discoveredProject,
+                ecp_weblogic_appName           : discoveredApp,
+                ecp_weblogic_objectNames       : """Queue:sample-module:sample-queue
 Datasource:sample-ds
 AppDeployment:jms-demo-app-deployed
 """
@@ -163,9 +164,9 @@ AppDeployment:jms-demo-app-deployed
         def processSteps = dsl "getProcessSteps projectName: '$discoveredProject', applicationName: '$discoveredApp', processName: 'Deploy'"
         debug(processSteps)
         println processSteps
-        assert processSteps.processStep?.find { it.processStepName == 'Create JMS Module sample-module'}
-        assert processSteps.processStep?.find { it.processStepName == 'Create JMS Queue sample-queue'}
-        assert processSteps.processStep?.find { it.processStepName == 'Create Datasouce sample-ds'}
+        assert processSteps.processStep?.find { it.processStepName == 'Create JMS Module sample-module' }
+        assert processSteps.processStep?.find { it.processStepName == 'Create JMS Queue sample-queue' }
+        assert processSteps.processStep?.find { it.processStepName == 'Create Datasouce sample-ds' }
     }
 
     def 'deploy discovered project'() {
@@ -194,8 +195,8 @@ runProcess(projectName: '$discoveredProject', applicationName: '$discoveredApp',
             procedureName,
             [
                 ecp_weblogic_resourceName: discoveredResourceName,
-                ecp_weblogic_hostname: resourceHost,
-                ecp_weblogic_resPort: resourcePort
+                ecp_weblogic_hostname    : resourceHost,
+                ecp_weblogic_resPort     : resourcePort
             ],
             [],
             discoveredResourceName)

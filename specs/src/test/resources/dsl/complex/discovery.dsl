@@ -133,7 +133,7 @@ project args.projectName, {
             actualParameter 'configname', args.config
             actualParameter 'ecp_weblogic_additionalOptions', ''
             actualParameter 'ecp_weblogic_databaseName', 'examples;create=true'
-            actualParameter 'ecp_weblogic_databaseUrl', 'jdbc:derby://localhost:1527/examples;create=true'
+            actualParameter 'ecp_weblogic_databaseUrl', 'jdbc:derby://' + args.derbyHost + ':1527/examples;create=true'
             actualParameter 'ecp_weblogic_dataSourceCredentials', 'ds'
             actualParameter 'ecp_weblogic_dataSourceDriverClass', 'org.apache.derby.jdbc.ClientDriver'
             actualParameter 'ecp_weblogic_dataSourceName', 'sample-ds'

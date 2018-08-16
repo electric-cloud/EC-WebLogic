@@ -32,7 +32,7 @@ class DatasourceDemo extends WebLogicHelper {
     @Shared def tierMapName = 'WebLogic'
     @Shared def driverName = 'org.apache.derby.jdbc.ClientXADataSource'
     @Shared def dbName = 'sample;create=true'
-    @Shared def dbUrl = 'jdbc:derby://localhost:1527/sample;ServerName=localhost;databaseName=sample;create=true'
+    @Shared def dbUrl = "jdbc:derby://${derbyHost}:1527/sample;ServerName=${derbyHost};databaseName=sample;create=true"
     @Shared def dsName = 'SampleDataSource'
     @Shared dslParams = [
         projectName: projectName,
