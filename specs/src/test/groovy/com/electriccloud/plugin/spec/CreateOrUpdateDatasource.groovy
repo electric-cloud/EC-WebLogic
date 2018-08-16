@@ -89,7 +89,7 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
     @Shared
     def driverProps = [
         empty     : '',
-        serverName: 'serverName=localhost'
+        serverName: "serverName=${derbyHost}"
     ]
 
     /**

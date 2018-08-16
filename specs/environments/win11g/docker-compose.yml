@@ -13,12 +13,6 @@ services:
     tty: true
     environment:
       - COMMANDER_SERVER=electricflow
-  derby:
-    image: az82/docker-derby:latest
-    ports:
-      - "1527:1527"
-    container_name: derby
-    tty: true
   weblogic:
     image: electricflow/weblogic:10.3.6-win-generic
     ports:

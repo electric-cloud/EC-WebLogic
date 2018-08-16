@@ -167,11 +167,11 @@ try:
             cd(propertyPath)
             set(optionName, value)
             print_info("Setting %s/%s to %s" % (propertyPath, optionName, value))
-    commitChanges()
 
 except WLSTException, e:
     discardAndExit(e, "Failed to create Datasource %s" % dsName)
 
+commitChanges()
 
 if successMessage != '':
     print_summary(successMessage)
