@@ -25,7 +25,7 @@ services:
       - COMMANDER_SERVER=electricflow
       - PRODUCTION_MODE=prod
       - EF_SERVER_HOST=electricflow
-      - EF_SERVER_USER=admin
+      - EF_SERVER_ADMIN_USER=admin
       - EF_SERVER_PASS=changeme
 networks:
     default:
