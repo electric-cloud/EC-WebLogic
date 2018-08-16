@@ -214,7 +214,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         text
     }
 
-    def publishArtifact(String artifactName, String version, String resName) {
+    def _publishArtifact(String artifactName, String version, String resName) {
         if (artifactExists(artifactName)) {
             return
         }
@@ -225,7 +225,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         String username = System.getProperty('COMMANDER_USER') ?: 'admin'
         String password = System.getProperty('COMMANDER_PASSWORD') ?: 'changeme'
         String commanderHome = System.getenv('COMMANDER_HOME') ?: '/opt/EC/'
-        assert commanderHome
+        assert commanderHome : "COMMANDER_HOME environment variable must be provided"
 
         File ectool = new File(commanderHome, "bin/ectool")
         assert ectool.exists()
