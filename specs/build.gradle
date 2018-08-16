@@ -34,7 +34,7 @@ dependencies {
 test {
     systemProperty 'com.athaydes.spockframework.report.showCodeBlocks', true
 
-    def server = findProperty('server') ?: 'localhost'
+    def server = findProperty('server') ?: findProperty('COMMANDER_SERVER') ?: findProperty('commanderServer') ?: 'localhost'
     systemProperties['COMMANDER_SERVER'] = server
     systemProperties["COMMANDER_SECURE"] = '1'
 
