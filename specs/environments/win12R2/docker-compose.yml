@@ -18,12 +18,15 @@ services:
     ports:
       - "7001:7001"
       - "7002:7002"
-      - "7808:78"
+      - "7808:7800"
     container_name: weblogic
     tty: true
     environment:
       - COMMANDER_SERVER=electricflow
       - PRODUCTION_MODE=prod
+      - EF_SERVER_HOST=electricflow
+      - EF_SERVER_USER=admin
+      - EF_SERVER_PASS=changeme
 networks:
     default:
         external:
