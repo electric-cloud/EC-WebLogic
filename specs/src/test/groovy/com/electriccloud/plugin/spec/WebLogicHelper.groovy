@@ -1049,4 +1049,9 @@ runPipeline(projectName: '$projectName', pipelineName: '$pipelineName', actualPa
         def status = task.status
         return [logs: logs, flowRuntimeId: runtimeId, status: task.status]
     }
+
+    def getDerbyHost() {
+        def host = System.getenv('WEBLOGIC_DERBY_HOST') ?: 'localhost'
+        return host
+    }
 }

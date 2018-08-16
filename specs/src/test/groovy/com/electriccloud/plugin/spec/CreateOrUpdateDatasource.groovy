@@ -52,7 +52,7 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
 
     @Shared
     def urls = [
-        medrec: 'jdbc:derby://localhost:1527/medrec;ServerName=localhost;databaseName=medrec;create=true'
+        medrec: "jdbc:derby://${derbyHost}:1527/medrec;ServerName=${derbyHost};databaseName=medrec;create=true"
     ]
 
     @Shared
