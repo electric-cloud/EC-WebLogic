@@ -27,6 +27,7 @@ services:
       - EF_SERVER_HOST=electricflow
       - EF_SERVER_ADMIN_USER=admin
       - EF_SERVER_ADMIN_PASS=changeme
+      - EF_RESOURCE_NAME=weblogic
 networks:
     default:
         external:
