@@ -28,7 +28,7 @@ limitations under the License.
         <label>WebLogic URL:</label>
         <property>weblogic_url</property>
         <value></value>
-        <documentation>URL of WebLogic Server (must include protocol, server and port).</documentation>
+        <documentation>URL of WebLogic Server (must include protocol, server and port). Two protocols are supported: t3 and t3s, e.g. t3://weblogic:7001.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
