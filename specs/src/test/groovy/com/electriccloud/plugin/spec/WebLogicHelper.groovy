@@ -214,8 +214,8 @@ class WebLogicHelper extends PluginSpockTestSupport {
         text
     }
 
-    def _publishArtifact(String artifactName, String version, String resName) {
-        if (artifactExists(artifactName)) {
+    def publishArtifact(String artifactName, String version, String resName) {
+        if (artifactExists(artifactName + ':' + version)) {
             return
         }
 
@@ -225,11 +225,19 @@ class WebLogicHelper extends PluginSpockTestSupport {
         String username = System.getProperty('COMMANDER_USER') ?: 'admin'
         String password = System.getProperty('COMMANDER_PASSWORD') ?: 'changeme'
         String commanderHome = System.getenv('COMMANDER_HOME') ?: '/opt/EC/'
-        assert commanderHome : "COMMANDER_HOME environment variable must be provided"
+        assert commanderHome : "Env COMMANDER_HOME must be provided"
 
-        File ectool = new File(commanderHome, "bin/ectool")
-        assert ectool.exists()
-        logger.debug(ectool.absolutePath.toString())
+        String ectoolPath
+        if (System.properties['os.name'].toLowerCase().contains('windows')){
+            ectoolPath = "bin/ectool.exe"
+        }
+        else {
+            ectoolPath = "bin/ectool"
+        }
+        File ectool = new File(commanderHome, ectoolPath)
+        assert ectool.exists() : "File ${ectool.absolutePath} does not exist"
+
+        logger.debug("ECTOOL PATH: " + ectool.absolutePath.toString())
 
         String command = "${ectool.absolutePath} --server $commanderServer "
         runCommand("${command} login ${username} ${password}")
@@ -240,7 +248,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         if (resource.directory) {
             publishCommand += "--fromDirectory ${resource}"
         } else {
-            publishCommand += "--fromDirectory ${resource.parentFile} --includePatterns $resName"
+            publishCommand += "--fromDirectory ${resource.parentFile} --includePatterns $resource"
         }
         runCommand(publishCommand)
     }
