@@ -214,7 +214,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         text
     }
 
-    def isWebLogic11() {
+    static def isWebLogic11() {
         return System.getenv('WEBLOGIC_VERSION') == '11g'
     }
 
