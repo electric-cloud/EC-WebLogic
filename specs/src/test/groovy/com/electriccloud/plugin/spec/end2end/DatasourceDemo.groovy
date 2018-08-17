@@ -1,6 +1,8 @@
-package com.electriccloud.plugin.spec
+package com.electriccloud.plugin.spec.end2end
 
+import com.electriccloud.plugin.spec.WebLogicHelper
 import spock.lang.Ignore
+import spock.lang.IgnoreIf
 import spock.lang.IgnoreRest
 import spock.lang.Narrative
 import spock.lang.Shared
@@ -10,6 +12,7 @@ import spock.lang.Stepwise
 @Narrative("""
 Datasource Use-case with URL checks
 """)
+@IgnoreIf({ WebLogicHelper.isWebLogic11()})
 class DatasourceDemo extends WebLogicHelper {
     @Shared
     def projectName = "EC-WebLogic Datasource Demo"
@@ -32,7 +35,7 @@ class DatasourceDemo extends WebLogicHelper {
     @Shared def tierMapName = 'WebLogic'
     @Shared def driverName = 'org.apache.derby.jdbc.ClientXADataSource'
     @Shared def dbName = 'sample;create=true'
-    @Shared def dbUrl = 'jdbc:derby://localhost:1527/sample;ServerName=localhost;databaseName=sample;create=true'
+    @Shared def dbUrl = "jdbc:derby://${derbyHost}:1527/sample;ServerName=${derbyHost};databaseName=sample;create=true"
     @Shared def dsName = 'SampleDataSource'
     @Shared dslParams = [
         projectName: projectName,

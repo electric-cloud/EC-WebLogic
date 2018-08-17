@@ -80,7 +80,7 @@ params = resource.getJDBCDataSourceParams()
 
 dbName = driverprops.createProperty('databaseName')
 dbName.setValue('testdb;create=true')
-driver.setUrl('jdbc:derby://localhost:1527/testdb;ServerName=localhost;databaseName=testdb;create=true')
+driver.setUrl('jdbc:derby://${derbyHost}:1527/testdb;ServerName=${derbyHost};databaseName=testdb;create=true')
 
 save()
 activate()

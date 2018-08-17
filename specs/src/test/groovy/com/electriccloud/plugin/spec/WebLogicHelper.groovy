@@ -114,38 +114,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
         """
     }
 
-
-    def __runWLST(code) {
-        code = code.trim()
-        def resourceName = getResourceName()
-        def procedureName = 'RunWLST'
-        dsl """
-            project '${HELPER_PROJECT}', {
-                procedure '${procedureName}', {
-                    step 'runCommand', {
-                        resourceName = '${getResourceName()}'
-                        shell = '${getWlstPath()}'
-                        command = '''\$[code]'''
-                    }
-
-                    formalParameter 'code', {
-                        type = 'textarea'
-                    }
-                }
-            }
-        """
-        def result = runProcedure("""
-            runProcedure(
-                projectName: '${HELPER_PROJECT}',
-                procedureName: '${procedureName}',
-                actualParameter: [
-                    code: '''$code'''
-                ]
-            )
-        """, resourceName)
-        result
-    }
-
     def runWLST(code, jobNameTmpl = 'helperJob') {
         code = code.trim()
         def resourceName = getResourceName()
@@ -214,22 +182,34 @@ class WebLogicHelper extends PluginSpockTestSupport {
         text
     }
 
-    def publishArtifact(String artifactName, String version, String resName) {
-        if (artifactExists(artifactName)) {
+    static def isWebLogic11() {
+        return System.getenv('WEBLOGIC_VERSION') == '11g'
+    }
+
+    def __publishArtifact(String artifactName, String version, String resName) {
+        if (artifactExists(artifactName + ':' + version)) {
             return
         }
 
         File resource = new File(this.getClass().getResource("/${resName}").toURI())
 
+
         String commanderServer = System.getProperty("COMMANDER_SERVER") ?: 'localhost'
         String username = System.getProperty('COMMANDER_USER') ?: 'admin'
         String password = System.getProperty('COMMANDER_PASSWORD') ?: 'changeme'
         String commanderHome = System.getenv('COMMANDER_HOME') ?: '/opt/EC/'
-        assert commanderHome
+        assert commanderHome: "Env COMMANDER_HOME must be provided"
 
-        File ectool = new File(commanderHome, "bin/ectool")
-        assert ectool.exists()
-        logger.debug(ectool.absolutePath.toString())
+        String ectoolPath
+        if (System.properties['os.name'].toLowerCase().contains('windows')) {
+            ectoolPath = "bin/ectool.exe"
+        } else {
+            ectoolPath = "bin/ectool"
+        }
+        File ectool = new File(commanderHome, ectoolPath)
+        assert ectool.exists(): "File ${ectool.absolutePath} does not exist"
+
+        logger.debug("ECTOOL PATH: " + ectool.absolutePath.toString())
 
         String command = "${ectool.absolutePath} --server $commanderServer "
         runCommand("${command} login ${username} ${password}")
@@ -1048,5 +1028,10 @@ runPipeline(projectName: '$projectName', pipelineName: '$pipelineName', actualPa
         def logs = readJobLogs(task.jobId, resourceName)
         def status = task.status
         return [logs: logs, flowRuntimeId: runtimeId, status: task.status]
+    }
+
+    def getDerbyHost() {
+        def host = System.getenv('WEBLOGIC_DERBY_HOST') ?: 'localhost'
+        return host
     }
 }
