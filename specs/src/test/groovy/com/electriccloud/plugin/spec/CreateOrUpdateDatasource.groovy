@@ -47,18 +47,26 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
 
     @Shared
     def drivers = [
-        derby: 'org.apache.derby.jdbc.ClientXADataSource'
+        correct: 'org.apache.derby.jdbc.ClientXADataSource',
+        derby: 'org.apache.derby.jdbc.ClientXADataSource',
+        incorrect: 'org.incorrect.jdbc.driver',
+        emty: '',
     ]
 
     @Shared
     def urls = [
-        medrec: "jdbc:derby://${derbyHost}:1527/medrec;ServerName=${derbyHost};databaseName=medrec;create=true"
+        correct: "jdbc:derby://${derbyHost}:1527/medrec;ServerName=${derbyHost};databaseName=medrec;create=true",
+        medrec: "jdbc:derby://${derbyHost}:1527/medrec;ServerName=${derbyHost};databaseName=medrec;create=true",
+        incorrect: "incorrect URL",
+        empty: "",
     ]
 
     @Shared
     def targets = [
         empty  : '',
-        default: 'AdminServer'
+        default: 'AdminServer',
+        correct: 'AdminServer',
+        incorrect: 'IncorrectServer'
     ]
 
     /**
