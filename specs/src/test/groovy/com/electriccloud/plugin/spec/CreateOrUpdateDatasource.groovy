@@ -281,12 +281,28 @@ attachCredential projectName: '$projectName',
             correct : CONFIG_NAME,
             incorrect: "Incorrect_$CONFIG_NAME",
             empty: '',
-        ]
+    ]
     @Shared
         dataSourceCredentials = [
             correct : 'medrec',
             incorrect: 'incorrect_dataSourceCredentials',
             empty: '',
+    ]
+    @Shared
+        databaseNames =[
+            correct: 'medrec;create=true',
+            incorrect: 'incorrect_databaseName',
+            empty: '',
+        ]
+    @Shared
+        updateActions =[
+            doNothing: 'do_nothing',
+            removeAndCreate: 'remove_and_create',
+            selectiveUpdate: 'selective_update',
+        ]
+    @Shared
+        expectedSummaryMessages =[
+            Message : '',
         ]
     
     @Unroll
@@ -297,7 +313,7 @@ attachCredential projectName: '$projectName',
         def dataSourceDriverClass
         def databaseUrl
         def jndiName
-        def dataSourceCredentials
+        def dataSourceCredential
         def databaseName
         def driverPropertie
         def target
@@ -309,7 +325,7 @@ attachCredential projectName: '$projectName',
             ecp_weblogic_dataSourceDriverClass: dataSourceDriverClass,
             ecp_weblogic_databaseUrl          : databaseUrl,
             ecp_weblogic_jndiName             : jndiName,
-            ecp_weblogic_dataSourceCredentials: dataSourceCredentials,
+            ecp_weblogic_dataSourceCredentials: dataSourceCredential,
             ecp_weblogic_databaseName         : databaseName,
             ecp_weblogic_driverProperties     : driverPropertie,
             ecp_weblogic_targets              : target,
@@ -317,7 +333,19 @@ attachCredential projectName: '$projectName',
             ecp_weblogic_additionalOptions    : additionalOption,
         ]
         when:       'Procedure runs'
-        then:       'Wait until job run is completed: '
+        def result = runProcedure(projectName, procedureName, runParams, [], getResourceName())
+
+        then: 'Wait until job run is completed'
+        def upperStepSummary = getJobUpperStepSummary(result.jobId)
+//        def actualOutcome = result.outcome
+//        def logs = result.logs
+        logger.info(upperStepSummary)
+        expect: 'Verification'
+        assert result.outcome = expectedOutcome
+        assert upperStepSummary =~expectedSummaryMessage
+        when: 'Table Run'
+        configname              | dataSourceName        | dataSourceDriverClass     | databaseUrl       | jndiName              | dataSourceCredential              | databaseName              | driverPropertie       | target            | updateAction              | additionalOption          | expectedOutcome           | expectedSummaryMessage
+        confignames.correct     | datasources.correct   | drivers.correct           | urls.correct      | jndiNames.correct     | dataSourceCredentials.correct     | databaseNames.correct     | driverProps.empty     | targets.empty     | updateActions.doNothing   | additionalOptions.empty   | expectedOutcomes.success  | expectedSummaryMessages.Message
         cleanup:    'Run after each test from Test Case Table'
         
     }
