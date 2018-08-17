@@ -1,6 +1,8 @@
-package com.electriccloud.plugin.spec
+package com.electriccloud.plugin.spec.end2end
 
+import com.electriccloud.plugin.spec.WebLogicHelper
 import spock.lang.Ignore
+import spock.lang.IgnoreIf
 import spock.lang.IgnoreRest
 import spock.lang.Narrative
 import spock.lang.Shared
@@ -10,6 +12,7 @@ import spock.lang.Stepwise
 @Narrative("""
 Datasource Use-case with URL checks
 """)
+@IgnoreIf({ WebLogicHelper.isWebLogic11()})
 class DatasourceDemo extends WebLogicHelper {
     @Shared
     def projectName = "EC-WebLogic Datasource Demo"

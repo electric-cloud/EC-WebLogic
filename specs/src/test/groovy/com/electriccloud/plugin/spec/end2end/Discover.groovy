@@ -1,4 +1,4 @@
-package com.electriccloud.plugin.spec.discovery
+package com.electriccloud.plugin.spec.end2end
 
 import com.electriccloud.plugin.spec.WebLogicHelper
 import groovy.json.JsonSlurper
@@ -27,12 +27,12 @@ class Discover extends WebLogicHelper {
     def doSetupSpec() {
         deleteProject(discoveredProject)
         setupResource()
-        createConfig(CONFIG_NAME)
+        createConfig(WebLogicHelper.CONFIG_NAME)
         deleteProject(projectName)
         String artifactName = 'weblogic:for_discovery'
         publishArtifact(artifactName, '1.0.0', 'jms-sample.war')
         dslFile "dsl/complex/discovery.dsl", [
-            config      : CONFIG_NAME,
+            config      : WebLogicHelper.CONFIG_NAME,
             artifactName: artifactName,
             projectName : projectName,
             wlst        : wlstPath,
