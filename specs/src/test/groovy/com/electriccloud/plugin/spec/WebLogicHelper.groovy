@@ -114,38 +114,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
         """
     }
 
-
-    def __runWLST(code) {
-        code = code.trim()
-        def resourceName = getResourceName()
-        def procedureName = 'RunWLST'
-        dsl """
-            project '${HELPER_PROJECT}', {
-                procedure '${procedureName}', {
-                    step 'runCommand', {
-                        resourceName = '${getResourceName()}'
-                        shell = '${getWlstPath()}'
-                        command = '''\$[code]'''
-                    }
-
-                    formalParameter 'code', {
-                        type = 'textarea'
-                    }
-                }
-            }
-        """
-        def result = runProcedure("""
-            runProcedure(
-                projectName: '${HELPER_PROJECT}',
-                procedureName: '${procedureName}',
-                actualParameter: [
-                    code: '''$code'''
-                ]
-            )
-        """, resourceName)
-        result
-    }
-
     def runWLST(code, jobNameTmpl = 'helperJob') {
         code = code.trim()
         def resourceName = getResourceName()
