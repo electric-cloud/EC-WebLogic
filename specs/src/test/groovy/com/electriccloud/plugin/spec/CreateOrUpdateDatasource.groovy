@@ -265,8 +265,40 @@ attachCredential projectName: '$projectName',
         additionalOptions.empty       | targets.empty   | driverProps.empty
 
     }
-
-
+    
+    @Unroll
+    def 'CreateORUpdateDataSource - Positive: #testCaseID.name #testCaseID.description'(){
+        setup:      'Define the parameters for Procedure running'
+        def configname
+        def dataSourceName
+        def dataSourceDriverClass
+        def databaseUrl
+        def jndiName
+        def dataSourceCredentials
+        def databaseName
+        def driverPropertie
+        def target
+        def updateAction
+        def additionalOption
+        Map runParams = [
+            configname                        : configname,
+            ecp_weblogic_dataSourceName       : dataSourceName,
+            ecp_weblogic_dataSourceDriverClass: dataSourceDriverClass,
+            ecp_weblogic_databaseUrl          : databaseUrl,
+            ecp_weblogic_jndiName             : jndiName,
+            ecp_weblogic_dataSourceCredentials: dataSourceCredentials,
+            ecp_weblogic_databaseName         : databaseName,
+            ecp_weblogic_driverProperties     : driverPropertie,
+            ecp_weblogic_targets              : target,
+            ecp_weblogic_updateAction         : updateAction,
+            ecp_weblogic_additionalOptions    : additionalOption,
+        ]
+        when:       'Procedure runs'
+        then:       'Wait until job run is completed: '
+        cleanup:    'Run after each test from Test Case Table'
+        
+    }
+    
     def checkStepSummary(action, name, summary) {
         if (action == 'do_nothing') {
             assert summary =~ /Datasource $name exists, no further action is required/
