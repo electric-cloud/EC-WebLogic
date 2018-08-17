@@ -265,6 +265,21 @@ attachCredential projectName: '$projectName',
         additionalOptions.empty       | targets.empty   | driverProps.empty
 
     }
+    /**
+     *  Some additional maps for extended tests
+     */
+    @Shared
+        confignames =[
+            correct : CONFIG_NAME,
+            incorrect: "Incorrect_$CONFIG_NAME",
+            empty: '',
+        ]
+    @Shared
+        dataSourceCredentials = [
+            correct : 'medrec',
+            incorrect: 'incorrect_dataSourceCredentials',
+            empty: '',
+        ]
     
     @Unroll
     def 'CreateORUpdateDataSource - Positive: #testCaseID.name #testCaseID.description'(){
