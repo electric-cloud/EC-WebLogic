@@ -170,6 +170,8 @@ class CreateOrUpdateJMSServerSuite extends WebLogicHelper {
             assert upperStepSummary.contains(expectedSummaryMessage)
         }
 
+        checkServerRestartOutputParameter(result.jobId)
+
         cleanup: 'Remove created entity'
         if (expectedOutcome == expectedOutcomes.success && outcome == expectedOutcomes.success) {
             deleteJMSServer(jmsServerName)

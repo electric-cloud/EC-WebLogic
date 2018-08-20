@@ -211,6 +211,7 @@ class CreateOrUpdateJMSModuleSubdeploymentSuite extends WebLogicHelper {
         if (expectedJobDetailedResult) {
             assert debugLog.contains(expectedJobDetailedResult)
         }
+        checkServerRestartOutputParameter(result.jobId)
 
         if (expectedSummaryMessage) {
             def upperStepSummary = getJobUpperStepSummary(result.jobId)

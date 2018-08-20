@@ -221,6 +221,7 @@ class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
 
         expect: 'Outcome and Upper Summary verification'
         assert result.outcome == expectedOutcome
+        checkServerRestartOutputParameter(result.jobId)
 
         if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
             assert jmsQueueExists(jmsModuleName, jmsQueueName)

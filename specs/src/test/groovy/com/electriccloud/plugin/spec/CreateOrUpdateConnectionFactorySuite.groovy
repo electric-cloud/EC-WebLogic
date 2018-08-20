@@ -237,6 +237,7 @@ class CreateOrUpdateConnectionFactorySuite extends WebLogicHelper {
 
         def defaultTargeting = getDefaultTargeting(jmsModuleName, connectionFactoryName)
         assert defaultTargeting == '1'
+        checkServerRestartOutputParameter(result.jobId)
         cleanup:
         deleteConnectionFactory(jmsModuleName, connectionFactoryName)
         where: 'The following params will be: '

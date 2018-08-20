@@ -234,6 +234,7 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
             def upperStepSummary = getJobUpperStepSummary(result.jobId)
             assert upperStepSummary.contains(expectedSummaryMessage)
         }
+        checkServerRestartOutputParameter(result.jobId)
 
         where: 'The following params will be: '
         caseId    | updateAction                    | jmsTopicName                                    | expectedOutcome          | expectedSummaryMessage                                          | expectedJobDetailedResult

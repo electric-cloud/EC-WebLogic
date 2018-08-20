@@ -158,6 +158,7 @@ class DeleteJMSModuleSuite extends WebLogicHelper {
         if (expectedSummaryMessage) {
             assert upperStepSummary.contains(expectedSummaryMessage)
         }
+        checkServerRestartOutputParameter(result.jobId)
         where: 'The following params will be: '
         caseId | jmsModuleName              | expectedOutcome          | expectedJobDetailedResult                         | expectedSummaryMessage
 

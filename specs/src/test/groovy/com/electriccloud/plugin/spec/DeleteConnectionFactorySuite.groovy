@@ -164,7 +164,7 @@ class DeleteConnectionFactorySuite extends WebLogicHelper {
             assert !connectionFactoryExists(jmsModuleName, connectionFactoryName)
         }
         assert debugLog.contains(expectedJobDetailedResult)
-
+        checkServerRestartOutputParameter(result.jobId)
         cleanup:
         if (expectedOutcome == expectedOutcomes.success && result.outcome != expectedOutcomes.success) {
             deleteConnectionFactory(jmsModuleName, connectionFactoryName)

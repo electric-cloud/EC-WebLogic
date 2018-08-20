@@ -151,6 +151,7 @@ class DeleteJMSServerSuite extends WebLogicHelper {
         if (expectedSummaryMessage) {
             assert upperStepSummary.contains(expectedSummaryMessage)
         }
+        checkServerRestartOutputParameter(result.jobId)
         where: 'The following params will be: '
         caseId    | jmsServerName              | expectedOutcome          | expectedJobDetailedResult
 

@@ -233,13 +233,6 @@ sub process_response {
         $self->error();
         return;
     }
-    my @matches = $result->{stdout} =~ m/WARNING:(.+?)$/gm;
-    my %seen = ();
-    @matches = grep {!$seen{$_}++} @matches;
-    if (@matches) {
-        $self->warning( join("\n", @matches));
-        return;
-    }
 
     my $restartFlagName = "WebLogicServerRestartRequired";
     my $restart = $result->{stdout} =~ m/that require server re-start/;
@@ -258,7 +251,16 @@ sub process_response {
         $self->out(1, "WebLogic Server restart is required");
     }
 
-    $self->success($summary);
+    my @matches = $result->{stdout} =~ m/WARNING:(.+?)$/gm;
+    my %seen = ();
+    @matches = grep {!$seen{$_}++} @matches;
+    if (@matches) {
+        $self->warning( join("\n", @matches));
+    }
+    else {
+        $self->success($summary);
+    }
+
     return;
 }
 
