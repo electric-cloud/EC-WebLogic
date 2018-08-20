@@ -74,8 +74,9 @@ sub main {
     my $template = $wl->render_template_from_property($template_path, $render_params);
 
     $wl->out(10, "Generated script:\n", $template);
+    my $wlst_path = $wl->get_wlst_path($params, $cred);
     my $res = $wl->execute_jython_script(
-        shell => $params->{wlstabspath},
+        shell => $wlst_path,
         script_path => $ENV{COMMANDER_WORKSPACE} . '/exec.jython',
         script_content => $template,
     );

@@ -1,5 +1,6 @@
-package com.electriccloud.plugin.spec
+package com.electriccloud.plugin.spec.end2end
 
+import com.electriccloud.plugin.spec.WebLogicHelper
 import spock.lang.*
 
 @Stepwise
@@ -7,6 +8,7 @@ import spock.lang.*
 JMS Use-case with URL checks. First create all the required resources and deploy app,
 then change JNDI names and redeploy the app.
 """)
+@IgnoreIf({WebLogicHelper.isWebLogic11()})
 class JMSDemo extends WebLogicHelper {
     @Shared
     def projectName = "EC-WebLogic JMS Demo"
@@ -34,7 +36,7 @@ class JMSDemo extends WebLogicHelper {
 
     def doSetupSpec() {
         setupResource()
-        createConfig(CONFIG_NAME)
+        createConfig(WebLogicHelper.CONFIG_NAME)
         deleteProject(projectName)
         publishArtifact(artifactName, '1.0.0', demoAppPath)
         def host = getResourceHost()
@@ -50,7 +52,7 @@ class JMSDemo extends WebLogicHelper {
         deleteJMSModule(jmsModuleName)
         dslFile "dsl/EndToEnd/jmsDemo.dsl", [
             projectName: projectName,
-            config: CONFIG_NAME,
+            config: WebLogicHelper.CONFIG_NAME,
             resName: resName,
             artifactName: artifactName,
             jmsModuleName: jmsModuleName,
@@ -86,7 +88,7 @@ class JMSDemo extends WebLogicHelper {
         ]
         dslFile "dsl/EndToEnd/jmsDemo.dsl", [
             projectName: projectName,
-            config: CONFIG_NAME,
+            config: WebLogicHelper.CONFIG_NAME,
             resName: resName,
             artifactName: artifactName,
             jmsModuleName: jmsModuleName,

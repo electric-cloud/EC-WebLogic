@@ -18,12 +18,17 @@ repositories {
     maven {
         url  "https://dl.bintray.com/ecpluginsdev/maven"
     }
+    maven {
+//        Local snapshots
+        url "http://10.200.1.182:8081/artifactory/libs-snapshot-local"
+    }
 }
 
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.5:indy'
     compile 'org.spockframework:spock-core:1.1-groovy-2.4-SNAPSHOT'
-    compile 'com.electriccloud:ec-specs-plugins-core:1.2'
+    compile 'com.electriccloud:ec-specs-plugins-core:1.5.0'
+    // compile 'com.electriccloud:ec-specs-plugins-core:1.5.0-SNAPSHOT'
     compile 'com.jayway.restassured:rest-assured:2.4.0'
     testCompile( 'com.athaydes:spock-reports:1.6.0' ) {
         transitive = false // this avoids affecting your version of Groovy/Spock
@@ -34,7 +39,7 @@ dependencies {
 test {
     systemProperty 'com.athaydes.spockframework.report.showCodeBlocks', true
 
-    def server = findProperty('server') ?: 'localhost'
+    def server = findProperty('server') ?: findProperty('COMMANDER_SERVER') ?: findProperty('commanderServer') ?: 'localhost'
     systemProperties['COMMANDER_SERVER'] = server
     systemProperties["COMMANDER_SECURE"] = '1'
 

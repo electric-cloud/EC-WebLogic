@@ -1,0 +1,34 @@
+version: '3'
+services:
+  electricflow:
+    image: "electricflow/efserver:latest-windowsservercore"
+    ports:
+      - "8000:8000"
+      - "8200:8200"
+      - "8443:8443"
+      - "443:443"
+      - "80:80"
+    container_name: electricflow
+    hostname: "electricflow"
+    tty: true
+    environment:
+      - COMMANDER_SERVER=electricflow
+  weblogic:
+    image: electricflow/weblogic:10.3.6-win-generic
+    ports:
+      - "7001:7001"
+      - "7002:7002"
+      - "7808:7800"
+    container_name: weblogic
+    tty: true
+    environment:
+      - COMMANDER_SERVER=electricflow
+      - PRODUCTION_MODE=prod
+      - EF_SERVER_HOST=electricflow
+      - EF_SERVER_ADMIN_USER=admin
+      - EF_SERVER_ADMIN_PASS=changeme
+      - EF_RESOURCE_NAME=weblogic
+networks:
+    default:
+        external:
+            name: nat

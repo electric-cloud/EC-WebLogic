@@ -346,7 +346,7 @@ sub gen_random_numbers {
 
 
 sub render_template_from_property {
-    my ($self, $template_name, $params) = @_;
+    my ($self, $template_name, $params, %options) = @_;
 
     $params ||= {};
 
@@ -365,7 +365,7 @@ sub render_template_from_property {
 
     $params->{preamble} = $self->SUPER::render_template_from_property('/myProject/jython/preamble.jython', $preamble_params);
     # $params->{preamble} = $self->get_param('/myProject/jython/preamble.jython');
-    return $self->SUPER::render_template_from_property($template_name, $params);
+    return $self->SUPER::render_template_from_property($template_name, $params, %options);
 }
 
 sub get_wlst_path {
@@ -373,7 +373,7 @@ sub get_wlst_path {
 
     my $retval = '';
     if ($params) {
-        $retval = $params->{wlstabspath};
+        $retval = $params->{wlstabspath} || $params->{wlst_abs_path};
     }
     else {
         $retval = eval {$self->ec->getProperty('wlstabspath')->findvalue('//value')->string_value};
@@ -404,7 +404,7 @@ sub run_jython_step {
         admin_url    => $config->{weblogic_url},
     };
     $render_params = { %$params, %$render_params };
-    my $wlst_path = $self->get_wlst_path();
+    my $wlst_path = $self->get_wlst_path($params, $config);
 
     my $step_name = $self->ec->getProperty('/myStep/name')->findvalue('//value')->string_value;
     my $replace = sub {

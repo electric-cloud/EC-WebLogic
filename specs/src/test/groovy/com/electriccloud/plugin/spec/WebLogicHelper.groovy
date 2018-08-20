@@ -81,10 +81,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
         def password = getPassword()
         def enableNamedSessions = System.getenv('WL_ENABLE_NAMED_SESSIONS') ? '1' : '0'
         def pluginConfig = [
-                weblogic_url         : endpoint,
-                enable_named_sessions: enableNamedSessions,
-                debug_level          : '0',
-                wlst_path            : getWlstPath(),
+            weblogic_url         : endpoint,
+            enable_named_sessions: enableNamedSessions,
+            debug_level          : '0',
+            wlst_path            : getWlstPath(),
         ]
         def props = [confPath: 'weblogic_cfgs']
         if (System.getenv('RECREATE_CONFIG')) {
@@ -112,41 +112,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
             port     = '$port'
           }
         """
-        sleep(10 * 1000)
-        // Giving some rest to container
-    }
-
-
-
-    def __runWLST(code) {
-        code = code.trim()
-        def resourceName = getResourceName()
-        def procedureName = 'RunWLST'
-        dsl """
-            project '${HELPER_PROJECT}', {
-                procedure '${procedureName}', {
-                    step 'runCommand', {
-                        resourceName = '${getResourceName()}'
-                        shell = '${getWlstPath()}'
-                        command = '''\$[code]'''
-                    }
-
-                    formalParameter 'code', {
-                        type = 'textarea'
-                    }
-                }
-            }
-        """
-        def result = runProcedure("""
-            runProcedure(
-                projectName: '${HELPER_PROJECT}',
-                procedureName: '${procedureName}',
-                actualParameter: [
-                    code: '''$code'''
-                ]
-            )
-        """, resourceName)
-        result
     }
 
     def runWLST(code, jobNameTmpl = 'helperJob') {
@@ -217,22 +182,34 @@ class WebLogicHelper extends PluginSpockTestSupport {
         text
     }
 
-    def publishArtifact(String artifactName, String version, String resName) {
-        if (artifactExists(artifactName)) {
+    static def isWebLogic11() {
+        return System.getenv('WEBLOGIC_VERSION') == '11g'
+    }
+
+    def __publishArtifact(String artifactName, String version, String resName) {
+        if (artifactExists(artifactName + ':' + version)) {
             return
         }
 
         File resource = new File(this.getClass().getResource("/${resName}").toURI())
 
+
         String commanderServer = System.getProperty("COMMANDER_SERVER") ?: 'localhost'
         String username = System.getProperty('COMMANDER_USER') ?: 'admin'
         String password = System.getProperty('COMMANDER_PASSWORD') ?: 'changeme'
         String commanderHome = System.getenv('COMMANDER_HOME') ?: '/opt/EC/'
-        assert commanderHome
+        assert commanderHome: "Env COMMANDER_HOME must be provided"
 
-        File ectool = new File(commanderHome, "bin/ectool")
-        assert ectool.exists()
-        logger.debug(ectool.absolutePath.toString())
+        String ectoolPath
+        if (System.properties['os.name'].toLowerCase().contains('windows')) {
+            ectoolPath = "bin/ectool.exe"
+        } else {
+            ectoolPath = "bin/ectool"
+        }
+        File ectool = new File(commanderHome, ectoolPath)
+        assert ectool.exists(): "File ${ectool.absolutePath} does not exist"
+
+        logger.debug("ECTOOL PATH: " + ectool.absolutePath.toString())
 
         String command = "${ectool.absolutePath} --server $commanderServer "
         runCommand("${command} login ${username} ${password}")
@@ -365,8 +342,8 @@ class WebLogicHelper extends PluginSpockTestSupport {
                 actualParameter: $params_str_arr
             )
                 """, resourceName,
-                180, // timeout
-                15  // initialDelay
+            180, // timeout
+            15  // initialDelay
         )
         return result
     }
@@ -398,7 +375,8 @@ class WebLogicHelper extends PluginSpockTestSupport {
         return result
     }
 
-    def deployApplication(def projectName, def params, String artifactName = 'test:sample', String filename = FILENAME) {
+    def deployApplication(
+        def projectName, def params, String artifactName = 'test:sample', String filename = FILENAME) {
 
         publishArtifact(artifactName, '1.0', FILENAME)
         def path = downloadArtifact(artifactName, getResourceName())
@@ -977,8 +955,7 @@ print "VALUE:" + '+' + str(get(propName)) + '+'
             if (groupOption.size() > 1) {
                 group = groupOption.getAt(0)
                 option = groupOption.getAt(1)
-            }
-            else {
+            } else {
                 option = key
             }
             if (value == 'true') {
@@ -989,7 +966,7 @@ print "VALUE:" + '+' + str(get(propName)) + '+'
             }
             def actualValue = getResourceProperty(moduleName, resName, resType, group, option)
             logger.debug("${group}.${option} = $actualValue")
-            assert actualValue == value : "Actual option value for $group.$option is $actualValue, expected is $value"
+            assert actualValue == value: "Actual option value for $group.$option is $actualValue, expected is $value"
         }
     }
 
@@ -1022,10 +999,39 @@ print "VALUE:" + '+' + str(get(propName)) + '+'
     }
 
     def getDemoAppName() {
-        return 'demo-app'
+        return 'jms-sample'
     }
 
     def getDemoAppPath() {
         return 'jms-sample.war'
+    }
+
+
+    def runPipeline(String projectName, String pipelineName, Map params, String resourceName = null, int timeout = 120) {
+        def actualParameters = []
+        params.each { k, v ->
+            actualParameters << k + ': """' + v + '"""'
+        }
+
+        def pipelineDsl = """
+runPipeline(projectName: '$projectName', pipelineName: '$pipelineName', actualParameter: [${actualParameters.join(',')}])
+"""
+        def result = dsl pipelineDsl
+        def runtimeId = result.flowRuntime?.flowRuntimeId
+        assert runtimeId
+        def poll = createPoll(timeout)
+        poll.eventually {
+            pipelineCompleted(result)
+        }
+
+        def task = dsl("getPipelineStageRuntimeTasks flowRuntimeId: '$runtimeId', stageName: 'Stage'")?.task[0]
+        def logs = readJobLogs(task.jobId, resourceName)
+        def status = task.status
+        return [logs: logs, flowRuntimeId: runtimeId, status: task.status]
+    }
+
+    def getDerbyHost() {
+        def host = System.getenv('WEBLOGIC_DERBY_HOST') ?: 'localhost'
+        return host
     }
 }

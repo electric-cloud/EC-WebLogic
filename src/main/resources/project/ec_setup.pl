@@ -111,7 +111,7 @@ my %stopNodeManager = (
 my %createDatasource = (
     label       => "WebLogic - Create Datasource",
     procedure   => "CreateDatasource",
-    description => "Creates a Datasource",
+    description => "Creates a Datasource (DEPRECATED)",
     category    => "Application Server"
 );
 my %deleteDatasource = (

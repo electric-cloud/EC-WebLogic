@@ -48,12 +48,6 @@ sub main {
 
     my $cred = $wl->get_credentials($params->{configname});
 
-    my $check = $wl->check_executable($params->{wlst_abs_path});
-
-    if (!$check->{ok}) {
-        $wl->bail_out($check->{msg});
-    }
-
     $wl->write_deployment_plan(
         path => $params->{plan_path},
         content => $params->{deployment_plan},
@@ -73,8 +67,9 @@ sub main {
     my $template = $wl->render_template_from_property($template_path, $render_params);
 
     $wl->out(10, "Generated script:\n", $template);
+    my $wlst_path = $wl->get_wlst_path($params, $cred);
     my $res = $wl->execute_jython_script(
-        shell          => $params->{wlst_abs_path},
+        shell          => $wlst_path,
         script_path    => $ENV{COMMANDER_WORKSPACE} . '/exec.jython',
         script_content => $template,
     );

@@ -46,4 +46,5 @@ my $load = sub {
 
 $load->('/myProject/EC::Plugin::Core');
 $load->('/myProject/EC::WebLogic');
+$load->('/myProject/Text::MicroTemplate');
 

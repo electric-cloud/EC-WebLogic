@@ -70,6 +70,10 @@ dsPassword = r'''
 [% dataSourceCredentialsPassword %]
 '''.strip()
 
+driverProperties = r'''
+[% driverProperties %]
+'''.strip()
+
 
 required(dsName, 'Datasource name is not provided')
 required(dsDriverClass, 'Datasource Driver class is not provided')
@@ -85,8 +89,6 @@ update = False
 datasource = getMBean(getDatasourcePath(dsName))
 
 
-driverProperties = "serverName=localhost\ndatabaseName=medrec;create=true"
-
 # Initial processing
 if datasource != None:
     if updateAction == REMOVE_AND_CREATE:
@@ -94,7 +96,7 @@ if datasource != None:
         try:
             startChanges()
             deleteDatasource(dsName)
-            safeCommitChanges()
+            commitChanges()
             print_info("Removed datasource %s" % dsName)
         except Exception, e:
             discardAndExit("Failed to delete datasource: " + str(e))
@@ -129,7 +131,8 @@ try:
     print_debug("Set password")
 
     if not update:
-        upsertProperty(driverprops, 'databaseName', databaseName)
+        if databaseName:
+            upsertProperty(driverprops, 'databaseName', databaseName)
         driver.setUrl(dsUrl)
         print_debug("Set url to %s" % dsUrl)
         driver.setDriverName(dsDriverClass)
@@ -137,17 +140,12 @@ try:
         params.setJNDINames([dsJndi])
         print_debug("Set JNDI to %s" % dsJndi)
 
-    # Driver Properties
-    if False:
-        driverProps = re.split('\\n', driverProperties)
-        for prop in driverProps:
-            (key, value) = re.split('=', prop, 1)
-            cd('/JDBCSystemResources/' + dsName + '/JDBCResource/' + dsName + '/JDBCDriverParams/' + dsName + '/Properties/' + dsName)
-            if getMBean('Properties/' + key) == None:
-                cmo.createProperty(key)
-            cd('Properties/' + key)
-            set('Value', value)
-            print_debug("Set Driver Property %s to %s" % (key, value))
+        # Driver Properties
+        if driverProperties:
+            for prop in re.split('\\n', driverProperties):
+                (key, value) = re.split('=', prop, 1)
+                if key and value:
+                    upsertProperty(driverprops, key, value)
 
 
     # Targets
@@ -155,7 +153,7 @@ try:
         newTargets = stringToTargetList(targets)
         rebuildTargetList(newTargets, datasource.getTargets(), datasource)
     else:
-        warn("No targets are provided, the datasource will not be deployed")
+        print_warning("No targets are provided, the datasource will not be deployed")
 
     # wls:/base_domain/serverConfig/JDBCSystemResources/my_datasource/Resource/my_datasource/JDBCConnectionPoolParams/my_datasource> ls()
     # Additional Options come in form Category.Subcategory.Option=value
@@ -170,11 +168,11 @@ try:
             set(optionName, value)
             print_info("Setting %s/%s to %s" % (propertyPath, optionName, value))
 
-
 except WLSTException, e:
-    discardAndExit("Failed to create Datasource %s" % dsName)
+    discardAndExit(e, "Failed to create Datasource %s" % dsName)
 
 commitChanges()
+
 if successMessage != '':
     print_summary(successMessage)
 
