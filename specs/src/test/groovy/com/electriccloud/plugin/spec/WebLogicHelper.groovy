@@ -1045,7 +1045,7 @@ runPipeline(projectName: '$projectName', pipelineName: '$pipelineName', actualPa
     }
 
     def checkServerRestartOutputParameter(jobId) {
-        def parameters = getOutputParameters(result.jobId, 'RunProcedure')
+        def parameters = getOutputParameters(jobId, 'RunProcedure')
         def restart = parameters.find { it.outputParameterName == 'WebLogicServerRestartRequired'}
         assert restart : "Output parameter WebLogicServerRestartRequired does not exist"
         return true
