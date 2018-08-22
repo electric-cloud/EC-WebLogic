@@ -156,6 +156,7 @@ class DeleteJMSQueueSuite extends WebLogicHelper {
         assert result.outcome == expectedOutcome
         if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
             assert !checkJMSQueueExists(jmsModuleName, jmsQueueName)
+            checkServerRestartOutputParameter(result.jobId)
         }
 
         if (expectedJobDetailedResult) {
@@ -165,7 +166,7 @@ class DeleteJMSQueueSuite extends WebLogicHelper {
         if (expectedSummaryMessage) {
             assert upperStepSummary.contains(expectedSummaryMessage)
         }
-        checkServerRestartOutputParameter(result.jobId)
+
         where: 'The following params will be: '
         caseId    | jmsQueueName              | jmsModuleName              | expectedOutcome          | expectedJobDetailedResult
 

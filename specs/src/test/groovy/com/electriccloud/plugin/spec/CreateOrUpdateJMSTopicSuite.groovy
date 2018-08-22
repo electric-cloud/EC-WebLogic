@@ -228,13 +228,13 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
 
         if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
 //            assert jmsTopicExists(jmsModuleName)
+            checkServerRestartOutputParameter(result.jobId)
         }
 
         if (expectedSummaryMessage) {
             def upperStepSummary = getJobUpperStepSummary(result.jobId)
             assert upperStepSummary.contains(expectedSummaryMessage)
         }
-        checkServerRestartOutputParameter(result.jobId)
 
         where: 'The following params will be: '
         caseId    | updateAction                    | jmsTopicName                                    | expectedOutcome          | expectedSummaryMessage                                          | expectedJobDetailedResult

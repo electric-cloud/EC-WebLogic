@@ -211,7 +211,9 @@ class CreateOrUpdateJMSModuleSubdeploymentSuite extends WebLogicHelper {
         if (expectedJobDetailedResult) {
             assert debugLog.contains(expectedJobDetailedResult)
         }
-        checkServerRestartOutputParameter(result.jobId)
+        if (result.outcome == 'success') {
+            checkServerRestartOutputParameter(result.jobId)
+        }
 
         if (expectedSummaryMessage) {
             def upperStepSummary = getJobUpperStepSummary(result.jobId)
@@ -298,8 +300,8 @@ class CreateOrUpdateJMSModuleSubdeploymentSuite extends WebLogicHelper {
         'C325072' | randomize(jmsSubDeploymentNames.default) | targets.serverAndCluster | expectedOutcomes.success | "Added 2 target(s), No targets to remove" | ''
 
         // Negative
-        'C325073'        | randomize(jmsSubDeploymentNames.default) | targets.nothing          | expectedOutcomes.error   | "Target name is not provided"             | 'Failed to create or update JMS Module Subdeployment'
-        'C325074'        | jmsSubDeploymentNames.empty              | targets.default          | expectedOutcomes.error   | 'No Subdeployment name is provided'       | ''
+        'C325073' | randomize(jmsSubDeploymentNames.default) | targets.nothing          | expectedOutcomes.error   | "Target name is not provided"             | 'Failed to create or update JMS Module Subdeployment'
+        'C325074' | jmsSubDeploymentNames.empty              | targets.default          | expectedOutcomes.error   | 'No Subdeployment name is provided'       | ''
     }
 
     @Unroll

@@ -181,6 +181,7 @@ class DeleteJMSModuleSubdeploymentSuite extends WebLogicHelper {
         assert result.outcome == expectedOutcome
         if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
             assert !checkJMSSubdeploymentExists(jmsModuleName, jmsSubdeploymentName)
+            checkServerRestartOutputParameter(result.jobId)
         }
 
         if (expectedJobDetailedResult) {
@@ -190,7 +191,7 @@ class DeleteJMSModuleSubdeploymentSuite extends WebLogicHelper {
         if (expectedSummaryMessage) {
             assert upperStepSummary.contains(expectedSummaryMessage)
         }
-        checkServerRestartOutputParameter(result.jobId)
+
         where: 'The following params will be: '
         caseId    | jmsSubdeploymentName              | jmsModuleName              | expectedOutcome          | expectedJobDetailedResult
 
