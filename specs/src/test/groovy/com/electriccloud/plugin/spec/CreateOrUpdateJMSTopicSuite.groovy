@@ -228,6 +228,7 @@ class CreateOrUpdateJMSTopicSuite extends WebLogicHelper {
 
         if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
 //            assert jmsTopicExists(jmsModuleName)
+            checkServerRestartOutputParameter(result.jobId)
         }
 
         if (expectedSummaryMessage) {

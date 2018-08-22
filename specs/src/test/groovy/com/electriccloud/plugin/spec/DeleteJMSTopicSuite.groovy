@@ -148,6 +148,7 @@ class DeleteJMSTopicSuite extends WebLogicHelper {
         assert result.outcome == expectedOutcome
         if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
             assert !checkJMSTopicExists(jmsTopicName)
+            checkServerRestartOutputParameter(result.jobId)
         }
 
         if (expectedJobDetailedResult) {
@@ -157,6 +158,7 @@ class DeleteJMSTopicSuite extends WebLogicHelper {
         if (expectedSummaryMessage) {
             assert upperStepSummary.contains(expectedSummaryMessage)
         }
+
         where: 'The following params will be: '
         caseId    | jmsTopicName              | expectedOutcome          | expectedJobDetailedResult
 

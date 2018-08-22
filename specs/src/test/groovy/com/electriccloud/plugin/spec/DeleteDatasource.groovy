@@ -46,6 +46,7 @@ class DeleteDatasource extends WebLogicHelper {
         then:
         assert result.outcome == 'success'
         assert getJobUpperStepSummary(result.jobId) == 'Datasource ' + dsName + ' has been deleted'
+        checkServerRestartOutputParameter(result.jobId)
     }
 
 
