@@ -1034,4 +1034,9 @@ runPipeline(projectName: '$projectName', pipelineName: '$pipelineName', actualPa
         def host = System.getenv('WEBLOGIC_DERBY_HOST') ?: 'localhost'
         return host
     }
+    
+    def getMysqlHost() {
+        def host = System.getenv('WEBLOGIC_MYSQL_HOST') ?: 'localhost'
+        return host
+    }
 }

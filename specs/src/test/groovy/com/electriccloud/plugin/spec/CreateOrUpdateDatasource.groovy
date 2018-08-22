@@ -35,6 +35,7 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
     @Shared
     def datasources = [
         correct    : 'SpecDatasource',
+        mysql      : 'MySQLSpecDataSource',
         updated    : 'SpecUpdatedDatasource',
         nonexisting: 'NoSuchDS'
     ]
@@ -42,20 +43,21 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
     @Shared
     def jndiNames = [
         empty  : '',
+        mysql  : "JNDI.Name.${datasources.mysql}",
         correct: 'datasources.TestJNDIName',
     ]
 
     @Shared
     def drivers = [
-        correct: 'org.apache.derby.jdbc.ClientXADataSource',
+        mysql: 'com.mysql.jdbc.Driver',
         derby: 'org.apache.derby.jdbc.ClientXADataSource',
-        incorrect: 'org.incorrect.jdbc.driver',
+        incorrect: 'com.incorrect.jdbc.driver',
         emty: '',
     ]
 
     @Shared
     def urls = [
-        correct: "jdbc:derby://${derbyHost}:1527/medrec;ServerName=${derbyHost};databaseName=medrec;create=true",
+        mysql: "jdbc:mysql://${mysqlHost}:3306/customers_db",
         medrec: "jdbc:derby://${derbyHost}:1527/medrec;ServerName=${derbyHost};databaseName=medrec;create=true",
         incorrect: "incorrect URL",
         empty: "",
@@ -91,12 +93,14 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
     @Shared
     def dbNames = [
         empty : '',
-        medrec: 'medrec'
+        medrec: 'medrec',
+        mysql : 'customers_db'
     ]
 
     @Shared
     def driverProps = [
         empty     : '',
+        mysql     : 'user=root',
         serverName: "serverName=${derbyHost}"
     ]
 
@@ -104,7 +108,9 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
      * Test Parameters: for Where section
      */
     @Shared
-    def caseId
+    def caseId =[
+        C1234: [ids: 'C1234', description: 'Positive']
+    ]
 
     // expected results
     def expectedOutcome
@@ -152,6 +158,12 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
 
         dsl """
 credential(userName: 'medrec', password: 'medrec', credentialName: 'medrec', projectName: '$projectName')
+credential(userName: 'root', password: 'root', credentialName: 'mysql', projectName: '$projectName')
+attachCredential projectName: '$projectName',
+    credentialName: 'mysql',
+    procedureName: '$procedureName',
+    stepName: 'RunProcedure'
+
 attachCredential projectName: '$projectName',
     credentialName: 'medrec',
     procedureName: '$procedureName',
@@ -284,15 +296,19 @@ attachCredential projectName: '$projectName',
     ]
     @Shared
         dataSourceCredentials = [
-            correct : 'medrec',
+            correct  : 'medrec',
+            medrec   : 'medrec',
+            mysql    : 'mysql',
             incorrect: 'incorrect_dataSourceCredentials',
-            empty: '',
+            empty    : '',
     ]
     @Shared
         databaseNames =[
-            correct: 'medrec;create=true',
+            merdec   : 'medrec;create=true',
+            mysql    : 'customers_db',
+            correct  : 'medrec;create=true',
             incorrect: 'incorrect_databaseName',
-            empty: '',
+            empty    : '',
         ]
     @Shared
         updateActions =[
@@ -302,23 +318,26 @@ attachCredential projectName: '$projectName',
         ]
     @Shared
         expectedSummaryMessages =[
+            correctCreate: "Created datasource replaceName successfully",
             Message : '',
         ]
     
+    def configname
+    def dataSourceName
+    def dataSourceDriverClass
+    def databaseUrl
+    def jndiName
+    def dataSourceCredential
+    def databaseName
+    def driverPropertie
+    def target
+    def updateAction
+    def additionalOption
+    
+    
     @Unroll
-    def 'CreateORUpdateDataSource - Positive: #testCaseID.name #testCaseID.description'(){
+    def 'CreateORUpdateDataSource - #caseIds.ids #caseIds.description'(){
         setup:      'Define the parameters for Procedure running'
-        def configname
-        def dataSourceName
-        def dataSourceDriverClass
-        def databaseUrl
-        def jndiName
-        def dataSourceCredential
-        def databaseName
-        def driverPropertie
-        def target
-        def updateAction
-        def additionalOption
         Map runParams = [
             configname                        : configname,
             ecp_weblogic_dataSourceName       : dataSourceName,
@@ -341,13 +360,12 @@ attachCredential projectName: '$projectName',
 //        def logs = result.logs
         logger.info(upperStepSummary)
         expect: 'Verification'
-        assert result.outcome = expectedOutcome
-        assert upperStepSummary =~expectedSummaryMessage
-        when: 'Table Run'
-        configname              | dataSourceName        | dataSourceDriverClass     | databaseUrl       | jndiName              | dataSourceCredential              | databaseName              | driverPropertie       | target            | updateAction              | additionalOption          | expectedOutcome           | expectedSummaryMessage
-        confignames.correct     | datasources.correct   | drivers.correct           | urls.correct      | jndiNames.correct     | dataSourceCredentials.correct     | databaseNames.correct     | driverProps.empty     | targets.empty     | updateActions.doNothing   | additionalOptions.empty   | expectedOutcomes.success  | expectedSummaryMessages.Message
-        cleanup:    'Run after each test from Test Case Table'
-        
+        assert result.outcome == expectedOutcome
+        assert upperStepSummary =~expectedSummaryMessage.replace('replaceName',dataSourceName)
+        cleanup: 'Clean the Procedure'
+        where: 'Table Run'
+        caseIds      |configname              | dataSourceName        | dataSourceDriverClass     | databaseUrl       | jndiName              | dataSourceCredential            /*Not Req*/  | databaseName              | driverPropertie       | target              | updateAction              | additionalOption          | expectedOutcome           | expectedSummaryMessage
+        caseId.C1234 |confignames.correct     | datasources.mysql     | drivers.mysql             | urls.mysql        | jndiNames.correct     | dataSourceCredentials.mysql     /*Not Req*/  | databaseNames.empty       | driverProps.empty     | targets.correct     | updateActions.doNothing   | additionalOptions.empty   | expectedOutcomes.success  | expectedSummaryMessages.Message
     }
     
     def checkStepSummary(action, name, summary) {
