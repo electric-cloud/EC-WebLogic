@@ -109,7 +109,8 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
      */
     @Shared
     def caseId =[
-        C1234: [ids: 'C1234', description: 'Positive']
+        C363890: [ids: 'C363890', description: 'Positive Create MYSQL DataSource'],
+//        C363890: [ids: 'C363890', description: 'Positive Create MYSQL DataSource'],
     ]
 
     // expected results
@@ -363,9 +364,13 @@ attachCredential projectName: '$projectName',
         assert result.outcome == expectedOutcome
         assert upperStepSummary =~expectedSummaryMessage.replace('replaceName',dataSourceName)
         cleanup: 'Clean the Procedure'
+        // NO Need to change the Methid above
         where: 'Table Run'
         caseIds      |configname              | dataSourceName        | dataSourceDriverClass     | databaseUrl       | jndiName              | dataSourceCredential            /*Not Req*/  | databaseName              | driverPropertie       | target              | updateAction              | additionalOption          | expectedOutcome           | expectedSummaryMessage
         caseId.C1234 |confignames.correct     | datasources.mysql     | drivers.mysql             | urls.mysql        | jndiNames.correct     | dataSourceCredentials.mysql     /*Not Req*/  | databaseNames.empty       | driverProps.empty     | targets.correct     | updateActions.doNothing   | additionalOptions.empty   | expectedOutcomes.success  | expectedSummaryMessages.Message
+        caseId.C1234 |confignames.correct     | datasources.mysql     | drivers.mysql             | urls.mysql        | jndiNames.correct     | dataSourceCredentials.mysql     /*Not Req*/  | databaseNames.empty       | driverProps.empty     | targets.correct     | updateActions.doNothing   | additionalOptions.empty   | expectedOutcomes.success  | expectedSummaryMessages.Message
+        caseId.C1234 |confignames.correct     | datasources.mysql     | drivers.mysql             | urls.mysql        | jndiNames.correct     | dataSourceCredentials.mysql     /*Not Req*/  | databaseNames.empty       | driverProps.empty     | targets.correct     | updateActions.doNothing   | additionalOptions.empty   | expectedOutcomes.success  | expectedSummaryMessages.Message
+        caseId.C1234 |confignames.correct       | datasources.mysql     | drivers.mysql             | urls.mysql        | jndiNames.correct     | dataSourceCredentials.mysql     /*Not Req*/  | databaseNames.empty       | driverProps.empty     | targets.correct     | updateActions.doNothing   | additionalOptions.empty   | expectedOutcomes.success  | expectedSummaryMessages.Message
     }
     
     def checkStepSummary(action, name, summary) {
