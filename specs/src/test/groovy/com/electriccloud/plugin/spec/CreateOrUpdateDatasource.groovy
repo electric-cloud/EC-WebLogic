@@ -129,9 +129,9 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
         C000015: [name: 'C000015', ids: 'C000015', description: 'Success remove and Update'],
         C000016: [name: 'C000016', ids: 'C000016', description: 'Success remove and Update'],
         //negative
-        C000017: [name: 'C000017', ids: 'C000017', description: 'Error config'],
-        C000018: [name: 'C000018', ids: 'C000018', description: 'Error'],
-        C000019: [name: 'C000019', ids: 'C000019', description: 'Error'],
+        C000017: [name: 'C000017', ids: 'C000017', description: 'Error config '],
+        C000018: [name: 'C000018', ids: 'C000018', description: 'Error Driver '],
+        C000019: [name: 'C000019', ids: 'C000019', description: 'Error URL '],
         C000020: [name: 'C000020', ids: 'C000020', description: 'Error'],
         C000021: [name: 'C000021', ids: 'C000021', description: 'Error'],
         C000022: [name: 'C000022', ids: 'C000022', description: 'Error'],
