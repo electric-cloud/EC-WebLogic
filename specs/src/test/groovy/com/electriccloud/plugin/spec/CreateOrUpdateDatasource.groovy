@@ -128,11 +128,11 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
         C000014: [name: 'C000014', ids: 'C000014', description: 'Success remove and Update'],
         C000015: [name: 'C000015', ids: 'C000015', description: 'Success remove and Update'],
         C000016: [name: 'C000016', ids: 'C000016', description: 'Success remove and Update'],
+        //negative
         C000017: [name: 'C000017', ids: 'C000017', description: 'Error'],
         C000018: [name: 'C000018', ids: 'C000018', description: 'Error'],
-        //negative
         C000019: [name: 'C000019', ids: 'C000019', description: 'Error'],
-        C000020: [name: 'C000020', ids: 'C000030', description: 'Error'],
+        C000020: [name: 'C000020', ids: 'C000020', description: 'Error'],
         C000021: [name: 'C000021', ids: 'C000021', description: 'Error'],
         C000022: [name: 'C000022', ids: 'C000022', description: 'Error'],
         C000023: [name: 'C000023', ids: 'C000023', description: 'Error'],
@@ -352,7 +352,7 @@ attachCredential projectName: '$projectName',
             correctCreate           : "Created datasource replaceName successfully",
             Message                 : 'Datasource replaceName exists, no further action is required',
             receated                : "Recreated datasource replaceName",
-            configurationDoesntExist: "Configuration ${confignames.incorrect} doesn't exist",
+            configurationDoesntExist: "Configuration replaceName doesn't exist",
         ]
     
     def configname
