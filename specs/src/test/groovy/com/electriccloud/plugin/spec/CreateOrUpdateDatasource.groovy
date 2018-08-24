@@ -129,7 +129,7 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
         C000015: [name: 'C000015', ids: 'C000015', description: 'Success remove and Update'],
         C000016: [name: 'C000016', ids: 'C000016', description: 'Success remove and Update'],
         //negative
-        C000017: [name: 'C000017', ids: 'C000017', description: 'Error'],
+        C000017: [name: 'C000017', ids: 'C000017', description: 'Error config'],
         C000018: [name: 'C000018', ids: 'C000018', description: 'Error'],
         C000019: [name: 'C000019', ids: 'C000019', description: 'Error'],
         C000020: [name: 'C000020', ids: 'C000020', description: 'Error'],
@@ -348,11 +348,14 @@ attachCredential projectName: '$projectName',
         ]
     @Shared
         expectedSummaryMessages = [
-            warningWithoutTargets   : "No targets are provided, the datasource will not be deployed",
-            correctCreate           : "Created datasource replaceName successfully",
-            Message                 : 'Datasource replaceName exists, no further action is required',
-            receated                : "Recreated datasource replaceName",
-            configurationDoesntExist: "Configuration replaceName doesn't exist",
+            warningWithoutTargets           : "No targets are provided, the datasource will not be deployed",
+            correctCreate                   : "Created datasource replaceName successfully",
+            Message                         : 'Datasource replaceName exists, no further action is required',
+            receated                        : "Recreated datasource replaceName",
+            errorConfigurationDoesntExist   : "Configuration ${confignames.incorrect} doesn't exist",
+            errorLoadDriver                 : "Cannot load driver class ${drivers.incorrect} for datasource 'replaceName'",
+            errorMySQLURL                   : "The driver ${drivers.mysql} does not accept URL ${urls.incorrect}",
+            errorCommon                     : "Completed with Errors",
         ]
     
     def configname
@@ -425,16 +428,16 @@ attachCredential projectName: '$projectName',
         caseIds.C000016 | confignames.correct   | datasources.mysql + caseIds.C000004.name | drivers.mysql         | urls.mysql     | jndiNames.correct                        | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.correct | updateActions.removeAndCreate | additionalOptions.maxCapacity | expectedOutcomes.success | expectedSummaryMessages.receated
         //the test with negative results
         
-        caseIds.C000017 | confignames.incorrect | datasources.mysql + caseIds.C000017.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000017.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.empty   | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.error   | expectedSummaryMessages.configurationDoesntExist
-        caseIds.C000018 | confignames.correct   | datasources.mysql + caseIds.C000018.name | drivers.incorrect     | urls.mysql     | jndiNames.correct + caseIds.C000018.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.correct | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.error   | expectedSummaryMessages.warningWithoutTargets
+        caseIds.C000017 | confignames.incorrect | datasources.mysql + caseIds.C000017.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000017.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.empty   | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.error   | expectedSummaryMessages.errorConfigurationDoesntExist
+        caseIds.C000018 | confignames.correct   | datasources.mysql + caseIds.C000018.name | drivers.incorrect     | urls.mysql     | jndiNames.correct + caseIds.C000018.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.correct | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.error   | expectedSummaryMessages.errorLoadDriver
         //the same JNDI name is incorrect C000001 - because duplicate
-        caseIds.C000019 | confignames.correct   | datasources.mysql + caseIds.C000019.name | drivers.mysql         | urls.incorrect | jndiNames.correct + caseIds.C000001.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.correct | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.error   | expectedSummaryMessages.warningWithoutTargets
+        caseIds.C000019 | confignames.correct   | datasources.mysql + caseIds.C000019.name | drivers.mysql         | urls.incorrect | jndiNames.correct + caseIds.C000001.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.correct | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.error   | expectedSummaryMessages.errorMySQLURL
         //other negative
-        caseIds.C000020 | confignames.correct   | datasources.mysql + caseIds.C000020.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000020.name | dataSourceCredentials.incorrect /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.correct | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.error   | expectedSummaryMessages.warningWithoutTargets
-        caseIds.C000021 | confignames.correct   | datasources.mysql + caseIds.C000021.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000021.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.incorrect | driverProps.empty     | targets.correct | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.error   | expectedSummaryMessages.warningWithoutTargets
-        caseIds.C000022 | confignames.correct   | datasources.mysql + caseIds.C000022.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000022.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.incorrect | targets.correct | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.error   | expectedSummaryMessages.warningWithoutTargets
-        caseIds.C000023 | confignames.correct   | datasources.mysql + caseIds.C000023.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000023.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.correct | updateActions.incorrect       | additionalOptions.empty       | expectedOutcomes.error   | expectedSummaryMessages.warningWithoutTargets
-        caseIds.C000024 | confignames.correct   | datasources.mysql + caseIds.C000024.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000024.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.correct | updateActions.doNothing       | additionalOptions.incorrect   | expectedOutcomes.error   | expectedSummaryMessages.warningWithoutTargets
+//        caseIds.C000020 | confignames.correct   | datasources.mysql + caseIds.C000020.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000020.name | dataSourceCredentials.incorrect /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.correct | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.error   | expectedSummaryMessages.warningWithoutTargets
+//        caseIds.C000021 | confignames.correct   | datasources.mysql + caseIds.C000021.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000021.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.incorrect | driverProps.empty     | targets.correct | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.error   | expectedSummaryMessages.warningWithoutTargets
+//        caseIds.C000022 | confignames.correct   | datasources.mysql + caseIds.C000022.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000022.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.incorrect | targets.correct | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.error   | expectedSummaryMessages.warningWithoutTargets
+//        caseIds.C000023 | confignames.correct   | datasources.mysql + caseIds.C000023.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000023.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.correct | updateActions.incorrect       | additionalOptions.empty       | expectedOutcomes.error   | expectedSummaryMessages.warningWithoutTargets
+//        caseIds.C000024 | confignames.correct   | datasources.mysql + caseIds.C000024.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000024.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.correct | updateActions.doNothing       | additionalOptions.incorrect   | expectedOutcomes.error   | expectedSummaryMessages.warningWithoutTargets
         //the tests with with targets, but with selective updates
     }
     
