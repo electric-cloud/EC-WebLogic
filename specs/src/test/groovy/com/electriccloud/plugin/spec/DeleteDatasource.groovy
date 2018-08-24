@@ -155,8 +155,6 @@ class DeleteDatasource extends WebLogicHelper {
 
 
 
-
-
     def doSetupSpec() {
         setupResource()
         createConfig(CONFIG_NAME)
@@ -268,7 +266,7 @@ class DeleteDatasource extends WebLogicHelper {
 
 
     @Unroll
-    def "Unable to Delete DataSource #testCaseId - #tcDescription"(){
+    def "Delete DataSource #testCaseId - #tcDescription"(){
         setup: "Create DataSource" (CONFIG_NAME,
                 datasources.mysql,
                 drivers.mysql,
