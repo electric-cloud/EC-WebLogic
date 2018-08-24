@@ -1035,6 +1035,12 @@ runPipeline(projectName: '$projectName', pipelineName: '$pipelineName', actualPa
         return host
     }
 
+    
+    def getMysqlHost() {
+        def host = System.getenv('WEBLOGIC_MYSQL_HOST') ?: 'localhost'
+        return host
+
+
 
     def getOutputParameters(jobId, stepName) {
         def details = dsl "getJobDetails jobId: '$jobId'"
@@ -1049,5 +1055,6 @@ runPipeline(projectName: '$projectName', pipelineName: '$pipelineName', actualPa
         def restart = parameters.find { it.outputParameterName == 'WebLogicServerRestartRequired'}
         assert restart : "Output parameter WebLogicServerRestartRequired does not exist"
         return true
+
     }
 }
