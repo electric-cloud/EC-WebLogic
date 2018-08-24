@@ -138,7 +138,7 @@ class CreateOrUpdateJMSServerSuite extends WebLogicHelper {
             ecp_weblogic_target         : target,
         ]
 
-        if (jmsServerName){
+        if (jmsServerName) {
             deleteJMSServer(jmsServerName)
         }
 
@@ -168,6 +168,10 @@ class CreateOrUpdateJMSServerSuite extends WebLogicHelper {
         if (expectedSummaryMessage) {
             def upperStepSummary = getJobUpperStepSummary(result.jobId)
             assert upperStepSummary.contains(expectedSummaryMessage)
+        }
+
+        if (result.outcome == 'success') {
+            checkServerRestartOutputParameter(result.jobId)
         }
 
         cleanup: 'Remove created entity'
@@ -207,7 +211,7 @@ class CreateOrUpdateJMSServerSuite extends WebLogicHelper {
             ecp_weblogic_target         : target,
         ])
 
-        if (jmsServerName){
+        if (jmsServerName) {
             deleteJMSServer(jmsServerName)
         }
 
@@ -248,7 +252,7 @@ class CreateOrUpdateJMSServerSuite extends WebLogicHelper {
         }
 
         where: 'The following params will be: '
-        caseId | updateAction                    | jmsServerName                                    | target          | expectedOutcome          | expectedSummaryMessage
+        caseId    | updateAction                    | jmsServerName                                    | target          | expectedOutcome          | expectedSummaryMessage
         // Create
         'C325090' | updateActions.empty             | jmsServerNames.default                           | targets.default | expectedOutcomes.success | "Created JMS Server $jmsServerName"
 

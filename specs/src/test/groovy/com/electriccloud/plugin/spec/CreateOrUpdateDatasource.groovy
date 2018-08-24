@@ -242,7 +242,9 @@ attachCredential projectName: '$projectName',
         def upperStepSummary = getJobUpperStepSummary(result.jobId)
         logger.info(upperStepSummary)
         expect: 'Outcome and Upper Summary verification'
-        
+
+        checkServerRestartOutputParameter(result.jobId)
+
         assert result.outcome != 'error'
 //        assert upperStepSummary =~ /Created datasource $dsName successfully/
         cleanup:

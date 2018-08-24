@@ -149,6 +149,7 @@ class DeleteJMSModuleSuite extends WebLogicHelper {
         assert result.outcome == expectedOutcome
         if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
             assert !checkJMSModuleExists(jmsModuleName)
+            checkServerRestartOutputParameter(result.jobId)
         }
 
         if (expectedJobDetailedResult) {
@@ -158,6 +159,7 @@ class DeleteJMSModuleSuite extends WebLogicHelper {
         if (expectedSummaryMessage) {
             assert upperStepSummary.contains(expectedSummaryMessage)
         }
+
         where: 'The following params will be: '
         caseId | jmsModuleName              | expectedOutcome          | expectedJobDetailedResult                         | expectedSummaryMessage
 
