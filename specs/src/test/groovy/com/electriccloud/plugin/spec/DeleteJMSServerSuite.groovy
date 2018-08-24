@@ -142,6 +142,7 @@ class DeleteJMSServerSuite extends WebLogicHelper {
         assert result.outcome == expectedOutcome
         if (expectedOutcome == expectedOutcomes.success && result.outcome == expectedOutcomes.success) {
             assert !checkJMSServerExists(jmsServerName)
+            checkServerRestartOutputParameter(result.jobId)
         }
 
         if (expectedJobDetailedResult) {
@@ -151,6 +152,7 @@ class DeleteJMSServerSuite extends WebLogicHelper {
         if (expectedSummaryMessage) {
             assert upperStepSummary.contains(expectedSummaryMessage)
         }
+
         where: 'The following params will be: '
         caseId    | jmsServerName              | expectedOutcome          | expectedJobDetailedResult
 

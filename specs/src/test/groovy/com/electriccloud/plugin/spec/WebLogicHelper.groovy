@@ -1034,9 +1034,27 @@ runPipeline(projectName: '$projectName', pipelineName: '$pipelineName', actualPa
         def host = System.getenv('WEBLOGIC_DERBY_HOST') ?: 'localhost'
         return host
     }
+
     
     def getMysqlHost() {
         def host = System.getenv('WEBLOGIC_MYSQL_HOST') ?: 'localhost'
         return host
+
+
+
+    def getOutputParameters(jobId, stepName) {
+        def details = dsl "getJobDetails jobId: '$jobId'"
+        def step = details?.job?.jobStep.find { it.stepName == stepName }
+        assert step : "Step $stepName is not found in job $jobId"
+        def parameters = dsl "getOutputParameters jobStepId: '${step.jobStepId}'"
+        return parameters?.outputParameter
+    }
+
+    def checkServerRestartOutputParameter(jobId) {
+        def parameters = getOutputParameters(jobId, 'RunProcedure')
+        def restart = parameters.find { it.outputParameterName == 'WebLogicServerRestartRequired'}
+        assert restart : "Output parameter WebLogicServerRestartRequired does not exist"
+        return true
+
     }
 }
