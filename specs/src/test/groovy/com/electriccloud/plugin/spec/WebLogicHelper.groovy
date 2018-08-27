@@ -1039,7 +1039,7 @@ runPipeline(projectName: '$projectName', pipelineName: '$pipelineName', actualPa
     def getMysqlHost() {
         def host = System.getenv('WEBLOGIC_MYSQL_HOST') ?: 'localhost'
         return host
-
+    }
 
 
     def getOutputParameters(jobId, stepName) {
