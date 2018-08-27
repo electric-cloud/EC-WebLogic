@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   electricflow:
-    image: "electricflow/efserver"
+    image: "electricflow/efserver:latest"
     ports:
       - "8000:8000"
       - "8200:8200"
@@ -33,7 +33,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
   weblogic:
-    image: electricflow/weblogic:10.3.6-generic
+    image: electricflow/weblogic:10.3.6
     ports:
       - "7001:7001"
       - "7808:7808"
@@ -44,6 +44,16 @@ services:
     environment:
       - COMMANDER_SERVER=electricflow
       - PRODUCTION_MODE=prod
+
+  derby:
+    image: az82/docker-derby:latest
+    ports:
+      - "1527:1527"
+    networks:
+      - internal
+    tty: true
+    container_name: derby
+
 networks:
   internal:
     driver: bridge
