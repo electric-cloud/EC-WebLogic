@@ -80,6 +80,9 @@ class WebLogicHelper extends PluginSpockTestSupport {
         def username = getUsername()
         def password = getPassword()
         def enableNamedSessions = System.getenv('WL_ENABLE_NAMED_SESSIONS') ? '1' : '0'
+        if (!supportsNamedSessions()) {
+            enableNamedSessions = '0'
+        }
         def pluginConfig = [
             weblogic_url         : endpoint,
             enable_named_sessions: enableNamedSessions,
@@ -184,6 +187,17 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
     static def isWebLogic11() {
         return System.getenv('WEBLOGIC_VERSION') == '11g'
+    }
+
+    static def supportsNamedSessions() {
+        def version = System.getenv('WEBLOGIC_VERSION')
+        if (!version) {
+            return true
+        }
+        if (version =~ /12R1|11/) {
+            return false
+        }
+        return true
     }
 
     def __publishArtifact(String artifactName, String version, String resName) {
@@ -1035,7 +1049,7 @@ runPipeline(projectName: '$projectName', pipelineName: '$pipelineName', actualPa
         return host
     }
 
-    
+
     def getMysqlHost() {
         def host = System.getenv('WEBLOGIC_MYSQL_HOST') ?: 'localhost'
         return host
