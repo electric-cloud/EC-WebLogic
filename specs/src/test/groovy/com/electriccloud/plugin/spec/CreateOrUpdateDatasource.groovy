@@ -400,7 +400,9 @@ attachCredential projectName: '$projectName',
         logger.info(upperStepSummary)
         expect: 'Verification'
         assert result.outcome == expectedOutcome
-        assert upperStepSummary =~ expectedSummaryMessage.replace('replaceName', dataSourceName)
+        if (!isWebLogic11()){
+            assert upperStepSummary =~ expectedSummaryMessage.replace('replaceName', dataSourceName)
+        }
         cleanup: 'Clean the Procedure'
         // NO Need to change the Methid above
         where: 'Table Run'
