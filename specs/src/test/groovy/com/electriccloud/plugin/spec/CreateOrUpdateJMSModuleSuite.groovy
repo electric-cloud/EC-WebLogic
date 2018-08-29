@@ -2,6 +2,7 @@ package com.electriccloud.plugin.spec
 
 import spock.lang.*
 
+@Requires({WebLogicHelper.testJMS()})
 class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
     /**
      * Environments Variables
@@ -124,6 +125,7 @@ class CreateOrUpdateJMSModuleSuite extends WebLogicHelper {
     def doSetupSpec() {
         setupResource()
         deleteProject(projectName)
+        discardChanges()
 
         createConfig(CONFIG_NAME)
 

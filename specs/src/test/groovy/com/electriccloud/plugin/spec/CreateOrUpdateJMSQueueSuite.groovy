@@ -1,7 +1,7 @@
 package com.electriccloud.plugin.spec
 
 import spock.lang.*
-
+@Requires({WebLogicHelper.testJMS()})
 class CreateOrUpdateJMSQueueSuite extends WebLogicHelper {
     /**
      * Dsl Parameters

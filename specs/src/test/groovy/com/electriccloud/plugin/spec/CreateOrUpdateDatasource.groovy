@@ -1,37 +1,40 @@
 package com.electriccloud.plugin.spec
 
+import spock.lang.IgnoreRest
+import spock.lang.Requires
 import spock.lang.Shared
 import spock.lang.Unroll
 
+@Requires({WebLogicHelper.testDatasource()})
 class CreateOrUpdateDatasource extends WebLogicHelper {
-    
+
     /**
      * Dsl Parameters
      */
-    
+
     @Shared
     String procedureName = 'CreateOrUpdateDatasource'
     @Shared
     String projectName = "EC-WebLogic ${procedureName}"
-    
+
     /**
      * Common Maps: General Maps for different fields
      */
-    
+
     @Shared
     def checkBoxValues = [
         unchecked: '0',
         checked  : '1',
     ]
-    
+
     /**
      * Parameters for Test Setup
      */
-    
+
     /**
      * Procedure Values: test parameters Procedure values
      */
-    
+
     @Shared
     def datasources = [
         correct    : 'SpecDatasource',
@@ -39,14 +42,14 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
         updated    : 'SpecUpdatedDatasource',
         nonexisting: 'NoSuchDS'
     ]
-    
+
     @Shared
     def jndiNames = [
         empty  : '',
         mysql  : "JNDI.Name.${datasources.mysql}",
         correct: 'datasources.TestJNDIName',
     ]
-    
+
     @Shared
     def drivers = [
         mysql    : 'com.mysql.jdbc.Driver',
@@ -54,7 +57,7 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
         incorrect: 'com.incorrect.jdbc.driver',
         emty     : '',
     ]
-    
+
     @Shared
     def urls = [
         mysql    : "jdbc:mysql://${mysqlHost}:3306/customers_db",
@@ -62,7 +65,7 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
         incorrect: "incorrect URL",
         empty    : "",
     ]
-    
+
     @Shared
     def targets = [
         empty    : '',
@@ -70,11 +73,11 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
         correct  : 'AdminServer',
         incorrect: 'IncorrectServer'
     ]
-    
+
     /**
      * Verification Values: Assert values
      */
-    
+
     @Shared
     def expectedOutcomes = [
         success: 'success',
@@ -82,7 +85,7 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
         warning: 'warning',
         running: 'running',
     ]
-    
+
     @Shared
     def additionalOptions = [
         empty      : '',
@@ -90,14 +93,14 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
         double     : "JDBCResource.JDBCConnectionPoolParams.InitialCapacity=2\nResource.JDBCConnectionPoolParams.MaxCapacity=20",
         incorrect  : "incorrect additional Options",
     ]
-    
+
     @Shared
     def dbNames = [
         empty : '',
         medrec: 'medrec',
         mysql : 'customers_db'
     ]
-    
+
     @Shared
     def driverProps = [
         empty     : '',
@@ -105,7 +108,7 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
         serverName: "serverName=${derbyHost}",
         incorrect : "incorrect driver prop"
     ]
-    
+
     /**
      * Test Parameters: for Where section
      */
@@ -138,25 +141,26 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
         C000023: [name: 'C000023', ids: 'C000023', description: 'Error'],
         C000024: [name: 'C000024', ids: 'C000024', description: 'Error'],
         C000025: [name: 'C000025', ids: 'C000025', description: 'Error'],
-    
+
     ]
-    
+
     // expected results
     def expectedOutcome
     def expectedSummaryMessage
     def expectedJobDetailedResult
-    
+
     /**
      * Preparation actions
      */
-    
+
+
     def doSetupSpec() {
         setupResource()
         createConfig(CONFIG_NAME)
-        
+
         discardChanges()
         deleteProject(projectName)
-        
+
         def params = [
             configname                        : CONFIG_NAME,
             ecp_weblogic_dataSourceName       : '',
@@ -170,21 +174,21 @@ class CreateOrUpdateDatasource extends WebLogicHelper {
             ecp_weblogic_additionalOptions    : '',
             ecp_weblogic_driverProperties     : ''
         ]
-        
+
         dslFile "dsl/procedures.dsl", [
             projectName  : projectName,
             resourceName : getResourceName(),
             procedureName: procedureName,
             params       : params
         ]
-        
+
         dslFile "dsl/pipeline.dsl", [
             projectName  : projectName,
             resourceName : resourceName,
             procedureName: procedureName,
             params       : params
         ]
-        
+
         dsl """
 credential(userName: 'medrec', password: 'medrec', credentialName: 'medrec', projectName: '$projectName')
 credential(userName: 'root', password: 'root', credentialName: 'mysql', projectName: '$projectName')
@@ -206,18 +210,18 @@ attachCredential projectName: '$projectName',
 
 """
     }
-    
+
     /**
      * Clean Up actions after test will finished
      */
-    
+
     def doCleanupSpec() {
     }
-    
+
     /**
      * Positive Scenarios
      */
-    
+
     @Unroll
     def "CreateOrUpdateDatasource - create - procedure, options: #options, targets: #tg, driver properties #driverProperties"() {
         setup: 'Define the parameters for Procedure running'
@@ -232,12 +236,12 @@ attachCredential projectName: '$projectName',
             ecp_weblogic_databaseName         : 'medrec;create=true',
             ecp_weblogic_driverProperties     : driverProperties
         ]
-        
+
         deleteDatasource(dsName)
         when: 'Procedure runs: '
-        
+
         def result = runProcedure(projectName, procedureName, runParams, [], getResourceName())
-        
+
         then: 'Wait until job run is completed: '
         def upperStepSummary = getJobUpperStepSummary(result.jobId)
         logger.info(upperStepSummary)
@@ -254,7 +258,7 @@ attachCredential projectName: '$projectName',
         additionalOptions.empty       | targets.empty   | driverProps.empty
         additionalOptions.maxCapacity | targets.default | driverProps.serverName
     }
-    
+
     @Unroll
     def 'Update datasource action #updateAction'() {
         setup: 'Define the parameters for Procedure running'
@@ -269,14 +273,14 @@ attachCredential projectName: '$projectName',
             ecp_weblogic_updateAction         : updateAction,
             ecp_weblogic_databaseName         : 'test;create=true',
         ]
-        
+
         def secondRunParams = firstRunParams << [ecp_weblogic_targets: targets.default]
-        
+
         deleteDatasource(dsName)
         def firstRun = runProcedure(projectName, procedureName, firstRunParams, [], getResourceName())
         assert firstRun.outcome != 'error'
         when: 'Procedure runs: '
-        
+
         def result = runProcedure(projectName, procedureName, secondRunParams, [], getResourceName())
         then:
         assert result.outcome == 'success'
@@ -286,7 +290,7 @@ attachCredential projectName: '$projectName',
         where:
         updateAction << ['do_nothing', 'selective_update', 'remove_and_create']
     }
-    
+
     def 'Create datasource pipeline '() {
         setup: 'Define the parameters for Procedure running'
         def dsName = datasources.correct
@@ -300,13 +304,13 @@ attachCredential projectName: '$projectName',
             ecp_weblogic_databaseName         : 'medrec;create=true',
             ecp_weblogic_driverProperties     : driverProperties
         ]
-        
+
         deleteDatasource(dsName)
         when: 'Procedure runs: '
-        
+
         def result = runPipeline(projectName, procedureName, runParams, resourceName)
         println result.logs
-        
+
         then: 'Wait until job run is completed: '
         assert result.outcome != 'error'
         cleanup:
@@ -314,7 +318,7 @@ attachCredential projectName: '$projectName',
         where:
         options                 | tg            | driverProperties
         additionalOptions.empty | targets.empty | driverProps.empty
-        
+
     }
     /**
      *  Some additional maps for extended tests
@@ -359,7 +363,7 @@ attachCredential projectName: '$projectName',
             errorMySQLURL                   : "The driver ${drivers.mysql} does not accept URL ${urls.incorrect}",
             errorCommon                     : "Completed with Errors",
         ]
-    
+
     def configname
     def caseId
     def dataSourceName
@@ -372,9 +376,9 @@ attachCredential projectName: '$projectName',
     def target
     def updateAction
     def additionalOption
-    
-    
+
     @Unroll
+    @IgnoreRest
     def 'CreateORUpdateDataSource - #caseId.ids #caseId.description, DS Name: #dataSourceName'() {
         setup: 'Define the parameters for Procedure running'
         Map runParams = [
@@ -392,7 +396,7 @@ attachCredential projectName: '$projectName',
         ]
         when: 'Procedure runs'
         def result = runProcedure(projectName, procedureName, runParams, [], getResourceName())
-        
+
         then: 'Wait until job run is completed'
         def upperStepSummary = getJobUpperStepSummary(result.jobId)
 //        def actualOutcome = result.outcome
@@ -401,35 +405,39 @@ attachCredential projectName: '$projectName',
         expect: 'Verification'
         assert result.outcome == expectedOutcome
         assert upperStepSummary =~ expectedSummaryMessage.replace('replaceName', dataSourceName)
+
         cleanup: 'Clean the Procedure'
         // NO Need to change the Methid above
+        if (expectedOutcome == 'error') {
+            discardChanges()
+        }
         where: 'Table Run'
         caseId          | configname            | dataSourceName                           | dataSourceDriverClass | databaseUrl    | jndiName                                 | dataSourceCredential            /*Not Req*/ | databaseName            | driverProperty        | target          | updateAction                  | additionalOption              | expectedOutcome          | expectedSummaryMessage
-        
+
         //MySQL
-        
-        //Just Create with the unique params, JUST one test with target,
-        caseIds.C000001 | confignames.correct   | datasources.mysql + caseIds.C000001.name | drivers.mysql         | urls.mysql     | jndiNames.correct                        | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.empty   | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.warning | expectedSummaryMessages.warningWithoutTargets
-        caseIds.C000002 | confignames.correct   | datasources.mysql + caseIds.C000002.name | drivers.mysql         | urls.mysql     | jndiNames.correct                        | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.mysql     | driverProps.empty     | targets.empty   | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.warning | expectedSummaryMessages.warningWithoutTargets
-        caseIds.C000003 | confignames.correct   | datasources.mysql + caseIds.C000003.name | drivers.mysql         | urls.mysql     | jndiNames.correct                        | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.mysql     | targets.empty   | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.warning | expectedSummaryMessages.warningWithoutTargets
-        caseIds.C000004 | confignames.correct   | datasources.mysql + caseIds.C000004.name | drivers.mysql         | urls.mysql     | jndiNames.correct                        | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.correct | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.success | expectedSummaryMessages.correctCreate
-        caseIds.C000005 | confignames.correct   | datasources.mysql + caseIds.C000005.name | drivers.mysql         | urls.mysql     | jndiNames.correct                        | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.empty   | updateActions.removeAndCreate | additionalOptions.empty       | expectedOutcomes.warning | expectedSummaryMessages.warningWithoutTargets
-        caseIds.C000006 | confignames.correct   | datasources.mysql + caseIds.C000006.name | drivers.mysql         | urls.mysql     | jndiNames.correct                        | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.empty   | updateActions.doNothing       | additionalOptions.maxCapacity | expectedOutcomes.warning | expectedSummaryMessages.warningWithoutTargets
-        //the tests with targets and diff other params
-        caseIds.C000007 | confignames.correct   | datasources.mysql + caseIds.C000007.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000007.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.mysql     | driverProps.empty     | targets.correct | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.success | expectedSummaryMessages.correctCreate
-        caseIds.C000008 | confignames.correct   | datasources.mysql + caseIds.C000008.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000008.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.mysql     | targets.correct | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.success | expectedSummaryMessages.correctCreate
-        caseIds.C000009 | confignames.correct   | datasources.mysql + caseIds.C000009.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000009.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.correct | updateActions.doNothing       | additionalOptions.double      | expectedOutcomes.success | expectedSummaryMessages.correctCreate
-        caseIds.C000010 | confignames.correct   | datasources.mysql + caseIds.C000010.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000010.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.correct | updateActions.doNothing       | additionalOptions.maxCapacity | expectedOutcomes.success | expectedSummaryMessages.correctCreate
-        //the tests with increase params
-        caseIds.C000011 | confignames.correct   | datasources.mysql + caseIds.C000011.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000011.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.mysql     | driverProps.mysql     | targets.correct | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.success | expectedSummaryMessages.correctCreate
-        caseIds.C000012 | confignames.correct   | datasources.mysql + caseIds.C000012.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000012.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.mysql     | driverProps.mysql     | targets.correct | updateActions.doNothing       | additionalOptions.double      | expectedOutcomes.success | expectedSummaryMessages.correctCreate
-        //additional tests for removeAndCreate in the Update Action (use the C000004.name)
-        caseIds.C000013 | confignames.correct   | datasources.mysql + caseIds.C000004.name | drivers.mysql         | urls.mysql     | jndiNames.correct                        | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.correct | updateActions.removeAndCreate | additionalOptions.empty       | expectedOutcomes.success | expectedSummaryMessages.receated
-        caseIds.C000014 | confignames.correct   | datasources.mysql + caseIds.C000004.name | drivers.mysql         | urls.mysql     | jndiNames.correct                        | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.mysql     | driverProps.empty     | targets.correct | updateActions.removeAndCreate | additionalOptions.empty       | expectedOutcomes.success | expectedSummaryMessages.receated
-        caseIds.C000015 | confignames.correct   | datasources.mysql + caseIds.C000004.name | drivers.mysql         | urls.mysql     | jndiNames.correct                        | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.mysql     | targets.correct | updateActions.removeAndCreate | additionalOptions.empty       | expectedOutcomes.success | expectedSummaryMessages.receated
-        caseIds.C000016 | confignames.correct   | datasources.mysql + caseIds.C000004.name | drivers.mysql         | urls.mysql     | jndiNames.correct                        | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.correct | updateActions.removeAndCreate | additionalOptions.maxCapacity | expectedOutcomes.success | expectedSummaryMessages.receated
-        //the test with negative results
-        
+//
+//        //Just Create with the unique params, JUST one test with target,
+//        caseIds.C000001 | confignames.correct   | datasources.mysql + caseIds.C000001.name | drivers.mysql         | urls.mysql     | jndiNames.correct                        | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.empty   | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.warning | expectedSummaryMessages.warningWithoutTargets
+//        caseIds.C000002 | confignames.correct   | datasources.mysql + caseIds.C000002.name | drivers.mysql         | urls.mysql     | jndiNames.correct                        | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.mysql     | driverProps.empty     | targets.empty   | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.warning | expectedSummaryMessages.warningWithoutTargets
+//        caseIds.C000003 | confignames.correct   | datasources.mysql + caseIds.C000003.name | drivers.mysql         | urls.mysql     | jndiNames.correct                        | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.mysql     | targets.empty   | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.warning | expectedSummaryMessages.warningWithoutTargets
+//        caseIds.C000004 | confignames.correct   | datasources.mysql + caseIds.C000004.name | drivers.mysql         | urls.mysql     | jndiNames.correct                        | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.correct | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.success | expectedSummaryMessages.correctCreate
+//        caseIds.C000005 | confignames.correct   | datasources.mysql + caseIds.C000005.name | drivers.mysql         | urls.mysql     | jndiNames.correct                        | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.empty   | updateActions.removeAndCreate | additionalOptions.empty       | expectedOutcomes.warning | expectedSummaryMessages.warningWithoutTargets
+//        caseIds.C000006 | confignames.correct   | datasources.mysql + caseIds.C000006.name | drivers.mysql         | urls.mysql     | jndiNames.correct                        | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.empty   | updateActions.doNothing       | additionalOptions.maxCapacity | expectedOutcomes.warning | expectedSummaryMessages.warningWithoutTargets
+//        //the tests with targets and diff other params
+//        caseIds.C000007 | confignames.correct   | datasources.mysql + caseIds.C000007.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000007.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.mysql     | driverProps.empty     | targets.correct | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.success | expectedSummaryMessages.correctCreate
+//        caseIds.C000008 | confignames.correct   | datasources.mysql + caseIds.C000008.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000008.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.mysql     | targets.correct | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.success | expectedSummaryMessages.correctCreate
+//        caseIds.C000009 | confignames.correct   | datasources.mysql + caseIds.C000009.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000009.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.correct | updateActions.doNothing       | additionalOptions.double      | expectedOutcomes.success | expectedSummaryMessages.correctCreate
+//        caseIds.C000010 | confignames.correct   | datasources.mysql + caseIds.C000010.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000010.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.correct | updateActions.doNothing       | additionalOptions.maxCapacity | expectedOutcomes.success | expectedSummaryMessages.correctCreate
+//        //the tests with increase params
+//        caseIds.C000011 | confignames.correct   | datasources.mysql + caseIds.C000011.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000011.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.mysql     | driverProps.mysql     | targets.correct | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.success | expectedSummaryMessages.correctCreate
+//        caseIds.C000012 | confignames.correct   | datasources.mysql + caseIds.C000012.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000012.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.mysql     | driverProps.mysql     | targets.correct | updateActions.doNothing       | additionalOptions.double      | expectedOutcomes.success | expectedSummaryMessages.correctCreate
+//        //additional tests for removeAndCreate in the Update Action (use the C000004.name)
+//        caseIds.C000013 | confignames.correct   | datasources.mysql + caseIds.C000004.name | drivers.mysql         | urls.mysql     | jndiNames.correct                        | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.correct | updateActions.removeAndCreate | additionalOptions.empty       | expectedOutcomes.success | expectedSummaryMessages.receated
+//        caseIds.C000014 | confignames.correct   | datasources.mysql + caseIds.C000004.name | drivers.mysql         | urls.mysql     | jndiNames.correct                        | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.mysql     | driverProps.empty     | targets.correct | updateActions.removeAndCreate | additionalOptions.empty       | expectedOutcomes.success | expectedSummaryMessages.receated
+//        caseIds.C000015 | confignames.correct   | datasources.mysql + caseIds.C000004.name | drivers.mysql         | urls.mysql     | jndiNames.correct                        | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.mysql     | targets.correct | updateActions.removeAndCreate | additionalOptions.empty       | expectedOutcomes.success | expectedSummaryMessages.receated
+//        caseIds.C000016 | confignames.correct   | datasources.mysql + caseIds.C000004.name | drivers.mysql         | urls.mysql     | jndiNames.correct                        | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.correct | updateActions.removeAndCreate | additionalOptions.maxCapacity | expectedOutcomes.success | expectedSummaryMessages.receated
+//        //the test with negative results
+
         caseIds.C000017 | confignames.incorrect | datasources.mysql + caseIds.C000017.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000017.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.empty   | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.error   | expectedSummaryMessages.errorConfigurationDoesntExist
         caseIds.C000018 | confignames.correct   | datasources.mysql + caseIds.C000018.name | drivers.incorrect     | urls.mysql     | jndiNames.correct + caseIds.C000018.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.correct | updateActions.doNothing       | additionalOptions.empty       | expectedOutcomes.error   | expectedSummaryMessages.errorLoadDriver
         //the same JNDI name is incorrect C000001 - because duplicate
@@ -442,7 +450,7 @@ attachCredential projectName: '$projectName',
 //        caseIds.C000024 | confignames.correct   | datasources.mysql + caseIds.C000024.name | drivers.mysql         | urls.mysql     | jndiNames.correct + caseIds.C000024.name | dataSourceCredentials.mysql     /*Not Req*/ | databaseNames.empty     | driverProps.empty     | targets.correct | updateActions.doNothing       | additionalOptions.incorrect   | expectedOutcomes.error   | expectedSummaryMessages.warningWithoutTargets
         //the tests with with targets, but with selective updates
     }
-    
+
     def checkStepSummary(action, name, summary) {
         if (action == 'do_nothing') {
             assert summary =~ /Datasource $name exists, no further action is required/
@@ -453,5 +461,5 @@ attachCredential projectName: '$projectName',
         }
         return true
     }
-    
+
 }

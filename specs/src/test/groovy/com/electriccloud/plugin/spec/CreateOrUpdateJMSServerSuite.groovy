@@ -3,6 +3,7 @@ package com.electriccloud.plugin.spec
 import spock.lang.*
 
 @Stepwise
+@Requires({WebLogicHelper.testJMS()})
 class CreateOrUpdateJMSServerSuite extends WebLogicHelper {
 
     /**
