@@ -9,6 +9,7 @@ JMS Use-case with URL checks. First create all the required resources and deploy
 then change JNDI names and redeploy the app.
 """)
 @IgnoreIf({WebLogicHelper.isWebLogic11()})
+@Requires({WebLogicHelper.end2end() && WebLogicHelper.testJMS()})
 class JMSDemo extends WebLogicHelper {
     @Shared
     def projectName = "EC-WebLogic JMS Demo"

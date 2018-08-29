@@ -5,6 +5,7 @@ import spock.lang.Ignore
 import spock.lang.IgnoreIf
 import spock.lang.IgnoreRest
 import spock.lang.Narrative
+import spock.lang.Requires
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -12,7 +13,8 @@ import spock.lang.Stepwise
 @Narrative("""
 Datasource Use-case with URL checks
 """)
-@IgnoreIf({ WebLogicHelper.isWebLogic11()})
+@Requires({WebLogicHelper.end2end()})
+@IgnoreIf({ WebLogicHelper.isWebLogic11() && WebLogicHelper.testDatasource() })
 class DatasourceDemo extends WebLogicHelper {
     @Shared
     def projectName = "EC-WebLogic Datasource Demo"

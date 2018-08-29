@@ -771,12 +771,14 @@ else:
     def discardChanges() {
         def code = """connect('${getUsername()}', '${getPassword()}', '${getEndpoint()}')
 try:
-    cancelEdit('y')
+    edit()
+    undo('true', 'y')
+    stopEdit('y')
 except WLSTException, e:
     print 'Cannot stop edit'
     print str(e)
 """
-        def result = runWLST(code)
+        def result = runWLST(code, "DiscardChanges")
         assert result.outcome == 'success'
         def notInEditTree = result.logs =~ /Cannot call Edit functions when you are not in the Edit tree/
         return notInEditTree
@@ -999,6 +1001,19 @@ print "VALUE:" + '+' + str(get(propName)) + '+'
         logs
     }
 
+    static def testDatasource() {
+        def test = System.getenv('WEBLOGIC_TEST_DATASOURCE')
+        return test ? true : false
+    }
+
+    static def testJMS() {
+        def testJMS = System.getenv('WEBLOGIC_TEST_JMS')
+        return testJMS ? true : false
+    }
+
+    static def end2end() {
+        return System.getenv('WEBLOGIC_TEST_END2END') ? true : false
+    }
 
     def runProcess(projectName, appName, processName, tierMapName) {
         def result = runProcedure """

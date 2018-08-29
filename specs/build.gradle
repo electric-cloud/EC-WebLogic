@@ -48,6 +48,10 @@ test {
     def destination = findProperty('reportDestination') ?: "spec-report"
     if (destination) {
         systemProperty 'com.athaydes.spockframework.report.outputDir', destination
+        reports {
+            html.destination = "$destination/plain"
+        }
     }
+
 }
 

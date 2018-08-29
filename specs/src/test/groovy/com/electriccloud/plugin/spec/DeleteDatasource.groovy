@@ -1,8 +1,10 @@
 package com.electriccloud.plugin.spec
 
+import spock.lang.Requires
 import spock.lang.Shared
 import spock.lang.Unroll
 
+@Requires({WebLogicHelper.testDatasource()})
 class DeleteDatasource extends WebLogicHelper {
 
     // expected results

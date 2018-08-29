@@ -8,6 +8,7 @@ import spock.lang.*
 //Does not work on weblogic 11 due to test application
 @Stepwise
 @IgnoreIf({ WebLogicHelper.isWebLogic11() })
+@Requires({WebLogicHelper.end2end()})
 class Discover extends WebLogicHelper {
     @Shared
     def projectName = "EC-WebLogic Discovery"

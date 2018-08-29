@@ -2,6 +2,8 @@ package com.electriccloud.plugin.spec
 
 import spock.lang.*
 
+@Requires({WebLogicHelper.testJMS()})
+
 class DeleteJMSQueueSuite extends WebLogicHelper {
     /**
      * Dsl Parameters
