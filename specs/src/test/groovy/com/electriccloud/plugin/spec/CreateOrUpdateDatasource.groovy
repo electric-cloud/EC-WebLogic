@@ -216,6 +216,7 @@ attachCredential projectName: '$projectName',
      */
 
     def doCleanupSpec() {
+        discardChanges()
     }
 
     /**
