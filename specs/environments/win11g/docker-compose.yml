@@ -14,7 +14,7 @@ services:
     environment:
       - COMMANDER_SERVER=electricflow
   weblogic:
-    image: electricflow/weblogic:10.3.6-win-generic
+    image: electricflow/weblogic:10.3.6-win
     ports:
       - "7001:7001"
       - "7002:7002"
