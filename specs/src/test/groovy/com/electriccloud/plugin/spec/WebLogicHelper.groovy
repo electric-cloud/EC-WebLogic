@@ -1012,7 +1012,7 @@ print "VALUE:" + '+' + str(get(propName)) + '+'
     }
 
     static def end2end() {
-        return System.getenv('WEBLOGIC_END2END') ? true : false
+        return System.getenv('WEBLOGIC_TEST_END2END') ? true : false
     }
 
     def runProcess(projectName, appName, processName, tierMapName) {
