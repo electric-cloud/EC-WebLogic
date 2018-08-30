@@ -189,6 +189,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
         return System.getenv('WEBLOGIC_VERSION') == '11g'
     }
 
+    static def isWindows() {
+        return System.properties['os.name'].toLowerCase().contains('windows')
+    }
+
     static def supportsNamedSessions() {
         def version = System.getenv('WEBLOGIC_VERSION')
         if (!version) {
@@ -1080,6 +1084,10 @@ runPipeline(projectName: '$projectName', pipelineName: '$pipelineName', actualPa
     }
 
     def checkServerRestartOutputParameter(jobId) {
+        if (isWindows()) {
+            println "Will not check output parameters on windows"
+            return true
+        }
         def parameters = getOutputParameters(jobId, 'RunProcedure')
         def restart = parameters.find { it.outputParameterName == 'WebLogicServerRestartRequired'}
         assert restart : "Output parameter WebLogicServerRestartRequired does not exist"
