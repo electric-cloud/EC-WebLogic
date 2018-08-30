@@ -1,5 +1,6 @@
 package com.electriccloud.plugin.spec
 
+import spock.lang.IgnoreIf
 import spock.lang.Requires
 import spock.lang.Shared
 import spock.lang.Unroll
@@ -218,6 +219,7 @@ class DeleteDatasource extends WebLogicHelper {
 
 
     @Unroll
+    @IgnoreIf({ isWebLogic11() && isWindows() })
     def "Delete DataSource #tcId - #tcDescription"(){
 
         setup: "Create DataSource" (CONFIG_NAME,
@@ -250,6 +252,7 @@ class DeleteDatasource extends WebLogicHelper {
     }
 
     @Unroll
+    @IgnoreIf({ isWebLogic11() && isWindows() })
     def "Delete DataSource #testCaseId - #testCaseDescription"(){
 
         when: 'Delete Data source #dataSource '
@@ -268,6 +271,7 @@ class DeleteDatasource extends WebLogicHelper {
 
 
     @Unroll
+    @IgnoreIf({ isWebLogic11() && isWindows() })
     def "Delete DataSource #testCaseId - #tcDescription"(){
         setup: "Create DataSource" (CONFIG_NAME,
                 datasources.mysql,
@@ -302,10 +306,6 @@ class DeleteDatasource extends WebLogicHelper {
         errorMessage  << ["Configuration configname doesn't exist.\n", "Configuration someTestConfig doesn't exist.\n", "The required value is missing\n\n", "File /u01/test/test.sh doesn't exist\n"]
 
     }
-
-
-
-
 
 
     def 'Create DataSource'(configname, dataSourceName, dataSourceDriverClass, databaseUrl, jndiName, dataSourceCredential, databaseName, driverProperty, target, updateAction, additionalOption){
