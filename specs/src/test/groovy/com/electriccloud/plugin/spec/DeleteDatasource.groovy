@@ -219,7 +219,7 @@ class DeleteDatasource extends WebLogicHelper {
 
 
     @Unroll
-    @IgnoreIf({ isWebLogic11() && isWindows() })
+    @IgnoreIf({ WebLogicHelper.isWebLogic11() && WebLogicHelper.isWindows() })
     def "Delete DataSource #tcId - #tcDescription"(){
 
         setup: "Create DataSource" (CONFIG_NAME,
@@ -252,7 +252,7 @@ class DeleteDatasource extends WebLogicHelper {
     }
 
     @Unroll
-    @IgnoreIf({ isWebLogic11() && isWindows() })
+    @IgnoreIf({ WebLogicHelper.isWebLogic11() && WebLogicHelper.isWindows() })
     def "Delete DataSource #testCaseId - #testCaseDescription"(){
 
         when: 'Delete Data source #dataSource '
@@ -271,7 +271,7 @@ class DeleteDatasource extends WebLogicHelper {
 
 
     @Unroll
-    @IgnoreIf({ isWebLogic11() && isWindows() })
+    @IgnoreIf({ WebLogicHelper.isWebLogic11() && WebLogicHelper.isWindows() })
     def "Delete DataSource #testCaseId - #tcDescription"(){
         setup: "Create DataSource" (CONFIG_NAME,
                 datasources.mysql,

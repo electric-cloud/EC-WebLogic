@@ -380,7 +380,7 @@ attachCredential projectName: '$projectName',
     def additionalOption
 
     @Unroll
-    @IgnoreIf({ isWebLogic11() && isWindows() })
+    @IgnoreIf({ WebLogicHelper.isWebLogic11() && WebLogicHelper.isWindows() })
     def 'CreateORUpdateDataSource - #caseId.ids #caseId.description, DS Name: #dataSourceName'() {
         setup: 'Define the parameters for Procedure running'
         Map runParams = [
