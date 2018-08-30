@@ -94,7 +94,7 @@ attachCredential credentialName: 'wl',
                 ecp_weblogic_resourceName      : discoveredResourceName,
                 ecp_weblogic_hostname          : resourceHost,
                 ecp_weblogic_resPort           : resourcePort,
-                ecp_weblogic_oracleHome        : '/u01/oracle',
+                ecp_weblogic_oracleHome        : oracleHome,
                 ecp_weblogic_connectionProtocol: 't3'
             ]
             , [], discoveredResourceName)
@@ -117,7 +117,7 @@ attachCredential credentialName: 'wl',
                 ecp_weblogic_resourceName      : discoveredResourceName,
                 ecp_weblogic_hostname          : resourceHost,
                 ecp_weblogic_resPort           : resourcePort,
-                ecp_weblogic_oracleHome        : '/u01/oracle',
+                ecp_weblogic_oracleHome        : oracleHome,
                 ecp_weblogic_connectionProtocol: 't3',
                 ecp_weblogic_envProjectName    : discoveredProject,
                 ecp_weblogic_envName           : discoveredEnvironment
@@ -146,7 +146,7 @@ deleteArtifact artifactName: 'weblogic.discovered:jms-demo-app-deployed'
                 ecp_weblogic_resourceName      : discoveredResourceName,
                 ecp_weblogic_hostname          : resourceHost,
                 ecp_weblogic_resPort           : resourcePort,
-                ecp_weblogic_oracleHome        : '/u01/oracle',
+                ecp_weblogic_oracleHome        : oracleHome,
                 ecp_weblogic_connectionProtocol: 't3',
                 ecp_weblogic_envProjectName    : discoveredProject,
                 ecp_weblogic_envName           : discoveredEnvironment,
@@ -214,6 +214,16 @@ runProcess(projectName: '$discoveredProject', applicationName: '$discoveredApp',
         assert data.SubDeployment
         assert data.Datasource
         return true
+    }
+
+
+    def getOracleHome() {
+        if (isWindows() ) {
+            return 'C:/Oracle/Middleware/Oracle_Home'
+        }
+        else {
+            return '/u01/oracle'
+        }
     }
 
 }
