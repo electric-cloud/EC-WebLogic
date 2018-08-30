@@ -204,7 +204,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         return true
     }
 
-    def __publishArtifact(String artifactName, String version, String resName) {
+    def publishArtifact(String artifactName, String version, String resName) {
         if (artifactExists(artifactName + ':' + version)) {
             return
         }
