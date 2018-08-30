@@ -205,12 +205,11 @@ class WebLogicHelper extends PluginSpockTestSupport {
     }
 
     def publishArtifact(String artifactName, String version, String resName) {
-        if (artifactExists(artifactName + ':' + version)) {
+        if (artifactExists(artifactName)) {
+            logger.debug("Artifact $artifactName exists")
             return
         }
-
         File resource = new File(this.getClass().getResource("/${resName}").toURI())
-
 
         String commanderServer = System.getProperty("COMMANDER_SERVER") ?: 'localhost'
         String username = System.getProperty('COMMANDER_USER') ?: 'admin'
@@ -242,6 +241,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         }
         runCommand(publishCommand)
     }
+
 
     def downloadArtifact(String artifactName, String resource) {
 
@@ -287,7 +287,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         return cacheDirPath.replace('\\', '\\\\\\\\')
     }
 
-    def artifactExists(def artifactName) {
+    def __artifactExists(def artifactName) {
 
         dslFile 'dsl/artifactExists.dsl', [
             projectName : HELPER_PROJECT,

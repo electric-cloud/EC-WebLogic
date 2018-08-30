@@ -14,7 +14,7 @@ import spock.lang.Stepwise
 Datasource Use-case with URL checks
 """)
 @Requires({WebLogicHelper.end2end()})
-@IgnoreIf({ WebLogicHelper.isWebLogic11() && WebLogicHelper.testDatasource() })
+@IgnoreIf({ WebLogicHelper.isWebLogic11() })
 class DatasourceDemo extends WebLogicHelper {
     @Shared
     def projectName = "EC-WebLogic Datasource Demo"
