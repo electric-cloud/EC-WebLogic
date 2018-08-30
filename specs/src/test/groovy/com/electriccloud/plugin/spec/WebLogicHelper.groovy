@@ -176,7 +176,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         def stderr = new StringBuilder()
         def process = command.execute()
         process.consumeProcessOutput(stdout, stderr)
-        process.waitForOrKill(20 * 1000)
+        process.waitForOrKill(30 * 1000)
         logger.debug("STDOUT: $stdout")
         logger.debug("STDERR: $stderr")
         logger.debug("Exit code: ${process.exitValue()}")
@@ -217,13 +217,17 @@ class WebLogicHelper extends PluginSpockTestSupport {
         String commanderHome = System.getenv('COMMANDER_HOME') ?: '/opt/EC/'
         assert commanderHome: "Env COMMANDER_HOME must be provided"
 
+        println commanderHome
+
         String ectoolPath
         if (System.properties['os.name'].toLowerCase().contains('windows')) {
             ectoolPath = "bin/ectool.exe"
         } else {
             ectoolPath = "bin/ectool"
         }
+        println ectoolPath
         File ectool = new File(commanderHome, ectoolPath)
+        println ectool.exists()
         assert ectool.exists(): "File ${ectool.absolutePath} does not exist"
 
         logger.debug("ECTOOL PATH: " + ectool.absolutePath.toString())
