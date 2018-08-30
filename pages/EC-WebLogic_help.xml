@@ -14,7 +14,7 @@
     <h1>@PLUGIN_KEY@</h1>
     <p>Plugin version @PLUGIN_VERSION@</p>
     
-    <p>Revised on August 16, 2018</p>
+    <p>Revised on August 30, 2018</p>
     
     <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade"/>
     <h3>Overview</h3>
@@ -98,6 +98,7 @@ other WebLogic Server instances. A server instance
 keeps track of each Java Virtual Machine (JVM) with
 which it connects, and creates a single &quot;t3&quot; connection
 to carry all traffic for a JVM.</p>
+<p><strong>After you perform the setup below it is important to make sure that the Electric Flow agent machine on which WebLogic runs is registered as a resource that can be pinged.</strong></p>
 
         
         Configuration Parameters
@@ -169,6 +170,7 @@ to carry all traffic for a JVM.</p>
     
     <div id="CreateCluster">
         <h2>CreateCluster</h2>
+        
         <p>Create a cluster.</p>
         
             <p>This procedure can be used to ceate a new cluster.</p>
@@ -230,6 +232,7 @@ to carry all traffic for a JVM.</p>
     
     <div id="CreateDomain">
         <h2>CreateDomain</h2>
+        
         <p>Create a domain</p>
         
             <p>This procedure creates a new domain on the WebLogic server.</p>
@@ -300,6 +303,7 @@ to carry all traffic for a JVM.</p>
     
     <div id="CreateManagedServer">
         <h2>CreateManagedServer</h2>
+        
         <p>Create a Managed Server.</p>
         
         <h3>CreateManagedServer Parameters</h3>
@@ -356,6 +360,7 @@ to carry all traffic for a JVM.</p>
     
     <div id="AddServerToCluster">
         <h2>AddServerToCluster</h2>
+        
         <p>Add server to cluster.</p>
         
             <p>This procedure adds a server to the specified cluster.</p>
@@ -411,6 +416,7 @@ to carry all traffic for a JVM.</p>
     
     <div id="DeleteCluster">
         <h2>DeleteCluster</h2>
+        
         <p>Delete a cluster.</p>
         
             <p>This procedure can be used to delete a cluster.</p>
@@ -462,6 +468,7 @@ to carry all traffic for a JVM.</p>
     
     <div id="DeleteManagedServer">
         <h2>DeleteManagedServer</h2>
+        
         <p>Delete a Managed Server.</p>
         
         <h3>DeleteManagedServer Parameters</h3>
@@ -510,6 +517,7 @@ to carry all traffic for a JVM.</p>
     
     <div id="StartAdminServer">
         <h2>StartAdminServer</h2>
+        
         <p>Starts a WebLogic Admin Server</p>
         
             <p>This procedure starts the WebLogic Administration Server.</p>
@@ -571,6 +579,7 @@ successfully.</p>
     
     <div id="StartCluster">
         <h2>StartCluster</h2>
+        
         <p>Starts a cluster</p>
         
             <p>This procedures starts a cluster.</p>
@@ -635,6 +644,7 @@ In the <b>StartCluster</b> step, click the Log button to see the diagnostic info
     
     <div id="StartManagedServer">
         <h2>StartManagedServer</h2>
+        
         <p>Starts a WebLogic Managed Server</p>
         
             <p>This procedure starts a WebLogic Managed Server. A WebLogic Server
@@ -716,6 +726,7 @@ successfully.</p>
     
     <div id="StartNodeManager">
         <h2>StartNodeManager</h2>
+        
         <p>Start the WebLogic Node Manager</p>
         
             <p>This procedure starts the WebLogic Node Manager. It is a
@@ -772,6 +783,7 @@ successfully.</p>
     
     <div id="StopAdminServer">
         <h2>StopAdminServer</h2>
+        
         <p>Stops a WebLogic Admin Server</p>
         
             <p>This procedure stops a WebLogic Administration Server.</p>
@@ -818,6 +830,7 @@ successfully.</p>
     
     <div id="StopCluster">
         <h2>StopCluster</h2>
+        
         <p>Stops a cluster</p>
         
             <p>This procedures stops a cluster.</p>
@@ -898,6 +911,7 @@ In the <b>StopCluster</b> step, click the Log button to see the diagnostic infor
     
     <div id="StopManagedServer">
         <h2>StopManagedServer</h2>
+        
         <p>Stops a WebLogic Managed Server</p>
         
             <p>This procedure stops a WebLogic Managed Server. The Node
@@ -949,6 +963,7 @@ Manager must be running before you run this procedure.</p>
     
     <div id="StopNodeManager">
         <h2>StopNodeManager</h2>
+        
         <p>Stop the WebLogic Node Manager</p>
         
             <p>This procedure stops the WebLogic Node Manager.</p>
@@ -1025,6 +1040,7 @@ successfully.</p>
     
     <div id="SuspendServer">
         <h2>SuspendServer</h2>
+        
         <p>Suspends the provided server</p>
         
             <p>This procedure suspends a WebLogic server.</p>
@@ -1096,6 +1112,7 @@ successfully.</p>
     
     <div id="ResumeServer">
         <h2>ResumeServer</h2>
+        
         <p>Resumes the provided server</p>
         
             <p>This procedure moves a server instance from the STANDBY state to the RUNNING state.</p>
@@ -1152,6 +1169,7 @@ moved from the STANDBY state to the RUNNING state.</p>
     
     <div id="DeployApp">
         <h2>DeployApp</h2>
+        
         <p>Deploys or redeploys an application or module</p>
         
             <p>This procedure deploys an application or a module using WLST. If application or module is already exists, it will be redeployed.</p>
@@ -1316,6 +1334,7 @@ The application was deployed successfully.</p>
     
     <div id="UpdateAppConfig">
         <h2>UpdateAppConfig</h2>
+        
         <p>Update a configuration of an already deployed app.</p>
         
             <p>This procedure can be used to update an application configuration.</p>
@@ -1394,6 +1413,7 @@ The application was deployed successfully.</p>
     
     <div id="UndeployApp">
         <h2>UndeployApp</h2>
+        
         <p>Stops the deployment unit and removes staged files from target servers.</p>
         
             <p>This procedure stops the deployment unit and removes staged files
@@ -1476,6 +1496,7 @@ successfully.</p>
     
     <div id="UpdateApp">
         <h2>UpdateApp (DEPRECATED)</h2>
+        
         <p>Update an already deployed app. (DEPRECATED)</p>
         
             <p>WARNING: This procedure is marked as deprecated and will be removed in the next releases. Please, use <a href="#UpdateAppConfig">UpdateAppConfig</a> procedure instead.</p>
@@ -1537,6 +1558,7 @@ successfully.</p>
     
     <div id="RunDeployer">
         <h2>RunDeployer</h2>
+        
         <p>Runs weblogic.Deployer in a free-mode</p>
         
             <p>This procedure runs weblogic.Deployer tool in a free mode.
@@ -1626,6 +1648,7 @@ successfully.</p>
     
     <div id="StartApp">
         <h2>StartApp</h2>
+        
         <p>Starts an application</p>
         
             <p>This procedures starts an application.</p>
@@ -1694,6 +1717,7 @@ was started successfully.</p>
     
     <div id="StopApp">
         <h2>StopApp</h2>
+        
         <p>Stop an application</p>
         
             <p>This procedure stops an application.</p>
@@ -1762,6 +1786,7 @@ successfully.</p>
     
     <div id="CreateOrUpdateDatasource">
         <h2>CreateOrUpdateDatasource</h2>
+        
         <p>Creates or updates a Datasource</p>
         
             <p>This procedure is used to create a new generic JDBC datasource or update an existing one.</p>
@@ -1906,6 +1931,7 @@ DONE
     
     <div id="DeleteDatasource">
         <h2>DeleteDatasource</h2>
+        
         <p>Deletes a Datasource</p>
         
         <h3>DeleteDatasource Parameters</h3>
@@ -1955,6 +1981,7 @@ DONE
     
     <div id="CreateDatasource">
         <h2>CreateDatasource (DEPRECATED)</h2>
+        
         <p>Creates a Datasource (DEPRECATED)</p>
         
             <p>This procedure creates a datasource in WebLogic.</p>
@@ -2049,6 +2076,7 @@ DONE
     
     <div id="CreateOrUpdateConnectionFactory">
         <h2>CreateOrUpdateConnectionFactory</h2>
+        
         <p>Creates or updates Connection Factory</p>
         
             <p>WebLogic Server defines two default connection factories, which can be looked up using the JNDI names weblogic.jms.ConnectionFactory and weblogic.jms.XAConnectionFactory.</p>
@@ -2231,6 +2259,7 @@ DONE
     
     <div id="CreateOrUpdateJMSModule">
         <h2>CreateOrUpdateJMSModule</h2>
+        
         <p>Creates or updates JMS Module</p>
         
         <h3>CreateOrUpdateJMSModule Parameters</h3>
@@ -2327,6 +2356,7 @@ DONE
     
     <div id="CreateOrUpdateJMSModuleSubdeployment">
         <h2>CreateOrUpdateJMSModuleSubdeployment</h2>
+        
         <p>Creates or updates JMS Module Subdeployment</p>
         
         <h3>CreateOrUpdateJMSModuleSubdeployment Parameters</h3>
@@ -2431,6 +2461,7 @@ DONE
     
     <div id="CreateOrUpdateJMSQueue">
         <h2>CreateOrUpdateJMSQueue</h2>
+        
         <p>Creates or updates JMS Queue</p>
         
             <p>This procedure is used to create and configure a new JMS Queue for an <strong>existing</strong> JMS module or update an existing JMS Queue.</p>
@@ -2578,6 +2609,7 @@ DONE
     
     <div id="CreateOrUpdateJMSServer">
         <h2>CreateOrUpdateJMSServer</h2>
+        
         <p>Creates or updates JMS Server</p>
         
         <h3>CreateOrUpdateJMSServer Parameters</h3>
@@ -2673,6 +2705,7 @@ DONE
     
     <div id="CreateOrUpdateJMSTopic">
         <h2>CreateOrUpdateJMSTopic</h2>
+        
         <p>Creates or updates JMS Topic</p>
         
         <h3>CreateOrUpdateJMSTopic Parameters</h3>
@@ -2816,6 +2849,7 @@ DONE
     
     <div id="DeleteConnectionFactory">
         <h2>DeleteConnectionFactory</h2>
+        
         <p>Deletes Connection Factory</p>
         
         <h3>DeleteConnectionFactory Parameters</h3>
@@ -2900,6 +2934,7 @@ DONE
     
     <div id="DeleteJMSModule">
         <h2>DeleteJMSModule</h2>
+        
         <p>Deletes JMS Module</p>
         
         <h3>DeleteJMSModule Parameters</h3>
@@ -2979,6 +3014,7 @@ DONE
     
     <div id="DeleteJMSModuleSubdeployment">
         <h2>DeleteJMSModuleSubdeployment</h2>
+        
         <p>Deletes JMS Module Subdeployment</p>
         
         <h3>DeleteJMSModuleSubdeployment Parameters</h3>
@@ -3064,6 +3100,7 @@ DONE
     
     <div id="DeleteJMSQueue">
         <h2>DeleteJMSQueue</h2>
+        
         <p>Deletes JMS Queue</p>
         
         <h3>DeleteJMSQueue Parameters</h3>
@@ -3150,6 +3187,7 @@ DONE
     
     <div id="DeleteJMSServer">
         <h2>DeleteJMSServer</h2>
+        
         <p>Deletes JMS Server</p>
         
         <h3>DeleteJMSServer Parameters</h3>
@@ -3228,6 +3266,7 @@ DONE
     
     <div id="DeleteJMSTopic">
         <h2>DeleteJMSTopic</h2>
+        
         <p>Deletes JMS Topic</p>
         
         <h3>DeleteJMSTopic Parameters</h3>
@@ -3314,6 +3353,7 @@ DONE
     
     <div id="CreateUser">
         <h2>CreateUser</h2>
+        
         <p>Create a user</p>
         
             <p>This procedure creates a new user on the WebLogic server.</p>
@@ -3385,6 +3425,7 @@ DONE
     
     <div id="CreateGroup">
         <h2>CreateGroup</h2>
+        
         <p>Create a group</p>
         
             <p>This procedure creates a new user group on the WebLogic server.</p>
@@ -3456,6 +3497,7 @@ DONE
     
     <div id="AddUserToGroup">
         <h2>AddUserToGroup</h2>
+        
         <p>Add a user to group.</p>
         
             <p>This procedure adds a User to the specified Group.</p>
@@ -3522,6 +3564,7 @@ DONE
     
     <div id="ChangeUserPassword">
         <h2>ChangeUserPassword</h2>
+        
         <p>Change password of a user.</p>
         
             <p>This procedure can be used to change the password of a specific user.</p>
@@ -3587,6 +3630,7 @@ DONE
     
     <div id="RemoveUserFromGroup">
         <h2>RemoveUserFromGroup</h2>
+        
         <p>Remove a user from group.</p>
         
             <p>This procedure removes a User from the specified Group.</p>
@@ -3653,6 +3697,7 @@ DONE
     
     <div id="ConfigureUserLockoutManager">
         <h2>ConfigureUserLockoutManager</h2>
+        
         <p>Configure User Lockout Manager.</p>
         
             <p>This procedure can be used to configure the User Lockout configuration.</p>
@@ -3715,6 +3760,7 @@ DONE
     
     <div id="UnlockUserAccount">
         <h2>UnlockUserAccount</h2>
+        
         <p>Unlock an user account.</p>
         
             <p>This procedure can be used to unlock a locked user account.</p>
@@ -3776,6 +3822,7 @@ successfully.</p>
     
     <div id="DeleteGroup">
         <h2>DeleteGroup</h2>
+        
         <p>Delete a group</p>
         
             <p>This procedure delets a user group on the WebLogic server.</p>
@@ -3837,6 +3884,7 @@ successfully.</p>
     
     <div id="DeleteUser">
         <h2>DeleteUser</h2>
+        
         <p>Delete a user</p>
         
             <p>This procedure deletes a user on the WebLogic server.</p>
@@ -3898,6 +3946,7 @@ successfully.</p>
     
     <div id="CheckClusterStatus">
         <h2>CheckClusterStatus</h2>
+        
         <p>Check the status of the given server cluster name.</p>
         
             <p>This procedure checks the status of the specified cluster.</p>
@@ -3958,6 +4007,7 @@ successfully.</p>
     
     <div id="CheckServerStatus">
         <h2>CheckServerStatus</h2>
+        
         <p>Check the status of the given server URL</p>
         
             <p>This procedure checks the status of the specified server.</p>
@@ -4018,6 +4068,7 @@ successfully.</p>
     
     <div id="RunWLST">
         <h2>RunWLST</h2>
+        
         <p>Runs Jython scripts using weblogic.WLST</p>
         
             <p>This procedure runs Jython scripts using weblogic.WLST. The
@@ -4108,6 +4159,7 @@ control statements.</p>
     
     <div id="CreateTemplate">
         <h2>CreateTemplate</h2>
+        
         <p>Creates a domain template from the existing domain.</p>
         
             <p>This procedure creates a domain template on the WebLogic server.</p>
@@ -4159,6 +4211,7 @@ control statements.</p>
     
     <div id="CheckPageStatus">
         <h2>CheckPageStatus</h2>
+        
         <p>Check the status of a page on a given URL</p>
         
             <p>This procedure checks the status of the specified page.</p>
@@ -4212,6 +4265,7 @@ control statements.</p>
     
     <div id="Discover">
         <h2>Discover</h2>
+        
         <p>Discovers WebLogic configuration and deployable objects</p>
         
             <p>This procedure will discover WebLogic resources and create a configuration, resource and EF model based on your current WebLogic resources.</p>
