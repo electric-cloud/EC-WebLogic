@@ -176,7 +176,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         def stderr = new StringBuilder()
         def process = command.execute()
         process.consumeProcessOutput(stdout, stderr)
-        process.waitForOrKill(20 * 1000)
+        process.waitForOrKill(30 * 1000)
         logger.debug("STDOUT: $stdout")
         logger.debug("STDERR: $stderr")
         logger.debug("Exit code: ${process.exitValue()}")
@@ -204,13 +204,12 @@ class WebLogicHelper extends PluginSpockTestSupport {
         return true
     }
 
-    def __publishArtifact(String artifactName, String version, String resName) {
-        if (artifactExists(artifactName + ':' + version)) {
+    def publishArtifact(String artifactName, String version, String resName) {
+        if (artifactExists(artifactName)) {
+            logger.debug("Artifact $artifactName exists")
             return
         }
-
         File resource = new File(this.getClass().getResource("/${resName}").toURI())
-
 
         String commanderServer = System.getProperty("COMMANDER_SERVER") ?: 'localhost'
         String username = System.getProperty('COMMANDER_USER') ?: 'admin'
@@ -218,13 +217,17 @@ class WebLogicHelper extends PluginSpockTestSupport {
         String commanderHome = System.getenv('COMMANDER_HOME') ?: '/opt/EC/'
         assert commanderHome: "Env COMMANDER_HOME must be provided"
 
+        println commanderHome
+
         String ectoolPath
         if (System.properties['os.name'].toLowerCase().contains('windows')) {
             ectoolPath = "bin/ectool.exe"
         } else {
             ectoolPath = "bin/ectool"
         }
+        println ectoolPath
         File ectool = new File(commanderHome, ectoolPath)
+        println ectool.exists()
         assert ectool.exists(): "File ${ectool.absolutePath} does not exist"
 
         logger.debug("ECTOOL PATH: " + ectool.absolutePath.toString())
@@ -242,6 +245,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         }
         runCommand(publishCommand)
     }
+
 
     def downloadArtifact(String artifactName, String resource) {
 
@@ -287,7 +291,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         return cacheDirPath.replace('\\', '\\\\\\\\')
     }
 
-    def artifactExists(def artifactName) {
+    def __artifactExists(def artifactName) {
 
         dslFile 'dsl/artifactExists.dsl', [
             projectName : HELPER_PROJECT,
