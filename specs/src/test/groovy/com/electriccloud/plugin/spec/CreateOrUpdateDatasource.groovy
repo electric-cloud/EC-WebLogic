@@ -1,5 +1,6 @@
 package com.electriccloud.plugin.spec
 
+import spock.lang.IgnoreIf
 import spock.lang.IgnoreRest
 import spock.lang.Requires
 import spock.lang.Shared
@@ -379,6 +380,7 @@ attachCredential projectName: '$projectName',
     def additionalOption
 
     @Unroll
+    @IgnoreIf({ isWebLogic11() && isWindows() })
     def 'CreateORUpdateDataSource - #caseId.ids #caseId.description, DS Name: #dataSourceName'() {
         setup: 'Define the parameters for Procedure running'
         Map runParams = [
