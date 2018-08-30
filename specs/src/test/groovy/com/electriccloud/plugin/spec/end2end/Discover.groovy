@@ -43,7 +43,7 @@ class Discover extends WebLogicHelper {
         ]
         def result = runProcedure(
             projectName, 'PrepareDeploy', [:], [],
-            resourceName, 150)
+            resourceName, 210)
         assert result.outcome == 'success'
         dsl """
 project '$projectName', {
