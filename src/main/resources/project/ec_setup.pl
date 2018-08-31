@@ -272,7 +272,7 @@ my %createOrUpdateJMSModule = (
 my %createOrUpdateDatasource = (
     label       => "WebLogic - Create Or Update Datasource",
     procedure   => "CreateOrUpdateDatasource",
-    description => "Create or update datasource",
+    description => "This procedure creates a new generic JDBC Data Source or updates an existing one based on the update action.",
     category    => "Application Server"
 );
 
