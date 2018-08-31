@@ -94,9 +94,9 @@ By default, the JNDI name is the name of the Datasource. Applications that look 
     <type>select</type>
     <label>Update Action:</label>
     <property>ecp_weblogic_updateAction</property>
-    <htmlDocumentation>This parameter controls as to what the Update Action should be when a JMS Queue with the same name exists:<br/>
+    <htmlDocumentation>This parameter controls as to what the Update Action should be when a DataSource with the same name exists:<br/>
 <b>Do Nothing (Default)</b> - The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.<br/>
-<b>Remove and Create</b> - The procedure would remove existing JMS Queue and recreate it based on new parameters passed.<br/>
+<b>Remove and Create</b> - The procedure would remove existing DataSource and recreate it based on new parameters passed.<br/>
 <b>Selective Update</b> - The procedure would update existing DataSource credentials and Server Target List.
 </htmlDocumentation>
     <required>0</required>
@@ -118,7 +118,7 @@ By default, the JNDI name is the name of the Datasource. Applications that look 
     <type>textarea</type>
     <label>Additional Options:</label>
     <property>ecp_weblogic_additionalOptions</property>
-    <documentation>Use this option to specify optional parameters for example initial pool size, min pool size, max pool size, validation SQL etc., At a minimum we should show case and test the validation SQL and pool size, going against MariaDB or MySQL.</documentation>
+    <documentation>Use this option to specify optional parameters for example initial pool size, min pool size, max pool size, validation SQL etc.</documentation>
     <required>0</required>
 </formElement>
 </editor>

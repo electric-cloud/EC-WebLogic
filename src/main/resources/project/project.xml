@@ -8779,7 +8779,7 @@ Selective Update - The procedure would update existing JMS Module for only param
 
 
 <procedure>
-  <description>Creates or updates a Datasource</description>
+  <description>This procedure creates a new generic JDBC Data Source or updates an existing one based on the update action.</description>
   <jobNameTemplate>weblogic-createOrUpdateDatasource-$[jobId]</jobNameTemplate>
   <procedureName>CreateOrUpdateDatasource</procedureName>
   <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
@@ -9018,7 +9018,7 @@ By default, the JNDI name is the name of the Datasource. Applications that look 
 </procedure>
 
 <procedure>
-  <description>Discovers WebLogic configuration and deployable objects</description>
+  <description>This procedure connects to a Weblogic environment, discovers objects specified by user and creates a Weblogic plugin configuration and an Application/Environment model in Electric Flow based on objects discovered.</description>
   <jobNameTemplate>weblogic-discover-$[jobId]</jobNameTemplate>
   <procedureName>Discover</procedureName>
   <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
