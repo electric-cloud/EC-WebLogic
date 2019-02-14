@@ -14,7 +14,7 @@
     <h1>@PLUGIN_KEY@</h1>
     <p>Plugin version @PLUGIN_VERSION@</p>
     
-    <p>Revised on August 31, 2018</p>
+    <p>Revised on February 14, 2019</p>
     
     <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade"/>
     <h3>Overview</h3>
@@ -4399,7 +4399,10 @@ The list of supported object types:
     
 
     <h1 id="releaseNotes">Release Notes</h1>
-    
+    <h3>@PLUGIN_KEY@ 3.4.1</h3>
+    <ul>
+        <li>Fixed the issue with lost output parameters for 9.0: upon upgrade or clean install of 9.0 output parameters were not created for the plugin's procedures.</li>
+    </ul>
     <h3>@PLUGIN_KEY@ 3.4.0</h3>
     <ul>
         
