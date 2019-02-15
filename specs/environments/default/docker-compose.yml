@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   electricflow:
-    image: "electricflow/efserver:8.5"
+    image: "electricflow/efserver:latest"
     ports:
       - "8000:8000"
       - "8200:8200"
