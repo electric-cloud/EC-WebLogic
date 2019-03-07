@@ -4520,6 +4520,13 @@ The list of supported object types:
         
     </ul>
     
+    <h3>@PLUGIN_KEY@ 3.4.1</h3>
+    <ul>
+        
+        <li>Fixed the issue with lost output parameters for 9.0. Upon upgrade or clean install of 9.0 output parameters were not created for the plugin's procedures.</li>
+        
+    </ul>
+    
     <h3>@PLUGIN_KEY@ 3.4.0</h3>
     <ul>
         
