@@ -1,5 +1,5 @@
 3.4.2:
-  - Fixed creating configuration by user with "@" in username.
+  - Configurations can be created by users with "@" sign in a name.
 3.4.0:
   - |
     Introduced the following 2 new procedures
