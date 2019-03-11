@@ -14,9 +14,26 @@
     <h1>@PLUGIN_KEY@</h1>
     <p>Plugin version @PLUGIN_VERSION@</p>
     
-    <p>Revised on February 14, 2019</p>
+    <p>Revised on March 06, 2019</p>
     
     <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade"/>
+    <h1>Contents</h1>
+    <ul>
+    <li><a href="#overview">Overview</a></li>
+    
+
+    
+
+    
+    <li><a href="#CreateConfiguration">Plugin Configuration</a></li>
+    
+
+    <li><a href="#procedures">Plugin Procedures</a></li>
+    <li>WLS Domain Management<br/><i>These procedures help in managing a WLS Domain.</i></li><ul><li><a href="#CreateCluster">CreateCluster</a></li><li><a href="#CreateDomain">CreateDomain</a></li><li><a href="#CreateManagedServer">CreateManagedServer</a></li><li><a href="#AddServerToCluster">AddServerToCluster</a></li><li><a href="#DeleteCluster">DeleteCluster</a></li><li><a href="#DeleteManagedServer">DeleteManagedServer</a></li></ul><li>WLS Domain Server Administration<br/><i>These procedures help in administering (i.e., Starting or Stopping Servers) of a WLS Domain.</i></li><ul><li><a href="#StartAdminServer">StartAdminServer</a></li><li><a href="#StartCluster">StartCluster</a></li><li><a href="#StartManagedServer">StartManagedServer</a></li><li><a href="#StartNodeManager">StartNodeManager</a></li><li><a href="#StopAdminServer">StopAdminServer</a></li><li><a href="#StopCluster">StopCluster</a></li><li><a href="#StopManagedServer">StopManagedServer</a></li><li><a href="#StopNodeManager">StopNodeManager</a></li><li><a href="#SuspendServer">SuspendServer</a></li><li><a href="#ResumeServer">ResumeServer</a></li></ul><li>Application Deployment<br/><i>These procedures help in managing the Deployment of an Application to a WLS Domain.</i></li><ul><li><a href="#DeployApp">DeployApp</a></li><li><a href="#UpdateAppConfig">UpdateAppConfig</a></li><li><a href="#UndeployApp">UndeployApp</a></li><li><a href="#UpdateApp">UpdateApp (DEPRECATED)</a></li><li><a href="#RunDeployer">RunDeployer</a></li></ul><li>Application Management<br/><i>These procedures help in managing an already deployed Application in a WLS Domain.</i></li><ul><li><a href="#StartApp">StartApp</a></li><li><a href="#StopApp">StopApp</a></li></ul><li>Datasource Management<br/><i>These procedures help in creating datasources in a WLS Domain.</i></li><ul><li><a href="#CreateOrUpdateDatasource">CreateOrUpdateDatasource</a></li><li><a href="#DeleteDatasource">DeleteDatasource</a></li><li><a href="#CreateDatasource">CreateDatasource (DEPRECATED)</a></li></ul><li>JMS Resource Management<br/><i>These procedures help in creating JMS resources in a WLS Domain.</i></li><ul><li><a href="#CreateOrUpdateConnectionFactory">CreateOrUpdateConnectionFactory</a></li><li><a href="#CreateOrUpdateJMSModule">CreateOrUpdateJMSModule</a></li><li><a href="#CreateOrUpdateJMSModuleSubdeployment">CreateOrUpdateJMSModuleSubdeployment</a></li><li><a href="#CreateOrUpdateJMSQueue">CreateOrUpdateJMSQueue</a></li><li><a href="#CreateOrUpdateJMSServer">CreateOrUpdateJMSServer</a></li><li><a href="#CreateOrUpdateJMSTopic">CreateOrUpdateJMSTopic</a></li><li><a href="#DeleteConnectionFactory">DeleteConnectionFactory</a></li><li><a href="#DeleteJMSModule">DeleteJMSModule</a></li><li><a href="#DeleteJMSModuleSubdeployment">DeleteJMSModuleSubdeployment</a></li><li><a href="#DeleteJMSQueue">DeleteJMSQueue</a></li><li><a href="#DeleteJMSServer">DeleteJMSServer</a></li><li><a href="#DeleteJMSTopic">DeleteJMSTopic</a></li></ul><li>User Management<br/><i>These procedures help in managing users in a WLS Domain.</i></li><ul><li><a href="#CreateUser">CreateUser</a></li><li><a href="#CreateGroup">CreateGroup</a></li><li><a href="#AddUserToGroup">AddUserToGroup</a></li><li><a href="#ChangeUserPassword">ChangeUserPassword</a></li><li><a href="#RemoveUserFromGroup">RemoveUserFromGroup</a></li><li><a href="#ConfigureUserLockoutManager">ConfigureUserLockoutManager</a></li><li><a href="#UnlockUserAccount">UnlockUserAccount</a></li><li><a href="#DeleteGroup">DeleteGroup</a></li><li><a href="#DeleteUser">DeleteUser</a></li></ul><li>Check Procedures<br/><i>These procedures help in checking the status of Servers in a WLS Domain</i></li><ul><li><a href="#CheckClusterStatus">CheckClusterStatus</a></li><li><a href="#CheckServerStatus">CheckServerStatus</a></li></ul><li>Generic Procedures<br/><i>These procedures which are generic in nature are based on different WLS use cases.</i></li><ul><li><a href="#RunWLST">RunWLST</a></li><li><a href="#CreateTemplate">CreateTemplate</a></li><li><a href="#CheckPageStatus">CheckPageStatus</a></li><li><a href="#Discover">Discover</a></li></ul>
+    
+    
+    <li><a href="#releaseNotes">Release Notes</a></li>
+</ul>
     <h3>Overview</h3>
     <p><p>WebLogic is a server software application that runs on a
 middle tier, between back-end databases and related
@@ -48,21 +65,10 @@ or to enter a new embedded file.</p>
 </ul>
 </p>
     
-    <h1>Contents</h1>
-    <ul>
-    <li><a href="#overview">Overview</a></li>
-    
-    
-    <li><a href="#CreateConfiguration">Plugin Configuration</a></li>
     
 
-    <li><a href="#procedures">Plugin Procedures</a></li>
-    <li>WLS Domain Management<br/><i>These procedures help in managing a WLS Domain.</i></li><ul><li><a href="#CreateCluster">CreateCluster</a></li><li><a href="#CreateDomain">CreateDomain</a></li><li><a href="#CreateManagedServer">CreateManagedServer</a></li><li><a href="#AddServerToCluster">AddServerToCluster</a></li><li><a href="#DeleteCluster">DeleteCluster</a></li><li><a href="#DeleteManagedServer">DeleteManagedServer</a></li></ul><li>WLS Domain Server Administration<br/><i>These procedures help in administering (i.e., Starting or Stopping Servers) of a WLS Domain.</i></li><ul><li><a href="#StartAdminServer">StartAdminServer</a></li><li><a href="#StartCluster">StartCluster</a></li><li><a href="#StartManagedServer">StartManagedServer</a></li><li><a href="#StartNodeManager">StartNodeManager</a></li><li><a href="#StopAdminServer">StopAdminServer</a></li><li><a href="#StopCluster">StopCluster</a></li><li><a href="#StopManagedServer">StopManagedServer</a></li><li><a href="#StopNodeManager">StopNodeManager</a></li><li><a href="#SuspendServer">SuspendServer</a></li><li><a href="#ResumeServer">ResumeServer</a></li></ul><li>Application Deployment<br/><i>These procedures help in managing the Deployment of an Application to a WLS Domain.</i></li><ul><li><a href="#DeployApp">DeployApp</a></li><li><a href="#UpdateAppConfig">UpdateAppConfig</a></li><li><a href="#UndeployApp">UndeployApp</a></li><li><a href="#UpdateApp">UpdateApp (DEPRECATED)</a></li><li><a href="#RunDeployer">RunDeployer</a></li></ul><li>Application Management<br/><i>These procedures help in managing an already deployed Application in a WLS Domain.</i></li><ul><li><a href="#StartApp">StartApp</a></li><li><a href="#StopApp">StopApp</a></li></ul><li>Datasource Management<br/><i>These procedures help in creating datasources in a WLS Domain.</i></li><ul><li><a href="#CreateOrUpdateDatasource">CreateOrUpdateDatasource</a></li><li><a href="#DeleteDatasource">DeleteDatasource</a></li><li><a href="#CreateDatasource">CreateDatasource (DEPRECATED)</a></li></ul><li>JMS Resource Management<br/><i>These procedures help in creating JMS resources in a WLS Domain.</i></li><ul><li><a href="#CreateOrUpdateConnectionFactory">CreateOrUpdateConnectionFactory</a></li><li><a href="#CreateOrUpdateJMSModule">CreateOrUpdateJMSModule</a></li><li><a href="#CreateOrUpdateJMSModuleSubdeployment">CreateOrUpdateJMSModuleSubdeployment</a></li><li><a href="#CreateOrUpdateJMSQueue">CreateOrUpdateJMSQueue</a></li><li><a href="#CreateOrUpdateJMSServer">CreateOrUpdateJMSServer</a></li><li><a href="#CreateOrUpdateJMSTopic">CreateOrUpdateJMSTopic</a></li><li><a href="#DeleteConnectionFactory">DeleteConnectionFactory</a></li><li><a href="#DeleteJMSModule">DeleteJMSModule</a></li><li><a href="#DeleteJMSModuleSubdeployment">DeleteJMSModuleSubdeployment</a></li><li><a href="#DeleteJMSQueue">DeleteJMSQueue</a></li><li><a href="#DeleteJMSServer">DeleteJMSServer</a></li><li><a href="#DeleteJMSTopic">DeleteJMSTopic</a></li></ul><li>User Management<br/><i>These procedures help in managing users in a WLS Domain.</i></li><ul><li><a href="#CreateUser">CreateUser</a></li><li><a href="#CreateGroup">CreateGroup</a></li><li><a href="#AddUserToGroup">AddUserToGroup</a></li><li><a href="#ChangeUserPassword">ChangeUserPassword</a></li><li><a href="#RemoveUserFromGroup">RemoveUserFromGroup</a></li><li><a href="#ConfigureUserLockoutManager">ConfigureUserLockoutManager</a></li><li><a href="#UnlockUserAccount">UnlockUserAccount</a></li><li><a href="#DeleteGroup">DeleteGroup</a></li><li><a href="#DeleteUser">DeleteUser</a></li></ul><li>Check Procedures<br/><i>These procedures help in checking the status of Servers in a WLS Domain</i></li><ul><li><a href="#CheckClusterStatus">CheckClusterStatus</a></li><li><a href="#CheckServerStatus">CheckServerStatus</a></li></ul><li>Generic Procedures<br/><i>These procedures which are generic in nature are based on different WLS use cases.</i></li><ul><li><a href="#RunWLST">RunWLST</a></li><li><a href="#CreateTemplate">CreateTemplate</a></li><li><a href="#CheckPageStatus">CheckPageStatus</a></li><li><a href="#Discover">Discover</a></li></ul>
     
-    
-    <li><a href="#releaseNotes">Release Notes</a></li>
-</ul>
-    
+    <!--TODO custom blocks-->
 
     
     <div id="CreateConfiguration">
@@ -166,12 +172,15 @@ to carry all traffic for a JVM.</p>
 
     <h1 id="procedures">Plugin Procedures</h1>
     
+    
 
     
     <div id="CreateCluster">
         <h2>CreateCluster</h2>
         
+        
         <p>Create a cluster.</p>
+        
         
             <p>This procedure can be used to ceate a new cluster.</p>
 
@@ -233,7 +242,9 @@ to carry all traffic for a JVM.</p>
     <div id="CreateDomain">
         <h2>CreateDomain</h2>
         
+        
         <p>Create a domain</p>
+        
         
             <p>This procedure creates a new domain on the WebLogic server.</p>
 
@@ -304,7 +315,9 @@ to carry all traffic for a JVM.</p>
     <div id="CreateManagedServer">
         <h2>CreateManagedServer</h2>
         
+        
         <p>Create a Managed Server.</p>
+        
         
         <h3>CreateManagedServer Parameters</h3>
         <table class="grid">
@@ -361,7 +374,9 @@ to carry all traffic for a JVM.</p>
     <div id="AddServerToCluster">
         <h2>AddServerToCluster</h2>
         
+        
         <p>Add server to cluster.</p>
+        
         
             <p>This procedure adds a server to the specified cluster.</p>
 
@@ -417,7 +432,9 @@ to carry all traffic for a JVM.</p>
     <div id="DeleteCluster">
         <h2>DeleteCluster</h2>
         
+        
         <p>Delete a cluster.</p>
+        
         
             <p>This procedure can be used to delete a cluster.</p>
 
@@ -469,7 +486,9 @@ to carry all traffic for a JVM.</p>
     <div id="DeleteManagedServer">
         <h2>DeleteManagedServer</h2>
         
+        
         <p>Delete a Managed Server.</p>
+        
         
         <h3>DeleteManagedServer Parameters</h3>
         <table class="grid">
@@ -518,7 +537,9 @@ to carry all traffic for a JVM.</p>
     <div id="StartAdminServer">
         <h2>StartAdminServer</h2>
         
+        
         <p>Starts a WebLogic Admin Server</p>
+        
         
             <p>This procedure starts the WebLogic Administration Server.</p>
 
@@ -580,7 +601,9 @@ successfully.</p>
     <div id="StartCluster">
         <h2>StartCluster</h2>
         
+        
         <p>Starts a cluster</p>
+        
         
             <p>This procedures starts a cluster.</p>
 <p>If cluster has a servers in the RUNNING state, warning will be thrown.</p>
@@ -645,7 +668,9 @@ In the <b>StartCluster</b> step, click the Log button to see the diagnostic info
     <div id="StartManagedServer">
         <h2>StartManagedServer</h2>
         
+        
         <p>Starts a WebLogic Managed Server</p>
+        
         
             <p>This procedure starts a WebLogic Managed Server. A WebLogic Server
 administration domain is a logically related group of
@@ -727,7 +752,9 @@ successfully.</p>
     <div id="StartNodeManager">
         <h2>StartNodeManager</h2>
         
+        
         <p>Start the WebLogic Node Manager</p>
+        
         
             <p>This procedure starts the WebLogic Node Manager. It is a
 WebLogic Server utility that enables you to start, shut
@@ -784,7 +811,9 @@ successfully.</p>
     <div id="StopAdminServer">
         <h2>StopAdminServer</h2>
         
+        
         <p>Stops a WebLogic Admin Server</p>
+        
         
             <p>This procedure stops a WebLogic Administration Server.</p>
 
@@ -831,7 +860,9 @@ successfully.</p>
     <div id="StopCluster">
         <h2>StopCluster</h2>
         
+        
         <p>Stops a cluster</p>
+        
         
             <p>This procedures stops a cluster.</p>
 <p>If cluster has a servers in the SHUTDOWN state, warning will be thrown.</p>
@@ -912,7 +943,9 @@ In the <b>StopCluster</b> step, click the Log button to see the diagnostic infor
     <div id="StopManagedServer">
         <h2>StopManagedServer</h2>
         
+        
         <p>Stops a WebLogic Managed Server</p>
+        
         
             <p>This procedure stops a WebLogic Managed Server. The Node
 Manager must be running before you run this procedure.</p>
@@ -964,7 +997,9 @@ Manager must be running before you run this procedure.</p>
     <div id="StopNodeManager">
         <h2>StopNodeManager</h2>
         
+        
         <p>Stop the WebLogic Node Manager</p>
+        
         
             <p>This procedure stops the WebLogic Node Manager.</p>
 
@@ -1041,7 +1076,9 @@ successfully.</p>
     <div id="SuspendServer">
         <h2>SuspendServer</h2>
         
+        
         <p>Suspends the provided server</p>
+        
         
             <p>This procedure suspends a WebLogic server.</p>
 
@@ -1113,7 +1150,9 @@ successfully.</p>
     <div id="ResumeServer">
         <h2>ResumeServer</h2>
         
+        
         <p>Resumes the provided server</p>
+        
         
             <p>This procedure moves a server instance from the STANDBY state to the RUNNING state.</p>
 
@@ -1170,7 +1209,9 @@ moved from the STANDBY state to the RUNNING state.</p>
     <div id="DeployApp">
         <h2>DeployApp</h2>
         
+        
         <p>Deploys or redeploys an application or module</p>
+        
         
             <p>This procedure deploys an application or a module using WLST. If application or module is already exists, it will be redeployed.</p>
 
@@ -1335,7 +1376,9 @@ The application was deployed successfully.</p>
     <div id="UpdateAppConfig">
         <h2>UpdateAppConfig</h2>
         
+        
         <p>Update a configuration of an already deployed app.</p>
+        
         
             <p>This procedure can be used to update an application configuration.</p>
 
@@ -1414,7 +1457,9 @@ The application was deployed successfully.</p>
     <div id="UndeployApp">
         <h2>UndeployApp</h2>
         
+        
         <p>Stops the deployment unit and removes staged files from target servers.</p>
+        
         
             <p>This procedure stops the deployment unit and removes staged files
 from target servers.
@@ -1497,7 +1542,9 @@ successfully.</p>
     <div id="UpdateApp">
         <h2>UpdateApp (DEPRECATED)</h2>
         
+        
         <p>Update an already deployed app. (DEPRECATED)</p>
+        
         
             <p>WARNING: This procedure is marked as deprecated and will be removed in the next releases. Please, use <a href="#UpdateAppConfig">UpdateAppConfig</a> procedure instead.</p>
 <p>This procedure can be used to update an application.</p>
@@ -1559,7 +1606,9 @@ successfully.</p>
     <div id="RunDeployer">
         <h2>RunDeployer</h2>
         
+        
         <p>Runs weblogic.Deployer in a free-mode</p>
+        
         
             <p>This procedure runs weblogic.Deployer tool in a free mode.
 The weblogic.Deployer tool is a Java-based deployment tool that
@@ -1649,7 +1698,9 @@ successfully.</p>
     <div id="StartApp">
         <h2>StartApp</h2>
         
+        
         <p>Starts an application</p>
+        
         
             <p>This procedures starts an application.</p>
 <p>If application is already started, warning will be thrown.</p>
@@ -1718,7 +1769,9 @@ was started successfully.</p>
     <div id="StopApp">
         <h2>StopApp</h2>
         
+        
         <p>Stop an application</p>
+        
         
             <p>This procedure stops an application.</p>
 <p>If application is already stopped, warning will be thrown.</p>
@@ -1787,7 +1840,9 @@ successfully.</p>
     <div id="CreateOrUpdateDatasource">
         <h2>CreateOrUpdateDatasource</h2>
         
+        
         <p>This procedure creates a new generic JDBC Data Source or updates an existing one based on the update action.</p>
+        
         
         <h3>CreateOrUpdateDatasource Parameters</h3>
         <table class="grid">
@@ -1929,7 +1984,9 @@ DONE
     <div id="DeleteDatasource">
         <h2>DeleteDatasource</h2>
         
+        
         <p>Deletes a Datasource</p>
+        
         
         <h3>DeleteDatasource Parameters</h3>
         <table class="grid">
@@ -1979,7 +2036,9 @@ DONE
     <div id="CreateDatasource">
         <h2>CreateDatasource (DEPRECATED)</h2>
         
+        
         <p>Creates a Datasource (DEPRECATED)</p>
+        
         
             <p>This procedure creates a datasource in WebLogic.</p>
 
@@ -2074,7 +2133,9 @@ DONE
     <div id="CreateOrUpdateConnectionFactory">
         <h2>CreateOrUpdateConnectionFactory</h2>
         
+        
         <p>Creates or updates Connection Factory</p>
+        
         
             <p>WebLogic Server defines two default connection factories, which can be looked up using the JNDI names weblogic.jms.ConnectionFactory and weblogic.jms.XAConnectionFactory.</p>
 <p>This procedure is used to create and configure a new connection factory for an existing JMS module if the pre-configured settings of the default factories are not suitable for your application.</p>
@@ -2257,7 +2318,9 @@ DONE
     <div id="CreateOrUpdateJMSModule">
         <h2>CreateOrUpdateJMSModule</h2>
         
+        
         <p>Creates or updates JMS Module</p>
+        
         
         <h3>CreateOrUpdateJMSModule Parameters</h3>
         <table class="grid">
@@ -2354,7 +2417,9 @@ DONE
     <div id="CreateOrUpdateJMSModuleSubdeployment">
         <h2>CreateOrUpdateJMSModuleSubdeployment</h2>
         
+        
         <p>Creates or updates JMS Module Subdeployment</p>
+        
         
         <h3>CreateOrUpdateJMSModuleSubdeployment Parameters</h3>
         <table class="grid">
@@ -2459,7 +2524,9 @@ DONE
     <div id="CreateOrUpdateJMSQueue">
         <h2>CreateOrUpdateJMSQueue</h2>
         
+        
         <p>Creates or updates JMS Queue</p>
+        
         
             <p>This procedure is used to create and configure a new JMS Queue for an <strong>existing</strong> JMS module or update an existing JMS Queue.</p>
 
@@ -2607,7 +2674,9 @@ DONE
     <div id="CreateOrUpdateJMSServer">
         <h2>CreateOrUpdateJMSServer</h2>
         
+        
         <p>Creates or updates JMS Server</p>
+        
         
         <h3>CreateOrUpdateJMSServer Parameters</h3>
         <table class="grid">
@@ -2703,7 +2772,9 @@ DONE
     <div id="CreateOrUpdateJMSTopic">
         <h2>CreateOrUpdateJMSTopic</h2>
         
+        
         <p>Creates or updates JMS Topic</p>
+        
         
         <h3>CreateOrUpdateJMSTopic Parameters</h3>
         <table class="grid">
@@ -2847,7 +2918,9 @@ DONE
     <div id="DeleteConnectionFactory">
         <h2>DeleteConnectionFactory</h2>
         
+        
         <p>Deletes Connection Factory</p>
+        
         
         <h3>DeleteConnectionFactory Parameters</h3>
         <table class="grid">
@@ -2932,7 +3005,9 @@ DONE
     <div id="DeleteJMSModule">
         <h2>DeleteJMSModule</h2>
         
+        
         <p>Deletes JMS Module</p>
+        
         
         <h3>DeleteJMSModule Parameters</h3>
         <table class="grid">
@@ -3012,7 +3087,9 @@ DONE
     <div id="DeleteJMSModuleSubdeployment">
         <h2>DeleteJMSModuleSubdeployment</h2>
         
+        
         <p>Deletes JMS Module Subdeployment</p>
+        
         
         <h3>DeleteJMSModuleSubdeployment Parameters</h3>
         <table class="grid">
@@ -3098,7 +3175,9 @@ DONE
     <div id="DeleteJMSQueue">
         <h2>DeleteJMSQueue</h2>
         
+        
         <p>Deletes JMS Queue</p>
+        
         
         <h3>DeleteJMSQueue Parameters</h3>
         <table class="grid">
@@ -3185,7 +3264,9 @@ DONE
     <div id="DeleteJMSServer">
         <h2>DeleteJMSServer</h2>
         
+        
         <p>Deletes JMS Server</p>
+        
         
         <h3>DeleteJMSServer Parameters</h3>
         <table class="grid">
@@ -3264,7 +3345,9 @@ DONE
     <div id="DeleteJMSTopic">
         <h2>DeleteJMSTopic</h2>
         
+        
         <p>Deletes JMS Topic</p>
+        
         
         <h3>DeleteJMSTopic Parameters</h3>
         <table class="grid">
@@ -3351,7 +3434,9 @@ DONE
     <div id="CreateUser">
         <h2>CreateUser</h2>
         
+        
         <p>Create a user</p>
+        
         
             <p>This procedure creates a new user on the WebLogic server.</p>
 
@@ -3423,7 +3508,9 @@ DONE
     <div id="CreateGroup">
         <h2>CreateGroup</h2>
         
+        
         <p>Create a group</p>
+        
         
             <p>This procedure creates a new user group on the WebLogic server.</p>
 
@@ -3495,7 +3582,9 @@ DONE
     <div id="AddUserToGroup">
         <h2>AddUserToGroup</h2>
         
+        
         <p>Add a user to group.</p>
+        
         
             <p>This procedure adds a User to the specified Group.</p>
 
@@ -3562,7 +3651,9 @@ DONE
     <div id="ChangeUserPassword">
         <h2>ChangeUserPassword</h2>
         
+        
         <p>Change password of a user.</p>
+        
         
             <p>This procedure can be used to change the password of a specific user.</p>
 
@@ -3628,7 +3719,9 @@ DONE
     <div id="RemoveUserFromGroup">
         <h2>RemoveUserFromGroup</h2>
         
+        
         <p>Remove a user from group.</p>
+        
         
             <p>This procedure removes a User from the specified Group.</p>
 
@@ -3695,7 +3788,9 @@ DONE
     <div id="ConfigureUserLockoutManager">
         <h2>ConfigureUserLockoutManager</h2>
         
+        
         <p>Configure User Lockout Manager.</p>
+        
         
             <p>This procedure can be used to configure the User Lockout configuration.</p>
 
@@ -3758,7 +3853,9 @@ DONE
     <div id="UnlockUserAccount">
         <h2>UnlockUserAccount</h2>
         
+        
         <p>Unlock an user account.</p>
+        
         
             <p>This procedure can be used to unlock a locked user account.</p>
 
@@ -3820,7 +3917,9 @@ successfully.</p>
     <div id="DeleteGroup">
         <h2>DeleteGroup</h2>
         
+        
         <p>Delete a group</p>
+        
         
             <p>This procedure delets a user group on the WebLogic server.</p>
 
@@ -3882,7 +3981,9 @@ successfully.</p>
     <div id="DeleteUser">
         <h2>DeleteUser</h2>
         
+        
         <p>Delete a user</p>
+        
         
             <p>This procedure deletes a user on the WebLogic server.</p>
 
@@ -3944,7 +4045,9 @@ successfully.</p>
     <div id="CheckClusterStatus">
         <h2>CheckClusterStatus</h2>
         
+        
         <p>Check the status of the given server cluster name.</p>
+        
         
             <p>This procedure checks the status of the specified cluster.</p>
 
@@ -4005,7 +4108,9 @@ successfully.</p>
     <div id="CheckServerStatus">
         <h2>CheckServerStatus</h2>
         
+        
         <p>Check the status of the given server URL</p>
+        
         
             <p>This procedure checks the status of the specified server.</p>
 
@@ -4066,7 +4171,9 @@ successfully.</p>
     <div id="RunWLST">
         <h2>RunWLST</h2>
         
+        
         <p>Runs Jython scripts using weblogic.WLST</p>
+        
         
             <p>This procedure runs Jython scripts using weblogic.WLST. The
 WebLogic Scripting Tool (WLST) is a command-line
@@ -4157,7 +4264,9 @@ control statements.</p>
     <div id="CreateTemplate">
         <h2>CreateTemplate</h2>
         
+        
         <p>Creates a domain template from the existing domain.</p>
+        
         
             <p>This procedure creates a domain template on the WebLogic server.</p>
 
@@ -4209,7 +4318,9 @@ control statements.</p>
     <div id="CheckPageStatus">
         <h2>CheckPageStatus</h2>
         
+        
         <p>Check the status of a page on a given URL</p>
+        
         
             <p>This procedure checks the status of the specified page.</p>
 
@@ -4263,7 +4374,9 @@ control statements.</p>
     <div id="Discover">
         <h2>Discover</h2>
         
+        
         <p>This procedure connects to a Weblogic environment, discovers objects specified by user and creates a Weblogic plugin configuration and an Application/Environment model in Electric Flow based on objects discovered.</p>
+        
         
             <p>After the procedure runs the following are created:</p>
 <ul>
@@ -4399,10 +4512,21 @@ The list of supported object types:
     
 
     <h1 id="releaseNotes">Release Notes</h1>
+    
+    <h3>@PLUGIN_KEY@ 3.4.2</h3>
+    <ul>
+        
+        <li>Configurations can be created by users with "@" sign in a name.</li>
+        
+    </ul>
+    
     <h3>@PLUGIN_KEY@ 3.4.1</h3>
     <ul>
-        <li>Fixed the issue with lost output parameters for 9.0: upon upgrade or clean install of 9.0 output parameters were not created for the plugin's procedures.</li>
+        
+        <li>Fixed the issue with lost output parameters for 9.0. Upon upgrade or clean install of 9.0 output parameters were not created for the plugin's procedures.</li>
+        
     </ul>
+    
     <h3>@PLUGIN_KEY@ 3.4.0</h3>
     <ul>
         
