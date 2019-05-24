@@ -14,7 +14,7 @@
     <h1>@PLUGIN_KEY@</h1>
     <p>Plugin version @PLUGIN_VERSION@</p>
     
-    <p>Revised on March 06, 2019</p>
+    <p>Revised on May 24, 2019</p>
     
     <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade"/>
     <h1>Contents</h1>
@@ -49,7 +49,7 @@ support for the encryption of data transmissions, as well
 as authentication and authorization mechanisms, make
 applications and secure.</p>
 <p>For more information about WebLogic, go to <a href="http://www.oracle.com/technetwork/middleware/weblogic/overview/index.html" target="_blank">WebLogic home page</a>.</p>
-<h2>ElectricFlow Integration to WebLogic</h2>
+<h2>CloudBees Flow Integration to WebLogic</h2>
 <p>Use this plugin to interact with the Oracle WebLogic server for application
 and server management, interacting or editing existing applications, and deploying new applications.
 You can start and stop both the Managed Servers and the Administration Server
@@ -86,7 +86,7 @@ or to enter a new embedded file.</p>
         </p>
 
         <h3>Creating Plugin Configurations</h3>
-        <p>To create plugin configurations in ElectricFlow,
+        <p>To create plugin configurations in CloudBees Flow,
             do these steps:</p>
 
         <li>Go to <b>Administration</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
@@ -95,7 +95,7 @@ or to enter a new embedded file.</p>
              Configurations page.</li>
         <li>Click <b>Create Configuration</b>.</li>
         
-        <p><strong>After you perform the setup below it is important to make sure that the Electric Flow agent machine on which WebLogic runs is registered as a resource that can be pinged.</strong></p>
+        <p><strong>After you perform the setup below it is important to make sure that the CloudBees Flow agent machine on which WebLogic runs is registered as a resource that can be pinged.</strong></p>
 <img src="../../plugins/EC-WebLogic/images/Config/EC-WLSConfig.png" />
 <p><strong>Note:</strong> In the URL, the protocol is &quot;t3&quot; or &quot;t3s&quot;. The
 RMI communications in WebLogic Server use
@@ -227,7 +227,7 @@ to carry all traffic for a JVM.</p>
             <br />
 <img src="../../plugins/EC-WebLogic/images/CreateCluster/EC-WLSCreateClusterStatus2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The status of the server was checked successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The status of the server was checked successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/CreateCluster/EC-WLSCreateClusterStatus3.png" />
 <p>In the <b>CreateCluster</b> step, click the Log button to see the diagnostic information:
 <br />
@@ -300,7 +300,7 @@ to carry all traffic for a JVM.</p>
         <p>
             <img src="../../plugins/EC-WebLogic/images/CreateDomain/EC-WLSCreateDomainStatus2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The database was created successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The database was created successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/CreateDomain/EC-WLSCreateDomainStatus3.png" />
 <p>In the <b>CreateDomain</b> step, click the Log button to see the diagnostic information:
 <br />
@@ -361,7 +361,7 @@ to carry all traffic for a JVM.</p>
             <br />
 <img src="../../plugins/EC-WebLogic/images/CreateManagedServer/EC-WLSCreateManagedServer2.png" />
 <h2>Output</h2>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The Managed Server was created successfully.
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The Managed Server was created successfully.
 <img src="../../plugins/EC-WebLogic/images/CreateManagedServer/EC-WLSCreateManagedServer3.png" /></p>
 <p>In the <b>CreateManagedServer</b> step, click the Log button to see the diagnostic information:</p>
 <img src="../../plugins/EC-WebLogic/images/CreateManagedServer/EC-WLSCreateManagedServer4.png" />
@@ -415,13 +415,13 @@ to carry all traffic for a JVM.</p>
         </table>
         
         <p>
-            <p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The status of the page was checked successfully.</p>
+            <p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The status of the page was checked successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/AddServerToCluster/EC-WLSAddServerToClusterStatus3.png" />
 <p>In the <b>AddServerToCluster</b> step, click the Log button to see the diagnostic information:</p>
 <br />
 <img src="../../plugins/EC-WebLogic/images/AddServerToCluster/EC-WLSAddServerToClusterStatus4.png" />
 <p>
-    <b>Note:</b> In the URL, the protocol is http. For this procedure,ElectricFlow uses an internal method to test the status of the page URLs with the original http protocol used in the web browsers.
+    <b>Note:</b> In the URL, the protocol is http. For this procedure,CloudBees Flow uses an internal method to test the status of the page URLs with the original http protocol used in the web browsers.
 </p>
 
         </p>
@@ -471,7 +471,7 @@ to carry all traffic for a JVM.</p>
             <br />
 <img src="../../plugins/EC-WebLogic/images/DeleteCluster/EC-WLSDeleteClusterStatus2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The status of the server was checked successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The status of the server was checked successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/DeleteCluster/EC-WLSDeleteClusterStatus3.png" />
 <p>In the <b>DeleteCluster</b> step, click the Log button to see the diagnostic information:
 <br />
@@ -522,7 +522,7 @@ to carry all traffic for a JVM.</p>
             <br />
 <img src="../../plugins/EC-WebLogic/images/DeleteMangedServer/EC-WLSDeleteManagedServer2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The Managed Server was deleted successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The Managed Server was deleted successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/DeleteMangedServer/EC-WLSDeleteManagedServer3.png" />
 <p>In the <b>DeleteManagedServer</b> step, click the Log button to see the diagnostic information:
 <br />
@@ -586,7 +586,7 @@ to carry all traffic for a JVM.</p>
             <br />
 <img src="../../plugins/EC-WebLogic/images/StartAdministrationServer/EC-WLSStartAdministrationServer2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The server was started
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The server was started
 successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/StartAdministrationServer/EC-WLSStartAdministrationServer3.png" />
 <p>In the <b>StartAdminServer</b> step, click the Log button to see the diagnostic information:</p>
@@ -651,7 +651,7 @@ successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/StartCluster/EC-WLSStartCluster2.png" />
 <h3>Output</h3>
 <p>
-After the job runs, you can view the results on the Job Details page in ElectricFlow. The cluster was started successfully.
+After the job runs, you can view the results on the Job Details page in CloudBees Flow. The cluster was started successfully.
 </p>
 <img src="../../plugins/EC-WebLogic/images/StartCluster/EC-WLSStartCluster3.png" />
 <p>
@@ -737,7 +737,7 @@ For example:</p>
             <br />
 <img src="../../plugins/EC-WebLogic/images/StartManagedServer/EC-WLSStartManagedServer2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The server was started
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The server was started
 successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/StartManagedServer/EC-WLSStartManagedServer3.png" />
 <p>In the <b>StartManagedServer</b> step, click the Log button to see the diagnostic information:</p>
@@ -796,7 +796,7 @@ applications with high availability requirements.</p>
             <br />
 <img src="../../plugins/EC-WebLogic/images/StartNodeManager/EC-WLSStartNodeManager2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The Node Manager was started
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The Node Manager was started
 successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/StartNodeManager/EC-WLSStartNodeManager3.png" />
 <p>In the <b>StartNodeManager</b> step, click the Log button to see the diagnostic information:</p>
@@ -845,7 +845,7 @@ successfully.</p>
             <br />
 <img src="../../plugins/EC-WebLogic/images/StopAdminServer/EC-WLSStopAdminServer2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The server was stopped
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The server was stopped
 successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/StopAdminServer/EC-WLSStopAdminServer3.png" />
 <p>In the <b>StopAdminServer</b> step, click the Log button to see the diagnostic information:</p>
@@ -926,7 +926,7 @@ successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/StopCluster/EC-WLSStopCluster2.png" />
 <h3>Output</h3>
 <p>
-After the job runs, you can view the results on the Job Details page in ElectricFlow. The cluster was stopped successfully.
+After the job runs, you can view the results on the Job Details page in CloudBees Flow. The cluster was stopped successfully.
 </p>
 <img src="../../plugins/EC-WebLogic/images/StopCluster/EC-WLSStopCluster3.png" />
 <p>
@@ -983,7 +983,7 @@ Manager must be running before you run this procedure.</p>
             <br />
 <img src="../../plugins/EC-WebLogic/images/StopManagedServer/EC-WLSStopManagedServer2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The server was stopped successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The server was stopped successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/StopManagedServer/EC-WLSStopManagedServer3.png" />
 <p>In the <b>StopManagedServer</b> step, click the Log button to see the diagnostic information:</p>
 <br />
@@ -1061,7 +1061,7 @@ Manager must be running before you run this procedure.</p>
             <br />
 <img src="../../plugins/EC-WebLogic/images/StopNodeManager/EC-WLSStopNodeManager2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The Node Manager was stopped
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The Node Manager was stopped
 successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/StopNodeManager/EC-WLSStopNodeManager3.png" />
 <p>In the <b>StopNodeManager</b> step, click the Log button to see the diagnostic information:</p>
@@ -1135,7 +1135,7 @@ successfully.</p>
             <br />
 <img src="../../plugins/EC-WebLogic/images/SuspendServer/EC-WLSSuspendServer2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The server was suspended
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The server was suspended
 successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/SuspendServer/EC-WLSSuspendServer3.png" />
 <p>In the <b>SuspendServer</b> step, click the Log button to see the diagnostic information:</p>
@@ -1194,7 +1194,7 @@ successfully.</p>
             <br />
 <img src="../../plugins/EC-WebLogic/images/ResumeServer/EC-WLSResumeServer2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The server instance successfully
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The server instance successfully
 moved from the STANDBY state to the RUNNING state.</p>
 <img src="../../plugins/EC-WebLogic/images/ResumeServer/EC-WLSResumeServer3.png" />
 <p>In the <b>ResumeServer</b> step, click the Log button to see the diagnostic information:</p>
@@ -1361,7 +1361,7 @@ moved from the STANDBY state to the RUNNING state.</p>
             <br />
 <img src="../../plugins/EC-WebLogic/images/DeployApp/EC-WLSDeployApp2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow.
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow.
 The application was deployed successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/DeployApp/EC-WLSDeployApp3.png" />
 <p>In the <b>DeployApp</b> step, click the Log button to see the diagnostic information:</p>
@@ -1443,7 +1443,7 @@ The application was deployed successfully.</p>
             <br />
 <img src="../../plugins/EC-WebLogic/images/UpdateAppConfig/EC-WLSUpdateAppConfigStatus2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The application was undeployed successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The application was undeployed successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/UpdateAppConfig/EC-WLSUpdateAppConfigStatus3.png" />
 <p>In the <b>UpdateAppConfig</b> step, click the Log button to see the diagnostic information:</p>
 <br />
@@ -1527,7 +1527,7 @@ Contrary to the weblogic documentation in section 'Undeploying a Retiring Applic
             <img src="../../plugins/EC-WebLogic/images/UndeployApp/EC-WLSUndeployApp2.png" />
 <br />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The application was undeployed
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The application was undeployed
 successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/UndeployApp/EC-WLSUndeployApp3.png" />
 <p>In the <b>UndeployApp</b> step, click the Log button to see the diagnostic information:</p>
@@ -1592,7 +1592,7 @@ successfully.</p>
             <br />
 <img src="../../plugins/EC-WebLogic/images/UpdateApp/EC-WLSUpdateAppStatus2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The application was undeployed successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The application was undeployed successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/UpdateApp/EC-WLSUpdateAppStatus3.png" />
 <p>In the <b>UpdateApp</b> step, click the Log button to see the diagnostic information:</p>
 <br />
@@ -1683,7 +1683,7 @@ provides a command-line interface to the WebLogic Server deployment API.</p>
             <br />
 <img src="../../plugins/EC-WebLogic/images/RunDeployer/EC-WLSRunDep2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The weblogic.Deployer tool was run
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The weblogic.Deployer tool was run
 successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/RunDeployer/EC-WLSRunDep3.png" />
 <p>In the <b>RunDeployer</b> step, click the Log button to see the diagnostic information:</p>
@@ -1754,7 +1754,7 @@ successfully.</p>
             <br />
 <img src="../../plugins/EC-WebLogic/images/StartApp/EC-WLSStartApp2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The application
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The application
 was started successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/StartApp/EC-WLSStartApp3.png" />
 <p>In the <b>StartApp</b> step, click the Log button to see the diagnostic information:</p>
@@ -1825,7 +1825,7 @@ was started successfully.</p>
             <br />
 <img src="../../plugins/EC-WebLogic/images/StopApp/EC-WLSStopApp2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The application was stopped
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The application was stopped
 successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/StopApp/EC-WLSStopApp3.png" />
 <p>In the <b>StopApp</b> step, click the Log button to see the diagnostic information:</p>
@@ -1920,7 +1920,7 @@ By default, the JNDI name is the name of the Datasource. Applications that look 
         <p>
             <img src="../../plugins/EC-WebLogic/images/CreateOrUpdateDatasource/Form.png" />
 <h2>Output</h2>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The Datasource was created successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The Datasource was created successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/CreateOrUpdateDatasource/Summary.png" />
 <p>In the <b>CreateOrUpdateDatasource</b> step, click the Log button to see the diagnostic information:</p>
 <pre><code>Using plugin EC-WebLogic-3.4.0.0
@@ -2021,7 +2021,7 @@ DONE
         <p>
             <img src="../../plugins/EC-WebLogic/images/DeleteDataSource/DeleteDataSource2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The database was deleted successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The database was deleted successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/DeleteDataSource/DeleteDataSource3.png" />
 <p>In the <b>DeleteDatasource</b> step, click the Log button to see the diagnostic information:
 <br />
@@ -2118,7 +2118,7 @@ DONE
             <br />
 <img src="../../plugins/EC-WebLogic/images/CreateDataSource/CreateDataSource2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The database was created successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The database was created successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/CreateDataSource/CreateDataSource3.png" />
 <p>In the <b>CreateDatasource</b> step, click the Log button to see the diagnostic information:
 <br />
@@ -2237,7 +2237,7 @@ FlowControlParams.FlowControlEnabled=true
         <p>
             <img src="../../plugins/EC-WebLogic/images/CreateOrUpdateConnectionFactory/Form.png" />
 <h2>Output</h2>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The Connection Factory was created successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The Connection Factory was created successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/CreateOrUpdateConnectionFactory/Summary.png" />
 <p>In the <b>CreateOrUpdateConnectionFactory</b> step, click the Log button to see the diagnostic information:</p>
 <pre><code>Using plugin EC-WebLogic-3.3.0.0
@@ -2360,7 +2360,7 @@ This parameter controls as to what the Update Action should be when a JMS Module
         <p>
             <img src="../../plugins/EC-WebLogic/images/CreateOrUpdateJMSModule/Form.png" />
 <h2>Output</h2>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The JMS Module was created successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The JMS Module was created successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/CreateOrUpdateJMSModule/Summary.png" />
 <p>In the <b>CreateOrUpdateJMSModule</b> step, click the Log button to see the diagnostic information:</p>
 <pre><code>Using plugin EC-WebLogic-3.3.0.0
@@ -2466,7 +2466,7 @@ Selective Update - The procedure would update target servers for the existing JM
         <p>
             <img src="../../plugins/EC-WebLogic/images/CreateOrUpdateSubdeployment/Form.png" />
 <h2>Output</h2>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The JMS Module Subdeployment was created successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The JMS Module Subdeployment was created successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/CreateOrUpdateSubdeployment/Summary.png" />
 <p>In the <b>CreateOrUpdateJMSModuleSubdeployment</b> step, click the Log button to see the diagnostic information:</p>
 <pre><code>Using plugin EC-WebLogic-3.3.0.0
@@ -2598,7 +2598,7 @@ DeliveryFailureParams.RedeliveryLimit=3
         <p>
             <img src="../../plugins/EC-WebLogic/images/CreateOrUpdateJMSQueue/Form.png" />
 <h2>Output</h2>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The JMS Queue was created successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The JMS Queue was created successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/CreateOrUpdateJMSQueue/Summary.png" />
 <p>In the <b>CreateOrUpdateJMSQueue</b> step, click the Log button to see the diagnostic information:</p>
 <pre><code>Using plugin C-WebLogic-3.3.0.0
@@ -2716,7 +2716,7 @@ This parameter controls as to what the Update Action should be when a JMS Module
         <p>
             <img src="../../plugins/EC-WebLogic/images/CreateJMSServer/Form.png" />
 <h2>Output</h2>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The JMS Server was created successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The JMS Server was created successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/CreateJMSServer/Summary.png" />
 <p>In the <b>CreateOrUpdateJMSServer</b> step, click the Log button to see the diagnostic information:</p>
 <pre><code>Using plugin C-WebLogic-3.3.0.0
@@ -2842,7 +2842,7 @@ DeliveryFailureParams.RedeliveryLimit=5
         <p>
             <img src="../../plugins/EC-WebLogic/images/CreateOrUpdateJMSTopic/Form.png" />
 <h2>Output</h2>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The JMS Topic was created successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The JMS Topic was created successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/CreateOrUpdateJMSTopic/Summary.png" />
 <p>In the <b>CreateOrUpdateJMSTopic</b> step, click the Log button to see the diagnostic information:</p>
 <pre><code>Using plugin EC-WebLogic-3.3.0.0
@@ -2953,7 +2953,7 @@ DONE
         <p>
             <img src="../../plugins/EC-WebLogic/images/DeleteConnectionFactory/Form.png" />
 <h2>Output</h2>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The Connection Factory was deleted.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The Connection Factory was deleted.</p>
 <img src="../../plugins/EC-WebLogic/images/DeleteConnectionFactory/Summary.png" />
 <p>In the <b>DeleteConnectionFactory</b> step, click the Log button to see the diagnostic information:</p>
 <pre><code>Using plugin EC-WebLogic-3.3.0.0
@@ -3035,7 +3035,7 @@ DONE
         <p>
             <img src="../../plugins/EC-WebLogic/images/DeleteJMSModule/Form.png" />
 <h2>Output</h2>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The JMS Module was deleted.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The JMS Module was deleted.</p>
 <img src="../../plugins/EC-WebLogic/images/DeleteJMSModule/Summary.png" />
 <p>In the <b>DeleteJMSModule</b> step, click the Log button to see the diagnostic information:</p>
 <pre><code>Using plugin EC-WebLogic-3.3.0.0
@@ -3122,7 +3122,7 @@ DONE
         <p>
             <img src="../../plugins/EC-WebLogic/images/DeleteSubdeployment/Form.png" />
 <h2>Output</h2>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The JMS Subdeployment was deleted.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The JMS Subdeployment was deleted.</p>
 <img src="../../plugins/EC-WebLogic/images/DeleteSubdeployment/Summary.png" />
 <p>In the <b>DeleteJMSModuleSubdeployment</b> step, click the Log button to see the diagnostic information:</p>
 <pre><code>Using plugin EC-WebLogic-3.3.0.0
@@ -3212,7 +3212,7 @@ DONE
         <p>
             <img src="../../plugins/EC-WebLogic/images/DeleteJMSQueue/Form.png" />
 <h2>Output</h2>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The JMS Queue was deleted.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The JMS Queue was deleted.</p>
 <img src="../../plugins/EC-WebLogic/images/DeleteJMSQueue/Summary.png" />
 <p>In the <b>DeleteJMSQueue</b> step, click the Log button to see the diagnostic information:</p>
 <pre><code>Using plugin EC-WebLogic-3.3.0.0
@@ -3294,7 +3294,7 @@ DONE
         <p>
             <img src="../../plugins/EC-WebLogic/images/DeleteJMSServer/Form.png" />
 <h2>Output</h2>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The JMS Server was deleted.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The JMS Server was deleted.</p>
 <img src="../../plugins/EC-WebLogic/images/DeleteJMSServer/Summary.png" />
 <p>In the <b>DeleteJMSServer</b> step, click the Log button to see the diagnostic information:</p>
 <pre><code>Using plugin EC-WebLogic-3.3.0.0
@@ -3382,7 +3382,7 @@ DONE
         <p>
             <img src="../../plugins/EC-WebLogic/images/DeleteJMSTopic/Form.png" />
 <h2>Output</h2>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The JMS Queue was deleted.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The JMS Queue was deleted.</p>
 <img src="../../plugins/EC-WebLogic/images/DeleteJMSTopic/Summary.png" />
 <p>In the <b>DeleteJMSTopic</b> step, click the Log button to see the diagnostic information:</p>
 <pre><code>Using plugin EC-WebLogic-3.3.0.0
@@ -3493,7 +3493,7 @@ DONE
             <br />
 <img src="../../plugins/EC-WebLogic/images/CreateUser/EC-WLSCreateUserStatus2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The database was created successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The database was created successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/CreateUser/EC-WLSCreateUserStatus3.png" />
 <p>In the <b>CreateUser</b> step, click the Log button to see the diagnostic information:
 <br />
@@ -3567,7 +3567,7 @@ DONE
             <br />
 <img src="../../plugins/EC-WebLogic/images/CreateGroup/EC-WLSCreateGroupStatus2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The database was created successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The database was created successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/CreateGroup/EC-WLSCreateGroupStatus3.png" />
 <p>In the <b>CreateGroup</b> step, click the Log button to see the diagnostic information:
 <br />
@@ -3636,12 +3636,12 @@ DONE
             <br />
 <img src="../../plugins/EC-WebLogic/images/AddUserToGroup/EC-WLSAddUserToGroupStatus2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The status of the page was checked successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The status of the page was checked successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/AddUserToGroup/EC-WLSAddUserToGroupStatus3.png" />
 <p>In the <b>AddUserToGroup</b> step, click the Log button to see the diagnostic information:</p>
 <br />
 <img src="../../plugins/EC-WebLogic/images/AddUserToGroup/EC-WLSAddUserToGroupStatus4.png" />
-<p><b>Note:</b> In the URL, the protocol is http. For this procedure, ElectricFlow uses an internal method to test the status of the page URLs with the original http protocol used in the web browsers.</p>
+<p><b>Note:</b> In the URL, the protocol is http. For this procedure, CloudBees Flow uses an internal method to test the status of the page URLs with the original http protocol used in the web browsers.</p>
 
         </p>
         
@@ -3704,12 +3704,12 @@ DONE
         <p>
             <img src="../../plugins/EC-WebLogic/images/ChangeUserPassword/EC-WLSChangeUserPasswordStatus2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The status of the page was checked successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The status of the page was checked successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/ChangeUserPassword/EC-WLSChangeUserPasswordStatus3.png" />
 <p>In the <b>ChangeUserPassword</b> step, click the Log button to see the diagnostic information:</p>
 <br />
 <img src="../../plugins/EC-WebLogic/images/ChangeUserPassword/EC-WLSChangeUserPasswordStatus4.png" />
-<p><b>Note:</b> In the URL, the protocol is http. For this procedure, ElectricFlow uses an internal method to test the status of the page URLs with the original http protocol used in the web browsers.</p>
+<p><b>Note:</b> In the URL, the protocol is http. For this procedure, CloudBees Flow uses an internal method to test the status of the page URLs with the original http protocol used in the web browsers.</p>
 
         </p>
         
@@ -3773,12 +3773,12 @@ DONE
             <br />
 <img src="../../plugins/EC-WebLogic/images/RemoveUserFromGroup/EC-WLSRemoveUserFromGroupStatus2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The status of the page was checked successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The status of the page was checked successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/RemoveUserFromGroup/EC-WLSRemoveUserFromGroupStatus3.png" />
 <p>In the <b>RemoveUserFromGroup</b> step, click the Log button to see the diagnostic information:</p>
 <br />
 <img src="../../plugins/EC-WebLogic/images/RemoveUserFromGroup/EC-WLSRemoveUserFromGroupStatus4.png" />
-<p><b>Note:</b> In the URL, the protocol is http. For this procedure,ElectricFlow uses an internal method to test the status of the page URLs with the original http protocol used in the web browsers.</p>
+<p><b>Note:</b> In the URL, the protocol is http. For this procedure,CloudBees Flow uses an internal method to test the status of the page URLs with the original http protocol used in the web browsers.</p>
 
         </p>
         
@@ -3837,7 +3837,7 @@ DONE
             <br />
 <img src="../../plugins/EC-WebLogic/images/ConfigureUserLockoutManager/EC-WLSConfigureUserLockoutManagerStatus2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The status of the server was checked successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The status of the server was checked successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/ConfigureUserLockoutManager/EC-WLSConfigureUserLockoutManagerStatus3.png" />
 <p>In the <b>ConfigureUserLockoutManager</b> step, click the Log button to see the diagnostic information:
 <br />
@@ -3902,7 +3902,7 @@ DONE
             <img src="../../plugins/EC-WebLogic/images/UnlockUserAccount/EC-WLSUnlockUserAccountStatus2.png" />
 <br />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The application was undeployed
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The application was undeployed
 successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/UnlockUserAccount/EC-WLSUnlockUserAccountStatus3.png" />
 <p>In the <b>UnlockUserAccount</b> step, click the Log button to see the diagnostic information:</p>
@@ -3966,7 +3966,7 @@ successfully.</p>
             <br />
 <img src="../../plugins/EC-WebLogic/images/DeleteGroup/EC-WLSDeleteGroupStatus2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The database was created successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The database was created successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/DeleteGroup/EC-WLSDeleteGroupStatus3.png" />
 <p>In the <b>DeleteGroup</b> step, click the Log button to see the diagnostic information:
 <br />
@@ -4030,7 +4030,7 @@ successfully.</p>
             <br />
 <img src="../../plugins/EC-WebLogic/images/DeleteUser/EC-WLSDeleteUserStatus2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The database was created successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The database was created successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/DeleteUser/EC-WLSDeleteUserStatus3.png" />
 <p>In the <b>DeleteUser</b> step, click the Log button to see the diagnostic information:
 <br />
@@ -4093,7 +4093,7 @@ successfully.</p>
         <p>
             <img src="../../plugins/EC-WebLogic/images/CheckClusterStatus/EC-WLSCheckClusterStatus2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The status of the cluster was checked successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The status of the cluster was checked successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/CheckClusterStatus/EC-WLSCheckClusterStatus3.png" />
 <p>In the <b>CheckClusterStatus</b> step, click the Log button to see the diagnostic information:
 <br />
@@ -4156,7 +4156,7 @@ successfully.</p>
         <p>
             <img src="../../plugins/EC-WebLogic/images/CheckServerStatus/EC-WLSCheckServerStatus2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The status of the server was checked successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The status of the server was checked successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/CheckServerStatus/EC-WLSCheckServerStatus3.png" />
 <p>In the <b>CheckServerStatus</b> step, click the Log button to see the diagnostic information:
 <br />
@@ -4249,7 +4249,7 @@ control statements.</p>
             <br />
 <img src="../../plugins/EC-WebLogic/images/RunWLST/runWLSTexample.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow.</p>
 <img src="../../plugins/EC-WebLogic/images/RunWLST/EC-WLSRunWLST4.png" />
 <p>In the <b>RunWLST</b> step, click the Log button to see the diagnostic information similar to this:</p>
 <img src="../../plugins/EC-WebLogic/images/RunWLST/EC-WLSRunWLST5.png" />
@@ -4303,7 +4303,7 @@ control statements.</p>
             <br />
 <img src="../../plugins/EC-WebLogic/images/CreateTemplate/EC-WLSCreateTemplateStatus2.png" />
 <h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The database was created successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The database was created successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/CreateTemplate/EC-WLSCreateTemplateStatus3.png" />
 <p>In the <b>CreateTemplate</b> step, click the Log button to see the diagnostic information:
 <br />
@@ -4360,11 +4360,11 @@ control statements.</p>
         
         <p>
             <img src="../../plugins/EC-WebLogic/images/CheckPageStatus/WLSCheckPageStatus2.png" />
-<p>After the job runs, you can view the results on the Job Details page in ElectricFlow. The status of the page was checked successfully.</p>
+<p>After the job runs, you can view the results on the Job Details page in CloudBees Flow. The status of the page was checked successfully.</p>
 <img src="../../plugins/EC-WebLogic/images/CheckPageStatus/EC-WLSCheckPageStatus3.png" />
 <p>In the <em>CheckPageStatus</em> step, click the Log button to see the diagnostic information:</p>
 <img src="../../plugins/EC-WebLogic/images/CheckPageStatus/EC-WLSCheckPageStatus4.png" />
-<p><b>Note:</b> In the URL, the protocol is http. For this procedure, ElectricFlow uses an internal method to test the status of the page URLs with the original http protocol used in the web browsers.</p>
+<p><b>Note:</b> In the URL, the protocol is http. For this procedure, CloudBees Flow uses an internal method to test the status of the page URLs with the original http protocol used in the web browsers.</p>
 
         </p>
         
@@ -4375,7 +4375,7 @@ control statements.</p>
         <h2>Discover</h2>
         
         
-        <p>This procedure connects to a Weblogic environment, discovers objects specified by user and creates a Weblogic plugin configuration and an Application/Environment model in Electric Flow based on objects discovered.</p>
+        <p>This procedure connects to a Weblogic environment, discovers objects specified by user and creates a Weblogic plugin configuration and an Application/Environment model in CloudBees Flow based on objects discovered.</p>
         
         
             <p>After the procedure runs the following are created:</p>
@@ -4415,17 +4415,17 @@ control statements.</p>
             
             <tr>
                 <td >Resource Name</td>
-                <td>Name of the ElectricFlow resource that represents the WebLogic environment that needs to be discovered.</td>
+                <td>Name of the CloudBees Flow resource that represents the WebLogic environment that needs to be discovered.</td>
             </tr>
             
             <tr>
                 <td >Resource Hostname</td>
-                <td>Hostname of a machine with WebLogic and ElectricFlow Agent running on it. Either Resource hostname (and port) or Resource Name should be specified.</td>
+                <td>Hostname of a machine with WebLogic and CloudBees Flow Agent running on it. Either Resource hostname (and port) or Resource Name should be specified.</td>
             </tr>
             
             <tr>
                 <td >Resource Port</td>
-                <td>Port of ElectricFlow agent running on the machine. Default is 7800.</td>
+                <td>Port of CloudBees Flow agent running on the machine. Default is 7800.</td>
             </tr>
             
             <tr>
@@ -4460,7 +4460,7 @@ control statements.</p>
             
             <tr>
                 <td >Environment Name</td>
-                <td>If specified, will be used to create ElectricFlow environment.</td>
+                <td>If specified, will be used to create CloudBees Flow environment.</td>
             </tr>
             
             <tr>
@@ -4512,6 +4512,10 @@ The list of supported object types:
     
 
     <h1 id="releaseNotes">Release Notes</h1>
+
+    <h3 id="3.4.3">@PLUGIN_KEY@ 3.4.3</h3>
+    <p>Renaming from "Electric Cloud" to "CloudBees"</p>
+
     
     <h3>@PLUGIN_KEY@ 3.4.2</h3>
     <ul>
