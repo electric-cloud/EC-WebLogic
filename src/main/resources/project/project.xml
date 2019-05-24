@@ -9018,7 +9018,7 @@ By default, the JNDI name is the name of the Datasource. Applications that look 
 </procedure>
 
 <procedure>
-  <description>This procedure connects to a Weblogic environment, discovers objects specified by user and creates a Weblogic plugin configuration and an Application/Environment model in Electric Flow based on objects discovered.</description>
+  <description>This procedure connects to a Weblogic environment, discovers objects specified by user and creates a Weblogic plugin configuration and an Application/Environment model in CloudBees Flow based on objects discovered.</description>
   <jobNameTemplate>weblogic-discover-$[jobId]</jobNameTemplate>
   <procedureName>Discover</procedureName>
   <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
@@ -9171,21 +9171,21 @@ By default, the JNDI name is the name of the Datasource. Applications that look 
   </propertySheet>
   <formalParameter>
     <defaultValue />
-    <description>Name of the ElectricFlow resource with the WebLogic instance running.</description>
+    <description>Name of the CloudBees Flow resource with the WebLogic instance running.</description>
     <formalParameterName>ecp_weblogic_resourceName</formalParameterName>
     <required>0</required>
     <type>entry</type>
   </formalParameter>
   <formalParameter>
     <defaultValue />
-    <description>Hostname of a machine with WebLogic and ElectricFlow Agent running on it. Either Resource hostname (and port) or Resource Name should be specified.</description>
+    <description>Hostname of a machine with WebLogic and CloudBees Flow Agent running on it. Either Resource hostname (and port) or Resource Name should be specified.</description>
     <formalParameterName>ecp_weblogic_hostname</formalParameterName>
     <required>0</required>
     <type>entry</type>
   </formalParameter>
   <formalParameter>
     <defaultValue />
-    <description>Port of ElectricFlow agent running on the machine. Default is 7800.</description>
+    <description>Port of CloudBees Flow agent running on the machine. Default is 7800.</description>
     <formalParameterName>ecp_weblogic_resPort</formalParameterName>
     <required>0</required>
     <type>entry</type>
@@ -9234,14 +9234,14 @@ By default, the JNDI name is the name of the Datasource. Applications that look 
   </formalParameter>
   <formalParameter>
     <defaultValue />
-    <description>If specified, will be used to create ElectricFlow environment.</description>
+    <description>If specified, will be used to create CloudBees Flow environment.</description>
     <formalParameterName>ecp_weblogic_envProjectName</formalParameterName>
     <required>0</required>
     <type>entry</type>
   </formalParameter>
   <formalParameter>
     <defaultValue />
-    <description>If specified, will be used to create ElectricFlow environment.</description>
+    <description>If specified, will be used to create CloudBees Flow environment.</description>
     <formalParameterName>ecp_weblogic_envName</formalParameterName>
     <required>0</required>
     <type>entry</type>
