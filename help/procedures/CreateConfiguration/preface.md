@@ -1,4 +1,4 @@
-**After you perform the setup below it is important to make sure that the Electric Flow agent machine on which WebLogic runs is registered as a resource that can be pinged.**
+**After you perform the setup below it is important to make sure that the CloudBees Flow agent machine on which WebLogic runs is registered as a resource that can be pinged.**
 
 <img src="../../plugins/EC-WebLogic/images/Config/EC-WLSConfig.png" />
 

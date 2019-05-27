@@ -2,7 +2,7 @@
 
 ## Output
 
-After the job runs, you can view the results on the Job Details page in ElectricFlow. The Datasource was created successfully.
+After the job runs, you can view the results on the Job Details page in CloudBees Flow. The Datasource was created successfully.
 
 <img src="../../plugins/EC-WebLogic/images/CreateOrUpdateDatasource/Summary.png" />
 

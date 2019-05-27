@@ -14,7 +14,7 @@ applications and secure.
 
 For more information about WebLogic, go to <a href="http://www.oracle.com/technetwork/middleware/weblogic/overview/index.html" target="_blank">WebLogic home page</a>.
 
-## ElectricFlow Integration to WebLogic
+## CloudBees Flow Integration to WebLogic
 
 Use this plugin to interact with the Oracle WebLogic server for application
 and server management, interacting or editing existing applications, and deploying new applications.

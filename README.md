@@ -1,7 +1,7 @@
 EC-WebLogic
 ============
 
-The ElectricFlow WebLogic integration
+The CloudBees Flow WebLogic integration
 
 ## Compile ##
 
