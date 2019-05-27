@@ -2,7 +2,7 @@
 
 ## Output
 
-After the job runs, you can view the results on the Job Details page in ElectricFlow. The JMS Subdeployment was deleted.
+After the job runs, you can view the results on the Job Details page in CloudBees Flow. The JMS Subdeployment was deleted.
 
 <img src="../../plugins/EC-WebLogic/images/DeleteSubdeployment/Summary.png" />
 

@@ -3,7 +3,7 @@
 
 ## Output
 
-After the job runs, you can view the results on the Job Details page in ElectricFlow. The Connection Factory was deleted.
+After the job runs, you can view the results on the Job Details page in CloudBees Flow. The Connection Factory was deleted.
 
 <img src="../../plugins/EC-WebLogic/images/DeleteConnectionFactory/Summary.png" />
 
