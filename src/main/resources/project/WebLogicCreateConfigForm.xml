@@ -84,6 +84,15 @@ limitations under the License.
         </documentation>
     </formElement>
     <formElement>
+        <type>checkbox</type>
+        <label>Test Connection?:</label>
+        <property>test_connection</property>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <required>0</required>
+        <documentation>Check if connection should be established during config creation to validate credentials.</documentation>
+    </formElement>
+    <formElement>
         <type>select</type>
         <label>Debug level:</label>
         <property>debug_level</property>

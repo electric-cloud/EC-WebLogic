@@ -79,14 +79,13 @@ limitations under the License.
         </documentation>
     </formElement>
     <formElement>
-        <type>entry</type>
-        <label>Debug level:</label>
-        <property>debug_level</property>
-        <value></value>
-        <documentation>
-            Debug level, higher debug level - more debug messages. Warning: on debug level 10 and more passwords will be revealed in a procedure logs.
-        </documentation>
-        <required>1</required>
+        <type>checkbox</type>
+        <label>Test Connection?:</label>
+        <property>test_connection</property>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <required>0</required>
+        <documentation>Check if connection should be established during config creation to validate credentials.</documentation>
     </formElement>
     <formElement>
         <type>select</type>

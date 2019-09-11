@@ -572,6 +572,16 @@
                   </propertySheet>
                 </property>
                 <property>
+                  <propertyName>test_connection</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
                   <propertyName>java_home</propertyName>
                   <propertySheet>
                     <property>
@@ -668,6 +678,15 @@
           <defaultValue/>
           <description>
               If checked, each WebLogic edit session will have unique name assigned. Defaults to false.
+          </description>
+          <required>0</required>
+          <type>checkbox</type>
+      </formalParameter>
+      <formalParameter>
+          <formalParameterName>test_connection</formalParameterName>
+          <defaultValue/>
+          <description>
+              Check if connection should be established during config creation to validate credentials.
           </description>
           <required>0</required>
           <type>checkbox</type>

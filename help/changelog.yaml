@@ -1,4 +1,5 @@
-3.4.4:
+3.5.0:
+  - Add checking connection while creating a configuration.
   - Jobs for the successful "CreateConfiguration" and "EditConfiguration" run is now preserved.
   - Add logging while running "CreateConfiguration".
 3.4.3:

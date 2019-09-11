@@ -193,6 +193,13 @@ to carry all traffic for a JVM.</p>
             
             <tr>
                 
+                    <td >Test Connection?</td>
+                    <td>Check if connection should be established during config creation to validate credentials.</td>
+                
+            </tr>
+            
+            <tr>
+                
                     <td >Debug level</td>
                     <td>Debug level, higher debug level - more debug messages. Warning: on debug level 10 and more passwords will be revealed in a procedure logs.Verbosity level of output.</td>
                 
@@ -5317,8 +5324,10 @@ The list of supported object types:
 
     <h1 id="releaseNotes">Release Notes</h1>
     
-    <h3>@PLUGIN_KEY@ 3.4.4</h3>
+    <h3>@PLUGIN_KEY@ 3.5.0</h3>
     <ul>
+        
+        <li>Add checking connection while creating a configuration.</li>
         
         <li>Jobs for the successful "CreateConfiguration" and "EditConfiguration" run is now preserved.</li>
         
