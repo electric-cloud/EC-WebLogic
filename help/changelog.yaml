@@ -1,3 +1,8 @@
+3.4.4:
+  - Jobs for the successful "CreateConfiguration" and "EditConfiguration" run is now preserved.
+  - Add logging while running "CreateConfiguration".
+3.4.3:
+  - Renaming from "Electric Cloud" to "CloudBees"
 3.4.2:
   - Configurations can be created by users with "@" sign in a name.
 3.4.1:

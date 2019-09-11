@@ -40,42 +40,43 @@ sub main {
     # Get CGI args
     my $cgi = new CGI;
     my $cgiArgs = $cgi->Vars;
-    
+
     # Check for required args
     my $jobId = $cgiArgs->{jobId};
     if (!defined $jobId || "$jobId" eq "") {
         reportError($cgi, "jobId is a required parameter");
     }
-    
+
     # Wait for job
     my $ec = new ElectricCommander({abortOnError => 0});
     my $xpath = $ec->waitForJob($jobId, $gTimeout);
     my $errors = $ec->checkAllErrors($xpath);
-    
+
     if ("$errors" ne "") {
         reportError($cgi, $errors);
     }
-    
+
     my $status = $xpath->findvalue("//status");
     if ("$status" ne "completed") {
-        
+
         # Abort job and report failure
         abortJobAndReportError($cgi, $ec, $jobId);
     }
-    
+
     my $outcome = $xpath->findvalue("//outcome");
     if ("$outcome" ne "success") {
-        
+
         # Report job errors
         reportJobErrors($cgi, $ec, $jobId);
     }
-    
-    # If the job was successful and the debug flag is not set, delete it
-    my $debug = $cgiArgs->{debug};
-    if (!defined $debug || "$debug" ne "1") {
-        $ec->deleteJob($jobId);
-    }
-    
+
+    # <!-- This behaviour was copied from the ServiceNowMonitor.cgi but commented out due to the FLOWPLUGIN-7918 -->
+    # # If the job was successful and the debug flag is not set, delete it
+    # my $debug = $cgiArgs->{debug};
+    # if (!defined $debug || "$debug" ne "1") {
+        # $ec->deleteJob($jobId);
+    # }
+
     # Report the job's success
     reportSuccess($cgi);
 }
@@ -84,9 +85,9 @@ sub main {
 # abortJobAndReportError - Abort the job and report the timeout error.
 #
 # Arguments:
-#   cgi   
+#   cgi
 #   ec    - ElectricCommander instance
-#   jobId - int identifier for the job 
+#   jobId - int identifier for the job
 #
 # Returns:
 #   -
@@ -94,29 +95,29 @@ sub main {
 ################################
 sub abortJobAndReportError($$$) {
     my ($cgi, $ec, $jobId) = @_;
-    
+
     my $errMsg = "Aborting job after reaching timeout";
-        
+
     # Try to abort the job
     my $xpath = $ec->abortJob($jobId);
     my $errors = $ec->checkAllErrors($xpath);
     if ($errors ne '') {
         reportError($cgi, $errMsg . "\n" . $errors);
     }
-    
+
     # Wait for the job to finish aborting
     $xpath = $ec->waitForJob($jobId, $gTimeout);
     $errors = $ec->checkAllErrors($xpath);
     if ("$errors" ne "") {
         reportError($cgi, $errMsg . "\n" . $errors);
     }
-    
+
     # Check to see if the job actually aborted
     my $status = $xpath->findvalue("//status");
     if ("$status" ne "completed") {
         reportError($cgi, $errMsg . "\nJob still running after abort");
     }
-    
+
     reportError($cgi, $errMsg . "\nJob successfully aborted");
 }
 
@@ -124,9 +125,9 @@ sub abortJobAndReportError($$$) {
 # reportJobErrors - Look for errors in the job to report.
 #
 # Arguments:
-#   cgi   
+#   cgi
 #   ec    - ElectricCommander instance
-#   jobId - int identifier for the job 
+#   jobId - int identifier for the job
 #
 # Returns:
 #   -
@@ -134,27 +135,27 @@ sub abortJobAndReportError($$$) {
 ################################
 sub reportJobErrors($$$) {
     my ($cgi, $ec, $jobId) = @_;
-    
+
     # Get job details
     my $xpath = $ec->getJobDetails($jobId);
     my $errors = $ec->checkAllErrors($xpath);
     if ("$errors" ne "") {
         reportError($cgi, $errors);
     }
-    
+
     # Look for configError first
     my $configError = $xpath->findvalue("//job/propertySheet/property[propertyName='configError']/value");
     if (defined $configError && "$configError" ne "") {
         reportError($cgi, $configError)
     }
-    
+
     # Find the first error message and report it
     my @errorMessages = $xpath->findnodes("//errorMessage");
     if (@errorMessages > 0) {
         my $firstMessage = $errorMessages[0]->string_value();
         reportError($cgi, $firstMessage);
     }
-    
+
     # Report a generic error message if we couldn't find a specific one on the
     # job
     reportError($cgi, "Configuration creation failed");
@@ -164,7 +165,7 @@ sub reportJobErrors($$$) {
 # reportError - Print the error message and exit.
 #
 # Arguments:
-#   cgi   
+#   cgi
 #   error - string to print
 #
 # Returns:
@@ -174,7 +175,7 @@ sub reportJobErrors($$$) {
 ################################
 sub reportError($$) {
     my ($cgi, $error) = @_;
-    
+
     print $cgi->header("text/html");
     print $error;
     exit ERROR;
@@ -184,7 +185,7 @@ sub reportError($$) {
 # reportSuccess - Report success.
 #
 # Arguments:
-#   cgi   
+#   cgi
 #
 # Returns:
 #   -
@@ -192,7 +193,7 @@ sub reportError($$) {
 ################################
 sub reportSuccess($) {
     my ($cgi) = @_;
-    
+
     print $cgi->header("text/html");
     print "Success";
 }
