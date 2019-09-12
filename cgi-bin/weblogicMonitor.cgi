@@ -22,7 +22,6 @@ use constant {
     ERROR   => 1,
 };
 
-
 my $gTimeout = 20;
 
 ################################
@@ -38,7 +37,7 @@ my $gTimeout = 20;
 sub main {
 
     # Get CGI args
-    my $cgi = new CGI;
+    my $cgi     = CGI->new();
     my $cgiArgs = $cgi->Vars;
 
     # Check for required args
@@ -48,7 +47,9 @@ sub main {
     }
 
     # Wait for job
-    my $ec = new ElectricCommander({abortOnError => 0});
+    my $ec = ElectricCommander->new({abortOnError => 0});
+    $ec->abortOnError(0);
+
     my $xpath = $ec->waitForJob($jobId, $gTimeout);
     my $errors = $ec->checkAllErrors($xpath);
 
@@ -74,12 +75,12 @@ sub main {
     # # If the job was successful and the debug flag is not set, delete it
     # my $debug = $cgiArgs->{debug};
     # if (!defined $debug || "$debug" ne "1") {
-        # $ec->deleteJob($jobId);
+    #   $ec->deleteJob($jobId);
     # }
 
     # Report the job's success
     reportSuccess($cgi);
-}
+} ## end sub main
 
 ################################
 # abortJobAndReportError - Abort the job and report the timeout error.
@@ -99,7 +100,7 @@ sub abortJobAndReportError($$$) {
     my $errMsg = "Aborting job after reaching timeout";
 
     # Try to abort the job
-    my $xpath = $ec->abortJob($jobId);
+    my $xpath  = $ec->abortJob($jobId);
     my $errors = $ec->checkAllErrors($xpath);
     if ($errors ne '') {
         reportError($cgi, $errMsg . "\n" . $errors);
@@ -119,7 +120,7 @@ sub abortJobAndReportError($$$) {
     }
 
     reportError($cgi, $errMsg . "\nJob successfully aborted");
-}
+} ## end sub abortJobAndReportError($$$)
 
 ################################
 # reportJobErrors - Look for errors in the job to report.
@@ -137,7 +138,8 @@ sub reportJobErrors($$$) {
     my ($cgi, $ec, $jobId) = @_;
 
     # Get job details
-    my $xpath = $ec->getJobDetails($jobId);
+    my $xpath  = $ec->getJobDetails($jobId);
+    my $procedureName = eval { $xpath->findvalue('//job/procedureName')->string_value(); };
     my $errors = $ec->checkAllErrors($xpath);
     if ("$errors" ne "") {
         reportError($cgi, $errors);
@@ -158,8 +160,13 @@ sub reportJobErrors($$$) {
 
     # Report a generic error message if we couldn't find a specific one on the
     # job
-    reportError($cgi, "Configuration creation failed");
-}
+    if ($procedureName && $procedureName eq 'EditConfiguration') {
+        reportError($cgi, "Edit configuration failed");
+    }
+    else {
+        reportError($cgi, "Configuration creation failed");
+    }
+} ## end sub reportJobErrors($$$)
 
 ################################
 # reportError - Print the error message and exit.
