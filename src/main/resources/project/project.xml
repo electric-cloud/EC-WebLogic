@@ -582,6 +582,16 @@
                   </propertySheet>
                 </property>
                 <property>
+                  <propertyName>test_connection_res</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
                   <propertyName>java_home</propertyName>
                   <propertySheet>
                     <property>
@@ -691,6 +701,13 @@
           <required>0</required>
           <type>checkbox</type>
       </formalParameter>
+      <formalParameter>
+        <formalParameterName>test_connection_res</formalParameterName>
+        <defaultValue/>
+        <description>A resource which is used for the testing connection.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
       <step>
         <stepName>AttemptConnection</stepName>
         <alwaysRun>0</alwaysRun>
@@ -704,7 +721,7 @@
         <parallel>0</parallel>
         <postProcessor/>
         <releaseExclusive>0</releaseExclusive>
-        <resourceName/>
+        <resourceName>$[test_connection_res]</resourceName>
         <retries>0</retries>
         <shell>ec-perl</shell>
         <timeLimit/>
@@ -884,6 +901,16 @@
                   </propertySheet>
                 </property>
                 <property>
+                  <propertyName>test_connection_res</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
                   <propertyName>java_home</propertyName>
                   <propertySheet>
                     <property>
@@ -918,13 +945,6 @@
           </propertySheet>
         </property>
       </propertySheet>
-      <formalParameter>
-        <formalParameterName>config</formalParameterName>
-        <defaultValue/>
-        <description>Configuration Name</description>
-        <required>1</required>
-        <type>entry</type>
-      </formalParameter>
       <formalParameter>
         <formalParameterName>wlst_path</formalParameterName>
         <defaultValue/>
@@ -992,6 +1012,13 @@
         <required>0</required>
         <type>checkbox</type>
       </formalParameter>
+      <formalParameter>
+        <formalParameterName>test_connection_res</formalParameterName>
+        <defaultValue/>
+        <description>A resource which is used for the testing connection.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
       <step>
         <stepName>AttemptConnection</stepName>
         <alwaysRun>0</alwaysRun>
@@ -1005,7 +1032,7 @@
         <parallel>0</parallel>
         <postProcessor/>
         <releaseExclusive>0</releaseExclusive>
-        <resourceName/>
+        <resourceName>$[test_connection_res]</resourceName>
         <retries>0</retries>
         <shell>ec-perl</shell>
         <timeLimit/>

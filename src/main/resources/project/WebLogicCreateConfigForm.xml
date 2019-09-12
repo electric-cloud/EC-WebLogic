@@ -16,6 +16,7 @@ limitations under the License.
 
 -->
 <editor>
+
     <formElement>
         <type>entry</type>
         <label>Configuration Name:</label>
@@ -23,6 +24,7 @@ limitations under the License.
         <value></value>
         <required>1</required>
     </formElement>
+
     <formElement>
         <type>entry</type>
         <label>WebLogic URL:</label>
@@ -31,6 +33,7 @@ limitations under the License.
         <documentation>URL of WebLogic Server (must include protocol, server and port). Two protocols are supported: t3 and t3s, e.g. t3://weblogic:7001.</documentation>
         <required>1</required>
     </formElement>
+
     <formElement>
         <type>entry</type>
         <label>WLST Script Absolute Path:</label>
@@ -39,6 +42,7 @@ limitations under the License.
         <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.</documentation>
         <required>0</required>
     </formElement>
+
     <formElement>
         <type>entry</type>
         <label>JAVA_HOME:</label>
@@ -47,6 +51,7 @@ limitations under the License.
         <documentation>JAVA_HOME environment variable, i.e. path to bin, where java executable is located. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, JAVA_VENDOR should be also set.</documentation>
         <required>0</required>
     </formElement>
+
     <formElement>
         <type>entry</type>
         <label>JAVA_VENDOR:</label>
@@ -55,6 +60,7 @@ limitations under the License.
         <documentation>JAVA_VENDOR environment variable, use it to specify java vendor. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, the option JAVA_HOME should be also set. </documentation>
         <required>0</required>
     </formElement>
+
     <formElement>
         <type>entry</type>
         <label>MW_HOME:</label>
@@ -63,6 +69,7 @@ limitations under the License.
         <documentation>MW_HOME environment variable, use it to specify WebLogic Home directory. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances.</documentation>
         <required>0</required>
     </formElement>
+
     <formElement>
         <type>credential</type>
         <label>Login as:</label>
@@ -71,6 +78,7 @@ limitations under the License.
         <required>0</required>
         <documentation>Username and password to connect to WebLogic server.</documentation>
     </formElement>
+
     <formElement>
         <type>checkbox</type>
         <label>Enable named sessions?:</label>
@@ -83,6 +91,7 @@ limitations under the License.
             If checked, each WebLogic edit session will have unique name assigned. Named sessions are not supported by WebLogic server prior to 12 version. Defaults to false.
         </documentation>
     </formElement>
+
     <formElement>
         <type>checkbox</type>
         <label>Test Connection?:</label>
@@ -92,6 +101,16 @@ limitations under the License.
         <required>0</required>
         <documentation>Check if connection should be established during config creation to validate credentials.</documentation>
     </formElement>
+
+    <formElement>
+        <type>entry</type>
+        <label>Test Connection Resource:</label>
+        <property>test_connection_res</property>
+        <value></value>
+        <documentation>A resource which is used for the testing connection.</documentation>
+        <required>0</required>
+    </formElement>
+
     <formElement>
         <type>select</type>
         <label>Debug level:</label>
@@ -113,4 +132,5 @@ limitations under the License.
         </option>
         <documentation>Verbosity level of output.</documentation>
     </formElement>
+
 </editor>
