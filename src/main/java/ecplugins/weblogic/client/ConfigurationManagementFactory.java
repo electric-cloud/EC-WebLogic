@@ -11,7 +11,7 @@ package ecplugins.weblogic.client;
 
 import ecinternal.client.InternalComponentBaseFactory;
 import ecinternal.client.InternalFormBase;
-import ecinternal.client.PropertySheetEditor;
+// import ecinternal.client.PropertySheetEditor;
 
 import com.electriccloud.commander.gwt.client.BrowserContext;
 import com.electriccloud.commander.gwt.client.Component;
@@ -37,17 +37,20 @@ public class ConfigurationManagementFactory
             component = new CreateConfiguration();
         }
         else if ("edit".equals(panel)) {
-            String configName    = BrowserContext.getInstance()
-                                                 .getGetParameter("configName");
+            String configName    = BrowserContext.getInstance().getGetParameter("configName");
             String projectName = "/plugins/" + getPluginName() + "/project";
             String propSheetPath = projectName + "/weblogic_cfgs/" + configName;
 
-            String formXmlPath   = "/plugins/" + getPluginName()
-                    + "/project/ui_forms/WebLogicEditConfigForm";
+            String formXmlPath   = "/plugins/" + getPluginName() + "/project/ui_forms/WebLogicEditConfigForm";
 
-            component = new EditConfigPropertySheetEditor("ecgc",
-                    "Edit WebLogic Configuration", configName, propSheetPath,
-                    formXmlPath, projectName, getPluginName()
+            component = new EditConfigPropertySheetEditor(
+                "ecgc",
+                "Edit WebLogic Configuration",
+                configName,
+                propSheetPath,
+                formXmlPath,
+                projectName,
+                getPluginName()
             );
 
             ((InternalFormBase) component).setDefaultRedirectToUrl(
