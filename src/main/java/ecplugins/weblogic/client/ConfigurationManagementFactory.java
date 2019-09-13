@@ -43,7 +43,7 @@ public class ConfigurationManagementFactory
             String propSheetPath = projectName + "/weblogic_cfgs/" + configName;
 
             String formXmlPath   = "/plugins/" + getPluginName()
-                    + "/project/ui_forms/EC-WebLogic - EditConfigForm";
+                    + "/project/ui_forms/WebLogicEditConfigForm";
 
             component = new EditConfigPropertySheetEditor("ecgc",
                     "Edit WebLogic Configuration", configName, propSheetPath,

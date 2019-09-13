@@ -621,7 +621,6 @@
                     </property>
                   </propertySheet>
                 </property>
-
               </propertySheet>
             </property>
           </propertySheet>
@@ -999,7 +998,7 @@
         <defaultValue/>
         <description>
               If checked, each WebLogic edit session will have unique name assigned. Defaults to false.
-          </description>
+        </description>
         <required>0</required>
         <type>checkbox</type>
       </formalParameter>
@@ -1008,7 +1007,7 @@
         <defaultValue/>
         <description>
               Check if connection should be established during config edition to validate credentials.
-          </description>
+        </description>
         <required>0</required>
         <type>checkbox</type>
       </formalParameter>
