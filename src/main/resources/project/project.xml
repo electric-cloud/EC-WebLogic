@@ -637,7 +637,7 @@
         <formalParameterName>wlst_path</formalParameterName>
         <defaultValue/>
         <description>WLST Script Absolute Path</description>
-        <required>0</required>
+        <required>1</required>
         <type>entry</type>
       </formalParameter>
       <formalParameter>
@@ -955,7 +955,7 @@
         <formalParameterName>wlst_path</formalParameterName>
         <defaultValue/>
         <description>WLST Script Absolute Path</description>
-        <required>0</required>
+        <required>1</required>
         <type>entry</type>
       </formalParameter>
       <formalParameter>
