@@ -70,7 +70,7 @@ if ($java_vendor) {
 
 if ($mw_home) {
     $ENV{MW_HOME} = $mw_home;
-    $wl->out(LEVEL_INFO, "MW_HOME was set to $mw_home");
+    $wl->out(LEVEL_INFO, "MW_HOME was set to '$mw_home'");
 }
 
 my $script = $ENV{COMMANDER_WORKSPACE} . '/do_ls';

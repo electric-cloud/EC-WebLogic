@@ -11,7 +11,6 @@ package ecplugins.weblogic.client;
 
 import ecinternal.client.InternalComponentBaseFactory;
 import ecinternal.client.InternalFormBase;
-// import ecinternal.client.PropertySheetEditor;
 
 import com.electriccloud.commander.gwt.client.BrowserContext;
 import com.electriccloud.commander.gwt.client.Component;
