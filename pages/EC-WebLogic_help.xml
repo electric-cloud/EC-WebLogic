@@ -14,7 +14,7 @@
     <h1>@PLUGIN_KEY@</h1>
     <p>Plugin version @PLUGIN_VERSION@</p>
     
-    <p>Revised on September 11, 2019</p>
+    <p>Revised on September 17, 2019</p>
     
     <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade"/>
     <h1>Contents</h1>
@@ -149,7 +149,7 @@ to carry all traffic for a JVM.</p>
             
             <tr>
                 
-                    <td >WLST Script Absolute Path</td>
+                    <td class="required">WLST Script Absolute Path</td>
                     <td>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.</td>
                 
             </tr>
@@ -195,6 +195,13 @@ to carry all traffic for a JVM.</p>
                 
                     <td >Test Connection?</td>
                     <td>Check if connection should be established during config creation to validate credentials.</td>
+                
+            </tr>
+            
+            <tr>
+                
+                    <td >Test Connection Resource</td>
+                    <td>A resource which is used for the testing connection.</td>
                 
             </tr>
             
