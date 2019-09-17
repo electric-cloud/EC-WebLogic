@@ -37,7 +37,8 @@ test {
 
     def server = findProperty('server') ?: findProperty('COMMANDER_SERVER') ?: findProperty('commanderServer') ?: 'localhost'
     systemProperties['COMMANDER_SERVER'] = server
-    systemProperties["COMMANDER_SECURE"] = '1'
+    def secure = findProperty('secure') ?: findProperty('COMMANDER_SECURE') ?: findProperty('commanderSecure') ?: 1
+    systemProperties["COMMANDER_SECURE"] = secure
 
     testLogging {
         showStandardStreams = true

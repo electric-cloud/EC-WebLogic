@@ -110,7 +110,7 @@ class StartStopServer extends WebLogicHelper {
             instancename  : 'AdminServer',
             wlstabspath: wlstPath,
             maxelapsedtime: 60,
-            adminserverurl: 't3://localhost:7001'
+            adminserverurl: getEndpoint()
         ], [], resourceName)
         then:
         assert result.outcome != 'error'
