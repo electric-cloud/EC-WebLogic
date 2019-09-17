@@ -572,6 +572,26 @@
                   </propertySheet>
                 </property>
                 <property>
+                  <propertyName>test_connection</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>test_connection_res</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
                   <propertyName>java_home</propertyName>
                   <propertySheet>
                     <property>
@@ -601,7 +621,6 @@
                     </property>
                   </propertySheet>
                 </property>
-
               </propertySheet>
             </property>
           </propertySheet>
@@ -618,7 +637,7 @@
         <formalParameterName>wlst_path</formalParameterName>
         <defaultValue/>
         <description>WLST Script Absolute Path</description>
-        <required>0</required>
+        <required>1</required>
         <type>entry</type>
       </formalParameter>
       <formalParameter>
@@ -672,6 +691,60 @@
           <required>0</required>
           <type>checkbox</type>
       </formalParameter>
+      <formalParameter>
+          <formalParameterName>test_connection</formalParameterName>
+          <defaultValue/>
+          <description>
+              Check if connection should be established during config creation to validate credentials.
+          </description>
+          <required>0</required>
+          <type>checkbox</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>test_connection_res</formalParameterName>
+        <defaultValue/>
+        <description>A resource which is used for the testing connection.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      <step>
+        <stepName>AttemptConnection</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command/>
+        <condition>$[test_connection]</condition>
+        <description/>
+        <errorHandling>abortJob</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName/>
+        <parallel>0</parallel>
+        <postProcessor/>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName>$[test_connection_res]</resourceName>
+        <retries>0</retries>
+        <shell>ec-perl</shell>
+        <timeLimit/>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory/>
+        <workspaceName/>
+        <procedureName>CreateConfiguration</procedureName>
+        <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+        <attachedParameters>
+          <formalParameterName>credential</formalParameterName>
+        </attachedParameters>
+      </step>
       <step>
         <stepName>CreateConfiguration</stepName>
         <alwaysRun>0</alwaysRun>
@@ -728,6 +801,251 @@
         <workingDirectory/>
         <workspaceName/>
         <procedureName>CreateConfiguration</procedureName>
+        <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+        <propertySheet>
+          <property>
+            <propertyName>ec_customEditorData</propertyName>
+            <propertySheet>
+              <property>
+                <propertyName>formType</propertyName>
+                <expandable>1</expandable>
+                <value>command</value>
+              </property>
+            </propertySheet>
+          </property>
+        </propertySheet>
+        <attachedParameters>
+          <formalParameterName>credential</formalParameterName>
+        </attachedParameters>
+      </step>
+    </procedure>
+    <procedure>
+      <procedureName>EditConfiguration</procedureName>
+      <description>Edit a WebLogic configuration</description>
+      <jobNameTemplate>weblogic-cfg-$[jobId]</jobNameTemplate>
+      <resourceName/>
+      <workspaceName/>
+      <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
+      <propertySheet>
+        <property>
+          <propertyName>ec_visibility</propertyName>
+          <description/>
+          <expandable>1</expandable>
+          <value>hidden</value>
+        </property>
+        <property>
+          <propertyName>ec_customEditorData</propertyName>
+          <propertySheet>
+            <property>
+              <propertyName>parameters</propertyName>
+              <propertySheet>
+                <property>
+                  <propertyName>wlst_path</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>weblogic_url</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>credential</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>debug_level</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>enable_named_sessions</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>test_connection</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>test_connection_res</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>java_home</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>java_vendor</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+                <property>
+                  <propertyName>mw_home</propertyName>
+                  <propertySheet>
+                    <property>
+                      <propertyName>formType</propertyName>
+                      <expandable>1</expandable>
+                      <value>standard</value>
+                    </property>
+                  </propertySheet>
+                </property>
+              </propertySheet>
+            </property>
+          </propertySheet>
+        </property>
+      </propertySheet>
+      <formalParameter>
+        <formalParameterName>config</formalParameterName>
+        <defaultValue/>
+        <description>Configuration Name</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>wlst_path</formalParameterName>
+        <defaultValue/>
+        <description>WLST Script Absolute Path</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>weblogic_url</formalParameterName>
+        <defaultValue/>
+        <description>URL of WebLogic Server (must include protocol, server and port).</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>debug_level</formalParameterName>
+        <defaultValue/>
+        <description>Verbosity level of output. By default, debug level is set to 1. Higher debug level - more debug messages. Maximal debug level is 10.</description>
+        <required>1</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>java_home</formalParameterName>
+        <defaultValue/>
+        <description>JAVA_HOME environment variable. It should be used when java is not in the path, or a different JDK needs to be used. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, JAVA_VENDOR should be also set.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>java_vendor</formalParameterName>
+        <defaultValue/>
+        <description>JAVA_VENDOR environment variable. It should be used to specify the Java vendor value when setting the JAVA_HOME parameter to point to a specific JDK. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, the option JAVA_HOME should be also set.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>mw_home</formalParameterName>
+        <defaultValue/>
+        <description>MW_HOME environment variable, use it to specify WebLogic Home directory. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>credential</formalParameterName>
+        <defaultValue/>
+        <description/>
+        <required>0</required>
+        <type>credential</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>enable_named_sessions</formalParameterName>
+        <defaultValue/>
+        <description>
+              If checked, each WebLogic edit session will have unique name assigned. Defaults to false.
+        </description>
+        <required>0</required>
+        <type>checkbox</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>test_connection</formalParameterName>
+        <defaultValue/>
+        <description>
+              Check if connection should be established during config edition to validate credentials.
+        </description>
+        <required>0</required>
+        <type>checkbox</type>
+      </formalParameter>
+      <formalParameter>
+        <formalParameterName>test_connection_res</formalParameterName>
+        <defaultValue/>
+        <description>A resource which is used for the testing connection.</description>
+        <required>0</required>
+        <type>entry</type>
+      </formalParameter>
+      <step>
+        <stepName>AttemptConnection</stepName>
+        <alwaysRun>0</alwaysRun>
+        <broadcast>0</broadcast>
+        <command/>
+        <condition>$[test_connection]</condition>
+        <description/>
+        <errorHandling>abortJob</errorHandling>
+        <exclusive>0</exclusive>
+        <logFileName/>
+        <parallel>0</parallel>
+        <postProcessor/>
+        <releaseExclusive>0</releaseExclusive>
+        <resourceName>$[test_connection_res]</resourceName>
+        <retries>0</retries>
+        <shell>ec-perl</shell>
+        <timeLimit/>
+        <timeLimitUnits>minutes</timeLimitUnits>
+        <workingDirectory/>
+        <workspaceName/>
+        <procedureName>EditConfiguration</procedureName>
         <projectName>@PLUGIN_KEY@-@PLUGIN_VERSION@</projectName>
         <propertySheet>
           <property>
