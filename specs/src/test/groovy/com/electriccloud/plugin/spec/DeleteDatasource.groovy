@@ -57,7 +57,7 @@ class DeleteDatasource extends WebLogicHelper {
 
     @Shared
     def urls = [
-            mysql    : "jdbc:mysql://${mysqlHost}:3306/customers_db",
+            mysql    : "jdbc:mysql://${mysqlHost}:3306/customers_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
             derby    : "jdbc:derby://${derbyHost}:1527/test;ServerName=${derbyHost};databaseName=test;create=true",
             medrec   : "jdbc:derby://${derbyHost}:1527/medrec;ServerName=${derbyHost};databaseName=medrec;create=true",
             incorrect: "incorrect URL",
