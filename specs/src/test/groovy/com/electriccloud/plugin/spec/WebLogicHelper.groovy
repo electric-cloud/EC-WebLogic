@@ -72,22 +72,27 @@ class WebLogicHelper extends PluginSpockTestSupport {
     }
 
     static def getEndpoint() {
-        return 't3://localhost:7001'
+        return System.getenv('WEBLOGIC_ENDPOINT') ?: 't3://localhost:7001'
     }
 
     def createConfig(configName) {
         def endpoint = getEndpoint()
         def username = getUsername()
         def password = getPassword()
-        def enableNamedSessions = System.getenv('WL_ENABLE_NAMED_SESSIONS') ? '1' : '0'
+        def enableNamedSessions = System.getenv('WEBLOGIC_ENABLE_NAMED_SESSIONS') ? '1' : '0'
         if (!supportsNamedSessions()) {
             enableNamedSessions = '0'
         }
+        def testConnection = System.getenv('WEBLOGIC_ENABLE_TEST_CONNECTION') ? '1' : '0'
+
         def pluginConfig = [
             weblogic_url         : endpoint,
             enable_named_sessions: enableNamedSessions,
             debug_level          : '0',
             wlst_path            : getWlstPath(),
+            test_connection      : testConnection,
+            test_connection_res  : getResourceName()
+
         ]
         def props = [confPath: 'weblogic_cfgs']
         if (System.getenv('RECREATE_CONFIG')) {
