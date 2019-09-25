@@ -99,6 +99,8 @@ limitations under the License.
         <property>test_connection_res</property>
         <value></value>
         <documentation>A resource which is used for the testing connection.</documentation>
+        <dependsOn>test_connection</dependsOn>
+        <condition>${test_connection} == 1</condition>
         <required>0</required>
     </formElement>
 
