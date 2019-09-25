@@ -27,8 +27,6 @@ my $projName   = '$[/myProject/projectName]';
 my $pluginName = '@PLUGIN_NAME@';
 my $pluginKey  = '@PLUGIN_KEY@';
 
-my $configName = '$[/myJob/config]';
-
 my $weblogic_url          = '$[weblogic_url]';
 my $wlst_path             = '$[wlst_path]';
 my $java_home             = '$[java_home]';
@@ -55,7 +53,7 @@ $wl->logger->level($debug_level);
 $wl->debug_level($debug_level+1);
 
 # $wl->logger->debug(Dumper(['#001', ''.$username, ''.$password]));
-# $wl->logger->debug(Dumper(['#002', $projName, $pluginName, $pluginKey, $configName]));
+# $wl->logger->debug(Dumper(['#002', $projName, $pluginName, $pluginKey]));
 # $wl->logger->debug(Dumper(['#003', $weblogic_url, $wlst_path, $java_home, $java_vendor, $mw_home, $credential, $enable_named_sessions]));
 
 if ($java_home) {
