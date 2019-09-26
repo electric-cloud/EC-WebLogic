@@ -91,8 +91,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
             debug_level          : '0',
             wlst_path            : getWlstPath(),
             test_connection      : testConnection,
-            test_connection_res  : getResourceName()
-
+            test_connection_res  : getResourceName(),
         ]
         def props = [confPath: 'weblogic_cfgs']
         if (System.getenv('RECREATE_CONFIG')) {
@@ -181,10 +180,11 @@ class WebLogicHelper extends PluginSpockTestSupport {
         def stderr = new StringBuilder()
         def process = command.execute()
         process.consumeProcessOutput(stdout, stderr)
-        process.waitForOrKill(30 * 1000)
+        //process.waitForOrKill(10 * 1000)
         logger.debug("STDOUT: $stdout")
         logger.debug("STDERR: $stderr")
         logger.debug("Exit code: ${process.exitValue()}")
+
         def text = "$stdout\n$stderr"
         assert process.exitValue() == 0
         text
