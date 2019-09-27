@@ -3,7 +3,6 @@ package com.electriccloud.plugin.spec
 import spock.lang.*
 
 @Stepwise
-@Ignore
 class DeployAppSuite extends WebLogicHelper {
 
     /**
