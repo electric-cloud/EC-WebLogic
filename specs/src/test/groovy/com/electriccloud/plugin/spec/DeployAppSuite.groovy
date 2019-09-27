@@ -108,8 +108,9 @@ class DeployAppSuite extends WebLogicHelper {
         def version = '1.0'
 
         setupResource()
+        println "doSetupSpec create config.. "
         createConfig(CONFIG_NAME)
-
+        println "doSetupSpec publish Artifacts... "
         publishArtifact(artifactName, version, FILENAME)
         String path = downloadArtifact(artifactName, getResourceName())
         apppath = new File(path, FILENAME)
