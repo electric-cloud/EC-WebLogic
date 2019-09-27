@@ -211,6 +211,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
     def publishArtifact(String artifactName, String version, String resName) {
         println "Publishing process Started..."
+        logger.debug("Publishing process Started...")
         if (artifactExists(artifactName)) {
             logger.debug("Artifact $artifactName exists")
             return
@@ -240,6 +241,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
         String command = "${ectool.absolutePath} --server $commanderServer "
         println "command: ${command}"
+        logger.debug("command: ${command}")
 
         runCommand("${command} login ${username} ${password}")
 
@@ -247,6 +249,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
         String publishCommand = "${command} publishArtifactVersion --version $version --artifactName ${artifactName} "
         println "publishCommand: ${publishCommand}"
+        logger.debug("publishCommand: ${publishCommand}")
 
         if (resource.directory) {
             publishCommand += "--fromDirectory ${resource}"
@@ -254,6 +257,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
             publishCommand += "--fromDirectory ${resource.parentFile} --includePatterns $resName"
         }
         println "Before Run publishCommand: ${publishCommand}"
+        logger.debug("Before Run publishCommand: ${publishCommand}")
         runCommand(publishCommand)
     }
 
