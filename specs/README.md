@@ -1,0 +1,2 @@
+EC-WebLogic Test running
+============
