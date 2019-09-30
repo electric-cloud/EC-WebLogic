@@ -5,6 +5,7 @@ import groovy.json.*
 import spock.util.concurrent.PollingConditions
 
 class WebLogicHelper extends PluginSpockTestSupport {
+    static pluginName = "EC-WebLogic"
     static final def HELPER_PROJECT = 'EC-WebLogic Specs Helper'
     static final def SUCCESS_RESPONSE = '200'
     static final def NOT_FOUND_RESPONSE = '404'
