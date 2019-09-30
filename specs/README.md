@@ -5,7 +5,7 @@ EC-WebLogic Test running
 Need to up and run the MySQL machine
 
 ## MySQL Settings##
-
+```
 mysql> DROP USER 'root'@'%';
 Query OK, 0 rows affected (0.00 sec)
 
@@ -55,3 +55,4 @@ affiliates. Other names may be trademarks of their respective
 owners.
 
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+```
