@@ -5,6 +5,7 @@ EC-WebLogic Test running
 Need to up and run the MySQL machine
 
 ## MySQL Settings##
+
 mysql> DROP USER 'root'@'%';
 Query OK, 0 rows affected (0.00 sec)
 
