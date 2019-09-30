@@ -37,14 +37,14 @@ class CreateConfigDS {
 
 
     //required fields
-    static configName = [
+    static def configName = [
             originalName: "config",
             correct     : "CreateConfigurationTest",
             incorrect   : "//",
             empty       : "",
     ]
 
-    static debugLevel = [
+    static def debugLevel = [
             originalName: "debug_level",
             info        : "1",
             debug       : "2",
@@ -53,13 +53,13 @@ class CreateConfigDS {
             empty       : "",
     ]
 
-    static weblogicUrl = [
+    static def weblogicUrl = [
             originalName: "weblogic_url",
             correct     : WebLogicHelper.getEndpoint(),
             incorrect   : "t3:/incorrectHost:1122",
             empty       : "",
     ]
-    static wlstPath = [
+    static def wlstPath = [
             originalName: "wlst_path",
             correct     : WebLogicHelper.getWlstPath(),
             incorrect   : "",
@@ -67,38 +67,40 @@ class CreateConfigDS {
     ]
 
 
-    static credential = [
+    static def credential = [
             originalName: "credential",
             correct     : "credential",
             incorrect   : "incorrectCredential",
             empty       : "",
     ]
 
-    static enableNamedSessions = checkBox
+    static def enableNamedSessions = checkBox
 
-    static javaHome = [
+    static def javaHome = [
             originalName: "java_home",
             correct     : "",
             incorrect   : "",
             empty       : "",
     ]
-    static javaVendor = [
+    static def javaVendor = [
             originalName: "java_vendor",
             correct     : "",
             incorrect   : "",
             empty       : "",
     ]
-    static mwHome = [
+    static def mwHome = [
             originalName: "mw_home",
             correct     : "",
             incorrect   : "",
             empty       : "",
     ]
-    static testConnectionRes = [
+    static def testConnectionRes = [
             originalName: "test_connection_res",
             correct     : WebLogicHelper.getResourceName(),
             incorrect   : "",
             empty       : "",
     ]
-    static testConnection = checkBox
+    static def testConnection = checkBox
+
+    static def we
 }
