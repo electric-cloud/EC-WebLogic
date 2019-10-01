@@ -1,11 +1,12 @@
 package com.electriccloud.plugin.spec.DataSource
 import com.electriccloud.plugin.spec.WebLogicHelper
+import com.electriccloud.plugin.spec.CreateConfigSuite
 
 class CreateConfigDS {
     //common fields
     static def testRailData = [
             contentPrefix : "Create new Procedure\n" +
-                    "Add ${GetChangeTasks.procedureName} Procedure from ${PluginTestHelper.pluginName} Plugin\n" +
+                    "Add ${CreateConfigSuite.procedureName} Procedure from ${WebLogicHelper.pluginName} Plugin\n" +
                     "With Values\n" +
                     "New Procedure Windows Opened\n" +
                     "Fill Parameters:\n",

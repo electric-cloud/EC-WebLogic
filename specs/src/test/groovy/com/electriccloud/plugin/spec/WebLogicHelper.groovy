@@ -841,7 +841,7 @@ try {
         return summary
     }
 
-    def runProcedure(dslString, resourceName = null, timeout = 120, initialDelay = 0) {
+    def runProcedure(String dslString, String resourceName = null, int timeout = 120, int initialDelay = 0) {
         assert dslString
         def result = dsl(dslString)
 

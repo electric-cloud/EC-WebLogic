@@ -5,23 +5,18 @@ import com.electriccloud.plugins.annotations.*
 import com.electriccloud.plugin.spec.DataSource.CreateConfigDS
 
 class CreateConfigSuite extends WebLogicHelper{
-    @Shared
-    String procedureName = "CreateConfiguration"
+    static String procedureName = "CreateConfiguration"
     @Shared
     String projectName = "${pluginName} Specs ${procedureName}"
     @Shared
     String configName = "${pluginName}-Specs-${procedureName}-${CreateConfigDS.configName.correct}"
-    @Shared
-    String resourceName = CreateConfigDS.resourceName.local
+    static String resourceName = CreateConfigDS.resourceName.local
     @Shared
     def TCs = [
             C000001: [ids: 'C000001', description: 'Create single ChangeTask, only required fields filled'],
     ]
     @Shared
-    def creds = [
-            Username: "",
-            Password: "",
-    ]
+    List creds = [getUsername(), getPassword()]
 
 
     def doSetupSpec() {
@@ -48,14 +43,14 @@ class CreateConfigSuite extends WebLogicHelper{
                 params        : params,
         ])
     }
-    @Shared
-    def weblogicUrl
-    @Shared
+
+    static def weblogicUrl
+
     def wlstPath
     @Shared
     def debugLevel
     @Shared
-    def credential
+    List credential
     @Shared
     def enableNamedSessions
     @Shared
@@ -77,7 +72,6 @@ class CreateConfigSuite extends WebLogicHelper{
         println "Given Part"
         def runParams
         def result
-        expectedOutcome = CreateConfigDS.expectedOutcome.success
 
         when:
         println "When Part"
@@ -93,7 +87,7 @@ class CreateConfigSuite extends WebLogicHelper{
                 test_connection_res  : testConnectionRes,
                 test_connection      : testConnection,
         ]
-        result = runProcedure(projectName, procedureName, runParams, creds)
+        result = runProcedure(projectName, procedureName, runParams, credential)
 
         then:
         println "Then Part"
@@ -101,7 +95,9 @@ class CreateConfigSuite extends WebLogicHelper{
         println getJobLink(result.jobId)
 
         where:
-        TCs.C000003 | configName | weblogicUrl | wlstPath | debugLevel | credential | enableNamedSessions testConnectionRes | testConnectionRes | testConnection
+        caseId      | configName            | weblogicUrl                        | wlstPath                        | debugLevel                      | credential | enableNamedSessions                          | testConnectionRes                        | testConnection
+        TCs.C000003 | randomize(configName) | CreateConfigDS.weblogicUrl.correct | CreateConfigDS.wlstPath.correct | CreateConfigDS.debugLevel.debug | creds      | CreateConfigDS.enableNamedSessions.unchecked | CreateConfigDS.testConnectionRes.correct | CreateConfigDS.testConnection.checked
+
     }
 
 
