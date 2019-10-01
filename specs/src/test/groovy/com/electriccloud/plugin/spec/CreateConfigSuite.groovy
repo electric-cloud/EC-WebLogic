@@ -16,7 +16,12 @@ class CreateConfigSuite extends WebLogicHelper{
             C000001: [ids: 'C000001', description: 'Create single ChangeTask, only required fields filled'],
     ]
     @Shared
-    List creds = [getUsername(), getPassword()]
+
+    Map creds = [
+            credentialName: "credential",
+            userName: getUsername(),
+            password: getPassword(),
+    ]
 
 
     def doSetupSpec() {
@@ -25,6 +30,7 @@ class CreateConfigSuite extends WebLogicHelper{
                 config               : "",
                 weblogic_url         : "",
                 wlst_path            : "",
+                credential           : "",
                 debug_level          : "",
                 enable_named_sessions: "",
                 java_home            : "",
@@ -50,7 +56,7 @@ class CreateConfigSuite extends WebLogicHelper{
     @Shared
     def debugLevel
     @Shared
-    List credential
+    Map credential
     @Shared
     def enableNamedSessions
     @Shared
@@ -87,7 +93,7 @@ class CreateConfigSuite extends WebLogicHelper{
                 test_connection_res  : testConnectionRes,
                 test_connection      : testConnection,
         ]
-        result = runProcedure(projectName, procedureName, runParams, credential)
+        result = runProcedure(projectName, procedureName, runParams, [credential])
 
         then:
         println "Then Part"
