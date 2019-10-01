@@ -205,6 +205,9 @@ $wl->out(LEVEL_INFO, 'EXIT_CODE: ', $code);
 
 if ($code) {
     $errmsg ||= $stderr || $stdout;
+    $errmsg =~ s/^(.+?)WLSTException:\s+//s;
+    $errmsg =~ s/^(.+?)(?:nested exception is:.*)$/\1/s;
+    $errmsg =~ s/^(.+?)(?:Use dumpStack.*)$/\1/s;
 
     $ec->setProperty('/myJob/configError', $errmsg);
     $ec->setProperty('/myJobStep/summary', $errmsg);
