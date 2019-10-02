@@ -49,6 +49,18 @@ my $wl = EC::WebLogic->new(
 );
 
 #*****************************************************************************
+sub configurationError {
+    my ($errmsg) = @_;
+
+    $ec->setProperty('/myJob/configError', $errmsg);
+    $ec->setProperty('/myJobStep/summary', $errmsg);
+
+    $wl->logErrorDiag("Create Configuration failed.\n\n$errmsg");
+
+    return;
+}
+
+#*****************************************************************************
 # load option list from procedure parameters
 my $x       = $ec->getJobDetails($ENV{COMMANDER_JOBID});
 my $nodeset = $x->find("//actualParameter");
@@ -59,7 +71,7 @@ foreach my $node ($nodeset->get_nodelist) {
 }
 
 if (!defined $opts->{config} || "$opts->{config}" eq '') {
-    $wl->configurationErrorWithSuggestions("Config parameter must exist and be non-blank");
+    configurationError("Config parameter must exist and be non-blank");
     exit(ERROR);
 }
 
@@ -68,7 +80,7 @@ my $xpath    = $ec->getProperty("/myProject/weblogic_cfgs/$opts->{config}");
 my $property = $xpath->findvalue("//response/property/propertyName");
 
 if (defined $property && "$property" ne "") {
-    $wl->configurationErrorWithSuggestions("A configuration named '$opts->{config}' already exists.");
+    configurationError("A configuration named '$opts->{config}' already exists.");
     exit(ERROR);
 }
 
