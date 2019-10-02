@@ -35,6 +35,10 @@
     <xpath>//property[propertyName="EC::WebLogicDiscover"]/value</xpath>
   </file>
   <file>
+    <path>lib/EC/POSTP.pm</path>
+    <xpath>//property[propertyName="EC::POSTP"]/value</xpath>
+  </file>
+  <file>
     <path>preamble.pl</path>
     <xpath>//property[propertyName="preamble"]/value</xpath>
   </file>
