@@ -20,7 +20,9 @@
 
 use ElectricCommander;
 use ElectricCommander::PropDB;
+use ElectricCommander::PropMod;
 
+#*****************************************************************************
 use constant {
     SUCCESS => 0,
     ERROR   => 1,
@@ -28,52 +30,59 @@ use constant {
 
 my $opts;
 
-my $PLUGIN_NAME = 'EC-WebLogic';
+my $projName   = '$[/myProject/projectName]';
+my $pluginName = '@PLUGIN_NAME@';
+my $pluginKey  = '@PLUGIN_KEY@';
 
-if (!defined $PLUGIN_NAME) {
-    print "PLUGIN_NAME must be defined\n";
-    exit ERROR;
-}
-
+#*****************************************************************************
 # get an EC object
-my $ec = new ElectricCommander();
-$ec->abortOnError(0);
+my $ec = ElectricCommander->new();
+# $ec->abortOnError(0);
 
+ElectricCommander::PropMod::loadPerlCodeFromProperty($ec, '/myProject/EC::Plugin::Core');
+ElectricCommander::PropMod::loadPerlCodeFromProperty($ec, '/myProject/EC::WebLogic');
+
+my $wl = EC::WebLogic->new(
+    project_name => $projName,
+    plugin_name  => $pluginName,
+    plugin_key   => $pluginKey
+);
+
+#*****************************************************************************
 # load option list from procedure parameters
-my $x = $ec->getJobDetails($ENV{COMMANDER_JOBID});
+my $x       = $ec->getJobDetails($ENV{COMMANDER_JOBID});
 my $nodeset = $x->find("//actualParameter");
 foreach my $node ($nodeset->get_nodelist) {
     my $parm = $node->findvalue("actualParameterName");
-    my $val = $node->findvalue("value");
-    $opts->{$parm}="$val";
+    my $val  = $node->findvalue("value");
+    $opts->{$parm} = "$val";
 }
 
 if (!defined $opts->{config} || "$opts->{config}" eq '') {
-    print "config parameter must exist and be non-blank\n";
-    exit ERROR;
+    $wl->configurationErrorWithSuggestions("Config parameter must exist and be non-blank");
+    exit(ERROR);
 }
 
 # check to see if a config with this name already exists before we do anything else
-my $xpath = $ec->getProperty("/myProject/weblogic_cfgs/$opts->{config}");
+my $xpath    = $ec->getProperty("/myProject/weblogic_cfgs/$opts->{config}");
 my $property = $xpath->findvalue("//response/property/propertyName");
 
 if (defined $property && "$property" ne "") {
-    my $errMsg = "A configuration named '$opts->{config}' already exists.";
-    $ec->setProperty("/myJob/configError", $errMsg);
-    print $errMsg;
-    exit ERROR;
+    $wl->configurationErrorWithSuggestions("A configuration named '$opts->{config}' already exists.");
+    exit(ERROR);
 }
 
-my $cfg = new ElectricCommander::PropDB($ec,"/myProject/weblogic_cfgs");
+my $cfg = ElectricCommander::PropDB->new($ec, "/myProject/weblogic_cfgs");
 
 # add all the options as properties
-foreach my $key (keys % {$opts}) {
+foreach my $key (keys %{$opts}) {
     if ($key eq 'config') {
         next;
     }
-    $cfg->setCol("$opts->{config}",$key,"$opts->{$key}");
+
+    $cfg->setCol("$opts->{config}", $key, "$opts->{$key}");
 }
 
 print "Configuration \"$opts->{config}\" created.\n";
 
-exit SUCCESS;
+exit(SUCCESS);

@@ -465,5 +465,73 @@ sub get_step_parameters {
     return $params;
 }
 
+#*****************************************************************************
+sub configurationErrorWithSuggestions  {
+    my ($self, $errmsg) = @_;
+
+    my $suggestions = q{Reasons could be due to one or more of the following. Please ensure they are correct and try again.:
+1. Is the name of the configuration is unique?
+2. WebLogic URL - Is your URL complete and reachable?
+3. WLST Script Absolute Path  - Is your Path to the Script correct?
+4. Test Resource - Is your Test resource correctly wired with Flow?  Is your Test Resource correctly setup with WebLogic?
+5. Credentials - Are your credentials correct? Are you able to use these credentials to log in to WebLogic using its console?
+};
+
+    $self->ec->setProperty('/myJob/configError', $errmsg . "\n\n" . $suggestions);
+    $self->ec->setProperty('/myJobStep/summary', $errmsg . "\n\n" . $suggestions);
+
+    $self->logErrorDiag("Create Configuration failed.\n\n$errmsg");
+    $self->logInfoDiag($suggestions);
+
+    return;
+}
+
+#*****************************************************************************
+sub logInfoDiag {
+    my ($self, @params) = @_;
+
+    return $self->printDiagMessage('INFO', @params);
+}
+
+#*****************************************************************************
+sub logErrorDiag {
+    my ($self, @params) = @_;
+
+    return $self->printDiagMessage('ERROR', @params);
+}
+
+#*****************************************************************************
+sub logWarningDiag {
+    my ($self, @params) = @_;
+
+    return $self->printDiagMessage('WARNING', @params);
+}
+
+#*****************************************************************************
+sub printDiagMessage {
+    my ($self, @params) = @_;
+
+    my $level = shift @params;
+
+    if (!$level || !@params) {
+        return 0;
+    }
+
+    $level = uc $level;
+    if ($level !~ m/^(?:ERROR|WARNING|INFO)$/s) {
+        return 0;
+    }
+
+    # \n[OUT][%s]: %s :[%s][OUT]\n
+    my $begin = "\n[OUT][$level]: ";
+    my $end   = " :[$level][OUT]\n";
+
+    my $msg = join '', @params;
+    $msg = $begin . $msg . $end;
+
+    return $self->logger->info($msg);
+}
+
+#*****************************************************************************
 1;
 
