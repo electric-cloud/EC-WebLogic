@@ -37,7 +37,7 @@ my $pluginKey  = '@PLUGIN_KEY@';
 #*****************************************************************************
 # get an EC object
 my $ec = ElectricCommander->new();
-# $ec->abortOnError(0);
+$ec->abortOnError(0);
 
 ElectricCommander::PropMod::loadPerlCodeFromProperty($ec, '/myProject/EC::Plugin::Core');
 ElectricCommander::PropMod::loadPerlCodeFromProperty($ec, '/myProject/EC::WebLogic');
