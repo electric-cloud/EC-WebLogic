@@ -49,6 +49,8 @@ services:
     image: mysql:5.7
     container_name: mysql
     tty: true
+    networks:
+      - internal
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=customers_db
