@@ -2,7 +2,7 @@
 
 ## Output
 
-After the job runs, you can view the results on the Job Details page in CloudBees Flow. The JMS Queue was deleted.
+After the job runs, you can view the results on the Job Details page in CloudBees CD. The JMS Queue was deleted.
 
 <img src="../../plugins/EC-WebLogic/images/DeleteJMSTopic/Summary.png" />
 
