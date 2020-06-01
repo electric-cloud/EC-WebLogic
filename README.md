@@ -1,7 +1,7 @@
 EC-WebLogic
 ============
 
-The CloudBees Flow WebLogic integration
+The CloudBees CD WebLogic integration
 
 ## Compile ##
 

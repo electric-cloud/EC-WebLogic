@@ -3,7 +3,7 @@
 
 <h3>Output</h3>
 <p>
-After the job runs, you can view the results on the Job Details page in CloudBees Flow. The cluster was stopped successfully.
+After the job runs, you can view the results on the Job Details page in CloudBees CD. The cluster was stopped successfully.
 </p>
 <img src="../../plugins/EC-WebLogic/images/StopCluster/EC-WLSStopCluster3.png" />
 <p>

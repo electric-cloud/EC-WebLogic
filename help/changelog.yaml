@@ -1,3 +1,5 @@
+3.5.1:
+  - Rebranding from "CloudBees Flow" to "CloudBees CD".
 3.5.0:
   - Add checking connection while creating a configuration.
   - Jobs for the successful "CreateConfiguration" and "EditConfiguration" run is now preserved.

@@ -22,21 +22,21 @@
         <label>Resource Name:</label>
         <property>ecp_weblogic_resourceName</property>
         <required>0</required>
-        <documentation>Name of the CloudBees Flow resource that represents the WebLogic environment that needs to be discovered.</documentation>
+        <documentation>Name of the CloudBees CD resource that represents the WebLogic environment that needs to be discovered.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Resource Hostname:</label>
         <property>ecp_weblogic_hostname</property>
         <required>0</required>
-        <documentation>Hostname of a machine with WebLogic and CloudBees Flow Agent running on it. Either Resource hostname (and port) or Resource Name should be specified.</documentation>
+        <documentation>Hostname of a machine with WebLogic and CloudBees CD Agent running on it. Either Resource hostname (and port) or Resource Name should be specified.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Resource Port:</label>
         <property>ecp_weblogic_resPort</property>
         <required>0</required>
-        <documentation>Port of CloudBees Flow agent running on the machine. Default is 7800.</documentation>
+        <documentation>Port of CloudBees CD agent running on the machine. Default is 7800.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
@@ -95,7 +95,7 @@
         <label>Environment Name:</label>
         <property>ecp_weblogic_envName</property>
         <required>0</required>
-        <documentation>If specified, will be used to create CloudBees Flow environment.</documentation>
+        <documentation>If specified, will be used to create CloudBees CD environment.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
