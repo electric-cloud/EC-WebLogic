@@ -1,12 +1,16 @@
-<img src="../../plugins/EC-WebLogic/images/CreateJMSServer/Form.png" />
 
-## Output
+![image](images/CreateJMSServer/Form.png)
+
+
+### Output
 
 After the job runs, you can view the results on the Job Details page in CloudBees CD. The JMS Server was created successfully.
 
-<img src="../../plugins/EC-WebLogic/images/CreateJMSServer/Summary.png" />
 
-In the <b>CreateOrUpdateJMSServer</b> step, click the Log button to see the diagnostic information:
+![image](images/CreateJMSServer/Summary.png)
+
+
+In the **CreateOrUpdateJMSServer** step, click the Log button to see the diagnostic information:
 
     Using plugin C-WebLogic-3.3.0.0
     Got parameter "configname" with value "demo"

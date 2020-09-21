@@ -16,7 +16,7 @@
 
 -->
 <editor>
-    <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#RemoveUserFromGroup</help>
+    <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#RemoveUserFromGroup</help>
     <formElement>
         <type>entry</type>
         <label>WLST Absolute Path:</label>
@@ -34,7 +34,7 @@
         <!-- End of improvements for CEV-18687 -->
         <property>configname</property>
         <documentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</documentation>
-        <htmlDocumentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="/commander/pages/@PLUGIN_NAME@/configurations">configuration page</a>.</htmlDocumentation>
+        <htmlDocumentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.</htmlDocumentation>
         <required>1</required>
         <propertyReference>/plugins/@PLUGIN_NAME@/project/weblogic_cfgs</propertyReference>
     </formElement>

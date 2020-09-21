@@ -1,12 +1,15 @@
-<img src="../../plugins/EC-WebLogic/images/CreateOrUpdateConnectionFactory/Form.png" />
+![image](images/CreateOrUpdateConnectionFactory/Form.png)
 
-## Output
+
+### Output
 
 After the job runs, you can view the results on the Job Details page in CloudBees CD. The Connection Factory was created successfully.
 
-<img src="../../plugins/EC-WebLogic/images/CreateOrUpdateConnectionFactory/Summary.png" />
 
-In the <b>CreateOrUpdateConnectionFactory</b> step, click the Log button to see the diagnostic information:
+![image](images/CreateOrUpdateConnectionFactory/Summary.png)
+
+
+In the **CreateOrUpdateConnectionFactory** step, click the Log button to see the diagnostic information:
 
     Using plugin EC-WebLogic-3.3.0.0
     Got parameter "additional_options" with value ""

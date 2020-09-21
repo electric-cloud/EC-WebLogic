@@ -1,0 +1,4223 @@
+Plugin version @PLUGIN_VERSION@
+
+Revised on September 21, 2020
+
+
+
+
+
+== Overview
+
+== {CD} Integration to WebLogic
+
+Use this plugin to interact with the Oracle WebLogic server for application
+and server management, interacting or editing existing applications, and deploying new applications.
+You can start and stop both the Managed Servers and the Administration Server
+using this integration. You can use Jython scripting to create script files
+or to enter a new embedded file.
+
+== Integrated Version
+
+This plugin was developed and tested against following WebLogic Server Versions:
+ - 12c (12.2.1.1.0) on Windows
+ - 12c (12.2.1.1.0) on Linux
+ - 11g (10.3.6.0) on Windows
+ - 11g (10.3.6.0) on Linux
+
+
+
+
+
+
+
+
+
+
+
+== Plugin Configurations
+Plugin configurations are sets of parameters that apply
+across some or all of the plugin procedures. They
+reduce repetition of common values, create
+predefined parameter sets for end users, and
+securely store credentials where needed. Each configuration
+is given a unique name that is entered in designated
+parameters on procedures that use them.
+
+
+=== Creating Plugin Configurations
+To create plugin configurations in {CD}, do these steps:
+
+* Go to **Administration** &gt;**Plugins** to open the Plugin Manager.
+* Find the @PLUGIN_NAME@ row.
+* Click *Configure* to open the
+     Configurations page.
+* Click *Create Configuration* as per the description of parameters below.
+
+
+*After you perform the setup below it is important to make sure that the {CD} agent machine on which WebLogic runs is registered as a resource that can be pinged.*
+
+image::cloudbees-common::cd-plugins/ec-weblogic/config/ec-wlsconfig.png[image]
+
+*Note:* In the URL, the protocol is "t3" or "t3s". The
+RMI communications in WebLogic Server use
+the "t3" protocol to transport data between WebLogic
+Server and other Java programs, including clients and
+other WebLogic Server instances. A server instance
+keeps track of each Java Virtual Machine (JVM) with
+which it connects, and creates a single "t3" connection
+to carry all traffic for a JVM.
+
+
+=== Configuration Procedure Parameters
+[cols=",",options="header",]
+|===
+|Parameter |Description
+
+|Configuration Name | 
+
+|WebLogic URL | URL of WebLogic Server (must include protocol, server and port). Two protocols are supported: t3 and t3s, e.g. t3://weblogic:7001.
+
+
+|WLST Script Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+
+
+|JAVA_HOME | JAVA_HOME environment variable, i.e. path to bin, where java executable is located. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, JAVA_VENDOR should be also set.
+
+
+|JAVA_VENDOR | JAVA_VENDOR environment variable, use it to specify java vendor. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, the option JAVA_HOME should be also set. 
+
+
+|MW_HOME | MW_HOME environment variable, use it to specify WebLogic Home directory. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances.
+
+
+|Login as | Username and password to connect to WebLogic server.
+
+
+|Enable named sessions? | 
+            If checked, each WebLogic edit session will have unique name assigned. Named sessions are not supported by WebLogic server prior to 12 version. Defaults to false.
+        
+
+
+|Test Connection? | Check if connection should be established during config creation to validate credentials.
+
+
+|Test Connection Resource | A resource which is used for the testing connection.
+
+
+|Debug level | Debug level, higher debug level - more debug messages. Warning: on debug level 10 and more passwords will be revealed in a procedure logs.Verbosity level of output.
+
+
+|===
+
+
+
+
+
+[[procedures]]
+== Plugin Procedures
+
+
+
+[[CreateCluster]]
+=== CreateCluster
+
+
+Create a cluster.
+
+
+This procedure can be used to ceate a new cluster.
+
+
+==== CreateCluster Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| Cluster Name | Name of the cluster to be created.
+
+
+| Multicast Address | Multicast IP Address.
+
+
+| Multicast Port | Multicast Port.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createcluster/ec-wlscreateclusterstatus2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The status of the server was checked successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createcluster/ec-wlscreateclusterstatus3.png[image]
+
+In the *CreateCluster* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createcluster/ec-wlscreateclusterstatus4.png[image]
+
+
+
+[[CreateDomain]]
+=== CreateDomain
+
+
+Create a domain
+
+
+This procedure creates a new domain on the WebLogic server.
+
+
+==== CreateDomain Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| User Credentials | Credentials of the user(Username and password).
+
+
+| Domain Template | Name and location of the domain template from which you want to create a domain.
+
+
+| Domain Directory | Name of the directory to which you want to write the domain configuration information. .
+
+
+| Listen Address | Server Listen Address.
+
+
+| Listen Port | Server Listen Port.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createdomain/ec-wlscreatedomainstatus2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The database was created successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createdomain/ec-wlscreatedomainstatus3.png[image]
+
+In the *CreateDomain* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createdomain/ec-wlscreatedomainstatus4.png[image]
+
+
+
+[[CreateManagedServer]]
+=== CreateManagedServer
+
+
+Create a Managed Server.
+
+
+
+==== CreateManagedServer Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| Server Name | Name of the managed server to be created.
+
+
+| Listen Address | Server Listen Address.
+
+
+| Listen Port | Server Listen Port.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createmanagedserver/ec-wlscreatemanagedserver2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The Managed Server was created successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createmanagedserver/ec-wlscreatemanagedserver3.png[image]
+
+In the *CreateManagedServer* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createmanagedserver/ec-wlscreatemanagedserver4.png[image]
+
+
+
+[[AddServerToCluster]]
+=== AddServerToCluster
+
+
+Add server to cluster.
+
+
+This procedure adds a server to the specified cluster.
+
+
+==== AddServerToCluster Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| Server Name | Name of the server which is to be added to cluster.
+
+
+| Cluster Name | Name of the cluster in which server is to be added.
+
+
+|===
+
+
+
+
+After the job runs, you can view the results on the Job Details page in {CD}. The status of the page was checked successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/addservertocluster/ec-wlsaddservertoclusterstatus3.png[image]
+
+In the *AddServerToCluster* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/addservertocluster/ec-wlsaddservertoclusterstatus4.png[image]
+
+*Note:* In the URL, the protocol is http. For this procedure,{CD} uses an internal method to test the status of the page URLs with the original http protocol used in the web browsers.
+
+
+
+[[DeleteCluster]]
+=== DeleteCluster
+
+
+Delete a cluster.
+
+
+This procedure can be used to delete a cluster.
+
+
+==== DeleteCluster Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| Cluster Name | Name of the cluster to be deleted.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deletecluster/ec-wlsdeleteclusterstatus2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The status of the server was checked successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deletecluster/ec-wlsdeleteclusterstatus3.png[image]
+
+In the *DeleteCluster* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deletecluster/ec-wlsdeleteclusterstatus4.png[image]
+
+
+
+[[DeleteManagedServer]]
+=== DeleteManagedServer
+
+
+Delete a Managed Server.
+
+
+
+==== DeleteManagedServer Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| Server Name | Name of the managed server to be deleted.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deletemangedserver/ec-wlsdeletemanagedserver2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The Managed Server was deleted successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deletemangedserver/ec-wlsdeletemanagedserver3.png[image]
+
+In the *DeleteManagedServer* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deletemangedserver/ec-wlsdeletemanagedserver4.png[image]
+
+
+
+[[StartAdminServer]]
+=== StartAdminServer
+
+
+Starts a WebLogic Admin Server
+
+
+This procedure starts the WebLogic Administration Server.
+
+
+==== StartAdminServer Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Script Location | Absolute path of the startWeblogic script, including filename and extension. i.e: '/path/to/startWeblogic.cmd'. (Required)
+
+
+| Admin Server Instance Name | Instance name of the Admin Server to start. i.e: 'AdminServer'. (Required)
+
+
+| Config Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)
+
+
+| Maximum Elapsed Time | Defines the maximum time in seconds that the job will try to check into the server. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/startadministrationserver/ec-wlsstartadministrationserver2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The server was started
+successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/startadministrationserver/ec-wlsstartadministrationserver3.png[image]
+
+In the *StartAdminServer* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/startadministrationserver/ec-wlsstartadministrationserver4.png[image]
+
+
+
+[[StartCluster]]
+=== StartCluster
+
+
+Starts a cluster
+
+
+This procedures starts a cluster.
+If cluster has a servers in the RUNNING state, warning will be thrown.
+
+
+==== StartCluster Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| Cluster Name | 
+      Name of the cluster to start. i.e: 'mycluster'.
+    
+
+
+| Timeout | 
+          Timeout in seconds for cluster start.
+      
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/startcluster/ec-wlsstartcluster2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The cluster was started successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/startcluster/ec-wlsstartcluster3.png[image]
+
+In the *StartCluster* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/startcluster/ec-wlsstartcluster4.png[image]
+
+
+
+[[StartManagedServer]]
+=== StartManagedServer
+
+
+Starts a WebLogic Managed Server
+
+
+This procedure starts a WebLogic Managed Server. A WebLogic Server
+administration domain is a logically related group of
+WebLogic Server resources. Usually, you configure a
+domain to include additional WebLogic Server instances
+called Managed Servers. You deploy Web applications,
+EJBs, and other resources onto the Managed Servers and
+use the Administration Server for configuration and
+management purposes only. The Node Manager
+must be running before you run this procedure.
+In order to start the managed server, a file called
+"boot.properties" must be created in the path
+"$DOMAIN_DIR$/servers/myserver/security", and this file
+must have the credentials needed to start the server.
+For example:
+username=weblogic
+password=w3blogic
+
+
+==== StartManagedServer Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Script Location | Absolute path of the start server script, including filename and extension. i.e: '/path/to/startManagedServer.cmd'. (Required)
+
+
+| Instance Name | Instance name of the Managed Server to start. (Required)
+
+
+| Config Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| Admin Server URL | URL from the Admin Server (including protocol and port). (Required)
+
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)
+
+
+| Maximum Elapsed Time | Defines the maximum time in seconds that the job will try to check into the server. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/startmanagedserver/ec-wlsstartmanagedserver2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The server was started
+successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/startmanagedserver/ec-wlsstartmanagedserver3.png[image]
+
+In the *StartManagedServer* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/startmanagedserver/ec-wlsstartmanagedserver4.png[image]
+
+
+
+[[StartNodeManager]]
+=== StartNodeManager
+
+
+Start the WebLogic Node Manager
+
+
+This procedure starts the WebLogic Node Manager. It is a
+WebLogic Server utility that enables you to start, shut
+down, and restart Administration Server and Managed
+Server instances from a remote location. Although Node
+Manager is optional, we recommend that you start the
+Node Manager if your WebLogic Server environment hosts
+applications with high availability requirements.
+
+
+==== StartNodeManager Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Node Manager Script Location | 
+      Absolute path of the startNodeManager script, including filename and extension. i.e: '/Oracle/Middleware/wlserver_10.3/server/bin/startNodeManager.cmd'.
+    
+
+
+| Maximum Elapsed Time | 
+      Defines the time in seconds that the job wait to test the status of the node manager. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).
+    
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/startnodemanager/ec-wlsstartnodemanager2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The Node Manager was started
+successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/startnodemanager/ec-wlsstartnodemanager3.png[image]
+
+In the *StartNodeManager* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/startnodemanager/ec-wlsstartnodemanager4.png[image]
+
+
+
+[[StopAdminServer]]
+=== StopAdminServer
+
+
+Stops a WebLogic Admin Server
+
+
+This procedure stops a WebLogic Administration Server.
+
+
+==== StopAdminServer Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Script Location | Absolute path of the stopWeblogic script, including filename and extension. i.e: '/path/to/stopWeblogic.cmd'. (Required)
+
+
+| Config Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/stopadminserver/ec-wlsstopadminserver2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The server was stopped
+successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/stopadminserver/ec-wlsstopadminserver3.png[image]
+
+In the *StopAdminServer* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/stopadminserver/ec-wlsstopadminserver4.png[image]
+
+
+
+[[StopCluster]]
+=== StopCluster
+
+
+Stops a cluster
+
+
+This procedures stops a cluster.
+If cluster has a servers in the SHUTDOWN state, warning will be thrown.
+
+
+==== StopCluster Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Configuration Name | 
+            Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+        
+
+
+| Cluster Name | 
+            Name of the cluster to stop. i.e: 'mycluster'.
+        
+
+
+| Shutdown Timeout | 
+            Timeout in seconds for cluster shutdown.
+        
+
+
+| Force Shutdown? | 
+            Value specifying whether WLST should terminate a server instance or a cluster without waiting for the active sessions to complete. This argument defaults to false, indicating that all active sessions must complete before shutdown.
+        
+
+
+| Ignore Sessions? | 
+            Value specifying whether WLST should drop all HTTP sessions immediately or wait for HTTP sessions to complete or timeout while shutting down. This argument defaults to false, indicating that all HTTP sessions must complete or timeout.
+        
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/stopcluster/ec-wlsstopcluster2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The cluster was stopped successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/stopcluster/ec-wlsstopcluster3.png[image]
+
+In the *StopCluster* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/stopcluster/ec-wlsstopcluster4.png[image]
+
+
+
+[[StopManagedServer]]
+=== StopManagedServer
+
+
+Stops a WebLogic Managed Server
+
+
+This procedure stops a WebLogic Managed Server. The Node
+Manager must be running before you run this procedure.
+
+
+==== StopManagedServer Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Script Location | Absolute path of the stop server script, including filename and extension. i.e: '/path/to/stopManagedServer.cmd'. (Required)
+
+
+| Instance Name | Instance name of the Managed Server to stop. (Required)
+
+
+| Config Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/stopmanagedserver/ec-wlsstopmanagedserver2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The server was stopped successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/stopmanagedserver/ec-wlsstopmanagedserver3.png[image]
+
+In the *StopManagedServer* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/stopmanagedserver/ec-wlsstopmanagedserver4.png[image]
+
+
+
+[[StopNodeManager]]
+=== StopNodeManager
+
+
+Stop the WebLogic Node Manager
+
+
+This procedure stops the WebLogic Node Manager.
+
+
+==== StopNodeManager Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Config Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| Host Name | Host name of Node Manager. This argument defaults to localhost.
+
+
+| Node Manager Port | Port number of Node Manager. This argument defaults to a value that is based on the Node Manager server type, for plain type, defaults to 5556. For rsh type, defaults to 514. For ssh type, defaults to 22. For ssl type, defaults to 5556.
+
+
+| Domain Name | Name of the domain that you want to manage. This argument defaults to mydomain.
+
+
+| Domain Path | Path of the domain directory to which you want to save the Node Manager secret file (nm_password.properties) and SerializedSystemIni.dat file. This argument defaults to the directory in which WLST was started.
+
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)
+
+
+| Node Manage Type | Type of the Node Manager server. This argument defaults to ssl.
+
+
+| Maximum Elapsed Time | Defines the time in seconds that the job wait to test the status of the node manager. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/stopnodemanager/ec-wlsstopnodemanager2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The Node Manager was stopped
+successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/stopnodemanager/ec-wlsstopnodemanager3.png[image]
+
+In the *StopNodeManager* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/stopnodemanager/ec-wlsstopnodemanager4.png[image]
+
+
+
+[[SuspendServer]]
+=== SuspendServer
+
+
+Suspends the provided server
+
+
+This procedure suspends a WebLogic server.
+
+
+==== SuspendServer Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Configuration | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)
+
+
+| Server Name | Name of the server to suspend. (Required)
+
+
+| Ignore Sessions | Boolean value specifying whether WLST should drop all HTTP sessions immediately or wait for HTTP sessions to complete or time out while suspending. This argument defaults to false, indicating that HTTP sessions must complete or time out.
+
+
+| Timeout | Time (in seconds) the WLST waits for the server to complete in-process work before suspending the server. This argument defaults to 0 seconds, indicating that there is no timeout.
+
+
+| Force | Boolean value specifying whether WLST should suspend the server without waiting for active sessions to complete. This argument defaults to false, indicating that all active sessions must complete before suspending the server.
+
+
+| Block | Boolean value specifying whether WLST blocks user interaction until the server is started. This argument defaults to false, indicating that user interaction is not blocked. In this case, WLST returns control to the user after issuing the command and assigns the task MBean associated with the current task to a variable that you can use to check its status. If you are importing WLST as a Jython module, as described in Importing WLST as a Jython Module, block is always set to true.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/suspendserver/ec-wlssuspendserver2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The server was suspended
+successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/suspendserver/ec-wlssuspendserver3.png[image]
+
+In the *SuspendServer* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/suspendserver/ec-wlssuspendserver4.png[image]
+
+
+
+[[ResumeServer]]
+=== ResumeServer
+
+
+Resumes the provided server
+
+
+This procedure moves a server instance from the STANDBY state to the RUNNING state.
+
+
+==== ResumeServer Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Configuration | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)
+
+
+| Server Name | Name of the server to resume. (Required)
+
+
+| Block | Boolean value specifying whether WLST should block user interaction until the server is resumed. This argument defaults to false, indicating that user interaction is not blocked. In this case, WLST returns control to the user after issuing the command and assigns the task MBean associated with the current task to a variable that you can use to check its status. If you are importing WLST as a Jython module, as described in Importing WLST as a Jython Module, block is always set to true.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/resumeserver/ec-wlsresumeserver2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The server instance successfully
+moved from the STANDBY state to the RUNNING state.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/resumeserver/ec-wlsresumeserver3.png[image]
+
+In the *ResumeServer* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/resumeserver/ec-wlsresumeserver4.png[image]
+
+
+
+[[DeployApp]]
+=== DeployApp
+
+
+Deploys or redeploys an application or module
+
+
+This procedure deploys an application or a module using WLST. If application or module is already exists, it will be redeployed.
+
+
+==== DeployApp Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Configuration Name | 
+            Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+        
+
+
+| Wlst Script Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Application Name | Deployment name to assign to a newly-deployed application or standalone module. i.e: 'webapp'.
+
+
+| Is library? | Select this parameter if the application is library.
+
+
+| Application Path | Absolute path of the application to deploy. i.e: '/path/to/webapp.war' or 'c:/mydir/webapp.war'.
+
+
+| Targets | Targets on which to deploy the application or module (comma-separated list of the target servers, clusters, or virtual hosts).
+
+
+| Stage mode | 
+            Staging mode for the application you are deploying.
+
+
+
+
+            Possible values are: stage, nostage, and external_stage.
+
+
+
+
+            If not provided, default stage mode will be used.
+
+
+
+
+            See 
+ http://docs.oracle.com/middleware/12212/wls/DEPGD/deploy.htm#DEPGD235[Oracle documentation]  for details.
+        
+
+
+| Deployment plan path | 
+            Path to read a deployment plan (if there is one) or to save a new one from the Deployment plan content parameter.
+        
+
+
+| Plan version | Deployment plan version.
+
+
+| Deployment plan content | 
+            A WebLogic Server deployment plan is an XML document that you use to configure an application for deployment to a specific WebLogic Server environment.
+        
+
+
+| Overwrite deployment plan? | 
+            If checked, deployment plan will be overwritten, if deployment plan content has been provided and deployment plan file already exists.
+
+
+
+
+            This option defaults to false.
+        
+
+
+| Additional Options | 
+            Comma-separated list of deployment options, specified as name-value pairs.
+
+
+
+
+            Refer to WLST deploy documentation (The options, which are not included in this form).
+        
+
+
+| Archive version | 
+            Archive version number.
+
+
+
+
+            Is used for production redeployment, specifies the application version which is going to be retired, while versionIdentifier specifies a new version.
+
+
+
+
+            Archive version stays along with the new one.
+        
+
+
+| Retire gracefully? | 
+            Retirement policy to gracefully retire an application only after it has completed all in-flight work.
+
+
+
+
+            This policy is only meaningful for stop and redeploy operations and is mutually exclusive to the retire timeout policy.
+        
+
+
+| Retire timeout | 
+            Time (in seconds) WLST waits before retiring an application that has been replaced with a newer version.
+
+
+
+
+            This option default to -1, which specifies graceful timeout.
+        
+
+
+| Version identifier | 
+            Version identifier that is being used by production redeployment. A string, that uniquely identifies the current application version across all versions of the same application.
+        
+
+
+| Upload? | 
+            Optional. Boolean value specifying whether the application files are uploaded to the WebLogic Server Administration Server's upload directory prior to deployment.
+
+
+
+
+            Use this option when you are on a different machine from the Administration Server and you cannot copy the deployment files by other means. 
+
+
+
+
+            This option defaults to false.
+        
+
+
+| Remote? | 
+            Boolean value specifying whether the operation will be remote from the file system that contains the source.
+            Use this option when you are on a different machine from the Administration Server and the deployment files are
+
+
+
+
+            already at the specified location where the Administration Server is located.
+            This option defaults to false.
+        
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deployapp/ec-wlsdeployapp2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}.
+The application was deployed successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deployapp/ec-wlsdeployapp3.png[image]
+
+In the *DeployApp* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deployapp/ec-wlsdeployapp4.png[image]
+.
+
+
+
+[[UpdateAppConfig]]
+=== UpdateAppConfig
+
+
+Update a configuration of an already deployed app.
+
+
+This procedure can be used to update an application configuration.
+
+
+==== UpdateAppConfig Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| Application Name | Name of the application which is to be updated.
+
+
+| Application version | Application version to update.
+
+
+| Plan Path | Absolute path to the new deployment plan file.
+
+
+| Deployment Plan Content | Content of the deployment plan. Required, if the file mentioned in "Plan Path" doesn't exist or empty.
+
+
+| Overwrite deployment plan? | 
+            If checked, deployment plan will be overwritten, if deployment plan content has been provided and deployment plan file already exists.
+
+
+
+
+            This option defaults to false.
+        
+
+
+| Additional Options | Comma-separated list of deployment options, specified as name-value pairs. For example: block=false,createPlan=true
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/updateappconfig/ec-wlsupdateappconfigstatus2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The application was undeployed successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/updateappconfig/ec-wlsupdateappconfigstatus3.png[image]
+
+In the *UpdateAppConfig* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/updateappconfig/ec-wlsupdateappconfigstatus4.png[image]
+
+
+
+[[UndeployApp]]
+=== UndeployApp
+
+
+Stops the deployment unit and removes staged files from target servers.
+
+
+This procedure stops the deployment unit and removes staged files
+from target servers.
+
+Contrary to the weblogic documentation in section 'Undeploying a Retiring Application' at https://docs.oracle.com/cd/E13222_01/wls/docs103/deployment/redeploy.html[docs.oracle.com], we found that in Weblogic 11, only retired version of application is undeployed if no application version is specified.
+
+
+==== UndeployApp Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| Wlst Script Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Application Name | Name of the application to undeploy. i.e: 'webapp'.
+
+
+| Retire Gracefully? (DEPRECATED) | 
+            Retirement policy to gracefully retire an application only after it has completed all in-flight work.
+
+
+
+
+            This policy is only meaningful for stop and redeploy operations and is mutually exclusive to the retire timeout policy.
+            
+ *This parameter is DEPRECATED and will be removed in the next release.* 
+
+| Application Version | 
+            Specifies a single application version to be undeployed. See Requirements and Restrictions for Production Redeployment for reference.
+        
+
+
+| Additional options | Additional options for undeploy API call. (See deploy function for reference).
+        
+
+
+| Give Up on Error? | 
+            If checked, any ambiguous situation will be treated as fatal error. Defaults to false.
+        
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/undeployapp/ec-wlsundeployapp2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The application was undeployed
+successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/undeployapp/ec-wlsundeployapp3.png[image]
+
+In the *UndeployApp* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/undeployapp/ec-wlsundeployapp4.png[image]
+.
+
+
+
+[[UpdateApp]]
+=== UpdateApp (DEPRECATED)
+
+
+Update an already deployed app. (DEPRECATED)
+
+
+WARNING: This procedure is marked as deprecated and will be removed in the next releases. Please, use <a href="#UpdateAppConfig">UpdateAppConfig</a> procedure instead.
+This procedure can be used to update an application.
+
+
+==== UpdateApp Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| Application Name | Name of the application which is to be updated.
+
+
+| Plan Path | Name of the new deployment plan file. The filename can be absolute or relative to the application directory.
+
+
+| Additional Options | Comma-separated list of deployment options, specified as name-value pairs.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/updateapp/ec-wlsupdateappstatus2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The application was undeployed successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/updateapp/ec-wlsupdateappstatus3.png[image]
+
+In the *UpdateApp* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/updateapp/ec-wlsupdateappstatus4.png[image]
+
+
+
+[[RunDeployer]]
+=== RunDeployer
+
+
+Runs weblogic.Deployer in a free-mode
+
+
+This procedure runs weblogic.Deployer tool in a free mode.
+The weblogic.Deployer tool is a Java-based deployment tool that
+provides a command-line interface to the WebLogic Server deployment API.
+
+
+==== RunDeployer Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Command To Use | 
+      The weblogic.Deployer command to use. i.e: '-deploy', '-undeploy', '-stop' or '-listapps'.
+    
+
+
+| Java Parameters | 
+      Java parameters to pass. i.e: '-verbose'.
+    
+
+
+| Configuration Name | 
+      Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+    
+
+
+| Additional Commands | Additional commands to be entered for weblogic.Deployer.
+
+
+| Java Absolute Path | Absolute path of java. i.e: 'java', 'java.exe' or '/path/to/java'.
+
+
+| Application Name | 
+      Name of the application to manage. i.e: 'webapp'.
+    
+
+
+| setDomainEnv Script Absolute Path | 
+      Absolute path of the setDomainEnv script, including filename and extension. i.e: '/path/to/setDomainEnv.sh' or 'setDomainEnv.cmd'.
+    
+
+
+| weblogic jar Absolute Path | 
+    Absolute path of the weblogic jar, needed to run the weblogic.Deployer in a free-mode. In Windows environment, if the jar is already added to the enviroment classpath variable, then is not necesary to include it. In Linux environment you must include the path. i.e: '/path/to/weblogic.jar' or '/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar'.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/rundeployer/ec-wlsrundep2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The weblogic.Deployer tool was run
+successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/rundeployer/ec-wlsrundep3.png[image]
+
+In the *RunDeployer* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/rundeployer/ec-wlsrundep4.png[image]
+
+
+
+[[StartApp]]
+=== StartApp
+
+
+Starts an application
+
+
+This procedures starts an application.
+If application is already started, warning will be thrown.
+
+
+==== StartApp Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| Application Name | 
+      Name of the application to start. i.e: 'webapp'.
+    
+
+
+| Application Version | 
+          Specific application version to be started.
+      
+
+
+| Additional options | 
+          Additional options for startApplication API. (See deploy function for reference).
+      
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/startapp/ec-wlsstartapp2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The application
+was started successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/startapp/ec-wlsstartapp3.png[image]
+
+In the *StartApp* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/startapp/ec-wlsstartapp4.png[image]
+
+
+
+[[StopApp]]
+=== StopApp
+
+
+Stop an application
+
+
+This procedure stops an application.
+If application is already stopped, warning will be thrown.
+
+
+==== StopApp Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| Application Name | 
+      Name of the application to start. i.e: 'webapp'.
+    
+
+
+| Application Version | 
+        Specific application version to be stopped.
+    
+
+
+| Additional Options | 
+        Additional options for stopApplication API. (See deploy function for reference).
+    
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/stopapp/ec-wlsstopapp2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The application was stopped
+successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/stopapp/ec-wlsstopapp3.png[image]
+
+In the *StopApp* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/stopapp/ec-wlsstopapp4.png[image]
+
+
+
+[[CreateOrUpdateDatasource]]
+=== CreateOrUpdateDatasource
+
+
+This procedure creates a new generic JDBC Data Source or updates an existing one based on the update action.
+
+
+
+==== CreateOrUpdateDatasource Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Configuration | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| Datasource Name | Unique name of the JDBC generic Data Source to be created.
+
+
+| DataSource Driver Class | The full package name of JDBC driver class used to create the physical database connections in the connection pool. (Note that this driver class must be in the classpath of every server to which it is targeted/deployed).
+
+
+| Database URL | The JDBC URL of the database to connect to. The format of the URL varies by JDBC driver. The URL is passed to the JDBC driver to create the physical database connections. These are some examples.
+jdbc:spssoem:mysql://<host>:<port>;DatabaseName=<database>
+jdbc:spssoem:oracle://<host>:<port>;SID=<database>[;AuthenticationMethod=kerberos].
+
+
+| JNDI Name | The JNDI path to where this Datasource is bound. For example jdbc/MYDS
+By default, the JNDI name is the name of the Datasource. Applications that look up the JNDI path will get a "javax.sql.Datasource" instance that corresponds to this Datasource.
+
+
+| Datasource Credentials | Username and password for the Database.
+
+
+| Database Name | Name of the Database/Default Schema to which the Database connection is to. Note that this may be relevant to MySQL (for example) and in general may not be necessary for all Databases. Further this name can be mentioned as part of the JDBC URL above. There is as such no need to use this parameter if it is already defined in the JDBC URL like above.
+
+
+| JDBC Driver Properties | The list of properties passed to the JDBC driver that are used to create physical database connections. For example: server=dbserver1. List each property=value pair on a separate line.Note:For security reasons, when WebLogic Server is running in production mode, you cannot specify database passwords in this properties list. Data source deployment will fail if a password is specified in the properties list. To override this security check, use the command line argument "weblogic.management.allowClearTextPasswords" when starting the server.
+    
+
+
+| Target Server List | A list of comma separated list of Servers on which the Data Source should be targeted. If targets are not specified, Data Source will be created but not deployed.
+
+
+| Update Action | This parameter controls as to what the Update Action should be when a DataSource with the same name exists:
+
+
+
+ *Do Nothing (Default)*  - The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
+
+
+
+ *Remove and Create*  - The procedure would remove existing DataSource and recreate it based on new parameters passed.
+
+
+
+ *Selective Update*  - The procedure would update existing DataSource credentials and Server Target List.
+
+
+
+| Additional Options | Use this option to specify optional parameters for example initial pool size, min pool size, max pool size, validation SQL etc.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createorupdatedatasource/form.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The Datasource was created successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createorupdatedatasource/summary.png[image]
+
+In the *CreateOrUpdateDatasource* step, click the Log button to see the diagnostic information:
+
+----
+Using plugin EC-WebLogic-3.4.0.0
+Got parameter "configname" with value "EC-Specs WebLogic Config"
+Got parameter "ecp_weblogic_additionalOptions" with value ""
+Got parameter "ecp_weblogic_databaseName" with value "medrec;create=true"
+Got parameter "ecp_weblogic_databaseUrl" with value "jdbc:derby://localhost:1527/medrec;ServerName=localhost;databaseName=medrec;create=true"
+Got parameter "ecp_weblogic_dataSourceDriverClass" with value "org.apache.derby.jdbc.ClientXADataSource"
+Got parameter "ecp_weblogic_dataSourceName" with value "SpecDatasource"
+Got parameter "ecp_weblogic_driverProperties" with value ""
+Got parameter "ecp_weblogic_jndiName" with value "datasources.TestJNDIName"
+Got parameter "ecp_weblogic_targets" with value ""
+Got parameter "ecp_weblogic_updateAction" with value ""
+Processing template /myProject/jython/preamble.jython
+Processing template /myProject/jython/create_or_update_datasource.jython
+Script path: /opt/electriccloud/electriccommander/workspace/job_3180_20180802043311/exec_257768208601721.jython
+Running command: '/u01/oracle/oracle_common/common/bin/wlst.sh' '/opt/electriccloud/electriccommander/workspace/job_3180_20180802043311/exec_257768208601721.jython'
+Unlinking file /opt/electriccloud/electriccommander/workspace/job_3180_20180802043311/exec_257768208601721.jython
+EXIT_CODE: 0
+STDOUT:
+Initializing WebLogic Scripting Tool (WLST) ...
+
+Welcome to WebLogic Server Administration Scripting Shell
+
+Type help() for help on available commands
+
+WebLogic version is: WebLogic Server 12.2.1.3.0
+Connecting to t3://localhost:7001 with userid weblogic ...
+Successfully connected to Admin Server "AdminServer" that belongs to domain "base_domain".
+
+Warning: An insecure protocol was used to connect to the server.
+To ensure on-the-wire security, the SSL port or Admin port should be used instead.
+
+No stack trace available.
+[WLST INFO] Datasource SpecDatasource does not exist
+Location changed to edit tree.
+This is a writable tree with DomainMBean as the root.
+To make changes you will need to start an edit session via startEdit().
+For more help, use help('edit').
+You already have an edit session in progress and hence WLST will
+continue with your edit session.
+
+Starting an edit session ...
+Started edit session, be sure to save and activate your changes once you are done.
+WARNING:No targets are provided, the datasource will not be deployed
+Saving all your changes ...
+Saved all your changes successfully.
+Activating all your changes, this may take a while ...
+The edit lock associated with this edit session is released once the activation is completed.
+Activation completed
+SUMMARY: Created datasource SpecDatasource successfully
+STDERR:
+DONE
+----
+
+
+
+[[DeleteDatasource]]
+=== DeleteDatasource
+
+
+Deletes a Datasource
+
+
+
+==== DeleteDatasource Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Configuration | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Datasource Name | 
+      The unique name that identifies this Datasource in the WebLogic domain to delete it.
+    
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deletedatasource/deletedatasource2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The database was deleted successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deletedatasource/deletedatasource3.png[image]
+
+In the *DeleteDatasource* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deletedatasource/deletedatasource4.png[image]
+
+
+
+[[CreateDatasource]]
+=== CreateDatasource (DEPRECATED)
+
+
+Creates a Datasource (DEPRECATED)
+
+
+This procedure creates a datasource in WebLogic.
+
+
+==== CreateDatasource Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Configuration | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Datasource Name | A unique name that identifies this Datasource in the WebLogic domain.
+
+
+| Database | The database used by the Datasource.
+
+
+| Server Instance | Instance name of the Server to include the Datasource. i.e: 'AdminServer'.
+
+
+| Datasource JNDI | 
+      The JNDI path to where this Datasource is bound. By default, the JNDI name is the name of the Datasource. Applications that look up the JNDI path will get a "javax.sql.Datasource" instance that corresponds to this Datasource.
+    
+
+
+| Datasource Driver Class | 
+      The full package name of JDBC driver class used to create the physical database connections in the connection pool. (Note that this driver class must be in the classpath of any server to which it is deployed).
+    
+
+
+| Datasource URL | 
+    The URL of the database to connect to. The format of the URL varies by JDBC driver. The URL is passed to the JDBC driver to create the physical database connections.
+  
+
+
+| Database User | The user to connect to the database.
+
+
+| Database Password | 
+      The password attribute passed to the JDBC driver when creating physical database connections. The value is stored in an encrypted form in the descriptor file and when displayed on the Administration Console.
+    
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createdatasource/createdatasource2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The database was created successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createdatasource/createdatasource3.png[image]
+
+In the *CreateDatasource* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createdatasource/createdatasource4.png[image]
+
+
+
+[[CreateOrUpdateConnectionFactory]]
+=== CreateOrUpdateConnectionFactory
+
+
+Creates or updates Connection Factory
+
+
+WebLogic Server defines two default connection factories, which can be looked up using the JNDI names weblogic.jms.ConnectionFactory and weblogic.jms.XAConnectionFactory.
+
+This procedure is used to create and configure a new connection factory for an existing JMS module if the pre-configured settings of the default factories are not suitable for your application.
+
+It is recommended to use default targeting for the Connection Factory, i.e. do not use Subdeployments.
+
+
+==== CreateOrUpdateConnectionFactory Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| Connection Factory Name | Unique name of the Connection Factory that is created.
+
+
+| JMS Module Name | Name of the JMS module in which the Connection Factory is created.
+
+
+| Subscription Sharing Policy | The Connection Factory Subscription Sharing Policy Subscribers can be used to control which subscribers can access new subscriptions.Values can be either Sharable or Exclusive.
+        
+
+
+| Client ID Policy | The Client ID Policy indicates whether more than one JMS connection can use the same Client ID. Oracle recommends setting the Client ID policy to Unrestricted if sharing durable subscribers. Subscriptions created with different Client ID policies are always treated as independent subscriptions.
+        
+
+
+| JNDI Name | JNDI Name is used to lookup the Connection factory using JNDI lookup. If the connection factory is created without passing this parameter, it can be only used in an Application Scoped context.
+
+
+| Maximum Messages per Session | This  limit specifies the number of messages that can be queued for an asynchronous session. Default value  is 10.
+
+
+| XA Connection Factory Enabled? | Indicates if this connection factory should  create XA queues and XA topics in order to accommodate JTA aware transactions. Default is Yes.
+
+
+| Subdeployment Name | Name of Subdeployment. Required only if you do not  want default targeting and instead want to use advanced targeting.
+
+
+| Target WLS Instance List | 
+        Comma delimited set of Weblogic Server instances (Standalone or cluster) to which the Connection Factory would be targeted to.
+
+
+
+
+        Required only if Subdeployment Name is specified.
+        
+
+
+| Target JMS Server List | Comma delimited set of JMS Servers to which the Connection Factory would be targeted to.
+Required only if Subdeployment Name is specified. 
+
+
+| Update Action | 
+This parameter controls as to what the Update Action should be when a Connection Factory with the same name exists:
+
+
+
+ *Do Nothing  (Default)*  -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
+
+
+
+ *Remove and Create*  - The procedure would remove existing Connection Factory and recreate it based on new parameters passed.
+
+
+
+ *Selective Update*  - The procedure would update existing Connection Factory. The parameters for selective update are 
+ *JNDI Name*  and 
+ *Subdeployment Name* .
+        
+
+
+| Additional Options | 
+Use this option to pass related parameters that pertain to Delivery, Client, Transaction or Flow Control. E.g., 
+ *DefaultDeliveryParams.DefaultPriority=5* .
+Several options are separated by a newline:
+
+
+
+
+DefaultDeliveryParams.DefaultPriority=5
+FlowControlParams.FlowMaximum=500
+FlowControlParams.FlowControlEnabled=true
+
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createorupdateconnectionfactory/form.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The Connection Factory was created successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createorupdateconnectionfactory/summary.png[image]
+
+In the *CreateOrUpdateConnectionFactory* step, click the Log button to see the diagnostic information:
+
+----
+Using plugin EC-WebLogic-3.3.0.0
+Got parameter "additional_options" with value ""
+Got parameter "cf_client_id_policy" with value "restricted"
+Got parameter "cf_max_messages_per_session" with value "10"
+Got parameter "cf_name" with value "TestCF"
+Got parameter "cf_sharing_policy" with value "exclusive"
+Got parameter "cf_xa_enabled" with value "1"
+Got parameter "configname" with value "demo"
+Got parameter "jms_module_name" with value "TestModule"
+Got parameter "jms_server_list" with value ""
+Got parameter "jndi_name" with value "weblogic.test.CF"
+Got parameter "subdeployment_name" with value ""
+Got parameter "update_action" with value "do_nothing"
+Got parameter "wls_instance_list" with value "AdminServer"
+Processing template /myProject/jython/preamble.jython
+Processing template /myProject/jython/create_or_update_connection_factory.jython
+Script path: /opt/electriccloud/electriccommander/workspace/job_25636_20180607052153/exec_108308602360286.jython
+Running command: '/u01/oracle/oracle_common/common/bin/wlst.sh' '/opt/electriccloud/electriccommander/workspace/job_25636_20180607052153/exec_108308602360286.jython'
+Unlinking file /opt/electriccloud/electriccommander/workspace/job_25636_20180607052153/exec_108308602360286.jython
+EXIT_CODE: 0
+STDOUT:
+Initializing WebLogic Scripting Tool (WLST) ...
+
+Welcome to WebLogic Server Administration Scripting Shell
+
+Type help() for help on available commands
+
+WebLogic version is: WebLogic Server 12.2.1.3.0
+Connecting to t3://localhost:7001 with userid weblogic ...
+Successfully connected to Admin Server "AdminServer" that belongs to domain "base_domain".
+
+Warning: An insecure protocol was used to connect to the server.
+To ensure on-the-wire security, the SSL port or Admin port should be used instead.
+
+Location changed to edit tree.
+This is a writable tree with DomainMBean as the root.
+To make changes you will need to start an edit session via startEdit().
+For more help, use help('edit').
+
+Starting an edit session ...
+Started edit session, be sure to save and activate your changes once you are done.
+No stack trace available.
+[WLST INFO] Connection Factory TestCF does not exist
+[WLST INFO] Created Connection Factory TestCF
+[WLST INFO] Set JNDI Name to weblogic.test.CF
+[WLST INFO] Set default targeting
+[WLST INFO] Options:
+[WLST INFO] Additional Options: {}
+
+All changes that are made but not yet activated are:
+
+MBean Changed : com.bea:Name=TestModule,Type=weblogic.j2ee.descriptor.wl.JMSBean,Parent=[base_domain]/JMSSystemResources[TestModule],Path=JMSResource
+Operation Invoked : create
+Attribute Modified : ConnectionFactories
+Attributes Old Value : null
+Attributes New Value : TestCF
+Server Restart Required : false
+
+Validating changes ...
+Validated the changes successfully
+Saving all your changes ...
+Saved all your changes successfully.
+Activating all your changes, this may take a while ...
+The edit lock associated with this edit session is released once the activation is completed.
+Activation completed
+SUMMARY: Created Connection Factory TestCF, Set Default Targeting
+STDERR:
+DONE
+----
+
+
+
+[[CreateOrUpdateJMSModule]]
+=== CreateOrUpdateJMSModule
+
+
+Creates or updates JMS Module
+
+
+
+==== CreateOrUpdateJMSModule Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Configuration | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| JMS Module Name | Unique name of the JMS system Module to be created or updated.
+
+
+| Target WLS Instance List | Comma delimited set of Weblogic Server instances (Standalone or cluster) to which the JMS system module would be deployed.
+
+
+| Update Action | 
+This parameter controls as to what the Update Action should be when a JMS Module with the same name exists:
+
+
+
+ *Do Nothing  (Default)*  -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
+
+
+
+ *Remove and Create*  - The procedure would remove existing JMS Module and recreate it based on new parameters passed.
+
+
+
+ *Selective Update*  - The procedure would update existing JMS Module. In this case 
+ *Target WLS List*  will be updated.
+        
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createorupdatejmsmodule/form.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The JMS Module was created successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createorupdatejmsmodule/summary.png[image]
+
+In the *CreateOrUpdateJMSModule* step, click the Log button to see the diagnostic information:
+
+----
+Using plugin EC-WebLogic-3.3.0.0
+Got parameter "configname" with value "demo"
+Got parameter "ecp_weblogic_jms_module_name" with value "TestModule"
+Got parameter "ecp_weblogic_target_list" with value "AdminServer"
+Got parameter "ecp_weblogic_update_action" with value "do_nothing"
+Processing template /myProject/jython/preamble.jython
+Processing template /myProject/jython/create_or_update_jms_module.jython
+Script path: /opt/electriccloud/electriccommander/workspace/job_25633_20180607045655/exec_217323896594554.jython
+Running command: '/u01/oracle/oracle_common/common/bin/wlst.sh' '/opt/electriccloud/electriccommander/workspace/job_25633_20180607045655/exec_217323896594554.jython'
+Unlinking file /opt/electriccloud/electriccommander/workspace/job_25633_20180607045655/exec_217323896594554.jython
+EXIT_CODE: 0
+STDOUT:
+Initializing WebLogic Scripting Tool (WLST) ...
+
+Welcome to WebLogic Server Administration Scripting Shell
+
+Type help() for help on available commands
+
+WebLogic version is: WebLogic Server 12.2.1.3.0
+Connecting to t3://localhost:7001 with userid weblogic ...
+Successfully connected to Admin Server "AdminServer" that belongs to domain "base_domain".
+
+Warning: An insecure protocol was used to connect to the server.
+To ensure on-the-wire security, the SSL port or Admin port should be used instead.
+
+Location changed to edit tree.
+This is a writable tree with DomainMBean as the root.
+To make changes you will need to start an edit session via startEdit().
+For more help, use help('edit').
+
+Starting an edit session ...
+Started edit session, be sure to save and activate your changes once you are done.
+No stack trace available.
+[WLST INFO] JMS System Module TestModule does not exist
+[WLST INFO] Adding target Server "AdminServer" to the list of targets
+[WLST INFO] No targets to remove
+Saving all your changes ...
+Saved all your changes successfully.
+Activating all your changes, this may take a while ...
+The edit lock associated with this edit session is released once the activation is completed.
+Activation completed
+SUMMARY: Created JMS System Module TestModule, Added 1 target(s), No targets were removed
+STDERR:
+DONE
+----
+
+
+
+[[CreateOrUpdateJMSModuleSubdeployment]]
+=== CreateOrUpdateJMSModuleSubdeployment
+
+
+Creates or updates JMS Module Subdeployment
+
+
+
+==== CreateOrUpdateJMSModuleSubdeployment Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Configuration | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| JMS Module Name | Unique name of the JMS Module in which the Sub-Deployment should be created. Note that this module should exist already for this Procedure to succeed.
+
+
+| Subdeployment Name | Name of the Subdeployment to be created or updated.
+
+
+| Target WLS Instance List | 1 or more comma separated list of Servers or Clusters that constitute the Sub-Deployment. In essence a Sub-Deployment provides a way to group multiple targets to which JMS Resources can be created on.
+
+
+| Update Action | This parameter controls as to what the Update Action should be when a JMS Subdeployment with the same name exists :
+Do Nothing  (Default) -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
+Remove and Create - The procedure would remove existing JMS Subdeployment and recreate it based on new parameters passed.
+Selective Update - The procedure would update target servers for the existing JMS Subdeployment.
+
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createorupdatesubdeployment/form.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The JMS Module Subdeployment was created successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createorupdatesubdeployment/summary.png[image]
+
+In the *CreateOrUpdateJMSModuleSubdeployment* step, click the Log button to see the diagnostic information:
+
+----
+Using plugin EC-WebLogic-3.3.0.0
+Got parameter "configname" with value "demo"
+Got parameter "ecp_weblogic_jms_module_name" with value "SystemModule-0"
+Got parameter "ecp_weblogic_subdeployment_name" with value "MyQueue"
+Got parameter "ecp_weblogic_subdeployment_target_list" with value "AdminServer"
+Got parameter "ecp_weblogic_update_action" with value "do_nothing"
+Processing template /myProject/jython/preamble.jython
+Processing template /myProject/jython/create_or_update_jms_module_subdeployment.jython
+Script path: /opt/electriccloud/electriccommander/workspace/job_27048_20180611060733/exec_403411813739896.jython
+Running command: '/u01/oracle/oracle_common/common/bin/wlst.sh' '/opt/electriccloud/electriccommander/workspace/job_27048_20180611060733/exec_403411813739896.jython'
+Unlinking file /opt/electriccloud/electriccommander/workspace/job_27048_20180611060733/exec_403411813739896.jython
+EXIT_CODE: 0
+STDOUT:
+Initializing WebLogic Scripting Tool (WLST) ...
+
+Welcome to WebLogic Server Administration Scripting Shell
+
+Type help() for help on available commands
+
+WebLogic version is: WebLogic Server 12.2.1.3.0
+Connecting to t3://localhost:7001 with userid weblogic ...
+Successfully connected to Admin Server "AdminServer" that belongs to domain "base_domain".
+
+Warning: An insecure protocol was used to connect to the server.
+To ensure on-the-wire security, the SSL port or Admin port should be used instead.
+
+Location changed to edit tree.
+This is a writable tree with DomainMBean as the root.
+To make changes you will need to start an edit session via startEdit().
+For more help, use help('edit').
+
+Starting an edit session ...
+Started edit session, be sure to save and activate your changes once you are done.
+No stack trace available.
+[WLST INFO] Subdeployment MyQueue does not exist
+[WLST INFO] Adding target Server "AdminServer" to the list of targets
+[WLST INFO] No targets to remove
+Saving all your changes ...
+Saved all your changes successfully.
+Activating all your changes, this may take a while ...
+The edit lock associated with this edit session is released once the activation is completed.
+Activation completed
+SUMMARY: Created SubDeployment MyQueue in the module SystemModule-0: Added 1 target(s), No targets to remove
+STDERR:
+DONE
+----
+
+
+
+[[CreateOrUpdateJMSQueue]]
+=== CreateOrUpdateJMSQueue
+
+
+Creates or updates JMS Queue
+
+
+This procedure is used to create and configure a new JMS Queue for an *existing* JMS module or update an existing JMS Queue.
+
+
+==== CreateOrUpdateJMSQueue Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| JMS Queue Name | Unique name of the JMS Queue Name that is going to be created or updated.
+
+
+
+| JMS Module Name | Name of the JMS module in which the JMS Queue is created. If there is already a JMS Queue with the specified name, it will be updated. The specified JMS Module should exist, if the module does not exist, the procedure will fail.
+
+
+
+| JNDI Name | JNDI Name is used to lookup the JMS Queue using JNDI lookup. If the JMS Queue is created without passing this parameter, it can be only used in an Application Scoped context.
+
+
+
+| Subdeployment Name | Name of Subdeployment. Required in order to deploy the Queue. If this is not specified the Queue will not be usable.
+
+
+
+| Target JMS Server | JMS Server  to which the Topic  would be targeted to. Required only if Subdeployment Name is specified.
+
+
+
+| Update Action | 
+This parameter controls as to what the Update Action should be when a JMS Queue with the same name exists:
+
+
+
+ *Do Nothing  (Default)*  -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
+
+
+
+ *Remove and Create*  - The procedure would remove existing JMS Queue and recreate it based on new parameters passed. If Subdeployment name is provided, the subdeployment will be removed and created too.
+
+
+
+ *Selective Update*  - The procedure would update existing JMS Queue. The parameters for selective update are 
+ *JNDI Name*  and 
+ *Subdeployment Name* . The targeting for Subdeployment will not be changed.
+        
+
+
+| Additional Options | 
+Use this option to specify general or advanced parameters, message thresholds and quota, message delivery overrides, message logging and message delivery failure options, e.g., 
+ *MaximumMessageSize=1024* . Parameters should be in the form of key=value pairs. Group and property name are separated by '.'. Several options are separated by a newline, e.g.
+
+
+
+
+MessageLoggingParams.MessageLoggingEnabled=false
+DeliveryFailureParams.RedeliveryLimit=3
+
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createorupdatejmsqueue/form.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The JMS Queue was created successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createorupdatejmsqueue/summary.png[image]
+
+In the *CreateOrUpdateJMSQueue* step, click the Log button to see the diagnostic information:
+
+----
+Using plugin C-WebLogic-3.3.0.0
+Got parameter "configname" with value "demo"
+Got parameter "ecp_weblogic_additional_options" with value ""
+Got parameter "ecp_weblogic_jms_module_name" with value "TestModule"
+Got parameter "ecp_weblogic_jms_queue_name" with value "SampleQueue"
+Got parameter "ecp_weblogic_jndi_name" with value "weblogic.test.Queue"
+Got parameter "ecp_weblogic_subdeployment_name" with value "SampleQueue"
+Got parameter "ecp_weblogic_target_jms_server" with value "TestServer"
+Got parameter "ecp_weblogic_update_action" with value "do_nothing"
+Processing template /myProject/jython/preamble.jython
+Processing template /myProject/jython/create_or_update_jms_queue.jython
+Script path: /opt/electriccloud/electriccommander/workspace/job_25637_20180607052545/exec_265381669060536.jython
+Running command: '/u01/oracle/oracle_common/common/bin/wlst.sh' '/opt/electriccloud/electriccommander/workspace/job_25637_20180607052545/exec_265381669060536.jython'
+Unlinking file /opt/electriccloud/electriccommander/workspace/job_25637_20180607052545/exec_265381669060536.jython
+EXIT_CODE: 0
+STDOUT:
+Initializing WebLogic Scripting Tool (WLST) ...
+
+Welcome to WebLogic Server Administration Scripting Shell
+
+Type help() for help on available commands
+
+WebLogic version is: WebLogic Server 12.2.1.3.0
+Connecting to t3://localhost:7001 with userid weblogic ...
+Successfully connected to Admin Server "AdminServer" that belongs to domain "base_domain".
+
+Warning: An insecure protocol was used to connect to the server.
+To ensure on-the-wire security, the SSL port or Admin port should be used instead.
+
+Location changed to edit tree.
+This is a writable tree with DomainMBean as the root.
+To make changes you will need to start an edit session via startEdit().
+For more help, use help('edit').
+
+Starting an edit session ...
+Started edit session, be sure to save and activate your changes once you are done.
+No stack trace available.
+[WLST INFO] Subdeployment SampleQueue does not exist
+[WLST INFO] Created Subdeployment SampleQueue
+[WLST INFO] Adding JMSServer "TestServer" to the list of targets
+Saving all your changes ...
+Saved all your changes successfully.
+Activating all your changes, this may take a while ...
+The edit lock associated with this edit session is released once the activation is completed.
+Activation completed
+Already in requested Edit Tree
+
+Starting an edit session ...
+Started edit session, be sure to save and activate your changes once you are done.
+No stack trace available.
+[WLST INFO] JMS Queue SampleQueue does not exist
+[WLST INFO] Created Queue SampleQueue
+[WLST INFO] Set JNDI Name weblogic.test.Queue
+[WLST INFO] Subdeployment has not changed
+[WLST INFO] Options:
+[WLST INFO] Additional Options: {}
+Saving all your changes ...
+Saved all your changes successfully.
+Activating all your changes, this may take a while ...
+The edit lock associated with this edit session is released once the activation is completed.
+Activation completed
+STDERR:
+DONE
+----
+
+
+
+[[CreateOrUpdateJMSServer]]
+=== CreateOrUpdateJMSServer
+
+
+Creates or updates JMS Server
+
+
+
+==== CreateOrUpdateJMSServer Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Configuration | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| JMS Server Name | Unique name of the JMS Server to be created or updated.
+
+
+| Target WLS Instance | The WLS Instance (Standalone or Cluster) to which this Server should be targeted. However note if this is not specified the JMS Server is not usable.
+
+
+| Update Action | 
+This parameter controls as to what the Update Action should be when a JMS Module with the same name exists:
+
+
+
+ *Do Nothing  (Default)*  -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
+
+
+
+ *Remove and Create*  - The procedure would remove existing JMS Module and recreate it based on new parameters passed.
+
+
+
+ *Selective Update*  - The procedure would update existing JMS Module. The only parameter for update will be 
+ *Target WLS Instance* .
+        
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createjmsserver/form.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The JMS Server was created successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createjmsserver/summary.png[image]
+
+In the *CreateOrUpdateJMSServer* step, click the Log button to see the diagnostic information:
+
+----
+Using plugin C-WebLogic-3.3.0.0
+Got parameter "configname" with value "demo"
+Got parameter "ecp_weblogic_jms_server_name" with value "TestServer"
+Got parameter "ecp_weblogic_target" with value "AdminServer"
+Got parameter "ecp_weblogic_update_action" with value "do_nothing"
+Processing template /myProject/jython/preamble.jython
+Processing template /myProject/jython/create_or_update_jms_server.jython
+Script path: /opt/electriccloud/electriccommander/workspace/job_25632_20180607045124/exec_323699757152446.jython
+Running command: '/u01/oracle/oracle_common/common/bin/wlst.sh' '/opt/electriccloud/electriccommander/workspace/job_25632_20180607045124/exec_323699757152446.jython'
+Unlinking file /opt/electriccloud/electriccommander/workspace/job_25632_20180607045124/exec_323699757152446.jython
+EXIT_CODE: 0
+STDOUT:
+Initializing WebLogic Scripting Tool (WLST) ...
+
+Welcome to WebLogic Server Administration Scripting Shell
+
+Type help() for help on available commands
+
+WebLogic version is: WebLogic Server 12.2.1.3.0
+Connecting to t3://localhost:7001 with userid weblogic ...
+Successfully connected to Admin Server "AdminServer" that belongs to domain "base_domain".
+
+Warning: An insecure protocol was used to connect to the server.
+To ensure on-the-wire security, the SSL port or Admin port should be used instead.
+
+Location changed to edit tree.
+This is a writable tree with DomainMBean as the root.
+To make changes you will need to start an edit session via startEdit().
+For more help, use help('edit').
+
+Starting an edit session ...
+Started edit session, be sure to save and activate your changes once you are done.
+No stack trace available.
+[WLST INFO] JMS Server TestServer does not exist
+[WLST INFO] Adding target Server "AdminServer"
+Saving all your changes ...
+Saved all your changes successfully.
+Activating all your changes, this may take a while ...
+The edit lock associated with this edit session is released once the activation is completed.
+Activation completed
+SUMMARY: Created JMS Server TestServer, Added target Server "AdminServer"
+STDERR:
+DONE
+----
+
+
+
+[[CreateOrUpdateJMSTopic]]
+=== CreateOrUpdateJMSTopic
+
+
+Creates or updates JMS Topic
+
+
+
+==== CreateOrUpdateJMSTopic Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| JMS Topic Name | Unique name of the JMS Topic that is going to be created or updated.
+
+
+
+| JMS Module Name | Name of the JMS module in which the JMS Topic is created. If there is already a JMS Topic with the specified name, it will be updated.
+
+
+
+| JNDI Name | JNDI Name is used to lookup the JMS Topic using JNDI lookup. If the JMS Topic is created without passing this parameter, it can be only used in an Application Scoped context.
+
+
+
+| Subdeployment Name | Name of Subdeployment. Required in order to deploy the Topic. If this is not specified the Topic will not be usable.
+
+
+
+| Target JMS Server | JMS Server  to which the Topic  would be targeted to. Required only if Subdeployment Name is specified.
+
+
+
+| Update Action | 
+This parameter controls as to what the Update Action should be when a JMS Topic with the same name exists:
+
+
+
+ *Do Nothing  (Default)*  -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
+
+
+
+ *Remove and Create*  - The procedure would remove existing JMS Topic and recreate it based on new parameters passed. If subdeployment name is specified, it will be recreated too.
+
+
+
+ *Selective Update*  - The procedure would update existing JMS Topic. The parameters for selective update are 
+ *JNDI Name*  and 
+ *Subdeployment Name* .
+        
+
+
+| Additional Options | Use this option to specify general or advanced parameters, message thresholds and quota, message delivery overrides, message logging and message delivery failure options, topic multicast parameters. Parameters should be in the form of key=value pairs. Group and property name are separated by '.'. E.g., 
+ *Multicast.MulticastTimeToLive=5* . Several options are separated by a newline:
+
+
+
+
+MessagingPerformancePreference=30
+DeliveryFailureParams.RedeliveryLimit=5
+
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createorupdatejmstopic/form.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The JMS Topic was created successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createorupdatejmstopic/summary.png[image]
+
+In the *CreateOrUpdateJMSTopic* step, click the Log button to see the diagnostic information:
+
+----
+Using plugin EC-WebLogic-3.3.0.0
+Got parameter "configname" with value "demo"
+Got parameter "ecp_weblogic_additional_options" with value ""
+Got parameter "ecp_weblogic_jms_module_name" with value "TestModule"
+Got parameter "ecp_weblogic_jms_topic_name" with value "SampleTopic"
+Got parameter "ecp_weblogic_jndi_name" with value "weblogic.test.Topic"
+Got parameter "ecp_weblogic_subdeployment_name" with value "SampleTopic"
+Got parameter "ecp_weblogic_target_jms_server" with value "TestServer"
+Got parameter "ecp_weblogic_update_action" with value "do_nothing"
+Processing template /myProject/jython/preamble.jython
+Processing template /myProject/jython/create_or_update_jms_topic.jython
+Script path: /opt/electriccloud/electriccommander/workspace/job_25639_20180607053241/exec_344164956000842.jython
+Running command: '/u01/oracle/oracle_common/common/bin/wlst.sh' '/opt/electriccloud/electriccommander/workspace/job_25639_20180607053241/exec_344164956000842.jython'
+Unlinking file /opt/electriccloud/electriccommander/workspace/job_25639_20180607053241/exec_344164956000842.jython
+EXIT_CODE: 0
+STDOUT:
+Initializing WebLogic Scripting Tool (WLST) ...
+
+Welcome to WebLogic Server Administration Scripting Shell
+
+Type help() for help on available commands
+
+WebLogic version is: WebLogic Server 12.2.1.3.0
+Connecting to t3://localhost:7001 with userid weblogic ...
+Successfully connected to Admin Server "AdminServer" that belongs to domain "base_domain".
+
+Warning: An insecure protocol was used to connect to the server.
+To ensure on-the-wire security, the SSL port or Admin port should be used instead.
+
+Location changed to edit tree.
+This is a writable tree with DomainMBean as the root.
+To make changes you will need to start an edit session via startEdit().
+For more help, use help('edit').
+
+Starting an edit session ...
+Started edit session, be sure to save and activate your changes once you are done.
+No stack trace available.
+[WLST INFO] Subdeployment SampleTopic does not exist
+[WLST INFO] Created Subdeployment SampleTopic
+[WLST INFO] Adding JMSServer "TestServer" to the list of targets
+Saving all your changes ...
+Saved all your changes successfully.
+Activating all your changes, this may take a while ...
+The edit lock associated with this edit session is released once the activation is completed.
+Activation completed
+Already in requested Edit Tree
+
+Starting an edit session ...
+Started edit session, be sure to save and activate your changes once you are done.
+No stack trace available.
+[WLST INFO] JMS Topic SampleTopic does not exist
+[WLST INFO] Created Topic SampleTopic
+[WLST INFO] Set JNDI Name weblogic.test.Topic
+[WLST INFO] Subdeployment has not changed
+[WLST INFO] Options:
+[WLST INFO] Additional Options: {}
+Saving all your changes ...
+Saved all your changes successfully.
+Activating all your changes, this may take a while ...
+The edit lock associated with this edit session is released once the activation is completed.
+Activation completed
+STDERR:
+DONE
+----
+
+
+
+[[DeleteConnectionFactory]]
+=== DeleteConnectionFactory
+
+
+Deletes Connection Factory
+
+
+
+==== DeleteConnectionFactory Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| Connection Factory Name | Unique name of the Connection Factory that is going to be deleted. If the Connection Factory with the specified name does not exist, the procedure will fail.
+
+
+| JMS Module Name | Name of the JMS module in which the Connection Factory was created.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deleteconnectionfactory/form.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The Connection Factory was deleted.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deleteconnectionfactory/summary.png[image]
+
+In the *DeleteConnectionFactory* step, click the Log button to see the diagnostic information:
+
+----
+Using plugin EC-WebLogic-3.3.0.0
+Got parameter "cf_name" with value "TestCF"
+Got parameter "configname" with value "demo"
+Got parameter "jms_module_name" with value "TestModule"
+Processing template /myProject/jython/preamble.jython
+Processing template /myProject/jython/delete_connection_factory.jython
+Script path: /opt/electriccloud/electriccommander/workspace/job_25643_20180607054551/exec_735556895409005.jython
+Running command: '/u01/oracle/oracle_common/common/bin/wlst.sh' '/opt/electriccloud/electriccommander/workspace/job_25643_20180607054551/exec_735556895409005.jython'
+Unlinking file /opt/electriccloud/electriccommander/workspace/job_25643_20180607054551/exec_735556895409005.jython
+EXIT_CODE: 0
+STDOUT:
+Initializing WebLogic Scripting Tool (WLST) ...
+
+Welcome to WebLogic Server Administration Scripting Shell
+
+Type help() for help on available commands
+
+WebLogic version is: WebLogic Server 12.2.1.3.0
+Connecting to t3://localhost:7001 with userid weblogic ...
+Successfully connected to Admin Server "AdminServer" that belongs to domain "base_domain".
+
+Warning: An insecure protocol was used to connect to the server.
+To ensure on-the-wire security, the SSL port or Admin port should be used instead.
+
+Location changed to edit tree.
+This is a writable tree with DomainMBean as the root.
+To make changes you will need to start an edit session via startEdit().
+For more help, use help('edit').
+
+Starting an edit session ...
+Started edit session, be sure to save and activate your changes once you are done.
+[WLST INFO] Removed Connection Factory TestCF from the module TestModule
+Saving all your changes ...
+Saved all your changes successfully.
+Activating all your changes, this may take a while ...
+The edit lock associated with this edit session is released once the activation is completed.
+Activation completed
+STDERR:
+DONE
+----
+
+
+
+[[DeleteJMSModule]]
+=== DeleteJMSModule
+
+
+Deletes JMS Module
+
+
+
+==== DeleteJMSModule Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Configuration | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| JMS Module Name | Unique name of the JMS Module that needs to be deleted.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deletejmsmodule/form.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The JMS Module was deleted.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deletejmsmodule/summary.png[image]
+
+In the *DeleteJMSModule* step, click the Log button to see the diagnostic information:
+
+----
+Using plugin EC-WebLogic-3.3.0.0
+Got parameter "configname" with value "demo"
+Got parameter "ecp_weblogic_jms_module_name" with value "TestModule"
+Processing template /myProject/jython/preamble.jython
+Processing template /myProject/jython/delete_jms_module.jython
+Script path: /opt/electriccloud/electriccommander/workspace/job_25644_20180607054757/exec_169758432417386.jython
+Running command: '/u01/oracle/oracle_common/common/bin/wlst.sh' '/opt/electriccloud/electriccommander/workspace/job_25644_20180607054757/exec_169758432417386.jython'
+Unlinking file /opt/electriccloud/electriccommander/workspace/job_25644_20180607054757/exec_169758432417386.jython
+EXIT_CODE: 0
+STDOUT:
+Initializing WebLogic Scripting Tool (WLST) ...
+
+Welcome to WebLogic Server Administration Scripting Shell
+
+Type help() for help on available commands
+
+WebLogic version is: WebLogic Server 12.2.1.3.0
+Connecting to t3://localhost:7001 with userid weblogic ...
+Successfully connected to Admin Server "AdminServer" that belongs to domain "base_domain".
+
+Warning: An insecure protocol was used to connect to the server.
+To ensure on-the-wire security, the SSL port or Admin port should be used instead.
+
+Location changed to edit tree.
+This is a writable tree with DomainMBean as the root.
+To make changes you will need to start an edit session via startEdit().
+For more help, use help('edit').
+
+Starting an edit session ...
+Started edit session, be sure to save and activate your changes once you are done.
+[WLST INFO] JMS Module TestModule has been deleted
+Saving all your changes ...
+Saved all your changes successfully.
+Activating all your changes, this may take a while ...
+The edit lock associated with this edit session is released once the activation is completed.
+Activation completed
+SUMMARY: Deleted JMS System Module TestModule
+STDERR:
+DONE
+----
+
+
+
+[[DeleteJMSModuleSubdeployment]]
+=== DeleteJMSModuleSubdeployment
+
+
+Deletes JMS Module Subdeployment
+
+
+
+==== DeleteJMSModuleSubdeployment Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Configuration | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| JMS Module Name | Unique name of the JMS Module in which the Sub-Deployment should be created. Note that this module should exist already for this Procedure to succeed.
+
+
+| Subdeployment Name | Name of the Subdeployment to be created or updated.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deletesubdeployment/form.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The JMS Subdeployment was deleted.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deletesubdeployment/summary.png[image]
+
+In the *DeleteJMSModuleSubdeployment* step, click the Log button to see the diagnostic information:
+
+----
+Using plugin EC-WebLogic-3.3.0.0
+Got parameter "configname" with value "demo"
+Got parameter "ecp_weblogic_jms_module_name" with value "SystemModule-0"
+Got parameter "ecp_weblogic_subdeployment_name" with value "MyQueue"
+Processing template /myProject/jython/preamble.jython
+Processing template /myProject/jython/delete_jms_module_subdeployment.jython
+Script path: /opt/electriccloud/electriccommander/workspace/job_27049_20180611060932/exec_313584566273004.jython
+Running command: '/u01/oracle/oracle_common/common/bin/wlst.sh' '/opt/electriccloud/electriccommander/workspace/job_27049_20180611060932/exec_313584566273004.jython'
+Unlinking file /opt/electriccloud/electriccommander/workspace/job_27049_20180611060932/exec_313584566273004.jython
+EXIT_CODE: 0
+STDOUT:
+Initializing WebLogic Scripting Tool (WLST) ...
+
+Welcome to WebLogic Server Administration Scripting Shell
+
+Type help() for help on available commands
+
+WebLogic version is: WebLogic Server 12.2.1.3.0
+Connecting to t3://localhost:7001 with userid weblogic ...
+Successfully connected to Admin Server "AdminServer" that belongs to domain "base_domain".
+
+Warning: An insecure protocol was used to connect to the server.
+To ensure on-the-wire security, the SSL port or Admin port should be used instead.
+
+Location changed to edit tree.
+This is a writable tree with DomainMBean as the root.
+To make changes you will need to start an edit session via startEdit().
+For more help, use help('edit').
+
+Starting an edit session ...
+Started edit session, be sure to save and activate your changes once you are done.
+[WLST INFO] Removed subdeployment MyQueue from the module SystemModule-0
+Saving all your changes ...
+Saved all your changes successfully.
+Activating all your changes, this may take a while ...
+The edit lock associated with this edit session is released once the activation is completed.
+Activation completed
+SUMMARY: Subdeployment MyQueue has been deleted from JMS Module SystemModule-0
+STDERR:
+DONE
+----
+
+
+
+[[DeleteJMSQueue]]
+=== DeleteJMSQueue
+
+
+Deletes JMS Queue
+
+
+
+==== DeleteJMSQueue Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| JMS Queue Name | Unique name of the JMS Queue that needs to be deleted. If JMS Queue with the specified name does not exist, the procedure will fail.
+
+
+
+| JMS Module Name | Name of the JMS module in which the JMS Queue was created.
+
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deletejmsqueue/form.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The JMS Queue was deleted.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deletejmsqueue/summary.png[image]
+
+In the *DeleteJMSQueue* step, click the Log button to see the diagnostic information:
+
+----
+Using plugin EC-WebLogic-3.3.0.0
+Got parameter "configname" with value "demo"
+Got parameter "ecp_weblogic_jms_module_name" with value "TestModule"
+Got parameter "ecp_weblogic_jms_queue_name" with value "SampleQueue"
+Processing template /myProject/jython/preamble.jython
+Processing template /myProject/jython/delete_jms_queue.jython
+Script path: /opt/electriccloud/electriccommander/workspace/job_25640_20180607054123/exec_471983963746803.jython
+Running command: '/u01/oracle/oracle_common/common/bin/wlst.sh' '/opt/electriccloud/electriccommander/workspace/job_25640_20180607054123/exec_471983963746803.jython'
+Unlinking file /opt/electriccloud/electriccommander/workspace/job_25640_20180607054123/exec_471983963746803.jython
+EXIT_CODE: 0
+STDOUT:
+Initializing WebLogic Scripting Tool (WLST) ...
+
+Welcome to WebLogic Server Administration Scripting Shell
+
+Type help() for help on available commands
+
+WebLogic version is: WebLogic Server 12.2.1.3.0
+Connecting to t3://localhost:7001 with userid weblogic ...
+Successfully connected to Admin Server "AdminServer" that belongs to domain "base_domain".
+
+Warning: An insecure protocol was used to connect to the server.
+To ensure on-the-wire security, the SSL port or Admin port should be used instead.
+
+Location changed to edit tree.
+This is a writable tree with DomainMBean as the root.
+To make changes you will need to start an edit session via startEdit().
+For more help, use help('edit').
+
+Starting an edit session ...
+Started edit session, be sure to save and activate your changes once you are done.
+[WLST INFO] Removed JMS Queue SampleQueue from the module TestModule
+Saving all your changes ...
+Saved all your changes successfully.
+Activating all your changes, this may take a while ...
+The edit lock associated with this edit session is released once the activation is completed.
+Activation completed
+STDERR:
+DONE
+----
+
+
+
+[[DeleteJMSServer]]
+=== DeleteJMSServer
+
+
+Deletes JMS Server
+
+
+
+==== DeleteJMSServer Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Configuration | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| JMS Server Name | Unique name of the JMS Server that needs to deleted. If the server with the specified name does not exist, the procedure will fail.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deletejmsserver/form.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The JMS Server was deleted.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deletejmsserver/summary.png[image]
+
+In the *DeleteJMSServer* step, click the Log button to see the diagnostic information:
+
+----
+Using plugin EC-WebLogic-3.3.0.0
+Got parameter "configname" with value "demo"
+Got parameter "ecp_weblogic_jms_server_name" with value "TestServer"
+Processing template /myProject/jython/preamble.jython
+Processing template /myProject/jython/delete_jms_server.jython
+Script path: /opt/electriccloud/electriccommander/workspace/job_25645_20180607055037/exec_330800760610238.jython
+Running command: '/u01/oracle/oracle_common/common/bin/wlst.sh' '/opt/electriccloud/electriccommander/workspace/job_25645_20180607055037/exec_330800760610238.jython'
+Unlinking file /opt/electriccloud/electriccommander/workspace/job_25645_20180607055037/exec_330800760610238.jython
+EXIT_CODE: 0
+STDOUT:
+Initializing WebLogic Scripting Tool (WLST) ...
+
+Welcome to WebLogic Server Administration Scripting Shell
+
+Type help() for help on available commands
+
+WebLogic version is: WebLogic Server 12.2.1.3.0
+Connecting to t3://localhost:7001 with userid weblogic ...
+Successfully connected to Admin Server "AdminServer" that belongs to domain "base_domain".
+
+Warning: An insecure protocol was used to connect to the server.
+To ensure on-the-wire security, the SSL port or Admin port should be used instead.
+
+Location changed to edit tree.
+This is a writable tree with DomainMBean as the root.
+To make changes you will need to start an edit session via startEdit().
+For more help, use help('edit').
+
+Starting an edit session ...
+Started edit session, be sure to save and activate your changes once you are done.
+[WLST INFO] Removed JMS Server TestServer
+Saving all your changes ...
+Saved all your changes successfully.
+Activating all your changes, this may take a while ...
+The edit lock associated with this edit session is released once the activation is completed.
+Activation completed
+STDERR:
+DONE
+----
+
+
+
+[[DeleteJMSTopic]]
+=== DeleteJMSTopic
+
+
+Deletes JMS Topic
+
+
+
+==== DeleteJMSTopic Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| JMS Topic Name | Unique name of the JMS Topic that is going to be deleted. If JMS Topic with the specified name does not exist in the JMS Module, the procedure will fail.
+
+
+
+| JMS Module Name | Name of the JMS module in which the JMS Topic was created.
+
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deletejmstopic/form.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The JMS Queue was deleted.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deletejmstopic/summary.png[image]
+
+In the *DeleteJMSTopic* step, click the Log button to see the diagnostic information:
+
+----
+Using plugin EC-WebLogic-3.3.0.0
+Got parameter "configname" with value "demo"
+Got parameter "ecp_weblogic_jms_module_name" with value "TestModule"
+Got parameter "ecp_weblogic_jms_topic_name" with value "SampleTopic"
+Processing template /myProject/jython/preamble.jython
+Processing template /myProject/jython/delete_jms_topic.jython
+Script path: /opt/electriccloud/electriccommander/workspace/job_25641_20180607054339/exec_788152218826341.jython
+Running command: '/u01/oracle/oracle_common/common/bin/wlst.sh' '/opt/electriccloud/electriccommander/workspace/job_25641_20180607054339/exec_788152218826341.jython'
+Unlinking file /opt/electriccloud/electriccommander/workspace/job_25641_20180607054339/exec_788152218826341.jython
+EXIT_CODE: 0
+STDOUT:
+Initializing WebLogic Scripting Tool (WLST) ...
+
+Welcome to WebLogic Server Administration Scripting Shell
+
+Type help() for help on available commands
+
+WebLogic version is: WebLogic Server 12.2.1.3.0
+Connecting to t3://localhost:7001 with userid weblogic ...
+Successfully connected to Admin Server "AdminServer" that belongs to domain "base_domain".
+
+Warning: An insecure protocol was used to connect to the server.
+To ensure on-the-wire security, the SSL port or Admin port should be used instead.
+
+Location changed to edit tree.
+This is a writable tree with DomainMBean as the root.
+To make changes you will need to start an edit session via startEdit().
+For more help, use help('edit').
+
+Starting an edit session ...
+Started edit session, be sure to save and activate your changes once you are done.
+[WLST INFO] Removed JMS Topic SampleTopic from the module TestModule
+Saving all your changes ...
+Saved all your changes successfully.
+Activating all your changes, this may take a while ...
+The edit lock associated with this edit session is released once the activation is completed.
+Activation completed
+STDERR:
+DONE
+----
+
+
+
+[[CreateUser]]
+=== CreateUser
+
+
+Create a user
+
+
+This procedure creates a new user on the WebLogic server.
+
+
+==== CreateUser Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| User Credentials | User credentials(Username and password).
+
+
+| Domain Name | Name of the user domain.
+
+
+| Realm Name | Name of the user realm.
+
+
+| User Description | Description about the user.
+
+
+| Overwrite Existing User | If enabled it will delete already existing user of the same name and recreate new user.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createuser/ec-wlscreateuserstatus2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The database was created successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createuser/ec-wlscreateuserstatus3.png[image]
+
+In the *CreateUser* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createuser/ec-wlscreateuserstatus4.png[image]
+
+
+
+[[CreateGroup]]
+=== CreateGroup
+
+
+Create a group
+
+
+This procedure creates a new user group on the WebLogic server.
+
+
+==== CreateGroup Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| Group Name | Name of the group to be created.
+
+
+| Domain Name | Name of the group domain.
+
+
+| Realm Name | Name of the group realm.
+
+
+| Group Description | Description about the group.
+
+
+| Overwrite Existing Group | If enabled it will delete already existing group of the same name and recreate new group.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/creategroup/ec-wlscreategroupstatus2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The database was created successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/creategroup/ec-wlscreategroupstatus3.png[image]
+
+In the *CreateGroup* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/creategroup/ec-wlscreategroupstatus4.png[image]
+
+
+
+[[AddUserToGroup]]
+=== AddUserToGroup
+
+
+Add a user to group.
+
+
+This procedure adds a User to the specified Group.
+
+
+==== AddUserToGroup Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| User Name | Name of the user to be added.
+
+
+| Group Name | Name of the group in which user is to be added.
+
+
+| Domain Name | Name of the user domain.
+
+
+| Realm Name | Name of the user realm.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/addusertogroup/ec-wlsaddusertogroupstatus2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The status of the page was checked successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/addusertogroup/ec-wlsaddusertogroupstatus3.png[image]
+
+In the *AddUserToGroup* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/addusertogroup/ec-wlsaddusertogroupstatus4.png[image]
+
+*Note:* In the URL, the protocol is http. For this procedure, {CD} uses an internal method to test the status of the page URLs with the original http protocol used in the web browsers.
+
+
+
+[[ChangeUserPassword]]
+=== ChangeUserPassword
+
+
+Change password of a user.
+
+
+This procedure can be used to change the password of a specific user.
+
+
+==== ChangeUserPassword Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| Old User Credentials | Old user credentials(username and password).
+
+
+| New User Credentials | New user credentials(Username and password). Username should be same as username in old credentials.
+
+
+| Domain Name | Name of the user domain.
+
+
+| Realm Name | Name of the user realm.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/changeuserpassword/ec-wlschangeuserpasswordstatus2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The status of the page was checked successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/changeuserpassword/ec-wlschangeuserpasswordstatus3.png[image]
+
+In the *ChangeUserPassword* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/changeuserpassword/ec-wlschangeuserpasswordstatus4.png[image]
+
+*Note:* In the URL, the protocol is http. For this procedure, {CD} uses an internal method to test the status of the page URLs with the original http protocol used in the web browsers.
+
+
+
+[[RemoveUserFromGroup]]
+=== RemoveUserFromGroup
+
+
+Remove a user from group.
+
+
+This procedure removes a User from the specified Group.
+
+
+==== RemoveUserFromGroup Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| User Name | Name of the user to be removed.
+
+
+| Group Name | Name of the group from which user is to be removed.
+
+
+| Domain Name | Name of the user domain.
+
+
+| Realm Name | Name of the user realm.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/removeuserfromgroup/ec-wlsremoveuserfromgroupstatus2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The status of the page was checked successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/removeuserfromgroup/ec-wlsremoveuserfromgroupstatus3.png[image]
+
+In the *RemoveUserFromGroup* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/removeuserfromgroup/ec-wlsremoveuserfromgroupstatus4.png[image]
+
+*Note:* In the URL, the protocol is http. For this procedure,{CD} uses an internal method to test the status of the page URLs with the original http protocol used in the web browsers.
+
+
+
+[[ConfigureUserLockoutManager]]
+=== ConfigureUserLockoutManager
+
+
+Configure User Lockout Manager.
+
+
+This procedure can be used to configure the User Lockout configuration.
+
+
+==== ConfigureUserLockoutManager Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| Lockout Threshold | The maximum number of consecutive invalid login attempts that can occur before a user's account is locked out. Minimum value: 1, Maximum value: 2147483647.
+
+
+| Lockout Duration | The number of minutes that a user's account is locked out. Minimum value: 0, Maximum value: 2147483647.
+
+
+| Lockout Enabled | Specifies whether the server locks users out when there are invalid login attempts on their account.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/configureuserlockoutmanager/ec-wlsconfigureuserlockoutmanagerstatus2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The status of the server was checked successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/configureuserlockoutmanager/ec-wlsconfigureuserlockoutmanagerstatus3.png[image]
+
+In the *ConfigureUserLockoutManager* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/configureuserlockoutmanager/ec-wlsconfigureuserlockoutmanagerstatus4.png[image]
+
+image::cloudbees-common::cd-plugins/ec-weblogic/configureuserlockoutmanager/ec-wlsconfigureuserlockoutmanagerstatus5.png[image]
+
+
+
+[[UnlockUserAccount]]
+=== UnlockUserAccount
+
+
+Unlock an user account.
+
+
+This procedure can be used to unlock a locked user account.
+
+
+==== UnlockUserAccount Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| User Name | Name of the user whose account is to be unlocked.
+
+
+| Domain Name | Name of the user domain.
+
+
+| Realm Name | Name of the user realm.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/unlockuseraccount/ec-wlsunlockuseraccountstatus2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The application was undeployed
+successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/unlockuseraccount/ec-wlsunlockuseraccountstatus3.png[image]
+
+In the *UnlockUserAccount* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/unlockuseraccount/ec-wlsunlockuseraccountstatus4.png[image]
+
+
+
+[[DeleteGroup]]
+=== DeleteGroup
+
+
+Delete a group
+
+
+This procedure delets a user group on the WebLogic server.
+
+
+==== DeleteGroup Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| Group Name | Name of the group to be deleted.
+
+
+| Domain Name | Name of the user domain.
+
+
+| Realm Name | Name of the user realm.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deletegroup/ec-wlsdeletegroupstatus2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The database was created successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deletegroup/ec-wlsdeletegroupstatus3.png[image]
+
+In the *DeleteGroup* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deletegroup/ec-wlsdeletegroupstatus4.png[image]
+
+
+
+[[DeleteUser]]
+=== DeleteUser
+
+
+Delete a user
+
+
+This procedure deletes a user on the WebLogic server.
+
+
+==== DeleteUser Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| User Name | Name of the user to be deleted.
+
+
+| Domain Name | Name of the user domain.
+
+
+| Realm Name | Name of the user realm.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deleteuser/ec-wlsdeleteuserstatus2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The database was created successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deleteuser/ec-wlsdeleteuserstatus3.png[image]
+
+In the *DeleteUser* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/deleteuser/ec-wlsdeleteuserstatus4.png[image]
+
+
+
+[[CheckClusterStatus]]
+=== CheckClusterStatus
+
+
+Check the status of the given server cluster name.
+
+
+This procedure checks the status of the specified cluster.
+
+
+==== CheckClusterStatus Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| Wlst Script Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Maximum Elapsed Time | Defines the maximum time in seconds that the job will try to check into the cluster. Blank implies no wait time (URL only checked one time).
+
+
+| Success Criteria | Indicates the expected correct result to be obtained when running checking the cluster.
+
+
+| Cluster Name | Indicates the name of the cluster to be checked.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/checkclusterstatus/ec-wlscheckclusterstatus2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The status of the cluster was checked successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/checkclusterstatus/ec-wlscheckclusterstatus3.png[image]
+
+In the *CheckClusterStatus* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/checkclusterstatus/ec-wlscheckclusterstatus4.png[image]
+
+
+
+[[CheckServerStatus]]
+=== CheckServerStatus
+
+
+Check the status of the given server URL
+
+
+This procedure checks the status of the specified server.
+
+
+==== CheckServerStatus Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+
+
+| Wlst Script Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Maximum Elapsed Time | Defines the maximum time in seconds that the job will try to check into the server. Blank implies no wait time (URL only checked one time).
+
+
+| Success Criteria | Indicates the expected correct result to be obtained when running checking the server.
+
+
+| Instance Name | Indicates the name of the instance to be checked.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/checkserverstatus/ec-wlscheckserverstatus2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The status of the server was checked successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/checkserverstatus/ec-wlscheckserverstatus3.png[image]
+
+In the *CheckServerStatus* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/checkserverstatus/ec-wlscheckserverstatus4.png[image]
+
+
+
+[[RunWLST]]
+=== RunWLST
+
+
+Runs Jython scripts using weblogic.WLST
+
+
+This procedure runs Jython scripts using weblogic.WLST. The
+WebLogic Scripting Tool (WLST) is a command-line
+scripting interface that system administrators and
+operators use to monitor and manage WebLogic Server
+instances and domains. The WLST scripting environment
+is based on the Java scripting interpreter, Jython. In
+addition to WebLogic scripting functions, you can use
+common features of interpreted languages, including
+local variables, conditional variables, and flow
+control statements.
+
+
+==== RunWLST Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Script File Absolute Path | 
+      Absolute path of a Jython script containing the desired job. The path is used only if 'Supplied File' is selected in the 'Script File Source' parameter. i.e: '/path/to/scriptfile.jython'.
+    
+
+
+| Script File Source | 
+      Indicates the source of the script file to execute. Either a existent file in the path defined in the 'scriptfile' parameter OR a new one using the code specified in scriptfile parameter.
+    
+
+
+| Script File | 
+      Content of the script file to run if 'New Script File' option is chosen in the 'Script File Source' parameter.
+    
+
+
+| Additional Commands | Additional commands to be entered for weblogic.WLST.
+
+
+| Additional Environment Vairables | 
+      Additional environment variables as comma separated key-value pairs.
+      For example: JAVA_HOME => '/path/to/java/home', other_env => 'myenv'
+    
+
+
+| weblogic jar Absolute Path | Absolute path of the weblogic jar, needed to run the run Jython scripts using weblogic.WLST. In Windows environment, if the jar is already added to the enviroment classpath variable, then is not necesary to include it. In Linux environment you must include the path. i.e: '/path/to/weblogic.jar' or '/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar'.
+    
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/runwlst/runwlstexample.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/runwlst/ec-wlsrunwlst4.png[image]
+
+In the *RunWLST* step, click the Log button to see the diagnostic information similar to this:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/runwlst/ec-wlsrunwlst5.png[image]
+
+This is the <i>HelloWorld.jython</i> file used in the <i>Supplied File</i> option:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/runwlst/ec-wlsrunwlst6.png[image]
+
+
+
+[[CreateTemplate]]
+=== CreateTemplate
+
+
+Creates a domain template from the existing domain.
+
+
+This procedure creates a domain template on the WebLogic server.
+
+
+==== CreateTemplate Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+
+
+| Domain Directory | Name of the domain directory from which you want to create the template.
+
+
+| Template Name | Name (use .jar extension) and location of the domain template to store the domain configuration information. A domain template is a JAR file that contains domain configuration documents, applications, security data, startup scripts, and other information needed to create a WebLogic domain.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createtemplate/ec-wlscreatetemplatestatus2.png[image]
+
+=== Output
+
+After the job runs, you can view the results on the Job Details page in {CD}. The database was created successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createtemplate/ec-wlscreatetemplatestatus3.png[image]
+
+In the *CreateTemplate* step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/createtemplate/ec-wlscreatetemplatestatus4.png[image]
+
+
+
+[[CheckPageStatus]]
+=== CheckPageStatus
+
+
+Check the status of a page on a given URL
+
+
+This procedure checks the status of the specified page.
+
+
+==== CheckPageStatus Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Credentials to be entered | The credentials needed to check the status of the page.
+
+
+| Maximum Elapsed Time | Defines the maximum time in seconds that the job will try to check into the server. Blank implies no wait time (URL only checked one time).
+
+
+| Target URL | URL of the page to be checked. (Required)
+
+
+| Success Criteria | Indicates the expected correct result to be obtained when running checking the server.
+
+
+|===
+
+
+
+
+image::cloudbees-common::cd-plugins/ec-weblogic/checkpagestatus/wlscheckpagestatus2.png[image]
+
+After the job runs, you can view the results on the Job Details page in {CD}. The status of the page was checked successfully.
+
+image::cloudbees-common::cd-plugins/ec-weblogic/checkpagestatus/ec-wlscheckpagestatus3.png[image]
+
+In the _CheckPageStatus_ step, click the Log button to see the diagnostic information:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/checkpagestatus/ec-wlscheckpagestatus4.png[image]
+
+*Note:* In the URL, the protocol is http. For this procedure, {CD} uses an internal method to test the status of the page URLs with the original http protocol used in the web browsers.
+
+
+
+[[Discover]]
+=== Discover
+
+
+This procedure connects to a Weblogic environment, discovers objects specified by user and creates a Weblogic plugin configuration and an Application/Environment model in {CD} based on objects discovered.
+
+
+After the procedure runs the following are created:
+
+* A EC-WebLogic plugin configuration based on the discovered environment
+* An EF Resource and Environment, based on the provided resource/hostname data.
+* An Application with components and process steps based on WebLogic resources, based on Object Names provided.
+* A report describing the current state of Weblogic resources in a variety of formats (csv, JSON and HTML).
+
+Currently the following objects are supported for discovery:
+
+* AppDeployment
+* Library
+* DataSource
+* JMS Module
+* JMS Queue
+* JMS Topic
+* JMS Connection Factory
+* JMS Submodule
+* JMS Server
+* Server
+* Cluster
+* User
+* Group
+
+
+==== Discover Parameters
+[cols=",",options="header",]
+|===
+| Parameter | Description
+
+| Resource Name | Name of the {CD} resource that represents the WebLogic environment that needs to be discovered.
+
+
+| Resource Hostname | Hostname of a machine with WebLogic and {CD} Agent running on it. Either Resource hostname (and port) or Resource Name should be specified.
+
+
+| Resource Port | Port of {CD} agent running on the machine. Default is 7800.
+
+
+| Oracle Home | Installation path of the WebLogic server, e.g. /home/oracle. Not required if WLST Path parameter is specified.
+
+
+| WLST Path | Absolute Path to WLST utility. If not provided, the procedure will look for it, in known locations. Not required if Oracle Home is specified.
+
+
+| Weblogic Connection Hostname | Hostname to connect to WebLogic instance. Localhost by default.
+
+
+| Weblogic Connection Protocol | Protocol to connect to WebLogic instance. T3 by default.
+
+
+| WebLogic Credentials | Username and password to connect to WebLogic server.
+
+
+| Environment Project Name | If specified will create Project for the Environment.
+
+
+| Environment Name | If specified, will be used to create {CD} environment.
+
+
+| Application Project Name | Project name to create Application based on discovered objects.
+
+
+| Application Name | Application for placing discovered objects.
+
+
+| Object Names | Objects to be retrieved from the WL Server in type:name pairs, e.g. AppDeployment:HelloWorld. For JMS Resource the name of the resource should be prefixed by JMS Module Name: helloJMSModule:helloQueue.
+
+
+
+
+
+The list of Object Names can be found in the .csv report generated by this procedure.
+
+
+
+
+
+The list of supported object types:
+
+
+ * AppDeployment
+
+ * Library
+
+ * Server
+
+ * Cluster
+
+ * Datasource
+
+ * Queue
+
+ * Topic
+
+ * JMSResource
+
+ * JMSServer
+
+ * ConnectionFactory
+
+ * User
+
+ * Group
+
+
+|===
+
+
+
+
+To run the procedure, provide inputs:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/discover/form.png[image]
+
+After the procedure is finished, it will provide a summary like this:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/discover/summary.png[image]
+
+Warnings usually indicate that some entities require additional configuration, like DataSources or Users.
+
+A report can look like below:
+
+image::cloudbees-common::cd-plugins/ec-weblogic/discover/report.png[image]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[[rns]]
+== Release notes
+
+
+=== EC-WebLogic 3.5.2
+
+- The documentation has been migrated to the main site.
+
+
+
+=== EC-WebLogic 3.5.1
+
+- Rebranding from "CloudBees Flow" to "{CD}".
+
+
+
+=== EC-WebLogic 3.5.0
+
+- Add checking connection while creating a configuration.
+
+
+- Jobs for the successful "CreateConfiguration" and "EditConfiguration" run is now preserved.
+
+
+- Add logging while running "CreateConfiguration".
+
+
+
+=== EC-WebLogic 3.4.3
+
+- Renaming from "Electric Cloud" to "CloudBees"
+
+
+
+=== EC-WebLogic 3.4.2
+
+- Configurations can be created by users with "@" sign in a name.
+
+
+
+=== EC-WebLogic 3.4.1
+
+- Fixed the issue with lost output parameters for 9.0. Upon upgrade or clean install of 9.0 output parameters were not created for the plugin's procedures.
+
+
+
+=== EC-WebLogic 3.4.0
+
+- Introduced the following 2 new procedures
+
+
+ * "CreateorUpdateDataSource" to support Data Source management.
+
+ * "Discover" procedure to support the discovery functionality where in an EF model can be created from an existing Weblogic environment.
+
+
+- Modified DeleteDataSource procedure
+
+
+- Old procedure CreateDataSource is deprecated
+
+
+
+=== EC-WebLogic 3.3.0
+
+- Added support for JMS Resource Management by adding the following procedures:
+
+
+ * CreateOrUpdateJMSServer
+
+ * DeleteJMSServer
+
+ * CreateOrUpdateJMSModule
+
+ * DeleteJMS Module
+
+ * CreateOrUpdateConnectionFactory
+
+ * DeleteConnectionFactory
+
+ * CreateOrUpdateJMSQueue
+
+ * DeleteJMSQueue
+
+ * CreateOrUpdateJMSTopic
+
+ * DeleteJMSTopic
+
+ * CreateOrUpdateJMSModuleSubdeployment
+
+ * DeleteJMSModuleSubdeployment
+
+
+
+=== EC-WebLogic 3.2.4
+
+- Configured the plugin to allow the ElectricFlow UI to render the plugin procedure parameters entirely using the configured form XMLs.
+
+
+- Enabled the plugin for managing the plugin configurations in-line when defining an application process step or a pipeline stage task.
+
+
+
+=== EC-WebLogic 3.2.3
+
+- UpdateApp procedure has been marked as deprecated.
+
+
+- Following procedures have been added:
+  
+
+ * UpdateAppConfig
+
+ * StartCluster
+
+ * StopCluster
+
+ * CheckClusterStatus
+
+
+- Additional parameters have been added to the following procedures:
+  
+
+ * StartApp
+
+ * StopApp
+
+ * UndeployApp
+
+ * DeployApp
+
+
+- Checkbox "Retire Gracefully?" from UndeployApp procedure has been marked as deprecated and will be removed in the next release.
+
+
+- DeployApp does redeployment if application already exists.
+
+
+- StartApp and StopApp have been improved and warning is being thrown if application is already in the desired state.
+
+
+- StartCluster and StopCluster have been improved and warning is being thrown if cluster is already in the desired state.
+
+
+- Support of named edit sessions (concurrent edit sessions) has been added. If WebLogic server doesn't have support of the named edit sessions, warning will be thrown.
+
+
+- MW_HOME environment variable has been added to the plugin configuration.
+
+
+
+=== EC-WebLogic 3.2.2
+
+- Added missing documentation.
+
+
+- Fixed multiline inputs for textareas in CreateUser and CreateGroup procedures.
+
+
+- Fixed issue with CreateUser and DeleteUser procedure when credentials was not found.
+
+
+- Cleanup was performed.
+
+
+
+=== EC-WebLogic 3.2.1
+
+- A lot of minor improvements and bugfixes.
+
+
+- Added the following new procedures:
+
+ * Add Server to Cluster
+
+ * Add User to Group
+
+ * Change User Password
+
+ * Configure User Lockout Manager
+
+ * Create Cluster
+
+ * Create Domain
+
+ * Create Group
+
+ * Create Template
+
+ * Create User
+
+ * Delete Cluster
+
+ * Delete Group
+
+ * Delete User
+
+ * Remove User from Group
+
+ * Unlock User Account
+
+ * Update App
+
+
+
+=== EC-WebLogic 3.0.1
+
+- Fixed issue with configurations being cached for IE.
+
+
+
+=== EC-WebLogic 3.0.0
+
+- Refactored the CheckPageStatus, CheckServerStatus, CreateDataSource, DeleteDataSource, DeployApp, RunWLST, StartApp, StopApp, and UndeployApp procedures.
+
+
+- Added link to plugin Configuration Page in plugin step panels.
+
+
+
+=== EC-WebLogic 2.0.7
+
+- Fixed the manifest file.
+
+
+
+=== EC-WebLogic 2.0.6
+
+- Fixed typos in references to the createDataSource and deleteDataSource files in the manifest.pl so that the files are included correctly in the plugin jar.
+
+
+- Fixed errors in the createDataSource procedure.
+
+
+
+=== EC-WebLogic 2.0.5
+
+- Added four procedures to create datasources, delete datasources, suspend a server,  and resume a server.
+
+
+- Fixed minor bugs.
+
+
+
+=== EC-WebLogic 2.0.4
+
+- Procedure names were changed in the step picker section.
+
+
+
+=== EC-WebLogic 2.0.3
+
+- Added a parameter in the start and stop server procedures to determine the maximum time in seconds to test the status of the server.
+
+
+- Created two procedures to start and stop the Node Manager.
+
+
+
+=== EC-WebLogic 2.0.2
+
+- Changes to Help files.
+
+
+
+=== EC-WebLogic 2.0.1
+
+- Upgrade to use the new Parameter Form XML.
+
+
+- Added a link directly to the new Help file.
+
+
+
+=== EC-WebLogic 2.0.0
+
+- New Help Page Format.
+
+
+- Add new Parameter Panels for each procedure.
+
+
+- Add the 
+ *weblogic jar Absolute Path*  parameter to the DeployApp, UndeployApp, StartApp, StopApp, RunDeployer and RunWLST procedures. It is required to a Linux environment to load WebLogic libreries.
+
+
+
+=== EC-WebLogic 1.1.3
+
+- Add the 
+ *Administration Server URL*  parameter to the StartManagedServer procedure.
+
+
+- Fixed minor issues.
+
+
+
+=== EC-WebLogic 1.1.1
+
+- Fix issue affecting workspace setting.
+
+
+
+=== EC-WebLogic 1.1.0
+
+- Add the CheckPageStatus procedure.
+
+
+- Modify the CheckServerProcedure procedure. CURL is not needed and parameters were changed.
+
+
+- Fix minor bugs.
+
+
+- Remove the CURL dependency.
+
+
+- Add new postp matchers.
+
+
+
+=== EC-WebLogic 1.0.2
+
+- Fixed minor bug on Configuration List page.
+
+
+
+=== EC-WebLogic 1.0.1
+
+- Procedures that have only one step are executed using Perl directly.
+
+
+- Credentials in the StartManagedServer procedure must be stored in a boot.properties file.
+
+
+
+=== EC-WebLogic 1.0.0
+
+- First release.
+
+
+

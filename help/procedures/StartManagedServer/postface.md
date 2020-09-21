@@ -1,9 +1,16 @@
-<br />
-<img src="../../plugins/EC-WebLogic/images/StartManagedServer/EC-WLSStartManagedServer2.png" />
-<h3>Output</h3>
-<p>After the job runs, you can view the results on the Job Details page in CloudBees CD. The server was started
-successfully.</p>
-<img src="../../plugins/EC-WebLogic/images/StartManagedServer/EC-WLSStartManagedServer3.png" />
-<p>In the <b>StartManagedServer</b> step, click the Log button to see the diagnostic information:</p>
-<br />
-<img src="../../plugins/EC-WebLogic/images/StartManagedServer/EC-WLSStartManagedServer4.png" />
+
+
+![image](images/StartManagedServer/EC-WLSStartManagedServer2.png)
+
+### Output
+
+After the job runs, you can view the results on the Job Details page in CloudBees CD. The server was started
+successfully.
+
+![image](images/StartManagedServer/EC-WLSStartManagedServer3.png)
+
+In the **StartManagedServer** step, click the Log button to see the diagnostic information:
+
+
+![image](images/StartManagedServer/EC-WLSStartManagedServer4.png)
+

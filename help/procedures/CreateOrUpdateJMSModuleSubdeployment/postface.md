@@ -1,12 +1,16 @@
-<img src="../../plugins/EC-WebLogic/images/CreateOrUpdateSubdeployment/Form.png" />
 
-## Output
+![image](images/CreateOrUpdateSubdeployment/Form.png)
+
+
+### Output
 
 After the job runs, you can view the results on the Job Details page in CloudBees CD. The JMS Module Subdeployment was created successfully.
 
-<img src="../../plugins/EC-WebLogic/images/CreateOrUpdateSubdeployment/Summary.png" />
 
-In the <b>CreateOrUpdateJMSModuleSubdeployment</b> step, click the Log button to see the diagnostic information:
+![image](images/CreateOrUpdateSubdeployment/Summary.png)
+
+
+In the **CreateOrUpdateJMSModuleSubdeployment** step, click the Log button to see the diagnostic information:
 
     Using plugin EC-WebLogic-3.3.0.0
     Got parameter "configname" with value "demo"
