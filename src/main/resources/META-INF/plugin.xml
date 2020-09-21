@@ -33,5 +33,6 @@
             <javascript>war/ecplugins.weblogic.ConfigurationManagement/ecplugins.weblogic.ConfigurationManagement.nocache.js</javascript>
         </component>
     </components>
-<hasAdoc>true</hasAdoc>
+    <hasAdoc>true</hasAdoc>
+    <catalogLabel>WebLogic</catalogLabel>
 </plugin>
