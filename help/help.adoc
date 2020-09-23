@@ -1,20 +1,6 @@
 Plugin version @PLUGIN_VERSION@
-
 Revised on September 21, 2020
 
-
-
-
-
-== Overview
-
-== {CD} Integration to WebLogic
-
-Use this plugin to interact with the Oracle WebLogic server for application
-and server management, interacting or editing existing applications, and deploying new applications.
-You can start and stop both the Managed Servers and the Administration Server
-using this integration. You can use Jython scripting to create script files
-or to enter a new embedded file.
 
 == Integrated Version
 
@@ -23,16 +9,6 @@ This plugin was developed and tested against following WebLogic Server Versions:
  - 12c (12.2.1.1.0) on Linux
  - 11g (10.3.6.0) on Windows
  - 11g (10.3.6.0) on Linux
-
-
-
-
-
-
-
-
-
-
 
 == Plugin Configurations
 Plugin configurations are sets of parameters that apply
@@ -73,7 +49,7 @@ to carry all traffic for a JVM.
 |===
 |Parameter |Description
 
-|Configuration Name | 
+|Configuration Name |
 
 |WebLogic URL | URL of WebLogic Server (must include protocol, server and port). Two protocols are supported: t3 and t3s, e.g. t3://weblogic:7001.
 
@@ -84,7 +60,7 @@ to carry all traffic for a JVM.
 |JAVA_HOME | JAVA_HOME environment variable, i.e. path to bin, where java executable is located. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, JAVA_VENDOR should be also set.
 
 
-|JAVA_VENDOR | JAVA_VENDOR environment variable, use it to specify java vendor. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, the option JAVA_HOME should be also set. 
+|JAVA_VENDOR | JAVA_VENDOR environment variable, use it to specify java vendor. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, the option JAVA_HOME should be also set.
 
 
 |MW_HOME | MW_HOME environment variable, use it to specify WebLogic Home directory. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances.
@@ -93,9 +69,9 @@ to carry all traffic for a JVM.
 |Login as | Username and password to connect to WebLogic server.
 
 
-|Enable named sessions? | 
+|Enable named sessions? |
             If checked, each WebLogic edit session will have unique name assigned. Named sessions are not supported by WebLogic server prior to 12 version. Defaults to false.
-        
+
 
 
 |Test Connection? | Check if connection should be established during config creation to validate credentials.
@@ -469,14 +445,14 @@ If cluster has a servers in the RUNNING state, warning will be thrown.
 | Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| Cluster Name | 
+| Cluster Name |
       Name of the cluster to start. i.e: 'mycluster'.
-    
 
 
-| Timeout | 
+
+| Timeout |
           Timeout in seconds for cluster start.
-      
+
 
 
 |===
@@ -587,14 +563,14 @@ applications with high availability requirements.
 |===
 | Parameter | Description
 
-| Node Manager Script Location | 
+| Node Manager Script Location |
       Absolute path of the startNodeManager script, including filename and extension. i.e: '/Oracle/Middleware/wlserver_10.3/server/bin/startNodeManager.cmd'.
-    
 
 
-| Maximum Elapsed Time | 
+
+| Maximum Elapsed Time |
       Defines the time in seconds that the job wait to test the status of the node manager. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).
-    
+
 
 
 |===
@@ -677,29 +653,29 @@ If cluster has a servers in the SHUTDOWN state, warning will be thrown.
 | WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| Configuration Name | 
+| Configuration Name |
             Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
-        
 
 
-| Cluster Name | 
+
+| Cluster Name |
             Name of the cluster to stop. i.e: 'mycluster'.
-        
 
 
-| Shutdown Timeout | 
+
+| Shutdown Timeout |
             Timeout in seconds for cluster shutdown.
-        
 
 
-| Force Shutdown? | 
+
+| Force Shutdown? |
             Value specifying whether WLST should terminate a server instance or a cluster without waiting for the active sessions to complete. This argument defaults to false, indicating that all active sessions must complete before shutdown.
-        
 
 
-| Ignore Sessions? | 
+
+| Ignore Sessions? |
             Value specifying whether WLST should drop all HTTP sessions immediately or wait for HTTP sessions to complete or timeout while shutting down. This argument defaults to false, indicating that all HTTP sessions must complete or timeout.
-        
+
 
 
 |===
@@ -942,9 +918,9 @@ This procedure deploys an application or a module using WLST. If application or 
 |===
 | Parameter | Description
 
-| Configuration Name | 
+| Configuration Name |
             Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
-        
+
 
 
 | Wlst Script Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
@@ -962,7 +938,7 @@ This procedure deploys an application or a module using WLST. If application or 
 | Targets | Targets on which to deploy the application or module (comma-separated list of the target servers, clusters, or virtual hosts).
 
 
-| Stage mode | 
+| Stage mode |
             Staging mode for the application you are deploying.
 
 
@@ -978,45 +954,45 @@ This procedure deploys an application or a module using WLST. If application or 
 
 
 
-            See 
+            See
  http://docs.oracle.com/middleware/12212/wls/DEPGD/deploy.htm#DEPGD235[Oracle documentation]  for details.
-        
 
 
-| Deployment plan path | 
+
+| Deployment plan path |
             Path to read a deployment plan (if there is one) or to save a new one from the Deployment plan content parameter.
-        
+
 
 
 | Plan version | Deployment plan version.
 
 
-| Deployment plan content | 
+| Deployment plan content |
             A WebLogic Server deployment plan is an XML document that you use to configure an application for deployment to a specific WebLogic Server environment.
-        
 
 
-| Overwrite deployment plan? | 
+
+| Overwrite deployment plan? |
             If checked, deployment plan will be overwritten, if deployment plan content has been provided and deployment plan file already exists.
 
 
 
 
             This option defaults to false.
-        
 
 
-| Additional Options | 
+
+| Additional Options |
             Comma-separated list of deployment options, specified as name-value pairs.
 
 
 
 
             Refer to WLST deploy documentation (The options, which are not included in this form).
-        
 
 
-| Archive version | 
+
+| Archive version |
             Archive version number.
 
 
@@ -1028,50 +1004,50 @@ This procedure deploys an application or a module using WLST. If application or 
 
 
             Archive version stays along with the new one.
-        
 
 
-| Retire gracefully? | 
+
+| Retire gracefully? |
             Retirement policy to gracefully retire an application only after it has completed all in-flight work.
 
 
 
 
             This policy is only meaningful for stop and redeploy operations and is mutually exclusive to the retire timeout policy.
-        
 
 
-| Retire timeout | 
+
+| Retire timeout |
             Time (in seconds) WLST waits before retiring an application that has been replaced with a newer version.
 
 
 
 
             This option default to -1, which specifies graceful timeout.
-        
 
 
-| Version identifier | 
+
+| Version identifier |
             Version identifier that is being used by production redeployment. A string, that uniquely identifies the current application version across all versions of the same application.
-        
 
 
-| Upload? | 
+
+| Upload? |
             Optional. Boolean value specifying whether the application files are uploaded to the WebLogic Server Administration Server's upload directory prior to deployment.
 
 
 
 
-            Use this option when you are on a different machine from the Administration Server and you cannot copy the deployment files by other means. 
+            Use this option when you are on a different machine from the Administration Server and you cannot copy the deployment files by other means.
 
 
 
 
             This option defaults to false.
-        
 
 
-| Remote? | 
+
+| Remote? |
             Boolean value specifying whether the operation will be remote from the file system that contains the source.
             Use this option when you are on a different machine from the Administration Server and the deployment files are
 
@@ -1080,7 +1056,7 @@ This procedure deploys an application or a module using WLST. If application or 
 
             already at the specified location where the Administration Server is located.
             This option defaults to false.
-        
+
 
 
 |===
@@ -1137,14 +1113,14 @@ This procedure can be used to update an application configuration.
 | Deployment Plan Content | Content of the deployment plan. Required, if the file mentioned in "Plan Path" doesn't exist or empty.
 
 
-| Overwrite deployment plan? | 
+| Overwrite deployment plan? |
             If checked, deployment plan will be overwritten, if deployment plan content has been provided and deployment plan file already exists.
 
 
 
 
             This option defaults to false.
-        
+
 
 
 | Additional Options | Comma-separated list of deployment options, specified as name-value pairs. For example: block=false,createPlan=true
@@ -1196,28 +1172,28 @@ Contrary to the weblogic documentation in section 'Undeploying a Retiring Applic
 | Application Name | Name of the application to undeploy. i.e: 'webapp'.
 
 
-| Retire Gracefully? (DEPRECATED) | 
+| Retire Gracefully? (DEPRECATED) |
             Retirement policy to gracefully retire an application only after it has completed all in-flight work.
 
 
 
 
             This policy is only meaningful for stop and redeploy operations and is mutually exclusive to the retire timeout policy.
-            
- *This parameter is DEPRECATED and will be removed in the next release.* 
 
-| Application Version | 
+ *This parameter is DEPRECATED and will be removed in the next release.*
+
+| Application Version |
             Specifies a single application version to be undeployed. See Requirements and Restrictions for Production Redeployment for reference.
-        
+
 
 
 | Additional options | Additional options for undeploy API call. (See deploy function for reference).
-        
 
 
-| Give Up on Error? | 
+
+| Give Up on Error? |
             If checked, any ambiguous situation will be treated as fatal error. Defaults to false.
-        
+
 
 
 |===
@@ -1308,19 +1284,19 @@ provides a command-line interface to the WebLogic Server deployment API.
 |===
 | Parameter | Description
 
-| Command To Use | 
+| Command To Use |
       The weblogic.Deployer command to use. i.e: '-deploy', '-undeploy', '-stop' or '-listapps'.
-    
 
 
-| Java Parameters | 
+
+| Java Parameters |
       Java parameters to pass. i.e: '-verbose'.
-    
 
 
-| Configuration Name | 
+
+| Configuration Name |
       Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
-    
+
 
 
 | Additional Commands | Additional commands to be entered for weblogic.Deployer.
@@ -1329,17 +1305,17 @@ provides a command-line interface to the WebLogic Server deployment API.
 | Java Absolute Path | Absolute path of java. i.e: 'java', 'java.exe' or '/path/to/java'.
 
 
-| Application Name | 
+| Application Name |
       Name of the application to manage. i.e: 'webapp'.
-    
 
 
-| setDomainEnv Script Absolute Path | 
+
+| setDomainEnv Script Absolute Path |
       Absolute path of the setDomainEnv script, including filename and extension. i.e: '/path/to/setDomainEnv.sh' or 'setDomainEnv.cmd'.
-    
 
 
-| weblogic jar Absolute Path | 
+
+| weblogic jar Absolute Path |
     Absolute path of the weblogic jar, needed to run the weblogic.Deployer in a free-mode. In Windows environment, if the jar is already added to the enviroment classpath variable, then is not necesary to include it. In Linux environment you must include the path. i.e: '/path/to/weblogic.jar' or '/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar'.
 
 
@@ -1385,19 +1361,19 @@ If application is already started, warning will be thrown.
 | Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| Application Name | 
+| Application Name |
       Name of the application to start. i.e: 'webapp'.
-    
 
 
-| Application Version | 
+
+| Application Version |
           Specific application version to be started.
-      
 
 
-| Additional options | 
+
+| Additional options |
           Additional options for startApplication API. (See deploy function for reference).
-      
+
 
 
 |===
@@ -1442,19 +1418,19 @@ If application is already stopped, warning will be thrown.
 | Configuration Name | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| Application Name | 
+| Application Name |
       Name of the application to start. i.e: 'webapp'.
-    
 
 
-| Application Version | 
+
+| Application Version |
         Specific application version to be stopped.
-    
 
 
-| Additional Options | 
+
+| Additional Options |
         Additional options for stopApplication API. (See deploy function for reference).
-    
+
 
 
 |===
@@ -1515,7 +1491,7 @@ By default, the JNDI name is the name of the Datasource. Applications that look 
 
 
 | JDBC Driver Properties | The list of properties passed to the JDBC driver that are used to create physical database connections. For example: server=dbserver1. List each property=value pair on a separate line.Note:For security reasons, when WebLogic Server is running in production mode, you cannot specify database passwords in this properties list. Data source deployment will fail if a password is specified in the properties list. To override this security check, use the command line argument "weblogic.management.allowClearTextPasswords" when starting the server.
-    
+
 
 
 | Target Server List | A list of comma separated list of Servers on which the Data Source should be targeted. If targets are not specified, Data Source will be created but not deployed.
@@ -1630,9 +1606,9 @@ Deletes a Datasource
 | WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| Datasource Name | 
+| Datasource Name |
       The unique name that identifies this Datasource in the WebLogic domain to delete it.
-    
+
 
 
 |===
@@ -1684,27 +1660,27 @@ This procedure creates a datasource in WebLogic.
 | Server Instance | Instance name of the Server to include the Datasource. i.e: 'AdminServer'.
 
 
-| Datasource JNDI | 
+| Datasource JNDI |
       The JNDI path to where this Datasource is bound. By default, the JNDI name is the name of the Datasource. Applications that look up the JNDI path will get a "javax.sql.Datasource" instance that corresponds to this Datasource.
-    
 
 
-| Datasource Driver Class | 
+
+| Datasource Driver Class |
       The full package name of JDBC driver class used to create the physical database connections in the connection pool. (Note that this driver class must be in the classpath of any server to which it is deployed).
-    
 
 
-| Datasource URL | 
+
+| Datasource URL |
     The URL of the database to connect to. The format of the URL varies by JDBC driver. The URL is passed to the JDBC driver to create the physical database connections.
-  
+
 
 
 | Database User | The user to connect to the database.
 
 
-| Database Password | 
+| Database Password |
       The password attribute passed to the JDBC driver when creating physical database connections. The value is stored in an encrypted form in the descriptor file and when displayed on the Administration Console.
-    
+
 
 
 |===
@@ -1755,11 +1731,11 @@ It is recommended to use default targeting for the Connection Factory, i.e. do n
 
 
 | Subscription Sharing Policy | The Connection Factory Subscription Sharing Policy Subscribers can be used to control which subscribers can access new subscriptions.Values can be either Sharable or Exclusive.
-        
+
 
 
 | Client ID Policy | The Client ID Policy indicates whether more than one JMS connection can use the same Client ID. Oracle recommends setting the Client ID policy to Unrestricted if sharing durable subscribers. Subscriptions created with different Client ID policies are always treated as independent subscriptions.
-        
+
 
 
 | JNDI Name | JNDI Name is used to lookup the Connection factory using JNDI lookup. If the connection factory is created without passing this parameter, it can be only used in an Application Scoped context.
@@ -1774,21 +1750,21 @@ It is recommended to use default targeting for the Connection Factory, i.e. do n
 | Subdeployment Name | Name of Subdeployment. Required only if you do not  want default targeting and instead want to use advanced targeting.
 
 
-| Target WLS Instance List | 
+| Target WLS Instance List |
         Comma delimited set of Weblogic Server instances (Standalone or cluster) to which the Connection Factory would be targeted to.
 
 
 
 
         Required only if Subdeployment Name is specified.
-        
+
 
 
 | Target JMS Server List | Comma delimited set of JMS Servers to which the Connection Factory would be targeted to.
-Required only if Subdeployment Name is specified. 
+Required only if Subdeployment Name is specified.
 
 
-| Update Action | 
+| Update Action |
 This parameter controls as to what the Update Action should be when a Connection Factory with the same name exists:
 
 
@@ -1801,14 +1777,14 @@ This parameter controls as to what the Update Action should be when a Connection
 
 
 
- *Selective Update*  - The procedure would update existing Connection Factory. The parameters for selective update are 
- *JNDI Name*  and 
+ *Selective Update*  - The procedure would update existing Connection Factory. The parameters for selective update are
+ *JNDI Name*  and
  *Subdeployment Name* .
-        
 
 
-| Additional Options | 
-Use this option to pass related parameters that pertain to Delivery, Client, Transaction or Flow Control. E.g., 
+
+| Additional Options |
+Use this option to pass related parameters that pertain to Delivery, Client, Transaction or Flow Control. E.g.,
  *DefaultDeliveryParams.DefaultPriority=5* .
 Several options are separated by a newline:
 
@@ -1931,7 +1907,7 @@ Creates or updates JMS Module
 | Target WLS Instance List | Comma delimited set of Weblogic Server instances (Standalone or cluster) to which the JMS system module would be deployed.
 
 
-| Update Action | 
+| Update Action |
 This parameter controls as to what the Update Action should be when a JMS Module with the same name exists:
 
 
@@ -1944,9 +1920,9 @@ This parameter controls as to what the Update Action should be when a JMS Module
 
 
 
- *Selective Update*  - The procedure would update existing JMS Module. In this case 
+ *Selective Update*  - The procedure would update existing JMS Module. In this case
  *Target WLS List*  will be updated.
-        
+
 
 
 |===
@@ -2148,7 +2124,7 @@ This procedure is used to create and configure a new JMS Queue for an *existing*
 
 
 
-| Update Action | 
+| Update Action |
 This parameter controls as to what the Update Action should be when a JMS Queue with the same name exists:
 
 
@@ -2161,14 +2137,14 @@ This parameter controls as to what the Update Action should be when a JMS Queue 
 
 
 
- *Selective Update*  - The procedure would update existing JMS Queue. The parameters for selective update are 
- *JNDI Name*  and 
+ *Selective Update*  - The procedure would update existing JMS Queue. The parameters for selective update are
+ *JNDI Name*  and
  *Subdeployment Name* . The targeting for Subdeployment will not be changed.
-        
 
 
-| Additional Options | 
-Use this option to specify general or advanced parameters, message thresholds and quota, message delivery overrides, message logging and message delivery failure options, e.g., 
+
+| Additional Options |
+Use this option to specify general or advanced parameters, message thresholds and quota, message delivery overrides, message logging and message delivery failure options, e.g.,
  *MaximumMessageSize=1024* . Parameters should be in the form of key=value pairs. Group and property name are separated by '.'. Several options are separated by a newline, e.g.
 
 
@@ -2284,7 +2260,7 @@ Creates or updates JMS Server
 | Target WLS Instance | The WLS Instance (Standalone or Cluster) to which this Server should be targeted. However note if this is not specified the JMS Server is not usable.
 
 
-| Update Action | 
+| Update Action |
 This parameter controls as to what the Update Action should be when a JMS Module with the same name exists:
 
 
@@ -2297,9 +2273,9 @@ This parameter controls as to what the Update Action should be when a JMS Module
 
 
 
- *Selective Update*  - The procedure would update existing JMS Module. The only parameter for update will be 
+ *Selective Update*  - The procedure would update existing JMS Module. The only parameter for update will be
  *Target WLS Instance* .
-        
+
 
 
 |===
@@ -2401,7 +2377,7 @@ Creates or updates JMS Topic
 
 
 
-| Update Action | 
+| Update Action |
 This parameter controls as to what the Update Action should be when a JMS Topic with the same name exists:
 
 
@@ -2414,13 +2390,13 @@ This parameter controls as to what the Update Action should be when a JMS Topic 
 
 
 
- *Selective Update*  - The procedure would update existing JMS Topic. The parameters for selective update are 
- *JNDI Name*  and 
+ *Selective Update*  - The procedure would update existing JMS Topic. The parameters for selective update are
+ *JNDI Name*  and
  *Subdeployment Name* .
-        
 
 
-| Additional Options | Use this option to specify general or advanced parameters, message thresholds and quota, message delivery overrides, message logging and message delivery failure options, topic multicast parameters. Parameters should be in the form of key=value pairs. Group and property name are separated by '.'. E.g., 
+
+| Additional Options | Use this option to specify general or advanced parameters, message thresholds and quota, message delivery overrides, message logging and message delivery failure options, topic multicast parameters. Parameters should be in the form of key=value pairs. Group and property name are separated by '.'. E.g.,
  *Multicast.MulticastTimeToLive=5* . Several options are separated by a newline:
 
 
@@ -3594,32 +3570,32 @@ control statements.
 | WLST Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| Script File Absolute Path | 
+| Script File Absolute Path |
       Absolute path of a Jython script containing the desired job. The path is used only if 'Supplied File' is selected in the 'Script File Source' parameter. i.e: '/path/to/scriptfile.jython'.
-    
 
 
-| Script File Source | 
+
+| Script File Source |
       Indicates the source of the script file to execute. Either a existent file in the path defined in the 'scriptfile' parameter OR a new one using the code specified in scriptfile parameter.
-    
 
 
-| Script File | 
+
+| Script File |
       Content of the script file to run if 'New Script File' option is chosen in the 'Script File Source' parameter.
-    
+
 
 
 | Additional Commands | Additional commands to be entered for weblogic.WLST.
 
 
-| Additional Environment Vairables | 
+| Additional Environment Vairables |
       Additional environment variables as comma separated key-value pairs.
       For example: JAVA_HOME => '/path/to/java/home', other_env => 'myenv'
-    
+
 
 
 | weblogic jar Absolute Path | Absolute path of the weblogic jar, needed to run the run Jython scripts using weblogic.WLST. In Windows environment, if the jar is already added to the enviroment classpath variable, then is not necesary to include it. In Linux environment you must include the path. i.e: '/path/to/weblogic.jar' or '/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar'.
-    
+
 
 
 |===
@@ -3891,7 +3867,7 @@ image::cloudbees-common::cd-plugins/ec-weblogic/discover/report.png[image]
 
 === EC-WebLogic 3.5.1
 
-- Rebranding from "CloudBees Flow" to "{CD}".
+- Rebranding  to "{CD}".
 
 
 
@@ -3909,7 +3885,7 @@ image::cloudbees-common::cd-plugins/ec-weblogic/discover/report.png[image]
 
 === EC-WebLogic 3.4.3
 
-- Renaming from "Electric Cloud" to "CloudBees"
+- Renaming  to "CloudBees"
 
 
 
@@ -3988,7 +3964,7 @@ image::cloudbees-common::cd-plugins/ec-weblogic/discover/report.png[image]
 
 
 - Following procedures have been added:
-  
+
 
  * UpdateAppConfig
 
@@ -4000,7 +3976,7 @@ image::cloudbees-common::cd-plugins/ec-weblogic/discover/report.png[image]
 
 
 - Additional parameters have been added to the following procedures:
-  
+
 
  * StartApp
 
@@ -4161,14 +4137,14 @@ image::cloudbees-common::cd-plugins/ec-weblogic/discover/report.png[image]
 - Add new Parameter Panels for each procedure.
 
 
-- Add the 
+- Add the
  *weblogic jar Absolute Path*  parameter to the DeployApp, UndeployApp, StartApp, StopApp, RunDeployer and RunWLST procedures. It is required to a Linux environment to load WebLogic libreries.
 
 
 
 === EC-WebLogic 1.1.3
 
-- Add the 
+- Add the
  *Administration Server URL*  parameter to the StartManagedServer procedure.
 
 
@@ -4218,6 +4194,3 @@ image::cloudbees-common::cd-plugins/ec-weblogic/discover/report.png[image]
 === EC-WebLogic 1.0.0
 
 - First release.
-
-
-
