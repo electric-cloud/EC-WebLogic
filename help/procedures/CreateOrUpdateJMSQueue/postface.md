@@ -1,12 +1,16 @@
-<img src="../../plugins/EC-WebLogic/images/CreateOrUpdateJMSQueue/Form.png" />
 
-## Output
+![image](images/CreateOrUpdateJMSQueue/Form.png)
+
+
+### Output
 
 After the job runs, you can view the results on the Job Details page in CloudBees CD. The JMS Queue was created successfully.
 
-<img src="../../plugins/EC-WebLogic/images/CreateOrUpdateJMSQueue/Summary.png" />
 
-In the <b>CreateOrUpdateJMSQueue</b> step, click the Log button to see the diagnostic information:
+![image](images/CreateOrUpdateJMSQueue/Summary.png)
+
+
+In the **CreateOrUpdateJMSQueue** step, click the Log button to see the diagnostic information:
 
     Using plugin C-WebLogic-3.3.0.0
     Got parameter "configname" with value "demo"

@@ -1,13 +1,17 @@
 
-<img src="../../plugins/EC-WebLogic/images/DeleteConnectionFactory/Form.png" />
 
-## Output
+![image](images/DeleteConnectionFactory/Form.png)
+
+
+### Output
 
 After the job runs, you can view the results on the Job Details page in CloudBees CD. The Connection Factory was deleted.
 
-<img src="../../plugins/EC-WebLogic/images/DeleteConnectionFactory/Summary.png" />
 
-In the <b>DeleteConnectionFactory</b> step, click the Log button to see the diagnostic information:
+![image](images/DeleteConnectionFactory/Summary.png)
+
+
+In the **DeleteConnectionFactory** step, click the Log button to see the diagnostic information:
 
     Using plugin EC-WebLogic-3.3.0.0
     Got parameter "cf_name" with value "TestCF"

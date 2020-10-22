@@ -1,12 +1,16 @@
-<img src="../../plugins/EC-WebLogic/images/CreateOrUpdateJMSTopic/Form.png" />
 
-## Output
+![image](images/CreateOrUpdateJMSTopic/Form.png)
+
+
+### Output
 
 After the job runs, you can view the results on the Job Details page in CloudBees CD. The JMS Topic was created successfully.
 
-<img src="../../plugins/EC-WebLogic/images/CreateOrUpdateJMSTopic/Summary.png" />
 
-In the <b>CreateOrUpdateJMSTopic</b> step, click the Log button to see the diagnostic information:
+![image](images/CreateOrUpdateJMSTopic/Summary.png)
+
+
+In the **CreateOrUpdateJMSTopic** step, click the Log button to see the diagnostic information:
 
     Using plugin EC-WebLogic-3.3.0.0
     Got parameter "configname" with value "demo"

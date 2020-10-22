@@ -1,13 +1,17 @@
 
-<img src="../../plugins/EC-WebLogic/images/DeleteJMSModule/Form.png" />
 
-## Output
+![image](images/DeleteJMSModule/Form.png)
+
+
+### Output
 
 After the job runs, you can view the results on the Job Details page in CloudBees CD. The JMS Module was deleted.
 
-<img src="../../plugins/EC-WebLogic/images/DeleteJMSModule/Summary.png" />
 
-In the <b>DeleteJMSModule</b> step, click the Log button to see the diagnostic information:
+![image](images/DeleteJMSModule/Summary.png)
+
+
+In the **DeleteJMSModule** step, click the Log button to see the diagnostic information:
 
     Using plugin EC-WebLogic-3.3.0.0
     Got parameter "configname" with value "demo"

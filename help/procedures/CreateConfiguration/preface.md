@@ -1,6 +1,8 @@
 **After you perform the setup below it is important to make sure that the CloudBees CD agent machine on which WebLogic runs is registered as a resource that can be pinged.**
 
-<img src="../../plugins/EC-WebLogic/images/Config/EC-WLSConfig.png" />
+
+![image](images/Config/EC-WLSConfig.png)
+
 
 **Note:** In the URL, the protocol is "t3" or "t3s". The
 RMI communications in WebLogic Server use

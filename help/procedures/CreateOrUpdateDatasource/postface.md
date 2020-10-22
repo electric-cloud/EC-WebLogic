@@ -1,12 +1,15 @@
-<img src="../../plugins/EC-WebLogic/images/CreateOrUpdateDatasource/Form.png" />
+![image](images/CreateOrUpdateDatasource/Form.png)
 
-## Output
+
+### Output
 
 After the job runs, you can view the results on the Job Details page in CloudBees CD. The Datasource was created successfully.
 
-<img src="../../plugins/EC-WebLogic/images/CreateOrUpdateDatasource/Summary.png" />
 
-In the <b>CreateOrUpdateDatasource</b> step, click the Log button to see the diagnostic information:
+![image](images/CreateOrUpdateDatasource/Summary.png)
+
+
+In the **CreateOrUpdateDatasource** step, click the Log button to see the diagnostic information:
 
     Using plugin EC-WebLogic-3.4.0.0
     Got parameter "configname" with value "EC-Specs WebLogic Config"

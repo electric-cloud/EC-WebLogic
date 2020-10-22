@@ -1,12 +1,16 @@
-<img src="../../plugins/EC-WebLogic/images/DeleteJMSTopic/Form.png" />
 
-## Output
+![image](images/DeleteJMSTopic/Form.png)
+
+
+### Output
 
 After the job runs, you can view the results on the Job Details page in CloudBees CD. The JMS Queue was deleted.
 
-<img src="../../plugins/EC-WebLogic/images/DeleteJMSTopic/Summary.png" />
 
-In the <b>DeleteJMSTopic</b> step, click the Log button to see the diagnostic information:
+![image](images/DeleteJMSTopic/Summary.png)
+
+
+In the **DeleteJMSTopic** step, click the Log button to see the diagnostic information:
 
     Using plugin EC-WebLogic-3.3.0.0
     Got parameter "configname" with value "demo"

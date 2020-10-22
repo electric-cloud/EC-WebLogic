@@ -1,12 +1,16 @@
-<img src="../../plugins/EC-WebLogic/images/DeleteSubdeployment/Form.png" />
 
-## Output
+![image](images/DeleteSubdeployment/Form.png)
+
+
+### Output
 
 After the job runs, you can view the results on the Job Details page in CloudBees CD. The JMS Subdeployment was deleted.
 
-<img src="../../plugins/EC-WebLogic/images/DeleteSubdeployment/Summary.png" />
 
-In the <b>DeleteJMSModuleSubdeployment</b> step, click the Log button to see the diagnostic information:
+![image](images/DeleteSubdeployment/Summary.png)
+
+
+In the **DeleteJMSModuleSubdeployment** step, click the Log button to see the diagnostic information:
 
 
     Using plugin EC-WebLogic-3.3.0.0

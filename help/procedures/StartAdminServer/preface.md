@@ -1,1 +1,1 @@
-<p>This procedure starts the WebLogic Administration Server.</p>
+This procedure starts the WebLogic Administration Server.

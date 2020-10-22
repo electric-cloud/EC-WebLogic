@@ -1,1 +1,1 @@
-<p>This procedure suspends a WebLogic server.</p>
+This procedure suspends a WebLogic server.

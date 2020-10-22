@@ -1,1 +1,1 @@
-<p>This procedure stops the WebLogic Node Manager.</p>
+This procedure stops the WebLogic Node Manager.

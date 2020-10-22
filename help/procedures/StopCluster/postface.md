@@ -1,13 +1,20 @@
-<br />
-<img src="../../plugins/EC-WebLogic/images/StopCluster/EC-WLSStopCluster2.png" />
 
-<h3>Output</h3>
-<p>
+
+![image](images/StopCluster/EC-WLSStopCluster2.png)
+
+
+### Output
+
+
 After the job runs, you can view the results on the Job Details page in CloudBees CD. The cluster was stopped successfully.
-</p>
-<img src="../../plugins/EC-WebLogic/images/StopCluster/EC-WLSStopCluster3.png" />
-<p>
-In the <b>StopCluster</b> step, click the Log button to see the diagnostic information:
-</p>
-<br />
-<img src="../../plugins/EC-WebLogic/images/StopCluster/EC-WLSStopCluster4.png" />.
+
+
+![image](images/StopCluster/EC-WLSStopCluster3.png)
+
+
+In the **StopCluster** step, click the Log button to see the diagnostic information:
+
+
+
+![image](images/StopCluster/EC-WLSStopCluster4.png)
+
