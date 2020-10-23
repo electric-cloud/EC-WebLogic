@@ -21,14 +21,30 @@ buildscript {
 }
 
 repositories {
-	maven {
-		url "https://oss.sonatype.org/content/repositories/snapshots"
-	}
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+
+    maven {
+        url 'http://35.234.102.60/artifactory/ec'
+        credentials {
+            username = System.getenv('ARTIFACTORY_USERNAME') ?: 'build'
+            password = System.getenv("ARTIFACTORY_PASSWORD")
+        }
+    }
+
+    maven {
+        url 'http://35.234.102.60/artifactory/thirdparty'
+        credentials {
+            username = System.getenv('ARTIFACTORY_USERNAME') ?: 'build'
+            password = System.getenv("ARTIFACTORY_PASSWORD")
+        }
+    }
 }
 
 group = "com.electriccloud"
 description = "Plugins : EC-WebLogic"
-version = "3.5.2"
+version = "3.5.3"
 
 apply plugin: 'flow-gradle-plugin'
 apply plugin: 'license'
