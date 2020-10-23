@@ -21,14 +21,15 @@ buildscript {
 }
 
 repositories {
-	maven {
-		url "https://oss.sonatype.org/content/repositories/snapshots"
-	}
+    jcenter()
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
 }
 
 group = "com.electriccloud"
 description = "Plugins : EC-WebLogic"
-version = "3.5.2"
+version = "3.5.3"
 
 apply plugin: 'flow-gradle-plugin'
 apply plugin: 'license'
