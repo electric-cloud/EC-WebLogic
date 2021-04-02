@@ -82,6 +82,19 @@ dependencies {
         testCompile "commons-codec:commons-codec:1.10"
 }
 
+configurations.all {
+    resolutionStrategy {
+        force group: 'com.electriccloud', name: 'commander-client', version: '+'
+        force group: 'com.electriccloud', name: 'commander-sdk', version: '+'
+        force group: 'com.electriccloud', name: 'ec_internal', version: '+'
+        force group: 'com.google.gwt', name: 'gwt-user', version: '2.5.0-ec3'
+        force group: 'com.google.gwt', name: 'gwt-dev', version: '2.5.0-ec1'
+
+        cacheChangingModulesFor 0, 'seconds'
+    }
+}
+
+
 test
 {
   systemProperties['PLUGIN_VERSION'] = version
