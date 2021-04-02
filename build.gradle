@@ -24,6 +24,7 @@ buildscript {
                 password = nexusPassword
             }
         }
+    }
 
     dependencies {
         classpath group: 'com.electriccloud.plugins', name: 'flow-gradle-plugin', version: '+'
