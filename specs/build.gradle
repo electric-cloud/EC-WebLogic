@@ -1,3 +1,6 @@
+plugins {
+    id "com.cloudbees.cd.plugins.specs" version "1.9.2.0"
+}
 
 apply plugin: "groovy"
 apply plugin: 'idea'
@@ -47,27 +50,8 @@ dependencies {
 
 }
 
-test {
-    systemProperty 'com.athaydes.spockframework.report.showCodeBlocks', true
-
-    def server = findProperty('server') ?: findProperty('COMMANDER_SERVER') ?: findProperty('commanderServer') ?: 'localhost'
-    systemProperties['COMMANDER_SERVER'] = server
-    def secure = findProperty('secure') ?: findProperty('COMMANDER_SECURE') ?: findProperty('commanderSecure') ?: 1
-    systemProperties["COMMANDER_SECURE"] = secure
-
-    testLogging {
-        showStandardStreams = true
-    }
-    outputs.upToDateWhen { false }
-    systemProperties['EC_SPECS_CLI'] = true
-
-    def destination = findProperty('reportDestination') ?: "spec-report"
-    if (destination) {
-        systemProperty 'com.athaydes.spockframework.report.outputDir', destination
-        reports {
-            html.destination = "$destination/plain"
-        }
-    }
-
+sendAllureReports {
+    projectName = 'ec-weblogic'
 }
+
 
