@@ -1,3 +1,6 @@
+plugins {
+    id "com.cloudbees.cd.plugins.specs" version "1.9.2.0"
+}
 
 apply plugin: "groovy"
 apply plugin: 'idea'
@@ -10,13 +13,28 @@ sourceCompatibility = 1.8
 defaultTasks 'test'
 
 repositories {
-    jcenter()
+    // jcenter()
     mavenCentral()
     maven {
-        url 'https://oss.sonatype.org/content/repositories/snapshots'
+        url 'https://nexus-internal.cloudbees.com/content/repositories/snapshots'
+        credentials {
+            username = nexusUsername
+            password = nexusPassword
+        }
     }
     maven {
-        url  "https://dl.bintray.com/ecpluginsdev/maven"
+        url 'https://nexus-internal.cloudbees.com/service/local/staging/deploy/maven2'
+        credentials {
+            username = nexusUsername
+            password = nexusPassword
+        }
+    }
+    maven {
+        url 'https://nexus-internal.cloudbees.com/content/groups/mirror'
+        credentials {
+            username = nexusUsername
+            password = nexusPassword
+        }
     }
 
 }
@@ -24,7 +42,7 @@ repositories {
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.5:indy'
     compile 'org.spockframework:spock-core:1.1-groovy-2.4'
-    compile 'com.electriccloud:ec-specs-plugins-core:1.5.1'
+    compile 'com.electriccloud:ec-specs-plugins-core:+'
     compile 'com.jayway.restassured:rest-assured:2.4.0'
     testCompile( 'com.athaydes:spock-reports:1.6.0' ) {
         transitive = false // this avoids affecting your version of Groovy/Spock
@@ -32,27 +50,8 @@ dependencies {
 
 }
 
-test {
-    systemProperty 'com.athaydes.spockframework.report.showCodeBlocks', true
-
-    def server = findProperty('server') ?: findProperty('COMMANDER_SERVER') ?: findProperty('commanderServer') ?: 'localhost'
-    systemProperties['COMMANDER_SERVER'] = server
-    def secure = findProperty('secure') ?: findProperty('COMMANDER_SECURE') ?: findProperty('commanderSecure') ?: 1
-    systemProperties["COMMANDER_SECURE"] = secure
-
-    testLogging {
-        showStandardStreams = true
-    }
-    outputs.upToDateWhen { false }
-    systemProperties['EC_SPECS_CLI'] = true
-
-    def destination = findProperty('reportDestination') ?: "spec-report"
-    if (destination) {
-        systemProperty 'com.athaydes.spockframework.report.outputDir', destination
-        reports {
-            html.destination = "$destination/plain"
-        }
-    }
-
+sendAllureReports {
+    projectName = 'ec-weblogic'
 }
+
 
