@@ -34,5 +34,12 @@
         </component>
     </components>
     <hasAdoc>true</hasAdoc>
+    <detailedDescription>
+        Use this plugin to interact with the Oracle WebLogic server for application
+        and server management, interacting or editing existing applications, and deploying new applications.
+        You can start and stop both the Managed Servers and the Administration Server
+        using this integration. You can use Jython scripting to create script files
+        or to enter a new embedded file.
+    </detailedDescription>
     <catalogLabel>WebLogic</catalogLabel>
 </plugin>
