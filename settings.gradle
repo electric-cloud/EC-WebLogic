@@ -1,0 +1,2 @@
+// licenseMain - maintenance requires lot of work that will be later just wiped
+startParameter.excludedTaskNames = ['licenseMain']
