@@ -3,22 +3,46 @@
 //
 // Gradle build script for EC-WebLogic plugin.
 //
-// Copyright (c) 2015 Electric Cloud, Inc.
+// Copyright (c) 2021 Electric Cloud, Inc.
 // All rights reserved
 
 buildscript {
     repositories {
         mavenCentral()
-        maven { url 'https://repo.cloudbees.com/content/repositories/dev-connect' }
+        mavenLocal()
+        maven {
+            url 'https://nexus-internal.cloudbees.com/content/groups/mirror'
+            credentials {
+                username = nexusUsername
+                password = nexusPassword
+            }
+        }
+//        maven {
+//            url 'https://repo.cloudbees.com/content/repositories/dev-connect'
+//        }
     }
     dependencies {
-        classpath group: 'com.electriccloud.plugins', name: 'flow-gradle-plugin', version: '2.4'
+        classpath group: 'com.electriccloud.plugins', name: 'flow-gradle-plugin', version: '+'
     }
 }
 
 repositories {
     mavenCentral()
-    maven { url 'https://repo.cloudbees.com/content/repositories/dev-connect' }
+    mavenLocal()
+    maven {
+        url 'https://nexus-internal.cloudbees.com/content/repositories/snapshots'
+        credentials {
+            username = nexusUsername
+            password = nexusPassword
+        }
+    }
+    maven {
+        url 'https://nexus-internal.cloudbees.com/service/local/staging/deploy/maven2'
+        credentials {
+            username = nexusUsername
+            password = nexusPassword
+        }
+    }
     maven {
         url 'https://nexus-internal.cloudbees.com/content/groups/mirror'
         credentials {
@@ -30,16 +54,16 @@ repositories {
 
 group = "com.electriccloud"
 description = "Plugins : EC-WebLogic"
-version = "3.5.3"
+version = "3.6.0"
 
 apply plugin: 'flow-gradle-plugin'
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '2.3'
+    gradleVersion = '2.3'
 }
 
 gwt {
-	modules 'ecplugins.weblogic.ConfigurationManagement'
+    modules 'ecplugins.weblogic.ConfigurationManagement'
 }
 
 dependencies {
@@ -65,8 +89,6 @@ configurations.all {
     }
 }
 
-
-test
-{
+test {
   systemProperties['PLUGIN_VERSION'] = version
 }
