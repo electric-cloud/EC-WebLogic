@@ -17,9 +17,6 @@ buildscript {
                 password = nexusPassword
             }
         }
-//        maven {
-//            url 'https://repo.cloudbees.com/content/repositories/dev-connect'
-//        }
     }
     dependencies {
         classpath group: 'com.electriccloud.plugins', name: 'flow-gradle-plugin', version: '+'
