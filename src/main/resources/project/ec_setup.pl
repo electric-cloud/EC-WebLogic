@@ -16,9 +16,13 @@
 
 no warnings qw/redefine/;
 use XML::Simple;
-
 use Data::Dumper;
-
+use ElectricCommander::Util;
+# External Credential Manageent Update:
+# We're retrieving the steps with attached creds from property sheet
+use JSON;
+my $stepsWithCredentials = getStepsWithCredentials();
+# End of External Credential Management Update
 
 my $restartFlagName = 'WebLogicServerRestartRequired';
 
@@ -583,463 +587,17 @@ if ( $upgradeAction eq "upgrade" ) {
                 );
             }
 
-            # Attach the credential to the appropriate steps
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'StartApp',
-                    stepName      => 'StartApp'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'StopApp',
-                    stepName      => 'StopApp'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CheckServerStatus',
-                    stepName      => 'CheckServerStatus'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'DeployApp',
-                    stepName      => 'DeployApp'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'RunDeployer',
-                    stepName      => 'RunJob'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'UndeployApp',
-                    stepName      => 'UndeployApp'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'RunWLST',
-                    stepName      => 'RunWLST'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'StartAdminServer',
-                    stepName      => 'StartAdminServer'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'StopAdminServer',
-                    stepName      => 'StopAdminServer'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'StartManagedServer',
-                    stepName      => 'StartInstance'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'StopManagedServer',
-                    stepName      => 'StopInstance'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CheckPageStatus',
-                    stepName      => 'CheckPageStatus'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'StartNodeManager',
-                    stepName      => 'StartNodeManager'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'StopNodeManager',
-                    stepName      => 'StopNodeManager'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateDatasource',
-                    stepName      => 'CreateDatasource'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'DeleteDatasource',
-                    stepName      => 'DeleteDatasource'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'SuspendServer',
-                    stepName      => 'SuspendServer'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'ResumeServer',
-                    stepName      => 'ResumeServer'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateUser',
-                    stepName      => 'CreateUser'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateGroup',
-                    stepName      => 'CreateGroup'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'DeleteUser',
-                    stepName      => 'DeleteUser'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'DeleteGroup',
-                    stepName      => 'DeleteGroup'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'AddUserToGroup',
-                    stepName      => 'AddUserToGroup'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'RemoveUserFromGroup',
-                    stepName      => 'RemoveUserFromGroup'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'ChangeUserPassword',
-                    stepName      => 'ChangeUserPassword'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'UnlockUserAccount',
-                    stepName      => 'UnlockUserAccount'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'UpdateApp',
-                    stepName      => 'UpdateApp'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateDomain',
-                    stepName      => 'CreateDomain'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateCluster',
-                    stepName      => 'CreateCluster'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'DeleteCluster',
-                    stepName      => 'DeleteCluster'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateManagedServer',
-                    stepName      => 'CreateManagedServer'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'DeleteManagedServer',
-                    stepName      => 'DeleteManagedServer'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'AddServerToCluster',
-                    stepName      => 'AddServerToCluster'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'ConfigureUserLockoutManager',
-                    stepName      => 'ConfigureUserLockoutManager'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'StartCluster',
-                    stepName      => 'StartCluster'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'StopCluster',
-                    stepName      => 'StopCluster'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'UpdateAppConfig',
-                    stepName      => 'UpdateAppConfig'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CheckClusterStatus',
-                    stepName      => 'CheckClusterStatus'
-                }
-            );
-
-            # $batch->attachCredential(
-            #     "\$[/plugins/$pluginName/project]",
-            #     $cred,
-            #     {
-            #         procedureName => 'CreateOrUpdateDatasource',
-            #         stepName      => 'CreateOrUpdateDatasource'
-            #     }
-            # );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateOrUpdateConnectionFactory',
-                    stepName      => 'CreateOrUpdateConnectionFactory'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'DeleteConnectionFactory',
-                    stepName      => 'DeleteConnectionFactory'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateOrUpdateJMSQueue',
-                    stepName      => 'CreateOrUpdateJMSQueue'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'DeleteJMSQueue',
-                    stepName      => 'DeleteJMSQueue'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateOrUpdateJMSTopic',
-                    stepName      => 'CreateOrUpdateJMSTopic'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'DeleteJMSTopic',
-                    stepName      => 'DeleteJMSTopic'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateOrUpdateJMSModule',
-                    stepName      => 'CreateOrUpdateJMSModule'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'DeleteJMSModule',
-                    stepName      => 'DeleteJMSModule'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateOrUpdateJMSModuleSubdeployment',
-                    stepName      => 'CreateOrUpdateJMSModuleSubdeployment'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'DeleteJMSModuleSubdeployment',
-                    stepName      => 'DeleteJMSModuleSubdeployment'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateOrUpdateJMSServer',
-                    stepName      => 'CreateOrUpdateJMSServer'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'DeleteJMSServer',
-                    stepName      => 'DeleteJMSServer'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateOrUpdateDatasource',
-                    stepName      => 'CreateOrUpdateDatasource'
-                }
-            );
+            for my $step (@$stepsWithCredentials) {
+                # Attach the credential to the appropriate steps
+                $batch->attachCredential("\$[/plugins/$pluginName/project]", $cred, {
+                    procedureName => $step->{procedureName},
+                    stepName => $step->{stepName}
+                });
+            }
         }
     }
+
+    reattachExternalCredentials($otherPluginName);
 }
 
 sub patch_configs {
@@ -1223,5 +781,60 @@ sub createMissingOutputParameters {
     }
     # print Dumper \@responses
     return 1;
+}
+
+sub reattachExternalCredentials {
+    my ($otherPluginName) = @_;
+
+    my $configName = getConfigLocation($otherPluginName);
+    my $configsPath = "/plugins/$otherPluginName/project/$configName";
+
+    my $xp = $commander->getProperty($configsPath);
+
+    my $id = $xp->findvalue('//propertySheetId')->string_value();
+    my $props = $commander->getProperties({propertySheetId => $id});
+    for my $node ($props->findnodes('//property/propertySheetId')) {
+        my $configPropertySheetId = $node->string_value();
+        my $config = $commander->getProperties({propertySheetId => $configPropertySheetId});
+
+        # iterate through props to get credentials.
+        for my $configRow ($config->findnodes('//property')) {
+            my $propName = $configRow->findvalue('propertyName')->string_value();
+            my $propValue = $configRow->findvalue('value')->string_value();
+            # print "Name $propName, value: $propValue\n";
+            if ($propName =~ m/credential$/s && $propValue =~ m|^\/|s) {
+                for my $step (@$stepsWithCredentials) {
+                    $batch->attachCredential({
+                        projectName    => $pluginName,
+                        procedureName  => $step->{procedureName},
+                        stepName       => $step->{stepName},
+                        credentialName => $propValue,
+                    });
+                    #    debug "Attached credential to $step->{stepName}";
+                }
+                print "Reattaching $propName with val: $propValue\n";
+            }
+        }
+        # exit 0;
+    }
+}
+
+sub getConfigLocation {
+    my ($otherPluginName) = @_;
+
+    my $configName = eval {
+        $commander->getProperty("/plugins/$otherPluginName/project/ec_configPropertySheet")->findvalue('//value')->string_value
+    } || 'Jenkins_cfgs';
+    return $configName;
+}
+
+sub getStepsWithCredentials {
+    my $retval = [];
+    eval {
+        my $pluginName = '@PLUGIN_NAME@';
+        my $stepsJson = $commander->getProperty("/projects/$pluginName/procedures/CreateConfiguration/ec_stepsWithAttachedCredentials")->findvalue('//value')->string_value;
+        $retval = decode_json($stepsJson);
+    };
+    return $retval;
 }
 

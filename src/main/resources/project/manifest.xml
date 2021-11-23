@@ -808,6 +808,12 @@
     <xpath>//property[propertyName="templates"]/propertySheet/property[propertyName="discovered_resources.html"]/value</xpath>
   </file>
 
+    <!-- PDK POSTP -->
+    <file>
+        <path>postp/postpLoader.pl</path>
+        <xpath>//property[propertyName=&quot;postpLoader&quot;]/value</xpath>
+    </file>
+
     <!-- PDK Perl Libs-->
     <file>
         <path>pdk/Bytes/Random/Secure/Tiny.pm</path>
@@ -1050,4 +1056,10 @@
         <xpath>//property[propertyName=&quot;pdk&quot;]/propertySheet/property[propertyName=&quot;Try&quot;]/propertySheet/property[propertyName=&quot;Tiny.pm&quot;]/value</xpath>
     </file>
     <!-- End of PDK Perl Libs-->
+    <!-- Adding steps with credentials into the CreateConfiguration to be referenced during build-->
+    <file>
+        <xpath>//procedure[procedureName=&quot;CreateConfiguration&quot;]/propertySheet/property[propertyName=&quot;ec_stepsWithAttachedCredentials&quot;]/value</xpath>
+        <path>stepsWithAttachedCredentials.json</path>
+    </file>
+    <!-- End of adding steps with credentials into the CreateConfiguration to be referenced during build-->
 </fileset>

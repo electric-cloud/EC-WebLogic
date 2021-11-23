@@ -13,6 +13,11 @@
             </property>
             <!-- Begin PDK related part-->
             <property>
+                <propertyName>postpLoader</propertyName>
+                <value></value>
+                <expandable>0</expandable>
+            </property>
+            <property>
                 <propertyName>pdk</propertyName>
                 <propertySheet>
                     <property>
@@ -404,13 +409,6 @@
             </propertySheet>
         </property>
         <!-- End of CEV-17558 improvements -->
-        <!-- postp_loader: begin -->
-        <property>
-            <propertyName>postp_loader</propertyName>
-            <value>ec-perl -MElectricCommander -MElectricCommander::PropMod -e "ElectricCommander::PropMod::loadPerlCodeFromProperty(ElectricCommander->new(), '/projects/@PLUGIN_KEY@-@PLUGIN_VERSION@/EC::POSTP');EC::POSTP->run(\@ARGV)";</value>
-            <expandable>0</expandable>
-        </property>
-        <!-- postp_loader: end -->
       <property>
         <propertyName>stopnodemanager_matchers</propertyName>
         <value/>
@@ -1076,7 +1074,7 @@
         <exclusive>0</exclusive>
         <logFileName/>
         <parallel>0</parallel>
-        <postProcessor>$[/myProject/postp_loader]</postProcessor>
+        <postProcessor>$[/myProject/postpLoader]</postProcessor>
         <releaseExclusive>0</releaseExclusive>
         <resourceName>$[test_connection_res]</resourceName>
         <retries>0</retries>
@@ -1114,7 +1112,7 @@
         <exclusive>0</exclusive>
         <logFileName/>
         <parallel>0</parallel>
-        <postProcessor>$[/myProject/postp_loader]</postProcessor>
+        <postProcessor>$[/myProject/postpLoader]</postProcessor>
         <releaseExclusive>0</releaseExclusive>
         <resourceName>local</resourceName>
         <retries>0</retries>
@@ -1356,7 +1354,7 @@
         <exclusive>0</exclusive>
         <logFileName/>
         <parallel>0</parallel>
-        <postProcessor>$[/myProject/postp_loader]</postProcessor>
+        <postProcessor>$[/myProject/postpLoader]</postProcessor>
         <releaseExclusive>0</releaseExclusive>
         <resourceName>$[test_connection_res]</resourceName>
         <retries>0</retries>
@@ -1394,7 +1392,7 @@
         <exclusive>0</exclusive>
         <logFileName/>
         <parallel>0</parallel>
-        <postProcessor>$[/myProject/postp_loader]</postProcessor>
+        <postProcessor>$[/myProject/postpLoader]</postProcessor>
         <releaseExclusive>0</releaseExclusive>
         <resourceName>local</resourceName>
         <retries>0</retries>
@@ -1472,7 +1470,7 @@
         <exclusive>0</exclusive>
         <logFileName/>
         <parallel>0</parallel>
-        <postProcessor>$[/myProject/postp_loader]</postProcessor>
+        <postProcessor>$[/myProject/postpLoader]</postProcessor>
         <releaseExclusive>0</releaseExclusive>
         <resourceName>local</resourceName>
         <retries>0</retries>
