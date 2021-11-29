@@ -13,22 +13,165 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-
-# test
 package EC::WebLogic;
+
+# Here we are loading PDK. We need to load it in the begin.
+# Do not modify it if you don't understand how perl phases are working.
+# Thanks.
+
+BEGIN {
+    require ElectricCommander;
+    import ElectricCommander;
+    my $ec = ElectricCommander->new();
+
+    my @locations = (
+        '/myProject/pdk/',
+        # '/myProject/perl/core/lib/',
+        # '/myProject/perl/lib/'
+    );
+    my $display;
+    my $pdk_loader = sub {
+        my ($self, $target) = @_;
+
+        $display = '[EC]@PLUGIN_KEY@-@PLUGIN_VERSION@/' . $target;
+        # Undo perl'd require transformation
+        # Retrieving framework part and lib part.
+        my $code;
+        for my $prefix (@locations) {
+            my $prop = $target;
+            # $prop =~ s#\.pm$##;
+
+            $prop = "$prefix$prop";
+            $code = eval {
+                $ec->getProperty("$prop")->findvalue('//value')->string_value;
+            };
+            last if $code;
+        }
+        return unless $code; # let other module paths try ;)
+
+        # Prepend comment for correct error attribution
+        $code = qq{# line 1 "$display"\n$code};
+
+        # We must return a file in perl < 5.10, in 5.10+ just return \$code
+        #    would suffice.
+        open my $fd, "<", \$code
+            or die "Redirect failed when loading $target from $display";
+
+        return $fd;
+    };
+
+    push @INC, $pdk_loader;
+};
+
 use strict;
 use warnings;
+
+no warnings qw/redefine/;
+
 use subs qw/parallel_exec_support/;
 
 use Data::Dumper;
 use ElectricCommander;
 use Carp;
 
+use FlowPDF;
+use FlowPDF::ContextFactory;
+
 use base 'EC::Plugin::Core';
 
 our $ENABLE_PARALLEL_EXEC_SUPPORT = 1;
 
 # functions
+
+#*****************************************************************************
+sub flowpdf {
+    my ($self) = @_;
+
+    if (!$self->{flowpdf}) {
+        print "DEBUG: Creating flowpdf object...\n";
+
+        my $procedureName = $self->ec()->getProperty('/myProcedure/procedureName')->findvalue('//value')->string_value();
+        my $stepName = $self->ec()->getProperty('/myJobStep/stepName')->findvalue('//value')->string_value();
+        my $pluginName = '@PLUGIN_KEY@';
+        my $pluginVersion = '@PLUGIN_VERSION@';
+
+        *FlowPDF::pluginInfo = sub {
+            return {
+                pluginName          => '@PLUGIN_KEY@',
+                pluginVersion       => '@PLUGIN_VERSION@',
+                config_fields       => [ 'config_name', 'configuration_name', 'config' ],
+                config_locations    => [ 'weblogic_cfgs', 'ec_plugin_cfgs' ],
+                defaultConfigValues => {
+                    'auth_type' => 'basic'
+                }
+            }
+        };
+
+        $self->{flowpdf} = FlowPDF->new({
+            pluginName      => '@PLUGIN_KEY@',
+            pluginVersion   => '@PLUGIN_VERSION@',
+            configFields    => ['config_name', 'configuration_name', 'config'],
+            configLocations => ['weblogic_cfgs', 'ec_plugin_cfgs'],
+            # defaultConfigValues => {
+                # 'auth_type' => 'basic'
+            # },
+            contextFactory  => FlowPDF::ContextFactory->new({
+                procedureName => $procedureName,
+                stepName      => $stepName
+            })
+        });
+        # print Dumper $self->{flowpdf};
+        # $self->{flowpdf}->showEnvironmentInfo();
+    }
+
+    return $self->{flowpdf};
+}
+
+#*****************************************************************************
+
+=head2 loadConfiguration
+
+  Title    : loadConfiguration
+  Usage    : $self->loadConfiguration();
+  Function : Retrieves configuration content and set class atributes
+  Returns  : none
+  Args     : named arguments:
+           : none
+           :
+
+=cut
+
+#-----------------------------------------------------------------------------
+sub loadConfiguration {
+    my ($self) = @_;
+
+    my $flowpdf = $self->flowpdf();
+    my $cfg;
+    try {
+        $cfg = $flowpdf->getContext()->getConfigValuesAsHashref();
+    } catch {
+        my $e = $_;
+        unless (ref($e)) {
+            $self->bail_out($e)
+        }
+        if (ref($e) && ref($e) =~ m/FlowPDF::Exception/s && $e->is('FlowPDF::Exception::ConfigDoesNotExist')) {
+            print "Can't get config: Config does not exist.\n";
+            # $self->bail_out("")
+            $self->bail_out($e->getMessage());
+        }
+    };
+
+    if ($cfg->{proxy_user}) {
+        $cfg->{proxy_username} = delete $cfg->{proxy_user};
+    }
+    for my $k (keys %$cfg) {
+        $self->{$k} = $cfg->{$k};
+    }
+
+    return $cfg;
+}
+
+#*****************************************************************************
 sub parallel_exec_support {
     my ($p) = @_;
 
