@@ -1,3 +1,5 @@
+3.6.0:
+  - Added support for the new plugin configurations.
 3.5.3:
   - Fixed Open Redirect Vulnerability and XSS, cookie stealing.
 3.5.2:

@@ -3858,6 +3858,14 @@ image::cloudbees-common::cd-plugins/ec-weblogic/discover/report.png[image]
 [[rns]]
 == Release notes
 
+=== EC-WebLogic 3.6.0
+
+- Added support for the new plugin configurations.
+
+=== EC-WebLogic 3.5.3
+
+- Fixed Open Redirect Vulnerability and XSS, cookie stealing.
+
 
 === EC-WebLogic 3.5.2
 
