@@ -1,5 +1,5 @@
 #
-#  Copyright 2015 Electric Cloud, Inc.
+#  Copyright 2021 Electric Cloud, Inc.
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -42,9 +42,7 @@ BEGIN {
             # $prop =~ s#\.pm$##;
 
             $prop = "$prefix$prop";
-            $code = eval {
-                $ec->getProperty("$prop")->findvalue('//value')->string_value;
-            };
+            $code = eval {$ec->getProperty("$prop")->findvalue('//value')->string_value;};
             last if $code;
         }
         return unless $code; # let other module paths try ;)
@@ -61,7 +59,7 @@ BEGIN {
     };
 
     push @INC, $pdk_loader;
-};
+} ## end BEGIN
 
 use strict;
 use warnings;
@@ -73,15 +71,23 @@ use subs qw/parallel_exec_support/;
 use Data::Dumper;
 use ElectricCommander;
 use Carp;
-
-use FlowPDF;
-use FlowPDF::ContextFactory;
+use Try::Tiny;
+use File::Spec;
 
 use base 'EC::Plugin::Core';
 
+use FlowPDF;
+use FlowPDF::ContextFactory;
+use FlowPDF::Log;
+# use FlowPDF::Log::FW;
+use FlowPDF::ComponentManager;
+
 our $ENABLE_PARALLEL_EXEC_SUPPORT = 1;
 
-# functions
+use constant {
+    SUCCESS => 0,
+    ERROR   => 1,
+};
 
 #*****************************************************************************
 sub flowpdf {
@@ -97,35 +103,33 @@ sub flowpdf {
 
         *FlowPDF::pluginInfo = sub {
             return {
-                pluginName          => '@PLUGIN_KEY@',
-                pluginVersion       => '@PLUGIN_VERSION@',
+                pluginName          => $pluginName,
+                pluginVersion       => $pluginVersion,
                 config_fields       => [ 'config_name', 'configuration_name', 'config' ],
                 config_locations    => [ 'weblogic_cfgs', 'ec_plugin_cfgs' ],
-                defaultConfigValues => {
-                    'auth_type' => 'basic'
-                }
+                defaultConfigValues => { 'auth_type' => 'basic' }
             }
         };
 
         $self->{flowpdf} = FlowPDF->new({
-            pluginName      => '@PLUGIN_KEY@',
-            pluginVersion   => '@PLUGIN_VERSION@',
-            configFields    => ['config_name', 'configuration_name', 'config'],
-            configLocations => ['weblogic_cfgs', 'ec_plugin_cfgs'],
+            pluginName      => $pluginName,
+            pluginVersion   => $pluginVersion,
+            configFields    => [ 'config_name', 'configuration_name', 'config' ],
+            configLocations => [ 'weblogic_cfgs', 'ec_plugin_cfgs' ],
             # defaultConfigValues => {
-                # 'auth_type' => 'basic'
+            # 'auth_type' => 'basic'
             # },
             contextFactory  => FlowPDF::ContextFactory->new({
                 procedureName => $procedureName,
                 stepName      => $stepName
-            })
+            }
+            )
         });
-        # print Dumper $self->{flowpdf};
         # $self->{flowpdf}->showEnvironmentInfo();
-    }
+    } ## end if (!$self->{flowpdf})
 
     return $self->{flowpdf};
-}
+} ## end sub flowpdf
 
 #*****************************************************************************
 
@@ -145,30 +149,141 @@ sub flowpdf {
 sub loadConfiguration {
     my ($self) = @_;
 
-    my $flowpdf = $self->flowpdf();
-    my $cfg;
+    my $context = $self->flowpdf()->getContext();
+    my $cfg = {};
     try {
-        $cfg = $flowpdf->getContext()->getConfigValuesAsHashref();
-    } catch {
+        $cfg = $context->getConfigValuesAsHashref();
+    }
+    catch {
         my $e = $_;
         unless (ref($e)) {
-            $self->bail_out($e)
+            $context->bailOut($e);
         }
-        if (ref($e) && ref($e) =~ m/FlowPDF::Exception/s && $e->is('FlowPDF::Exception::ConfigDoesNotExist')) {
+
+        if ($e->isa('FlowPDF::Exception::ConfigDoesNotExist')) {
             print "Can't get config: Config does not exist.\n";
-            # $self->bail_out("")
-            $self->bail_out($e->getMessage());
+        }
+        else {
+            $context->bailOut($e->getMessage());
         }
     };
 
-    if ($cfg->{proxy_user}) {
-        $cfg->{proxy_username} = delete $cfg->{proxy_user};
-    }
-    for my $k (keys %$cfg) {
-        $self->{$k} = $cfg->{$k};
-    }
+    # for my $k (keys %{$cfg}) {
+    #     $self->{$k} = $cfg->{$k};
+    # }
 
     return $cfg;
+} ## end sub loadConfiguration
+
+#*****************************************************************************
+sub cli {
+    my ($self) = @_;
+    if (!$self->{cli}) {
+        $self->{cli} = FlowPDF::ComponentManager->loadComponent('FlowPDF::Component::CLI', {
+            workingDirectory => $ENV{COMMANDER_WORKSPACE}
+        });
+    }
+
+    return $self->{cli};
+}
+
+#*****************************************************************************
+sub testConnection {
+    my ($self) = @_;
+
+    my $cfg = $self->loadConfiguration();
+    # my $cfg = {
+    #     debug_level           => '2',
+    #     enable_named_sessions => '1',
+    #     java_home             => '',
+    #     java_vendor           => '',
+    #     mw_home               => '',
+    #     password              => 'weblogic2',
+    #     weblogic_url          => 't3://127.0.0.1:7001',
+    #     wlst_path             => '/u01/oracle/oracle_common/common/bin/wlst.sh',
+    #     user                  => 'weblogic',
+    # };
+
+    if (defined($cfg->{debug_level})) {
+        FlowPDF::Log::setLogLevel($cfg->{debug_level});
+    }
+
+    if ($cfg->{java_home}) {
+        $ENV{JAVA_HOME} = $cfg->{java_home};
+        logInfo("JAVA_HOME was set to '$cfg->{java_home}'");
+    }
+
+    if ($cfg->{java_vendor}) {
+        $ENV{JAVA_VENDOR} = $cfg->{java_vendor};
+        logInfo("JAVA_VENDOR was set to '$cfg->{java_vendor}'");
+    }
+
+    if ($cfg->{mw_home}) {
+        $ENV{MW_HOME} = $cfg->{mw_home};
+        logInfo("MW_HOME was set to '$cfg->{mw_home}'");
+    }
+
+    my $script = File::Spec->catfile($ENV{COMMANDER_WORKSPACE}, 'do_ls');
+
+    open FH, '>', $script;
+    print FH "connect('$cfg->{user}','$cfg->{password}','$cfg->{weblogic_url}'); ls(); disconnect()\n";
+    close FH;
+
+    my $cli = $self->cli();
+    my $command = $cli->newCommand($cfg->{wlst_path}, [ $script ]);
+    my $result = eval {$cli->runCommand($command)};
+
+    my $evalError = $@;
+    my $code = 0;
+    my $stdout = "";
+    my $stderr = "";
+    my $errmsg = "";
+    if ($result) {
+        $code = $result->getCode();
+        $stdout = $result->getStdout();
+        $stderr = $result->getStderr();
+        $errmsg = $result->getErrmsg();
+    }
+
+    if ($evalError) {
+        if ($errmsg) {
+            $errmsg .= "\n$evalError";
+        }
+        else {
+            $errmsg = $evalError;
+        }
+
+        $code ||= 1;
+    }
+
+    logInfo('STDOUT', $stdout) if ($stdout);
+    logInfo('STDERR: ', $stderr) if ($stderr);
+    logInfo('ERRMSG: ', $errmsg) if ($errmsg);
+    logInfo('EXIT_CODE: ', $code);
+
+    if ($code) {
+        $errmsg ||= $stderr || $stdout;
+        $errmsg =~ s/^(.+?)WLSTException:\s+//s;
+        $errmsg =~ s/^(.+?)(?:nested exception is:.*)$/$1/s;
+        $errmsg =~ s/^(.+?)(?:Use dumpStack.*)$/$1/s;
+
+        my $suggestions = q{Reasons could be due to one or more of the following. Please ensure they are correct and try again.:
+1. WebLogic URL - Is your URL complete and reachable?
+2. WLST Script Absolute Path  - Is your Path to the Script correct?
+3. Test Resource - Is your Test resource correctly wired with CloudBees CD?  Is your Test Resource correctly setup with WebLogic?
+4. Credentials - Are your credentials correct? Are you able to use these credentials to log in to WebLogic using its console?
+};
+
+        $self->ec->setProperty('/myJob/configError', $errmsg . "\n\n" . $suggestions);
+        $self->ec->setProperty('/myJobStep/summary', $errmsg . "\n\n" . $suggestions);
+
+        logErrorDiag("Create Configuration failed.\n\n$errmsg");
+        logInfoDiag($suggestions);
+
+        return ERROR;
+    }
+
+    return SUCCESS;
 }
 
 #*****************************************************************************
@@ -181,19 +296,18 @@ sub parallel_exec_support {
     return $ENABLE_PARALLEL_EXEC_SUPPORT;
 }
 
-
 sub out {
     my ($self, $level, @message) = @_;
 
     if ($self->{_credentials}->{password}) {
         my $password = $self->{_credentials}->{password};
         $password = quotemeta($password);
-        map {s/$password/********/gms;$_} @message;
+        map {s/$password/********/gms;
+            $_} @message;
     }
     $level ||= 1;
     return $self->SUPER::out($level, @message);
 }
-
 
 sub after_init_hook {
     my ($self, %params) = @_;
@@ -203,11 +317,7 @@ sub after_init_hook {
     my $dryrun = 0;
 
     if ($self->{plugin_key}) {
-        eval {
-            $dryrun = $self->ec()->getProperty(
-                "/plugins/$self->{plugin_key}/project/dryrun"
-            )->findvalue('//value')->string_value();
-        };
+        eval {$dryrun = $self->ec()->getProperty("/plugins/$self->{plugin_key}/project/dryrun")->findvalue('//value')->string_value();};
     }
     if ($dryrun) {
         $self->dbg("Dryrun enabled");
@@ -218,8 +328,7 @@ sub after_init_hook {
     print "EF Server Version: $version\n";
     my $perlLibraryVersion = $ElectricCommander::VERSION;
     print "Perl Library Version: $perlLibraryVersion\n";
-}
-
+} ## end sub after_init_hook
 
 sub generate_exec_path {
     my $wl = shift;
@@ -237,7 +346,6 @@ sub generate_exec_path {
     return $path;
 }
 
-
 sub get_credentials {
     my ($self, $config_name) = @_;
 
@@ -245,18 +353,19 @@ sub get_credentials {
 
     my $cred = $self->SUPER::get_credentials(
         $config_name => {
-            userName => 'user',
-            password => 'password',
-            java_home => 'java_home',
-            java_vendor => 'java_vendor',
-            mw_home => 'mw_home',
-            weblogic_url => 'weblogic_url',
-            debug_level => 'debug_level',
+            userName                  => 'user',
+            password                  => 'password',
+            java_home                 => 'java_home',
+            java_vendor               => 'java_vendor',
+            mw_home                   => 'mw_home',
+            weblogic_url              => 'weblogic_url',
+            debug_level               => 'debug_level',
             enable_exclusive_sessions => 'enable_exclusive_sessions',
-            enable_named_sessions => 'enable_named_sessions',
-            wlst_path => 'wlst_path',
+            enable_named_sessions     => 'enable_named_sessions',
+            wlst_path                 => 'wlst_path',
         },
-        'weblogic_cfgs');
+        'weblogic_cfgs'
+    );
 
     if (defined $cred->{debug_level}) {
         my $level = $cred->{debug_level} ? int($cred->{debug_level}) : 0;
@@ -280,27 +389,23 @@ sub get_credentials {
 
     $self->{_credentials} = $cred;
     return $cred;
-}
-
+} ## end sub get_credentials
 
 sub get_common_credentials {
     my ($self, $cred_name) = @_;
 
-    my $xpath = $self->ec()->getFullCredential($cred_name, {
-        jobStepId => $ENV{COMMANDER_JOBSTEPID}
-    });
+    my $xpath = $self->ec()->getFullCredential($cred_name, { jobStepId => $ENV{COMMANDER_JOBSTEPID} });
     if (!defined $xpath) {
         $self->error("Can't find common credential", $cred_name);
     }
 
     my $credentials = {
-        user => $xpath->findvalue('//credential/userName') . '',
+        user     => $xpath->findvalue('//credential/userName') . '',
         password => $xpath->findvalue('//credential/password') . ''
     };
 
     return $credentials;
 }
-
 
 sub get_step_credential {
     my ($self, $cred_name) = @_;
@@ -311,7 +416,7 @@ sub get_step_credential {
     my $user_name = $xpath->findvalue('//userName')->string_value;
     my $password = $xpath->findvalue('//password')->string_value;
 
-    return {userName => $user_name, password => $password};
+    return { userName => $user_name, password => $password };
 }
 
 sub write_deployment_plan {
@@ -349,8 +454,7 @@ sub write_deployment_plan {
     print $fh $params{content};
     close $fh;
     return 1;
-}
-
+} ## end sub write_deployment_plan
 
 sub process_response {
     my ($self, $result) = @_;
@@ -398,14 +502,14 @@ sub process_response {
     my %seen = ();
     @matches = grep {!$seen{$_}++} @matches;
     if (@matches) {
-        $self->warning( join("\n", @matches));
+        $self->warning(join("\n", @matches));
     }
     else {
         $self->success($summary);
     }
 
     return;
-}
+} ## end sub process_response
 
 ## %arams = (
 ## shell => '/path/to/wlst.sh,
@@ -421,8 +525,7 @@ sub execute_jython_script {
         croak "Missing shell param";
     }
 
-    my $check = $self->dryrun() ?
-        {ok => 1} : $self->check_executable($params{shell});
+    my $check = $self->dryrun() ? { ok => 1 } : $self->check_executable($params{shell});
 
     unless ($check->{ok}) {
         $self->bail_out($check->{msg});
@@ -468,8 +571,7 @@ sub execute_jython_script {
     }
 
     return $retval;
-}
-
+} ## end sub execute_jython_script
 
 # extending safe_cmd from the base class
 sub safe_cmd {
@@ -480,7 +582,6 @@ sub safe_cmd {
     return $command;
 }
 
-
 sub gen_random_numbers {
     my ($mod) = @_;
 
@@ -489,7 +590,6 @@ sub gen_random_numbers {
     return $rand;
 }
 
-
 sub render_template_from_property {
     my ($self, $template_name, $params, %options) = @_;
 
@@ -497,7 +597,7 @@ sub render_template_from_property {
 
     my $preamble_params = {
         enable_exclusive_sessions => 0,
-        enable_named_sessions => 0,
+        enable_named_sessions     => 0,
     };
 
     if ($self->{_credentials}->{enable_named_sessions}) {
@@ -511,7 +611,7 @@ sub render_template_from_property {
     $params->{preamble} = $self->SUPER::render_template_from_property('/myProject/jython/preamble.jython', $preamble_params);
     # $params->{preamble} = $self->get_param('/myProject/jython/preamble.jython');
     return $self->SUPER::render_template_from_property($template_name, $params, %options);
-}
+} ## end sub render_template_from_property
 
 sub get_wlst_path {
     my ($self, $params, $cred) = @_;
@@ -524,7 +624,7 @@ sub get_wlst_path {
         $retval = eval {$self->ec->getProperty('wlstabspath')->findvalue('//value')->string_value};
     }
     return $retval if $retval;
-    unless($cred) {
+    unless ($cred) {
         $cred = $self->get_credentials;
     }
     $retval = $cred->{wlst_path};
@@ -532,7 +632,6 @@ sub get_wlst_path {
 
     $self->bail_out("WLST Path was not provided");
 }
-
 
 sub run_jython_step {
     my ($self) = @_;
@@ -568,24 +667,23 @@ sub run_jython_step {
         script_content => $template,
     );
     $self->process_response($res);
-}
+} ## end sub run_jython_step
 
 sub numbered_lines {
     my ($text) = @_;
 
     my @lines = split(/\n/, $text);
     my $counter = 1;
-    @lines = map { $counter ++ . ') ' . $_ } @lines;
+    @lines = map {$counter++ . ') ' . $_} @lines;
     return join("\n", @lines);
 }
-
 
 sub get_step_parameters {
     my ($self) = @_;
 
     my $params = {};
     my $procedure_name = $self->ec->getProperty('/myProcedure/name')->findvalue('//value')->string_value;
-    my $xpath = $self->ec->getFormalParameters({projectName => '@PLUGIN_NAME@', procedureName => $procedure_name});
+    my $xpath = $self->ec->getFormalParameters({ projectName => '@PLUGIN_NAME@', procedureName => $procedure_name });
     for my $param ($xpath->findnodes('//formalParameter')) {
         my $name = $param->findvalue('formalParameterName')->string_value;
         my $value = $self->get_param($name);
@@ -606,73 +704,7 @@ sub get_step_parameters {
         }
     }
     return $params;
-}
-
-#*****************************************************************************
-sub configurationErrorWithSuggestions  {
-    my ($self, $errmsg) = @_;
-
-    my $suggestions = q{Reasons could be due to one or more of the following. Please ensure they are correct and try again.:
-1. WebLogic URL - Is your URL complete and reachable?
-2. WLST Script Absolute Path  - Is your Path to the Script correct?
-3. Test Resource - Is your Test resource correctly wired with CloudBees CD?  Is your Test Resource correctly setup with WebLogic?
-4. Credentials - Are your credentials correct? Are you able to use these credentials to log in to WebLogic using its console?
-};
-
-    $self->ec->setProperty('/myJob/configError', $errmsg . "\n\n" . $suggestions);
-    $self->ec->setProperty('/myJobStep/summary', $errmsg . "\n\n" . $suggestions);
-
-    $self->logErrorDiag("Create Configuration failed.\n\n$errmsg");
-    $self->logInfoDiag($suggestions);
-
-    return;
-}
-
-#*****************************************************************************
-sub logInfoDiag {
-    my ($self, @params) = @_;
-
-    return $self->printDiagMessage('INFO', @params);
-}
-
-#*****************************************************************************
-sub logErrorDiag {
-    my ($self, @params) = @_;
-
-    return $self->printDiagMessage('ERROR', @params);
-}
-
-#*****************************************************************************
-sub logWarningDiag {
-    my ($self, @params) = @_;
-
-    return $self->printDiagMessage('WARNING', @params);
-}
-
-#*****************************************************************************
-sub printDiagMessage {
-    my ($self, @params) = @_;
-
-    my $level = shift @params;
-
-    if (!$level || !@params) {
-        return 0;
-    }
-
-    $level = uc $level;
-    if ($level !~ m/^(?:ERROR|WARNING|INFO)$/s) {
-        return 0;
-    }
-
-    # \n[OUT][%s]: %s :[%s][OUT]\n
-    my $begin = "\n[OUT][$level]: ";
-    my $end   = " :[$level][OUT]\n";
-
-    my $msg = join '', @params;
-    $msg = $begin . $msg . $end;
-
-    return $self->logger->info($msg);
-}
+} ## end sub get_step_parameters
 
 #*****************************************************************************
 1;

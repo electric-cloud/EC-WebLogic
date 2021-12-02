@@ -192,6 +192,16 @@
     <path>WebLogicEditConfigForm.xml</path>
     <xpath>//property[propertyName="ui_forms"]/propertySheet/property[propertyName="WebLogicEditConfigForm"]/value</xpath>
   </file>
+  <file>
+    <path>WebLogicCreateConfigFormNew.xml</path>
+    <xpath>//procedure[procedureName=&quot;ConfigurationParametersHolder&quot;]/propertySheet/property[propertyName=&quot;ec_parameterForm&quot;]/value</xpath>
+  </file>
+    <!-- Begin of test connection procedure -->
+  <file>
+    <path>conf/testConnection.pl</path>
+    <xpath>//procedure[procedureName=&quot;TestConfiguration&quot;]/step[stepName=&quot;checkConnection&quot;]/command</xpath>
+  </file>
+  <!-- End of test connection procedure -->
   <!-- postp code starts from here -->
   <file>
     <path>matchers/stopServerMatchers.pl</path>
@@ -1058,8 +1068,14 @@
     <!-- End of PDK Perl Libs-->
     <!-- Adding steps with credentials into the CreateConfiguration to be referenced during build-->
     <file>
-        <xpath>//procedure[procedureName=&quot;CreateConfiguration&quot;]/propertySheet/property[propertyName=&quot;ec_stepsWithAttachedCredentials&quot;]/value</xpath>
         <path>stepsWithAttachedCredentials.json</path>
+        <xpath>//procedure[procedureName=&quot;CreateConfiguration&quot;]/propertySheet/property[propertyName=&quot;ec_stepsWithAttachedCredentials&quot;]/value</xpath>
     </file>
     <!-- End of adding steps with credentials into the CreateConfiguration to be referenced during build-->
+    <!-- ec_config/stepsWithAttachedCredentials -->
+    <file>
+        <path>stepsWithAttachedCredentials.json</path>
+        <xpath>//property[propertyName=&quot;ec_config&quot;]/propertySheet/property[propertyName=&quot;stepsWithAttachedCredentials&quot;]/value</xpath>
+    </file>
+    <!-- end of ec_config/stepsWithAttachedCredentials -->
 </fileset>
