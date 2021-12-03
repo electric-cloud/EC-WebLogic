@@ -20,7 +20,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
     static final def ENVIRONMENT_NAME = 'EC-Weblogic Specs Env'
     static final def TEST_APPLICATION = 'EC-WebLogic Specs Application'
 
-    static final def TIMEOUT = 360
+    static final def TIMEOUT = 600
     static final def INITIAL_DELAY = 15
 
     def doSetupSpec() {
