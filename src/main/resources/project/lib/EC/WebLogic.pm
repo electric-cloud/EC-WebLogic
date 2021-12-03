@@ -344,7 +344,8 @@ sub get_credentials {
 
     $config_name ||= 'configname';
 
-    my $cfg = $self->loadConfiguration({configName => $config_name});
+    # my $cfg = $self->loadConfiguration({configName => $config_name});
+    my $cfg = $self->loadConfiguration();
 
     if (defined $cfg->{debug_level}) {
         my $level = $cfg->{debug_level} ? int($cfg->{debug_level}) : 0;
