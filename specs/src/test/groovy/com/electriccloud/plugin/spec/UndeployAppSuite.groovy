@@ -164,7 +164,7 @@ class UndeployAppSuite extends WebLogicHelper {
                 appname    : appName,
                 apppath    : '', // Will be filled inside
                 targets    : 'AdminServer',
-                is_library : ""
+                is_library : "false"
             ], artifactName, FILENAME)
 
             assert (deploy.outcome == 'success')
@@ -214,7 +214,7 @@ class UndeployAppSuite extends WebLogicHelper {
                 appname    : appName,
                 apppath    : '', // Will be filled inside
                 targets    : 'AdminServer',
-                is_library : ""
+                is_library : "false"
             ], artifactName, FILENAME)
 
             assert (deploy.outcome == 'success')

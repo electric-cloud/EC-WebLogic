@@ -220,7 +220,7 @@ class DeployAppSuite extends WebLogicHelper {
         where: 'The following params will be: '
         caseId    | wlstabspath | appname          | targets       | is_library               | expectedOutcome          | expectedSummaryMessage
         // Simple positive
-        'C325212' | wlstPath    | APPLICATION_NAME | ''            | ''                       | expectedOutcomes.success | ''
+        'C325212' | wlstPath    | APPLICATION_NAME | ''            | 'false'                  | expectedOutcomes.success | ''
 
         // with TargetServerSpecified
         'C325217' | wlstPath    | APPLICATION_NAME | 'AdminServer' | checkBoxValues.unchecked | expectedOutcomes.success | ''
@@ -292,7 +292,7 @@ class DeployAppSuite extends WebLogicHelper {
         where:
         caseId    | wlstabspath | appname          | targets       | is_library               | expectedOutcome          | expectedSummaryMessage
         // Simple positive
-        'C325213' | wlstPath    | APPLICATION_NAME | ''            | ''                       | expectedOutcomes.success | ''
+        'C325213' | wlstPath    | APPLICATION_NAME | ''            | 'false'                  | expectedOutcomes.success | ''
 
         // with TargetServerSpecified
         'C325220' | wlstPath    | APPLICATION_NAME | 'AdminServer' | checkBoxValues.unchecked | expectedOutcomes.success | ''
