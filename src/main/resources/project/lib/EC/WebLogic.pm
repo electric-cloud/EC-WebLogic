@@ -147,12 +147,12 @@ sub flowpdf {
 
 #-----------------------------------------------------------------------------
 sub loadConfiguration {
-    my ($self) = @_;
+    my ($self, $params) = @_;
 
     my $context = $self->flowpdf()->getContext();
     my $cfg = {};
     try {
-        $cfg = $context->getConfigValuesAsHashref();
+        $cfg = $context->getConfigValuesAsHashref($params);
     }
     catch {
         my $e = $_;
@@ -285,6 +285,7 @@ sub parallel_exec_support {
     return $ENABLE_PARALLEL_EXEC_SUPPORT;
 }
 
+#*****************************************************************************
 sub out {
     my ($self, $level, @message) = @_;
 
@@ -298,6 +299,7 @@ sub out {
     return $self->SUPER::out($level, @message);
 }
 
+#*****************************************************************************
 sub after_init_hook {
     my ($self, %params) = @_;
 
@@ -319,6 +321,7 @@ sub after_init_hook {
     print "Perl Library Version: $perlLibraryVersion\n";
 } ## end sub after_init_hook
 
+#*****************************************************************************
 sub generate_exec_path {
     my $wl = shift;
     my $path;
@@ -335,7 +338,42 @@ sub generate_exec_path {
     return $path;
 }
 
+#*****************************************************************************
 sub get_credentials {
+    my ($self, $config_name) = @_;
+
+    $config_name ||= 'configname';
+
+    my $cfg = loadConfiguration({configName => $config_name});
+
+    if (defined $cfg->{debug_level}) {
+        my $level = $cfg->{debug_level} ? int($cfg->{debug_level}) : 0;
+        $self->debug_level($level + 1);
+        $self->logger->level($level);
+        FlowPDF::Log::setLogLevel($cfg->{debug_level});
+        $self->out(3, "Debug level set to ", $self->debug_level())
+    }
+
+    if ($cfg->{java_home}) {
+        $ENV{JAVA_HOME} = $cfg->{java_home};
+        $self->out(10, "JAVA_HOME was set to $cfg->{java_home}");
+    }
+    if ($cfg->{java_vendor}) {
+        $ENV{JAVA_VENDOR} = $cfg->{java_vendor};
+        $self->out(10, "JAVA_VENDOR was set to $cfg->{java_vendor}");
+    }
+    if ($cfg->{mw_home}) {
+        $ENV{MW_HOME} = $cfg->{mw_home};
+        $self->out(10, "MW_HOME was set to $cfg->{mw_home}");
+    }
+
+    $self->{_credentials} = $cfg;
+
+    return $cfg;
+}
+
+#*****************************************************************************
+sub get_credentials_old {
     my ($self, $config_name) = @_;
 
     $config_name ||= 'configname';
@@ -380,6 +418,7 @@ sub get_credentials {
     return $cred;
 } ## end sub get_credentials
 
+#*****************************************************************************
 sub get_common_credentials {
     my ($self, $cred_name) = @_;
 
@@ -396,7 +435,8 @@ sub get_common_credentials {
     return $credentials;
 }
 
-sub get_step_credential {
+#*****************************************************************************
+sub _unused_anywhere_get_step_credential {
     my ($self, $cred_name) = @_;
 
     return {} unless $cred_name;

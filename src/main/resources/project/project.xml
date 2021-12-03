@@ -1612,7 +1612,7 @@
         <description>Additional options for startApplication API. (See deploy function for reference).</description>
         <required>0</required>
         <type>textarea</type>
-</formalParameter>
+      </formalParameter>
       <formalParameter>
         <formalParameterName>version_identifier</formalParameterName>
         <defaultValue/>

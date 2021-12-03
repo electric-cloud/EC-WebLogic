@@ -645,10 +645,10 @@ sub retrieveConfigByNameAndLocation {
 # TODO: add getConfigValuesAsHashref to list of public APIs
 # TODO: think about getConfigValues to be present in public APIs list.
 sub getConfigValuesAsHashref {
-    my ($self) = @_;
+    my ($self, $params) = @_;
 
     my $c = undef;
-    $c = $self->getConfigValues();
+    $c = $self->getConfigValues($params);
     my $cKeys;
     my $retval = {};
     # eval {
