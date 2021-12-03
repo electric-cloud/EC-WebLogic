@@ -427,7 +427,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
                  appname    : '${params.appname}',
                  apppath    : "$path/$filename",
                  targets    : 'AdminServer',
-                 is_library : ""
+                 is_library : "false"
             ]
         )
         """, getResourceName())
@@ -940,7 +940,7 @@ activate()
             appname    : appName,
             apppath    : path,
             targets    : targetServer,
-            is_library : ""
+            is_library : "false"
         ], artifactName, 'SampleJMSApplication.war')
     }
 
