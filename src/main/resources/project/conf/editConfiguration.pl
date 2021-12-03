@@ -74,7 +74,7 @@ for my $k (keys %$opts) {
             # it has the credential reference, so the runtime credential should be deleted.
             # TODO: Add deletion of runtime credential.
             # print "SETTING REFERENCE: $propertySheetFullPath/$k, $opts->{$key_ref}\n";
-            my $credential_to_delete =  gen_credential_name($configuration_name, $k);
+            my $credential_to_delete = gen_credential_name($configuration_name, $k);
             $ec->deleteCredential($projName, $credential_to_delete);
             $ec->setProperty("$propertySheetFullPath/$k", $opts->{$key_ref});
         }
@@ -97,7 +97,7 @@ eval {
     # print "OPTS2: ", Dumper $opts;
 
     for my $param ($ec->getFormalParameters({
-        projectName => $projName,
+        projectName   => $projName,
         procedureName => 'CreateConfiguration',
     })->findnodes('//formalParameter')) {
         my $type = $param->findvalue('type') . '';
@@ -129,11 +129,14 @@ eval {
     exit 1;
 };
 
+print "Configuration \"$configuration_name\" saved.\n";
+
 # Handling credentials here
-### Service subroutines
+
+### Service subroutines #####################################################
 
 sub getActualParameters {
-    my $x       = $ec->getJobDetails($ENV{COMMANDER_JOBID});
+    my $x = $ec->getJobDetails($ENV{COMMANDER_JOBID});
     my $nodeset = $x->find('//actualParameter');
     my $opts;
 
@@ -146,12 +149,11 @@ sub getActualParameters {
                 $opts->{$key} = $credRef;
             }
         }
-        my $val  = $node->findvalue('value');
+        my $val = $node->findvalue('value');
         $opts->{$parm} = "$val";
     }
     return $opts;
 }
-
 
 sub getCredentialReference {
     my ($credName) = @_;
@@ -167,7 +169,6 @@ sub getCredentialReference {
 
     return $existingCredRef;
 }
-
 
 sub createAndAttachCredential {
     my ($credName, $configName, $configPropertySheet, $steps) = @_;
@@ -208,17 +209,17 @@ sub createAndAttachCredential {
         # Give job launcher full permissions on the credential
         my $user = '$[/myJob/launchedByUser]';
         $xpath = $ec->createAclEntry("user", $user, {
-            projectName => $projName,
-            credentialName => $credObjectName,
-            readPrivilege => 'allow',
-            modifyPrivilege => 'allow',
-            executePrivilege => 'allow',
+            projectName                => $projName,
+            credentialName             => $credObjectName,
+            readPrivilege              => 'allow',
+            modifyPrivilege            => 'allow',
+            executePrivilege           => 'allow',
             changePermissionsPrivilege => 'allow'
         });
         $errors .= $ec->checkAllErrors($xpath);
     }
     # Attach credential to steps that will need it
-    for my $step( @$steps ) {
+    for my $step (@$steps) {
         if ($existingCredRef) {
             $credObjectName = $existingCredRef;
         }
@@ -226,9 +227,9 @@ sub createAndAttachCredential {
         my $apath = $ec->attachCredential(
             $projName,
             $credObjectName, {
-                procedureName => $step->{procedureName},
-                stepName => $step->{stepName}
-            });
+            procedureName => $step->{procedureName},
+            stepName      => $step->{stepName}
+        });
         $errors .= $ec->checkAllErrors($apath);
     }
 

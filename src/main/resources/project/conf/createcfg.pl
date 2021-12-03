@@ -18,6 +18,9 @@
 ## createcfg.pl
 #########################
 
+use strict;
+use warnings;
+
 use ElectricCommander;
 use ElectricCommander::PropDB;
 use ElectricCommander::PropMod;
@@ -30,9 +33,9 @@ use constant {
 
 my $opts;
 
-my $projName   = '$[/myProject/projectName]';
+my $projName = '$[/myProject/projectName]';
 my $pluginName = '@PLUGIN_NAME@';
-my $pluginKey  = '@PLUGIN_KEY@';
+my $pluginKey = '@PLUGIN_KEY@';
 
 #*****************************************************************************
 # get an EC object
@@ -62,11 +65,11 @@ sub configurationError {
 
 #*****************************************************************************
 # load option list from procedure parameters
-my $x       = $ec->getJobDetails($ENV{COMMANDER_JOBID});
+my $x = $ec->getJobDetails($ENV{COMMANDER_JOBID});
 my $nodeset = $x->find("//actualParameter");
 foreach my $node ($nodeset->get_nodelist) {
     my $parm = $node->findvalue("actualParameterName");
-    my $val  = $node->findvalue("value");
+    my $val = $node->findvalue("value");
     $opts->{$parm} = "$val";
 }
 
@@ -76,7 +79,7 @@ if (!defined $opts->{config} || "$opts->{config}" eq '') {
 }
 
 # check to see if a config with this name already exists before we do anything else
-my $xpath    = $ec->getProperty("/myProject/weblogic_cfgs/$opts->{config}");
+my $xpath = $ec->getProperty("/myProject/weblogic_cfgs/$opts->{config}");
 my $property = $xpath->findvalue("//response/property/propertyName");
 
 if (defined $property && "$property" ne "") {

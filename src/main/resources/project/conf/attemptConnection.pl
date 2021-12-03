@@ -30,13 +30,32 @@ use constant {
     ERROR   => 1,
 };
 
+my $configName = '$[/myJob/config]';
+
 #*****************************************************************************
 my $ec = ElectricCommander->new();
-$ec->abortOnError(0);
+# $ec->abortOnError(0);
 
 my $projName = '$[/myProject/projectName]';
 my $pluginName = '@PLUGIN_NAME@';
 my $pluginKey = '@PLUGIN_KEY@';
+
+my $credential = '$[credential]';
+my $cred_xpath = $ec->getFullCredential($credential);
+my $username = $cred_xpath->findvalue("//userName");
+my $password = $cred_xpath->findvalue("//password");
+
+my $cfg = {
+    debug_level           => '$[debug_level]',
+    enable_named_sessions => '$[enable_named_sessions]',
+    java_home             => '$[java_home]',
+    java_vendor           => '$[java_vendor]',
+    mw_home               => '$[mw_home]',
+    password              => $password,
+    weblogic_url          => '$[weblogic_url]',
+    wlst_path             => '$[wlst_path]',
+    user                  => $username,
+};
 
 ElectricCommander::PropMod::loadPerlCodeFromProperty($ec, '/myProject/EC::Plugin::Core');
 ElectricCommander::PropMod::loadPerlCodeFromProperty($ec, '/myProject/EC::WebLogic');
@@ -47,7 +66,7 @@ my $wl = EC::WebLogic->new(
     plugin_key   => $pluginKey,
 );
 
-my $retval = $wl->testConnection();
+my $retval = $wl->testConnection($cfg);
 if ($retval == SUCCESS) {
     $wl->logger->info("Successfully connected to the WebLogic instance.");
 }

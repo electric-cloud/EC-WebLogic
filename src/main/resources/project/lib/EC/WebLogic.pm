@@ -189,9 +189,9 @@ sub cli {
 
 #*****************************************************************************
 sub testConnection {
-    my ($self) = @_;
+    my ($self, $cfg) = @_;
 
-    my $cfg = $self->loadConfiguration();
+    $cfg ||= $self->loadConfiguration();
     # my $cfg = {
     #     debug_level           => '2',
     #     enable_named_sessions => '1',
@@ -267,18 +267,7 @@ sub testConnection {
         $errmsg =~ s/^(.+?)(?:nested exception is:.*)$/$1/s;
         $errmsg =~ s/^(.+?)(?:Use dumpStack.*)$/$1/s;
 
-        my $suggestions = q{Reasons could be due to one or more of the following. Please ensure they are correct and try again.:
-1. WebLogic URL - Is your URL complete and reachable?
-2. WLST Script Absolute Path  - Is your Path to the Script correct?
-3. Test Resource - Is your Test resource correctly wired with CloudBees CD?  Is your Test Resource correctly setup with WebLogic?
-4. Credentials - Are your credentials correct? Are you able to use these credentials to log in to WebLogic using its console?
-};
-
-        $self->ec->setProperty('/myJob/configError', $errmsg . "\n\n" . $suggestions);
-        $self->ec->setProperty('/myJobStep/summary', $errmsg . "\n\n" . $suggestions);
-
-        logErrorDiag("Create Configuration failed.\n\n$errmsg");
-        logInfoDiag($suggestions);
+        $self->configurationErrorWithSuggestions($errmsg);
 
         return ERROR;
     }
@@ -705,6 +694,26 @@ sub get_step_parameters {
     }
     return $params;
 } ## end sub get_step_parameters
+
+#*****************************************************************************
+sub configurationErrorWithSuggestions {
+    my ($self, $errmsg) = @_;
+
+    my $suggestions = q{Reasons could be due to one or more of the following. Please ensure they are correct and try again.:
+1. WebLogic URL - Is your URL complete and reachable?
+2. WLST Script Absolute Path  - Is your Path to the Script correct?
+3. Test Resource - Is your Test resource correctly wired with CloudBees CD?  Is your Test Resource correctly setup with WebLogic?
+4. Credentials - Are your credentials correct? Are you able to use these credentials to log in to WebLogic using its console?
+};
+
+    $self->ec->setProperty('/myJob/configError', $errmsg . "\n\n" . $suggestions);
+    $self->ec->setProperty('/myJobStep/summary', $errmsg . "\n\n" . $suggestions);
+
+    logErrorDiag("Create Configuration failed.\n\n$errmsg");
+    logInfoDiag($suggestions);
+
+    return;
+}
 
 #*****************************************************************************
 1;
