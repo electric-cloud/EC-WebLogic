@@ -20,9 +20,6 @@ class WebLogicHelper extends PluginSpockTestSupport {
     static final def ENVIRONMENT_NAME = 'EC-Weblogic Specs Env'
     static final def TEST_APPLICATION = 'EC-WebLogic Specs Application'
 
-    static final def TIMEOUT = 600
-    static final def INITIAL_DELAY = 15
-
     def doSetupSpec() {
         setupResource()
         createConfig(CONFIG_NAME)
@@ -372,8 +369,8 @@ class WebLogicHelper extends PluginSpockTestSupport {
                 actualParameter: $params_str_arr
             )
                 """, resourceName,
-            TIMEOUT, // timeout
-            INITIAL_DELAY  // initialDelay
+            180, // timeout
+            15  // initialDelay
         )
         return result
     }
@@ -400,11 +397,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
                  appname    : '${params.appname}'
             ]
         )
-        """,
-            getResourceName(),
-            TIMEOUT,
-            INITIAL_DELAY
-        )
+        """, getResourceName())
 
         return result
     }
@@ -434,14 +427,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
                  appname    : '${params.appname}',
                  apppath    : "$path/$filename",
                  targets    : 'AdminServer',
-                 is_library : "",
+                 is_library : ""
             ]
         )
-        """,
-            getResourceName(),
-            TIMEOUT,
-            INITIAL_DELAY
-        )
+        """, getResourceName())
 
         logger.debug("Hello, my dear friend " + result)
 
@@ -1047,11 +1036,7 @@ print "VALUE:" + '+' + str(get(propName)) + '+'
                 processName: '$processName',
                 tierMapName: '$tierMapName'
             )
-        """,
-            getResourceName(),
-            TIMEOUT,
-            INITIAL_DELAY
-
+        """, getResourceName(), 180, 15
         return result
     }
 
