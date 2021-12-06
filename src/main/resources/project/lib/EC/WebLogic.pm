@@ -150,12 +150,9 @@ sub loadConfiguration {
     my ($self, $params) = @_;
     my $t0 = [gettimeofday];
     my $context = $self->flowpdf()->getContext();
-    print(Dumper(['#001', tv_interval ( $t0, [gettimeofday])]));
     my $cfg = {};
     try {
-        print(Dumper(['#002', tv_interval ( $t0, [gettimeofday])]));
         $cfg = $context->getConfigValuesAsHashref($params);
-        print(Dumper(['#003', tv_interval ( $t0, [gettimeofday])]));
     }
     catch {
         my $e = $_;
@@ -174,7 +171,6 @@ sub loadConfiguration {
     # for my $k (keys %{$cfg}) {
     #     $self->{$k} = $cfg->{$k};
     # }
-    print(Dumper(['#004', tv_interval ( $t0, [gettimeofday])]));
 
     return $cfg;
 } ## end sub loadConfiguration
