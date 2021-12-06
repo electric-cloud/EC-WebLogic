@@ -100,7 +100,7 @@ class StartAppSuite extends WebLogicHelper {
                 appname    : APPLICATION_NAME,
                 apppath    : '', // This will be filled by downloadArtifact()
                 targets    : 'AdminServer',
-                is_library : "false"
+                is_library : "0"
             ],
             artifactName,
             FILENAME
