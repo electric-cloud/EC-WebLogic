@@ -1,5 +1,5 @@
 #
-#  Copyright 2015 Electric Cloud, Inc.
+#  Copyright 2021 Electric Cloud, Inc.
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -14,7 +14,10 @@
 #  limitations under the License.
 #
 
-no warnings qw/redefine/;
+use strict;
+use warnings;
+no warnings 'redefine';
+
 use XML::Simple;
 use Data::Dumper;
 use ElectricCommander::Util;
@@ -556,7 +559,7 @@ if (0 && ($upgradeAction eq "upgrade")) {
     } ## end if ($nodes)
 
     reattachExternalCredentials($otherPluginName);
-} ## end if ($upgradeAction eq ...)
+} ## end if (0 && ($upgradeAction...))
 
 sub patch_configs {
     my ($config_path) = @_;
@@ -632,6 +635,7 @@ my @formalOutputParameters = map {{formalOutputParameterName => $restartFlagName
 
 if ($promoteAction eq 'promote') {
 
+    reattachExternalConfigurations($otherPluginName);
     ## Check if agent supports formalOutputParameters API,
     if (exists $ElectricCommander::Arguments{getFormalOutputParameters}) {
         my $versions = $commander->getVersions();
