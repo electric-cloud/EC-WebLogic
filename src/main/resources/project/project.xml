@@ -1151,6 +1151,9 @@
             </propertySheet>
           </property>
         </propertySheet>
+        <attachedParameters>
+          <formalParameterName>credential</formalParameterName>
+        </attachedParameters>
       </step>
     </procedure>
     <procedure>
@@ -1431,6 +1434,9 @@
             </propertySheet>
           </property>
         </propertySheet>
+        <attachedParameters>
+          <formalParameterName>credential</formalParameterName>
+        </attachedParameters>
       </step>
     </procedure>
     <procedure>
