@@ -498,23 +498,23 @@
   </file>
   <!-- config management procedures -->
   <file>
-    <path>conf/createcfg.pl</path>
+    <path>conf/createConfiguration.pl</path>
     <xpath>//procedure[procedureName="CreateConfiguration"]/step[stepName="CreateConfiguration"]/command</xpath>
-  </file>
-  <file>
-    <path>conf/createAndAttachCredential.pl</path>
-    <xpath>//procedure[procedureName="CreateConfiguration"]/step[stepName="CreateAndAttachCredential"]/command</xpath>
   </file>
   <file>
     <path>conf/attemptConnection.pl</path>
     <xpath>//procedure[procedureName=&quot;CreateConfiguration&quot;]/step[stepName=&quot;AttemptConnection&quot;]/command</xpath>
   </file>
   <file>
+    <path>conf/editConfiguration.pl</path>
+    <xpath>//procedure[procedureName=&quot;EditConfiguration&quot;]/step[stepName=&quot;EditConfiguration&quot;]/command</xpath>
+  </file>
+  <file>
     <path>conf/attemptConnection.pl</path>
     <xpath>//procedure[procedureName=&quot;EditConfiguration&quot;]/step[stepName=&quot;AttemptConnection&quot;]/command</xpath>
   </file>
   <file>
-    <path>conf/deletecfg.pl</path>
+    <path>conf/deleteConfiguration.pl</path>
     <xpath>//procedure[procedureName="DeleteConfiguration"]/step[stepName="DeleteConfiguration"]/command</xpath>
   </file>
   <file>

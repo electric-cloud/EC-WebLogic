@@ -770,8 +770,8 @@ sub reattachExternalCredentials {
 sub getConfigLocation {
     my ($otherPluginName) = @_;
 
-    my $configName
-        = eval {$commander->getProperty("/plugins/$otherPluginName/project/ec_configPropertySheet")->findvalue('//value')->string_value} || 'Jenkins_cfgs';
+    my $configName = eval {$commander->getProperty("/plugins/$otherPluginName/project/ec_configPropertySheet")->findvalue('//value')->string_value} || 'weblogic_cfgs';
+
     return $configName;
 }
 

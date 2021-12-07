@@ -105,7 +105,7 @@ sub flowpdf {
             return {
                 pluginName          => $pluginName,
                 pluginVersion       => $pluginVersion,
-                config_fields       => [ 'config_name', 'configuration_name', 'config' ],
+                config_fields       => [ 'configname', 'config_name', 'configuration_name', 'config' ],
                 config_locations    => [ 'weblogic_cfgs', 'ec_plugin_cfgs' ],
                 defaultConfigValues => { 'auth_type' => 'basic' }
             }
@@ -114,7 +114,7 @@ sub flowpdf {
         $self->{flowpdf} = FlowPDF->new({
             pluginName      => $pluginName,
             pluginVersion   => $pluginVersion,
-            configFields    => [ 'config_name', 'configuration_name', 'config' ],
+            configFields    => [ 'configname', 'config_name', 'configuration_name', 'config' ],
             configLocations => [ 'weblogic_cfgs', 'ec_plugin_cfgs' ],
             # defaultConfigValues => {
             # 'auth_type' => 'basic'
@@ -148,7 +148,6 @@ sub flowpdf {
 #-----------------------------------------------------------------------------
 sub loadConfiguration {
     my ($self, $params) = @_;
-    my $t0 = [gettimeofday];
     my $context = $self->flowpdf()->getContext();
     my $cfg = {};
     try {

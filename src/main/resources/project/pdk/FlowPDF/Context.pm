@@ -166,7 +166,7 @@ sub bailOut {
 
     if (!ref $params) {
         my $message = $params;
-        $params = {message => $message};
+        $params = { message => $message };
     }
 
     if (!$params->{message} && !$params->{suggestion}) {
@@ -351,8 +351,8 @@ sub getStepParameters {
                 # TODO: Change it to something more reliable later.
                 # Currently we have support of default credentials only.
                 credentialType => 'default',
-                userName => $stepParametersHash->{$k}->{userName},
-                secretValue => $stepParametersHash->{$k}->{password},
+                userName       => $stepParametersHash->{$k}->{userName},
+                secretValue    => $stepParametersHash->{$k}->{password},
             });
         }
         $parameters->{$k} = $p;
@@ -360,7 +360,7 @@ sub getStepParameters {
 
     my $stepParameters = FlowPDF::StepParameters->new({
         parametersList => $parametersList,
-        parameters => $parameters
+        parameters     => $parameters
     });
 
     # During create configuration we have step parameters instead of config values.
@@ -434,7 +434,6 @@ sub getConfigValues {
 
     my $configName = undef;
     my $autoDetectConfig = 1;
-
     # Get config name. Otherwise the function will determine automatically
     # where to get the config and will return it.
     if ($params->{configName}) {
@@ -459,11 +458,12 @@ sub getConfigValues {
         $context->populateDefaultConfigValues($configValues);
         return $configValues;
     }
+
     my $stepParameters = $context->getStepParameters();
     my $po = $context->getPluginObject();
     logTrace("Plugin Object: ", Dumper $po);
     my $configLocations = $po->getConfigLocations();
-    my $configFields    = $po->getConfigFields();
+    my $configFields = $po->getConfigFields();
 
     my $configField = undef;
     if ($autoDetectConfig) {
@@ -473,6 +473,7 @@ sub getConfigValues {
                 last;
             }
         }
+
         if ($autoDetectConfig && !$configField && $context->getHasConfigField()) {
             FlowPDF::Exception::EntityDoesNotExist->new(
                 "No config field detected in current step parameters"
@@ -514,6 +515,7 @@ sub getConfigValues {
             }
         }
     }
+
     # TODO: Improve this error message.
     # This exception is being thrown in 1 of 2 scenarios:
     #   1. When current step has config field and config does not exist.
@@ -523,6 +525,7 @@ sub getConfigValues {
             configName => $stepParameters->getParameter($configField)->getValue()
         })->throw();
     }
+
     my $keys = [];
     my $configValuesHash = {};
     $context->populateDefaultConfigValues($configHash);
@@ -534,7 +537,7 @@ sub getConfigValues {
         # TODO: Refactor this a bit, move my $value to this line
         if (!ref $tempRow) {
             my $value = FlowPDF::Parameter->new({
-                name => $k,
+                name  => $k,
                 value => $configHash->{$k}
             });
             $configValuesHash->{$k} = $value;
@@ -544,8 +547,8 @@ sub getConfigValues {
                 credentialName => $k,
                 # TODO: Change it to something more reliable later.
                 credentialType => 'default',
-                userName => $configHash->{$k}->{userName},
-                secretValue => $configHash->{$k}->{password},
+                userName       => $configHash->{$k}->{userName},
+                secretValue    => $configHash->{$k}->{password},
             });
             $configValuesHash->{$k} = $value;
         }
@@ -553,7 +556,7 @@ sub getConfigValues {
 
     my $retval = FlowPDF::Config->new({
         parametersList => $keys,
-        parameters => $configValuesHash
+        parameters     => $configValuesHash
     });
 
     # We're caching config values if and only if
@@ -561,6 +564,7 @@ sub getConfigValues {
     if ($autoDetectConfig) {
         $context->setCurrentStepConfigValues($retval);
     }
+
     return $retval;
 }
 
@@ -580,14 +584,14 @@ sub retrieveConfigByNameAndLocation {
     my $config_fields = $po->getConfigFields();
     my $config_property_sheet = sprintf("/projects/%s/%s/%s", $plugin_project_name, $configLocation, $configName);
     fwLogDebug("Config property sheet: $config_property_sheet");
-    my $property_sheet_id = eval { $self->getEc->getProperty($config_property_sheet)->findvalue('//propertySheetId')->string_value };
+    my $property_sheet_id = eval {$self->getEc->getProperty($config_property_sheet)->findvalue('//propertySheetId')->string_value};
     if ($@) {
         return undef;
     }
 
-    my $properties = $self->getEc->getProperties({propertySheetId => $property_sheet_id});
+    my $properties = $self->getEc->getProperties({ propertySheetId => $property_sheet_id });
     my $retval = {};
-    for my $node ( $properties->findnodes('//property')) {
+    for my $node ($properties->findnodes('//property')) {
         my $value = $node->findvalue('value')->string_value;
         my $name = $node->findvalue('propertyName')->string_value;
         # if ($self->isCredential($node)) {
@@ -616,6 +620,7 @@ sub retrieveConfigByNameAndLocation {
                 fwLogInfo("Value of credential field is starts from /. Using external credentials logic...");
                 $credentialName = $value;
             }
+
             my $credentials = $self->getEc->getFullCredential($credentialName);
             my $user_name = $credentials->findvalue('//userName')->string_value;
             my $password = $credentials->findvalue('//password')->string_value;
@@ -633,7 +638,6 @@ sub retrieveConfigByNameAndLocation {
             }
             $retval->{$name} = $value;
         }
-
     }
 
     fwLogDebug("Retval", Dumper $retval);
@@ -782,8 +786,8 @@ sub isParameterRequired {
         FlowPDF::Helpers::bailOut("Parameter name is mandatory for isParameterRequired method");
     }
     my $procedureName = $self->getProcedureName();
-    my $projectName   = $self->getPluginObject()->getPluginProjectName();
-    my $ec            = $self->getEc();
+    my $projectName = $self->getPluginObject()->getPluginProjectName();
+    my $ec = $self->getEc();
 
     my $formalParameter = $ec->getFormalParameter({
         projectName         => $projectName,
@@ -803,12 +807,11 @@ sub readActualParameter {
     my $retval;
     my $xpath;
 
-
     my @subs = ();
     push @subs, sub {
         my $jobId = $ec->getProperty('/myJob/id')->findvalue('//value')->string_value;
         my $xpath = $ec->getActualParameter({
-            jobId => $jobId,
+            jobId               => $jobId,
             actualParameterName => $param
         });
         return $xpath;
@@ -817,7 +820,7 @@ sub readActualParameter {
     push @subs, sub {
         my $jobStepId = $ec->getProperty('/myJobStep/id')->findvalue('//value')->string_value;
         my $xpath = $ec->getActualParameter({
-            jobStepId => $jobStepId,
+            jobStepId           => $jobStepId,
             actualParameterName => $param,
         });
         return $xpath;
@@ -826,34 +829,32 @@ sub readActualParameter {
     push @subs, sub {
         my $jobStepId = $ec->getProperty('/myJobStep/parent/id')->findvalue('//value')->string_value;
         my $xpath = $ec->getActualParameter({
-            jobStepId => $jobStepId,
+            jobStepId           => $jobStepId,
             actualParameterName => $param,
         });
         return $xpath;
     };
-
 
     push @subs, sub {
         my $jobStepId = $ec->getProperty('/myJobStep/parent/parent/id')->findvalue('//value')->string_value;
         my $xpath = $ec->getActualParameter({
-            jobStepId => $jobStepId,
+            jobStepId           => $jobStepId,
             actualParameterName => $param,
         });
         return $xpath;
     };
 
-
     for my $sub (@subs) {
-        my $xpath = eval { $sub->() };
+        my $xpath = eval {$sub->()};
         if (!$@ && $xpath && $xpath->exists('//actualParameterName')) {
             my $val = $xpath->findvalue('//value')->string_value;
-            if ($self->isParameterRequired($param)) {
-                if (!defined $val || $val eq '') {
-                    my $procedureName = $self->getProcedureName();
-                    FlowPDF::Helpers::bailOut "Parameter '$param' of procedure '$procedureName' is marked as required, but it does not have a value. Aborting with fatal error.";
-                }
-            }
-            return $val;
+            # if ($self->isParameterRequired($param)) {
+            #     if (!defined $val || $val eq '') {
+            #         my $procedureName = $self->getProcedureName();
+            #         FlowPDF::Helpers::bailOut "Parameter '$param' of procedure '$procedureName' is marked as required, but it does not have a value. Aborting with fatal error.";
+            #     }
+            # }
+            return "" . $val;
         }
 
     }
@@ -887,7 +888,7 @@ sub getCurrentStepParametersAsHashref {
     my $procedure_name = $self->getEc()->getProperty('/myProcedure/name')->findvalue('//value')->string_value;
     my $po = $self->getPluginObject();
     my $xpath = $self->getEc()->getFormalParameters({
-        projectName => sprintf('%s-%s', $po->getPluginName(), $po->getPluginVersion()),
+        projectName   => sprintf('%s-%s', $po->getPluginName(), $po->getPluginVersion()),
         procedureName => $procedure_name
     });
 
@@ -904,14 +905,15 @@ sub getCurrentStepParametersAsHashref {
             try {
                 $cred = $self->readCredential({
                     credentialName => $value,
-                    parameterName => $name
+                    parameterName  => $name
                 });
                 # $cred = $self->getEc()->getFullCredential($value);
                 # my $error_code = $cred->findvalue('//error/code')->string_value();
                 # if ($error_code && $self->isParameterRequired($name)) {
                 #     FlowPDF::Exception::RuntimeException->new("Can't get credential $name: $error_code")->throw();
                 # }
-            } catch {
+            }
+            catch {
                 my ($e) = @_;
                 if ($self->isParameterRequired($name)) {
                     if (ref $e =~ m/^FlowPDF::Exception/s) {
@@ -924,7 +926,7 @@ sub getCurrentStepParametersAsHashref {
                 logDebug("Can't get optional credential $name: ", $e);
             };
 
-            if (!$cred){
+            if (!$cred) {
                 next;
             }
 
@@ -1110,7 +1112,7 @@ sub isCheckConnectionInCreateConfigurationContext {
 
     my $procedureName = $self->getProcedureName();
     my $stepName = $self->getStepName();
-    if ($stepName eq 'checkConnection' && ($procedureName eq 'CreateConfiguration' || $procedureName eq 'TestConfiguration') ) {
+    if ($stepName eq 'checkConnection' && ($procedureName eq 'CreateConfiguration' || $procedureName eq 'TestConfiguration')) {
         return 1;
     }
     return 0;
@@ -1171,7 +1173,7 @@ sub getCredentialFromConfig {
     elsif ($name =~ m/(.*?_credential)$/m) {
         $whatToGet = $configName . '_' . $1;
     }
-    return $self->readCredential({credentialName => $whatToGet});
+    return $self->readCredential({ credentialName => $whatToGet });
 }
 
 # private
@@ -1229,7 +1231,7 @@ sub _readPluginConfiguration {
     my $cfg;
     eval {
         $cfg = $self->getEc()->getPluginConfiguration({
-            projectName => $configProjectName,
+            projectName             => $configProjectName,
             pluginConfigurationName => $cfgName
         });
         1
@@ -1245,7 +1247,7 @@ sub _readPluginConfiguration {
 
     # todo procedure does not exist
     my $formalParameters = $self->getEc()->getFormalParameters({
-        projectName => $pluginProjectName,
+        projectName   => $pluginProjectName,
         procedureName => 'ConfigurationParametersHolder'
     });
 
@@ -1254,7 +1256,7 @@ sub _readPluginConfiguration {
         my $name = $f->findvalue('parameterName')->string_value();
         my $value = $f->findvalue('parameterValue')->string_value();
         if ($value =~ /\$\[/) {
-            $value = $self->getEc()->expandString({value => $value, jobId => $ENV{COMMANDER_JOBID}})->findvalue('//value')->string_value();
+            $value = $self->getEc()->expandString({ value => $value, jobId => $ENV{COMMANDER_JOBID} })->findvalue('//value')->string_value();
         }
         $fields->{$name} = $value;
     }
@@ -1273,7 +1275,7 @@ sub _readPluginConfiguration {
 
         if ($type eq 'credential') {
             my $path = $credentials->{$name};
-            unless($path) {
+            unless ($path) {
                 if ($required eq '1' || $required eq 'true') {
                     FlowPDF::Exception::UnexpectedEmptyValue->new("Credential $name is required but not provided by the configuration")->throw();
                 }
@@ -1287,7 +1289,6 @@ sub _readPluginConfiguration {
                 password => $cred->findvalue('//password')->string_value()
             };
 
-
             if ($fields->{$name}->{password}) {
                 FlowPDF::Log->setMaskPatterns($fields->{$name}->{password});
             }
@@ -1295,7 +1296,7 @@ sub _readPluginConfiguration {
 
         $fields->{$name} ||= '';
         if ($required eq '1' || $required eq 'true') {
-            unless($fields->{$name}) {
+            unless ($fields->{$name}) {
                 FlowPDF::Exception::UnexpectedEmptyValue->new("Parameter $name is required but not provided by the configuration")->throw();
             }
         }
