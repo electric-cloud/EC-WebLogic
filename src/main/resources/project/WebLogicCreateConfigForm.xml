@@ -77,6 +77,7 @@ limitations under the License.
         <value></value>
         <required>0</required>
         <documentation>Username and password to connect to WebLogic server.</documentation>
+        <supportsCredentialReference>true</supportsCredentialReference>
     </formElement>
 
     <formElement>

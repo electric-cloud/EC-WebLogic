@@ -42,6 +42,7 @@ import com.electriccloud.commander.gwt.client.requests.CgiRequestProxy;
 import com.electriccloud.commander.client.requests.RunProcedureRequest;
 import com.electriccloud.commander.client.responses.DefaultRunProcedureResponseCallback;
 import com.electriccloud.commander.client.responses.RunProcedureResponse;
+import com.electriccloud.commander.client.util.StringUtil;
 import com.electriccloud.commander.gwt.client.ui.CredentialEditor;
 import com.electriccloud.commander.gwt.client.ui.FormBuilder;
 import com.electriccloud.commander.gwt.client.ui.FormTable;
@@ -121,8 +122,26 @@ public class CreateConfiguration
             if (credentialParams.contains(paramName)) {
                 CredentialEditor credential = fb.getCredential(paramName);
 
-                request.addCredentialParameter(paramName,
-                    credential.getUsername(), credential.getPassword());
+                String                           username                         =
+                        credential.getUsername();
+                String                           password                         =
+                        credential.getPassword();
+
+                String credentialReference = credential.getCredentialReference();
+
+                if (!StringUtil.isEmpty(credentialReference)) {
+
+                    request.addCredentialReferenceParameter(
+                            paramName,
+                            credentialReference);
+                    request.addActualParameter(paramName,
+                            paramName);
+                }
+                else {
+                    request.addCredentialParameter(paramName, username,
+                            password);
+                }
+
             }
             else {
                 request.addActualParameter(paramName, params.get(paramName));

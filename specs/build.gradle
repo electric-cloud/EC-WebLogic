@@ -13,8 +13,8 @@ sourceCompatibility = 1.8
 defaultTasks 'test'
 
 repositories {
-    // jcenter()
     mavenCentral()
+    mavenLocal()
     maven {
         url 'https://nexus-internal.cloudbees.com/content/repositories/snapshots'
         credentials {
@@ -36,7 +36,6 @@ repositories {
             password = nexusPassword
         }
     }
-
 }
 
 dependencies {

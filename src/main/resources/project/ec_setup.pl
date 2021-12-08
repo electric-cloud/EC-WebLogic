@@ -1,5 +1,5 @@
 #
-#  Copyright 2015 Electric Cloud, Inc.
+#  Copyright 2021 Electric Cloud, Inc.
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -14,11 +14,33 @@
 #  limitations under the License.
 #
 
-no warnings qw/redefine/;
+use strict;
+use warnings;
+no warnings 'redefine';
+
 use XML::Simple;
-
 use Data::Dumper;
+use ElectricCommander::Util;
 
+use subs qw(debug);
+use Time::HiRes qw(time gettimeofday tv_interval);
+
+my @logs = ();
+
+sub debug($) {
+    my ($message) = @_;
+    push @logs, scalar time . ": " . $message;
+
+    if ($ENV{EC_SETUP_DEBUG}) {
+        print scalar time . ": $message\n";
+    }
+}
+
+# External Credential Manageent Update:
+# We're retrieving the steps with attached creds from property sheet
+use JSON;
+my $stepsWithCredentials = getStepsWithCredentials();
+# End of External Credential Management Update
 
 my $restartFlagName = 'WebLogicServerRestartRequired';
 
@@ -41,11 +63,10 @@ my %checkServerStatus = (
     category    => "Application Server"
 );
 my %deployApp = (
-    label     => "WebLogic - Deploy Application",
-    procedure => "DeployApp",
-    description =>
-      "Deploys or redeploys an application or module using the weblogic",
-    category => "Application Server"
+    label       => "WebLogic - Deploy Application",
+    procedure   => "DeployApp",
+    description => "Deploys or redeploys an application or module using the weblogic",
+    category    => "Application Server"
 );
 my %runDeployer = (
     label       => "WebLogic - Run Deployer",
@@ -54,11 +75,10 @@ my %runDeployer = (
     category    => "Application Server"
 );
 my %undeployApp = (
-    label     => "WebLogic - Undeploy Application",
-    procedure => "UndeployApp",
-    description =>
-      "Stops the deployment unit and removes staged files from target servers",
-    category => "Application Server"
+    label       => "WebLogic - Undeploy Application",
+    procedure   => "UndeployApp",
+    description => "Stops the deployment unit and removes staged files from target servers",
+    category    => "Application Server"
 );
 my %runWLST = (
     label       => "WebLogic - Run WLST",
@@ -352,182 +372,127 @@ my %deleteJMSServer = (
     category    => "Application Server"
 );
 
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/EC-WebLogic - Start App");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/EC-WebLogic - Stop App");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/EC-WebLogic - Check Server Status");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/EC-WebLogic - Deploy App");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/EC-WebLogic - Run Deployer");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/EC-WebLogic - Undeploy App");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/EC-WebLogic - Run WLST");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/EC-WebLogic - Start Admin Server");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/EC-WebLogic - Stop Admin Server");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/EC-WebLogic - Start Managed Server");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/EC-WebLogic - Stop Managed Server");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/EC-WebLogic - Check Page Status");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/EC-WebLogic - Start Node Manager");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/EC-WebLogic - Stop Node Manager");
 
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/EC-WebLogic - Start App");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/EC-WebLogic - Stop App");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/EC-WebLogic - Check Server Status");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/EC-WebLogic - Deploy App");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/EC-WebLogic - Run Deployer");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/EC-WebLogic - Undeploy App");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/EC-WebLogic - Run WLST");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/EC-WebLogic - Start Admin Server");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/EC-WebLogic - Stop Admin Server");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/EC-WebLogic - Start Managed Server");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/EC-WebLogic - Stop Managed Server");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/EC-WebLogic - Check Page Status");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/EC-WebLogic - Start Node Manager");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/EC-WebLogic - Stop Node Manager");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Start App");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Stop App");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Check Server Status");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Deploy App");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Run Deployer");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Undeploy App");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Run WLST");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Start Admin Server");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Stop Admin Server");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Start Managed Server");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Stop Managed Server");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Check Page Status");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Start Node Manager");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Stop Node Manager");
 
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Start App");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Stop App");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Check Server Status");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Deploy App");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Run Deployer");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Undeploy App");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Run WLST");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Start Admin Server");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Stop Admin Server");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Start Managed Server");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Stop Managed Server");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Check Page Status");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Start Node Manager");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Stop Node Manager");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Start Application");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Stop Application");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Deploy Application");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Undeploy Application");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Create Datasource");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Delete Datasource");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Create Data Source");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Delete Data Source");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Suspend Server");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Resume Server");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Start Cluster");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Stop Cluster");
 
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Start Application");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Stop Application");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Deploy Application");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Undeploy Application");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Create Datasource");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Delete Datasource");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Create Data Source");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Delete Data Source");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Suspend Server");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Resume Server");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Start Cluster");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Stop Cluster");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Update Application");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Update Application (DEPRECATED)");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Update Application Config");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Check Cluster Status");
 
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Update Application");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Update Application (DEPRECATED)");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Update Application Config");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Check Cluster Status");
-
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Create Or JMS Resource");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Create Or JMS Resource");
 
 # $batch->deleteProperty(
 #     "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update Datasource");
 
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update Connection Factory");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Delete Connection Factory");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update JMS Queue");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Delete JMS Queue");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update JMS Topic");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Delete JMS Topic");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update JMS Module");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Delete JMS Module");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update JMS Module Subdeployment");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Delete JMS Module Subdeployment");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Create Or Update JMS Server");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Delete JMS Server");
-$batch->deleteProperty(
-    "/server/ec_customEditors/pickerStep/WebLogic - Create or Update Datasource");
-
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Create Or Update Connection Factory");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Delete Connection Factory");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Create Or Update JMS Queue");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Delete JMS Queue");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Create Or Update JMS Topic");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Delete JMS Topic");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Create Or Update JMS Module");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Delete JMS Module");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Create Or Update JMS Module Subdeployment");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Delete JMS Module Subdeployment");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Create Or Update JMS Server");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Delete JMS Server");
+$batch->deleteProperty("/server/ec_customEditors/pickerStep/WebLogic - Create or Update Datasource");
 
 @::createStepPickerSteps = (
-    \%startApp,                    \%stopApp,
-    \%checkServerStatus,           \%deployApp,
-    \%runDeployer,                 \%undeployApp,
-    \%runWLST,                     \%startAdminServer,
-    \%stopAdminServer,             \%startManagedServer,
-    \%stopManagedServer,           \%checkPageStatus,
-    \%startNodeManager,            \%stopNodeManager,
-    \%createDatasource,            \%deleteDatasource,
-    \%suspendServer,               \%resumeServer,
-    \%createUser,                  \%createGroup,
-    \%deleteUser,                  \%deleteGroup,
-    \%addUserToGroup,              \%removeUserFromGroup,
-    \%changeUserPassword,          \%unlockUserAccount,
-    \%updateApp,                   \%createDomain,
-    \%createTemplate,              \%createCluster,
-    \%addServerToCluster,          \%configureUserLockoutManager,
-    \%deleteCluster,               \%createManagedServer,
-    \%deleteManagedServer,         \%startCluster,
-    \%stopCluster,                 \%updateAppConfig,
-    \%checkClusterStatus,          \%createOrUpdateConnectionFactory,
-    \%deleteConnectionFactory,     \%createOrUpdateJMSQueue,
-    \%createOrUpdateJMSTopic,      \%deleteJMSTopic,
-    \%createOrUpdateJMSModule,     \%deleteJMSModule,
+    \%startApp,                             \%stopApp,
+    \%checkServerStatus,                    \%deployApp,
+    \%runDeployer,                          \%undeployApp,
+    \%runWLST,                              \%startAdminServer,
+    \%stopAdminServer,                      \%startManagedServer,
+    \%stopManagedServer,                    \%checkPageStatus,
+    \%startNodeManager,                     \%stopNodeManager,
+    \%createDatasource,                     \%deleteDatasource,
+    \%suspendServer,                        \%resumeServer,
+    \%createUser,                           \%createGroup,
+    \%deleteUser,                           \%deleteGroup,
+    \%addUserToGroup,                       \%removeUserFromGroup,
+    \%changeUserPassword,                   \%unlockUserAccount,
+    \%updateApp,                            \%createDomain,
+    \%createTemplate,                       \%createCluster,
+    \%addServerToCluster,                   \%configureUserLockoutManager,
+    \%deleteCluster,                        \%createManagedServer,
+    \%deleteManagedServer,                  \%startCluster,
+    \%stopCluster,                          \%updateAppConfig,
+    \%checkClusterStatus,                   \%createOrUpdateConnectionFactory,
+    \%deleteConnectionFactory,              \%createOrUpdateJMSQueue,
+    \%createOrUpdateJMSTopic,               \%deleteJMSTopic,
+    \%createOrUpdateJMSModule,              \%deleteJMSModule,
     \%createOrUpdateJMSModuleSubdeployment, \%deleteJMSModuleSubdeployment,
     \%createOrUpdateJMSServer, \%deleteJMSServer, \%deleteJMSQueue,
     \%createOrUpdateDatasource
 );
 
-if ( $upgradeAction eq "upgrade" ) {
+if ($upgradeAction eq 'upgrade') {
+    migrateConfigurations($otherPluginName);
+    migrateProperties($otherPluginName);
+    debug "Migrated properties";
+    reattachExternalCredentials($otherPluginName);
+}
+
+# Disabling this branch of logic temporary
+if (0 && ($upgradeAction eq "upgrade")) {
     patch_configs("/plugins/$otherPluginName/project/weblogic_cfgs");
-    my $query = $commander->newBatch();
-    my $newcfg =
-      $query->getProperty("/plugins/$pluginName/project/weblogic_cfgs");
-    my $oldcfgs =
-      $query->getProperty("/plugins/$otherPluginName/project/weblogic_cfgs");
-    my $creds = $query->getCredentials("\$[/plugins/$otherPluginName]");
+    my $query   = $commander->newBatch();
+    my $newcfg  = $query->getProperty("/plugins/$pluginName/project/weblogic_cfgs");
+    my $oldcfgs = $query->getProperty("/plugins/$otherPluginName/project/weblogic_cfgs");
+    my $creds   = $query->getCredentials("\$[/plugins/$otherPluginName]");
 
     local $self->{abortOnError} = 0;
     $query->submit();
 
     # if new plugin does not already have cfgs
-    if ( $query->findvalue( $newcfg, "code" ) eq "NoSuchProperty" ) {
+    if ($query->findvalue($newcfg, "code") eq "NoSuchProperty") {
 
         # if old cfg has some cfgs to copy
-        if ( $query->findvalue( $oldcfgs, "code" ) ne "NoSuchProperty" ) {
-            $batch->clone(
-                {
-                    path => "/plugins/$otherPluginName/project/weblogic_cfgs",
+        if ($query->findvalue($oldcfgs, "code") ne "NoSuchProperty") {
+            $batch->clone({
+                    path      => "/plugins/$otherPluginName/project/weblogic_cfgs",
                     cloneName => "/plugins/$pluginName/project/weblogic_cfgs"
                 }
             );
@@ -542,16 +507,13 @@ if ( $upgradeAction eq "upgrade" ) {
             my $cred = $_->string_value;
 
             # Clone the credential
-            $batch->clone(
-                {
-                    path =>
-                      "/plugins/$otherPluginName/project/credentials/$cred",
-                    cloneName =>
-                      "/plugins/$pluginName/project/credentials/$cred"
+            $batch->clone({
+                    path      => "/plugins/$otherPluginName/project/credentials/$cred",
+                    cloneName => "/plugins/$pluginName/project/credentials/$cred"
                 }
             );
 
-       # Make sure the credential has an ACL entry for the new project principal
+            # Make sure the credential has an ACL entry for the new project principal
             my $xpath = $commander->getAclEntry(
                 "user",
                 "project: $pluginName",
@@ -560,7 +522,7 @@ if ( $upgradeAction eq "upgrade" ) {
                     credentialName => $cred
                 }
             );
-            if ( $xpath->findvalue("//code") eq "NoSuchAclEntry" ) {
+            if ($xpath->findvalue("//code") eq "NoSuchAclEntry") {
                 $batch->deleteAclEntry(
                     "user",
                     "project: $otherPluginName",
@@ -581,466 +543,23 @@ if ( $upgradeAction eq "upgrade" ) {
                         changePermissionsPrivilege => 'allow'
                     }
                 );
+            } ## end if ($xpath->findvalue(...))
+
+            for my $step (@$stepsWithCredentials) {
+                # Attach the credential to the appropriate steps
+                $batch->attachCredential(
+                    "\$[/plugins/$pluginName/project]",
+                    $cred, {
+                        procedureName => $step->{procedureName},
+                        stepName      => $step->{stepName}
+                    }
+                );
             }
+        } ## end for (@nodes)
+    } ## end if ($nodes)
 
-            # Attach the credential to the appropriate steps
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'StartApp',
-                    stepName      => 'StartApp'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'StopApp',
-                    stepName      => 'StopApp'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CheckServerStatus',
-                    stepName      => 'CheckServerStatus'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'DeployApp',
-                    stepName      => 'DeployApp'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'RunDeployer',
-                    stepName      => 'RunJob'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'UndeployApp',
-                    stepName      => 'UndeployApp'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'RunWLST',
-                    stepName      => 'RunWLST'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'StartAdminServer',
-                    stepName      => 'StartAdminServer'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'StopAdminServer',
-                    stepName      => 'StopAdminServer'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'StartManagedServer',
-                    stepName      => 'StartInstance'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'StopManagedServer',
-                    stepName      => 'StopInstance'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CheckPageStatus',
-                    stepName      => 'CheckPageStatus'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'StartNodeManager',
-                    stepName      => 'StartNodeManager'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'StopNodeManager',
-                    stepName      => 'StopNodeManager'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateDatasource',
-                    stepName      => 'CreateDatasource'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'DeleteDatasource',
-                    stepName      => 'DeleteDatasource'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'SuspendServer',
-                    stepName      => 'SuspendServer'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'ResumeServer',
-                    stepName      => 'ResumeServer'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateUser',
-                    stepName      => 'CreateUser'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateGroup',
-                    stepName      => 'CreateGroup'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'DeleteUser',
-                    stepName      => 'DeleteUser'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'DeleteGroup',
-                    stepName      => 'DeleteGroup'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'AddUserToGroup',
-                    stepName      => 'AddUserToGroup'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'RemoveUserFromGroup',
-                    stepName      => 'RemoveUserFromGroup'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'ChangeUserPassword',
-                    stepName      => 'ChangeUserPassword'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'UnlockUserAccount',
-                    stepName      => 'UnlockUserAccount'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'UpdateApp',
-                    stepName      => 'UpdateApp'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateDomain',
-                    stepName      => 'CreateDomain'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateCluster',
-                    stepName      => 'CreateCluster'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'DeleteCluster',
-                    stepName      => 'DeleteCluster'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateManagedServer',
-                    stepName      => 'CreateManagedServer'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'DeleteManagedServer',
-                    stepName      => 'DeleteManagedServer'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'AddServerToCluster',
-                    stepName      => 'AddServerToCluster'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'ConfigureUserLockoutManager',
-                    stepName      => 'ConfigureUserLockoutManager'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'StartCluster',
-                    stepName      => 'StartCluster'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'StopCluster',
-                    stepName      => 'StopCluster'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'UpdateAppConfig',
-                    stepName      => 'UpdateAppConfig'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CheckClusterStatus',
-                    stepName      => 'CheckClusterStatus'
-                }
-            );
-
-            # $batch->attachCredential(
-            #     "\$[/plugins/$pluginName/project]",
-            #     $cred,
-            #     {
-            #         procedureName => 'CreateOrUpdateDatasource',
-            #         stepName      => 'CreateOrUpdateDatasource'
-            #     }
-            # );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateOrUpdateConnectionFactory',
-                    stepName      => 'CreateOrUpdateConnectionFactory'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'DeleteConnectionFactory',
-                    stepName      => 'DeleteConnectionFactory'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateOrUpdateJMSQueue',
-                    stepName      => 'CreateOrUpdateJMSQueue'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'DeleteJMSQueue',
-                    stepName      => 'DeleteJMSQueue'
-                }
-            );
-
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateOrUpdateJMSTopic',
-                    stepName      => 'CreateOrUpdateJMSTopic'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'DeleteJMSTopic',
-                    stepName      => 'DeleteJMSTopic'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateOrUpdateJMSModule',
-                    stepName      => 'CreateOrUpdateJMSModule'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'DeleteJMSModule',
-                    stepName      => 'DeleteJMSModule'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateOrUpdateJMSModuleSubdeployment',
-                    stepName      => 'CreateOrUpdateJMSModuleSubdeployment'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'DeleteJMSModuleSubdeployment',
-                    stepName      => 'DeleteJMSModuleSubdeployment'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateOrUpdateJMSServer',
-                    stepName      => 'CreateOrUpdateJMSServer'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'DeleteJMSServer',
-                    stepName      => 'DeleteJMSServer'
-                }
-            );
-            $batch->attachCredential(
-                "\$[/plugins/$pluginName/project]",
-                $cred,
-                {
-                    procedureName => 'CreateOrUpdateDatasource',
-                    stepName      => 'CreateOrUpdateDatasource'
-                }
-            );
-        }
-    }
-}
+    reattachExternalCredentials($otherPluginName);
+} ## end if (0 && ($upgradeAction...))
 
 sub patch_configs {
     my ($config_path) = @_;
@@ -1055,14 +574,14 @@ sub patch_configs {
     }
     my $cfg_list = undef;
     eval {
-        my $t = $commander->getProperties( { propertySheetId => $configs } );
-        my $cfg_data = XMLin( $t->{_xml} );
+        my $t        = $commander->getProperties({propertySheetId => $configs});
+        my $cfg_data = XMLin($t->{_xml});
 
         $cfg_list = $cfg_data->{response}->{propertySheet}->{property};
-        if ( ref $cfg_list eq 'HASH' ) {
+        if (ref $cfg_list eq 'HASH') {
             $cfg_list = [$cfg_list];
         }
-        if ( ref $cfg_list ne 'ARRAY' ) {
+        if (ref $cfg_list ne 'ARRAY') {
             $cfg_list = [];
         }
     };
@@ -1071,18 +590,13 @@ sub patch_configs {
         my $debug_level = undef;
 
         eval {
-            my $prop =
-              $commander->getProperty(
-                $config_path . '/' . $c->{propertyName} );
+            my $prop = $commander->getProperty($config_path . '/' . $c->{propertyName});
             eval {
-                my $sheet = $commander->getProperties(
-                    { propertySheetId => $c->{propertySheetId} } );
-                $sheet = XMLin( $sheet->{_xml} );
-                for
-                  my $p ( @{ $sheet->{response}->{propertySheet}->{property} } )
-                {
-                    if ( $p->{propertyName} eq 'debug_level' ) {
-                        if ( !ref $p->{value} && $p->{value} =~ m/^\d+$/s ) {
+                my $sheet = $commander->getProperties({propertySheetId => $c->{propertySheetId}});
+                $sheet = XMLin($sheet->{_xml});
+                for my $p (@{$sheet->{response}->{propertySheet}->{property}}) {
+                    if ($p->{propertyName} eq 'debug_level') {
+                        if (!ref $p->{value} && $p->{value} =~ m/^\d+$/s) {
                             $debug_level = $p->{value};
                         }
                     }
@@ -1094,13 +608,11 @@ sub patch_configs {
         };
         defined $debug_level and next;
         $debug_level = 1;
-        $commander->setProperty( $config_path . '/'
-              . $c->{propertyName}
-              . '/debug_level' => $debug_level );
+        $commander->setProperty($config_path . '/' . $c->{propertyName} . '/debug_level' => $debug_level);
 
-    }
+    } ## end for my $c (@$cfg_list)
     return 1;
-}
+} ## end sub patch_configs
 
 my @proceduresWithPossibleRestart = qw(
     CreateOrUpdateDatasource
@@ -1119,13 +631,11 @@ my @proceduresWithPossibleRestart = qw(
     DeleteJMSModuleSubdeployment
 );
 
-
-my @formalOutputParameters = map {
-    { formalOutputParameterName => $restartFlagName, procedureName => $_ }
-} @proceduresWithPossibleRestart;
+my @formalOutputParameters = map {{formalOutputParameterName => $restartFlagName, procedureName => $_}} @proceduresWithPossibleRestart;
 
 if ($promoteAction eq 'promote') {
 
+    reattachExternalConfigurations($otherPluginName);
     ## Check if agent supports formalOutputParameters API,
     if (exists $ElectricCommander::Arguments{getFormalOutputParameters}) {
         my $versions = $commander->getVersions();
@@ -1147,16 +657,14 @@ sub checkAndSetOutputParameters {
     # Form flatten unique list of procedureNames
     # and get all parameters for defined procedures
     my $query = $commander->newBatch();
-    my %subs = ();
+    my %subs  = ();
     foreach my $param (@parameters) {
         my $proc_name = $param->{procedureName};
         $subs{$proc_name} = 1;
-    };
+    }
 
     foreach (keys %subs) {
-        $subs{$_} = $query->getFormalOutputParameters($otherPluginName, {
-            procedureName => $_
-        });
+        $subs{$_} = $query->getFormalOutputParameters($otherPluginName, {procedureName => $_});
     }
     $query->submit();
 
@@ -1164,18 +672,18 @@ sub checkAndSetOutputParameters {
     foreach my $proc_name (keys %subs) {
         my $response_for_params = $query->find($proc_name);
 
-        push @params_to_create, checkMissingOutputParameters( \@parameters, $response_for_params );
+        push @params_to_create, checkMissingOutputParameters(\@parameters, $response_for_params);
     }
 
     createMissingOutputParameters(@params_to_create);
-}
+} ## end sub checkAndSetOutputParameters
 
 sub checkMissingOutputParameters {
     my ($parameters, $response) = @_;
     my @parameters = @{$parameters};
 
     # This is list of keys to build unique parameter's indices
-    my @key_parts = ('formalOutputParameterName', 'procedureName');
+    my @key_parts        = ('formalOutputParameterName', 'procedureName');
     my @params_to_create = ();
 
     my %parsed_parameters = ();
@@ -1184,10 +692,7 @@ sub checkMissingOutputParameters {
 
         if (@defined_params) {
             for my $param (@defined_params) {
-                my $key = join('_', map {
-                    $param->find($_)->string_value()
-                  } @key_parts
-                );
+                my $key = join('_', map {$param->find($_)->string_value()} @key_parts);
 
                 # Setting a flag parameter that parameter is already created
                 $parsed_parameters{$key} = 1;
@@ -1199,18 +704,18 @@ sub checkMissingOutputParameters {
         my $key = join('_', map {$param->{$_} || ''} @key_parts);
 
         if (!exists $parsed_parameters{$key}) {
-            push(@params_to_create, [
-                $pluginName,
-                $param->{formalOutputParameterName},
-                {
-                    procedureName => $param->{procedureName}
-                }
-            ]);
+            push(
+                @params_to_create, [
+                    $pluginName,
+                    $param->{formalOutputParameterName},
+                    {procedureName => $param->{procedureName}}
+                ]
+            );
         }
     }
 
     return @params_to_create;
-}
+} ## end sub checkMissingOutputParameters
 
 sub createMissingOutputParameters {
     my (@params_to_create) = @_;
@@ -1225,3 +730,203 @@ sub createMissingOutputParameters {
     return 1;
 }
 
+sub reattachExternalCredentials {
+    my ($otherPluginName) = @_;
+
+    my $configName  = getConfigLocation($otherPluginName);
+    my $configsPath = "/plugins/$otherPluginName/project/$configName";
+
+    my $xp = $commander->getProperty($configsPath);
+
+    my $id    = $xp->findvalue('//propertySheetId')->string_value();
+    my $props = $commander->getProperties({propertySheetId => $id});
+    for my $node ($props->findnodes('//property/propertySheetId')) {
+        my $configPropertySheetId = $node->string_value();
+        my $config                = $commander->getProperties({propertySheetId => $configPropertySheetId});
+
+        # iterate through props to get credentials.
+        for my $configRow ($config->findnodes('//property')) {
+            my $propName  = $configRow->findvalue('propertyName')->string_value();
+            my $propValue = $configRow->findvalue('value')->string_value();
+            # print "Name $propName, value: $propValue\n";
+            if ($propName =~ m/credential$/s && $propValue =~ m|^\/|s) {
+                for my $step (@$stepsWithCredentials) {
+                    $batch->attachCredential({
+                            projectName    => $pluginName,
+                            procedureName  => $step->{procedureName},
+                            stepName       => $step->{stepName},
+                            credentialName => $propValue,
+                        }
+                    );
+                    #    debug "Attached credential to $step->{stepName}";
+                }
+                print "Reattaching $propName with val: $propValue\n";
+            }
+        }
+        # exit 0;
+    } ## end for my $node ($props->findnodes...)
+} ## end sub reattachExternalCredentials
+
+sub getConfigLocation {
+    my ($otherPluginName) = @_;
+
+    my $configName = eval {$commander->getProperty("/plugins/$otherPluginName/project/ec_configPropertySheet")->findvalue('//value')->string_value} || 'weblogic_cfgs';
+
+    return $configName;
+}
+
+sub getStepsWithCredentials {
+    my $retval = [];
+    eval {
+        my $pluginName = '@PLUGIN_NAME@';
+        my $stepsJson  = $commander->getProperty("/projects/$pluginName/procedures/CreateConfiguration/ec_stepsWithAttachedCredentials")->findvalue('//value')
+            ->string_value;
+        $retval = decode_json($stepsJson);
+    };
+    return $retval;
+}
+
+sub reattachExternalConfigurations {
+    my ($otherPluginName) = @_;
+
+    my %migrated = ();
+    # For the configurations that exists while the plugin was deleted
+    # The api is new so it requires the upgraded version of the agent
+    eval {
+        my $cfgs = $commander->getPluginConfigurations({
+                pluginKey => '@PLUGIN_KEY@',
+            }
+        );
+        my @creds = ();
+        for my $cfg ($cfgs->findnodes('//pluginConfiguration/credentialMappings/parameterDetail')) {
+            my $value = $cfg->findvalue('parameterValue')->string_value();
+            push @creds, $value;
+        }
+
+        for my $cred (@creds) {
+            next if $migrated{$cred};
+            for my $stepWithCreds (@$stepsWithCredentials) {
+                $commander->attachCredential({
+                        projectName    => "/plugins/$pluginName/project",
+                        credentialName => $cred,
+                        procedureName  => $stepWithCreds->{procedureName},
+                        stepName       => $stepWithCreds->{stepName}
+                    }
+                );
+            }
+            $migrated{$cred} = 1;
+            debug "Migrated $cred";
+        }
+        1;
+    } or do {
+        debug "getPluginConfiguration API is not supported on the promoting agent, falling back";
+        for my $stepWithCreds (@$stepsWithCredentials) {
+            my $step = $commander->getStep({
+                    projectName   => "/plugins/$otherPluginName/project",
+                    procedureName => $stepWithCreds->{procedureName},
+                    stepName      => $stepWithCreds->{stepName},
+                }
+            );
+            for my $attachedCred ($step->findnodes('//attachedCredentials/credentialName')) {
+                my $credName = $attachedCred->string_value();
+                $commander->attachCredential({
+                        projectName    => "/plugins/$pluginName/project",
+                        credentialName => $credName,
+                        procedureName  => $stepWithCreds->{procedureName},
+                        stepName       => $stepWithCreds->{stepName}
+                    }
+                );
+                $migrated{$credName} = 1;
+                debug "Migrated credential $credName to $stepWithCreds->{procedureName}";
+            }
+        } ## end for my $stepWithCreds (...)
+    };
+} ## end sub reattachExternalConfigurations
+
+sub migrateConfigurations {
+    my ($otherPluginName) = @_;
+
+    my $configName = getConfigLocation($otherPluginName);
+    # my $configName = eval {
+    #     $commander->getProperty("/plugins/$otherPluginName/project/ec_configPropertySheet")->findvalue('//value')->string_value
+    # } || 'ec_plugin_cfgs';
+
+    $commander->clone({
+            path      => "/plugins/$otherPluginName/project/$configName",
+            cloneName => "/plugins/$pluginName/project/$configName"
+        }
+    );
+
+    my $xpath = $commander->getCredentials("/plugins/$otherPluginName/project");
+    for my $credential ($xpath->findnodes('//credential')) {
+        my $credName = $credential->findvalue('credentialName')->string_value;
+
+        # If credential name starts with "/", it means that it is a reference.
+        # We do not need to clone it.
+        # if ($credName !~ m|^\/|s) {
+        debug "Migrating old configuration $credName";
+        $batch->clone({
+                path      => "/plugins/$otherPluginName/project/credentials/$credName",
+                cloneName => "/plugins/$pluginName/project/credentials/$credName"
+            }
+        );
+        $batch->deleteAclEntry({
+                principalName  => "project: $otherPluginName",
+                projectName    => $pluginName,
+                credentialName => $credName,
+                principalType  => 'user'
+            }
+        );
+        $batch->deleteAclEntry({
+                principalType  => 'user',
+                principalName  => "project: $pluginName",
+                credentialName => $credName,
+                projectName    => $pluginName,
+            }
+        );
+
+        $batch->createAclEntry({
+                principalType              => 'user',
+                principalName              => "project: $pluginName",
+                projectName                => $pluginName,
+                credentialName             => $credName,
+                objectType                 => 'credential',
+                readPrivilege              => 'allow',
+                modifyPrivilege            => 'allow',
+                executePrivilege           => 'allow',
+                changePermissionsPrivilege => 'allow'
+            }
+        );
+        #}
+
+        for my $step (@$stepsWithCredentials) {
+            $batch->attachCredential({
+                    projectName    => $pluginName,
+                    procedureName  => $step->{procedureName},
+                    stepName       => $step->{stepName},
+                    credentialName => $credName,
+                }
+            );
+            debug "Attached credential to $step->{stepName}";
+        }
+    } ## end for my $credential ($xpath...)
+} ## end sub migrateConfigurations
+
+sub migrateProperties {
+    my ($otherPluginName) = @_;
+    my $clonedPropertySheets
+        = eval {decode_json($commander->getProperty("/plugins/$otherPluginName/project/ec_clonedProperties")->findvalue('//value')->string_value);};
+    unless ($clonedPropertySheets) {
+        debug "No properties to migrate";
+        return;
+    }
+
+    for my $prop (@$clonedPropertySheets) {
+        $commander->clone({
+                path      => "/plugins/$otherPluginName/project/$prop",
+                cloneName => "/plugins/$pluginName/project/$prop"
+            }
+        );
+        debug "Cloned $prop"
+    }
+}
