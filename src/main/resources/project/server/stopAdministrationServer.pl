@@ -14,28 +14,33 @@
 #  limitations under the License.
 #
 
+# preamble.pl
+# $[/myProject/preamble]
 
 # -------------------------------------------------------------------------
 # Includes
 # -------------------------------------------------------------------------
 use ElectricCommander;
-use ElectricCommander::PropDB;
-use warnings;
-use strict;
-$|=1;
+use Data::Dumper;
+
+$| = 1;
 
 # -------------------------------------------------------------------------
 # Constants
 # -------------------------------------------------------------------------
 use constant {
-  SUCCESS => 0,
-  ERROR   => 1,
+    SUCCESS => 0,
+    ERROR   => 1,
 
-  PLUGIN_NAME => 'EC-WebLogic',
-  WIN_IDENTIFIER => 'MSWin32',
-  CREDENTIAL_ID => 'credential',
+    PLUGIN_NAME    => 'EC-WebLogic',
+    WIN_IDENTIFIER => 'MSWin32',
+    CREDENTIAL_ID  => 'credential',
 
 };
+
+my $PROJECT_NAME = '$[/myProject/projectName]';
+my $PLUGIN_NAME  = '@PLUGIN_NAME@';
+my $PLUGIN_KEY   = '@PLUGIN_KEY@';
 
 ########################################################################
 # trim - deletes blank spaces before and after the entered value in
@@ -68,14 +73,12 @@ sub trim($) {
 # Variables
 # -------------------------------------------------------------------------
 
-$::gScriptLocation = trim(q($[scriptlocation]));
+$::gScriptLocation    = trim(q($[scriptlocation]));
 $::gConfigurationName = trim(q($[configname]));
-
 
 # -------------------------------------------------------------------------
 # Main functions
 # -------------------------------------------------------------------------
-
 
 ########################################################################
 # main - contains the whole process to be done by the plugin, it builds
@@ -90,59 +93,69 @@ $::gConfigurationName = trim(q($[configname]));
 ########################################################################
 sub main() {
 
-  # create args array
-  my @args = ();
-  my %props;
+    # create args array
+    my @args = ();
+    my %props;
 
-  my $ec = new ElectricCommander();
-  $ec->abortOnError(0);
+    my $ec = new ElectricCommander();
+    $ec->abortOnError(0);
 
-  my $fixedLocation = $::gScriptLocation;
+    my $wl = EC::WebLogic->new(
+        project_name => $PROJECT_NAME,
+        plugin_name  => $PLUGIN_NAME,
+        plugin_key   => $PLUGIN_KEY
+    );
 
-  push(@args, '"'.$fixedLocation.'"');
+    my $fixedLocation = $::gScriptLocation;
 
-  my $cmdLine = createCommandLine(\@args);
-  $props{'stopAdminServerLine'} = $cmdLine;
-  setProperties(\%props);
+    push(@args, '"' . $fixedLocation . '"');
 
-  my %configuration = getConfiguration($::gConfigurationName);
-  my $user = $configuration{user};
-  my $pass = $configuration{password};
+    my $cmdLine = createCommandLine(\@args);
+    $props{'stopAdminServerLine'} = $cmdLine;
+    setProperties(\%props);
 
-  $cmdLine .= " $user $pass";
+    my $configuration = $wl->get_credentials( $::gConfigurationName );
 
-  #execute command
-  my $content = `$cmdLine`;
+    my $user          = $configuration->{user};
+    my $pass          = $configuration->{password};
 
-  #print log
-  print "$content\n";
+    $cmdLine .= " $user $pass";
 
-  #evaluates if exit was successful to mark it as a success or fail the step
-  if($? == SUCCESS){
+    #execute command
+    my $content = `$cmdLine`;
 
-      if ($content =~ m/failed to be authenticated/) {
-		$ec->setProperty("/myJobStep/outcome", 'error');
-	} else {
-		if ($content =~ m/Destination unreachable/){
-			$ec->setProperty("/myJobStep/outcome", 'error');
-		} else {
-			$ec->setProperty("/myJobStep/outcome", 'success');
-		}
-	}
+    #print log
+    print "$content\n";
 
-      #set any additional error or warning conditions here
-      #there may be cases in which an error occurs and the exit code is 0.
-      #we want to set to correct outcome for the running step
-#        if($content =~ m/WSVR0028I:/){
-#            #license expired warning
-#            $ec->setProperty("/myJobStep/outcome", 'warning');
-#        }
+    #evaluates if exit was successful to mark it as a success or fail the step
+    if ($? == SUCCESS) {
 
-  }else{
-      $ec->setProperty("/myJobStep/outcome", 'error');
-  }
+        if ($content =~ m/failed to be authenticated/) {
+            $ec->setProperty("/myJobStep/outcome", 'error');
+        }
+        else {
+            if ($content =~ m/Destination unreachable/) {
+                $ec->setProperty("/myJobStep/outcome", 'error');
+            }
+            else {
+                $ec->setProperty("/myJobStep/outcome", 'success');
+            }
+        }
 
-}
+        #set any additional error or warning conditions here
+        #there may be cases in which an error occurs and the exit code is 0.
+        #we want to set to correct outcome for the running step
+        #        if($content =~ m/WSVR0028I:/){
+        #            #license expired warning
+        #            $ec->setProperty("/myJobStep/outcome", 'warning');
+        #        }
+
+    } ## end if ($? == SUCCESS)
+    else {
+        $ec->setProperty("/myJobStep/outcome", 'error');
+    }
+
+} ## end sub main
 
 ########################################################################
 # createCommandLine - creates the command line for the invocation
@@ -193,7 +206,7 @@ sub setProperties($) {
     my $ec = new ElectricCommander();
     $ec->abortOnError(0);
 
-    foreach my $key (keys % $propHash) {
+    foreach my $key (keys %$propHash) {
         my $val = $propHash->{$key};
         $ec->setProperty("/myCall/$key", $val);
     }
@@ -211,11 +224,11 @@ sub setProperties($) {
 #   none
 #
 ########################################################################
-sub registerReports($){
+sub registerReports($) {
 
     my ($reportFilename, $reportName) = @_;
 
-    if($reportFilename && $reportFilename ne ''){
+    if ($reportFilename && $reportFilename ne '') {
 
         # get an EC object
         my $ec = new ElectricCommander();
@@ -223,54 +236,14 @@ sub registerReports($){
 
         $ec->setProperty("/myJob/artifactsDirectory", '');
 
-        $ec->setProperty("/myJob/report-urls/" . $reportName,
-           "jobSteps/$[jobStepId]/" . $reportFilename);
+        $ec->setProperty(
+            "/myJob/report-urls/" . $reportName,
+            "jobSteps/$[jobStepId]/" . $reportFilename
+        );
 
     }
 
-}
-
-
-##########################################################################
-# getConfiguration - get the information of the configuration given
-#
-# Arguments:
-#   -configName: name of the configuration to retrieve
-#
-# Returns:
-#   -configToUse: hash containing the configuration information
-#
-#########################################################################
-sub getConfiguration($){
-  my ($configName) = @_;
-
-  # get an EC object
-  my $ec = new ElectricCommander();
-  $ec->abortOnError(0);
-
-  my %configToUse;
-
-  my $proj = "$[/myProject/projectName]";
-  my $pluginConfigs = new ElectricCommander::PropDB($ec,"/projects/$proj/weblogic_cfgs");
-  my %configRow = $pluginConfigs->getRow($configName);
-  # Check if configuration exists
-  unless(keys(%configRow)) {
-      print "Configuration '$configName' doesn't exist.\n";
-      exit ERROR;
-  }
-  # Get user/password out of credential
-  my $xpath = $ec->getFullCredential($configRow{credential});
-  $configToUse{'user'} = $xpath->findvalue("//userName");
-  $configToUse{'password'} = $xpath->findvalue("//password");
-  foreach my $c (keys %configRow) {
-      #getting all values except the credential that was read previously
-      if ($c ne CREDENTIAL_ID) {
-          $configToUse{$c} = $configRow{$c};
-      }
-  }
-  return %configToUse;
-}
-
+} ## end sub registerReports($)
 
 main();
 
