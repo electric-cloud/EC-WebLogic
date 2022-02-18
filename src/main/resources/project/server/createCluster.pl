@@ -35,8 +35,10 @@ sub main {
 #Every additional option should have following format <OPTION_NAME1>=<OPTION_VALUE1>, <OPTION_NAME2>=<OPTION_VALUE2>
 #Options separated by commas
       my $params = $wl->get_params_as_hashref(
-          'wlst_abs_path', 'cluster_name',
-          'configname',    'multicast_address',
+          'wlst_abs_path',
+          'cluster_name',
+          'configname',
+          'multicast_address',
           'multicast_port'
       );
 

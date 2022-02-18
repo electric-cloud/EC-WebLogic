@@ -1023,7 +1023,7 @@
         <formalParameterName>debug_level</formalParameterName>
         <defaultValue/>
         <description>Verbosity level of output. By default, debug level is set to 1. Higher debug level - more debug messages. Maximal debug level is 10.</description>
-        <required>1</required>
+        <required>0</required>
         <type>entry</type>
       </formalParameter>
       <formalParameter>
@@ -1306,7 +1306,7 @@
         <formalParameterName>debug_level</formalParameterName>
         <defaultValue/>
         <description>Verbosity level of output. By default, debug level is set to 1. Higher debug level - more debug messages. Maximal debug level is 10.</description>
-        <required>1</required>
+        <required>0</required>
         <type>entry</type>
       </formalParameter>
       <formalParameter>
@@ -7147,7 +7147,7 @@
         <formalParameterName>cluster_name</formalParameterName>
         <defaultValue/>
         <description>Name of the new cluster in which server is to be added.</description>
-        <required>0</required>
+        <required>1</required>
         <type>entry</type>
       </formalParameter>
       <step>
@@ -10176,7 +10176,7 @@ For JMS Resource the name of the resource should be prefixed by JMS Module Name:
       <formalParameterName>debug_level</formalParameterName>
       <defaultValue/>
       <description>Verbosity level of output. By default, debug level is set to 1. Higher debug level - more debug messages. Maximal debug level is 10.</description>
-      <required>1</required>
+      <required>0</required>
       <type>entry</type>
     </formalParameter>
     <formalParameter>
@@ -10358,7 +10358,7 @@ For JMS Resource the name of the resource should be prefixed by JMS Module Name:
       <formalParameterName>debug_level</formalParameterName>
       <defaultValue/>
       <description>Verbosity level of output. By default, debug level is set to 1. Higher debug level - more debug messages. Maximal debug level is 10.</description>
-      <required>1</required>
+      <required>0</required>
       <type>entry</type>
     </formalParameter>
     <formalParameter>

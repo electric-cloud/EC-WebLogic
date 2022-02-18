@@ -615,6 +615,7 @@ sub patch_configs {
 } ## end sub patch_configs
 
 my @proceduresWithPossibleRestart = qw(
+    CreateCluster
     CreateOrUpdateDatasource
     CreateOrUpdateConnectionFactory
     CreateOrUpdateJMSModuleSubdeployment

@@ -110,7 +110,7 @@ limitations under the License.
         <type>select</type>
         <label>Debug Level:</label>
         <property>debug_level</property>
-        <value>1</value>
+        <value>0</value>
         <documentation>Debug level, higher debug level - more debug messages. Warning: on debug level 10 and more passwords will be revealed in a procedure logs.</documentation>
         <required>0</required>
         <option>
