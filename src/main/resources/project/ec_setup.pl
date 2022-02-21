@@ -623,6 +623,7 @@ my @proceduresWithPossibleRestart = qw(
     CreateOrUpdateJMSQueue
     CreateOrUpdateJMSTopic
     CreateOrUpdateJMSServer
+    DeployApp
     DeleteDatasource
     DeleteConnectionFactory
     DeleteJMSModule
@@ -630,6 +631,7 @@ my @proceduresWithPossibleRestart = qw(
     DeleteJMSTopic
     DeleteJMSQueue
     DeleteJMSModuleSubdeployment
+    UndeployApp
 );
 
 my @formalOutputParameters = map {{formalOutputParameterName => $restartFlagName, procedureName => $_}} @proceduresWithPossibleRestart;
