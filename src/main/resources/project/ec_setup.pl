@@ -614,54 +614,50 @@ sub patch_configs {
 
 my $restartFlagName = 'WebLogicServerRestartRequired';
 
-# The candidates for adding
-# Because they are calling "WL->process_response"
-#
-# AddServerToCluster
-# AddUserToGroup
-# ChangeUserPassword
-# CheckClusterStatus
-# ConfigureUserLockoutManager
-# CreateDataSource
-# CreateDomain
-# CreateGroup
-# CreateManagedServer
-# CreateTemplate
-# CreateUser
-# DeleteCluster
-# DeleteGroup
-# DeleteManagedServer
-# DeleteUser
-# RemoveUserFromGroup
-# ResumeServer
-# StartApp
-# StartCluster
-# StopApp
-# StopCluster
-# StopNodeManager
-# SuspendServer
-# UnlockUserAccount
-# UpdateApp
-# UpdateAppConfig
-
 my @proceduresWithPossibleRestart = qw(
+    AddServerToCluster
+    AddUserToGroup
+    ChangeUserPassword
+    CheckClusterStatus
+    ConfigureUserLockoutManager
     CreateCluster
-    CreateOrUpdateDatasource
+    CreateDataSource
+    CreateDomain
+    CreateGroup
+    CreateManagedServer
     CreateOrUpdateConnectionFactory
-    CreateOrUpdateJMSModuleSubdeployment
+    CreateOrUpdateDatasource
     CreateOrUpdateJMSModule
+    CreateOrUpdateJMSModuleSubdeployment
     CreateOrUpdateJMSQueue
-    CreateOrUpdateJMSTopic
     CreateOrUpdateJMSServer
-    DeleteDatasource
+    CreateOrUpdateJMSTopic
+    CreateTemplate
+    CreateUser
+    DeleteCluster
     DeleteConnectionFactory
+    DeleteDatasource
+    DeleteGroup
     DeleteJMSModule
+    DeleteJMSModuleSubdeployment
+    DeleteJMSQueue
     DeleteJMSServer
     DeleteJMSTopic
-    DeleteJMSQueue
-    DeleteJMSModuleSubdeployment
+    DeleteManagedServer
+    DeleteUser
     DeployApp
+    RemoveUserFromGroup
+    ResumeServer
+    StartApp
+    StartCluster
+    StopApp
+    StopCluster
+    StopNodeManager
+    SuspendServer
     UndeployApp
+    UnlockUserAccount
+    UpdateApp
+    UpdateAppConfig
 );
 
 my @formalOutputParameters = map {{formalOutputParameterName => $restartFlagName, procedureName => $_}} @proceduresWithPossibleRestart;
