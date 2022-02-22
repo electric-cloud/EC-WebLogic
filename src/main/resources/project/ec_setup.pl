@@ -42,8 +42,6 @@ use JSON;
 my $stepsWithCredentials = getStepsWithCredentials();
 # End of External Credential Management Update
 
-my $restartFlagName = 'WebLogicServerRestartRequired';
-
 my %startApp = (
     label       => "WebLogic - Start Application",
     procedure   => "StartApp",
@@ -614,6 +612,38 @@ sub patch_configs {
     return 1;
 } ## end sub patch_configs
 
+my $restartFlagName = 'WebLogicServerRestartRequired';
+
+# The candidates for adding
+# Because they are calling "WL->process_response"
+#
+# AddServerToCluster
+# AddUserToGroup
+# ChangeUserPassword
+# CheckClusterStatus
+# ConfigureUserLockoutManager
+# CreateDataSource
+# CreateDomain
+# CreateGroup
+# CreateManagedServer
+# CreateTemplate
+# CreateUser
+# DeleteCluster
+# DeleteGroup
+# DeleteManagedServer
+# DeleteUser
+# RemoveUserFromGroup
+# ResumeServer
+# StartApp
+# StartCluster
+# StopApp
+# StopCluster
+# StopNodeManager
+# SuspendServer
+# UnlockUserAccount
+# UpdateApp
+# UpdateAppConfig
+
 my @proceduresWithPossibleRestart = qw(
     CreateCluster
     CreateOrUpdateDatasource
@@ -630,6 +660,8 @@ my @proceduresWithPossibleRestart = qw(
     DeleteJMSTopic
     DeleteJMSQueue
     DeleteJMSModuleSubdeployment
+    DeployApp
+    UndeployApp
 );
 
 my @formalOutputParameters = map {{formalOutputParameterName => $restartFlagName, procedureName => $_}} @proceduresWithPossibleRestart;
