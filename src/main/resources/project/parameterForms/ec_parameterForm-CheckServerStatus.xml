@@ -19,7 +19,7 @@
   <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#CheckServerStatus</help>
   <formElement>
     <type>entry</type>
-    <label>Configuration Name</label>
+    <label>Configuration name</label>
     <!-- Improvements for CEV-18687 -->
     <configuration>1</configuration>
     <!-- End of improvements for CEV-18687 -->
@@ -31,7 +31,7 @@
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>Wlst Script Absolute Path</label>
+    <label>WLST script absolute path</label>
     <property>wlstabspath</property>
     <required>1</required>
     <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
@@ -40,14 +40,14 @@
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>Maximum Elapsed Time</label>
+    <label>Maximum elapsed time</label>
     <property>maxelapsedtime</property>
     <documentation>Defines the maximum time in seconds that the job will try to check into the server. Blank implies no wait time (URL only checked one time).</documentation>
     <required>0</required>
   </formElement>
   <formElement>
     <type>select</type>
-    <label>Success Criteria</label>
+    <label>Success criteria</label>
     <property>successcriteria</property>
     <required>1</required>
     <documentation>Indicates the expected correct result to be obtained when running checking the server.</documentation>
@@ -62,7 +62,7 @@
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>Instance Name</label>
+    <label>Instance name</label>
     <property>instancename</property>
     <documentation>Indicates the name of the instance to be checked.</documentation>
     <required>1</required>

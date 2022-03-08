@@ -19,7 +19,7 @@
     <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#Discover</help>
     <formElement>
         <type>entry</type>
-        <label>Resource Name</label>
+        <label>Resource name</label>
         <property>ecp_weblogic_resourceName</property>
         <required>0</required>
         <documentation>Name of the CloudBees CD resource that represents the WebLogic environment that needs to be discovered.</documentation>
@@ -85,28 +85,28 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Environment Project Name</label>
+        <label>Environment Project name</label>
         <property>ecp_weblogic_envProjectName</property>
         <required>0</required>
         <documentation>If specified will create Project for the Environment.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Environment Name</label>
+        <label>Environment name</label>
         <property>ecp_weblogic_envName</property>
         <required>0</required>
         <documentation>If specified, will be used to create CloudBees CD environment.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Application Project Name</label>
+        <label>Application Project name</label>
         <property>ecp_weblogic_appProjName</property>
         <required>0</required>
         <documentation>Project name to create Application based on discovered objects.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Application Name</label>
+        <label>Application name</label>
         <property>ecp_weblogic_appName</property>
         <required>0</required>
         <documentation>Application for placing discovered objects.</documentation>

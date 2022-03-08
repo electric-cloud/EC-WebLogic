@@ -399,7 +399,7 @@
                             <propertySheet>
                                 <property>
                                     <propertyName>label</propertyName>
-                                    <value>Configuration Name</value>
+                                    <value>Configuration name</value>
                                 </property>
                                 <property>
                                     <propertyName>order</propertyName>
@@ -1001,7 +1001,7 @@
       <formalParameter>
         <formalParameterName>config</formalParameterName>
         <defaultValue/>
-        <description>Configuration Name</description>
+        <description>Configuration name</description>
         <required>1</required>
         <type>entry</type>
       </formalParameter>
@@ -1284,7 +1284,7 @@
       <formalParameter>
         <formalParameterName>config</formalParameterName>
         <defaultValue/>
-        <description>Configuration Name</description>
+        <description>Configuration name</description>
         <required>1</required>
         <type>entry</type>
       </formalParameter>

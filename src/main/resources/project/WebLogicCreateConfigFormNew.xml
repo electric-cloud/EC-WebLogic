@@ -87,7 +87,7 @@ limitations under the License.
 
     <formElement>
         <type>entry</type>
-        <label>Test Connection Resource</label>
+        <label>Test connection resource</label>
         <property>test_connection_res</property>
         <value></value>
         <documentation>A resource which is used for the testing connection.</documentation>

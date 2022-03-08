@@ -65,7 +65,7 @@ To create plugin configurations in {CD}, do these steps:
 |===
 |Parameter |Description
 
-|__**Configuration Name**__ | 
+|__**Configuration name**__ | 
 
 |__**WebLogic URL**__ | URL of WebLogic Server (must include protocol, server and port). Two protocols are supported: t3 and t3s, e.g. t3://weblogic:7001.
 
@@ -90,10 +90,10 @@ To create plugin configurations in {CD}, do these steps:
         
 
 
-|Test Connection? | Check if connection should be established during config creation to validate credentials.
+|Test connection? | Check if connection should be established during config creation to validate credentials.
 
 
-|Test Connection Resource | A resource which is used for the testing connection.
+|Test connection resource | A resource which is used for the testing connection.
 
 
 |Debug level | Debug level, higher debug level - more debug messages. Warning: on debug level 10 and more passwords will be revealed in a procedure logs.Verbosity level of output.
@@ -127,10 +127,10 @@ Create a cluster.
 | WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**Cluster Name**__ | Name of the cluster to be created.
+| __**Cluster name**__ | Name of the cluster to be created.
 
 
 | Multicast Address | Multicast IP Address.
@@ -162,7 +162,7 @@ Create a domain
 | WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
 | __**User Credentials**__ | Credentials of the user(Username and password).
@@ -203,10 +203,10 @@ Create a Managed Server.
 | WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**Server Name**__ | Name of the managed server to be created.
+| __**Server name**__ | Name of the managed server to be created.
 
 
 | Listen Address | Server Listen Address.
@@ -238,13 +238,13 @@ Add server to cluster.
 | WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**Server Name**__ | Name of the server which is to be added to cluster.
+| __**Server name**__ | Name of the server which is to be added to cluster.
 
 
-| __**Cluster Name**__ | Name of the cluster in which server is to be added.
+| __**Cluster name**__ | Name of the cluster in which server is to be added.
 
 
 |===
@@ -270,10 +270,10 @@ Delete a cluster.
 | WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**Cluster Name**__ | Name of the cluster to be deleted.
+| __**Cluster name**__ | Name of the cluster to be deleted.
 
 
 |===
@@ -299,10 +299,10 @@ Delete a Managed Server.
 | WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**Server Name**__ | Name of the managed server to be deleted.
+| __**Server name**__ | Name of the managed server to be deleted.
 
 
 |===
@@ -328,16 +328,16 @@ Starts a WebLogic Admin Server
 | __**Script Location**__ | Absolute path of the startWeblogic script, including filename and extension. i.e: '/path/to/startWeblogic.cmd'. (Required)
 
 
-| __**Admin Server Instance Name**__ | Instance name of the Admin Server to start. i.e: 'AdminServer'. (Required)
+| __**Admin Server Instance name**__ | Instance name of the Admin Server to start. i.e: 'AdminServer'. (Required)
 
 
-| __**Config Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Config name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
 | __**WLST script absolute path**__ | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)
 
 
-| Maximum Elapsed Time | Defines the maximum time in seconds that the job will try to check into the server. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).
+| Maximum elapsed time | Defines the maximum time in seconds that the job will try to check into the server. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).
 
 
 |===
@@ -363,10 +363,10 @@ Starts a cluster
 | WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**Cluster Name**__ | 
+| __**Cluster name**__ | 
       Name of the cluster to start. i.e: 'mycluster'.
     
 
@@ -399,10 +399,10 @@ Starts a WebLogic Managed Server
 | __**Script Location**__ | Absolute path of the start server script, including filename and extension. i.e: '/path/to/startManagedServer.cmd'. (Required)
 
 
-| __**Instance Name**__ | Instance name of the Managed Server to start. (Required)
+| __**Instance name**__ | Instance name of the Managed Server to start. (Required)
 
 
-| __**Config Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Config name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
 | __**Admin Server URL**__ | URL from the Admin Server (including protocol and port). (Required)
@@ -411,7 +411,7 @@ Starts a WebLogic Managed Server
 | WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)
 
 
-| Maximum Elapsed Time | Defines the maximum time in seconds that the job will try to check into the server. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).
+| Maximum elapsed time | Defines the maximum time in seconds that the job will try to check into the server. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).
 
 
 |===
@@ -439,7 +439,7 @@ Start the WebLogic Node Manager
     
 
 
-| Maximum Elapsed Time | 
+| Maximum elapsed time | 
       Defines the time in seconds that the job wait to test the status of the node manager. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).
     
 
@@ -467,7 +467,7 @@ Stops a WebLogic Admin Server
 | __**Script Location**__ | Absolute path of the stopWeblogic script, including filename and extension. i.e: '/path/to/stopWeblogic.cmd'. (Required)
 
 
-| __**Config Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Config name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
 |===
@@ -493,12 +493,12 @@ Stops a cluster
 | WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Configuration Name**__ | 
+| __**Configuration name**__ | 
             Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
         
 
 
-| __**Cluster Name**__ | 
+| __**Cluster name**__ | 
             Name of the cluster to stop. i.e: 'mycluster'.
         
 
@@ -541,10 +541,10 @@ Stops a WebLogic Managed Server
 | __**Script Location**__ | Absolute path of the stop server script, including filename and extension. i.e: '/path/to/stopManagedServer.cmd'. (Required)
 
 
-| __**Instance Name**__ | Instance name of the Managed Server to stop. (Required)
+| __**Instance name**__ | Instance name of the Managed Server to stop. (Required)
 
 
-| __**Config Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Config name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
 |===
@@ -567,16 +567,16 @@ Stop the WebLogic Node Manager
 |===
 |Parameter |Description
 
-| __**Config Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Config name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| Host Name | Host name of Node Manager. This argument defaults to localhost.
+| Host name | Host name of Node Manager. This argument defaults to localhost.
 
 
 | Node Manager Port | Port number of Node Manager. This argument defaults to a value that is based on the Node Manager server type, for plain type, defaults to 5556. For rsh type, defaults to 514. For ssh type, defaults to 22. For ssl type, defaults to 5556.
 
 
-| __**Domain Name**__ | Name of the domain that you want to manage. This argument defaults to mydomain.
+| __**Domain name**__ | Name of the domain that you want to manage. This argument defaults to mydomain.
 
 
 | __**Domain Path**__ | Path of the domain directory to which you want to save the Node Manager secret file (nm_password.properties) and SerializedSystemIni.dat file. This argument defaults to the directory in which WLST was started.
@@ -588,7 +588,7 @@ Stop the WebLogic Node Manager
 | __**Node Manage Type**__ | Type of the Node Manager server. This argument defaults to ssl.
 
 
-| Maximum Elapsed Time | Defines the time in seconds that the job wait to test the status of the node manager. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).
+| Maximum elapsed time | Defines the time in seconds that the job wait to test the status of the node manager. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).
 
 
 |===
@@ -617,7 +617,7 @@ Suspends the provided server
 | WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)
 
 
-| __**Server Name**__ | Name of the server to suspend. (Required)
+| __**Server name**__ | Name of the server to suspend. (Required)
 
 
 | Ignore Sessions | Boolean value specifying whether WLST should drop all HTTP sessions immediately or wait for HTTP sessions to complete or time out while suspending. This argument defaults to false, indicating that HTTP sessions must complete or time out.
@@ -658,7 +658,7 @@ Resumes the provided server
 | WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)
 
 
-| __**Server Name**__ | Name of the server to resume. (Required)
+| __**Server name**__ | Name of the server to resume. (Required)
 
 
 | Block | Boolean value specifying whether WLST should block user interaction until the server is resumed. This argument defaults to false, indicating that user interaction is not blocked. In this case, WLST returns control to the user after issuing the command and assigns the task MBean associated with the current task to a variable that you can use to check its status. If you are importing WLST as a Jython module, as described in Importing WLST as a Jython Module, block is always set to true.
@@ -684,15 +684,15 @@ Deploys or redeploys an application or module
 |===
 |Parameter |Description
 
-| __**Configuration Name**__ | 
+| __**Configuration name**__ | 
             Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
         
 
 
-| Wlst Script Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Application Name**__ | Deployment name to assign to a newly-deployed application or standalone module. i.e: 'webapp'.
+| __**Application name**__ | Deployment name to assign to a newly-deployed application or standalone module. i.e: 'webapp'.
 
 
 | __**Is library?**__ | Select this parameter if the application is library.
@@ -748,7 +748,7 @@ Deploys or redeploys an application or module
         
 
 
-| Additional Options | 
+| Additional options | 
             Comma-separated list of deployment options, specified as name-value pairs.
 
 
@@ -848,10 +848,10 @@ Update a configuration of an already deployed app.
 | WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**Application Name**__ | Name of the application which is to be updated.
+| __**Application name**__ | Name of the application which is to be updated.
 
 
 | Application version | Application version to update.
@@ -873,7 +873,7 @@ Update a configuration of an already deployed app.
         
 
 
-| Additional Options | Comma-separated list of deployment options, specified as name-value pairs. For example: block=false,createPlan=true
+| Additional options | Comma-separated list of deployment options, specified as name-value pairs. For example: block=false,createPlan=true
 
 
 |===
@@ -896,13 +896,13 @@ Stops the deployment unit and removes staged files from target servers.
 |===
 |Parameter |Description
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| Wlst Script Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Application Name**__ | Name of the application to undeploy. i.e: 'webapp'.
+| __**Application name**__ | Name of the application to undeploy. i.e: 'webapp'.
 
 
 | Retire Gracefully? (DEPRECATED) | 
@@ -915,7 +915,7 @@ Stops the deployment unit and removes staged files from target servers.
             
  *This parameter is DEPRECATED and will be removed in the next release.* 
 
-| Application Version | 
+| Application version | 
             Specifies a single application version to be undeployed. See Requirements and Restrictions for Production Redeployment for reference.
         
 
@@ -952,16 +952,16 @@ Update an already deployed app. (DEPRECATED)
 | __**WLST script absolute path**__ | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**Application Name**__ | Name of the application which is to be updated.
+| __**Application name**__ | Name of the application which is to be updated.
 
 
 | __**Plan Path**__ | Name of the new deployment plan file. The filename can be absolute or relative to the application directory.
 
 
-| Additional Options | Comma-separated list of deployment options, specified as name-value pairs.
+| Additional options | Comma-separated list of deployment options, specified as name-value pairs.
 
 
 |===
@@ -994,7 +994,7 @@ Runs weblogic.Deployer in a free-mode
     
 
 
-| Configuration Name | 
+| Configuration name | 
       Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
     
 
@@ -1005,7 +1005,7 @@ Runs weblogic.Deployer in a free-mode
 | __**Java Absolute Path**__ | Absolute path of java. i.e: 'java', 'java.exe' or '/path/to/java'.
 
 
-| __**Application Name**__ | 
+| __**Application name**__ | 
       Name of the application to manage. i.e: 'webapp'.
     
 
@@ -1042,15 +1042,15 @@ Starts an application
 | WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**Application Name**__ | 
+| __**Application name**__ | 
       Name of the application to start. i.e: 'webapp'.
     
 
 
-| Application Version | 
+| Application version | 
           Specific application version to be started.
       
 
@@ -1083,20 +1083,20 @@ Stop an application
 | WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Application nameConfiguration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**Application Name**__ | 
+| __**Application name**__ | 
       Name of the application to start. i.e: 'webapp'.
     
 
 
-| Application Version | 
+| Application version | 
         Specific application version to be stopped.
     
 
 
-| Additional Options | 
+| Additional options | 
         Additional options for stopApplication API. (See deploy function for reference).
     
 
@@ -1124,7 +1124,7 @@ This procedure creates a new generic JDBC Data Source or updates an existing one
 | __**Configuration**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**Datasource Name**__ | Unique name of the JDBC generic Data Source to be created.
+| __**Datasource name**__ | Unique name of the JDBC generic Data Source to be created.
 
 
 | __**DataSource Driver Class**__ | The full package name of JDBC driver class used to create the physical database connections in the connection pool. (Note that this driver class must be in the classpath of every server to which it is targeted/deployed).
@@ -1135,14 +1135,14 @@ jdbc:spssoem:mysql://<host>:<port>;DatabaseName=<database>
 jdbc:spssoem:oracle://<host>:<port>;SID=<database>[;AuthenticationMethod=kerberos].
 
 
-| __**JNDI Name**__ | The JNDI path to where this Datasource is bound. For example jdbc/MYDS
+| __**JNDI name**__ | The JNDI path to where this Datasource is bound. For example jdbc/MYDS
 By default, the JNDI name is the name of the Datasource. Applications that look up the JNDI path will get a "javax.sql.Datasource" instance that corresponds to this Datasource.
 
 
 | __**Datasource Credentials**__ | Username and password for the Database.
 
 
-| Database Name | Name of the Database/Default Schema to which the Database connection is to. Note that this may be relevant to MySQL (for example) and in general may not be necessary for all Databases. Further this name can be mentioned as part of the JDBC URL above. There is as such no need to use this parameter if it is already defined in the JDBC URL like above.
+| Database name | Name of the Database/Default Schema to which the Database connection is to. Note that this may be relevant to MySQL (for example) and in general may not be necessary for all Databases. Further this name can be mentioned as part of the JDBC URL above. There is as such no need to use this parameter if it is already defined in the JDBC URL like above.
 
 
 | JDBC Driver Properties | The list of properties passed to the JDBC driver that are used to create physical database connections. For example: server=dbserver1. List each property=value pair on a separate line.Note:For security reasons, when WebLogic Server is running in production mode, you cannot specify database passwords in this properties list. Data source deployment will fail if a password is specified in the properties list. To override this security check, use the command line argument "weblogic.management.allowClearTextPasswords" when starting the server.
@@ -1168,7 +1168,7 @@ By default, the JNDI name is the name of the Datasource. Applications that look 
 
 
 
-| Additional Options | Use this option to specify optional parameters for example initial pool size, min pool size, max pool size, validation SQL etc.
+| Additional options | Use this option to specify optional parameters for example initial pool size, min pool size, max pool size, validation SQL etc.
 
 
 |===
@@ -1197,7 +1197,7 @@ Deletes a Datasource
 | WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Datasource Name**__ | 
+| __**Datasource name**__ | 
       The unique name that identifies this Datasource in the WebLogic domain to delete it.
     
 
@@ -1228,7 +1228,7 @@ Creates a Datasource (DEPRECATED)
 | __**WLST script absolute path**__ | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Datasource Name**__ | A unique name that identifies this Datasource in the WebLogic domain.
+| __**Datasource name**__ | A unique name that identifies this Datasource in the WebLogic domain.
 
 
 | __**Database**__ | The database used by the Datasource.
@@ -1280,13 +1280,13 @@ Creates or updates Connection Factory
 |===
 |Parameter |Description
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**Connection Factory Name**__ | Unique name of the Connection Factory that is created.
+| __**Connection Factory name**__ | Unique name of the Connection Factory that is created.
 
 
-| __**JMS Module Name**__ | Name of the JMS module in which the Connection Factory is created.
+| __**JMS Module name**__ | Name of the JMS module in which the Connection Factory is created.
 
 
 | __**Subscription Sharing Policy**__ | The Connection Factory Subscription Sharing Policy Subscribers can be used to control which subscribers can access new subscriptions.Values can be either Sharable or Exclusive.
@@ -1297,7 +1297,7 @@ Creates or updates Connection Factory
         
 
 
-| JNDI Name | JNDI Name is used to lookup the Connection factory using JNDI lookup. If the connection factory is created without passing this parameter, it can be only used in an Application Scoped context.
+| JNDI name | JNDI Name is used to lookup the Connection factory using JNDI lookup. If the connection factory is created without passing this parameter, it can be only used in an Application Scoped context.
 
 
 | Maximum Messages per Session | This  limit specifies the number of messages that can be queued for an asynchronous session. Default value  is 10.
@@ -1306,7 +1306,7 @@ Creates or updates Connection Factory
 | XA Connection Factory Enabled? | Indicates if this connection factory should  create XA queues and XA topics in order to accommodate JTA aware transactions. Default is Yes.
 
 
-| Subdeployment Name | Name of Subdeployment. Required only if you do not  want default targeting and instead want to use advanced targeting.
+| Subdeployment name | Name of Subdeployment. Required only if you do not  want default targeting and instead want to use advanced targeting.
 
 
 | Target WLS Instance List | 
@@ -1342,7 +1342,7 @@ This parameter controls as to what the Update Action should be when a Connection
         
 
 
-| Additional Options | 
+| Additional options | 
 Use this option to pass related parameters that pertain to Delivery, Client, Transaction or Flow Control. E.g., 
  *DefaultDeliveryParams.DefaultPriority=5* .
 Several options are separated by a newline:
@@ -1379,7 +1379,7 @@ Creates or updates JMS Module
 | __**Configuration**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**JMS Module Name**__ | Unique name of the JMS system Module to be created or updated.
+| __**JMS Module name**__ | Unique name of the JMS system Module to be created or updated.
 
 
 | __**Target WLS Instance List**__ | Comma delimited set of Weblogic Server instances (Standalone or cluster) to which the JMS system module would be deployed.
@@ -1426,10 +1426,10 @@ Creates or updates JMS Module Subdeployment
 | __**Configuration**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**JMS Module Name**__ | Unique name of the JMS Module in which the Sub-Deployment should be created. Note that this module should exist already for this Procedure to succeed.
+| __**JMS Module name**__ | Unique name of the JMS Module in which the Sub-Deployment should be created. Note that this module should exist already for this Procedure to succeed.
 
 
-| __**Subdeployment Name**__ | Name of the Subdeployment to be created or updated.
+| __**Subdeployment name**__ | Name of the Subdeployment to be created or updated.
 
 
 | __**Target WLS Instance List**__ | 1 or more comma separated list of Servers or Clusters that constitute the Sub-Deployment. In essence a Sub-Deployment provides a way to group multiple targets to which JMS Resources can be created on.
@@ -1462,22 +1462,22 @@ Creates or updates JMS Queue
 |===
 |Parameter |Description
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**JMS Queue Name**__ | Unique name of the JMS Queue Name that is going to be created or updated.
-
-
-
-| __**JMS Module Name**__ | Name of the JMS module in which the JMS Queue is created. If there is already a JMS Queue with the specified name, it will be updated. The specified JMS Module should exist, if the module does not exist, the procedure will fail.
+| __**JMS Queue name**__ | Unique name of the JMS Queue Name that is going to be created or updated.
 
 
 
-| JNDI Name | JNDI Name is used to lookup the JMS Queue using JNDI lookup. If the JMS Queue is created without passing this parameter, it can be only used in an Application Scoped context.
+| __**JMS Module name**__ | Name of the JMS module in which the JMS Queue is created. If there is already a JMS Queue with the specified name, it will be updated. The specified JMS Module should exist, if the module does not exist, the procedure will fail.
 
 
 
-| Subdeployment Name | Name of Subdeployment. Required in order to deploy the Queue. If this is not specified the Queue will not be usable.
+| JNDI name | JNDI Name is used to lookup the JMS Queue using JNDI lookup. If the JMS Queue is created without passing this parameter, it can be only used in an Application Scoped context.
+
+
+
+| Subdeployment name | Name of Subdeployment. Required in order to deploy the Queue. If this is not specified the Queue will not be usable.
 
 
 
@@ -1504,7 +1504,7 @@ This parameter controls as to what the Update Action should be when a JMS Queue 
         
 
 
-| Additional Options | 
+| Additional options | 
 Use this option to specify general or advanced parameters, message thresholds and quota, message delivery overrides, message logging and message delivery failure options, e.g., 
  *MaximumMessageSize=1024* . Parameters should be in the form of key=value pairs. Group and property name are separated by '.'. Several options are separated by a newline, e.g.
 
@@ -1539,7 +1539,7 @@ Creates or updates JMS Server
 | __**Configuration**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**JMS Server Name**__ | Unique name of the JMS Server to be created or updated.
+| __**JMS Server name**__ | Unique name of the JMS Server to be created or updated.
 
 
 | Target WLS Instance | The WLS Instance (Standalone or Cluster) to which this Server should be targeted. However note if this is not specified the JMS Server is not usable.
@@ -1583,22 +1583,22 @@ Creates or updates JMS Topic
 |===
 |Parameter |Description
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**JMS Topic Name**__ | Unique name of the JMS Topic that is going to be created or updated.
-
-
-
-| __**JMS Module Name**__ | Name of the JMS module in which the JMS Topic is created. If there is already a JMS Topic with the specified name, it will be updated.
+| __**JMS Topic name**__ | Unique name of the JMS Topic that is going to be created or updated.
 
 
 
-| JNDI Name | JNDI Name is used to lookup the JMS Topic using JNDI lookup. If the JMS Topic is created without passing this parameter, it can be only used in an Application Scoped context.
+| __**JMS Module name**__ | Name of the JMS module in which the JMS Topic is created. If there is already a JMS Topic with the specified name, it will be updated.
 
 
 
-| Subdeployment Name | Name of Subdeployment. Required in order to deploy the Topic. If this is not specified the Topic will not be usable.
+| JNDI name | JNDI Name is used to lookup the JMS Topic using JNDI lookup. If the JMS Topic is created without passing this parameter, it can be only used in an Application Scoped context.
+
+
+
+| Subdeployment name | Name of Subdeployment. Required in order to deploy the Topic. If this is not specified the Topic will not be usable.
 
 
 
@@ -1625,7 +1625,7 @@ This parameter controls as to what the Update Action should be when a JMS Topic 
         
 
 
-| Additional Options | Use this option to specify general or advanced parameters, message thresholds and quota, message delivery overrides, message logging and message delivery failure options, topic multicast parameters. Parameters should be in the form of key=value pairs. Group and property name are separated by '.'. E.g., 
+| Additional options | Use this option to specify general or advanced parameters, message thresholds and quota, message delivery overrides, message logging and message delivery failure options, topic multicast parameters. Parameters should be in the form of key=value pairs. Group and property name are separated by '.'. E.g., 
  *Multicast.MulticastTimeToLive=5* . Several options are separated by a newline:
 
 
@@ -1656,13 +1656,13 @@ Deletes Connection Factory
 |===
 |Parameter |Description
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**Connection Factory Name**__ | Unique name of the Connection Factory that is going to be deleted. If the Connection Factory with the specified name does not exist, the procedure will fail.
+| __**Connection Factory name**__ | Unique name of the Connection Factory that is going to be deleted. If the Connection Factory with the specified name does not exist, the procedure will fail.
 
 
-| __**JMS Module Name**__ | Name of the JMS module in which the Connection Factory was created.
+| __**JMS Module name**__ | Name of the JMS module in which the Connection Factory was created.
 
 
 |===
@@ -1688,7 +1688,7 @@ Deletes JMS Module
 | __**Configuration**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**JMS Module Name**__ | Unique name of the JMS Module that needs to be deleted.
+| __**JMS Module name**__ | Unique name of the JMS Module that needs to be deleted.
 
 
 |===
@@ -1714,10 +1714,10 @@ Deletes JMS Module Subdeployment
 | __**Configuration**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**JMS Module Name**__ | Unique name of the JMS Module in which the Sub-Deployment should be created. Note that this module should exist already for this Procedure to succeed.
+| __**JMS Module name**__ | Unique name of the JMS Module in which the Sub-Deployment should be created. Note that this module should exist already for this Procedure to succeed.
 
 
-| __**Subdeployment Name**__ | Name of the Subdeployment to be created or updated.
+| __**Subdeployment name**__ | Name of the Subdeployment to be created or updated.
 
 
 |===
@@ -1740,14 +1740,14 @@ Deletes JMS Queue
 |===
 |Parameter |Description
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**JMS Queue Name**__ | Unique name of the JMS Queue that needs to be deleted. If JMS Queue with the specified name does not exist, the procedure will fail.
+| __**JMS Queue name**__ | Unique name of the JMS Queue that needs to be deleted. If JMS Queue with the specified name does not exist, the procedure will fail.
 
 
 
-| __**JMS Module Name**__ | Name of the JMS module in which the JMS Queue was created.
+| __**JMS Module name**__ | Name of the JMS module in which the JMS Queue was created.
 
 
 
@@ -1774,7 +1774,7 @@ Deletes JMS Server
 | __**Configuration**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**JMS Server Name**__ | Unique name of the JMS Server that needs to deleted. If the server with the specified name does not exist, the procedure will fail.
+| __**JMS Server name**__ | Unique name of the JMS Server that needs to deleted. If the server with the specified name does not exist, the procedure will fail.
 
 
 |===
@@ -1797,14 +1797,14 @@ Deletes JMS Topic
 |===
 |Parameter |Description
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**JMS Topic Name**__ | Unique name of the JMS Topic that is going to be deleted. If JMS Topic with the specified name does not exist in the JMS Module, the procedure will fail.
+| __**JMS Topic name**__ | Unique name of the JMS Topic that is going to be deleted. If JMS Topic with the specified name does not exist in the JMS Module, the procedure will fail.
 
 
 
-| __**JMS Module Name**__ | Name of the JMS module in which the JMS Topic was created.
+| __**JMS Module name**__ | Name of the JMS module in which the JMS Topic was created.
 
 
 
@@ -1831,16 +1831,16 @@ Create a user
 | WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
 | __**User Credentials**__ | User credentials(Username and password).
 
 
-| __**Domain Name**__ | Name of the user domain.
+| __**Domain name**__ | Name of the user domain.
 
 
-| __**Realm Name**__ | Name of the user realm.
+| __**Realm name**__ | Name of the user realm.
 
 
 | User Description | Description about the user.
@@ -1872,16 +1872,16 @@ Create a group
 | WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**Group Name**__ | Name of the group to be created.
+| __**Group name**__ | Name of the group to be created.
 
 
-| __**Domain Name**__ | Name of the group domain.
+| __**Domain name**__ | Name of the group domain.
 
 
-| __**Realm Name**__ | Name of the group realm.
+| __**Realm name**__ | Name of the group realm.
 
 
 | Group Description | Description about the group.
@@ -1913,19 +1913,19 @@ Add a user to group.
 | WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**User Name**__ | Name of the user to be added.
+| __**User name**__ | Name of the user to be added.
 
 
-| __**Group Name**__ | Name of the group in which user is to be added.
+| __**Group name**__ | Name of the group in which user is to be added.
 
 
-| __**Domain Name**__ | Name of the user domain.
+| __**Domain name**__ | Name of the user domain.
 
 
-| __**Realm Name**__ | Name of the user realm.
+| __**Realm name**__ | Name of the user realm.
 
 
 |===
@@ -1951,7 +1951,7 @@ Change password of a user.
 | WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
 | __**Old User Credentials**__ | Old user credentials(username and password).
@@ -1960,10 +1960,10 @@ Change password of a user.
 | __**New User Credentials**__ | New user credentials(Username and password). Username should be same as username in old credentials.
 
 
-| __**Domain Name**__ | Name of the user domain.
+| __**Domain name**__ | Name of the user domain.
 
 
-| __**Realm Name**__ | Name of the user realm.
+| __**Realm name**__ | Name of the user realm.
 
 
 |===
@@ -1989,19 +1989,19 @@ Remove a user from group.
 | WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**User Name**__ | Name of the user to be removed.
+| __**User name**__ | Name of the user to be removed.
 
 
-| __**Group Name**__ | Name of the group from which user is to be removed.
+| __**Group name**__ | Name of the group from which user is to be removed.
 
 
-| __**Domain Name**__ | Name of the user domain.
+| __**Domain name**__ | Name of the user domain.
 
 
-| __**Realm Name**__ | Name of the user realm.
+| __**Realm name**__ | Name of the user realm.
 
 
 |===
@@ -2027,7 +2027,7 @@ Configure User Lockout Manager.
 | WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
 | Lockout Threshold | The maximum number of consecutive invalid login attempts that can occur before a user's account is locked out. Minimum value: 1, Maximum value: 2147483647.
@@ -2062,16 +2062,16 @@ Unlock an user account.
 | WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Server nameConfiguration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**User Name**__ | Name of the user whose account is to be unlocked.
+| __**User name**__ | Name of the user whose account is to be unlocked.
 
 
-| __**Domain Name**__ | Name of the user domain.
+| __**Domain name**__ | Name of the user domain.
 
 
-| __**Realm Name**__ | Name of the user realm.
+| __**Realm name**__ | Name of the user realm.
 
 
 |===
@@ -2097,16 +2097,16 @@ Delete a group
 | WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**Group Name**__ | Name of the group to be deleted.
+| __**Group name**__ | Name of the group to be deleted.
 
 
-| __**Domain Name**__ | Name of the user domain.
+| __**Domain name**__ | Name of the user domain.
 
 
-| __**Realm Name**__ | Name of the user realm.
+| __**Realm name**__ | Name of the user realm.
 
 
 |===
@@ -2132,16 +2132,16 @@ Delete a user
 | WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**User Name**__ | Name of the user to be deleted.
+| __**User name**__ | Name of the user to be deleted.
 
 
-| __**Domain Name**__ | Name of the user domain.
+| __**Domain name**__ | Name of the user domain.
 
 
-| __**Realm Name**__ | Name of the user realm.
+| __**Realm name**__ | Name of the user realm.
 
 
 |===
@@ -2164,19 +2164,19 @@ Check the status of the given server cluster name.
 |===
 |Parameter |Description
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| Wlst Script Absolute Path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| Maximum Elapsed Time | Defines the maximum time in seconds that the job will try to check into the cluster. Blank implies no wait time (URL only checked one time).
+| Maximum elapsed time | Defines the maximum time in seconds that the job will try to check into the cluster. Blank implies no wait time (URL only checked one time).
 
 
-| __**Success Criteria**__ | Indicates the expected correct result to be obtained when running checking the cluster.
+| __**Success criteria**__ | Indicates the expected correct result to be obtained when running checking the cluster.
 
 
-| __**Cluster Name**__ | Indicates the name of the cluster to be checked.
+| __**Cluster name**__ | Indicates the name of the cluster to be checked.
 
 
 |===
@@ -2199,19 +2199,19 @@ Check the status of the given server URL
 |===
 |Parameter |Description
 
-| __**Configuration Name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**Wlst Script Absolute Path**__ | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| __**WLST script absolute path**__ | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
 
 
-| Maximum Elapsed Time | Defines the maximum time in seconds that the job will try to check into the server. Blank implies no wait time (URL only checked one time).
+| Maximum elapsed time | Defines the maximum time in seconds that the job will try to check into the server. Blank implies no wait time (URL only checked one time).
 
 
-| __**Success Criteria**__ | Indicates the expected correct result to be obtained when running checking the server.
+| __**Success criteria**__ | Indicates the expected correct result to be obtained when running checking the server.
 
 
-| __**Instance Name**__ | Indicates the name of the instance to be checked.
+| __**Instance name**__ | Indicates the name of the instance to be checked.
 
 
 |===
@@ -2291,7 +2291,7 @@ Creates a domain template from the existing domain.
 | __**Domain Directory**__ | Name of the domain directory from which you want to create the template.
 
 
-| __**Template Name**__ | Name (use .jar extension) and location of the domain template to store the domain configuration information. A domain template is a JAR file that contains domain configuration documents, applications, security data, startup scripts, and other information needed to create a WebLogic domain.
+| __**Template name**__ | Name (use .jar extension) and location of the domain template to store the domain configuration information. A domain template is a JAR file that contains domain configuration documents, applications, security data, startup scripts, and other information needed to create a WebLogic domain.
 
 
 |===
@@ -2317,13 +2317,13 @@ Check the status of a page on a given URL
 | Credentials to be entered | The credentials needed to check the status of the page.
 
 
-| Maximum Elapsed Time | Defines the maximum time in seconds that the job will try to check into the server. Blank implies no wait time (URL only checked one time).
+| Maximum elapsed time | Defines the maximum time in seconds that the job will try to check into the server. Blank implies no wait time (URL only checked one time).
 
 
 | __**Target URL**__ | URL of the page to be checked. (Required)
 
 
-| __**Success Criteria**__ | Indicates the expected correct result to be obtained when running checking the server.
+| __**Success criteria**__ | Indicates the expected correct result to be obtained when running checking the server.
 
 
 |===
@@ -2346,7 +2346,7 @@ This procedure connects to a Weblogic environment, discovers objects specified b
 |===
 |Parameter |Description
 
-| Resource Name | Name of the {CD} resource that represents the WebLogic environment that needs to be discovered.
+| Resource name | Name of the {CD} resource that represents the WebLogic environment that needs to be discovered.
 
 
 | Resource Hostname | Hostname of a machine with WebLogic and {CD} Agent running on it. Either Resource hostname (and port) or Resource Name should be specified.
@@ -2370,16 +2370,16 @@ This procedure connects to a Weblogic environment, discovers objects specified b
 | __**WebLogic Credentials**__ | Username and password to connect to WebLogic server.
 
 
-| Environment Project Name | If specified will create Project for the Environment.
+| Environment Project name | If specified will create Project for the Environment.
 
 
-| Environment Name | If specified, will be used to create {CD} environment.
+| Environment name | If specified, will be used to create {CD} environment.
 
 
-| Application Project Name | Project name to create Application based on discovered objects.
+| Application Project name | Project name to create Application based on discovered objects.
 
 
-| Application Name | Application for placing discovered objects.
+| Application name | Application for placing discovered objects.
 
 
 | Object Names | Objects to be retrieved from the WL Server in type:name pairs, e.g. AppDeployment:HelloWorld. For JMS Resource the name of the resource should be prefixed by JMS Module Name: helloJMSModule:helloQueue.
@@ -2465,7 +2465,7 @@ ConfigurationParametersHolder
         
 
 
-| Test Connection Resource | A resource which is used for the testing connection.
+| Test connection resource | A resource which is used for the testing connection.
 
 
 | Debug level | Debug level, higher debug level - more debug messages. Warning: on debug level 10 and more passwords will be revealed in a procedure logs.Verbosity level of output.

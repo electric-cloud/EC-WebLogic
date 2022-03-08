@@ -28,7 +28,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Configuration Name</label>
+        <label>Configuration name</label>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
         <!-- End of improvements for CEV-18687 -->
@@ -40,7 +40,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Application Name</label>
+        <label>Application name</label>
         <property>app_name</property>
         <documentation>Name of the application which is to be updated.</documentation>
         <required>1</required>
@@ -84,7 +84,7 @@
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>Additional Options</label>
+        <label>Additional options</label>
         <property>additional_options</property>
         <documentation>Comma-separated list of deployment options, specified as name-value pairs. For example: block=false,createPlan=true</documentation>
         <required>0</required>

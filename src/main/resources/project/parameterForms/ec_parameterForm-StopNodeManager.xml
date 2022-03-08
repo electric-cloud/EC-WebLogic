@@ -20,7 +20,7 @@
 
   <formElement>
     <type>entry</type>
-    <label>Config Name</label>
+    <label>Config name</label>
     <!-- Improvements for CEV-18687 -->
     <configuration>1</configuration>
     <!-- End of improvements for CEV-18687 -->
@@ -33,7 +33,7 @@
 
   <formElement>
     <type>entry</type>
-    <label>Host Name</label>
+    <label>Host name</label>
     <property>host_name</property>
     <documentation>Host name of Node Manager. This argument defaults to localhost.</documentation>
     <required>0</required>
@@ -49,7 +49,7 @@
 
   <formElement>
     <type>entry</type>
-    <label>Domain Name</label>
+    <label>Domain name</label>
     <property>domainName</property>
     <required>1</required>
     <documentation>Name of the domain that you want to manage. This argument defaults to mydomain.</documentation>
@@ -87,7 +87,7 @@
 
   <formElement>
     <type>entry</type>
-    <label>Maximum Elapsed Time</label>
+    <label>Maximum elapsed time</label>
     <property>maxelapsedtime</property>
     <documentation>Defines the time in seconds that the job wait to test the status of the node manager. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).</documentation>
     <required>0</required>

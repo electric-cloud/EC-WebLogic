@@ -28,7 +28,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Configuration Name</label>
+        <label>Configuration name</label>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
         <!-- End of improvements for CEV-18687 -->
@@ -40,7 +40,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Server Name</label>
+        <label>Server name</label>
         <property>server_name</property>
         <documentation>Name of the managed server to be created.</documentation>
         <required>1</required>

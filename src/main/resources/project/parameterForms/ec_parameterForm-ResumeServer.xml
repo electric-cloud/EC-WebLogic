@@ -43,7 +43,7 @@
 
 	<formElement>
 		<type>entry</type>
-		<label>Server Name</label>
+		<label>Server name</label>
 		<property>servername</property>
 		<documentation>Name of the server to resume. (Required)</documentation>
 		<required>1</required>

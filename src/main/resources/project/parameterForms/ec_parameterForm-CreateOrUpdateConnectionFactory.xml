@@ -19,7 +19,7 @@
     <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#CreateOrUpdateConnectionFactory</help>
     <formElement>
         <type>entry</type>
-        <label>Configuration Name</label>
+        <label>Configuration name</label>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
         <!-- End of improvements for CEV-18687 -->
@@ -31,14 +31,14 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Connection Factory Name</label>
+        <label>Connection Factory name</label>
         <property>cf_name</property>
         <documentation>Unique name of the Connection Factory that is created.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>JMS Module Name</label>
+        <label>JMS Module name</label>
         <property>jms_module_name</property>
         <documentation>Name of the JMS module in which the Connection Factory is created.</documentation>
         <required>1</required>
@@ -65,7 +65,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>JNDI Name</label>
+        <label>JNDI name</label>
         <property>jndi_name</property>
         <documentation>JNDI Name is used to lookup the Connection factory using JNDI lookup. If the connection factory is created without passing this parameter, it can be only used in an Application Scoped context.</documentation>
         <required>0</required>
@@ -90,7 +90,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Subdeployment Name</label>
+        <label>Subdeployment name</label>
         <property>subdeployment_name</property>
         <documentation>Name of Subdeployment. Required only if you do not  want default targeting and instead want to use advanced targeting.</documentation>
         <required>0</required>
@@ -147,7 +147,7 @@ This parameter controls as to what the Update Action should be when a Connection
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>Additional Options</label>
+        <label>Additional options</label>
         <required>0</required>
         <documentation>Use this option to pass related parameters that pertain to Delivery, Client, Transaction or Flow Control. E.g., DefaultDeliveryParams.DefaultPriority=5</documentation>
         <htmlDocumentation>

@@ -136,7 +136,7 @@ to carry all traffic for a JVM.</p>
             
             <tr>
                 
-                    <td class="required">Configuration Name</td>
+                    <td class="required">Configuration name</td>
                     <td></td>
                 
             </tr>
@@ -194,7 +194,7 @@ to carry all traffic for a JVM.</p>
             
             <tr>
                 
-                    <td >Test Connection?</td>
+                    <td >Test connection?</td>
                     <td>Check if connection should be established during config creation to validate credentials.</td>
                 
             </tr>
@@ -255,7 +255,7 @@ to carry all traffic for a JVM.</p>
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -332,7 +332,7 @@ to carry all traffic for a JVM.</p>
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -419,7 +419,7 @@ to carry all traffic for a JVM.</p>
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -494,7 +494,7 @@ to carry all traffic for a JVM.</p>
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -563,7 +563,7 @@ to carry all traffic for a JVM.</p>
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -623,7 +623,7 @@ to carry all traffic for a JVM.</p>
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -764,7 +764,7 @@ successfully.</p>
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -1063,7 +1063,7 @@ successfully.</p>
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>
             Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.
         </td>
@@ -1475,7 +1475,7 @@ moved from the STANDBY state to the RUNNING state.</p>
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>
             Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.
         </td>
@@ -1688,7 +1688,7 @@ The application was deployed successfully.</p>
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -1784,7 +1784,7 @@ Contrary to the weblogic documentation in section 'Undeploying a Retiring Applic
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -1891,7 +1891,7 @@ successfully.</p>
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -1980,7 +1980,7 @@ provides a command-line interface to the WebLogic Server deployment API.</p>
             
             <tr>
                 
-                <td >Configuration Name</td>
+                <td >Configuration name</td>
                 <td>
       Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.
     </td>
@@ -2079,7 +2079,7 @@ successfully.</p>
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -2163,7 +2163,7 @@ was started successfully.</p>
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -2591,7 +2591,7 @@ DONE
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -3033,7 +3033,7 @@ DONE
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -3308,7 +3308,7 @@ DONE
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -3473,7 +3473,7 @@ DONE
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -3755,7 +3755,7 @@ DONE
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -3941,7 +3941,7 @@ DONE
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -4049,7 +4049,7 @@ DONE
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -4140,7 +4140,7 @@ DONE
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -4231,7 +4231,7 @@ DONE
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -4315,7 +4315,7 @@ DONE
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -4398,7 +4398,7 @@ DONE
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -4482,7 +4482,7 @@ DONE
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -4560,7 +4560,7 @@ DONE
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -4637,7 +4637,7 @@ successfully.</p>
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -4714,7 +4714,7 @@ successfully.</p>
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -4784,7 +4784,7 @@ successfully.</p>
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>
@@ -4860,7 +4860,7 @@ successfully.</p>
             
             <tr>
                 
-                <td class="required">Configuration Name</td>
+                <td class="required">Configuration name</td>
                 <td>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.<br/><br/>A Configuration defines connection details and can be created by going to plugin <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" href="/commander/pages/@PLUGIN_NAME@/configurations" target="_blank">configuration page</a>.</td>
                 
             </tr>

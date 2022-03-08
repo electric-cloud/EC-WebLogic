@@ -31,7 +31,7 @@
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>JMS Server Name</label>
+    <label>JMS Server name</label>
     <property>ecp_weblogic_jms_server_name</property>
     <documentation>Unique name of the JMS Server that needs to deleted. If the server with the specified name does not exist, the procedure will fail.</documentation>
     <required>1</required>

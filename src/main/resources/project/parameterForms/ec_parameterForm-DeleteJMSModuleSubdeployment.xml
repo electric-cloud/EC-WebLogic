@@ -31,14 +31,14 @@
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>JMS Module Name</label>
+    <label>JMS Module name</label>
     <property>ecp_weblogic_jms_module_name</property>
     <documentation>Unique name of the JMS Module in which the Sub-Deployment should be created. Note that this module should exist already for this Procedure to succeed.</documentation>
     <required>1</required>
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>Subdeployment Name</label>
+    <label>Subdeployment name</label>
     <required>1</required>
     <property>ecp_weblogic_subdeployment_name</property>
     <documentation>Name of the Subdeployment to be created or updated.</documentation>

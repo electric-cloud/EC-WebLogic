@@ -87,7 +87,7 @@ limitations under the License.
 
     <formElement>
         <type>checkbox</type>
-        <label>Test Connection?</label>
+        <label>Test connection?</label>
         <property>test_connection</property>
         <checkedValue>1</checkedValue>
         <uncheckedValue>0</uncheckedValue>
@@ -97,7 +97,7 @@ limitations under the License.
 
     <formElement>
         <type>entry</type>
-        <label>Test Connection Resource</label>
+        <label>Test connection resource</label>
         <property>test_connection_res</property>
         <value></value>
         <documentation>A resource which is used for the testing connection.</documentation>

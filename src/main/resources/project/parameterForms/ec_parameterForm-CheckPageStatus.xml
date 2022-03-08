@@ -26,7 +26,7 @@
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>Maximum Elapsed Time</label>
+    <label>Maximum elapsed time</label>
     <property>maxelapsedtime</property>
     <documentation>Defines the maximum time in seconds that the job will try to check into the server. Blank implies no wait time (URL only checked one time).</documentation>
     <required>0</required>
@@ -40,7 +40,7 @@
   </formElement>
   <formElement>
     <type>select</type>
-    <label>Success Criteria</label>
+    <label>Success criteria</label>
     <property>successcriteria</property>
     <required>1</required>
     <documentation>Indicates the expected correct result to be obtained when running checking the server.</documentation>

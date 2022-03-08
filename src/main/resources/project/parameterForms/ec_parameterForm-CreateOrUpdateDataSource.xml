@@ -31,7 +31,7 @@ limitations under the License.
 </formElement>
 <formElement>
     <type>entry</type>
-    <label>Datasource Name</label>
+    <label>Datasource name</label>
     <property>ecp_weblogic_dataSourceName</property>
     <documentation>Unique name of the JDBC generic Data Source to be created.</documentation>
     <required>1</required>
@@ -54,7 +54,7 @@ jdbc:spssoem:oracle://&lt;host&gt;:&lt;port&gt;;SID=&lt;database&gt;[;Authentica
 </formElement>
 <formElement>
     <type>entry</type>
-    <label>JNDI Name</label>
+    <label>JNDI name</label>
     <property>ecp_weblogic_jndiName</property>
     <documentation>The JNDI path to where this Datasource is bound. For example jdbc/MYDS
 By default, the JNDI name is the name of the Datasource. Applications that look up the JNDI path will get a "javax.sql.Datasource" instance that corresponds to this Datasource.</documentation>
@@ -69,7 +69,7 @@ By default, the JNDI name is the name of the Datasource. Applications that look 
 </formElement>
 <formElement>
     <type>entry</type>
-    <label>Database Name</label>
+    <label>Database name</label>
     <property>ecp_weblogic_databaseName</property>
     <documentation>Name of the Database/Default Schema to which the Database connection is to. Note that this may be relevant to MySQL (for example) and in general may not be necessary for all Databases. Further this name can be mentioned as part of the JDBC URL above. There is as such no need to use this parameter if it is already defined in the JDBC URL like above.</documentation>
     <required>0</required>
@@ -116,7 +116,7 @@ By default, the JNDI name is the name of the Datasource. Applications that look 
 </formElement>
 <formElement>
     <type>textarea</type>
-    <label>Additional Options</label>
+    <label>Additional options</label>
     <property>ecp_weblogic_additionalOptions</property>
     <documentation>Use this option to specify optional parameters for example initial pool size, min pool size, max pool size, validation SQL etc.</documentation>
     <required>0</required>

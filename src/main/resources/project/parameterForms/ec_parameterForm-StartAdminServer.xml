@@ -27,7 +27,7 @@
 
 	<formElement>
 		<type>entry</type>
-		<label>Admin Server Instance Name</label>
+		<label>Admin Server Instance name</label>
 		<property>admininstancename</property>
 		<required>1</required>
 		<documentation>Instance name of the Admin Server to start. i.e: 'AdminServer'. (Required)</documentation>
@@ -35,7 +35,7 @@
 
 	<formElement>
 		<type>entry</type>
-		<label>Config Name</label>
+		<label>Config name</label>
 		<property>configname</property>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
@@ -58,7 +58,7 @@
 
 	<formElement>
 		<type>entry</type>
-		<label>Maximum Elapsed Time</label>
+		<label>Maximum elapsed time</label>
 		<property>maxelapsedtime</property>
 		<documentation>Defines the maximum time in seconds that the job will try to check into the server. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).</documentation>
 		<required>0</required>

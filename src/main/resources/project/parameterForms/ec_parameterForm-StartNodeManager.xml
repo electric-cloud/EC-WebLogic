@@ -28,7 +28,7 @@
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>Maximum Elapsed Time</label>
+    <label>Maximum elapsed time</label>
     <property>maxelapsedtime</property>
     <documentation>
       Defines the time in seconds that the job wait to test the status of the node manager. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).

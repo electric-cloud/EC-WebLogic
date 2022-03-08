@@ -31,7 +31,7 @@
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>JMS Module Name</label>
+    <label>JMS Module name</label>
     <property>ecp_weblogic_jms_module_name</property>
     <documentation>Unique name of the JMS system Module to be created or updated.</documentation>
     <required>1</required>

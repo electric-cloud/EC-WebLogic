@@ -27,7 +27,7 @@
 
 	<formElement>
 		<type>entry</type>
-		<label>Instance Name</label>
+		<label>Instance name</label>
 		<property>instancename</property>
 		<required>1</required>
 		<documentation>Instance name of the Managed Server to stop. (Required)</documentation>
@@ -35,7 +35,7 @@
 
 	<formElement>
 		<type>entry</type>
-		<label>Config Name</label>
+		<label>Config name</label>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
         <!-- End of improvements for CEV-18687 -->

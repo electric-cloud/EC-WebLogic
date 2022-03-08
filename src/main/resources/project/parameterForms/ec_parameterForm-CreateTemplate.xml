@@ -33,7 +33,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Template Name</label>
+        <label>Template name</label>
         <property>template_name</property>
         <documentation>Name (use .jar extension) and location of the domain template to store the domain configuration information. A domain template is a JAR file that contains domain configuration documents, applications, security data, startup scripts, and other information needed to create a WebLogic domain.</documentation>
         <required>1</required>

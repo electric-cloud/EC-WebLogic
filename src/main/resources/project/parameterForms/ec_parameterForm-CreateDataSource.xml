@@ -40,7 +40,7 @@
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>Datasource Name</label>
+    <label>Datasource name</label>
     <property>dsname</property>
     <documentation>A unique name that identifies this Datasource in the WebLogic domain.</documentation>
     <required>1</required>

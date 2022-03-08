@@ -29,7 +29,7 @@
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>Configuration Name</label>
+    <label>Configuration name</label>
     <!-- Improvements for CEV-18687 -->
     <configuration>1</configuration>
     <!-- End of improvements for CEV-18687 -->
@@ -42,7 +42,7 @@
 
   <formElement>
     <type>entry</type>
-    <label>Application Name</label>
+    <label>Application name</label>
     <property>appname</property>
     <documentation>
       Name of the application to start. i.e: 'webapp'.
@@ -52,7 +52,7 @@
 
   <formElement>
       <type>entry</type>
-      <label>Application Version</label>
+      <label>Application version</label>
       <property>version_identifier</property>
       <documentation>
           Specific application version to be started.
