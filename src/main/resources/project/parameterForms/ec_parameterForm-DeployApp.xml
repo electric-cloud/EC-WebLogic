@@ -19,7 +19,7 @@
     <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#DeployApp</help>
     <formElement>
         <type>entry</type>
-        <label>Configuration Name:</label>
+        <label>Configuration Name</label>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
         <!-- End of improvements for CEV-18687 -->
@@ -35,7 +35,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Wlst Script Absolute Path:</label>
+        <label>Wlst Script Absolute Path</label>
         <property>wlstabspath</property>
         <required>0</required>
         <propertyReference type="property">/plugins/@PLUGIN_NAME@/project/weblogic_cfgs/$configname/wlst_path</propertyReference>
@@ -44,13 +44,13 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Application Name:</label>
+        <label>Application Name</label>
         <property>appname</property>
         <documentation>Deployment name to assign to a newly-deployed application or standalone module. i.e: 'webapp'.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
-        <label>Is library?:</label>
+        <label>Is library?</label>
         <property>is_library</property>
         <documentation>Select this parameter if the application is library.</documentation>
         <required>1</required>
@@ -60,20 +60,20 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Application Path:</label>
+        <label>Application Path</label>
         <property>apppath</property>
         <documentation>Absolute path of the application to deploy. i.e: '/path/to/webapp.war' or 'c:/mydir/webapp.war'.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Targets:</label>
+        <label>Targets</label>
         <property>targets</property>
         <documentation>Targets on which to deploy the application or module (comma-separated list of the target servers, clusters, or virtual hosts).</documentation>
         <required>1</required>
     </formElement>
     <formElement>
-        <label>Stage mode:</label>
+        <label>Stage mode</label>
         <property>stage_mode</property>
         <type>select</type>
         <option><name>stage</name><value>stage</value></option>
@@ -94,7 +94,7 @@
         </htmlDocumentation>
     </formElement>
     <formElement>
-        <label>Deployment plan path:</label>
+        <label>Deployment plan path</label>
         <property>plan_path</property>
         <type>entry</type>
         <required>0</required>
@@ -103,14 +103,14 @@
         </documentation>
     </formElement>
     <formElement>
-        <label>Plan version:</label>
+        <label>Plan version</label>
         <property>plan_version</property>
         <type>entry</type>
         <required>0</required>
         <documentation>Deployment plan version.</documentation>
     </formElement>
     <formElement>
-        <label>Deployment plan content:</label>
+        <label>Deployment plan content</label>
         <property>deployment_plan</property>
         <type>textarea</type>
         <required>0</required>
@@ -119,7 +119,7 @@
         </documentation>
     </formElement>
     <formElement>
-        <label>Overwrite deployment plan?:</label>
+        <label>Overwrite deployment plan?</label>
         <property>overwrite_deployment_plan</property>
         <type>checkbox</type>
         <checkedValue>1</checkedValue>
@@ -135,7 +135,7 @@
         </htmlDocumentation>
     </formElement>
     <formElement>
-        <label>Additional Options:</label>
+        <label>Additional Options</label>
         <property>additional_options</property>
         <type>textarea</type>
         <required>0</required>
@@ -149,7 +149,7 @@
         </htmlDocumentation>
     </formElement>
     <formElement>
-        <label>Archive version:</label>
+        <label>Archive version</label>
         <property>archive_version</property>
         <type>entry</type>
         <required>0</required>
@@ -166,7 +166,7 @@
     </formElement>
 
     <formElement>
-        <label>Retire gracefully?:</label>
+        <label>Retire gracefully?</label>
         <property>retire_gracefully</property>
         <type>checkbox</type>
         <checkedValue>1</checkedValue>
@@ -182,7 +182,7 @@
         </htmlDocumentation>
     </formElement>
     <formElement>
-        <label>Retire timeout:</label>
+        <label>Retire timeout</label>
         <property>retire_timeout</property>
         <type>entry</type>
         <required>0</required>
@@ -196,7 +196,7 @@
         </htmlDocumentation>
     </formElement>
     <formElement>
-        <label>Version identifier:</label>
+        <label>Version identifier</label>
         <property>version_identifier</property>
         <type>entry</type>
         <required>0</required>
@@ -205,7 +205,7 @@
         </documentation>
     </formElement>
     <formElement>
-        <label>Upload?:</label>
+        <label>Upload?</label>
         <property>upload</property>
         <type>checkbox</type>
         <checkedValue>1</checkedValue>
@@ -223,7 +223,7 @@
         </htmlDocumentation>
     </formElement>
     <formElement>
-        <label>Remote?:</label>
+        <label>Remote?</label>
         <property>remote</property>
         <type>checkbox</type>
         <checkedValue>1</checkedValue>

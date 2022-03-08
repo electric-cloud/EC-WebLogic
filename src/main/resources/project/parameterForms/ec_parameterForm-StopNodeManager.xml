@@ -20,7 +20,7 @@
 
   <formElement>
     <type>entry</type>
-    <label>Config Name:</label>
+    <label>Config Name</label>
     <!-- Improvements for CEV-18687 -->
     <configuration>1</configuration>
     <!-- End of improvements for CEV-18687 -->
@@ -33,7 +33,7 @@
 
   <formElement>
     <type>entry</type>
-    <label>Host Name:</label>
+    <label>Host Name</label>
     <property>host_name</property>
     <documentation>Host name of Node Manager. This argument defaults to localhost.</documentation>
     <required>0</required>
@@ -41,7 +41,7 @@
 
   <formElement>
     <type>entry</type>
-    <label>Node Manager Port:</label>
+    <label>Node Manager Port</label>
     <property>port</property>
     <required>0</required>
     <documentation>Port number of Node Manager. This argument defaults to a value that is based on the Node Manager server type, for plain type, defaults to 5556. For rsh type, defaults to 514. For ssh type, defaults to 22. For ssl type, defaults to 5556.</documentation>
@@ -49,7 +49,7 @@
 
   <formElement>
     <type>entry</type>
-    <label>Domain Name:</label>
+    <label>Domain Name</label>
     <property>domainName</property>
     <required>1</required>
     <documentation>Name of the domain that you want to manage. This argument defaults to mydomain.</documentation>
@@ -57,7 +57,7 @@
 
   <formElement>
     <type>entry</type>
-    <label>Domain Path:</label>
+    <label>Domain Path</label>
     <property>domainPath</property>
     <required>1</required>
     <documentation>Path of the domain directory to which you want to save the Node Manager secret file (nm_password.properties) and SerializedSystemIni.dat file. This argument defaults to the directory in which WLST was started.</documentation>
@@ -65,7 +65,7 @@
 
   <formElement>
     <type>entry</type>
-    <label>WLST Absolute Path:</label>
+    <label>WLST script absolute path</label>
     <property>wlstabspath</property>
     <required>1</required>
     <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)</documentation>
@@ -75,7 +75,7 @@
 
   <formElement>
     <type>select</type>
-    <label>Node Manage Type:</label>
+    <label>Node Manage Type</label>
     <property>nmType</property>
     <required>1</required>
     <documentation>Type of the Node Manager server. This argument defaults to ssl.</documentation>
@@ -87,7 +87,7 @@
 
   <formElement>
     <type>entry</type>
-    <label>Maximum Elapsed Time:</label>
+    <label>Maximum Elapsed Time</label>
     <property>maxelapsedtime</property>
     <documentation>Defines the time in seconds that the job wait to test the status of the node manager. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).</documentation>
     <required>0</required>

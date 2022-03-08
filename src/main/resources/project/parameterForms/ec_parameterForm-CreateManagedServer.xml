@@ -19,7 +19,7 @@
     <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#CreateManagedServer</help>
     <formElement>
         <type>entry</type>
-        <label>WLST Absolute Path:</label>
+        <label>WLST script absolute path</label>
         <property>wlst_abs_path</property>
         <required>0</required>
         <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
@@ -28,7 +28,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Configuration Name:</label>
+        <label>Configuration Name</label>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
         <!-- End of improvements for CEV-18687 -->
@@ -40,21 +40,21 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Server Name:</label>
+        <label>Server Name</label>
         <property>server_name</property>
         <documentation>Name of the managed server to be created.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Listen Address:</label>
+        <label>Listen Address</label>
         <property>listen_address</property>
         <documentation>Server Listen Address.</documentation>
         <required>0</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Listen Port:</label>
+        <label>Listen Port</label>
         <property>listen_port</property>
         <documentation>Server Listen Port.</documentation>
         <required>0</required>

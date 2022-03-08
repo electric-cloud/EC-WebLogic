@@ -19,7 +19,7 @@
   <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#CreateOrUpdateJMSServer</help>
   <formElement>
     <type>entry</type>
-    <label>Configuration:</label>
+    <label>Configuration</label>
     <!-- Improvements for CEV-18687 -->
     <configuration>1</configuration>
     <!-- End of improvements for CEV-18687 -->
@@ -31,21 +31,21 @@
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>JMS Server Name:</label>
+    <label>JMS Server Name</label>
     <property>ecp_weblogic_jms_server_name</property>
     <documentation>Unique name of the JMS Server to be created or updated.</documentation>
     <required>1</required>
   </formElement>
   <formElement>
     <type>textarea</type>
-    <label>Target WLS Instance:</label>
+    <label>Target WLS Instance</label>
     <property>ecp_weblogic_target</property>
     <documentation>The WLS Instance (Standalone or Cluster) to which this Server should be targeted. However note if this is not specified the JMS Server is not usable.</documentation>
     <required>0</required>
   </formElement>
   <formElement>
     <type>select</type>
-    <label>Update Action:</label>
+    <label>Update Action</label>
     <property>ecp_weblogic_update_action</property>
     <documentation>This parameter controls as to what the Update Action should be when a JMS Module with the same name exists :
 Do Nothing  (Default) -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
@@ -53,7 +53,7 @@ Remove and Create - The procedure would remove existing JMS Module and recreate 
 Selective Update - The procedure would update existing JMS Module for only parameters that we have designed to be updatable out of the box, based on what we think makes sense.The logic for this scenario is in the logic section below.
 </documentation>
         <htmlDocumentation>
-This parameter controls as to what the Update Action should be when a JMS Module with the same name exists:<br/>
+This parameter controls as to what the Update Action should be when a JMS Module with the same name exists<br/>
 <b>Do Nothing  (Default)</b> -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.<br/>
 <b>Remove and Create</b> - The procedure would remove existing JMS Module and recreate it based on new parameters passed.<br/>
 <b>Selective Update</b> - The procedure would update existing JMS Module. The only parameter for update will be <b>Target WLS Instance</b>.

@@ -19,7 +19,7 @@
 	<help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#StopAdminServer</help>
 	<formElement>
 		<type>entry</type>
-		<label>Script Location:</label>
+		<label>Script Location</label>
 		<property>scriptlocation</property>
 		<documentation>Absolute path of the stopWeblogic script, including filename and extension. i.e: '/path/to/stopWeblogic.cmd'. (Required)</documentation>
 		<required>1</required>
@@ -27,7 +27,7 @@
 
 	<formElement>
 		<type>entry</type>
-		<label>Config Name:</label>
+		<label>Config Name</label>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
         <!-- End of improvements for CEV-18687 -->

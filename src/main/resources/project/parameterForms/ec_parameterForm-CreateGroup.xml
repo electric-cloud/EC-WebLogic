@@ -19,7 +19,7 @@
     <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#CreateGroup</help>
     <formElement>
         <type>entry</type>
-        <label>WLST Absolute Path:</label>
+        <label>WLST script absolute path</label>
         <property>wlst_abs_path</property>
         <required>0</required>
         <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
@@ -28,7 +28,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Configuration Name:</label>
+        <label>Configuration Name</label>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
         <!-- End of improvements for CEV-18687 -->
@@ -40,35 +40,35 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Group Name:</label>
+        <label>Group Name</label>
         <property>group_name</property>
         <documentation>Name of the group to be created.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Domain Name:</label>
+        <label>Domain Name</label>
         <property>domain_name</property>
         <documentation>Name of the group domain.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Realm Name:</label>
+        <label>Realm Name</label>
         <property>realm_name</property>
         <documentation>Name of the group realm.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>Group Description:</label>
+        <label>Group Description</label>
         <property>desc</property>
         <documentation>Description about the group.</documentation>
         <required>0</required>
     </formElement>
     <formElement>
         <type>checkbox</type>
-        <label>Overwrite Existing Group:</label>
+        <label>Overwrite Existing Group</label>
         <property>overwrite_existing_group</property>
         <required>0</required>
         <documentation>If enabled it will delete already existing group of the same name and recreate new group.</documentation>

@@ -19,7 +19,7 @@
     <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#CreateCluster</help>
     <formElement>
         <type>entry</type>
-        <label>WLST Absolute Path:</label>
+        <label>WLST script absolute path</label>
         <property>wlst_abs_path</property>
         <required>0</required>
         <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
@@ -28,7 +28,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Configuration Name:</label>
+        <label>Configuration Name</label>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
         <!-- End of improvements for CEV-18687 -->
@@ -40,7 +40,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Cluster Name:</label>
+        <label>Cluster Name</label>
         <property>cluster_name</property>
         <documentation>Name of the cluster to be deleted.</documentation>
         <required>1</required>

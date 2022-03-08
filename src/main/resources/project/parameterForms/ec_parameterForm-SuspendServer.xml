@@ -20,7 +20,7 @@
 
 	<formElement>
 		<type>entry</type>
-		<label>Configuration:</label>
+		<label>Configuration</label>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
         <!-- End of improvements for CEV-18687 -->
@@ -33,7 +33,7 @@
 
 	<formElement>
 		<type>entry</type>
-		<label>WLST Absolute Path:</label>
+		<label>WLST script absolute path</label>
 		<property>wlstabspath</property>
 		<required>0</required>
 		<documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)</documentation>
@@ -43,7 +43,7 @@
 
 	<formElement>
 		<type>entry</type>
-		<label>Server Name:</label>
+		<label>Server Name</label>
 		<property>servername</property>
 		<documentation>Name of the server to suspend. (Required)</documentation>
 		<required>1</required>
@@ -51,7 +51,7 @@
 
 	<formElement>
 		<type>checkbox</type>
-		<label>Ignore Sessions:</label>
+		<label>Ignore Sessions</label>
 		<property>ignoresessions</property>
         <checkedValue>1</checkedValue>
         <uncheckedValue>0</uncheckedValue>
@@ -62,7 +62,7 @@
 
 	<formElement>
 		<type>entry</type>
-		<label>Timeout:</label>
+		<label>Timeout</label>
 		<property>timeoutserver</property>
         <required>0</required>
 		<documentation>Time (in seconds) the WLST waits for the server to complete in-process work before suspending the server. This argument defaults to 0 seconds, indicating that there is no timeout.</documentation>
@@ -70,7 +70,7 @@
 
 	<formElement>
 		<type>checkbox</type>
-		<label>Force:</label>
+		<label>Force</label>
 		<property>force</property>
         <checkedValue>1</checkedValue>
         <uncheckedValue>0</uncheckedValue>
@@ -81,7 +81,7 @@
 
 	<formElement>
 		<type>checkbox</type>
-		<label>Block:</label>
+		<label>Block</label>
 		<property>block</property>
         <checkedValue>1</checkedValue>
         <uncheckedValue>0</uncheckedValue>

@@ -19,7 +19,7 @@
     <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#CreateDomain</help>
     <formElement>
         <type>entry</type>
-        <label>WLST Absolute Path:</label>
+        <label>WLST script absolute path</label>
         <property>wlst_abs_path</property>
         <required>0</required>
         <propertyReference type="property">/plugins/@PLUGIN_NAME@/project/weblogic_cfgs/$configname/wlst_path</propertyReference>
@@ -28,7 +28,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Configuration Name:</label>
+        <label>Configuration Name</label>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
         <!-- End of improvements for CEV-18687 -->
@@ -40,35 +40,35 @@
     </formElement>
     <formElement>
         <type>credential</type>
-        <label>User Credentials:</label>
+        <label>User Credentials</label>
         <property>user_credentials</property>
         <documentation>Credentials of the user(Username and password).</documentation>
         <required>1</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Domain Template:</label>
+        <label>Domain Template</label>
         <property>domain_template</property>
         <documentation>Name and location of the domain template from which you want to create a domain.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Domain Directory:</label>
+        <label>Domain Directory</label>
         <property>domain_directory</property>
         <documentation>Name of the directory to which you want to write the domain configuration information. .</documentation>
         <required>1</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Listen Address:</label>
+        <label>Listen Address</label>
         <property>listen_address</property>
         <documentation>Server Listen Address.</documentation>
         <required>0</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Listen Port:</label>
+        <label>Listen Port</label>
         <property>listen_port</property>
         <documentation>Server Listen Port.</documentation>
         <required>0</required>

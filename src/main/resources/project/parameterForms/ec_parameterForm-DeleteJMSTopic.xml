@@ -19,7 +19,7 @@
     <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateOrUpdateConnectionFactory.xml</help>
     <formElement>
         <type>entry</type>
-        <label>Configuration Name:</label>
+        <label>Configuration Name</label>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
         <!-- End of improvements for CEV-18687 -->
@@ -31,7 +31,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>JMS Topic Name:</label>
+        <label>JMS Topic Name</label>
         <property>ecp_weblogic_jms_topic_name</property>
         <documentation>Unique name of the JMS Topic that is going to be deleted. If JMS Topic with the specified name does not exist in the JMS Module, the procedure will fail.
 </documentation>
@@ -39,7 +39,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>JMS Module Name:</label>
+        <label>JMS Module Name</label>
         <property>ecp_weblogic_jms_module_name</property>
         <documentation>Name of the JMS module in which the JMS Topic was created.
 </documentation>

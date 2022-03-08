@@ -19,7 +19,7 @@
   <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#CreateDatasource</help>
   <formElement>
     <type>entry</type>
-    <label>Configuration:</label>
+    <label>Configuration</label>
     <!-- Improvements for CEV-18687 -->
     <configuration>1</configuration>
     <!-- End of improvements for CEV-18687 -->
@@ -31,14 +31,14 @@
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>JMS Module Name:</label>
+    <label>JMS Module Name</label>
     <property>ecp_weblogic_jms_module_name</property>
     <documentation>Unique name of the JMS Module in which the Sub-Deployment should be created. Note that this module should exist already for this Procedure to succeed.</documentation>
     <required>1</required>
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>Subdeployment Name:</label>
+    <label>Subdeployment Name</label>
     <required>1</required>
     <property>ecp_weblogic_subdeployment_name</property>
     <documentation>Name of the Subdeployment to be created or updated.</documentation>

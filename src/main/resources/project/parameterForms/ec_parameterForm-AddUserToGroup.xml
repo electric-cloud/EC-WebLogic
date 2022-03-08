@@ -19,7 +19,7 @@
     <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#AddUserToGroup</help>
     <formElement>
         <type>entry</type>
-        <label>WLST Absolute Path:</label>
+        <label>WLST script absolute path</label>
         <property>wlst_abs_path</property>
         <required>0</required>
         <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
@@ -28,7 +28,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Configuration Name:</label>
+        <label>Configuration Name</label>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
         <!-- End of improvements for CEV-18687 -->
@@ -40,28 +40,28 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>User Name:</label>
+        <label>User Name</label>
         <property>user_name</property>
         <documentation>Name of the user to be added.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Group Name:</label>
+        <label>Group Name</label>
         <property>group_name</property>
         <documentation>Name of the group in which user is to be added.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Domain Name:</label>
+        <label>Domain Name</label>
         <property>domain_name</property>
         <documentation>Name of the user domain.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Realm Name:</label>
+        <label>Realm Name</label>
         <property>realm_name</property>
         <documentation>Name of the user realm.</documentation>
         <required>1</required>

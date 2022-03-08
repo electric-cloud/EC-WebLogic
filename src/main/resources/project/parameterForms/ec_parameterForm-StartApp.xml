@@ -20,7 +20,7 @@
 
   <formElement>
     <type>entry</type>
-    <label>WLST Absolute Path:</label>
+    <label>WLST script absolute path</label>
     <property>wlstabspath</property>
     <required>0</required>
     <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
@@ -29,7 +29,7 @@
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>Configuration Name:</label>
+    <label>Configuration Name</label>
     <!-- Improvements for CEV-18687 -->
     <configuration>1</configuration>
     <!-- End of improvements for CEV-18687 -->
@@ -42,7 +42,7 @@
 
   <formElement>
     <type>entry</type>
-    <label>Application Name:</label>
+    <label>Application Name</label>
     <property>appname</property>
     <documentation>
       Name of the application to start. i.e: 'webapp'.
@@ -52,7 +52,7 @@
 
   <formElement>
       <type>entry</type>
-      <label>Application Version:</label>
+      <label>Application Version</label>
       <property>version_identifier</property>
       <documentation>
           Specific application version to be started.
@@ -61,7 +61,7 @@
   </formElement>
   <formElement>
       <type>textarea</type>
-      <label>Additional options:</label>
+      <label>Additional options</label>
       <property>additional_options</property>
       <documentation>
           Additional options for startApplication API. (See <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="https://docs.oracle.com/middleware/12212/wls/WLSTC/reference.htm#WLSTC119">deploy</a> function for reference).

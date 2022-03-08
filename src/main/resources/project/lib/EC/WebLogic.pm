@@ -741,7 +741,7 @@ sub configurationErrorWithSuggestions {
 
     my $suggestions = q{Reasons could be due to one or more of the following. Please ensure they are correct and try again.:
 1. WebLogic URL - Is your URL complete and reachable?
-2. WLST Script Absolute Path  - Is your Path to the Script correct?
+2. WLST script absolute path  - Is your path to the script correct?
 3. Test Resource - Is your Test resource correctly wired with CloudBees CD?  Is your Test Resource correctly setup with WebLogic?
 4. Credentials - Are your credentials correct? Are you able to use these credentials to log in to WebLogic using its console?
 };

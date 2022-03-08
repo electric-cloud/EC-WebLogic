@@ -19,7 +19,7 @@
     <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#CreateOrUpdateConnectionFactory</help>
     <formElement>
         <type>entry</type>
-        <label>Configuration Name:</label>
+        <label>Configuration Name</label>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
         <!-- End of improvements for CEV-18687 -->
@@ -31,20 +31,20 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Connection Factory Name:</label>
+        <label>Connection Factory Name</label>
         <property>cf_name</property>
         <documentation>Unique name of the Connection Factory that is created.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>JMS Module Name:</label>
+        <label>JMS Module Name</label>
         <property>jms_module_name</property>
         <documentation>Name of the JMS module in which the Connection Factory is created.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
-        <label>Subscription Sharing Policy:</label>
+        <label>Subscription Sharing Policy</label>
         <property>cf_sharing_policy</property>
         <type>select</type>
         <option><name>Exclusive</name><value>exclusive</value></option>
@@ -54,7 +54,7 @@
         </documentation>
     </formElement>
     <formElement>
-        <label>Client ID Policy:</label>
+        <label>Client ID Policy</label>
         <property>cf_client_id_policy</property>
         <type>select</type>
         <option><name>Restricted</name><value>restricted</value></option>
@@ -65,14 +65,14 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>JNDI Name:</label>
+        <label>JNDI Name</label>
         <property>jndi_name</property>
         <documentation>JNDI Name is used to lookup the Connection factory using JNDI lookup. If the connection factory is created without passing this parameter, it can be only used in an Application Scoped context.</documentation>
         <required>0</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Maximum Messages per Session:</label>
+        <label>Maximum Messages per Session</label>
         <property>cf_max_messages_per_session</property>
         <documentation>This  limit specifies the number of messages that can be queued for an asynchronous session. Default value  is 10.</documentation>
         <value>10</value>
@@ -80,7 +80,7 @@
     </formElement>
     <formElement>
         <type>checkbox</type>
-        <label>XA Connection Factory Enabled?:</label>
+        <label>XA Connection Factory Enabled?</label>
         <property>cf_xa_enabled</property>
         <documentation>Indicates if this connection factory should  create XA queues and XA topics in order to accommodate JTA aware transactions. Default is Yes.</documentation>
         <checkedValue>1</checkedValue>
@@ -90,14 +90,14 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Subdeployment Name:</label>
+        <label>Subdeployment Name</label>
         <property>subdeployment_name</property>
         <documentation>Name of Subdeployment. Required only if you do not  want default targeting and instead want to use advanced targeting.</documentation>
         <required>0</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Target WLS Instance List:</label>
+        <label>Target WLS Instance List</label>
         <property>wls_instance_list</property>
         <documentation>Comma delimited set of Weblogic Server instances (Standalone or cluster) to which the Connection Factory would be targeted to.
         Required only if Subdeployment Name is specified.</documentation>
@@ -109,7 +109,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Target JMS Server List:</label>
+        <label>Target JMS Server List</label>
         <property>jms_server_list</property>
         <documentation>Comma delimited set of JMS Servers to which the Connection Factory would be targeted to.
 Required only if Subdeployment Name is specified. </documentation>
@@ -117,7 +117,7 @@ Required only if Subdeployment Name is specified. </documentation>
     </formElement>
     <formElement>
         <type>select</type>
-        <label>Update Action:</label>
+        <label>Update Action</label>
         <property>update_action</property>
         <documentation>This parameter controls as to what the Update Action should be when a Connection Factory with the same name exists:
 Do Nothing  (Default) -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
@@ -147,7 +147,7 @@ This parameter controls as to what the Update Action should be when a Connection
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>Additional Options:</label>
+        <label>Additional Options</label>
         <required>0</required>
         <documentation>Use this option to pass related parameters that pertain to Delivery, Client, Transaction or Flow Control. E.g., DefaultDeliveryParams.DefaultPriority=5</documentation>
         <htmlDocumentation>

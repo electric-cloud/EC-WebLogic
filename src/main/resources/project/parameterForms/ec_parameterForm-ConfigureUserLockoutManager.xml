@@ -19,7 +19,7 @@
     <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#ConfigureUserLockoutManager</help>
     <formElement>
         <type>entry</type>
-        <label>WLST Absolute Path:</label>
+        <label>WLST script absolute path</label>
         <property>wlst_abs_path</property>
         <required>0</required>
         <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
@@ -28,7 +28,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Configuration Name:</label>
+        <label>Configuration Name</label>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
         <!-- End of improvements for CEV-18687 -->
@@ -40,21 +40,21 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Lockout Threshold:</label>
+        <label>Lockout Threshold</label>
         <property>lockout_threshold</property>
         <documentation>The maximum number of consecutive invalid login attempts that can occur before a user's account is locked out. Minimum value: 1, Maximum value: 2147483647.</documentation>
         <required>0</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Lockout Duration:</label>
+        <label>Lockout Duration</label>
         <property>lockout_duration</property>
         <documentation>The number of minutes that a user's account is locked out. Minimum value: 0, Maximum value: 2147483647.</documentation>
         <required>0</required>
     </formElement>
     <formElement>
         <type>checkbox</type>
-        <label>Lockout Enabled:</label>
+        <label>Lockout Enabled</label>
         <property>lockout_enabled</property>
         <required>0</required>
         <documentation>Specifies whether the server locks users out when there are invalid login attempts on their account.</documentation>

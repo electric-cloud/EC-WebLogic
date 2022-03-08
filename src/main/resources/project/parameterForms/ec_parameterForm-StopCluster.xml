@@ -19,7 +19,7 @@
     <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#StopCluster</help>
     <formElement>
         <type>entry</type>
-        <label>WLST Absolute Path:</label>
+        <label>WLST script absolute path</label>
         <property>wlstabspath</property>
         <required>0</required>
         <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
@@ -28,7 +28,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Configuration Name:</label>
+        <label>Configuration Name</label>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
         <!-- End of improvements for CEV-18687 -->
@@ -44,7 +44,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Cluster Name:</label>
+        <label>Cluster Name</label>
         <property>clustername</property>
         <documentation>
             Name of the cluster to stop. i.e: 'mycluster'.
@@ -53,7 +53,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Shutdown Timeout:</label>
+        <label>Shutdown Timeout</label>
         <property>shutdownTimeout</property>
         <documentation>
             Timeout in seconds for cluster shutdown.
@@ -63,7 +63,7 @@
     </formElement>
     <formElement>
         <type>checkbox</type>
-        <label>Force Shutdown?:</label>
+        <label>Force Shutdown?</label>
         <property>forceShutdown</property>
         <checkedValue>1</checkedValue>
         <uncheckedValue>0</uncheckedValue>
@@ -75,7 +75,7 @@
     </formElement>
     <formElement>
         <type>checkbox</type>
-        <label>Ignore Sessions?:</label>
+        <label>Ignore Sessions?</label>
         <property>ignoreSessions</property>
         <checkedValue>1</checkedValue>
         <uncheckedValue>0</uncheckedValue>
