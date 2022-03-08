@@ -22,7 +22,10 @@
     <label>WLST script absolute path</label>
     <property>wlstabspath</property>
     <required>1</required>
-    <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
+        <documentation>
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        </documentation>
   </formElement>
   <formElement>
     <type>entry</type>

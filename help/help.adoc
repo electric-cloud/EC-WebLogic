@@ -70,7 +70,10 @@ To create plugin configurations in {CD}, do these steps:
 |__**WebLogic URL**__ | URL of WebLogic Server (must include protocol, server and port). Two protocols are supported: t3 and t3s, e.g. t3://weblogic:7001.
 
 
-|__**WLST script absolute path**__ | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+|__**WLST script absolute path**__ | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 |JAVA_HOME | JAVA_HOME environment variable, i.e. path to bin, where java executable is located. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, JAVA_VENDOR should be also set.
@@ -124,7 +127,10 @@ Create a cluster.
 |===
 |Parameter |Description
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
@@ -159,7 +165,10 @@ Create a domain
 |===
 |Parameter |Description
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
@@ -200,7 +209,10 @@ Create a Managed Server.
 |===
 |Parameter |Description
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
@@ -235,7 +247,10 @@ Add server to cluster.
 |===
 |Parameter |Description
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
@@ -267,7 +282,10 @@ Delete a cluster.
 |===
 |Parameter |Description
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
@@ -296,7 +314,10 @@ Delete a Managed Server.
 |===
 |Parameter |Description
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
@@ -334,7 +355,10 @@ Starts a WebLogic Admin Server
 | __**Config name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**WLST script absolute path**__ | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)
+| __**WLST script absolute path**__ | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | Maximum elapsed time | Defines the maximum time in seconds that the job will try to check into the server. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).
@@ -360,7 +384,10 @@ Starts a cluster
 |===
 |Parameter |Description
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
@@ -408,7 +435,10 @@ Starts a WebLogic Managed Server
 | __**Admin Server URL**__ | URL from the Admin Server (including protocol and port). (Required)
 
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | Maximum elapsed time | Defines the maximum time in seconds that the job will try to check into the server. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).
@@ -490,7 +520,10 @@ Stops a cluster
 |===
 |Parameter |Description
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Configuration name**__ | 
@@ -582,7 +615,10 @@ Stop the WebLogic Node Manager
 | __**Domain Path**__ | Path of the domain directory to which you want to save the Node Manager secret file (nm_password.properties) and SerializedSystemIni.dat file. This argument defaults to the directory in which WLST was started.
 
 
-| __**WLST script absolute path**__ | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)
+| __**WLST script absolute path**__ | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Node Manage Type**__ | Type of the Node Manager server. This argument defaults to ssl.
@@ -614,7 +650,10 @@ Suspends the provided server
 | __**Configuration**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Server name**__ | Name of the server to suspend. (Required)
@@ -655,7 +694,10 @@ Resumes the provided server
 | __**Configuration**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Server name**__ | Name of the server to resume. (Required)
@@ -689,7 +731,10 @@ Deploys or redeploys an application or module
         
 
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Application name**__ | Deployment name to assign to a newly-deployed application or standalone module. i.e: 'webapp'.
@@ -845,7 +890,10 @@ Update a configuration of an already deployed app.
 |===
 |Parameter |Description
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
@@ -899,7 +947,10 @@ Stops the deployment unit and removes staged files from target servers.
 | __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Application name**__ | Name of the application to undeploy. i.e: 'webapp'.
@@ -949,7 +1000,10 @@ Update an already deployed app. (DEPRECATED)
 |===
 |Parameter |Description
 
-| __**WLST script absolute path**__ | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| __**WLST script absolute path**__ | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
@@ -1039,7 +1093,10 @@ Starts an application
 |===
 |Parameter |Description
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
@@ -1080,7 +1137,10 @@ Stop an application
 |===
 |Parameter |Description
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Application nameConfiguration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
@@ -1194,7 +1254,10 @@ Deletes a Datasource
 | __**Configuration**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Datasource name**__ | 
@@ -1225,7 +1288,10 @@ Creates a Datasource (DEPRECATED)
 | __**Configuration**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**WLST script absolute path**__ | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| __**WLST script absolute path**__ | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Datasource name**__ | A unique name that identifies this Datasource in the WebLogic domain.
@@ -1828,7 +1894,10 @@ Create a user
 |===
 |Parameter |Description
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
@@ -1869,7 +1938,10 @@ Create a group
 |===
 |Parameter |Description
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
@@ -1910,7 +1982,10 @@ Add a user to group.
 |===
 |Parameter |Description
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
@@ -1948,7 +2023,10 @@ Change password of a user.
 |===
 |Parameter |Description
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
@@ -1986,7 +2064,10 @@ Remove a user from group.
 |===
 |Parameter |Description
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
@@ -2024,7 +2105,10 @@ Configure User Lockout Manager.
 |===
 |Parameter |Description
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
@@ -2059,7 +2143,10 @@ Unlock an user account.
 |===
 |Parameter |Description
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Server nameConfiguration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
@@ -2094,7 +2181,10 @@ Delete a group
 |===
 |Parameter |Description
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
@@ -2129,7 +2219,10 @@ Delete a user
 |===
 |Parameter |Description
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
@@ -2167,7 +2260,10 @@ Check the status of the given server cluster name.
 | __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| WLST script absolute path | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| WLST script absolute path | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | Maximum elapsed time | Defines the maximum time in seconds that the job will try to check into the cluster. Blank implies no wait time (URL only checked one time).
@@ -2202,7 +2298,10 @@ Check the status of the given server URL
 | __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
 
 
-| __**WLST script absolute path**__ | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| __**WLST script absolute path**__ | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | Maximum elapsed time | Defines the maximum time in seconds that the job will try to check into the server. Blank implies no wait time (URL only checked one time).
@@ -2234,7 +2333,10 @@ Runs Jython scripts using weblogic.WLST
 |===
 |Parameter |Description
 
-| __**WLST script absolute path**__ | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| __**WLST script absolute path**__ | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | Script File Absolute Path | 
@@ -2285,7 +2387,10 @@ Creates a domain template from the existing domain.
 |===
 |Parameter |Description
 
-| __**WLST script absolute path**__ | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.
+| __**WLST script absolute path**__ | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | __**Domain Directory**__ | Name of the domain directory from which you want to create the template.
@@ -2445,7 +2550,10 @@ ConfigurationParametersHolder
 | __**WebLogic URL**__ | URL of WebLogic Server (must include protocol, server and port). Two protocols are supported: t3 and t3s, e.g. t3://weblogic:7001.
 
 
-| __**WLST script absolute path**__ | Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+| __**WLST script absolute path**__ | 
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        
 
 
 | JAVA_HOME | JAVA_HOME environment variable, i.e. path to bin, where java executable is located. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, JAVA_VENDOR should be also set.

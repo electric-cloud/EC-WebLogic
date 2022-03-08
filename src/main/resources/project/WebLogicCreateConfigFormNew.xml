@@ -31,7 +31,10 @@ limitations under the License.
         <label>WLST script absolute path</label>
         <property>wlst_path</property>
         <value></value>
-        <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.</documentation>
+        <documentation>
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        </documentation>
         <required>1</required>
     </formElement>
 
