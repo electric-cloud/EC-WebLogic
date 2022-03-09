@@ -19,7 +19,7 @@
   <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#CreateOrUpdateJMSModuleSubdeployment</help>
   <formElement>
     <type>entry</type>
-    <label>Configuration:</label>
+    <label>Configuration</label>
     <!-- Improvements for CEV-18687 -->
     <configuration>1</configuration>
     <!-- End of improvements for CEV-18687 -->
@@ -31,28 +31,28 @@
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>JMS Module Name:</label>
+    <label>JMS Module name</label>
     <property>ecp_weblogic_jms_module_name</property>
     <documentation>Unique name of the JMS Module in which the Sub-Deployment should be created. Note that this module should exist already for this Procedure to succeed.</documentation>
     <required>1</required>
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>Subdeployment Name:</label>
+    <label>Subdeployment name</label>
     <required>1</required>
     <property>ecp_weblogic_subdeployment_name</property>
     <documentation>Name of the Subdeployment to be created or updated.</documentation>
   </formElement>
   <formElement>
     <type>textarea</type>
-    <label>Target WLS Instance List:</label>
+    <label>Target WLS Instance List</label>
     <required>1</required>
     <property>ecp_weblogic_subdeployment_target_list</property>
     <documentation>1 or more comma separated list of Servers or Clusters that constitute the Sub-Deployment. In essence a Sub-Deployment provides a way to group multiple targets to which JMS Resources can be created on.</documentation>
   </formElement>
   <formElement>
     <type>select</type>
-    <label>Update Action:</label>
+    <label>Update Action</label>
     <property>ecp_weblogic_update_action</property>
     <documentation>This parameter controls as to what the Update Action should be when a JMS Subdeployment with the same name exists :
 Do Nothing  (Default) -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.

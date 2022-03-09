@@ -20,7 +20,7 @@
 
 	<formElement>
 		<type>entry</type>
-		<label>Configuration:</label>
+		<label>Configuration</label>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
         <!-- End of improvements for CEV-18687 -->
@@ -33,17 +33,20 @@
 
 	<formElement>
 		<type>entry</type>
-		<label>WLST Absolute Path:</label>
+		<label>WLST script absolute path</label>
 		<property>wlstabspath</property>
 		<required>0</required>
-		<documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)</documentation>
+        <documentation>
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        </documentation>
         <propertyReference type="property">/plugins/@PLUGIN_NAME@/project/weblogic_cfgs/$configname/wlst_path</propertyReference>
         <dependsOn>configname</dependsOn>
 	</formElement>
 
 	<formElement>
 		<type>entry</type>
-		<label>Server Name:</label>
+		<label>Server name</label>
 		<property>servername</property>
 		<documentation>Name of the server to resume. (Required)</documentation>
 		<required>1</required>
@@ -51,7 +54,7 @@
 
 	<formElement>
 		<type>checkbox</type>
-		<label>Block:</label>
+		<label>Block</label>
 		<property>block</property>
         <checkedValue>1</checkedValue>
         <uncheckedValue>0</uncheckedValue>

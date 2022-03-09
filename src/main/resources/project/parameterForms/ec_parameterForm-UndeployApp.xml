@@ -20,7 +20,7 @@
 
     <formElement>
         <type>entry</type>
-        <label>Configuration Name:</label>
+        <label>Configuration name</label>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
         <!-- End of improvements for CEV-18687 -->
@@ -33,17 +33,20 @@
 
     <formElement>
         <type>entry</type>
-        <label>Wlst Script Absolute Path:</label>
+        <label>WLST script absolute path</label>
         <property>wlstabspath</property>
         <required>0</required>
-        <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
+        <documentation>
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        </documentation>
         <propertyReference type="property">/plugins/@PLUGIN_NAME@/project/weblogic_cfgs/$configname/wlst_path</propertyReference>
         <dependsOn>configname</dependsOn>
     </formElement>
 
     <formElement>
         <type>entry</type>
-        <label>Application Name:</label>
+        <label>Application name</label>
         <property>appname</property>
         <documentation>Name of the application to undeploy. i.e: 'webapp'.</documentation>
         <required>1</required>
@@ -68,7 +71,7 @@
 
     <formElement>
         <type>entry</type>
-        <label>Application Version:</label>
+        <label>Application version</label>
         <property>version_identifier</property>
         <documentation>
             Specifies a single application version to be undeployed. See <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="http://docs.oracle.com/middleware/12212/wls/DEPGD/redeploy.htm#DEPGD270">Requirements and Restrictions for Production Redeployment</a> for reference.
@@ -77,7 +80,7 @@
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>Additional options:</label>
+        <label>Additional options</label>
         <property>additional_options</property>
         <documentation>Additional options for undeploy API call. (See <a style="text-decoration: none !important; border-bottom-style: dashed; border-bottom-width: thin; font-size: inherit; color: inherit; font-family: inherit; border-color: #d8d8d8; border-spacing: 2px;" target="_blank" href="https://docs.oracle.com/middleware/12212/wls/WLSTC/reference.htm#WLSTC119">deploy</a> function for reference).
         </documentation>
@@ -85,7 +88,7 @@
     </formElement>
     <formElement>
         <type>checkbox</type>
-        <label>Give Up on Error?:</label>
+        <label>Give Up on Error?</label>
         <property>give_up</property>
         <checkedValue>1</checkedValue>
         <uncheckedValue>0</uncheckedValue>

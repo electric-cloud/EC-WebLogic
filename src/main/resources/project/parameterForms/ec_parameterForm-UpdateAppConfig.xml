@@ -19,16 +19,19 @@
     <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#UpdateAppConfig</help>
     <formElement>
         <type>entry</type>
-        <label>WLST Absolute Path:</label>
+        <label>WLST script absolute path</label>
         <property>wlst_abs_path</property>
         <required>0</required>
-        <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
+        <documentation>
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        </documentation>
         <propertyReference type="property">/plugins/@PLUGIN_NAME@/project/weblogic_cfgs/$configname/wlst_path</propertyReference>
         <dependsOn>configname</dependsOn>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Configuration Name:</label>
+        <label>Configuration name</label>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
         <!-- End of improvements for CEV-18687 -->
@@ -40,13 +43,13 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Application Name:</label>
+        <label>Application name</label>
         <property>app_name</property>
         <documentation>Name of the application which is to be updated.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
-        <label>Application version:</label>
+        <label>Application version</label>
         <property>version_identifier</property>
         <type>entry</type>
         <required>0</required>
@@ -54,20 +57,20 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Plan Path:</label>
+        <label>Plan Path</label>
         <property>plan_path</property>
         <documentation>Absolute path to the new deployment plan file.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>Deployment Plan Content:</label>
+        <label>Deployment Plan Content</label>
         <property>deployment_plan</property>
         <documentation>Content of the deployment plan. Required, if the file mentioned in "Plan Path" doesn't exist or empty.</documentation>
         <required>0</required>
     </formElement>
     <formElement>
-        <label>Overwrite deployment plan?:</label>
+        <label>Overwrite deployment plan?</label>
         <property>overwrite_deployment_plan</property>
         <type>checkbox</type>
         <checkedValue>1</checkedValue>
@@ -84,7 +87,7 @@
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>Additional Options:</label>
+        <label>Additional options</label>
         <property>additional_options</property>
         <documentation>Comma-separated list of deployment options, specified as name-value pairs. For example: block=false,createPlan=true</documentation>
         <required>0</required>

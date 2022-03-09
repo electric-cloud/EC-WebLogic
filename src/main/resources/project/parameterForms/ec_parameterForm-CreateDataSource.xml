@@ -19,7 +19,7 @@
   <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#CreateDatasource</help>
   <formElement>
     <type>entry</type>
-    <label>Configuration:</label>
+    <label>Configuration</label>
     <!-- Improvements for CEV-18687 -->
     <configuration>1</configuration>
     <!-- End of improvements for CEV-18687 -->
@@ -31,37 +31,40 @@
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>WLST Absolute Path:</label>
+    <label>WLST script absolute path</label>
     <property>wlstabspath</property>
     <required>1</required>
-    <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
+        <documentation>
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        </documentation>
     <propertyReference type="property">/plugins/@PLUGIN_NAME@/project/weblogic_cfgs/$configname/wlst_path</propertyReference>
     <dependsOn>configname</dependsOn>
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>Datasource Name:</label>
+    <label>Datasource name</label>
     <property>dsname</property>
     <documentation>A unique name that identifies this Datasource in the WebLogic domain.</documentation>
     <required>1</required>
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>Database:</label>
+    <label>Database</label>
     <property>dsdbname</property>
     <documentation>The database used by the Datasource.</documentation>
     <required>1</required>
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>Server Instance:</label>
+    <label>Server Instance</label>
     <property>target</property>
     <documentation>Instance name of the Server to include the Datasource. i.e: 'AdminServer'.</documentation>
     <required>1</required>
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>Datasource JNDI:</label>
+    <label>Datasource JNDI</label>
     <property>jndiname</property>
     <documentation>
       The JNDI path to where this Datasource is bound. By default, the JNDI name is the name of the Datasource. Applications that look up the JNDI path will get a "javax.sql.Datasource" instance that corresponds to this Datasource.
@@ -70,7 +73,7 @@
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>Datasource Driver Class:</label>
+    <label>Datasource Driver Class</label>
     <property>driverclass</property>
     <documentation>
       The full package name of JDBC driver class used to create the physical database connections in the connection pool. (Note that this driver class must be in the classpath of any server to which it is deployed).
@@ -78,7 +81,7 @@
     <required>1</required>
   </formElement>
   <formElement><type>entry</type>
-  <label>Datasource URL:</label>
+  <label>Datasource URL</label>
   <property>driverurl</property>
   <documentation>
     The URL of the database to connect to. The format of the URL varies by JDBC driver. The URL is passed to the JDBC driver to create the physical database connections.
@@ -87,14 +90,14 @@
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>Database User:</label>
+    <label>Database User</label>
     <property>username</property>
     <documentation>The user to connect to the database.</documentation>
     <required>1</required>
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>Database Password:</label>
+    <label>Database Password</label>
     <property>password</property>
     <documentation>
       The password attribute passed to the JDBC driver when creating physical database connections. The value is stored in an encrypted form in the descriptor file and when displayed on the Administration Console.

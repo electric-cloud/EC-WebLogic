@@ -19,7 +19,7 @@
     <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#DeleteConnectionFactory.xml</help>
     <formElement>
         <type>entry</type>
-        <label>Configuration Name:</label>
+        <label>Configuration name</label>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
         <!-- End of improvements for CEV-18687 -->
@@ -31,14 +31,14 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Connection Factory Name:</label>
+        <label>Connection Factory name</label>
         <property>cf_name</property>
         <documentation>Unique name of the Connection Factory that is going to be deleted. If the Connection Factory with the specified name does not exist, the procedure will fail.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>JMS Module Name:</label>
+        <label>JMS Module name</label>
         <property>jms_module_name</property>
         <documentation>Name of the JMS module in which the Connection Factory was created.</documentation>
         <required>1</required>

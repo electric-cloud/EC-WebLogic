@@ -19,7 +19,7 @@
   <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#DeleteDatasource</help>
   <formElement>
     <type>entry</type>
-    <label>Configuration:</label>
+    <label>Configuration</label>
     <!-- Improvements for CEV-18687 -->
     <configuration>1</configuration>
     <!-- End of improvements for CEV-18687 -->
@@ -31,16 +31,19 @@
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>WLST Absolute Path:</label>
+    <label>WLST script absolute path</label>
     <property>wlstabspath</property>
     <required>0</required>
     <propertyReference type="property">/plugins/@PLUGIN_NAME@/project/weblogic_cfgs/$configname/wlst_path</propertyReference>
     <dependsOn>configname</dependsOn>
-    <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
+        <documentation>
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        </documentation>
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>Datasource Name:</label>
+    <label>Datasource name</label>
     <property>dsname</property>
     <documentation>
       The unique name that identifies this Datasource in the WebLogic domain to delete it.

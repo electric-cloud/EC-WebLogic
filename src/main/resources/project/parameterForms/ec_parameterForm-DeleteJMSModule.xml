@@ -19,7 +19,7 @@
   <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#CreateDatasource</help>
   <formElement>
     <type>entry</type>
-    <label>Configuration:</label>
+    <label>Configuration</label>
     <!-- Improvements for CEV-18687 -->
     <configuration>1</configuration>
     <!-- End of improvements for CEV-18687 -->
@@ -31,7 +31,7 @@
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>JMS Module Name:</label>
+    <label>JMS Module name</label>
     <property>ecp_weblogic_jms_module_name</property>
     <documentation>Unique name of the JMS Module that needs to be deleted.</documentation>
     <required>1</required>

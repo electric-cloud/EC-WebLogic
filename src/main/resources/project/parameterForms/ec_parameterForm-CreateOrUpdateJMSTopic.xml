@@ -19,7 +19,7 @@
     <help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateOrUpdateJMSTopic.xml</help>
     <formElement>
         <type>entry</type>
-        <label>Configuration Name:</label>
+        <label>Configuration name</label>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
         <!-- End of improvements for CEV-18687 -->
@@ -31,7 +31,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>JMS Topic Name:</label>
+        <label>JMS Topic name</label>
         <property>ecp_weblogic_jms_topic_name</property>
         <documentation>Unique name of the JMS Topic that is going to be created or updated.
 </documentation>
@@ -39,7 +39,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>JMS Module Name:</label>
+        <label>JMS Module name</label>
         <property>ecp_weblogic_jms_module_name</property>
         <documentation>Name of the JMS module in which the JMS Topic is created. If there is already a JMS Topic with the specified name, it will be updated.
 </documentation>
@@ -47,7 +47,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>JNDI Name:</label>
+        <label>JNDI name</label>
         <property>ecp_weblogic_jndi_name</property>
         <documentation>JNDI Name is used to lookup the JMS Topic using JNDI lookup. If the JMS Topic is created without passing this parameter, it can be only used in an Application Scoped context.
 </documentation>
@@ -55,7 +55,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Subdeployment Name:</label>
+        <label>Subdeployment name</label>
         <property>ecp_weblogic_subdeployment_name</property>
         <documentation>Name of Subdeployment. Required in order to deploy the Topic. If this is not specified the Topic will not be usable.
 </documentation>
@@ -63,7 +63,7 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Target JMS Server:</label>
+        <label>Target JMS Server</label>
         <property>ecp_weblogic_target_jms_server</property>
         <documentation>JMS Server  to which the Topic  would be targeted to. Required only if Subdeployment Name is specified.
 </documentation>
@@ -71,7 +71,7 @@
     </formElement>
     <formElement>
         <type>select</type>
-        <label>Update Action:</label>
+        <label>Update Action</label>
         <property>ecp_weblogic_update_action</property>
         <documentation>This parameter controls as to what the Update Action should be when a Connection Factory with the same name exists:
 Do Nothing  (Default) -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
@@ -102,7 +102,7 @@ This parameter controls as to what the Update Action should be when a JMS Topic 
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>Additional Options:</label>
+        <label>Additional options</label>
         <required>0</required>
         <documentation>Use this option to specify general or advanced parameters, message thresholds and quota, message delivery overrides, message logging and message delivery failure options, topic multicast parameters. If an option belongs to a groupm, they are separated by dot '.', e.g., Multicast.MulticastTimeToLive=5. Several options are separated by a newline:
 MessagingPerformancePreference=30

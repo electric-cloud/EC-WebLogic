@@ -21,14 +21,17 @@
         <type>entry</type>
         <propertyReference type="property">/plugins/@PLUGIN_NAME@/project/weblogic_cfgs/$configname/wlst_path</propertyReference>
         <dependsOn>configname</dependsOn>
-        <label>WLST Absolute Path:</label>
+        <label>WLST script absolute path</label>
         <property>wlst_abs_path</property>
         <required>0</required>
-        <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
+        <documentation>
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        </documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Configuration Name:</label>
+        <label>Configuration name</label>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
         <!-- End of improvements for CEV-18687 -->
@@ -40,21 +43,21 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>User Name:</label>
+        <label>User name</label>
         <property>user_name</property>
         <documentation>Name of the user to be deleted.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Domain Name:</label>
+        <label>Domain name</label>
         <property>domain_name</property>
         <documentation>Name of the user domain.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Realm Name:</label>
+        <label>Realm name</label>
         <property>realm_name</property>
         <documentation>Name of the user realm.</documentation>
         <required>1</required>

@@ -19,16 +19,19 @@
     <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#CreateUser</help>
     <formElement>
         <type>entry</type>
-        <label>WLST Absolute Path:</label>
+        <label>WLST script absolute path</label>
         <property>wlst_abs_path</property>
         <required>0</required>
-        <documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'.</documentation>
+        <documentation>
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        </documentation>
         <propertyReference type="property">/plugins/@PLUGIN_NAME@/project/weblogic_cfgs/$configname/wlst_path</propertyReference>
         <dependsOn>configname</dependsOn>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Configuration Name:</label>
+        <label>Configuration name</label>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
         <!-- End of improvements for CEV-18687 -->
@@ -40,35 +43,35 @@
     </formElement>
     <formElement>
         <type>credential</type>
-        <label>User Credentials:</label>
+        <label>User Credentials</label>
         <property>user_credentials</property>
         <documentation>User credentials(Username and password).</documentation>
         <required>1</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Domain Name:</label>
+        <label>Domain name</label>
         <property>domain_name</property>
         <documentation>Name of the user domain.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Realm Name:</label>
+        <label>Realm name</label>
         <property>realm_name</property>
         <documentation>Name of the user realm.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>User Description:</label>
+        <label>User Description</label>
         <property>desc</property>
         <documentation>Description about the user.</documentation>
         <required>0</required>
     </formElement>
     <formElement>
         <type>checkbox</type>
-        <label>Overwrite Existing User:</label>
+        <label>Overwrite Existing User</label>
         <property>overwrite_existing_user</property>
         <required>0</required>
         <documentation>If enabled it will delete already existing user of the same name and recreate new user.</documentation>

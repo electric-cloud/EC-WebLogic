@@ -19,42 +19,42 @@
     <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#Discover</help>
     <formElement>
         <type>entry</type>
-        <label>Resource Name:</label>
+        <label>Resource name</label>
         <property>ecp_weblogic_resourceName</property>
         <required>0</required>
         <documentation>Name of the CloudBees CD resource that represents the WebLogic environment that needs to be discovered.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Resource Hostname:</label>
+        <label>Resource Hostname</label>
         <property>ecp_weblogic_hostname</property>
         <required>0</required>
         <documentation>Hostname of a machine with WebLogic and CloudBees CD Agent running on it. Either Resource hostname (and port) or Resource Name should be specified.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Resource Port:</label>
+        <label>Resource Port</label>
         <property>ecp_weblogic_resPort</property>
         <required>0</required>
         <documentation>Port of CloudBees CD agent running on the machine. Default is 7800.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Oracle Home:</label>
+        <label>Oracle Home</label>
         <property>ecp_weblogic_oracleHome</property>
         <required>0</required>
         <documentation>Installation path of the WebLogic server, e.g. /home/oracle. Not required if WLST Path parameter is specified.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>WLST Path:</label>
+        <label>WLST Path</label>
         <property>ecp_weblogic_wlstPath</property>
         <required>0</required>
         <documentation>Absolute Path to WLST utility. If not provided, the procedure will look for it, in known locations. Not required if Oracle Home is specified.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Weblogic Connection Hostname:</label>
+        <label>Weblogic Connection Hostname</label>
         <property>ecp_weblogic_connectionHostname</property>
         <required>0</required>
         <value>localhost</value>
@@ -62,7 +62,7 @@
     </formElement>
     <formElement>
         <type>select</type>
-        <label>Weblogic Connection Protocol:</label>
+        <label>Weblogic Connection Protocol</label>
         <property>ecp_weblogic_connectionProtocol</property>
         <required>0</required>
         <value>t3</value>
@@ -78,42 +78,42 @@
     </formElement>
     <formElement>
         <type>credential</type>
-        <label>WebLogic Credentials:</label>
+        <label>WebLogic Credentials</label>
         <property>ecp_weblogic_credential</property>
         <required>1</required>
         <documentation>Username and password to connect to WebLogic server.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Environment Project Name:</label>
+        <label>Environment Project name</label>
         <property>ecp_weblogic_envProjectName</property>
         <required>0</required>
         <documentation>If specified will create Project for the Environment.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Environment Name:</label>
+        <label>Environment name</label>
         <property>ecp_weblogic_envName</property>
         <required>0</required>
         <documentation>If specified, will be used to create CloudBees CD environment.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Application Project Name:</label>
+        <label>Application Project name</label>
         <property>ecp_weblogic_appProjName</property>
         <required>0</required>
         <documentation>Project name to create Application based on discovered objects.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Application Name:</label>
+        <label>Application name</label>
         <property>ecp_weblogic_appName</property>
         <required>0</required>
         <documentation>Application for placing discovered objects.</documentation>
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>Object Names:</label>
+        <label>Object Names</label>
         <property>ecp_weblogic_objectNames</property>
         <required>0</required>
         <htmlDocumentation>Objects to be retrieved from the WL Server in type:name pairs, e.g. AppDeployment:HelloWorld. For JMS Resource the name of the resource should be prefixed by JMS Module Name: helloJMSModule:helloQueue.

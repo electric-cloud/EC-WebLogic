@@ -19,7 +19,7 @@
   <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#StartNodeManager</help>
   <formElement>
     <type>entry</type>
-    <label>Node Manager Script Location:</label>
+    <label>Node Manager Script Location</label>
     <property>scriptlocation</property>
     <documentation>
       Absolute path of the startNodeManager script, including filename and extension. i.e: '/Oracle/Middleware/wlserver_10.3/server/bin/startNodeManager.cmd'.
@@ -28,7 +28,7 @@
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>Maximum Elapsed Time:</label>
+    <label>Maximum elapsed time</label>
     <property>maxelapsedtime</property>
     <documentation>
       Defines the time in seconds that the job wait to test the status of the node manager. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).

@@ -19,7 +19,7 @@
   <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#RunDeployer</help>
   <formElement>
     <type>entry</type>
-    <label>Command To Use:</label>
+    <label>Command To Use</label>
     <property>commandtouse</property>
     <required>1</required>
     <documentation>
@@ -28,7 +28,7 @@
   </formElement>
   <formElement>
     <type>textarea</type>
-    <label>Java Parameters:</label>
+    <label>Java Parameters</label>
     <property>javaparams</property>
     <required>0</required>
     <documentation>
@@ -37,7 +37,7 @@
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>Configuration Name:</label>
+    <label>Configuration name</label>
     <!-- Improvements for CEV-18687 -->
     <configuration>1</configuration>
     <!-- End of improvements for CEV-18687 -->
@@ -52,21 +52,21 @@
   </formElement>
   <formElement>
     <type>textarea</type>
-    <label>Additional Commands:</label>
+    <label>Additional Commands</label>
     <property>additionalcommands</property>
     <documentation>Additional commands to be entered for weblogic.Deployer.</documentation>
     <required>0</required>
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>Java Absolute Path:</label>
+    <label>Java Absolute Path</label>
     <property>javapath</property>
     <required>1</required>
     <documentation>Absolute path of java. i.e: 'java', 'java.exe' or '/path/to/java'.</documentation>
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>Application Name:</label>
+    <label>Application name</label>
     <property>appname</property>
     <documentation>
       Name of the application to manage. i.e: 'webapp'.
@@ -75,7 +75,7 @@
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>setDomainEnv Script Absolute Path:</label>
+    <label>setDomainEnv Script Absolute Path</label>
     <property>envscriptpath</property>
     <documentation>
       Absolute path of the setDomainEnv script, including filename and extension. i.e: '/path/to/setDomainEnv.sh' or 'setDomainEnv.cmd'.
@@ -84,7 +84,7 @@
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>weblogic jar Absolute Path:</label>
+    <label>weblogic jar Absolute Path</label>
     <property>webjarpath</property>
     <documentation>
     Absolute path of the weblogic jar, needed to run the weblogic.Deployer in a free-mode. In Windows environment, if the jar is already added to the enviroment classpath variable, then is not necesary to include it. In Linux environment you must include the path. i.e: '/path/to/weblogic.jar' or '/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar'.</documentation>

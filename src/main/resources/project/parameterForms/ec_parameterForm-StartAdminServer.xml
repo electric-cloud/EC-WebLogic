@@ -19,7 +19,7 @@
 	<help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-weblogic#StartAdminServer</help>
 	<formElement>
 		<type>entry</type>
-		<label>Script Location:</label>
+		<label>Script Location</label>
 		<property>scriptlocation</property>
 		<documentation>Absolute path of the startWeblogic script, including filename and extension. i.e: '/path/to/startWeblogic.cmd'. (Required)</documentation>
 		<required>1</required>
@@ -27,7 +27,7 @@
 
 	<formElement>
 		<type>entry</type>
-		<label>Admin Server Instance Name:</label>
+		<label>Admin Server Instance name</label>
 		<property>admininstancename</property>
 		<required>1</required>
 		<documentation>Instance name of the Admin Server to start. i.e: 'AdminServer'. (Required)</documentation>
@@ -35,7 +35,7 @@
 
 	<formElement>
 		<type>entry</type>
-		<label>Config Name:</label>
+		<label>Config name</label>
 		<property>configname</property>
         <!-- Improvements for CEV-18687 -->
         <configuration>1</configuration>
@@ -50,15 +50,18 @@
 		<type>entry</type>
         <propertyReference type="property">/plugins/@PLUGIN_NAME@/project/weblogic_cfgs/$configname/wlst_path</propertyReference>
         <dependsOn>configname</dependsOn>
-		<label>WLST Absolute Path:</label>
+		<label>WLST script absolute path</label>
 		<property>wlstabspath</property>
 		<required>1</required>
-		<documentation>Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. (Required)</documentation>
+        <documentation>
+Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+NOTE: You need to install the agent to the machine that has access to the WLST script at least.
+        </documentation>
 	</formElement>
 
 	<formElement>
 		<type>entry</type>
-		<label>Maximum Elapsed Time:</label>
+		<label>Maximum elapsed time</label>
 		<property>maxelapsedtime</property>
 		<documentation>Defines the maximum time in seconds that the job will try to check into the server. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).</documentation>
 		<required>0</required>
