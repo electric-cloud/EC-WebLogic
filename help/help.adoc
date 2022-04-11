@@ -1,6 +1,6 @@
 Plugin version @PLUGIN_VERSION@
 
-Revised on April 06, 2022
+Revised on April 11, 2022
 
 
 
@@ -2605,6 +2605,7 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
 === . 3.6.1
 
 - Upgraded HttpClient library to v4.5.13.
+- Added session validation
 
 
 === . 3.6.0
