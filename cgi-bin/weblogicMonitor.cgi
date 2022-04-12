@@ -213,7 +213,6 @@ sub reportSuccess($) {
 # ------------------------------------------------------------------------
 sub validateUserSession() {
 
-    open my $fh, ">/tmp/log" or die $!;
     my $ec = new ElectricCommander({abortOnError => 0});
     $ec->login();
     if($ec->getError()) {
