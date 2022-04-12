@@ -1,5 +1,6 @@
 3.6.1:
   - Upgraded HttpClient library to v4.5.13.
+  - Added session validation
 3.6.0:
   - Added support for the new plugin configurations.
 3.5.3:
