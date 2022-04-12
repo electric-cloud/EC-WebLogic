@@ -214,12 +214,9 @@ sub reportSuccess($) {
 sub validateUserSession() {
 
     open my $fh, ">/tmp/log" or die $!;
-    print $fh "here";
     my $ec = new ElectricCommander({abortOnError => 0});
     $ec->login();
-    print $fh 'login';
     if($ec->getError()) {
-        print "Location: ../\n\n";
         exit 0;
     }
 }
