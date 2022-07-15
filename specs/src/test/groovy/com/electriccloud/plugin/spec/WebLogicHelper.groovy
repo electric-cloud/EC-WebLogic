@@ -411,12 +411,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
 
         publishArtifact(artifactName, '1.0', FILENAME)
 
-        // for some reason retrieving artifact doesn't work on docker container agent
-        // commenting problematic lines, changing to strict path
-
-//        def path = downloadArtifact(artifactName, getResourceName())
-
-        String path  = '/tmp/artifacts'
+        def path = downloadArtifact(artifactName, getResourceName())
 
         // Should be present (to initialize) but empty
         params.apppath = ''
