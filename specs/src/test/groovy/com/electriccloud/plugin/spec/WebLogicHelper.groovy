@@ -249,6 +249,10 @@ class WebLogicHelper extends PluginSpockTestSupport {
             publishCommand += "--fromDirectory ${resource.parentFile} --includePatterns $resName"
         }
         runCommand(publishCommand)
+
+        //Additionally change address of default repository due to issues with access from another docker container
+        String modifyRepository = "${command} modifyRepository default --url https://electricflow:8200"
+        runCommand(modifyRepository)
     }
 
 
@@ -406,6 +410,7 @@ class WebLogicHelper extends PluginSpockTestSupport {
         def projectName, def params, String artifactName = 'test:sample', String filename = FILENAME) {
 
         publishArtifact(artifactName, '1.0', FILENAME)
+
         def path = downloadArtifact(artifactName, getResourceName())
 
         // Should be present (to initialize) but empty
