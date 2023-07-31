@@ -54,7 +54,7 @@ To create plugin configurations in {PRODUCT}, do these steps:
 * Go to menu:Administration[Plugins] to open the Plugin Manager.
 * Find the @PLUGIN_NAME@ row.
 * Click *Configure* to open the
-     Configurations page.
+ Configurations page.
 * Click *Create Configuration* as per the description of parameters below.
 
 
@@ -67,30 +67,37 @@ To create plugin configurations in {PRODUCT}, do these steps:
 
 |__**Configuration name**__ | 
 
-|__**WebLogic URL**__ | URL of WebLogic Server (must include protocol, server and port). Two protocols are supported: t3 and t3s, e.g. t3://weblogic:7001.
+|__**WebLogic URL**__ | URL of WebLogic Server (must include protocol, server and port). Two protocols are supported: `t3` and `t3s`, e.g. `t3://weblogic:7001`.
 
 
-|__**WLST script absolute path**__ | 
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+|__**WLST script absolute path**__ a|
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
+
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
+  
 
 
-|JAVA_HOME | JAVA_HOME environment variable, i.e. path to bin, where java executable is located. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, JAVA_VENDOR should be also set.
+|JAVA_HOME a| `JAVA_HOME` environment variable, i.e. path to bin, where Java executable is located. This variable will be set every time procedure runs for the job environment. 
+
+IMPORTANT: The behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, `JAVA_VENDOR` should be also set.
 
 
-|JAVA_VENDOR | JAVA_VENDOR environment variable, use it to specify java vendor. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, the option JAVA_HOME should be also set. 
+|JAVA_VENDOR a| `JAVA_VENDOR` environment variable, use it to specify Java vendor. This variable will be set every time procedure runs for the job environment. 
+
+IMPORTANT: The behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, the option `JAVA_HOME` should be also set. 
 
 
-|MW_HOME | MW_HOME environment variable, use it to specify WebLogic Home directory. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances.
+|MW_HOME a| `MW_HOME` environment variable, use it to specify WebLogic Home directory. This variable will be set every time procedure runs for the job environment.
+
+IMPORTANT: The behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances.
 
 
 |Login as | Username and password to connect to WebLogic server.
 
 
 |Enable named sessions? | 
-            If checked, each WebLogic edit session will have unique name assigned. Named sessions are not supported by WebLogic server prior to 12 version. Defaults to false.
-        
+If selected, each WebLogic edit session will have unique name assigned. Named sessions are not supported by WebLogic server prior to version 12. Defaults to `false`.
+  
 
 
 |Test connection? | Check if connection should be established during config creation to validate credentials.
@@ -99,7 +106,9 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
 |Test connection resource | A resource which is used for the testing connection.
 
 
-|Debug level | Debug level, higher debug level - more debug messages. Warning: on debug level 10 and more passwords will be revealed in a procedure logs.Verbosity level of output.
+|Debug level a| Debug level, higher debug level - more debug messages.
+
+IMPORTANT: On debug level `10` and more, passwords will be revealed in a procedure `logs.Verbosity` level of output.
 
 
 |===
@@ -128,12 +137,12 @@ Create a cluster.
 |Parameter |Description
 
 | WLST script absolute path | 
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
+  
 
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**Cluster name**__ | Name of the cluster to be created.
@@ -165,22 +174,23 @@ Create a domain
 |===
 |Parameter |Description
 
-| WLST script absolute path | 
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+| WLST script absolute path a|
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
+
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
+  
 
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
-| __**User Credentials**__ | Credentials of the user(Username and password).
+| __**User Credentials**__ | Credentials of the user (Username and password).
 
 
 | __**Domain Template**__ | Name and location of the domain template from which you want to create a domain.
 
 
-| __**Domain Directory**__ | Name of the directory to which you want to write the domain configuration information. .
+| __**Domain Directory**__ | Name of the directory to which you want to write the domain configuration information.
 
 
 | Listen Address | Server Listen Address.
@@ -209,13 +219,14 @@ Create a Managed Server.
 |===
 |Parameter |Description
 
-| WLST script absolute path | 
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+| WLST script absolute path a|
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
+
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
+  
 
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**Server name**__ | Name of the managed server to be created.
@@ -247,13 +258,14 @@ Add server to cluster.
 |===
 |Parameter |Description
 
-| WLST script absolute path | 
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+| WLST script absolute path a|
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
+
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
+  
 
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**Server name**__ | Name of the server which is to be added to cluster.
@@ -282,13 +294,14 @@ Delete a cluster.
 |===
 |Parameter |Description
 
-| WLST script absolute path | 
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+| WLST script absolute path a|
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
+
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
+  
 
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**Cluster name**__ | Name of the cluster to be deleted.
@@ -314,13 +327,14 @@ Delete a Managed Server.
 |===
 |Parameter |Description
 
-| WLST script absolute path | 
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+| WLST script absolute path a|
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
+
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
+  
 
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**Server name**__ | Name of the managed server to be deleted.
@@ -346,23 +360,23 @@ Starts a WebLogic Admin Server
 |===
 |Parameter |Description
 
-| __**Script Location**__ | Absolute path of the startWeblogic script, including filename and extension. i.e: '/path/to/startWeblogic.cmd'. (Required)
+| __**Script Location**__ | Absolute path of the start WebLogic script, including filename and extension. i.e: `/path/to/startWebLogic.cmd`. (Required)
 
 
-| __**Admin Server Instance name**__ | Instance name of the Admin Server to start. i.e: 'AdminServer'. (Required)
+| __**Admin Server Instance name**__ | Instance name of the Admin Server to start. i.e: `AdminServer`. (Required)
 
 
-| __**Config name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Config name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**WLST script absolute path**__ a|
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
 
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
+  
 
 
-| Maximum elapsed time | Defines the maximum time in seconds that the job will try to check into the server. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).
+| Maximum elapsed time | Defines the maximum time in seconds that the job will try to check into the server. Note that the step has a `Time Limit` property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).
 
 
 |===
@@ -385,23 +399,24 @@ Starts a cluster
 |===
 |Parameter |Description
 
-| WLST script absolute path | 
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+| WLST script absolute path a| 
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
+
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
+  
 
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**Cluster name**__ | 
-      Name of the cluster to start. i.e: 'mycluster'.
-    
+Name of the cluster to start. i.e: `mycluster`.
+
 
 
 | Timeout | 
-          Timeout in seconds for cluster start.
-      
+Timeout in seconds for cluster start.
+
 
 
 |===
@@ -424,25 +439,26 @@ Starts a WebLogic Managed Server
 |===
 |Parameter |Description
 
-| __**Script Location**__ | Absolute path of the start server script, including filename and extension. i.e: '/path/to/startManagedServer.cmd'. (Required)
+| __**Script Location**__ | Absolute path of the start server script, including filename and extension. i.e: `/path/to/startManagedServer.cmd`. (Required)
 
 
 | __**Instance name**__ | Instance name of the Managed Server to start. (Required)
 
 
-| __**Config name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Config name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**Admin Server URL**__ | URL from the Admin Server (including protocol and port). (Required)
 
 
-| WLST script absolute path | 
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+| WLST script absolute path a|
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
+
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
+  
 
 
-| Maximum elapsed time | Defines the maximum time in seconds that the job will try to check into the server. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).
+| Maximum elapsed time | Defines the maximum time in seconds that the job will try to check into the server. Note that the step has a `Time Limit` property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).
 
 
 |===
@@ -466,13 +482,13 @@ Start the WebLogic Node Manager
 |Parameter |Description
 
 | __**Node Manager Script Location**__ | 
-      Absolute path of the startNodeManager script, including filename and extension. i.e: '/Oracle/Middleware/wlserver_10.3/server/bin/startNodeManager.cmd'.
-    
+Absolute path of the startNodeManager script, including filename and extension. i.e: `/Oracle/Middleware/wlserver_10.3/server/bin/startNodeManager.cmd`.
+
 
 
 | Maximum elapsed time | 
-      Defines the time in seconds that the job wait to test the status of the node manager. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).
-    
+Defines the time in seconds that the job wait to test the status of the node manager. Note that the step has a `Time Limit` property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).
+
 
 
 |===
@@ -495,10 +511,10 @@ Stops a WebLogic Admin Server
 |===
 |Parameter |Description
 
-| __**Script Location**__ | Absolute path of the stopWeblogic script, including filename and extension. i.e: '/path/to/stopWeblogic.cmd'. (Required)
+| __**Script Location**__ | Absolute path of the stop WebLogic script, including filename and extension. i.e: `/path/to/stopWeblogic.cmd`. (Required)
 
 
-| __**Config name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Config name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 |===
@@ -521,35 +537,36 @@ Stops a cluster
 |===
 |Parameter |Description
 
-| WLST script absolute path | 
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+| WLST script absolute path a|
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
+
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
+  
 
 
 | __**Configuration name**__ | 
-            Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
-        
+Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
+  
 
 
 | __**Cluster name**__ | 
-            Name of the cluster to stop. i.e: 'mycluster'.
-        
+Name of the cluster to stop. i.e: `mycluster`.
+  
 
 
 | Shutdown Timeout | 
-            Timeout in seconds for cluster shutdown.
-        
+Timeout in seconds for cluster shutdown.
+  
 
 
 | Force Shutdown? | 
-            Value specifying whether WLST should terminate a server instance or a cluster without waiting for the active sessions to complete. This argument defaults to false, indicating that all active sessions must complete before shutdown.
-        
+Value specifying whether WLST should terminate a server instance or a cluster without waiting for the active sessions to complete. This argument defaults to `false`, indicating that all active sessions must complete before shutdown.
+  
 
 
 | Ignore Sessions? | 
-            Value specifying whether WLST should drop all HTTP sessions immediately or wait for HTTP sessions to complete or timeout while shutting down. This argument defaults to false, indicating that all HTTP sessions must complete or timeout.
-        
+Value specifying whether WLST should drop all HTTP sessions immediately or wait for HTTP sessions to complete or timeout while shutting down. This argument defaults to `false`, indicating that all HTTP sessions must complete or timeout.
+  
 
 
 |===
@@ -572,13 +589,13 @@ Stops a WebLogic Managed Server
 |===
 |Parameter |Description
 
-| __**Script Location**__ | Absolute path of the stop server script, including filename and extension. i.e: '/path/to/stopManagedServer.cmd'. (Required)
+| __**Script Location**__ | Absolute path of the stop server script, including filename and extension. i.e: `/path/to/stopManagedServer.cmd`. (Required)
 
 
 | __**Instance name**__ | Instance name of the Managed Server to stop. (Required)
 
 
-| __**Config name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Config name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 |===
@@ -601,32 +618,32 @@ Stop the WebLogic Node Manager
 |===
 |Parameter |Description
 
-| __**Config name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Config name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
-| Host name | Host name of Node Manager. This argument defaults to localhost.
+| Host name | Host name of Node Manager. This argument defaults to `localhost`.
 
 
-| Node Manager Port | Port number of Node Manager. This argument defaults to a value that is based on the Node Manager server type, for plain type, defaults to 5556. For rsh type, defaults to 514. For ssh type, defaults to 22. For ssl type, defaults to 5556.
+| Node Manager Port | Port number of Node Manager. This argument defaults to a value that is based on the *Node Manager server type*, for plain type, defaults to `5556`. For *rsh type*, defaults to `514`. For *ssh type*, defaults to `22`. For *ssl type*, defaults to `5556`.
 
 
-| __**Domain name**__ | Name of the domain that you want to manage. This argument defaults to mydomain.
+| __**Domain name**__ | Name of the domain that you want to manage. This argument defaults to `mydomain`.
 
 
-| __**Domain Path**__ | Path of the domain directory to which you want to save the Node Manager secret file (nm_password.properties) and SerializedSystemIni.dat file. This argument defaults to the directory in which WLST was started.
+| __**Domain Path**__ | Path of the domain directory to which you want to save the *Node Manager secret file* (`nm_password.properties`) and `SerializedSystemIni.dat` file. This argument defaults to the directory in which WLST was started.
 
 
 | __**WLST script absolute path**__ a|
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
 
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
+  
 
 
-| __**Node Manage Type**__ | Type of the Node Manager server. This argument defaults to ssl.
+| __**Node Manage Type**__ | Type of the Node Manager server. This argument defaults to `ssl`.
 
 
-| Maximum elapsed time | Defines the time in seconds that the job wait to test the status of the node manager. Note that the step has a "Time Limit" property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).
+| Maximum elapsed time | Defines the time in seconds that the job wait to test the status of the node manager. Note that the step has a `Time Limit` property, so if this property is set to less than the parameter it will abort the step early. Blank implies no wait time (URL only checked one time).
 
 
 |===
@@ -649,28 +666,29 @@ Suspends the provided server
 |===
 |Parameter |Description
 
-| __**Configuration**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
-| WLST script absolute path | 
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+| WLST script absolute path a|
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
+
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
+  
 
 
 | __**Server name**__ | Name of the server to suspend. (Required)
 
 
-| Ignore Sessions | Boolean value specifying whether WLST should drop all HTTP sessions immediately or wait for HTTP sessions to complete or time out while suspending. This argument defaults to false, indicating that HTTP sessions must complete or time out.
+| Ignore Sessions | Boolean value specifying whether WLST should drop all HTTP sessions immediately or wait for HTTP sessions to complete or time out while suspending. This argument defaults to `false`, indicating that HTTP sessions must complete or time out.
 
 
-| Timeout | Time (in seconds) the WLST waits for the server to complete in-process work before suspending the server. This argument defaults to 0 seconds, indicating that there is no timeout.
+| Timeout | Time (in seconds) the WLST waits for the server to complete in-process work before suspending the server. This argument defaults to `0` seconds, indicating that there is no timeout.
 
 
-| Force | Boolean value specifying whether WLST should suspend the server without waiting for active sessions to complete. This argument defaults to false, indicating that all active sessions must complete before suspending the server.
+| Force | Boolean value specifying whether WLST should suspend the server without waiting for active sessions to complete. This argument defaults to `false`, indicating that all active sessions must complete before suspending the server.
 
 
-| Block | Boolean value specifying whether WLST blocks user interaction until the server is started. This argument defaults to false, indicating that user interaction is not blocked. In this case, WLST returns control to the user after issuing the command and assigns the task MBean associated with the current task to a variable that you can use to check its status. If you are importing WLST as a Jython module, as described in Importing WLST as a Jython Module, block is always set to true.
+| Block | Boolean value specifying whether WLST blocks user interaction until the server is started. This argument defaults to `false`, indicating that user interaction is not blocked. In this case, WLST returns control to the user after issuing the command and assigns the task MBean associated with the current task to a variable that you can use to check its status. If you are importing WLST as a Jython module, as described in Importing WLST as a Jython Module, block is always set to true.
 
 
 |===
@@ -693,19 +711,20 @@ Resumes the provided server
 |===
 |Parameter |Description
 
-| __**Configuration**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
-| WLST script absolute path | 
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+| WLST script absolute path a|
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
+
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
+  
 
 
 | __**Server name**__ | Name of the server to resume. (Required)
 
 
-| Block | Boolean value specifying whether WLST should block user interaction until the server is resumed. This argument defaults to false, indicating that user interaction is not blocked. In this case, WLST returns control to the user after issuing the command and assigns the task MBean associated with the current task to a variable that you can use to check its status. If you are importing WLST as a Jython module, as described in Importing WLST as a Jython Module, block is always set to true.
+| Block | Boolean value specifying whether WLST should block user interaction until the server is resumed. This argument defaults to `false`, indicating that user interaction is not blocked. In this case, WLST returns control to the user after issuing the command and assigns the task MBean associated with the current task to a variable that you can use to check its status. If you are importing WLST as a Jython module, as described in Importing WLST as a Jython Module, block is always set to true.
 
 
 |===
@@ -729,147 +748,147 @@ Deploys or redeploys an application or module
 |Parameter |Description
 
 | __**Configuration name**__ | 
-            Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
-        
+Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
+  
 
 
-| WLST script absolute path | 
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+| WLST script absolute path a|
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
+
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
+  
 
 
-| __**Application name**__ | Deployment name to assign to a newly-deployed application or standalone module. i.e: 'webapp'.
+| __**Application name**__ | Deployment name to assign to a newly-deployed application or standalone module. i.e: `webapp`.
 
 
 | __**Is library?**__ | Select this parameter if the application is library.
 
 
-| __**Application Path**__ | Absolute path of the application to deploy. i.e: '/path/to/webapp.war' or 'c:/mydir/webapp.war'.
+| __**Application Path**__ | Absolute path of the application to deploy. i.e: `/path/to/webapp.war` or `c:/mydir/webapp.war`.
 
 
 | __**Targets**__ | Targets on which to deploy the application or module (comma-separated list of the target servers, clusters, or virtual hosts).
 
 
 | Stage mode | 
-            Staging mode for the application you are deploying.
+Staging mode for the application you are deploying.
 
 
 
 
-            Possible values are: stage, nostage, and external_stage.
+Possible values are: `stage`, `nostage`, and `external_stage`.
 
 
 
 
-            If not provided, default stage mode will be used.
+If not provided, default stage mode will be used.
 
 
 
 
-            See 
- http://docs.oracle.com/middleware/12212/wls/DEPGD/deploy.htm#DEPGD235[Oracle documentation]  for details.
-        
+Refer to link:http://docs.oracle.com/middleware/12212/wls/DEPGD/deploy.htm#DEPGD235[Oracle documentation] for details.
+  
 
 
 | Deployment plan path | 
-            Path to read a deployment plan (if there is one) or to save a new one from the Deployment plan content parameter.
-        
+Path to read a deployment plan (if there is one) or to save a new one from the *Deployment plan content* parameter.
+  
 
 
 | Plan version | Deployment plan version.
 
 
 | Deployment plan content | 
-            A WebLogic Server deployment plan is an XML document that you use to configure an application for deployment to a specific WebLogic Server environment.
-        
+A WebLogic Server deployment plan is an XML document that you use to configure an application for deployment to a specific WebLogic Server environment.
+  
 
 
 | Overwrite deployment plan? | 
-            If checked, deployment plan will be overwritten, if deployment plan content has been provided and deployment plan file already exists.
+If selected, deployment plan will be overwritten, if deployment plan content has been provided and deployment plan file already exists.
 
 
 
 
-            This option defaults to false.
-        
+This option defaults to `false`.
+  
 
 
 | Additional options | 
-            Comma-separated list of deployment options, specified as name-value pairs.
+Comma-separated list of deployment options, specified as name-value pairs.
 
 
 
 
-            Refer to WLST deploy documentation (The options, which are not included in this form).
-        
+Refer to WLST deploy documentation (The options, which are not included in this form).
+  
 
 
 | Archive version | 
-            Archive version number.
+Archive version number.
 
 
 
 
-            Is used for production redeployment, specifies the application version which is going to be retired, while versionIdentifier specifies a new version.
+Is used for production redeployment, specifies the application version which is going to be retired, while `versionIdentifier` specifies a new version.
 
 
 
 
-            Archive version stays along with the new one.
-        
+Archive version stays along with the new one.
+  
 
 
 | Retire gracefully? | 
-            Retirement policy to gracefully retire an application only after it has completed all in-flight work.
+Retirement policy to gracefully retire an application only after it has completed all in-flight work.
 
 
 
 
-            This policy is only meaningful for stop and redeploy operations and is mutually exclusive to the retire timeout policy.
-        
+This policy is only meaningful for `stop` and `redeploy` operations and is mutually exclusive to the retire timeout policy.
+  
 
 
 | Retire timeout | 
-            Time (in seconds) WLST waits before retiring an application that has been replaced with a newer version.
+Time (in seconds) WLST waits before retiring an application that has been replaced with a newer version.
 
 
 
 
-            This option default to -1, which specifies graceful timeout.
-        
+This option defaults to `-1`, which specifies graceful timeout.
+  
 
 
 | Version identifier | 
-            Version identifier that is being used by production redeployment. A string, that uniquely identifies the current application version across all versions of the same application.
-        
+Version identifier that is being used by production redeployment. A string, that uniquely identifies the current application version across all versions of the same application.
+  
 
 
 | Upload? | 
-            Optional. Boolean value specifying whether the application files are uploaded to the WebLogic Server Administration Server's upload directory prior to deployment.
+Optional. Boolean value specifying whether the application files are uploaded to the WebLogic Server Administration Server's upload directory prior to deployment.
 
 
 
 
-            Use this option when you are on a different machine from the Administration Server and you cannot copy the deployment files by other means. 
+Use this option when you are on a different machine from the Administration Server and you cannot copy the deployment files by other means. 
 
 
 
 
-            This option defaults to false.
-        
+This option defaults to `false`.
+  
 
 
 | Remote? | 
-            Boolean value specifying whether the operation will be remote from the file system that contains the source.
-            Use this option when you are on a different machine from the Administration Server and the deployment files are
+Boolean value specifying whether the operation will be remote from the file system that contains the source.
+Use this option when you are on a different machine from the Administration Server and the deployment files are
 
 
 
 
-            already at the specified location where the Administration Server is located.
-            This option defaults to false.
-        
+already at the specified location where the Administration Server is located.
+This option defaults to `false`.
+  
 
 
 |===
@@ -892,13 +911,14 @@ Update a configuration of an already deployed app.
 |===
 |Parameter |Description
 
-| WLST script absolute path | 
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+| WLST script absolute path a|
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
+
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
+  
 
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**Application name**__ | Name of the application which is to be updated.
@@ -910,17 +930,17 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
 | __**Plan Path**__ | Absolute path to the new deployment plan file.
 
 
-| Deployment Plan Content | Content of the deployment plan. Required, if the file mentioned in "Plan Path" doesn't exist or empty.
+| Deployment Plan Content | Content of the deployment plan. Required, if the file mentioned in *Plan Path* doesn't exist or empty.
 
 
 | Overwrite deployment plan? | 
-            If checked, deployment plan will be overwritten, if deployment plan content has been provided and deployment plan file already exists.
+If checked, deployment plan will be overwritten, if deployment plan content has been provided and deployment plan file already exists.
 
 
 
 
-            This option defaults to false.
-        
+This option defaults to `false`.
+  
 
 
 | Additional options | Comma-separated list of deployment options, specified as name-value pairs. For example: block=false,createPlan=true
@@ -946,40 +966,41 @@ Stops the deployment unit and removes staged files from target servers.
 |===
 |Parameter |Description
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
-| WLST script absolute path | 
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+| WLST script absolute path a|
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
+
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
+  
 
 
-| __**Application name**__ | Name of the application to undeploy. i.e: 'webapp'.
+| __**Application name**__ | Name of the application to undeploy. i.e: `webapp`.
 
 
 | Retire Gracefully? (DEPRECATED) | 
-            Retirement policy to gracefully retire an application only after it has completed all in-flight work.
+Retirement policy to gracefully retire an application only after it has completed all in-flight work.
 
 
 
 
-            This policy is only meaningful for stop and redeploy operations and is mutually exclusive to the retire timeout policy.
-            
+This policy is only meaningful for stop and redeploy operations and is mutually exclusive to the retire timeout policy.
+
  *This parameter is DEPRECATED and will be removed in the next release.* 
 
 | Application version | 
-            Specifies a single application version to be undeployed. See Requirements and Restrictions for Production Redeployment for reference.
-        
+Specifies a single application version to undeploy. See Requirements and Restrictions for Production Redeployment for reference.
+  
 
 
-| Additional options | Additional options for undeploy API call. (See deploy function for reference).
-        
+| Additional options | Additional options for `undeploy` API call. (See deploy function for reference).
+  
 
 
 | Give Up on Error? | 
-            If checked, any ambiguous situation will be treated as fatal error. Defaults to false.
-        
+If checked, any ambiguous situation will be treated as fatal error. Defaults to false.
+  
 
 
 |===
@@ -1003,13 +1024,13 @@ Update an already deployed app. (DEPRECATED)
 |Parameter |Description
 
 | __**WLST script absolute path**__ a|
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
 
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
+  
 
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**Application name**__ | Name of the application which is to be updated.
@@ -1032,7 +1053,7 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
 === RunDeployer
 
 
-Runs weblogic.Deployer in a free-mode
+Runs `weblogic.Deployer` in a free-mode.
 
 
 
@@ -1042,38 +1063,38 @@ Runs weblogic.Deployer in a free-mode
 |Parameter |Description
 
 | __**Command To Use**__ | 
-      The weblogic.Deployer command to use. i.e: '-deploy', '-undeploy', '-stop' or '-listapps'.
-    
+The weblogic.Deployer command to use. i.e: `-deploy`, `-undeploy`, `-stop` or `-listapps`.
+
 
 
 | Java Parameters | 
-      Java parameters to pass. i.e: '-verbose'.
-    
+Java parameters to pass. i.e: `-verbose`.
+
 
 
 | Configuration name | 
-      Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
-    
+Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
-| Additional Commands | Additional commands to be entered for weblogic.Deployer.
+
+| Additional Commands | Additional commands to be entered for `weblogic.Deployer`.
 
 
-| __**Java Absolute Path**__ | Absolute path of java. i.e: 'java', 'java.exe' or '/path/to/java'.
+| __**Java Absolute Path**__ | Absolute path of Java. i.e: `java`, `java.exe` or `/path/to/java`.
 
 
 | __**Application name**__ | 
-      Name of the application to manage. i.e: 'webapp'.
-    
+Name of the application to manage. i.e: `webapp`.
+
 
 
 | __**setDomainEnv Script Absolute Path**__ | 
-      Absolute path of the setDomainEnv script, including filename and extension. i.e: '/path/to/setDomainEnv.sh' or 'setDomainEnv.cmd'.
-    
+Absolute path of the `setDomainEnv` script, including filename and extension. i.e: `/path/to/setDomainEnv.sh` or `setDomainEnv.cmd`.
+
 
 
 | __**weblogic jar Absolute Path**__ | 
-    Absolute path of the weblogic jar, needed to run the weblogic.Deployer in a free-mode. In Windows environment, if the jar is already added to the enviroment classpath variable, then is not necesary to include it. In Linux environment you must include the path. i.e: '/path/to/weblogic.jar' or '/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar'.
+Absolute path of the WebLogic jar, needed to run the `weblogic.Deployer` in a *free-mode*. In Windows environments, if the jar is already added to the environment classpath variable, then is not necessary to include it. In Linux environments, you must include the path. i.e: `/path/to/weblogic.jar` or `/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar`.
 
 
 |===
@@ -1097,28 +1118,28 @@ Starts an application
 |Parameter |Description
 
 | WLST script absolute path a| 
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
 
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
+  
 
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**Application name**__ | 
-      Name of the application to start. i.e: 'webapp'.
-    
+Name of the application to start. i.e: `webapp`.
+
 
 
 | Application version | 
-          Specific application version to be started.
-      
+Specific application version to be started.
+
 
 
 | Additional options | 
-          Additional options for startApplication API. (See deploy function for reference).
-      
+Additional options for `startApplication` API. (See deploy function for reference).
+
 
 
 |===
@@ -1141,28 +1162,29 @@ Stop an application
 |===
 |Parameter |Description
 
-| WLST script absolute path | 
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+| WLST script absolute path a|
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
+
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
+  
 
 
-| __**Application nameConfiguration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Application nameConfiguration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**Application name**__ | 
-      Name of the application to start. i.e: 'webapp'.
-    
+Name of the application to start. i.e: `webapp`.
+
 
 
 | Application version | 
-        Specific application version to be stopped.
-    
+Specific application version to be stopped.
+
 
 
 | Additional options | 
-        Additional options for stopApplication API. (See deploy function for reference).
-    
+Additional options for `stopApplication` API. (See deploy function for reference).
+
 
 
 |===
@@ -1185,7 +1207,7 @@ This procedure creates a new generic JDBC Data Source or updates an existing one
 |===
 |Parameter |Description
 
-| __**Configuration**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**Datasource name**__ | Unique name of the JDBC generic Data Source to be created.
@@ -1194,23 +1216,28 @@ This procedure creates a new generic JDBC Data Source or updates an existing one
 | __**DataSource Driver Class**__ | The full package name of JDBC driver class used to create the physical database connections in the connection pool. (Note that this driver class must be in the classpath of every server to which it is targeted/deployed).
 
 
-| __**Database URL**__ | The JDBC URL of the database to connect to. The format of the URL varies by JDBC driver. The URL is passed to the JDBC driver to create the physical database connections. These are some examples.
-jdbc:spssoem:mysql://<host>:<port>;DatabaseName=<database>
-jdbc:spssoem:oracle://<host>:<port>;SID=<database>[;AuthenticationMethod=kerberos].
+| __**Database URL**__ a| The JDBC URL of the database to connect to. The format of the URL varies by JDBC driver. The URL is passed to the JDBC driver to create the physical database connections. Examples:
+
+* `jdbc:spssoem:mysql://<host>:<port>;DatabaseName=<database>`
+* `jdbc:spssoem:oracle://<host>:<port>;SID=<database>[;AuthenticationMethod=kerberos]`
 
 
 | __**JNDI name**__ | The JNDI path to where this Datasource is bound. For example jdbc/MYDS
-By default, the JNDI name is the name of the Datasource. Applications that look up the JNDI path will get a "javax.sql.Datasource" instance that corresponds to this Datasource.
+By default, the JNDI name is the name of the Datasource. Applications that look up the JNDI path will get a `javax.sql.Datasource` instance that corresponds to this Datasource.
 
 
 | __**Datasource Credentials**__ | Username and password for the Database.
 
 
-| Database name | Name of the Database/Default Schema to which the Database connection is to. Note that this may be relevant to MySQL (for example) and in general may not be necessary for all Databases. Further this name can be mentioned as part of the JDBC URL above. There is as such no need to use this parameter if it is already defined in the JDBC URL like above.
+| Database name a| Name of the Database/Default Schema to which the Database connection is to.
+
+NOTE: This may be relevant to MySQL (for example) and in general may not be necessary for all Databases. Further this name can be mentioned as part of the JDBC URL above. There is as such no need to use this parameter if it is already defined in the JDBC URL like above.
 
 
-| JDBC Driver Properties | The list of properties passed to the JDBC driver that are used to create physical database connections. For example: server=dbserver1. List each property=value pair on a separate line.Note:For security reasons, when WebLogic Server is running in production mode, you cannot specify database passwords in this properties list. Data source deployment will fail if a password is specified in the properties list. To override this security check, use the command line argument "weblogic.management.allowClearTextPasswords" when starting the server.
-    
+| JDBC Driver Properties a| The list of properties passed to the JDBC driver that are used to create physical database connections. For example: `server=dbserver1`. List each property=value pair on a separate line.
+
+IMPORTANT: For security reasons, when WebLogic Server is running in production mode, you cannot specify database passwords in this properties list. Data source deployment will fail if a password is specified in the properties list. To override this security check, use the command line argument `weblogic.management.allowClearTextPasswords` when starting the server.
+
 
 
 | Target Server List | A list of comma separated list of Servers on which the Data Source should be targeted. If targets are not specified, Data Source will be created but not deployed.
@@ -1220,15 +1247,15 @@ By default, the JNDI name is the name of the Datasource. Applications that look 
 
 
 
- *Do Nothing (Default)*  - The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
+ *Do Nothing (Default)*- The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
 
 
 
- *Remove and Create*  - The procedure would remove existing DataSource and recreate it based on new parameters passed.
+ *Remove and Create*- The procedure would remove existing DataSource and recreate it based on new parameters passed.
 
 
 
- *Selective Update*  - The procedure would update existing DataSource credentials and Server Target List.
+ *Selective Update*- The procedure would update existing DataSource credentials and Server Target List.
 
 
 
@@ -1255,18 +1282,19 @@ Deletes a Datasource
 |===
 |Parameter |Description
 
-| __**Configuration**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
-| WLST script absolute path | 
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+| WLST script absolute path a|
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
+
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
+
 
 
 | __**Datasource name**__ | 
-      The unique name that identifies this Datasource in the WebLogic domain to delete it.
-    
+The unique name that identifies this Datasource in the WebLogic domain to delete it.
+
 
 
 |===
@@ -1289,14 +1317,14 @@ Creates a Datasource (DEPRECATED)
 |===
 |Parameter |Description
 
-| __**Configuration**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**WLST script absolute path**__ a|
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
 
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
+
 
 
 | __**Datasource name**__ | A unique name that identifies this Datasource in the WebLogic domain.
@@ -1305,30 +1333,32 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
 | __**Database**__ | The database used by the Datasource.
 
 
-| __**Server Instance**__ | Instance name of the Server to include the Datasource. i.e: 'AdminServer'.
+| __**Server Instance**__ | Instance name of the Server to include the Datasource. i.e: `AdminServer`.
 
 
 | Datasource JNDI | 
-      The JNDI path to where this Datasource is bound. By default, the JNDI name is the name of the Datasource. Applications that look up the JNDI path will get a "javax.sql.Datasource" instance that corresponds to this Datasource.
-    
+The JNDI path to where this Datasource is bound. By default, the JNDI name is the name of the Datasource. Applications that look up the JNDI path will get a `javax.sql.Datasource` instance that corresponds to this Datasource.
 
 
-| __**Datasource Driver Class**__ | 
-      The full package name of JDBC driver class used to create the physical database connections in the connection pool. (Note that this driver class must be in the classpath of any server to which it is deployed).
-    
+
+| __**Datasource Driver Class**__ a|
+The full package name of JDBC driver class used to create the physical database connections in the connection pool.
+
+NOTE: This driver class must be in the classpath of any server to which it is deployed.
+
 
 
 | __**Datasource URL**__ | 
-    The URL of the database to connect to. The format of the URL varies by JDBC driver. The URL is passed to the JDBC driver to create the physical database connections.
-  
+The URL of the database to connect to. The format of the URL varies by JDBC driver. The URL is passed to the JDBC driver to create the physical database connections.
+
 
 
 | __**Database User**__ | The user to connect to the database.
 
 
 | __**Database Password**__ | 
-      The password attribute passed to the JDBC driver when creating physical database connections. The value is stored in an encrypted form in the descriptor file and when displayed on the Administration Console.
-    
+The password attribute passed to the JDBC driver when creating physical database connections. The value is stored in an encrypted form in the descriptor file and when displayed on the Administration Console.
+
 
 
 |===
@@ -1351,7 +1381,7 @@ Creates or updates Connection Factory
 |===
 |Parameter |Description
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**Connection Factory name**__ | Unique name of the Connection Factory that is created.
@@ -1361,70 +1391,65 @@ Creates or updates Connection Factory
 
 
 | __**Subscription Sharing Policy**__ | The Connection Factory Subscription Sharing Policy Subscribers can be used to control which subscribers can access new subscriptions.Values can be either Sharable or Exclusive.
-        
+
 
 
 | __**Client ID Policy**__ | The Client ID Policy indicates whether more than one JMS connection can use the same Client ID. Oracle recommends setting the Client ID policy to Unrestricted if sharing durable subscribers. Subscriptions created with different Client ID policies are always treated as independent subscriptions.
-        
 
 
-| JNDI name | JNDI Name is used to lookup the Connection factory using JNDI lookup. If the connection factory is created without passing this parameter, it can be only used in an Application Scoped context.
+
+| JNDI name | JNDI Name is used to look up the Connection factory using JNDI lookup. If the connection factory is created without passing this parameter, it can be only used in an Application Scoped context.
 
 
-| Maximum Messages per Session | This  limit specifies the number of messages that can be queued for an asynchronous session. Default value  is 10.
+| Maximum Messages per Session | This limit specifies the number of messages that can be queued for an asynchronous session. Default value is `10`.
 
 
-| XA Connection Factory Enabled? | Indicates if this connection factory should  create XA queues and XA topics in order to accommodate JTA aware transactions. Default is Yes.
+| XA Connection Factory Enabled? | Indicates if this connection factory should create XA queues and XA topics in order to accommodate JTA aware transactions. Default is Yes.
 
 
-| Subdeployment name | Name of Subdeployment. Required only if you do not  want default targeting and instead want to use advanced targeting.
+| Subdeployment name | Name of Subdeployment. Required only if you do not want default targeting and instead want to use advanced targeting.
 
 
 | Target WLS Instance List | 
-        Comma delimited set of Weblogic Server instances (Standalone or cluster) to which the Connection Factory would be targeted to.
+Comma delimited set of WebLogic Server instances (Standalone or cluster) to which the Connection Factory would be targeted to.
 
 
 
 
-        Required only if Subdeployment Name is specified.
-        
+Required only if *Subdeployment Name* is specified.
+
 
 
 | Target JMS Server List | Comma delimited set of JMS Servers to which the Connection Factory would be targeted to.
-Required only if Subdeployment Name is specified. 
+Required only if *Subdeployment Name* is specified.
 
 
-| Update Action | 
-This parameter controls as to what the Update Action should be when a Connection Factory with the same name exists:
-
-
-
- *Do Nothing  (Default)*  -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
+| Update Action a|
+This parameter controls as to what the *Update Action* should be when a Connection Factory with the same name exists:
 
 
 
- *Remove and Create*  - The procedure would remove existing Connection Factory and recreate it based on new parameters passed.
+* *Do Nothing (Default)* - The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
 
 
 
- *Selective Update*  - The procedure would update existing Connection Factory. The parameters for selective update are 
- *JNDI Name*  and 
- *Subdeployment Name* .
-        
+* *Remove and Create* - The procedure would remove existing Connection Factory and recreate it based on new parameters passed.
 
 
-| Additional options | 
+
+* *Selective Update* - The procedure would update existing Connection Factory. The parameters for selective update are
+ *JNDI Name* and *Subdeployment Name*.
+
+| Additional options a| 
 Use this option to pass related parameters that pertain to Delivery, Client, Transaction or Flow Control. E.g., 
- *DefaultDeliveryParams.DefaultPriority=5* .
-Several options are separated by a newline:
+ `DefaultDeliveryParams.DefaultPriority=5`. Several options are separated by a newline:
 
-
-
-
+[source,text]
+----
 DefaultDeliveryParams.DefaultPriority=5
 FlowControlParams.FlowMaximum=500
 FlowControlParams.FlowControlEnabled=true
-
+----
 
 
 |===
@@ -1447,31 +1472,25 @@ Creates or updates JMS Module
 |===
 |Parameter |Description
 
-| __**Configuration**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**JMS Module name**__ | Unique name of the JMS system Module to be created or updated.
 
 
-| __**Target WLS Instance List**__ | Comma delimited set of Weblogic Server instances (Standalone or cluster) to which the JMS system module would be deployed.
+| __**Target WLS Instance List**__ | Comma delimited set of WebLogic Server instances (Standalone or cluster) to which the JMS system module would be deployed.
 
 
-| Update Action | 
+| Update Action a|
 This parameter controls as to what the Update Action should be when a JMS Module with the same name exists:
 
 
+* *Do Nothing (Default)* - The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
 
- *Do Nothing  (Default)*  -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
+* *Remove and Create* - The procedure would remove existing JMS Module and recreate it based on new parameters passed.
 
-
-
- *Remove and Create*  - The procedure would remove existing JMS Module and recreate it based on new parameters passed.
-
-
-
- *Selective Update*  - The procedure would update existing JMS Module. In this case 
- *Target WLS List*  will be updated.
-        
+* *Selective Update* - The procedure would update existing JMS Module. In this case
+ *Target WLS List* will be updated.
 
 
 |===
@@ -1494,7 +1513,7 @@ Creates or updates JMS Module Subdeployment
 |===
 |Parameter |Description
 
-| __**Configuration**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**JMS Module name**__ | Unique name of the JMS Module in which the Sub-Deployment should be created. Note that this module should exist already for this Procedure to succeed.
@@ -1503,15 +1522,14 @@ Creates or updates JMS Module Subdeployment
 | __**Subdeployment name**__ | Name of the Subdeployment to be created or updated.
 
 
-| __**Target WLS Instance List**__ | 1 or more comma separated list of Servers or Clusters that constitute the Sub-Deployment. In essence a Sub-Deployment provides a way to group multiple targets to which JMS Resources can be created on.
+| __**Target WLS Instance List**__ | One or more comma separated list of Servers or Clusters that constitute the Sub-Deployment. In essence a Sub-Deployment provides a way to group multiple targets to which JMS Resources can be created on.
 
 
-| Update Action | This parameter controls as to what the Update Action should be when a JMS Subdeployment with the same name exists :
-Do Nothing  (Default) -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
-Remove and Create - The procedure would remove existing JMS Subdeployment and recreate it based on new parameters passed.
-Selective Update - The procedure would update target servers for the existing JMS Subdeployment.
+| Update Action a| This parameter controls as to what the Update Action should be when a JMS Subdeployment with the same name exists:
 
-
+* *Do Nothing* (Default) - The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
+* *Remove and Create* - The procedure would remove existing JMS Subdeployment and recreate it based on new parameters passed.
+* *Selective Update* - The procedure would update target servers for the existing JMS Subdeployment.
 
 |===
 
@@ -1533,7 +1551,7 @@ Creates or updates JMS Queue
 |===
 |Parameter |Description
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**JMS Queue name**__ | Unique name of the JMS Queue Name that is going to be created or updated.
@@ -1544,7 +1562,7 @@ Creates or updates JMS Queue
 
 
 
-| JNDI name | JNDI Name is used to lookup the JMS Queue using JNDI lookup. If the JMS Queue is created without passing this parameter, it can be only used in an Application Scoped context.
+| JNDI name | JNDI Name is used to look up the JMS Queue using JNDI lookup. If the JMS Queue is created without passing this parameter, it can be only used in an Application Scoped context.
 
 
 
@@ -1552,39 +1570,36 @@ Creates or updates JMS Queue
 
 
 
-| Target JMS Server | JMS Server  to which the Topic  would be targeted to. Required only if Subdeployment Name is specified.
+| Target JMS Server | JMS Server to which the Topic would be targeted to. Required only if Subdeployment Name is specified.
 
 
 
-| Update Action | 
+| Update Action a|
 This parameter controls as to what the Update Action should be when a JMS Queue with the same name exists
 
 
 
- *Do Nothing  (Default)*  -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
+* *Do Nothing (Default)* - The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
 
 
 
- *Remove and Create*  - The procedure would remove existing JMS Queue and recreate it based on new parameters passed. If Subdeployment name is provided, the subdeployment will be removed and created too.
+* *Remove and Create* - The procedure would remove existing JMS Queue and recreate it based on new parameters passed. If Subdeployment name is provided, the subdeployment will be removed and created too.
 
 
 
- *Selective Update*  - The procedure would update existing JMS Queue. The parameters for selective update are 
- *JNDI Name*  and 
- *Subdeployment Name* . The targeting for Subdeployment will not be changed.
-        
+* *Selective Update* - The procedure would update existing JMS Queue. The parameters for selective update are
+ *JNDI Name* and *Subdeployment Name*. The targeting for Subdeployment will not be changed.
 
 
-| Additional options | 
+| Additional options a| 
 Use this option to specify general or advanced parameters, message thresholds and quota, message delivery overrides, message logging and message delivery failure options, e.g., 
- *MaximumMessageSize=1024* . Parameters should be in the form of key=value pairs. Group and property name are separated by '.'. Several options are separated by a newline, e.g.
+ `MaximumMessageSize=1024`. Parameters should be in the form of `key=value pairs`. Group and property name are separated by `.`. Several options are separated by a newline, e.g.
 
-
-
-
+[source,text]
+----
 MessageLoggingParams.MessageLoggingEnabled=false
 DeliveryFailureParams.RedeliveryLimit=3
-
+----
 
 
 |===
@@ -1607,31 +1622,30 @@ Creates or updates JMS Server
 |===
 |Parameter |Description
 
-| __**Configuration**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**JMS Server name**__ | Unique name of the JMS Server to be created or updated.
 
 
-| Target WLS Instance | The WLS Instance (Standalone or Cluster) to which this Server should be targeted. However note if this is not specified the JMS Server is not usable.
+| Target WLS Instance | The WLS Instance (Standalone or Cluster) to which this Server should be targeted. However, if this is not specified the JMS Server is not usable.
 
 
-| Update Action | 
+| Update Action a|
 This parameter controls as to what the Update Action should be when a JMS Module with the same name exists
 
 
 
- *Do Nothing  (Default)*  -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
+* *Do Nothing (Default)* - The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
 
 
 
- *Remove and Create*  - The procedure would remove existing JMS Module and recreate it based on new parameters passed.
+* *Remove and Create* - The procedure would remove existing JMS Module and recreate it based on new parameters passed.
 
 
 
- *Selective Update*  - The procedure would update existing JMS Module. The only parameter for update will be 
- *Target WLS Instance* .
-        
+* *Selective Update* - The procedure would update existing JMS Module. The only parameter for update will be
+ *Target WLS Instance*.
 
 
 |===
@@ -1654,7 +1668,7 @@ Creates or updates JMS Topic
 |===
 |Parameter |Description
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**JMS Topic name**__ | Unique name of the JMS Topic that is going to be created or updated.
@@ -1665,7 +1679,7 @@ Creates or updates JMS Topic
 
 
 
-| JNDI name | JNDI Name is used to lookup the JMS Topic using JNDI lookup. If the JMS Topic is created without passing this parameter, it can be only used in an Application Scoped context.
+| JNDI name | JNDI Name is used to look up the JMS Topic using JNDI lookup. If the JMS Topic is created without passing this parameter, it can be only used in an Application Scoped context.
 
 
 
@@ -1673,38 +1687,36 @@ Creates or updates JMS Topic
 
 
 
-| Target JMS Server | JMS Server  to which the Topic  would be targeted to. Required only if Subdeployment Name is specified.
+| Target JMS Server | JMS Server to which the Topic would be targeted to. Required only if Subdeployment Name is specified.
 
 
 
-| Update Action | 
+| Update Action a|
 This parameter controls as to what the Update Action should be when a JMS Topic with the same name exists:
 
 
 
- *Do Nothing  (Default)*  -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
+* *Do Nothing (Default)* - The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
 
 
 
- *Remove and Create*  - The procedure would remove existing JMS Topic and recreate it based on new parameters passed. If subdeployment name is specified, it will be recreated too.
+* *Remove and Create* - The procedure would remove existing JMS Topic and recreate it based on new parameters passed. If subdeployment name is specified, it will be recreated too.
 
 
 
- *Selective Update*  - The procedure would update existing JMS Topic. The parameters for selective update are 
- *JNDI Name*  and 
- *Subdeployment Name* .
-        
-
-
-| Additional options | Use this option to specify general or advanced parameters, message thresholds and quota, message delivery overrides, message logging and message delivery failure options, topic multicast parameters. Parameters should be in the form of key=value pairs. Group and property name are separated by '.'. E.g., 
- *Multicast.MulticastTimeToLive=5* . Several options are separated by a newline:
+* *Selective Update* - The procedure would update existing JMS Topic. The parameters for selective update are
+ *JNDI Name* and *Subdeployment Name*.
 
 
 
+| Additional options a| Use this option to specify general or advanced parameters, message thresholds and quota, message delivery overrides, message logging and message delivery failure options, topic multicast parameters. Parameters should be in the form of `key=value` pairs. Group and property name are separated by `.`. E.g.,
+ `Multicast.MulticastTimeToLive=5`. Several options are separated by a newline:
 
+[source,text]
+----
 MessagingPerformancePreference=30
 DeliveryFailureParams.RedeliveryLimit=5
-
+----
 
 
 |===
@@ -1727,7 +1739,7 @@ Deletes Connection Factory
 |===
 |Parameter |Description
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**Connection Factory name**__ | Unique name of the Connection Factory that is going to be deleted. If the Connection Factory with the specified name does not exist, the procedure will fail.
@@ -1756,7 +1768,7 @@ Deletes JMS Module
 |===
 |Parameter |Description
 
-| __**Configuration**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**JMS Module name**__ | Unique name of the JMS Module that needs to be deleted.
@@ -1782,7 +1794,7 @@ Deletes JMS Module Subdeployment
 |===
 |Parameter |Description
 
-| __**Configuration**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**JMS Module name**__ | Unique name of the JMS Module in which the Sub-Deployment should be created. Note that this module should exist already for this Procedure to succeed.
@@ -1811,7 +1823,7 @@ Deletes JMS Queue
 |===
 |Parameter |Description
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**JMS Queue name**__ | Unique name of the JMS Queue that needs to be deleted. If JMS Queue with the specified name does not exist, the procedure will fail.
@@ -1842,10 +1854,10 @@ Deletes JMS Server
 |===
 |Parameter |Description
 
-| __**Configuration**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
-| __**JMS Server name**__ | Unique name of the JMS Server that needs to deleted. If the server with the specified name does not exist, the procedure will fail.
+| __**JMS Server name**__ | Unique name of the JMS Server that needs deleting. If the server with the specified name does not exist, the procedure will fail.
 
 
 |===
@@ -1868,7 +1880,7 @@ Deletes JMS Topic
 |===
 |Parameter |Description
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**JMS Topic name**__ | Unique name of the JMS Topic that is going to be deleted. If JMS Topic with the specified name does not exist in the JMS Module, the procedure will fail.
@@ -1900,13 +1912,11 @@ Create a user
 |Parameter |Description
 
 | WLST script absolute path a|
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
 
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
 
-
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**User Credentials**__ | User credentials(Username and password).
@@ -1945,13 +1955,12 @@ Create a group
 |Parameter |Description
 
 | WLST script absolute path a|
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
 
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
 
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**Group name**__ | Name of the group to be created.
@@ -1990,13 +1999,12 @@ Add a user to group.
 |Parameter |Description
 
 | WLST script absolute path a|
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
 
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
 
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**User name**__ | Name of the user to be added.
@@ -2032,13 +2040,12 @@ Change password of a user.
 |Parameter |Description
 
 | WLST script absolute path a|
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
 
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
 
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**Old User Credentials**__ | Old user credentials(username and password).
@@ -2074,13 +2081,12 @@ Remove a user from group.
 |Parameter |Description
 
 | WLST script absolute path a|
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
 
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
 
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**User name**__ | Name of the user to be removed.
@@ -2116,19 +2122,18 @@ Configure User Lockout Manager.
 |Parameter |Description
 
 | WLST script absolute path a|
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
 
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
 
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
-| Lockout Threshold | The maximum number of consecutive invalid login attempts that can occur before a user's account is locked out. Minimum value: 1, Maximum value: 2147483647.
+| Lockout Threshold | The maximum number of consecutive invalid login attempts that can occur before a user's account is locked out. Minimum value: `1`, Maximum value: `2147483647`.
 
 
-| Lockout Duration | The number of minutes that a user's account is locked out. Minimum value: 0, Maximum value: 2147483647.
+| Lockout Duration | The number of minutes that a user's account is locked out. Minimum value: `0`, Maximum value: `2147483647`.
 
 
 | Lockout Enabled | Specifies whether the server locks users out when there are invalid login attempts on their account.
@@ -2145,7 +2150,7 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
 === UnlockUserAccount
 
 
-Unlock an user account.
+Unlock a user account.
 
 
 
@@ -2154,13 +2159,12 @@ Unlock an user account.
 |===
 |Parameter |Description
 
-| WLST script absolute path | 
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+| WLST script absolute path a|
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
+
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
 
-
-| __**Server nameConfiguration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Server nameConfiguration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**User name**__ | Name of the user whose account is to be unlocked.
@@ -2192,13 +2196,13 @@ Delete a group
 |===
 |Parameter |Description
 
-| WLST script absolute path | 
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+| WLST script absolute path a|
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
+
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
 
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**Group name**__ | Name of the group to be deleted.
@@ -2230,13 +2234,13 @@ Delete a user
 |===
 |Parameter |Description
 
-| WLST script absolute path | 
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+| WLST script absolute path a|
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
+
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
 
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**User name**__ | Name of the user to be deleted.
@@ -2268,13 +2272,13 @@ Check the status of the given server cluster name.
 |===
 |Parameter |Description
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
-| WLST script absolute path | 
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+| WLST script absolute path a|
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
+
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
 
 
 | Maximum elapsed time | Defines the maximum time in seconds that the job will try to check into the cluster. Blank implies no wait time (URL only checked one time).
@@ -2306,14 +2310,13 @@ Check the status of the given server URL
 |===
 |Parameter |Description
 
-| __**Configuration name**__ | Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.
+| __**Configuration name**__ | Name of the configuration to be used. URL, port, and credentials are retrieved from the given configuration.
 
 
 | __**WLST script absolute path**__ a|
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
 
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
 
 
 | Maximum elapsed time | Defines the maximum time in seconds that the job will try to check into the server. Blank implies no wait time (URL only checked one time).
@@ -2346,38 +2349,38 @@ Runs Jython scripts using weblogic.WLST
 |Parameter |Description
 
 | __**WLST script absolute path**__ a|
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
 
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
-
 
 | Script File Absolute Path | 
-      Absolute path of a Jython script containing the desired job. The path is used only if 'Supplied File' is selected in the 'Script File Source' parameter. i.e: '/path/to/scriptfile.jython'.
-    
+Absolute path of a Jython script containing the desired job. The path is used only if `Supplied File` is selected in the `Script File Source` parameter. i.e: `/path/to/scriptfile.jython`.
+
 
 
 | __**Script File Source**__ | 
-      Indicates the source of the script file to execute. Either a existent file in the path defined in the 'scriptfile' parameter OR a new one using the code specified in scriptfile parameter.
-    
+Indicates the source of the script file to execute. Either a existent file in the path defined in the `scriptfile` parameter OR a new one using the code specified in `scriptfile` parameter.
+
 
 
 | Script File | 
-      Content of the script file to run if 'New Script File' option is chosen in the 'Script File Source' parameter.
-    
+Content of the script file to run if `New Script File` option is chosen in the *Script File Source* parameter.
 
 
-| Additional Commands | Additional commands to be entered for weblogic.WLST.
+
+| Additional Commands | Additional commands to be entered for `weblogic.WLST`.
 
 
-| Additional Environment Vairables | 
-      Additional environment variables as comma separated key-value pairs.
-      For example: JAVA_HOME => '/path/to/java/home', other_env => 'myenv'
-    
+| Additional Environment Variables |
+Additional environment variables as comma separated key-value pairs. For example: 
+
+* `JAVA_HOME => /path/to/java/home`
+* `other_env => myenv`
 
 
-| weblogic jar Absolute Path | Absolute path of the weblogic jar, needed to run the run Jython scripts using weblogic.WLST. In Windows environment, if the jar is already added to the enviroment classpath variable, then is not necesary to include it. In Linux environment you must include the path. i.e: '/path/to/weblogic.jar' or '/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar'.
-    
+
+| weblogic jar Absolute Path | Absolute path of the WebLogic jar, needed to run the run Jython scripts using `weblogic.WLST`. In Windows environments, if the jar is already added to the environment classpath variable, then is not necessary to include it. In Linux environment, you must include the path. i.e: `/path/to/weblogic.jar` or `/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar`.
+
 
 
 |===
@@ -2401,11 +2404,9 @@ Creates a domain template from the existing domain.
 |Parameter |Description
 
 | __**WLST script absolute path**__ a|
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
 
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
-
 
 | __**Domain Directory**__ | Name of the domain directory from which you want to create the template.
 
@@ -2456,7 +2457,7 @@ Check the status of a page on a given URL
 === Discover
 
 
-This procedure connects to a Weblogic environment, discovers objects specified by user and creates a Weblogic plugin configuration and an Application/Environment model in {PRODUCT} based on objects discovered.
+This procedure connects to a WebLogic environment, discovers objects specified by user and creates a WebLogic plugin configuration and an Application/Environment model in {PRODUCT} based on objects discovered.
 
 
 
@@ -2471,25 +2472,25 @@ This procedure connects to a Weblogic environment, discovers objects specified b
 | Resource Hostname | Hostname of a machine with WebLogic and {PRODUCT} Agent running on it. Either Resource hostname (and port) or Resource Name should be specified.
 
 
-| Resource Port | Port of {PRODUCT} agent running on the machine. Default is 7800.
+| Resource Port | Port of {PRODUCT} agent running on the machine. Default is `7800`.
 
 
-| Oracle Home | Installation path of the WebLogic server, e.g. /home/oracle. Not required if WLST Path parameter is specified.
+| Oracle Home | Installation path of the WebLogic server, e.g. `/home/oracle`. Not required if WLST Path parameter is specified.
 
 
-| WLST Path | Absolute Path to WLST utility. If not provided, the procedure will look for it, in known locations. Not required if Oracle Home is specified.
+| WLST Path | Absolute Path to WLST utility. If not provided, the procedure will look for it, in known locations. Not required if *Oracle Home* is specified.
 
 
-| Weblogic Connection Hostname | Hostname to connect to WebLogic instance. Localhost by default.
+| Weblogic Connection Hostname | Hostname to connect to WebLogic instance. `Localhost` by default.
 
 
-| Weblogic Connection Protocol | Protocol to connect to WebLogic instance. T3 by default.
+| Weblogic Connection Protocol | Protocol to connect to WebLogic instance. `T3` by default.
 
 
 | __**WebLogic Credentials**__ | Username and password to connect to WebLogic server.
 
 
-| Environment Project name | If specified will create Project for the Environment.
+| Environment Project name | If specified, a project if created for the environment.
 
 
 | Environment name | If specified, will be used to create {PRODUCT} environment.
@@ -2501,7 +2502,7 @@ This procedure connects to a Weblogic environment, discovers objects specified b
 | Application name | Application for placing discovered objects.
 
 
-| Object Names a| Objects to be retrieved from the WL Server in type:name pairs, e.g. AppDeployment:HelloWorld. For JMS Resource the name of the resource should be prefixed by JMS Module Name: helloJMSModule:helloQueue.
+| Object Names a| Objects to be retrieved from the WL Server in `type:name pairs`, e.g. `AppDeployment:HelloWorld`. For JMS Resource, the name of the resource should be prefixed by JMS Module Name: `helloJMSModule:helloQueue`.
 
 
 
@@ -2560,37 +2561,43 @@ ConfigurationParametersHolder
 |===
 |Parameter |Description
 
-| __**WebLogic URL**__ | URL of WebLogic Server (must include protocol, server and port). Two protocols are supported: t3 and t3s, e.g. t3://weblogic:7001.
+| __**WebLogic URL**__ | URL of WebLogic Server (must include protocol, server and port). Two protocols are supported: t3 and t3s, e.g. `t3://weblogic:7001`.
 
 
 | __**WLST script absolute path**__ a|
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
+Absolute path to WLST. i.e: `/path/to/wlst.cmd` or `wlst.sh`. Setting this path will make applying the equal param in procedures unnecessary.
 
 NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        
 
 
-| JAVA_HOME | JAVA_HOME environment variable, i.e. path to bin, where java executable is located. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, JAVA_VENDOR should be also set.
+| JAVA_HOME a| `JAVA_HOME` environment variable, i.e. path to bin, where Java executable is located. This variable will be set every time procedure runs for the job environment.
+
+IMPORTANT: The behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, `JAVA_VENDOR` should be also set.
 
 
-| JAVA_VENDOR | JAVA_VENDOR environment variable, use it to specify java vendor. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, the option JAVA_HOME should be also set. 
+| JAVA_VENDOR a| `JAVA_VENDOR` environment variable, use it to specify Java vendor. This variable will be set every time procedure runs for the job environment.
+
+IMPORTANT: The behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances. If this option is set, the option `JAVA_HOME` should be also set.
 
 
-| MW_HOME | MW_HOME environment variable, use it to specify WebLogic Home directory. This variable will be set every time procedure runs for the job environment. Warning: the behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances.
+| MW_HOME a| `MW_HOME` environment variable, use it to specify WebLogic Home directory. This variable will be set every time procedure runs for the job environment.
+
+IMPORTANT: The behaviour of the procedure can become unpredictable, if the same resource is shared across multiple EF instances.
 
 
 | Login as | Username and password to connect to WebLogic server.
 
 
 | Enable named sessions? | 
-            If checked, each WebLogic edit session will have unique name assigned. Named sessions are not supported by WebLogic server prior to 12 version. Defaults to false.
-        
+If checked, each WebLogic edit session will have unique name assigned. Named sessions are not supported by WebLogic server prior to version 12. Defaults to `false`.
 
 
 | Test connection resource | A resource which is used for the testing connection.
 
 
-| Debug level | Debug level, higher debug level - more debug messages. Warning: on debug level 10 and more passwords will be revealed in a procedure logs.Verbosity level of output.
+| Debug level | Debug level, higher debug level - more debug messages.
+
+IMPORTANT: On debug level 10 and more, passwords will be revealed in a procedure `logs.Verbosity` level of output.
 
 
 |===
@@ -2646,31 +2653,31 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
 
 - Add checking connection while creating a configuration.
 
-- Jobs for the successful "CreateConfiguration" and "EditConfiguration" run is now preserved.
+- Jobs for the successful *CreateConfiguration* and *EditConfiguration* run is now preserved.
 
-- Add logging while running "CreateConfiguration".
+- Add logging while running *CreateConfiguration*.
 
 
 === 3.4.3
 
-- Renaming from "Electric Cloud" to "CloudBees"
+- Renaming from *Electric Cloud* to "CloudBees"
 
 
 === 3.4.2
 
-- Configurations can be created by users with "@" sign in a name.
+- Configurations can be created by users with `@` sign in a name.
 
 
 === 3.4.1
 
-- Fixed the issue with lost output parameters for 9.0. Upon upgrade or clean install of 9.0 output parameters were not created for the plugin's procedures.
+- Fixed the issue with lost output parameters for 9.0. Upon upgrade or clean installation of 9.0, output parameters were not created for the plugin's procedures.
 
 
 === 3.4.0
 
 - Introduced the following 2 new procedures:
-* *CreateorUpdateDataSource* to support Data Source management.
-* *Discover* procedure to support the discovery functionality where in an EF model can be created from an existing Weblogic environment.
+* *CreatorUpdateDataSource* to support Data Source management.
+* *Discover* procedure to support the discovery functionality where in an EF model can be created from an existing WebLogic environment.
 - Modified DeleteDataSource procedure
 
 - Old procedure CreateDataSource is deprecated
@@ -2680,18 +2687,18 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
 
 - Added support for JMS Resource Management by adding the following procedures:
 
-  * *CreateOrUpdateJMSServer*
-  * *DeleteJMSServer*
-  * *CreateOrUpdateJMSModule*
-  * *DeleteJMS Module*
-  * *CreateOrUpdateConnectionFactory*
-  * *DeleteConnectionFactory*
-  * *CreateOrUpdateJMSQueue*
-  * *DeleteJMSQueue*
-  * *CreateOrUpdateJMSTopic*
-  * *DeleteJMSTopic*
-  * *CreateOrUpdateJMSModuleSubdeployment*
-  * *DeleteJMSModuleSubdeployment*
+* *CreateOrUpdateJMSServer*
+* *DeleteJMSServer*
+* *CreateOrUpdateJMSModule*
+* *DeleteJMS Module*
+* *CreateOrUpdateConnectionFactory*
+* *DeleteConnectionFactory*
+* *CreateOrUpdateJMSQueue*
+* *DeleteJMSQueue*
+* *CreateOrUpdateJMSTopic*
+* *DeleteJMSTopic*
+* *CreateOrUpdateJMSModuleSubdeployment*
+* *DeleteJMSModuleSubdeployment*
 
 
 
@@ -2709,42 +2716,42 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
 
 - Following procedures have been added:
 
-  * *UpdateAppConfig*
-  * *StartCluster*
-  * *StopCluster*
-  * *CheckClusterStatus*
+* *UpdateAppConfig*
+* *StartCluster*
+* *StopCluster*
+* *CheckClusterStatus*
 
 
 
 - Additional parameters have been added to the following procedures:
 
-  * *StartApp*
-  * *StopApp*
-  * *UndeployApp*
-  * *DeployApp*
+* *StartApp*
+* *StopApp*
+* *UndeployApp*
+* *DeployApp*
 
 
 
-- Checkbox "Retire Gracefully?" from UndeployApp procedure has been marked as deprecated and will be removed in the next release.
+- Checkbox *Retire Gracefully?* from *UndeployApp* procedure has been marked as deprecated and will be removed in the next release.
 
-- DeployApp does redeployment if application already exists.
+- *DeployApp* does redeployment if application already exists.
 
-- StartApp and StopApp have been improved and warning is being thrown if application is already in the desired state.
+- *StartApp* and *StopApp* have been improved and warning is being thrown if application is already in the desired state.
 
-- StartCluster and StopCluster have been improved and warning is being thrown if cluster is already in the desired state.
+- *StartCluster* and *StopCluster* have been improved and warning is being thrown if cluster is already in the desired state.
 
 - Support of named edit sessions (concurrent edit sessions) has been added. If WebLogic server doesn't have support of the named edit sessions, warning will be thrown.
 
-- MW_HOME environment variable has been added to the plugin configuration.
+- `MW_HOME` environment variable has been added to the plugin configuration.
 
 
 === 3.2.2
 
 - Added missing documentation.
 
-- Fixed multiline inputs for textareas in CreateUser and CreateGroup procedures.
+- Fixed multiline inputs for text areas in *CreateUser* and *CreateGroup* procedures.
 
-- Fixed issue with CreateUser and DeleteUser procedure when credentials was not found.
+- Fixed issue with *CreateUser* and *DeleteUser* procedure when credentials was not found.
 
 - Cleanup was performed.
 
@@ -2777,7 +2784,7 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
 
 === 3.0.0
 
-- Refactored the CheckPageStatus, CheckServerStatus, CreateDataSource, DeleteDataSource, DeployApp, RunWLST, StartApp, StopApp, and UndeployApp procedures.
+- Refactored the *CheckPageStatus*, *CheckServerStatus*, *CreateDataSource*, *DeleteDataSource*, *DeployApp*, *RunWLST*, *StartApp*, *StopApp*, and *UndeployApp* procedures.
 
 - Added link to plugin Configuration Page in plugin step panels.
 
@@ -2789,14 +2796,14 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
 
 === 2.0.6
 
-- Fixed typos in references to the createDataSource and deleteDataSource files in the manifest.pl so that the files are included correctly in the plugin jar.
+- Fixed typos in references to the `createDataSource` and `deleteDataSource` files in the `manifest.pl` so that the files are included correctly in the plugin jar.
 
 - Fixed errors in the createDataSource procedure.
 
 
 === 2.0.5
 
-- Added four procedures to create datasources, delete datasources, suspend a server,  and resume a server.
+- Added four procedures to create datasource, delete datasource, suspend a server, and resume a server.
 
 - Fixed minor bugs.
 
@@ -2831,7 +2838,7 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
 
 - Add new Parameter Panels for each procedure.
 
-- Add the *weblogic jar Absolute Path* parameter to the DeployApp, UndeployApp, StartApp, StopApp, RunDeployer and RunWLST procedures. It is required to a Linux environment to load WebLogic libreries.
+- Add the *weblogic jar Absolute Path* parameter to the DeployApp, UndeployApp, StartApp, StopApp, RunDeployer and RunWLST procedures. It is required to a Linux environment to load WebLogic libraries.
 
 
 === 1.1.3
@@ -2848,15 +2855,15 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
 
 === 1.1.0
 
-- Add the CheckPageStatus procedure.
+- Add the *CheckPageStatus* procedure.
 
-- Modify the CheckServerProcedure procedure. CURL is not needed and parameters were changed.
+- Modify the *CheckServerProcedure* procedure. CURL is not needed and parameters were changed.
 
 - Fix minor bugs.
 
 - Remove the CURL dependency.
 
-- Add new postp matchers.
+- Add new `postp` matchers.
 
 
 === 1.0.2
