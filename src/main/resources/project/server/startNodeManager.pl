@@ -54,7 +54,7 @@ sub main {
     my $out_log = $log_path . $sep . 'ecdaemon.out.log';
     open TMP, '>', $out_log;
     close TMP;
-    my $command = qq|ecdaemon -- ec-perl -e |;
+    my $command = qq|ecdaemon -- cb-perl -e |;
     $sep = $wl->is_win() ? q|"| : q|'|;
     $command .= sprintf(
         qq|"exec(q{%s$params->{scriptlocation}%s 1> %s$out_log%s 2> %s$err_log%s})"|,

@@ -8,7 +8,7 @@ project projName, {
         resourceName = resource
 
         step 'RunProcedure', {
-            shell = 'ec-perl'
+            shell = 'cb-perl'
             command = '''
 use strict;
 use warnings;
