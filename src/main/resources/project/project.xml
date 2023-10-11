@@ -1094,7 +1094,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName>$[test_connection_res]</resourceName>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -1132,7 +1132,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName>local</resourceName>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit>5</timeLimit>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -1377,7 +1377,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName>$[test_connection_res]</resourceName>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -1415,7 +1415,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName>local</resourceName>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit>5</timeLimit>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -1496,7 +1496,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName>local</resourceName>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit>5</timeLimit>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -1640,7 +1640,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -1810,7 +1810,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -1993,7 +1993,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -2176,7 +2176,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -2372,7 +2372,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -2781,7 +2781,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -2995,7 +2995,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -3218,7 +3218,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -3363,7 +3363,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -3457,7 +3457,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -3618,7 +3618,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -3728,7 +3728,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -3894,7 +3894,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit>5</timeLimit>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -3990,7 +3990,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -4252,7 +4252,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -4481,7 +4481,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -4591,7 +4591,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -4769,7 +4769,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -4896,7 +4896,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -5057,7 +5057,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -5218,7 +5218,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -5402,7 +5402,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -5515,7 +5515,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -5708,7 +5708,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -5901,7 +5901,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -6048,7 +6048,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -6135,7 +6135,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -6296,7 +6296,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -6440,7 +6440,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -6584,7 +6584,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -6782,7 +6782,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -6927,7 +6927,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -7037,7 +7037,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -7164,7 +7164,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -7308,7 +7308,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -7452,7 +7452,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -7562,7 +7562,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -7689,7 +7689,7 @@
           <releaseExclusive>0</releaseExclusive>
           <resourceName/>
           <retries>0</retries>
-          <shell>ec-perl</shell>
+          <shell>cb-perl</shell>
           <timeLimit/>
           <timeLimitUnits>minutes</timeLimitUnits>
           <workingDirectory/>
@@ -7858,7 +7858,7 @@
         <releaseExclusive>0</releaseExclusive>
         <resourceName/>
         <retries>0</retries>
-        <shell>ec-perl</shell>
+        <shell>cb-perl</shell>
         <timeLimit/>
         <timeLimitUnits>minutes</timeLimitUnits>
         <workingDirectory/>
@@ -8149,7 +8149,7 @@ Selective Update - The procedure would update existing Connection Factory for on
     <releaseExclusive>0</releaseExclusive>
     <resourceName />
     <retries>0</retries>
-    <shell>ec-perl</shell>
+    <shell>cb-perl</shell>
     <stepName>CreateOrUpdateConnectionFactory</stepName>
     <timeLimit />
     <timeLimitUnits>minutes</timeLimitUnits>
@@ -8246,7 +8246,7 @@ Selective Update - The procedure would update existing Connection Factory for on
     <releaseExclusive>0</releaseExclusive>
     <resourceName />
     <retries>0</retries>
-    <shell>ec-perl</shell>
+    <shell>cb-perl</shell>
     <stepName>DeleteConnectionFactory</stepName>
     <timeLimit />
     <timeLimitUnits>minutes</timeLimitUnits>
@@ -8439,7 +8439,7 @@ Selective Update - The procedure would update existing Connection Factory for on
     <releaseExclusive>0</releaseExclusive>
     <resourceName />
     <retries>0</retries>
-    <shell>ec-perl</shell>
+    <shell>cb-perl</shell>
     <stepName>CreateOrUpdateJMSQueue</stepName>
     <timeLimit />
     <timeLimitUnits>minutes</timeLimitUnits>
@@ -8538,7 +8538,7 @@ Selective Update - The procedure would update existing Connection Factory for on
     <releaseExclusive>0</releaseExclusive>
     <resourceName />
     <retries>0</retries>
-    <shell>ec-perl</shell>
+    <shell>cb-perl</shell>
     <stepName>DeleteJMSQueue</stepName>
     <timeLimit />
     <timeLimitUnits>minutes</timeLimitUnits>
@@ -8732,7 +8732,7 @@ Selective Update - The procedure would update existing JMS Topic for only parame
     <releaseExclusive>0</releaseExclusive>
     <resourceName />
     <retries>0</retries>
-    <shell>ec-perl</shell>
+    <shell>cb-perl</shell>
     <stepName>CreateOrUpdateJMSTopic</stepName>
     <timeLimit />
     <timeLimitUnits>minutes</timeLimitUnits>
@@ -8831,7 +8831,7 @@ Selective Update - The procedure would update existing JMS Topic for only parame
     <releaseExclusive>0</releaseExclusive>
     <resourceName />
     <retries>0</retries>
-    <shell>ec-perl</shell>
+    <shell>cb-perl</shell>
     <stepName>DeleteJMSTopic</stepName>
     <timeLimit />
     <timeLimitUnits>minutes</timeLimitUnits>
@@ -8950,7 +8950,7 @@ Selective Update - The procedure would update existing JMS Module for only param
     <releaseExclusive>0</releaseExclusive>
     <resourceName />
     <retries>0</retries>
-    <shell>ec-perl</shell>
+    <shell>cb-perl</shell>
     <stepName>CreateOrUpdateJMSModule</stepName>
     <timeLimit />
     <timeLimitUnits>minutes</timeLimitUnits>
@@ -9030,7 +9030,7 @@ Selective Update - The procedure would update existing JMS Module for only param
     <releaseExclusive>0</releaseExclusive>
     <resourceName />
     <retries>0</retries>
-    <shell>ec-perl</shell>
+    <shell>cb-perl</shell>
     <stepName>DeleteJMSModule</stepName>
     <timeLimit />
     <timeLimitUnits>minutes</timeLimitUnits>
@@ -9165,7 +9165,7 @@ Selective Update - The procedure would update existing JMS Module for only param
     <releaseExclusive>0</releaseExclusive>
     <resourceName />
     <retries>0</retries>
-    <shell>ec-perl</shell>
+    <shell>cb-perl</shell>
     <stepName>CreateOrUpdateJMSModuleSubdeployment</stepName>
     <timeLimit />
     <timeLimitUnits>minutes</timeLimitUnits>
@@ -9261,7 +9261,7 @@ Selective Update - The procedure would update existing JMS Module for only param
     <releaseExclusive>0</releaseExclusive>
     <resourceName />
     <retries>0</retries>
-    <shell>ec-perl</shell>
+    <shell>cb-perl</shell>
     <stepName>DeleteJMSModuleSubdeployment</stepName>
     <timeLimit />
     <timeLimitUnits>minutes</timeLimitUnits>
@@ -9379,7 +9379,7 @@ Selective Update - The procedure would update existing JMS Module for only param
     <releaseExclusive>0</releaseExclusive>
     <resourceName />
     <retries>0</retries>
-    <shell>ec-perl</shell>
+    <shell>cb-perl</shell>
     <stepName>CreateOrUpdateJMSServer</stepName>
     <timeLimit />
     <timeLimitUnits>minutes</timeLimitUnits>
@@ -9460,7 +9460,7 @@ Selective Update - The procedure would update existing JMS Module for only param
     <releaseExclusive>0</releaseExclusive>
     <resourceName />
     <retries>0</retries>
-    <shell>ec-perl</shell>
+    <shell>cb-perl</shell>
     <stepName>DeleteJMSServer</stepName>
     <timeLimit />
     <timeLimitUnits>minutes</timeLimitUnits>
@@ -9698,7 +9698,7 @@ By default, the JNDI name is the name of the Datasource. Applications that look 
     <releaseExclusive>0</releaseExclusive>
     <resourceName />
     <retries>0</retries>
-    <shell>ec-perl</shell>
+    <shell>cb-perl</shell>
     <stepName>CreateOrUpdateDatasource</stepName>
     <timeLimit />
     <timeLimitUnits>minutes</timeLimitUnits>
@@ -10005,7 +10005,7 @@ For JMS Resource the name of the resource should be prefixed by JMS Module Name:
     <releaseExclusive>0</releaseExclusive>
     <resourceName />
     <retries>0</retries>
-    <shell>ec-perl</shell>
+    <shell>cb-perl</shell>
     <stepName>SetupResource</stepName>
     <timeLimit />
     <timeLimitUnits>minutes</timeLimitUnits>
@@ -10030,7 +10030,7 @@ For JMS Resource the name of the resource should be prefixed by JMS Module Name:
     <releaseExclusive>0</releaseExclusive>
     <resourceName>$[WLResourceName]</resourceName>
     <retries>0</retries>
-    <shell>ec-perl</shell>
+    <shell>cb-perl</shell>
     <stepName>Discover</stepName>
     <timeLimit />
     <timeLimitUnits>minutes</timeLimitUnits>
@@ -10419,7 +10419,7 @@ For JMS Resource the name of the resource should be prefixed by JMS Module Name:
       <releaseExclusive>0</releaseExclusive>
       <resourceName>$[test_connection_res]</resourceName>
       <retries>0</retries>
-      <shell>ec-perl</shell>
+      <shell>cb-perl</shell>
       <timeLimit></timeLimit>
       <timeLimitUnits>minutes</timeLimitUnits>
       <workingDirectory></workingDirectory>

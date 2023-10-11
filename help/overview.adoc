@@ -14,3 +14,7 @@ This plugin was developed and tested against following WebLogic Server Versions:
  - 12c (12.2.1.1.0) on Linux
  - 11g (10.3.6.0) on Windows
  - 11g (10.3.6.0) on Linux
+
+== Updated Perl version required
+
+This plugin uses an updated version of Perl and requires CloudBees CD/RO agent version 10.3 or later.
