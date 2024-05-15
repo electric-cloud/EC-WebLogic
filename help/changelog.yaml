@@ -1,36 +1,35 @@
 4.0.0:
-  - Upgraded from Perl 5.8 to Perl 5.32. The EC-WebLogic plugin is not backward compatible with {PRODUCT} 10.3 and earlier.
-  - Starting with the 4.0.0 release, a new agent is required to run EC-WebLogic plugin procedures.
+  - Upgraded from Perl 5.8 to Perl 5.32. The WebLogic plugin is not backward compatible with {PRODUCT} 10.3 and earlier.
+  - Starting with the WebLogic plugin 4.0.0 release, a new agent is required to run WebLogic plugin procedures.
 3.6.1:
-  - Upgraded HttpClient library to v4.5.13.
-  - Added session validation
+  - Upgraded the HTTP client library to v4.5.13.
+  - Added session validation.
 3.6.0:
-  - Added support for the new plugin configurations.
+  - Added support for new plugin configurations.
 3.5.3:
-  - Fixed Open Redirect Vulnerability and XSS, cookie stealing.
+  - Fixed Open Redirect Vulnerability and XSS cookie stealing.
 3.5.2:
   - The documentation has been migrated to the main site.
 3.5.1:
-  - Rebranding from "CloudBees Flow" to "CloudBees CD".
+  - Rebranded from "CloudBees Flow" to "CloudBees CD".
 3.5.0:
-  - Add checking connection while creating a configuration.
-  - Jobs for the successful "CreateConfiguration" and "EditConfiguration" run is now preserved.
-  - Add logging while running "CreateConfiguration".
+  - Added the option to check the connection when creating a plugin configuration.
+  - Jobs for the successful *CreateConfiguration* and *EditConfiguration* procedure runs are now preserved.
+  - Added support for logging when running the *CreateConfiguration* procedure.
 3.4.3:
-  - Renaming from "Electric Cloud" to "CloudBees"
+  - Renamed from "Electric Cloud" to "CloudBees"
 3.4.2:
-  - Configurations can be created by users with "@" sign in a name.
+  - Configurations can be created by users with `@` sign in a name.
 3.4.1:
-  - Fixed the issue with lost output parameters for 9.0. Upon upgrade or clean install of 9.0 output parameters were not created for the plugin's procedures.
+  - Fixed an issue with lost output parameters for {PRODUCT} v9.0. Upon upgrade or a clean installation of {PRODUCT} 9.0, output parameters were not created for the plugin's procedures.
 3.4.0:
   - |
-    Introduced the following 2 new procedures
-    <ul>
-    <li>"CreateorUpdateDataSource" to support Data Source management.</li>
-    <li>"Discover" procedure to support the discovery functionality where in an EF model can be created from an existing Weblogic environment.</li>
-    </ul>
-  - Modified DeleteDataSource procedure
-  - Old procedure CreateDataSource is deprecated
+    Added support for the following new procedures:
+
+    * *CreateorUpdateDataSource* procedure to support Data Source management.</li>
+    * *Discover* procedure, to support the discovery functionality where a {PRODUCT} model can be created from an existing WebLogic environment.</li>
+  - Modified the *DeleteDataSource* procedure.
+  - Deprecated the *CreateDataSource* procedure.
 3.3.0:
   - |
     Added support for JMS Resource Management by adding the following procedures:

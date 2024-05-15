@@ -26,8 +26,7 @@
     <!-- End of improvements for CEV-18687 -->
     <property>configname</property>
     <required>1</required>
-    <documentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</documentation>
-    <htmlDocumentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.</htmlDocumentation>
+    <htmlDocumentation>Name of the configuration to be used. URL, port, and credentials are retrieved from the specified plugin configuration.</htmlDocumentation>
     <propertyReference>/plugins/@PLUGIN_NAME@/project/weblogic_cfgs</propertyReference>
   </formElement>
 
@@ -68,10 +67,7 @@
     <label>WLST script absolute path</label>
     <property>wlstabspath</property>
     <required>1</required>
-        <documentation>
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
-NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        </documentation>
+    <documentation>Absolute path to WLST (for example, /path/to/wlst.cmd or wlst.sh). If this path is specified, you do not need to apply the equal parameter in procedures. Note that you must install the agent to the machine that has access to the WLST script.</documentation>
     <propertyReference type="property">/plugins/@PLUGIN_NAME@/project/weblogic_cfgs/$configname/wlst_path</propertyReference>
     <dependsOn>configname</dependsOn>
   </formElement>

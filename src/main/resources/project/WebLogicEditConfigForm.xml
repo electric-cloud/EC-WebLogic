@@ -83,9 +83,7 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
         <uncheckedValue>0</uncheckedValue>
         <value>0</value>
         <required>0</required>
-        <documentation>
-            If checked, each WebLogic edit session will have unique name assigned. Named sessions are not supported by WebLogic server prior to 12 version. Defaults to false.
-        </documentation>
+        <documentation>If selected, each WebLogic edit session has a unique name assigned. Named sessions only supported by WebLogic server version 12 and later. Defaults to false.</documentation>
     </formElement>
 
     <formElement>

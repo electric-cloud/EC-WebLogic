@@ -26,18 +26,14 @@
     <property>configname</property>
     <propertyReference>/plugins/@PLUGIN_NAME@/project/weblogic_cfgs</propertyReference>
     <required>1</required>
-    <documentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</documentation>
-    <htmlDocumentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.</htmlDocumentation>
+    <htmlDocumentation>Name of the configuration to be used. URL, port, and credentials are retrieved from the specified plugin configuration.</htmlDocumentation>
   </formElement>
   <formElement>
     <type>entry</type>
     <label>WLST script absolute path</label>
     <property>wlstabspath</property>
     <required>1</required>
-        <documentation>
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
-NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        </documentation>
+    <documentation>Absolute path to WLST (for example, /path/to/wlst.cmd or wlst.sh). If this path is specified, you do not need to apply the equal parameter in procedures. Note that you must install the agent to the machine that has access to the WLST script.</documentation>
     <propertyReference type="property">/plugins/@PLUGIN_NAME@/project/weblogic_cfgs/$configname/wlst_path</propertyReference>
     <dependsOn>configname</dependsOn>
   </formElement>
@@ -45,7 +41,7 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
     <type>entry</type>
     <label>Maximum elapsed time</label>
     <property>maxelapsedtime</property>
-    <documentation>Defines the maximum time in seconds that the job will try to check into the server. Blank implies no wait time (URL only checked one time).</documentation>
+    <documentation>Defines the maximum time, in seconds, that the job tries to check on the cluster. If left blank, there is no wait time and the URL is only checked once.</documentation>
     <required>0</required>
   </formElement>
   <formElement>
@@ -53,7 +49,7 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
     <label>Success criteria</label>
     <property>successcriteria</property>
     <required>1</required>
-    <documentation>Indicates the expected correct result to be obtained when running checking the server.</documentation>
+    <documentation>Expected result when checking the server status.</documentation>
     <option>
       <name>Server running</name>
       <value>RUNNING</value>
@@ -67,7 +63,7 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
     <type>entry</type>
     <label>Instance name</label>
     <property>instancename</property>
-    <documentation>Indicates the name of the instance to be checked.</documentation>
+    <documentation>Name of the instance to be checked.</documentation>
     <required>1</required>
   </formElement>
 </editor>

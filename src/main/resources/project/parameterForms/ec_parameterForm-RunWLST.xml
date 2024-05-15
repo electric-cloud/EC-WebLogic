@@ -22,18 +22,13 @@
     <label>WLST script absolute path</label>
     <property>wlstabspath</property>
     <required>1</required>
-        <documentation>
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
-NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        </documentation>
+    <documentation>Absolute path to WLST (for example, /path/to/wlst.cmd or wlst.sh). If this path is specified, you do not need to apply the equal parameter in procedures. Note that you must install the agent to the machine that has access to the WLST script.</documentation>
   </formElement>
   <formElement>
     <type>entry</type>
     <label>Script File Absolute Path</label>
     <property>scriptfilepath</property>
-    <documentation>
-      Absolute path of a Jython script containing the desired job. The path is used only if 'Supplied File' is selected in the 'Script File Source' parameter. i.e: '/path/to/scriptfile.jython'.
-    </documentation>
+    <documentation>Absolute path of a Jython script containing the desired job. The path is used only if 'Supplied File' is selected in the 'Script File Source' parameter. i.e: '/path/to/scriptfile.jython'.</documentation>
     <required>0</required>
   </formElement>
   <formElement>
@@ -41,9 +36,7 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
     <label>Script File Source</label>
     <property>scriptfilesource</property>
     <required>1</required>
-    <documentation>
-      Indicates the source of the script file to execute. Either a existent file in the path defined in the 'scriptfile' parameter OR a new one using the code specified in scriptfile parameter.
-    </documentation>
+    <documentation>Indicates the source of the script file to execute. Either a existent file in the path defined in the 'scriptfile' parameter OR a new one using the code specified in scriptfile parameter.</documentation>
     <option>
       <name>Supplied File</name>
       <value>suppliedfile</value>
@@ -56,9 +49,7 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
     <type>textarea</type>
     <label>Script File</label>
     <property>scriptfile</property>
-    <documentation>
-      Content of the script file to run if 'New Script File' option is chosen in the 'Script File Source' parameter.
-    </documentation>
+    <documentation>Content of the script file to run if 'New Script File' option is chosen in the 'Script File Source' parameter.</documentation>
     <required>0</required>
   </formElement>
   <formElement>
@@ -70,19 +61,16 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
   </formElement>
   <formElement>
     <type>textarea</type>
-    <label>Additional Environment Vairables</label>
+    <label>Additional environment variables</label>
     <property>additional_envs</property>
-    <documentation>
-      Additional environment variables as comma separated key-value pairs.
-      For example: JAVA_HOME => '/path/to/java/home', other_env => 'myenv'
-    </documentation>
+    <documentation> Additional environment variables as comma separated key-value pairs. For example: JAVA_HOME => '/path/to/java/home', other_env => 'myenv'</documentation>
     <required>0</required>
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>weblogic jar Absolute Path</label>
+    <label>WebLogic JAR absolute path</label>
     <property>webjarpath</property>
-    <documentation>Absolute path of the weblogic jar, needed to run the run Jython scripts using weblogic.WLST. In Windows environment, if the jar is already added to the enviroment classpath variable, then is not necesary to include it. In Linux environment you must include the path. i.e: '/path/to/weblogic.jar' or '/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar'.
+    <documentation>Absolute path of the weblogic .jar, needed to run the run Jython scripts using weblogic.WLST. In Windows environment, if the jar is already added to the enviroment classpath variable, then is not necesary to include it. In Linux environment you must include the path. i.e: '/path/to/weblogic.jar' or '/root/Oracle/Middleware/wlserver_10.3/server/lib/weblogic.jar'.
     </documentation>
     <required>0</required>
   </formElement>

@@ -24,8 +24,7 @@
     <configuration>1</configuration>
     <!-- End of improvements for CEV-18687 -->
     <property>configname</property>
-    <documentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</documentation>
-    <htmlDocumentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.</htmlDocumentation>
+    <htmlDocumentation>Name of the configuration to be used. URL, port, and credentials are retrieved from the specified plugin configuration.</htmlDocumentation>
     <required>1</required>
     <propertyReference>/plugins/@PLUGIN_NAME@/project/weblogic_cfgs</propertyReference>
   </formElement>
@@ -33,7 +32,7 @@
     <type>entry</type>
     <label>JMS Module name</label>
     <property>ecp_weblogic_jms_module_name</property>
-    <documentation>Unique name of the JMS Module in which the Sub-Deployment should be created. Note that this module should exist already for this Procedure to succeed.</documentation>
+    <documentation>Unique name of the JMS module in which the sub-deployment should be created. Note that this module must already exist for this procedure to succeed.</documentation>
     <required>1</required>
   </formElement>
   <formElement>
@@ -41,24 +40,27 @@
     <label>Subdeployment name</label>
     <required>1</required>
     <property>ecp_weblogic_subdeployment_name</property>
-    <documentation>Name of the Subdeployment to be created or updated.</documentation>
+    <documentation>Name of the subdeployment to be created or updated.</documentation>
   </formElement>
   <formElement>
     <type>textarea</type>
     <label>Target WLS Instance List</label>
     <required>1</required>
     <property>ecp_weblogic_subdeployment_target_list</property>
-    <documentation>1 or more comma separated list of Servers or Clusters that constitute the Sub-Deployment. In essence a Sub-Deployment provides a way to group multiple targets to which JMS Resources can be created on.</documentation>
+    <documentation>Comma-separated list of servers or clusters that constitute the sub-deployment, providing a way to group multiple targets to which JMS resources can be created on.</documentation>
   </formElement>
   <formElement>
     <type>select</type>
     <label>Update Action</label>
     <property>ecp_weblogic_update_action</property>
-    <documentation>This parameter controls as to what the Update Action should be when a JMS Subdeployment with the same name exists :
-Do Nothing  (Default) -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
-Remove and Create - The procedure would remove existing JMS Subdeployment and recreate it based on new parameters passed.
-Selective Update - The procedure would update target servers for the existing JMS Subdeployment.
-</documentation>
+      <htmlDocumentation>The update action to take when a connection factory with the same name already exists:
+          <br/>
+          <ul>
+              <li><b>Do nothing (default):</b> No action is taken upon an update (for example, it will be a NO-OP).</li>
+              <li><b>Remove and create:</b> The existing connection factory is removed, and it is recreated based on the new parameters passed.</li>
+              <li><b>Selective update:</b> The existing connection factory is updated only for parameters that are designed to be updated out-of-the-box.</li>
+          </ul>
+      </htmlDocumentation>
     <required>0</required>
     <option>
       <value>do_nothing</value>

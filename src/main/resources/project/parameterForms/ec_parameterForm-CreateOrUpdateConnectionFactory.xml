@@ -24,34 +24,33 @@
         <configuration>1</configuration>
         <!-- End of improvements for CEV-18687 -->
         <property>configname</property>
-        <documentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</documentation>
-        <htmlDocumentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.</htmlDocumentation>
+        <documentation>Name of the configuration to be used. URL, port, and credentials are retrieved from the specified plugin configuration.</documentation>
+        <htmlDocumentation>Name of the configuration to be used. URL, port, and credentials are retrieved from the specified plugin configuration.</htmlDocumentation>
         <required>1</required>
         <propertyReference>/plugins/@PLUGIN_NAME@/project/weblogic_cfgs</propertyReference>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Connection Factory name</label>
+        <label>Connection factory name</label>
         <property>cf_name</property>
-        <documentation>Unique name of the Connection Factory that is created.</documentation>
+        <documentation>Unique name of the connection factory that is created.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>JMS Module name</label>
+        <label>JMS module name</label>
         <property>jms_module_name</property>
-        <documentation>Name of the JMS module in which the Connection Factory is created.</documentation>
+        <documentation>Name of the JMS module where the connection factory is created.</documentation>
         <required>1</required>
     </formElement>
     <formElement>
-        <label>Subscription Sharing Policy</label>
+        <label>Subscription sharing policy</label>
         <property>cf_sharing_policy</property>
         <type>select</type>
         <option><name>Exclusive</name><value>exclusive</value></option>
         <option><name>Sharable</name><value>sharable</value></option>
         <required>1</required>
-        <documentation>The Connection Factory Subscription Sharing Policy Subscribers can be used to control which subscribers can access new subscriptions.Values can be either Sharable or Exclusive.
-        </documentation>
+        <documentation>Connection factory subscription sharing policy used to control which subscribers can access new subscriptions.</documentation>
     </formElement>
     <formElement>
         <label>Client ID Policy</label>
@@ -60,29 +59,30 @@
         <option><name>Restricted</name><value>restricted</value></option>
         <option><name>Unrestricted</name><value>unrestricted</value></option>
         <required>1</required>
-        <documentation>The Client ID Policy indicates whether more than one JMS connection can use the same Client ID. Oracle recommends setting the Client ID policy to Unrestricted if sharing durable subscribers. Subscriptions created with different Client ID policies are always treated as independent subscriptions.
-        </documentation>
+        <documentation>Client ID policy to specify if more than one JMS connection can use the same client ID. Oracle recommends setting the client ID policy to *Unrestricted* if sharing durable subscribers. Subscriptions created with different client ID policies are always treated as independent subscriptions.</documentation>
+        <htmlDocumentation>Client ID policy to specify if more than one JMS connection can use the same client ID. Oracle recommends setting the client ID policy to <b>Unrestricted</b> if sharing durable subscribers. Subscriptions created with different client ID policies are always treated as independent subscriptions.</htmlDocumentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>JNDI name</label>
         <property>jndi_name</property>
-        <documentation>JNDI Name is used to lookup the Connection factory using JNDI lookup. If the connection factory is created without passing this parameter, it can be only used in an Application Scoped context.</documentation>
+        <documentation>JNDI name used to look up the connection factory, using JNDI lookup. If the connection factory is created without passing this parameter, it can be only used in an application-scoped context.</documentation>
         <required>0</required>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Maximum Messages per Session</label>
         <property>cf_max_messages_per_session</property>
-        <documentation>This  limit specifies the number of messages that can be queued for an asynchronous session. Default value  is 10.</documentation>
+        <documentation>Number of messages that can be queued for an asynchronous session. Default is *10*.</documentation>
+        <htmlDocumentation>Number of messages that can be queued for an asynchronous session. Default is <b>10</b>.</htmlDocumentation>
         <value>10</value>
         <required>0</required>
     </formElement>
     <formElement>
         <type>checkbox</type>
-        <label>XA Connection Factory Enabled?</label>
+        <label>XA connection factory enabled?</label>
         <property>cf_xa_enabled</property>
-        <documentation>Indicates if this connection factory should  create XA queues and XA topics in order to accommodate JTA aware transactions. Default is Yes.</documentation>
+        <documentation>If selected, this connection factory creates XA queues and XA topics to accommodate JTA aware transactions. Default is *Yes*.</documentation>
         <checkedValue>1</checkedValue>
         <uncheckedValue>0</uncheckedValue>
         <value>1</value>
@@ -92,18 +92,17 @@
         <type>entry</type>
         <label>Subdeployment name</label>
         <property>subdeployment_name</property>
-        <documentation>Name of Subdeployment. Required only if you do not  want default targeting and instead want to use advanced targeting.</documentation>
+        <documentation>Name of the subdeployment. Required only if you want to use advanced targeting, and not the default targeting.</documentation>
         <required>0</required>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Target WLS Instance List</label>
         <property>wls_instance_list</property>
-        <documentation>Comma delimited set of Weblogic Server instances (Standalone or cluster) to which the Connection Factory would be targeted to.
-        Required only if Subdeployment Name is specified.</documentation>
+        <documentation>Comma-delimited set of Weblogic server instances (standalone or cluster) that the connection factory is targeted to. Required only if the *Subdeployment name* parameter is specified.</documentation>
         <htmlDocumentation>
-        Comma delimited set of Weblogic Server instances (Standalone or cluster) to which the Connection Factory would be targeted to.<br/>
-        Required only if Subdeployment Name is specified.
+        Comma-delimited set of Weblogic server instances (standalone or cluster) that the connection factory is targeted to.<br/>
+        Required only if the <b>Subdeployment name</b> is specified.
         </htmlDocumentation>
         <required>0</required>
     </formElement>
@@ -111,24 +110,20 @@
         <type>entry</type>
         <label>Target JMS Server List</label>
         <property>jms_server_list</property>
-        <documentation>Comma delimited set of JMS Servers to which the Connection Factory would be targeted to.
-Required only if Subdeployment Name is specified. </documentation>
+        <documentation>Comma-delimited set of JMS servers that the connection factory is targeted to. Required only if Subdeployment Name is specified. </documentation>
         <required>0</required>
     </formElement>
     <formElement>
         <type>select</type>
         <label>Update Action</label>
         <property>update_action</property>
-        <documentation>This parameter controls as to what the Update Action should be when a Connection Factory with the same name exists:
-Do Nothing  (Default) -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.
-Remove and Create - The procedure would remove existing Connection Factory and recreate it based on new parameters passed.
-Selective Update - The procedure would update existing Connection Factory for only parameters that we have designed to be updatable out of the box, based on what we think makes sense.
-</documentation>
-        <htmlDocumentation>
-This parameter controls as to what the Update Action should be when a Connection Factory with the same name exists:<br/>
-<b>Do Nothing  (Default)</b> -  The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.<br/>
-<b>Remove and Create</b> - The procedure would remove existing Connection Factory and recreate it based on new parameters passed.<br/>
-<b>Selective Update</b> - The procedure would update existing Connection Factory. The parameters for selective update are <b>JNDI Name</b> and <b>Subdeployment Name</b>.
+        <htmlDocumentation>The update action to take when a connection factory with the same name already exists:
+            <br/>
+            <ul>
+                <li><b>Do nothing (default):</b> No action is taken upon an update (for example, it will be a NO-OP).</li>
+                <li><b>Remove and create:</b> The existing connection factory is removed, and it is recreated based on the new parameters passed.</li>
+                <li><b>Selective update:</b> The existing connection factory is updated only for parameters that are designed to be updated out-of-the-box.</li>
+            </ul>
         </htmlDocumentation>
         <required>0</required>
         <option>
@@ -149,15 +144,15 @@ This parameter controls as to what the Update Action should be when a Connection
         <type>textarea</type>
         <label>Additional options</label>
         <required>0</required>
-        <documentation>Use this option to pass related parameters that pertain to Delivery, Client, Transaction or Flow Control. E.g., DefaultDeliveryParams.DefaultPriority=5</documentation>
-        <htmlDocumentation>
-Use this option to pass related parameters that pertain to Delivery, Client, Transaction or Flow Control. E.g., <b>DefaultDeliveryParams.DefaultPriority=5</b>.
-Several options are separated by a newline:<br/>
-<pre>
-DefaultDeliveryParams.DefaultPriority=5
-FlowControlParams.FlowMaximum=500
-FlowControlParams.FlowControlEnabled=true
-</pre>
+        <htmlDocumentation>Pass related parameters that pertain to delivery, client, transaction, or flow control. For example, <b>DefaultDeliveryParams.DefaultPriority=5</b>.
+            <br/>
+            Several options are separated by a newline:
+            <br/>
+            <pre>
+            DefaultDeliveryParams.DefaultPriority=5
+            FlowControlParams.FlowMaximum=500
+            FlowControlParams.FlowControlEnabled=true
+            </pre>
         </htmlDocumentation>
         <property>additional_options</property>
     </formElement>

@@ -24,8 +24,7 @@ limitations under the License.
     <configuration>1</configuration>
     <!-- End of improvements for CEV-18687 -->
     <property>configname</property>
-    <documentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</documentation>
-    <htmlDocumentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.</htmlDocumentation>
+    <htmlDocumentation>Name of the configuration to be used. URL, port, and credentials are retrieved from the specified plugin configuration.</htmlDocumentation>
     <required>1</required>
     <propertyReference>/plugins/@PLUGIN_NAME@/project/weblogic_cfgs</propertyReference>
 </formElement>
@@ -33,72 +32,78 @@ limitations under the License.
     <type>entry</type>
     <label>Datasource name</label>
     <property>ecp_weblogic_dataSourceName</property>
-    <documentation>Unique name of the JDBC generic Data Source to be created.</documentation>
+    <documentation>Unique name of the JDBC generic data source to be created.</documentation>
     <required>1</required>
 </formElement>
 <formElement>
     <type>entry</type>
-    <label>DataSource Driver Class</label>
+    <label>DataSource driver class</label>
     <property>ecp_weblogic_dataSourceDriverClass</property>
-    <documentation>The full package name of JDBC driver class used to create the physical database connections in the connection pool. (Note that this driver class must be in the classpath of every server to which it is targeted/deployed).</documentation>
+    <documentation>The full package name of the JDBC driver class used to create the physical database connections in the connection pool. Note that this driver class must be in the classpath of every server to which it is targeted/deployed.</documentation>
     <required>1</required>
 </formElement>
 <formElement>
     <type>entry</type>
     <label>Database URL</label>
     <property>ecp_weblogic_databaseUrl</property>
-    <htmlDocumentation>The JDBC URL of the database to connect to. The format of the URL varies by JDBC driver. The URL is passed to the JDBC driver to create the physical database connections. These are some examples.
-jdbc:spssoem:mysql://&lt;host&gt;:&lt;port&gt;;DatabaseName=&lt;database&gt;
-jdbc:spssoem:oracle://&lt;host&gt;:&lt;port&gt;;SID=&lt;database&gt;[;AuthenticationMethod=kerberos].</htmlDocumentation>
+    <htmlDocumentation>JDBC URL of the database to connect to. The format of the URL varies by JDBC driver. The URL is passed to the JDBC driver to create the physical database connections. Examples:
+        <br/>
+        <ul>
+        <li>jdbc:spssoem:mysql://&lt;host&gt;:&lt;port&gt;;DatabaseName=&lt;database&gt;</li>
+        <li>jdbc:spssoem:oracle://&lt;host&gt;:&lt;port&gt;;SID=&lt;database&gt;[;AuthenticationMethod=kerberos].</li>
+        </ul>
+    </htmlDocumentation>
     <required>1</required>
 </formElement>
 <formElement>
     <type>entry</type>
     <label>JNDI name</label>
     <property>ecp_weblogic_jndiName</property>
-    <documentation>The JNDI path to where this Datasource is bound. For example jdbc/MYDS
-By default, the JNDI name is the name of the Datasource. Applications that look up the JNDI path will get a "javax.sql.Datasource" instance that corresponds to this Datasource.</documentation>
+    <documentation>JNDI path to where this datasource is bound (for example, jdbc/MYDS). By default, the JNDI name is the name of the datasource. Applications that look up the JNDI path will get a javax.sql.Datasource instance that corresponds to this datasource.</documentation>
     <required>1</required>
 </formElement>
 <formElement>
     <type>credential</type>
-    <label>Datasource Credentials</label>
+    <label>Datasource credentials</label>
     <property>ecp_weblogic_dataSourceCredentials</property>
-    <documentation>Username and password for the Database.</documentation>
+    <documentation>Username and password for the database.</documentation>
     <required>1</required>
 </formElement>
 <formElement>
     <type>entry</type>
     <label>Database name</label>
     <property>ecp_weblogic_databaseName</property>
-    <documentation>Name of the Database/Default Schema to which the Database connection is to. Note that this may be relevant to MySQL (for example) and in general may not be necessary for all Databases. Further this name can be mentioned as part of the JDBC URL above. There is as such no need to use this parameter if it is already defined in the JDBC URL like above.</documentation>
+    <htmlDocumentation>Name of the database/default schema for the database connection. Note that this may be relevant to some databases (for example, MySQL), but may not be necessary for all databases. This parameter is not required if it is already defined in the <b>JDBC URL</b> parameter.</htmlDocumentation>
     <required>0</required>
 </formElement>
 <formElement>
     <type>textarea</type>
-    <label>JDBC Driver Properties</label>
+    <label>JDBC driver properties</label>
     <property>ecp_weblogic_driverProperties</property>
-    <documentation>The list of properties passed to the JDBC driver that are used to create physical database connections. For example: server=dbserver1. List each property=value pair on a separate line.<br/>
-    <b>Note</b>:For security reasons, when WebLogic Server is running in production mode, you cannot specify database passwords in this properties list. Data source deployment will fail if a password is specified in the properties list. To override this security check, use the command line argument "weblogic.management.allowClearTextPasswords" when starting the server.
-    </documentation>
+    <htmlDocumentation>Newline-separated list of property=value pairs passed to the JDBC driver that are used to create physical database connections (for example, server=dbserver1).<br/>
+NOTE: For security reasons, when the WebLogic server is running in production mode, you cannot specify database passwords in this properties list because it will cause datasource deployments to fail. To override this security check, use the commandline argument "weblogic.management.allowClearTextPasswords" when starting the server.
+    </htmlDocumentation>
     <required>0</required>
 </formElement>
 <formElement>
     <type>textarea</type>
-    <label>Target Server List</label>
+    <label>Target server list</label>
     <property>ecp_weblogic_targets</property>
-    <documentation>A list of comma separated list of Servers on which the Data Source should be targeted. If targets are not specified, Data Source will be created but not deployed.</documentation>
+    <documentation>Comma-separated list of servers the datasource should target. If targets are not specified, the datasource is created, but not deployed.</documentation>
     <required>0</required>
 </formElement>
 <formElement>
     <type>select</type>
-    <label>Update Action</label>
+    <label>Update action</label>
     <property>ecp_weblogic_updateAction</property>
-    <htmlDocumentation>This parameter controls as to what the Update Action should be when a DataSource with the same name exists<br/>
-<b>Do Nothing (Default)</b> - The procedure will take no action upon an update (i.e., will be a NO-OP), if this option is chosen.<br/>
-<b>Remove and Create</b> - The procedure would remove existing DataSource and recreate it based on new parameters passed.<br/>
-<b>Selective Update</b> - The procedure would update existing DataSource credentials and Server Target List.
-</htmlDocumentation>
+    <htmlDocumentation>The update action to take when a connection factory with the same name already exists:
+        <br/>
+        <ul>
+            <li><b>Do nothing (default):</b> No action is taken upon an update (for example, it will be a NO-OP).</li>
+            <li><b>Remove and create:</b> The existing connection factory is removed, and it is recreated based on the new parameters passed.</li>
+            <li><b>Selective update:</b> The existing connection factory is updated only for parameters that are designed to be updated out-of-the-box.</li>
+        </ul>
+    </htmlDocumentation>
     <required>0</required>
     <value>do_nothing</value>
     <option>
@@ -118,7 +123,7 @@ By default, the JNDI name is the name of the Datasource. Applications that look 
     <type>textarea</type>
     <label>Additional options</label>
     <property>ecp_weblogic_additionalOptions</property>
-    <documentation>Use this option to specify optional parameters for example initial pool size, min pool size, max pool size, validation SQL etc.</documentation>
+    <documentation>If selected, specify optional parameters (for example, the initial pool size, minimum pool size, maximum pool size, and validation SQL).</documentation>
     <required>0</required>
 </formElement>
 </editor>

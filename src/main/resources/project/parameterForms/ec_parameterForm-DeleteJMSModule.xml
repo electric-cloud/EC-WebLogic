@@ -24,8 +24,7 @@
     <configuration>1</configuration>
     <!-- End of improvements for CEV-18687 -->
     <property>configname</property>
-    <documentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</documentation>
-    <htmlDocumentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.</htmlDocumentation>
+    <htmlDocumentation>Name of the configuration to be used. URL, port, and credentials are retrieved from the specified plugin configuration.</htmlDocumentation>
     <required>1</required>
     <propertyReference>/plugins/@PLUGIN_NAME@/project/weblogic_cfgs</propertyReference>
   </formElement>

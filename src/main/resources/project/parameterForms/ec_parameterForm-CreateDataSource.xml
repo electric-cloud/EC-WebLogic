@@ -34,10 +34,7 @@
     <label>WLST script absolute path</label>
     <property>wlstabspath</property>
     <required>1</required>
-        <documentation>
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
-NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        </documentation>
+    <documentation>Absolute path to WLST (for example, /path/to/wlst.cmd or wlst.sh). If this path is specified, you do not need to apply the equal parameter in procedures. Note that you must install the agent to the machine that has access to the WLST script.</documentation>
     <propertyReference type="property">/plugins/@PLUGIN_NAME@/project/weblogic_cfgs/$configname/wlst_path</propertyReference>
     <dependsOn>configname</dependsOn>
   </formElement>
@@ -45,21 +42,21 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
     <type>entry</type>
     <label>Datasource name</label>
     <property>dsname</property>
-    <documentation>A unique name that identifies this Datasource in the WebLogic domain.</documentation>
+    <documentation>Unique name that identifies this datasource in the WebLogic domain.</documentation>
     <required>1</required>
   </formElement>
   <formElement>
     <type>entry</type>
     <label>Database</label>
     <property>dsdbname</property>
-    <documentation>The database used by the Datasource.</documentation>
+    <documentation>The database used by the datasource.</documentation>
     <required>1</required>
   </formElement>
   <formElement>
     <type>entry</type>
     <label>Server Instance</label>
     <property>target</property>
-    <documentation>Instance name of the Server to include the Datasource. i.e: 'AdminServer'.</documentation>
+    <documentation>Instance name of the server to include the datasource (for example, AdminServer).</documentation>
     <required>1</required>
   </formElement>
   <formElement>
@@ -67,25 +64,21 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
     <label>Datasource JNDI</label>
     <property>jndiname</property>
     <documentation>
-      The JNDI path to where this Datasource is bound. By default, the JNDI name is the name of the Datasource. Applications that look up the JNDI path will get a "javax.sql.Datasource" instance that corresponds to this Datasource.
+      JNDI path that this datasource is bound to. By default, the JNDI name is the name of the datasource. Applications that look up the JNDI path retrieve a javax.sql.Datasource instance that corresponds to this datasource.
     </documentation>
     <required>0</required>
   </formElement>
   <formElement>
     <type>entry</type>
-    <label>Datasource Driver Class</label>
+    <label>Datasource driver class</label>
     <property>driverclass</property>
-    <documentation>
-      The full package name of JDBC driver class used to create the physical database connections in the connection pool. (Note that this driver class must be in the classpath of any server to which it is deployed).
-    </documentation>
+    <documentation>Full package name of the JDBC driver class used to create the physical database connections in the connection pool. Note that this driver class must be in the classpath of any server to which it is deployed.</documentation>
     <required>1</required>
   </formElement>
   <formElement><type>entry</type>
   <label>Datasource URL</label>
   <property>driverurl</property>
-  <documentation>
-    The URL of the database to connect to. The format of the URL varies by JDBC driver. The URL is passed to the JDBC driver to create the physical database connections.
-  </documentation>
+  <documentation>The URL of the database to connect to. The format of the URL varies by JDBC driver. The URL is passed to the JDBC driver to create the physical database connections.</documentation>
   <required>1</required>
   </formElement>
   <formElement>
@@ -99,9 +92,7 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
     <type>entry</type>
     <label>Database Password</label>
     <property>password</property>
-    <documentation>
-      The password attribute passed to the JDBC driver when creating physical database connections. The value is stored in an encrypted form in the descriptor file and when displayed on the Administration Console.
-    </documentation>
+    <documentation>Password attribute passed to the JDBC driver when creating physical database connections. This value is stored in an encrypted form in the descriptor file and when displayed on the administration console.</documentation>
     <required>1</required>
   </formElement>
 </editor>

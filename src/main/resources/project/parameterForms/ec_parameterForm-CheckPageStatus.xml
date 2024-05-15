@@ -21,21 +21,21 @@
     <type>credential</type>
     <label>Credentials to be entered</label>
     <property>credentialName</property>
-    <documentation>The credentials needed to check the status of the page.</documentation>
+    <documentation>The required credentials to check the status of the page.</documentation>
     <required>0</required>
   </formElement>
   <formElement>
     <type>entry</type>
     <label>Maximum elapsed time</label>
     <property>maxelapsedtime</property>
-    <documentation>Defines the maximum time in seconds that the job will try to check into the server. Blank implies no wait time (URL only checked one time).</documentation>
+    <documentation>Defines the maximum time, in seconds, that the job tries to check on the cluster. If left blank, there is no wait time and the URL is only checked once.</documentation>
     <required>0</required>
   </formElement>
   <formElement>
     <type>entry</type>
     <label>Target URL</label>
     <property>targeturl</property>
-    <documentation>URL of the page to be checked. (Required)</documentation>
+    <documentation>URL of the page to be checked.</documentation>
     <required>1</required>
   </formElement>
   <formElement>
@@ -43,7 +43,7 @@
     <label>Success criteria</label>
     <property>successcriteria</property>
     <required>1</required>
-    <documentation>Indicates the expected correct result to be obtained when running checking the server.</documentation>
+    <documentation>Expected result when checking the server status.</documentation>
     <option><name>Page found (200)</name><value>pagefound</value></option>
     <option><name>Page not found (404)</name><value>pagenotfound</value></option>
     <option><name>Page error</name><value>pageerror</value></option>

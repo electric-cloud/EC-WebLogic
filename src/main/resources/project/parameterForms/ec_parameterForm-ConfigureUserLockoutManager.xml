@@ -22,10 +22,7 @@
         <label>WLST script absolute path</label>
         <property>wlst_abs_path</property>
         <required>0</required>
-        <documentation>
-Absolute path to WLST. i.e: '/path/to/wlst.cmd' or 'wlst.sh'. Setting this path will make applying the equal param in procedures unnecessary.
-NOTE: You need to install the agent to the machine that has access to the WLST script at least.
-        </documentation>
+        <documentation>Absolute path to WLST (for example, /path/to/wlst.cmd or wlst.sh). If this path is specified, you do not need to apply the equal parameter in procedures. Note that you must install the agent to the machine that has access to the WLST script.</documentation>
         <propertyReference type="property">/plugins/@PLUGIN_NAME@/project/weblogic_cfgs/$configname/wlst_path</propertyReference>
         <dependsOn>configname</dependsOn>
     </formElement>
@@ -37,15 +34,15 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
         <!-- End of improvements for CEV-18687 -->
         <property>configname</property>
         <propertyReference>/plugins/@PLUGIN_NAME@/project/weblogic_cfgs</propertyReference>
-        <documentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</documentation>
-        <htmlDocumentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.</htmlDocumentation>
+        <documentation>Name of the configuration to be used. URL, port, and credentials are retrieved from the specified plugin configuration.</documentation>
+        <htmlDocumentation>Name of the configuration to be used. URL, port, and credentials are retrieved from the specified plugin configuration.</htmlDocumentation>
         <required>1</required>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Lockout Threshold</label>
         <property>lockout_threshold</property>
-        <documentation>The maximum number of consecutive invalid login attempts that can occur before a user's account is locked out. Minimum value: 1, Maximum value: 2147483647.</documentation>
+        <documentation>The maximum number of consecutive invalid sign in attempts that can occur before a user's account is locked out. Minimum value: 1, Maximum value: 2147483647.</documentation>
         <required>0</required>
     </formElement>
     <formElement>
@@ -60,7 +57,7 @@ NOTE: You need to install the agent to the machine that has access to the WLST s
         <label>Lockout Enabled</label>
         <property>lockout_enabled</property>
         <required>0</required>
-        <documentation>Specifies whether the server locks users out when there are invalid login attempts on their account.</documentation>
+        <documentation>Specifies whether the server locks users out when there are invalid sign in attempts on their account.</documentation>
         <checkedValue>1</checkedValue>
         <uncheckedValue>0</uncheckedValue>
     </formElement>

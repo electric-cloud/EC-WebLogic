@@ -34,8 +34,8 @@
 		<property>configname</property>
 		<required>1</required>
         <propertyReference>/plugins/@PLUGIN_NAME@/project/weblogic_cfgs</propertyReference>
-        <documentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration. To view or create a new configuration, go to the Administration -> Plugins tab, and select 'Configure' action for @PLUGIN_KEY@ plugin.</documentation>
-        <htmlDocumentation>Name of the configuration to be used. URL, port and credentials are retrieved from the given configuration.</htmlDocumentation>
+        <documentation>Name of the configuration to be used. URL, port, and credentials are retrieved from the specified plugin configuration.</documentation>
+        <htmlDocumentation>Name of the configuration to be used. URL, port, and credentials are retrieved from the specified plugin configuration.</htmlDocumentation>
 	</formElement>
 
 </editor>
